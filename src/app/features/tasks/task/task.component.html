@@ -335,11 +335,6 @@
           >
             @if (t._hideSubTasksMode === ShowSubTasksMode.HideAll) {
               <mat-icon>add</mat-icon>
-              @if (sp) {
-                <div class="progress-badge sub-task-progress-badge">
-                  {{ sp.done }}/{{ sp.total }}
-                </div>
-              }
             } @else {
               <mat-icon
                 [class.isHideDoneTasks]="
@@ -347,6 +342,11 @@
                 "
                 >remove
               </mat-icon>
+            }
+            @if (sp) {
+              <div class="progress-badge sub-task-progress-badge">
+                {{ sp.done }}/{{ sp.total }}
+              </div>
             }
           </button>
           <task-list

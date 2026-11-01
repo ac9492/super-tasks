@@ -346,13 +346,10 @@ export class TaskComponent implements OnDestroy, AfterViewInit {
     getChecklistProgress(this.task().notes),
   );
 
-  // Done/total badge on the toggle while sub tasks are collapsed (null = not shown). #7057
-  subTaskProgress = computed<ChecklistProgress | null>(() => {
-    const t = this.task();
-    return t._hideSubTasksMode === HideSubTasksMode.HideAll
-      ? getSubTaskProgress(t.subTasks)
-      : null;
-  });
+  // Memoized done/total count, shared by every subtask visibility mode.
+  subTaskProgress = computed<ChecklistProgress | null>(() =>
+    getSubTaskProgress(this.task().subTasks),
+  );
 
   isShowRemoveFromToday = computed(() => {
     return (

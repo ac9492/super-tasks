@@ -27,12 +27,24 @@ test.describe('Subtask inline input', () => {
     await draft.press('Escape');
     await expect(parent.locator('.sub-tasks task')).toHaveCount(2);
     await expect(addSubtask).toBeVisible();
+    const progress = parent.locator('.sub-task-progress-badge');
+    await expect(progress).toBeVisible();
+    await expect(progress).toHaveText('0/2');
     await taskPage.markTaskAsDone(parent.locator('.sub-tasks task').first());
+    await expect(progress).toHaveText('1/2');
     await parent.locator('.toggle-sub-tasks-btn').click();
+    await expect(progress).toBeVisible();
+    await expect(progress).toHaveText('1/2');
     await expect(addSubtask).toBeVisible();
+    await expect(progress).toHaveText('1/2');
     await parent.locator('.toggle-sub-tasks-btn').click();
+    await expect(progress).toBeVisible();
+    await expect(progress).toHaveText('1/2');
     await expect(addSubtask).toBeHidden();
+    await expect(progress).toHaveText('1/2');
     await parent.locator('.toggle-sub-tasks-btn').click();
+    await expect(progress).toBeVisible();
+    await expect(progress).toHaveText('1/2');
     await expect(addSubtask).toBeVisible();
   });
 
