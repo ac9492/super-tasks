@@ -20,7 +20,7 @@ jobs:
         run: npm ci
       - name: Build frontend and desktop code
         run: npm run buildFrontend:prod:es6 && npm run electron:build
-      - name: Build unsigned Intel and Apple Silicon packages
+      - name: Build ad-hoc-signed Intel and Apple Silicon packages
         run: npx electron-builder --config electron-builder.super-tasks.cjs --mac dmg zip --x64 --arm64 --publish never
       - name: Check app identities and runtime dependencies
         shell: bash
@@ -28,9 +28,21 @@ jobs:
           for app in .tmp/super-tasks-builds/mac*/"Super Tasks.app"; do
             test "$(/usr/libexec/PlistBuddy -c 'Print CFBundleDisplayName' "$app/Contents/Info.plist")" = "Super Tasks"
             test "$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$app/Contents/Info.plist")" = "io.github.ac9492.supertasks"
+            codesign --verify --deep --strict --verbose=2 "$app"
+            codesign --display --verbose=4 "$app"
             node tools/verify-electron-requires.js "$app/Contents/Resources/app.asar"
           done
           shasum -a 256 .tmp/super-tasks-builds/*.dmg .tmp/super-tasks-builds/*.zip > .tmp/super-tasks-builds/SHA256SUMS-mac.txt
+      - name: Verify signatures inside the distributable disk images
+        shell: bash
+        run: |
+          for image in .tmp/super-tasks-builds/*.dmg; do
+            mountpoint="$(mktemp -d)"
+            hdiutil attach "$image" -readonly -nobrowse -mountpoint "$mountpoint"
+            codesign --verify --deep --strict --verbose=2 "$mountpoint/Super Tasks.app"
+            hdiutil detach "$mountpoint"
+            rmdir "$mountpoint"
+          done
       - name: Launch the native Mac app with an isolated profile
         shell: bash
         run: |

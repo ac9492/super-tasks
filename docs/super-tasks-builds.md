@@ -4,7 +4,7 @@ Super Tasks is Adrian's personal fork of Super Productivity. The combined branch
 
 The Windows installer and portable app are named Super Tasks. macOS downloads are available separately for Apple Silicon (arm64) and Intel (x64). Both platforms use the app identifier `io.github.ac9492.supertasks`, their own Super Tasks data folder, and the `supertasks://` desktop URL scheme. They can be installed alongside Super Productivity. Existing upstream data is not copied automatically; use its export/import interface if you want to transfer your tasks.
 
-Builds are unsigned and macOS builds are not notarized. Keep the upstream license and author attribution; this is a fork, not an official upstream release. Services configured to return OAuth redirects to `superproductivity://` still open the upstream app; configure a `supertasks://` callback where the provider supports it.
+Windows builds are unsigned. macOS builds are ad-hoc signed (their integrity is checked, but they have no Apple Developer ID) and are not notarized. macOS may require explicit approval in System Settings → Privacy & Security. Keep the upstream license and author attribution; this is a fork, not an official upstream release. Services configured to return OAuth redirects to `superproductivity://` still open the upstream app; configure a `supertasks://` callback where the provider supports it.
 
 To build Windows, run `npm run buildFrontend:prod:es6`, `npm run electron:build`, then `npx electron-builder --config electron-builder.super-tasks.cjs --win nsis portable --x64 --publish never`.
 

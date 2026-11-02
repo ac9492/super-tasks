@@ -13,7 +13,10 @@ config.win.publish = null;
 config.nsis.artifactName = 'Super-Tasks-Setup-${version}-${arch}.${ext}';
 config.portable.artifactName = 'Super-Tasks-Portable-${version}-${arch}.${ext}';
 config.mac.appId = config.appId;
-config.mac.identity = null;
+// Re-sign the renamed Electron bundle; skipping signing leaves an invalid
+// upstream signature and can produce macOS's misleading "damaged" message.
+config.mac.identity = '-';
+config.mac.artifactName = 'Super-Tasks-${version}-mac-${arch}-adhoc.${ext}';
 config.mac.notarize = false;
 config.mac.publish = null;
 delete config.mac.provisioningProfile;
