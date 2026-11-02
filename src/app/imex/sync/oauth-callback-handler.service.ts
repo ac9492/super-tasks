@@ -95,7 +95,10 @@ export class OAuthCallbackHandlerService implements OnDestroy {
         return;
       }
 
-      if (!callbackUrl.startsWith('superproductivity://oauth-callback')) {
+      if (
+        !callbackUrl.startsWith('supertasks://oauth-callback') &&
+        !callbackUrl.startsWith('superproductivity://oauth-callback')
+      ) {
         SyncLog.warn(
           'OAuthCallbackHandler: Rejected callback URL with unexpected scheme',
           callbackUrl.split(':')[0],

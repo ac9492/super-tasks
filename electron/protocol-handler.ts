@@ -5,7 +5,7 @@ import { IPC } from './shared-with-frontend/ipc-events.const';
 import { getIsAppReady } from './main-window';
 import { showOrFocus, toggleWindowVisibility } from './various-shared';
 
-export const PROTOCOL_NAME = 'superproductivity';
+export const PROTOCOL_NAME = 'supertasks';
 export const PROTOCOL_PREFIX = `${PROTOCOL_NAME}://`;
 
 // Store pending URLs to process after window is ready

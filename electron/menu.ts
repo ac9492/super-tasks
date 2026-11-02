@@ -14,11 +14,11 @@ export const createMenuTemplate = ({
   onQuit: () => void;
 }): MenuItemConstructorOptions[] => [
   {
-    label: 'Super Productivity',
+    label: 'Super Tasks',
     submenu: [
-      { role: 'about', label: 'About Super Productivity' },
+      { role: 'about', label: 'About Super Tasks' },
       { type: 'separator' },
-      { role: 'hide', label: 'Hide Super Productivity' },
+      { role: 'hide', label: 'Hide Super Tasks' },
       { role: 'hideOthers' },
       { role: 'unhide' },
       { type: 'separator' },
