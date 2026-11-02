@@ -46,7 +46,9 @@ try {
   process.exit(2);
 }
 
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'sp-verify-asar-'));
+// Node resolves symlinks in require.resolve (macOS /var -> /private/var).
+// Compare against the same canonical root so packaged files are not mistaken for host files.
+const tmp = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'sp-verify-asar-')));
 const errors = [];
 
 // Note: `electron/preload.js` is an esbuild bundle produced by
