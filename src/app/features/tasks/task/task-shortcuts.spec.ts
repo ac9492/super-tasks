@@ -269,10 +269,10 @@ describe('TaskComponent shortcut handling', () => {
         ...createTopLevelTask('Task'),
         dueDay: '2026-05-06',
       });
-      expect(component.scheduledDateColor()).toBe('');
+      expect(component.scheduledDateColor()).toBe('tomorrow');
       const clock = TestBed.inject(GlobalTrackingIntervalService);
       (clock.todayDateStr as WritableSignal<string>).set('2026-05-06');
-      expect(component.scheduledDateColor()).toBe('');
+      expect(component.scheduledDateColor()).toBe('today');
       (clock.todayDateStr as WritableSignal<string>).set('2026-05-07');
       expect(component.scheduledDateColor()).toBe('overdue');
     });
@@ -284,7 +284,7 @@ describe('TaskComponent shortcut handling', () => {
         ...createTopLevelTask('Task'),
         dueWithTime: scheduled,
       });
-      expect(component.scheduledDateColor()).toBe('');
+      expect(component.scheduledDateColor()).toBe('today');
       (clock.clockTimestamp as WritableSignal<number>).set(scheduled);
       expect(component.scheduledDateColor()).toBe('overdue');
     });
@@ -299,7 +299,7 @@ describe('TaskComponent shortcut handling', () => {
         ...createTopLevelTask('Task'),
         dueWithTime: scheduled,
       });
-      expect(component.scheduledDateColor()).toBe('');
+      expect(component.scheduledDateColor()).toBe('today');
       currentId.set('top-1');
       expect(component.scheduledDateColor()).toBe('');
       (clock.clockTimestamp as WritableSignal<number>).set(scheduled + 1);

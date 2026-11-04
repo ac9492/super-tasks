@@ -1,9 +1,9 @@
 import { getDbDateStr, isValidDBDateStr } from '../../../util/get-db-date-str';
 import { Task } from '../task.model';
 
-export type ScheduledDateColor = 'overdue' | '';
+export type ScheduledDateColor = 'overdue' | 'today' | 'tomorrow' | 'upcoming' | '';
 
-/** Only overdue schedules get a color; uses the logical day for timed tasks. */
+/** Relative calendar-day colors, independent of label formatting and DST hours. */
 export const getScheduledDateColor = (
   task: Pick<Task, 'dueDay' | 'dueWithTime' | 'isDone'>,
   today: string,
@@ -18,5 +18,9 @@ export const getScheduledDateColor = (
   if (dueDate < today || (task.dueWithTime && task.dueWithTime <= now)) {
     return 'overdue';
   }
-  return '';
+  if (dueDate === today) return 'today';
+  // These ISO day strings represent calendar dates, not elapsed local hours.
+  const days = (Date.parse(dueDate) - Date.parse(today)) / 86400000;
+  if (days === 1) return 'tomorrow';
+  return days >= 2 && days <= 8 ? 'upcoming' : '';
 };

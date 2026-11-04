@@ -176,15 +176,15 @@ describe('BoardPanelComponent - Backlog Feature', () => {
     fixture.detectChanges();
   });
 
-  it('keeps Board Today controls at the default color', () => {
+  it('colors Board Today controls green', () => {
     const task = component.tasks()[0];
-    expect(component.scheduledDateColor(task)).toBe('');
+    expect(component.scheduledDateColor(task)).toBe('today');
 
     const button = fixture.nativeElement.querySelector(
       '.schedule-btn',
     ) as HTMLElement | null;
     expect(button).not.toBeNull();
-    expect(button!.getAttribute('data-scheduled-date-color')).toBe('');
+    expect(button!.getAttribute('data-scheduled-date-color')).toBe('today');
     const icon = button!.querySelector('mat-icon') as HTMLElement;
     const badge = button!.querySelector('.time-badge') as HTMLElement;
     expect(getComputedStyle(badge).color).toBe(getComputedStyle(icon).color);
@@ -199,7 +199,7 @@ describe('BoardPanelComponent - Backlog Feature', () => {
     >;
     const dueWithTime = new Date(2026, 8, 12, 12, 1).getTime();
     const task = { ...component.tasks()[0], dueDay: undefined, dueWithTime };
-    expect(component.scheduledDateColor(task)).toBe('');
+    expect(component.scheduledDateColor(task)).toBe('today');
     interval.clockTimestamp.set(dueWithTime);
     expect(component.scheduledDateColor(task)).toBe('overdue');
     currentTaskId.set(task.id);

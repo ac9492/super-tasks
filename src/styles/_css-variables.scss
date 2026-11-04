@@ -606,6 +606,10 @@ body.isDarkTheme {
 
 /* stylelint-disable-next-line no-duplicate-selectors -- layered token file: Cat B follows Layer 1 primitives on the same selector */
 body {
+  // Saturated schedule text colors on light surfaces.
+  --scheduled-date-today: #007a29;
+  --scheduled-date-tomorrow: #b45b00;
+  --scheduled-date-upcoming: #8000d0;
   // Background colors (Cat B)
   --bg-drag-col: rgb(242, 242, 242);
   --bg-slightly-lighter: var(--bg);
@@ -689,6 +693,9 @@ body {
 
 /* stylelint-disable-next-line no-duplicate-selectors -- layered token file: Cat B follows Layer 1 primitives on the same selector */
 body.isDarkTheme {
+  --scheduled-date-today: #00d45a;
+  --scheduled-date-tomorrow: #ffaa00;
+  --scheduled-date-upcoming: #d580ff;
   // Background colors (Cat B)
   --bg-slightly-lighter: var(--dark4);
   --bg-super-light: #616161;

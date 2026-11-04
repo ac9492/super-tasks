@@ -1,6 +1,6 @@
 import { expect, test } from '../../fixtures/test.fixture';
 
-test('scheduled badges color only overdue dates in light and dark mode without changing text', async ({
+test('scheduled badges restore the relative-day palette in light and dark mode without changing text', async ({
   page,
   workViewPage,
   testPrefix,
@@ -13,11 +13,14 @@ test('scheduled badges color only overdue dates in light and dark mode without c
 
   const ranges = [
     { days: -1, color: 'overdue' },
-    { days: 0, color: '' },
-    { days: 1, color: '' },
-    { days: 8, color: '' },
-    { days: 1, color: '', timed: true },
-    { days: 1, color: '', timed: true, reminder: true },
+    { days: 0, color: 'today' },
+    { days: 1, color: 'tomorrow' },
+    { days: 2, color: 'upcoming' },
+    { days: 7, color: 'upcoming' },
+    { days: 8, color: 'upcoming' },
+    { days: 9, color: '' },
+    { days: 1, color: 'tomorrow', timed: true },
+    { days: 1, color: 'tomorrow', timed: true, reminder: true },
     { days: 0, color: 'overdue', timed: true, elapsed: true },
   ];
   for (const range of ranges) {
@@ -80,6 +83,29 @@ test('scheduled badges color only overdue dates in light and dark mode without c
       (isDark) => document.body.classList.toggle('isDarkTheme', isDark),
       dark,
     );
+    const palette: string[] = [];
+    for (const state of ['overdue', 'today', 'tomorrow', 'upcoming']) {
+      const control = page
+        .locator(`.schedule-btn[data-scheduled-date-color="${state}"]`)
+        .first();
+      const colors = await control.evaluate((button, name) => {
+        const probe = document.createElement('span');
+        probe.style.color =
+          name === 'overdue' ? 'var(--c-warn)' : `var(--scheduled-date-${name})`;
+        button.appendChild(probe);
+        const expectedColor = getComputedStyle(probe).color;
+        probe.remove();
+        return {
+          expectedColor,
+          icon: getComputedStyle(button.querySelector('mat-icon')!).color,
+          badge: getComputedStyle(button.querySelector('.time-badge')!).color,
+        };
+      }, state);
+      expect(colors.icon).toBe(colors.expectedColor);
+      expect(colors.badge).toBe(colors.expectedColor);
+      palette.push(colors.expectedColor);
+    }
+    expect(new Set(palette).size).toBe(4);
     // Overdue retains the existing warning palette in either mode.
     const overdue = page
       .locator('.schedule-btn[data-scheduled-date-color="overdue"]')
@@ -155,7 +181,7 @@ test('updates elapsed dates and suppresses color while tracking', async ({
     );
   };
   await schedule(3_000);
-  await expect(button).toHaveAttribute('data-scheduled-date-color', '');
+  await expect(button).toHaveAttribute('data-scheduled-date-color', 'today');
   const textBefore = await badge.textContent();
   await expect(button).toHaveAttribute('data-scheduled-date-color', 'overdue');
   expect(await badge.textContent()).toBe(textBefore);

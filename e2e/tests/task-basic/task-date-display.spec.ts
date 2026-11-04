@@ -93,6 +93,10 @@ test('task date styles and weekday preference work through settings and persist 
     await expect(row.locator('.deadline-btn .time-badge')).toHaveText(
       expected[i].ordinal,
     );
+    await expect(row.locator('.schedule-btn')).toHaveAttribute(
+      'data-scheduled-date-color',
+      i === 0 ? 'tomorrow' : 'upcoming',
+    );
   }
   const boxes = await taskPage.getTaskByText(`${testPrefix} date 0`).evaluate((row) => {
     const due = row.querySelector('.schedule-btn .time-badge')!.getBoundingClientRect();
