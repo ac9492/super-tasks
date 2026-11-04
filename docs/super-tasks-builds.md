@@ -1,6 +1,6 @@
 # Super Tasks desktop builds
 
-Super Tasks is Adrian's personal fork of Super Productivity. The combined branch includes the merged upstream features, PRs #10503 and #10504, the closed #10922 inline creation feature, and completed/total subtask counts.
+Super Tasks is an independent, UX-focused fork of Super Productivity. The `main` branch is the active Super Tasks branch, based on the former `build/combined-2026-10-25` branch. It includes the merged upstream features, PRs #10503 and #10504, the closed #10922 inline creation feature, and completed/total subtask counts.
 
 The Windows installer and portable app are named Super Tasks. macOS downloads are available separately for Apple Silicon (arm64) and Intel (x64). Both platforms use the app identifier `io.github.ac9492.supertasks`, their own Super Tasks data folder, and the `supertasks://` desktop URL scheme. They can be installed alongside Super Productivity. Existing upstream data is not copied automatically; use its export/import interface if you want to transfer your tasks.
 

@@ -1,227 +1,82 @@
-<a href="https://super-productivity.com/"><img alt="Banner" src="docs/screens/banner.png"/></a>
+# Super Tasks
 
-<p align="center">
-  <strong>
-    An advanced todo list app with timeboxing & time tracking capabilities that supports importing tasks from your calendar, Jira, GitHub and others
-  </strong>
-</p>
+**A clearer everyday interface for tasks, planning, and time tracking.**
 
-<p align="center">
-  :globe_with_meridians: <a href="https://app.super-productivity.com">Open Web App</a> or :computer: <a href="https://super-productivity.com/download/">Download</a>
-</p>
+Super Tasks is an independent, UX-focused fork of [Super Productivity](https://github.com/super-productivity/super-productivity). It builds on that project's local-first task management, time tracking, integrations, and sync foundation, with a focus on making daily work easier to understand and faster to manage.
 
-<br/>
+**Status: early development.** The fork already includes desktop improvements, but the public release process and cross-client sync validation are still being prepared. It is not an official Super Productivity release.
 
-<!-- The <a> and <img> elements are intentionally made without space.
-     Because of the extra whitespace characters in <a>, makes blue underline lines appear for them.
-     Please do not change this formatting, so as not to make them.
--->
-<p align="center">
-  <a href="https://lbesson.mit-license.org"><img alt="MIT license" src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square"/></a>
-  &nbsp;
-  <a href="https://github.com/super-productivity/super-productivity/discussions"><img alt="GitHub Discussions" src="https://img.shields.io/badge/Community-Discussions-blue?style=flat-square&logo=github"/></a>
-</p>
+[UX priorities](#three-ux-priorities) · [Compatibility](#data-and-sync-compatibility) · [Build from source](#build-from-source) · [Give feedback](https://github.com/ac9492/super-tasks/issues)
 
-<p align="center">
-  <a href="https://www.reddit.com/r/superProductivity/"><img alt="Reddit Community" src="https://img.shields.io/badge/Reddit-%23FF4500.svg?style=for-the-badge&logo=Reddit&logoColor=white" width="85"/></a>
-  &nbsp;
-  <a href="https://mastodon.social/@superproductivity"><img alt="Super Productivity on Mastodon" src="https://img.shields.io/badge/-MASTODON-%232B90D9?style=for-the-badge&logo=mastodon&logoColor=white" width="105"/></a>
-  &nbsp;
-  <a href="https://x.com/intent/post?text=Super%20Productivity%20%20https%3A%2F%2Fsuper-productivity.com"><img alt="Tweet" src="https://img.shields.io/badge/TWEET-%23000000.svg?style=for-the-badge&logo=X" width="90"/></a>
-</p>
+## Why Super Tasks?
 
-<p align="center">
-  <a href="https://youtu.be/_mvMXWLsL-8"><img src="docs/screens/reel.gif" alt="Super Productivity: capture a task, plan it on the schedule, then focus on it"/></a>
-</p>
+Super Productivity provides a capable foundation for focused individual work. Super Tasks explores how that foundation can feel more consistent: clearer dates and counts, predictable task entry, and navigation that helps you stay oriented.
 
-## :computer: Downloads & Install
+The direction is practical: improve frequent interactions, keep the interface calm, preserve keyboard access, and keep the underlying data compatible with upstream. Small, testable improvements will guide the redesign.
 
-<p align="center">
-  <a href='https://flathub.org/apps/com.super_productivity.SuperProductivity' target="_blank"><img alt='Get it on Flathub' src='https://flathub.org/api/badge?locale=en' height="30"/></a>
-  <a href="https://snapcraft.io/superproductivity" target="_blank"><img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" height="30"/></a>
-  <a href='//www.microsoft.com/store/apps/9NHFVG8361TW?cid=storebadge&ocid=badge' target="_blank"><img src='https://developer.microsoft.com/store/badges/images/English_get-it-from-MS.png' alt='Get it from Microsoft Store' height="30"/></a>
-  <a href='https://play.google.com/store/apps/details?id=com.superproductivity.superproductivity&amp;referrer=utm_source%3Dgithub%26utm_medium%3Downed%26utm_campaign%3Dreadme' target="_blank"><img src='docs/screens/google-play-badge.svg' alt='Play Store Badge' height="30"/></a>
-  <a href='//f-droid.org/en/packages/com.superproductivity.superproductivity' target="_blank"><img src='https://f-droid.org/assets/fdroid-logo-text_S0MUfk_FsnAYL7n2MQye-34IoSNm6QM6xYjDnMqkufo=.svg' alt='F-Droid Badge' height="30"/></a>
-  <a href='https://apps.obtainium.imranr.dev/redirect?r=obtainium%3A%2F%2Fadd%2Fhttps%3A%2F%2Fgithub.com%2Fsuper-productivity%2Fsuper-productivity%2Freleases'><img src='https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png' alt='Get it on Obtainium' height="30"/></a>
-  <a href='//apps.apple.com/app/super-productivity/id1482572463?l=en' target="_blank"><img src='docs/screens/app-store-badge.svg' alt='App Store Badge' height="30"/></a>
-</p>
+## Already in this fork
 
-<p align="center">
-  <strong>For all current downloads, package links, and platform-specific notes:
-    <a href="https://github.com/super-productivity/super-productivity/wiki/2.01-Downloads-and-Install" target="_blank">
-      check the wiki
-    </a>
-  </strong><br/>
-  <a href="https://github.com/super-productivity/super-productivity/wiki/2.01-Downloads-and-Install" target="_blank">
-    <img
-      src="docs/screens/get-it-on-github.webp"
-      alt="Get it on GitHub"
-      height="120"
-    />
-  </a>
-</p>
+| Area                      | Current changes                                                                                                                                                                          |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Dates at a glance         | Optional weekday labels for the next seven days, date-format choices such as `3-Dec` and `December 3rd`, and distinct colors for overdue, today, tomorrow, and upcoming scheduled dates. |
+| Consistent task counts    | The Today sidebar and optional desktop app-icon badge share the due-task count, with a tooltip breakdown of overdue and today tasks.                                                     |
+| Task organization         | Inline task creation within sections, bulk moves between sections, and completed/total subtask counts.                                                                                   |
+| Separate desktop identity | Super Tasks has its own application identity, data folder, and desktop URL scheme, so it can be installed alongside Super Productivity.                                                  |
 
-<hr>
+These additions sit on top of the inherited tasks, projects, tags, notes, planning, time-tracking, and integration features. Some changes may also exist in newer upstream versions.
 
-<p align="center">
-  <a href="https://bank.gov.ua/en/news/all/natsionalniy-bank-vidkriv-rahunok-dlya-gumanitarnoyi-dopomogi-ukrayintsyam-postrajdalim-vid-rosiyskoyi-agresiyi" target="_blank">
-    <img
-      src="https://upload.wikimedia.org/wikipedia/commons/4/49/Flag_of_Ukraine.svg"
-      alt="Ukraine Flag"
-      height="120"
-    /><br/>
-    <strong>Humanitarian Aid for Ukraine</strong><br/>
-    Support humanitarian relief via the official National Bank of Ukraine account.
-  </a>
-</p>
+## Three UX priorities
 
-<hr>
+These are proposed areas for research and testing, not completed redesigns.
 
-## :heavy_check_mark: Features
+| Priority                               | Problem to address                                                                           | What improvement should achieve                                                                                                                                                 |
+| -------------------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1. Clearer task lists**              | Dates, status, progress, counts, and row actions compete for attention.                      | Make it easy to scan what needs attention and act on it, with consistent spacing and labels in light and dark themes. Build on the date and count improvements already present. |
+| **2. Faster task capture and editing** | It can be difficult to tell where a new task will land or which date field to change.        | Make the destination project/section and the distinction between a scheduled date and a deadline obvious; keep common edits quick and keyboard-accessible.                      |
+| **3. More predictable navigation**     | Switching between Today, Inbox, projects, and planning views can interrupt the flow of work. | Keep the current context visible and make frequent destinations easy to reach, while preserving access to advanced features.                                                    |
 
-- **Keep organized and focused!** Plan and categorize your tasks using sub-tasks, projects and tags and color code them as needed.
-- **Plan ahead** with the **planner** and see your day laid out on the **schedule** timeline, next to your calendar events.
-- Sort tasks visually on **boards**, like the built-in **Kanban** and **Eisenhower Matrix**, or build your own.
-- Use **timeboxing** and **track your time**. Create time sheets and work summaries in a breeze to easily export them to your company's time tracking system.
-- Helps you to **establish healthy & productive habits**:
-  - A **break reminder** reminds you when it's time to step away.
-  - The **anti-procrastination feature** helps you gain perspective when you really need to.
-  - Need some extra focus? **Focus mode** offers **Pomodoro**, **Flowtime** and **countdown** sessions.
-  - **Collect personal metrics** to see, which of your work routines need adjustments.
-- Integrate with **Jira**, **Trello**, **GitHub**, **GitLab**, **Gitea**, **OpenProject**, **Linear**, **ClickUp**, **Redmine**, **Nextcloud Deck** and **Azure DevOps**. Auto import tasks assigned to you, plan the details locally, automatically create work logs, and get notified immediately, when something changes.
-- Basic **CalDAV** integration.
-- Back up and synchronize your data across multiple devices with **SuperSync**, **Dropbox** and **WebDAV** support. SuperSync is our own sync service, end-to-end encrypted with a password only you hold, which you can also [host yourself](https://github.com/super-productivity/super-productivity/tree/master/packages/super-sync-server).
-- Attach context information to tasks and projects. Create **notes**, attach **files** or create **project-level bookmarks** for links, files, and even commands.
-- Super Productivity **respects your privacy** and **does NOT collect any data**. No account or registration is required. **You decide where you store your data!**
-- Extend and restyle the app with **[plugins](https://github.com/super-productivity/super-productivity/wiki/2.15-Develop-a-Plugin)** and **[custom themes](https://github.com/super-productivity/super-productivity/wiki/3.09-Theming)**.
-- Runs on **Linux**, **macOS**, **Windows**, **Android**, **iOS** and in the **browser**.
-- It's **free** and **open source** and always will be.
+The [UX direction and research notes](docs/super-tasks-ux-direction.md) explain the evidence, initial prior art, and compatibility boundaries. Concrete designs will be prototyped and tested with users before implementation.
 
-And much more!
+## Data and sync compatibility
 
-> [!NOTE]
-> The web version has some limitations: See the **[Web App vs Desktop comparison](https://github.com/super-productivity/super-productivity/wiki/3.05-Web-App-vs-Desktop)** for more details.
+**Upstream-compatible data and sync are a project requirement.** Super Tasks should not introduce a separate task-storage format, sync protocol, encryption scheme, or conflict-resolution model. Upstream migrations must continue to be followed. New display preferences should be device-local where possible and must not require fork-only fields in synced task records.
 
-## :book: Documentation and Guides
+The fork inherits upstream's sync implementations, including Nextcloud/WebDAV, Dropbox, SuperSync, local-file sync on desktop, and OneDrive where supported. However, a complete provider-by-provider and mixed Super Tasks/Super Productivity test matrix has **not** yet been completed. Rebranded sign-in callbacks also need validation; inherited provider code alone is not a compatibility guarantee.
 
-<!-- Getting Started -->
-<h3>Getting Started</h3>
-<ul>
-  <li><a href="https://dev.to/johannesjo/getting-started-with-super-productivity-2791">Getting started guide</a> (article)</li>
-  <li><a href="https://www.youtube.com/watch?v=VoF2_RSdNXA">Video walkthrough</a> (YouTube)</li>
-  <li><a href="https://dev.to/johannesjo/the-prioritising-scheme-how-to-eat-the-frog-with-super-productivity-mlk">Eat the frog prioritizing scheme</a></li>
-</ul>
-<p><strong>Starting Point in Wiki:</strong><br>
-  <a href="https://github.com/super-productivity/super-productivity/wiki/1.01-First-Steps">First steps</a> •
-  <a href="https://github.com/super-productivity/super-productivity/wiki/3.00-Reference">Reference</a> •
-  <a href="https://github.com/super-productivity/super-productivity/wiki/2.00-How_To">How-To</a>
-</p>
-<p><strong>Productivity Tips:</strong><br>
-  <a href="https://github.com/super-productivity/super-productivity/wiki/3.03-Keyboard-Shortcuts">Keyboard Shortcuts</a> •
-  <a href="https://github.com/super-productivity/super-productivity/wiki/3.04-Short-Syntax">Short Syntax</a>
-</p>
-<p><strong>Need Help?</strong><br>
-  <a href="https://github.com/super-productivity/super-productivity/discussions">Visit the discussions page</a>
-</p>
-<p>See the bottom of the README for more information on the documentation.</p>
+Keep a backup before trying development builds. The separate Super Tasks data folder does not automatically import an existing Super Productivity installation. See the [desktop build notes](docs/super-tasks-builds.md) and [inherited sync reference](docs/wiki/3.08-Sync-Integration-Comparison.md) for details and platform limitations.
 
-<!-- Advanced Topics -->
-<h3>Advanced Topics</h3>
-<p>Here are some other topics covered in the
-  <a href="https://github.com/super-productivity/super-productivity/wiki">official wiki</a>:
-</p>
-<p><strong>Development:</strong><br>
-  <a href="https://github.com/super-productivity/super-productivity/wiki/2.11-Run-the-Development-Server">Run dev server</a> •
-  <a href="https://github.com/super-productivity/super-productivity/wiki/2.12-Package-the-App">Package the app</a> •
-  <a href="https://github.com/super-productivity/super-productivity/wiki/2.14-Build-for-Android">Build for Android</a> •
-  <a href="https://github.com/super-productivity/super-productivity/wiki/2.13-Run-with-Docker">Run with Docker</a>
-</p>
-<p><strong>Data Management:</strong><br>
-  <a href="https://github.com/super-productivity/super-productivity/wiki/4.23-Managing-Your-Data">User Data</a> •
-  <a href="https://github.com/super-productivity/super-productivity/wiki/3.07-Issue-Integration-Comparison">Issue Providers</a> •
-  <a href="https://github.com/super-productivity/super-productivity/wiki/3.08-Sync-Integration-Comparison">Sync Providers</a>
-</p>
-<p><strong>Customization:</strong><br>
-  <a href="https://github.com/super-productivity/super-productivity/wiki/2.15-Develop-a-Plugin">Plugins</a> •
-  <a href="https://github.com/super-productivity/super-productivity/wiki/3.09-Theming">Themes</a>
-</p>
-<p><strong>APIs:</strong><br>
-  <a href="https://github.com/super-productivity/super-productivity/wiki/3.01-API#1-sync-server-rest-api">Sync Server</a> •
-  <a href="https://github.com/super-productivity/super-productivity/wiki/3.01-API#2-plugin-api">Plugins</a> •
-  <a href="https://github.com/super-productivity/super-productivity/wiki/3.01-API#3-local-rest-api">REST</a>
-</p>
+## Downloads and release status
 
-## Community
+There is no public packaged Super Tasks release yet. Public packages, when available, will be listed under [Super Tasks Releases](https://github.com/ac9492/super-tasks/releases); upstream app-store links install Super Productivity.
 
-The development of Super Productivity is driven by a wonderful community of users and contributors. Thank you all so much for your support!
+Windows installer/portable builds and macOS Apple Silicon/Intel builds have been produced during development. Current Windows builds are unsigned. Current Mac builds are ad-hoc signed and are not Apple-notarized. Public signing, installation verification, and automatic-update distribution remain release work in progress.
 
-<p>
-  :eyes:
-  <a href='https://github.com/super-productivity/awesome-super-productivity'>
-    Check out our awesome curated list of community-created resources about Super Productivity
-  </a>
-</p>
+## Build from source
 
-### :hearts: Contributing
+Use the Node.js and package-manager versions declared in [package.json](package.json).
 
-You don't have to be a programmer to help: spread the word, [answer questions](https://github.com/super-productivity/super-productivity/discussions), [report bugs](https://github.com/super-productivity/super-productivity/issues/new), [contribute translations](https://github.com/super-productivity/super-productivity/wiki/2.18-Contribute-Translations), build [plugins](https://github.com/super-productivity/super-productivity/wiki/2.15-Develop-a-Plugin) or [themes](https://github.com/super-productivity/super-productivity/wiki/3.09-Theming), or [sponsor the project](https://github.com/sponsors/johannesjo).
+```sh
+git clone https://github.com/ac9492/super-tasks.git
+cd super-tasks
+npm ci
+npm run startFrontend
+```
 
-Before opening a pull request, read [CONTRIBUTING.md](CONTRIBUTING.md) and follow the [commit message format](.github/CONTRIBUTING.md#commit-message-format).
+For desktop packaging, follow the [Super Tasks build instructions](docs/super-tasks-builds.md). The inherited [repository map](docs/repository-map.md) explains the codebase and focused checks.
 
-[//]: # '[![inlang status badge](https://badge.inlang.com/?url=github.com/super-productivity/super-productivity)](https://fink.inlang.com/github.com/super-productivity/super-productivity?ref=badge)'
-[//]: #
-[//]: # 'You can use the Fink Localization Editor to edit, lint, and add translations for different languages. [Contribute via fink Guide](https://inlang.com/g/6ddyhpoi).'
+## Help shape Super Tasks
 
-### Special Thanks to our Sponsors
+Designers, accessibility reviewers, testers, documentation contributors, and developers are welcome.
 
-A big thank you to all our sponsors!
+- [Report an issue or suggest an improvement](https://github.com/ac9492/super-tasks/issues/new). Describe the task you were trying to do, what happened, and the outcome you expected.
+- Share a small mockup or a reproducible example for one of the three UX priorities. Please use sample tasks and remove personal information from screenshots and logs.
+- Test keyboard navigation, light/dark themes, long task lists, installation, and the sync service you actually use. Include the platform and build version in feedback.
+- Discuss substantial interface changes before opening a large pull request. The [feature review guide](docs/feature-review-guide.md) covers prior art, scope, and long-term compatibility costs.
 
-- **[SignPath.io](https://signpath.io?utm_source=foundation&utm_medium=github&utm_campaign=super-productivity)**: free code signing for our Windows binaries, with a certificate by [SignPath Foundation](https://signpath.org?utm_source=foundation&utm_medium=github&utm_campaign=super-productivity).
-- **[Blacksmith](https://www.blacksmith.sh)**: covers all our CI runner minutes for GitHub Actions.
+Please bring fork-specific support and feedback to this repository. We aim to contribute generally useful fixes upstream and keep the relationship constructive.
 
-  <a href="https://www.blacksmith.sh"><img alt="CI powered by Blacksmith" src="docs/screens/blacksmith-powered-wob.png" height="60"/></a>
+## Credits and license
 
-_(If you are, intend to or have been a sponsor and want to be shown here, [please let me know](mailto:contact@super-productivity.com)!)_
+Super Tasks is based on Super Productivity, created by Johannes Millan and its contributors. Their work provides the foundation for this fork. Super Tasks is independently maintained and is not affiliated with or endorsed by the upstream project.
 
-## Documentation: Manual versus Automated
-
-There are two wikis: the official one hosted by GitHub and the autonomously generated variant using [DeepWiki.com](https://deepwiki.com/super-productivity/super-productivity). The manually curated version is a more stable and approachable resource designed to help you understand the app from a more human-focused perspective whereas DeepWiki is optimized for explaining the code itself with little regard for context beyond that.
-
-<!-- Official Wiki -->
-<h3>Official Wiki</h3>
-<p>
-  It is preferable to maintain local documentation rather than rely on an external service.
-  It is also preferable that the documentation is updated in tandem with the code changes as
-  demonstrated in
-  <a href="https://github.com/super-productivity/super-productivity/commit/7a51d4b06e414fdcc48e4999197a93eee9cd09da">this commit</a>.
-</p>
-<p>
-  Changes to files within <code>./docs/wiki</code> are linted in CI before being automatically
-  sync'd to the repository's official Wiki hosted by GitHub.
-</p>
-<p>
-  Migrating to Docusaurus is a long-term goal once the content and structure of the wiki has matured
-  and the remaining "legacy docs" have either been reworked or removed. There are some automations in development to help reduce the difference between the published docs and the state of the code while retaining a human-in-the-loop.
-</p>
-
-<!-- DeepWiki -->
-<h3>DeepWiki.com</h3>
-<p>
-  If you have very specific questions about how the code works or why a bug might be producing
-  a particular message it might be useful to
-  <a href="https://deepwiki.com/super-productivity/super-productivity">
-    <img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki">
-  </a>. It can help "cite your sources" when discussing functionality and code that you don't fully
-  understand as part of feature requests or bug reports.
-</p>
-<p>
-  This automated
-  <a href="https://diataxis.fr/reference/#reference">reference</a>
-  does come with some significant drawbacks:
-</p>
-<ol>
-  <li><strong>Intent:</strong> Describes what code does, not why decisions or tradeoffs were made.</li>
-  <li><strong>Staleness:</strong> Will *always* lag behind the code.</li>
-  <li><strong>Code-Focused:</strong> Does not provide guides or conceptual explanations.</li>
-  <li><strong>Cost:</strong> Potential future cost and higher resource usage than static docs.</li>
-</ol>
+The project retains the [MIT license](LICENSE) and upstream copyright notice. Third-party components retain their respective licenses.
