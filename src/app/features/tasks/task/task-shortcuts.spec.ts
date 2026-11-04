@@ -163,6 +163,7 @@ describe('TaskComponent shortcut handling', () => {
           provide: GlobalConfigService,
           useValue: jasmine.createSpyObj('GlobalConfigService', ['cfg'], {
             cfg: () => ({ keyboard: {}, tasks: {}, reminder: {} }),
+            localization: signal({}),
           }),
         },
         {

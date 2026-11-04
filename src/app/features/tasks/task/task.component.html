@@ -139,83 +139,124 @@
             </button>
           }
           @if (t.remindAt) {
-            <button
-              (click)="scheduleTask()"
-              [title]="T.F.TASK.CMP.EDIT_SCHEDULED | translate"
-              [matTooltip]="
-                hasTimeConflict() ? (T.F.TASK.CMP.TIME_CONFLICT | translate) : ''
-              "
-              matTooltipPosition="above"
-              [attr.aria-label]="
-                hasTimeConflict()
-                  ? (T.F.TASK.CMP.TIME_CONFLICT | translate)
-                  : (T.F.TASK.CMP.EDIT_SCHEDULED | translate)
-              "
-              class="ico-btn schedule-btn"
-              [attr.data-scheduled-date-color]="scheduledDateColor()"
-              mat-icon-button
-            >
-              <mat-icon>alarm</mat-icon>
-              <div
-                class="time-badge"
-                [innerHTML]="t.dueWithTime | shortPlannedAt"
-              ></div>
-            </button>
+            @let dateLabel =
+              t.dueWithTime
+                | shortPlannedAt
+                  : false
+                  : globalTrackingIntervalService.todayDateStr()
+                  : taskDateDisplay();
+            <span class="date-control">
+              <button
+                (click)="scheduleTask()"
+                [title]="T.F.TASK.CMP.EDIT_SCHEDULED | translate"
+                [matTooltip]="
+                  hasTimeConflict() ? (T.F.TASK.CMP.TIME_CONFLICT | translate) : ''
+                "
+                matTooltipPosition="above"
+                [attr.aria-label]="
+                  hasTimeConflict()
+                    ? (T.F.TASK.CMP.TIME_CONFLICT | translate)
+                    : (T.F.TASK.CMP.EDIT_SCHEDULED | translate)
+                "
+                class="ico-btn schedule-btn"
+                [attr.data-scheduled-date-color]="scheduledDateColor()"
+                mat-icon-button
+              >
+                <mat-icon>alarm</mat-icon>
+                <div
+                  class="time-badge"
+                  [innerHTML]="dateLabel"
+                ></div>
+              </button>
+              <span
+                class="date-label-reservation"
+                aria-hidden="true"
+                [innerHTML]="dateLabel"
+              ></span>
+            </span>
           } @else if (t.dueWithTime) {
-            <button
-              (click)="scheduleTask()"
-              [title]="T.F.TASK.CMP.EDIT_SCHEDULED | translate"
-              [matTooltip]="
-                hasTimeConflict() ? (T.F.TASK.CMP.TIME_CONFLICT | translate) : ''
-              "
-              matTooltipPosition="above"
-              [attr.aria-label]="
-                hasTimeConflict()
-                  ? (T.F.TASK.CMP.TIME_CONFLICT | translate)
-                  : (T.F.TASK.CMP.EDIT_SCHEDULED | translate)
-              "
-              class="ico-btn schedule-btn"
-              [attr.data-scheduled-date-color]="scheduledDateColor()"
-              mat-icon-button
-            >
-              @if (isScheduledToday()) {
-                <mat-icon>wb_sunny</mat-icon>
-              } @else {
-                <mat-icon>schedule</mat-icon>
-              }
-              <div
-                class="time-badge"
-                [innerHTML]="t.dueWithTime | shortPlannedAt"
-              ></div>
-            </button>
+            @let dateLabel =
+              t.dueWithTime
+                | shortPlannedAt
+                  : false
+                  : globalTrackingIntervalService.todayDateStr()
+                  : taskDateDisplay();
+            <span class="date-control">
+              <button
+                (click)="scheduleTask()"
+                [title]="T.F.TASK.CMP.EDIT_SCHEDULED | translate"
+                [matTooltip]="
+                  hasTimeConflict() ? (T.F.TASK.CMP.TIME_CONFLICT | translate) : ''
+                "
+                matTooltipPosition="above"
+                [attr.aria-label]="
+                  hasTimeConflict()
+                    ? (T.F.TASK.CMP.TIME_CONFLICT | translate)
+                    : (T.F.TASK.CMP.EDIT_SCHEDULED | translate)
+                "
+                class="ico-btn schedule-btn"
+                [attr.data-scheduled-date-color]="scheduledDateColor()"
+                mat-icon-button
+              >
+                @if (isScheduledToday()) {
+                  <mat-icon>wb_sunny</mat-icon>
+                } @else {
+                  <mat-icon>schedule</mat-icon>
+                }
+                <div
+                  class="time-badge"
+                  [innerHTML]="dateLabel"
+                ></div>
+              </button>
+              <span
+                class="date-label-reservation"
+                aria-hidden="true"
+                [innerHTML]="dateLabel"
+              ></span>
+            </span>
           } @else if (isShowDueDayBtn()) {
-            <button
-              (click)="scheduleTask()"
-              [title]="T.F.TASK.CMP.EDIT_SCHEDULED | translate"
-              [matTooltip]="
-                hasTimeConflict() ? (T.F.TASK.CMP.TIME_CONFLICT | translate) : ''
-              "
-              matTooltipPosition="above"
-              [attr.aria-label]="
-                hasTimeConflict()
-                  ? (T.F.TASK.CMP.TIME_CONFLICT | translate)
-                  : (T.F.TASK.CMP.EDIT_SCHEDULED | translate)
-              "
-              class="ico-btn schedule-btn"
-              [attr.data-scheduled-date-color]="scheduledDateColor()"
-              mat-icon-button
-            >
-              @if (isScheduledToday()) {
-                <mat-icon>wb_sunny</mat-icon>
-              } @else {
-                <mat-icon>today</mat-icon>
-              }
-              <div class="time-badge">
-                {{
-                  t.dueDay | localDateStr: globalTrackingIntervalService.todayDateStr()
-                }}
-              </div>
-            </button>
+            @let dateLabel =
+              t.dueDay
+                | localDateStr
+                  : globalTrackingIntervalService.todayDateStr()
+                  : taskDateDisplay();
+            <span class="date-control">
+              <button
+                (click)="scheduleTask()"
+                [title]="T.F.TASK.CMP.EDIT_SCHEDULED | translate"
+                [matTooltip]="
+                  hasTimeConflict() ? (T.F.TASK.CMP.TIME_CONFLICT | translate) : ''
+                "
+                matTooltipPosition="above"
+                [attr.aria-label]="
+                  hasTimeConflict()
+                    ? (T.F.TASK.CMP.TIME_CONFLICT | translate)
+                    : (T.F.TASK.CMP.EDIT_SCHEDULED | translate)
+                "
+                class="ico-btn schedule-btn"
+                [attr.data-scheduled-date-color]="scheduledDateColor()"
+                mat-icon-button
+              >
+                @if (isScheduledToday()) {
+                  <mat-icon>wb_sunny</mat-icon>
+                } @else {
+                  <mat-icon>today</mat-icon>
+                }
+                <div class="time-badge">
+                  {{
+                    t.dueDay
+                      | localDateStr
+                        : globalTrackingIntervalService.todayDateStr()
+                        : taskDateDisplay()
+                  }}
+                </div>
+              </button>
+              <span
+                class="date-label-reservation"
+                aria-hidden="true"
+                [innerHTML]="dateLabel"
+              ></span>
+            </span>
           }
           @if (hasTimeConflict()) {
             <!-- Decorative: MatIcon forces aria-hidden, and the adjacent schedule
@@ -229,30 +270,50 @@
             >
           }
           @if (hasDeadline()) {
-            <button
-              (click)="openDeadlineDialog()"
-              [title]="T.F.TASK.ADDITIONAL_INFO.DEADLINE | translate"
-              class="ico-btn deadline-btn"
-              [color]="
-                isDeadlineOverdue() ? 'warn' : isDeadlineApproaching() ? 'accent' : ''
-              "
-              mat-icon-button
-            >
-              <mat-icon>flag</mat-icon>
-              @if (t.deadlineWithTime) {
-                <div
-                  class="time-badge"
-                  [innerHTML]="t.deadlineWithTime | shortPlannedAt"
-                ></div>
-              } @else if (t.deadlineDay) {
-                <div class="time-badge">
-                  {{
-                    t.deadlineDay
-                      | localDateStr: globalTrackingIntervalService.todayDateStr()
-                  }}
-                </div>
-              }
-            </button>
+            @let dateLabel =
+              t.deadlineWithTime
+                ? (t.deadlineWithTime
+                  | shortPlannedAt
+                    : false
+                    : globalTrackingIntervalService.todayDateStr()
+                    : taskDateDisplay())
+                : (t.deadlineDay
+                  | localDateStr
+                    : globalTrackingIntervalService.todayDateStr()
+                    : taskDateDisplay());
+            <span class="date-control">
+              <button
+                (click)="openDeadlineDialog()"
+                [title]="T.F.TASK.ADDITIONAL_INFO.DEADLINE | translate"
+                class="ico-btn deadline-btn"
+                [color]="
+                  isDeadlineOverdue() ? 'warn' : isDeadlineApproaching() ? 'accent' : ''
+                "
+                mat-icon-button
+              >
+                <mat-icon>flag</mat-icon>
+                @if (t.deadlineWithTime) {
+                  <div
+                    class="time-badge"
+                    [innerHTML]="dateLabel"
+                  ></div>
+                } @else if (t.deadlineDay) {
+                  <div class="time-badge">
+                    {{
+                      t.deadlineDay
+                        | localDateStr
+                          : globalTrackingIntervalService.todayDateStr()
+                          : taskDateDisplay()
+                    }}
+                  </div>
+                }
+              </button>
+              <span
+                class="date-label-reservation"
+                aria-hidden="true"
+                [innerHTML]="dateLabel"
+              ></span>
+            </span>
           }
 
           <!-- Stands in for the notes icon; like it, yields to the close (X) button -->

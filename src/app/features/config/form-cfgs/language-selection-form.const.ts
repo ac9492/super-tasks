@@ -98,5 +98,28 @@ export const LANGUAGE_SELECTION_FORM_FORM: ConfigFormSection<LocalizationConfig>
         ],
       },
     },
+    {
+      key: 'isShowWeekdayForNextWeek',
+      defaultValue: true,
+      type: 'checkbox',
+      templateOptions: {
+        label: T.GCF.LANG.TASK_WEEKDAYS,
+        description: T.GCF.LANG.TASK_WEEKDAYS_DESCRIPTION,
+      },
+    },
+    {
+      key: 'taskDateStyle',
+      defaultValue: 'day-month',
+      type: 'select',
+      templateOptions: {
+        label: T.GCF.LANG.TASK_DATE_STYLE,
+        description: T.GCF.LANG.TASK_DATE_STYLE_DESCRIPTION,
+        options: [
+          { label: T.GCF.LANG.TASK_DATE_NUMERIC, value: 'numeric' },
+          { label: T.GCF.LANG.TASK_DATE_COMPACT, value: 'day-month' },
+          { label: T.GCF.LANG.TASK_DATE_ORDINAL, value: 'month-day-ordinal' },
+        ],
+      },
+    },
   ],
 };

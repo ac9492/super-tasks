@@ -104,6 +104,7 @@ import { TaskPriorityIndicatorComponent } from '../task-priority-indicator/task-
 import { ProgressBarComponent } from '../../../ui/progress-bar/progress-bar.component';
 import { TaskListComponent } from '../task-list/task-list.component';
 import { MsToStringPipe } from '../../../ui/duration/ms-to-string.pipe';
+import { DateTimeFormatService } from '../../../core/date-time-format/date-time-format.service';
 import { ShortPlannedAtPipe } from '../../../ui/pipes/short-planned-at.pipe';
 import { LocalDateStrPipe } from '../../../ui/pipes/local-date-str.pipe';
 import { LocaleDatePipe } from '../../../ui/pipes/locale-date.pipe';
@@ -212,6 +213,7 @@ export class TaskComponent implements OnDestroy, AfterViewInit {
   private readonly _taskMoveToProjectService = inject(TaskMoveToProjectService);
   private readonly _issueSyncState = inject(IssueSyncStateService);
 
+  readonly taskDateDisplay = inject(DateTimeFormatService).taskDateDisplay;
   readonly workContextService = inject(WorkContextService);
   readonly layoutService = inject(LayoutService);
   readonly globalTrackingIntervalService = inject(GlobalTrackingIntervalService);

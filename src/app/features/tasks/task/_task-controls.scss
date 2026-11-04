@@ -543,3 +543,24 @@ done-toggle {
   vertical-align: middle;
   margin-right: var(--s-half);
 }
+
+// Reserve the intrinsic label width without changing Material button internals.
+// The invisible duplicate shares the grid cell with the existing icon control.
+.date-control {
+  display: inline-grid;
+  min-width: 40px;
+  align-items: stretch;
+
+  > * {
+    grid-area: 1 / 1;
+    justify-self: center;
+  }
+}
+
+.date-label-reservation {
+  visibility: hidden;
+  pointer-events: none;
+  white-space: nowrap;
+  font-size: 12px;
+  padding-inline: var(--s-half);
+}

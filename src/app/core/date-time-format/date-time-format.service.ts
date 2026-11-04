@@ -10,6 +10,7 @@ import {
 } from 'src/app/core/locale.constants';
 import { TranslateService } from '@ngx-translate/core';
 import { DateInputLocale, isDayFirstDateFormat } from './date-input-locale';
+import { TaskDateDisplayOptions } from './task-date-display';
 
 @Injectable({
   providedIn: 'root',
@@ -59,6 +60,18 @@ export class DateTimeFormatService {
   readonly textLocale = computed<string>(
     () => this.isoTextLocale() ?? this.currentLocale(),
   );
+
+  // One shared memoized preference object; pure row pipes only reformat when
+  // the date, logical day, language or these preferences change.
+  readonly taskDateDisplay = computed<TaskDateDisplayOptions>(() => {
+    const cfg = this._globalConfigService.localization();
+    return {
+      dateStyle: cfg?.taskDateStyle ?? 'day-month',
+      showWeekdays: cfg?.isShowWeekdayForNextWeek ?? true,
+      locale: this.currentLocale(),
+      textLocale: this.textLocale(),
+    };
+  });
 
   /** Test formats to detect locale-specific time and date formats (e.g., 24h vs 12h, DD/MM vs MM/DD) */
   private readonly _testFormats = computed(() => {

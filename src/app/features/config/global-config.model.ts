@@ -225,6 +225,8 @@ export type LocalizationConfig = Readonly<{
   lng?: LanguageCode | null;
   firstDayOfWeek?: number | null;
   dateTimeLocale?: DateTimeLocale | null;
+  taskDateStyle?: 'numeric' | 'day-month' | 'month-day-ordinal' | null;
+  isShowWeekdayForNextWeek?: boolean | null;
 }>;
 
 export type SoundConfig = Readonly<{

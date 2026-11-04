@@ -38,6 +38,8 @@ export const DEFAULT_GLOBAL_CONFIG: GlobalConfigState = {
   localization: {
     lng: undefined,
     dateTimeLocale: undefined,
+    taskDateStyle: 'day-month',
+    isShowWeekdayForNextWeek: true,
     firstDayOfWeek: undefined,
   },
   tasks: {

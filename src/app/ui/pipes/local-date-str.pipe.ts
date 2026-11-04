@@ -2,8 +2,12 @@ import { inject, Pipe, PipeTransform } from '@angular/core';
 import { dateStrToUtcDate } from '../../util/date-str-to-utc-date';
 import { TranslateService } from '@ngx-translate/core';
 import { T } from 'src/app/t.const';
-import { getDbDateStr, isDBDateStr } from '../../util/get-db-date-str';
-import { formatMonthDay } from '../../util/format-month-day.util';
+import { isDBDateStr } from '../../util/get-db-date-str';
+import {
+  formatTaskDateLabel,
+  TaskDateDisplayOptions,
+} from '../../core/date-time-format/task-date-display';
+import { DateService } from '../../core/date/date.service';
 import { DateTimeFormatService } from '../../core/date-time-format/date-time-format.service';
 
 @Pipe({
@@ -13,10 +17,12 @@ import { DateTimeFormatService } from '../../core/date-time-format/date-time-for
 export class LocalDateStrPipe implements PipeTransform {
   private _dateTimeFormatService = inject(DateTimeFormatService);
   private translateService = inject(TranslateService);
+  private _dateService = inject(DateService);
 
   transform(
     value: string | null | undefined,
-    todayStr: string = getDbDateStr(),
+    todayStr: string = this._dateService.todayStr(),
+    options: TaskDateDisplayOptions = this._dateTimeFormatService.taskDateDisplay(),
   ): string | null {
     if (typeof value !== 'string' || !isDBDateStr(value)) {
       return null;
@@ -29,8 +35,6 @@ export class LocalDateStrPipe implements PipeTransform {
     }
 
     const d = dateStrToUtcDate(value);
-    // Use the configured locale if available, otherwise fall back to default
-    const locale = this._dateTimeFormatService.currentLocale();
-    return formatMonthDay(d, locale);
+    return formatTaskDateLabel(d, todayStr, options);
   }
 }
