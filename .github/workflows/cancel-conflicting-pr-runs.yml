@@ -1,13 +1,13 @@
 name: Cancel CI of conflicting PRs
 
-# A PR only gains a conflict when master moves. Its in-flight runs test a merge
+# A PR only gains a conflict when main moves. Its in-flight runs test a merge
 # commit that can no longer be produced, and resolving the conflict pushes a
 # new commit that re-runs everything, so the old runs are wasted minutes.
 on:
   push:
-    branches: [master]
+    branches: [main]
 
-# A newer master push re-evaluates every open PR, so older sweeps can stop.
+# A newer main push re-evaluates every open PR, so older sweeps can stop.
 concurrency:
   group: cancel-conflicting-pr-runs
   cancel-in-progress: true
@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Cancel runs of PRs that now conflict with master
+      - name: Cancel runs of PRs that now conflict with main
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
@@ -36,7 +36,7 @@ jobs:
             exit 0
           fi
           declare -A done_shas=()
-          # GitHub computes mergeability lazily after master moves; the first
+          # GitHub computes mergeability lazily after main moves; the first
           # query mostly returns UNKNOWN, so poll until it settles.
           for attempt in 1 2 3 4 5 6; do
             prs=$(gh pr list --state open --limit 200 --json number,headRefOid,mergeable |
@@ -50,7 +50,7 @@ jobs:
               for id in $(gh run list --commit "$sha" --event pull_request --limit 100 \
                 --json databaseId,status,workflowName \
                 --jq '.[] | select(.status != "completed" and .workflowName != "iOS TestFlight Build on Label") | .databaseId'); do
-                echo "PR #$pr conflicts with master: cancelling run $id"
+                echo "PR #$pr conflicts with main: cancelling run $id"
                 # A run can finish between listing and cancelling; not fatal.
                 gh run cancel "$id" || echo "::warning::Could not cancel run $id of PR #$pr"
               done

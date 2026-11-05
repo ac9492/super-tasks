@@ -81,7 +81,7 @@ def deliver_options(extra)
   }.merge(extra)
 end
 
-# Both release lanes run on the same `v*` tag push (see the two release
+# Both release lanes run on the same `super-tasks-v*` tag push (see the two release
 # workflows) and can race on App Store Connect's per-app review-submission
 # state. When they collide, the lane that submits second gets "Cannot submit
 # for review - A review submission is already in progress" -- but only AFTER its

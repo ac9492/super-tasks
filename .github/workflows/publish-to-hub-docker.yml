@@ -12,6 +12,7 @@ permissions:
 
 jobs:
   push_to_registry:
+    if: ${{ github.event_name == 'workflow_dispatch' || startsWith(github.event.release.tag_name, 'super-tasks-v') }}
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     timeout-minutes: 30

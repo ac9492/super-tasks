@@ -2,6 +2,7 @@ name: PR Preview Build
 
 on:
   pull_request:
+    branches: [main]
     types: [opened, synchronize, reopened]
     # No app change, nothing to preview.
     paths-ignore:

@@ -3,11 +3,18 @@ const os = require('os');
 const path = require('path');
 const { execFileSync } = require('child_process');
 
+const {
+  TAG_PREFIX,
+  STABLE_TAG_PATTERN,
+  RELEASE_TAG_PATTERN,
+} = require('./release-version');
+const upstreamBase = require('../build/upstream-base.json');
+
 const ROOT_DIR = path.join(__dirname, '..');
 const PLAY_STORE_MAX_CHARS = 500;
 const DEFAULT_CHANGELOG = 'Bug fixes and improvements';
 const DOWNLOADS_NOTE =
-  'For all current downloads, package links, and platform-specific notes: [check the wiki](https://github.com/super-productivity/super-productivity/wiki/2.01-Downloads-and-Install).';
+  'For all current downloads, package links, and platform-specific notes: [check the releases](https://github.com/ac9492/super-tasks/releases).';
 
 const GENERATED_RELEASE_NOTES_DIR = path.join(
   ROOT_DIR,
@@ -23,11 +30,9 @@ const RELEASE_NOTES_BASE_FILE = path.join(ROOT_DIR, 'build', 'release-notes-base
 
 const GITHUB_API_URL = 'https://api.github.com';
 const GITHUB_API_TIMEOUT_MS = 10000;
-const STABLE_TAG_PATTERN = /^v\d+\.\d+\.\d+$/;
 // `npm version` commits carry the bare version as their subject. A base that is
 // the last published release can span several of them, so drop them as noise.
-const VERSION_BUMP_SUBJECT_PATTERN = /^v?\d+\.\d+\.\d+(?:-[\w.]+)?$/;
-const RELEASE_TAG_PATTERN = /^v/;
+const VERSION_BUMP_SUBJECT_PATTERN = /^(?:super-tasks-v|v)?\d+\.\d+\.\d+(?:-[\w.]+)?$/;
 
 const USER_FACING_TYPES = new Set(['feat', 'fix', 'perf']);
 const LOW_SIGNAL_TYPES = new Set([
@@ -117,7 +122,9 @@ const getAndroidVersionInfo = (version) => {
   const versionCodeWithUnderscores = versionCode
     .toString()
     .padStart(10, '0')
-    .replace(/^(\d{2})(\d{2})(\d{2})(\d{4})$/, '$1_$2_$3_$4');
+    .replace(/^(\d{2})(\d{2})(\d{2})(\d{4})$/, '$1_$2_$3_$4')
+    // A leading zero makes Groovy interpret this integer literal as octal.
+    .replace(/^[0_]+/, '');
 
   return {
     baseVersion,
@@ -134,7 +141,7 @@ const getLatestTag = ({ version, stableOnly = false }) =>
     .split('\n')
     .find((tag) => {
       const releaseTag = tag.trim();
-      if (releaseTag === `v${version}`) {
+      if (releaseTag === `${TAG_PREFIX}${version}`) {
         return false;
       }
       return stableOnly
@@ -163,7 +170,7 @@ const pickPublishedBaseTag = ({ releases, version, stableOnly }) =>
   releases
     .find((release) => {
       const tag = release.tag_name?.trim();
-      if (release.draft || !tag || tag === `v${version}`) {
+      if (release.draft || !tag || tag === `${TAG_PREFIX}${version}`) {
         return false;
       }
       return stableOnly
@@ -212,14 +219,14 @@ const resolveReleaseBaseTag = async ({
     console.warn(
       publishedTag
         ? `Release notes base: ${publishedTag} (last published release)`
-        : 'Release notes base: none - nothing published yet, using the last 20 commits',
+        : 'Release notes base: none - nothing published yet; generation will use the recorded upstream base',
     );
     return publishedTag;
   } catch (err) {
     const fallbackTag = getFallbackTag({ version, stableOnly });
     console.warn(
       `Could not resolve the last published release (${err.message}) - basing the notes on ` +
-        `${fallbackTag || 'the last 20 commits'} instead. A tag whose release never shipped ` +
+        `${fallbackTag || 'the recorded upstream base'} instead. A tag whose release never shipped ` +
         'shortens the notes, so review them before pushing.',
     );
     return fallbackTag;
@@ -618,10 +625,11 @@ const getLegacyFastlaneChangelogFile = (versionCode) =>
   );
 
 const generateReleaseNotes = async ({ version, versionCode, isPreRelease }) => {
-  const baseTag = await resolveReleaseBaseTag({
-    version,
-    stableOnly: !isPreRelease,
-  });
+  const baseTag =
+    (await resolveReleaseBaseTag({
+      version,
+      stableOnly: !isPreRelease,
+    })) || upstreamBase.commit;
   const commits = uniqueByDescription(
     getCommitSubjectsSinceBaseTag(baseTag)
       .filter((subject) => !isVersionBumpSubject(subject))
@@ -641,6 +649,8 @@ const generateReleaseNotes = async ({ version, versionCode, isPreRelease }) => {
     playStoreText: deterministicPlayStoreText,
   });
   const githubReleaseNotes = `${DOWNLOADS_NOTE}
+
+Upstream base: [Super Productivity ${upstreamBase.commit.slice(0, 8)}](${upstreamBase.repository}/commit/${upstreamBase.commit}).
 
 ${aiReleaseNotes?.githubMarkdown || deterministicGithubMarkdown}
 `;
@@ -714,6 +724,7 @@ module.exports = {
   preparePlayStoreReleaseNotes,
   resolveReleaseBaseTag,
   __test: {
+    getLatestTag,
     getUserFacingCommits,
     isVersionBumpSubject,
     toCommitRangeArgs,

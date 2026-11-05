@@ -12,7 +12,7 @@ jobs:
   upload-to-app-super-productivity:
     runs-on: ubuntu-latest
     timeout-minutes: 45
-    if: '!github.event.release.prerelease'
+    if: ${{ github.event_name == 'workflow_dispatch' || (startsWith(github.event.release.tag_name, 'super-tasks-v') && !github.event.release.prerelease) }}
     env:
       UNSPLASH_KEY: ${{ secrets.UNSPLASH_KEY }}
       UNSPLASH_CLIENT_ID: ${{ secrets.UNSPLASH_CLIENT_ID }}

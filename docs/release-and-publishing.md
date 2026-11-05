@@ -2,18 +2,75 @@
 
 > **Status:** Maintained
 >
-> **Last verified against workflows:** 2026-09-12
+> **Last verified against workflows:** 2026-11-04
 
 The GitHub Actions workflows are the executable source of truth. Update this
 runbook in the same change whenever their triggers, channels, artifacts, or secret
 names change.
 
+## Fork branches and upstream updates
+
+`main` is the canonical Super Tasks development branch. Before stable `1.0.0`,
+work lands directly on it; afterward, PRs target `ac9492/super-tasks:main`.
+Use `gh pr create --repo ac9492/super-tasks --base main` when opening a fork PR.
+The affected-spec runner and sync-fuzz comparison default to `origin/main`.
+
+Keep the GitHub fork relationship and the `upstream` remote. Track only
+`upstream/master` and disable automatic upstream tag fetching to keep the local
+branch list focused; existing historical tags remain available. Fetching upstream
+does not change Super Tasks files. To inspect future updates, run
+`git fetch upstream` and `git log --oneline main..upstream/master`. Incorporate
+them in a separate, tested change by merge, rebase or selected cherry-picks.
+Rebasing a published `main` rewrites its history and requires coordinating with
+other checkouts before updating the remote branch.
+
+Completed or superseded topic branches can be retired after their work has been
+checked against `main`. Preserve their tips in a recovery bundle or archive refs
+when the original commits were squashed or rebased. GitHub automatically deletes
+head branches after future PRs merge. Inherited store-publishing workflows still
+target their original release infrastructure; changing the development branch
+does not migrate app identities, signing, or distribution destinations.
+
+## Super Tasks version policy
+
+Super Tasks has its own product version, starting at `0.1.0`. Use `0.x` while
+the fork's core experience is taking shape, then `1.0.0` for the first dependable
+stable experience. Testing releases use suffixes such as `0.1.0-alpha.1`,
+`0.1.0-beta.1`, and `0.1.0-rc.1`.
+
+After `1.0.0`, patches contain fixes and small visual refinements; minor releases
+add compatible capabilities or workflow improvements; major releases deliberately
+break supported contracts or substantially change established workflows. Plugin
+interfaces, imports, shortcuts and automation interfaces must be considered when
+assessing compatibility. Product versions do not automatically change persisted
+schemas, sync protocols or independently versioned package APIs.
+
+The repository's `.npmrc` makes `npm version` create `super-tasks-vX.Y.Z` tags.
+Inherited upstream `v*` tags remain historical references and released-client
+test fixtures; they are excluded from fork release selection and TestFlight
+version calculation. Incorporating upstream changes does not dictate the next
+Super Tasks version: choose it from the resulting user-visible changes.
+
+[`build/upstream-base.json`](../build/upstream-base.json) records the upstream
+repository and incorporated commit separately. Update it when incorporating a
+new upstream base; selective cherry-picks should also be identified in release
+notes rather than implying that an entire newer upstream release was merged.
+The release-note generator includes this provenance and uses the recorded commit
+as the first release's comparison base when there is no earlier fork release.
+
+Before distributing the fork, migrate the inherited app/store identifiers,
+desktop data location, update feeds and publishing destinations to Super Tasks.
+This version change does not perform that identity migration. In particular,
+the reset Android version code belongs to a new application identity; it cannot
+upgrade the existing Super Productivity store package. Keep the apps' data
+separate and provide an explicit import path.
+
 ## Release boundaries
 
 Releasing has two distinct boundaries:
 
-1. **Push a `v*` tag:** builds artifacts and creates a draft GitHub release. A
-   final tag (`vX.Y.Z`, with no `-`) also uploads and submits the iOS and Mac App
+1. **Push a `super-tasks-v*` tag:** builds artifacts and creates a draft GitHub release. A
+   final tag (`super-tasks-vX.Y.Z`, with no prerelease suffix) also uploads and submits the iOS and Mac App
    Store builds for review with automatic release after Apple approval. Treat a
    final tag as production-affecting even while the GitHub release remains a draft.
 2. **Publish the GitHub release:** triggers the release-event workflows that
@@ -32,13 +89,16 @@ npm version patch
 ```
 
 Use `minor`, `major`, or an explicit pre-release version when appropriate.
+For the initial release, after committing the fork setup, use
+`npm version 0.1.0 --allow-same-version`. For testing releases, use an explicit
+version such as `npm version 0.2.0-beta.1`.
 The `version` lifecycle updates the Android version, generates
 `build/release-notes.md`, writes the versioned Google Play changelog, stages the
 changes, and creates the npm version commit and tag.
 
 ### The release-notes base
 
-Notes span from the **last published GitHub release** to `HEAD`, not from the
+Notes span from the **last published Super Tasks GitHub release** to `HEAD`, not from the
 newest tag: a version whose draft release was abandoned, deleted, or left
 unpublished still leaves its tag behind, and basing the notes on that tag drops
 everything the unpublished versions contained. A final version bases on the last
@@ -78,18 +138,18 @@ the placeholder with the tag created by `npm version`; do not use
 `--follow-tags`, which can include other reachable annotated tags.
 
 ```bash
-git push --atomic origin HEAD "vX.Y.Z"
+git push --atomic origin HEAD "super-tasks-vX.Y.Z"
 ```
 
 ## What the tag triggers
 
-| Output                                                      | Workflow                                                      | Final tag                                       | Tag containing `-` |
-| ----------------------------------------------------------- | ------------------------------------------------------------- | ----------------------------------------------- | ------------------ |
-| Draft GitHub release and Linux/macOS/Windows desktop assets | `.github/workflows/build.yml`                                 | Build                                           | Build              |
-| Android APK and GitHub release asset                        | `.github/workflows/build-android.yml`                         | Upload to Play `internal` and attach APK        | Build/attach only  |
-| iOS App Store                                               | `.github/workflows/build-ios.yml`                             | Upload and submit for review                    | Upload only        |
-| Mac App Store                                               | `.github/workflows/build-publish-to-mac-store-on-release.yml` | Upload and submit for review                    | Upload only        |
-| Microsoft Store `.appx`                                     | `.github/workflows/build-create-windows-store-on-release.yml` | Build artifact for manual Partner Center upload | Build artifact     |
+| Output                                                      | Workflow                                                      | Final tag                                       | Tag with prerelease suffix |
+| ----------------------------------------------------------- | ------------------------------------------------------------- | ----------------------------------------------- | -------------------------- |
+| Draft GitHub release and Linux/macOS/Windows desktop assets | `.github/workflows/build.yml`                                 | Build                                           | Build                      |
+| Android APK and GitHub release asset                        | `.github/workflows/build-android.yml`                         | Upload to Play `internal` and attach APK        | Build/attach only          |
+| iOS App Store                                               | `.github/workflows/build-ios.yml`                             | Upload and submit for review                    | Upload only                |
+| Mac App Store                                               | `.github/workflows/build-publish-to-mac-store-on-release.yml` | Upload and submit for review                    | Upload only                |
+| Microsoft Store `.appx`                                     | `.github/workflows/build-create-windows-store-on-release.yml` | Build artifact for manual Partner Center upload | Build artifact             |
 
 Apple's detailed submission behavior, API-key requirements, and recovery cases
 are in [Apple release automation](apple-release-automation.md).
@@ -100,9 +160,9 @@ protected publisher then signs and uploads it to the public TestFlight group
 (`build-ios-testflight.yml` → `publish-ios-testflight.yml`). See
 [Apple release automation](apple-release-automation.md#public-testflight-builds-label-triggered).
 
-The desktop workflow's draft/prerelease flag detection does not use exactly the
-same rule as the Apple workflows. Before publishing a pre-release, explicitly
-confirm that GitHub marks the draft as a pre-release.
+Desktop, Android and Apple workflows classify the version suffix using
+`tools/release-version.js`, so hyphens in the product's tag prefix do not make
+a stable release a prerelease. The tag version must match `package.json`.
 
 ## Verify before publishing the draft
 
@@ -191,7 +251,7 @@ A warning is not a safety net, though, so the outcome is asserted where it can b
 checked: `build-android.yml` verifies on the packaged APK that no
 `assets/public/` service-worker entry survived. That covers build, `cap sync`,
 strip and package together rather than any single step. It never runs on a pull
-request — push (`master`, `release/*`, `test/git-actions`, `v*` tags) and
+request — push (`master`, `release/*`, `test/git-actions`, `super-tasks-v*` tags) and
 `workflow_dispatch` only — so it gates the publish rather than the merge. No PR
 workflow could host it: `android-tests.yml` does assemble an APK, but it
 substitutes a stand-in smoke page for the Angular bundle, so the assertion would
@@ -272,6 +332,6 @@ for development-only labels, secrets, and personal data before upload.
   is authorized for the organization. If those checks do not explain a rejection,
   report the run URL and submission timestamp to SignPath support so they can
   inspect the server-side request record.
-- Windows signing runs only on a `v*` tag, so a signing fix can only be
+- Windows signing runs only on a `super-tasks-v*` tag, so a signing fix can only be
   exercised by re-running `windows-bin` or by pushing a pre-release tag. Never
   move a released tag to retest.

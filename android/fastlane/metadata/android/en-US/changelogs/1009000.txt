@@ -1,0 +1,10 @@
+- add optional glass appearance and top search
+- introduce glass workspace and task editing shortcuts
+- restore relative-date colors in Super Tasks
+- add weekday labels and task date styles
+- brand the combined fork as Super Tasks
+- show subtask completion counts in every visibility mode #10501
+- split inline task creation from #10501
+- bulk move selected tasks between project sections
+- add inline project section insertion (#10502)
+- align Today sidebar and desktop badge counts

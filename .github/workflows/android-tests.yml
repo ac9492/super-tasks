@@ -4,7 +4,7 @@ name: Android Native Tests
 # expensive setup and tests are skipped when no Android-affecting files changed.
 on:
   pull_request:
-    branches: [master, main]
+    branches: [main]
   workflow_dispatch:
 
 permissions:

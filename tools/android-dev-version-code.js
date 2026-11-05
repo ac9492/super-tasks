@@ -25,6 +25,7 @@
 // isolated in computeDevVersionCode() and unit-tested (irreversible Play codes
 // warrant a test); the git/IO glue in main() is thin.
 
+const { TAG_PREFIX, STABLE_TAG_PATTERN } = require('./release-version');
 const fs = require('fs');
 const { execFileSync } = require('child_process');
 const { getAndroidVersionInfo } = require('./release-notes');
@@ -63,7 +64,7 @@ const lastStableTag = () =>
   })
     .split('\n')
     .map((t) => t.trim())
-    .find((t) => /^v\d+\.\d+\.\d+$/.test(t));
+    .find((t) => STABLE_TAG_PATTERN.test(t));
 
 const countCommitsSince = (tag) =>
   Number(
@@ -87,10 +88,12 @@ const main = () => {
   try {
     const tag = lastStableTag();
     if (!tag) {
-      console.log('::warning::no stable v* tag reachable from HEAD; skipping dev build');
+      console.log(
+        '::warning::no stable super-tasks-v* tag reachable from HEAD; skipping dev build',
+      );
       return setOutput({ skip: true });
     }
-    const { versionCode: baseCode } = getAndroidVersionInfo(tag.replace(/^v/, ''));
+    const { versionCode: baseCode } = getAndroidVersionInfo(tag.slice(TAG_PREFIX.length));
     const commits = countCommitsSince(tag);
     const result = computeDevVersionCode({ baseCode, commits });
     if (result.skip) {

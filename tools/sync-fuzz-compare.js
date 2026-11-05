@@ -3,7 +3,7 @@
 // Compares the sync fuzz signature report of the working tree with a base ref
 // and fails on any seed that newly shows a failure signature.
 //
-//   npm run sync-fuzz:compare              # against origin/master
+//   npm run sync-fuzz:compare              # against origin/main
 //   npm run sync-fuzz:compare -- <ref>
 //
 // The pinned traces and the random sweep only report signatures no pin
@@ -174,7 +174,7 @@ const runReport = (cwd, label) => {
 };
 
 const main = () => {
-  const baseRef = process.argv[2] ?? 'origin/master';
+  const baseRef = process.argv[2] ?? 'origin/main';
   const root = git(process.cwd(), ['rev-parse', '--show-toplevel']);
   const baseSha = git(root, ['rev-parse', '--short', baseRef]);
   const baseLabel = `${baseRef} (${baseSha})`;

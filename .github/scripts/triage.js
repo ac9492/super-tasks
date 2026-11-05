@@ -68,7 +68,8 @@ const strings = (value) =>
   Array.isArray(value) ? value.filter((entry) => typeof entry === 'string') : [];
 
 const parseVersion = (value) => {
-  const match = typeof value === 'string' && value.match(/^v?(\d+)\.(\d+)\.(\d+)/);
+  const match =
+    typeof value === 'string' && value.match(/^(?:super-tasks-v|v)?(\d+)\.(\d+)\.(\d+)/);
   if (!match) return null;
   const [, major, minor, patch] = match;
   return { major: +major, minor: +minor, text: `${major}.${minor}.${patch}` };

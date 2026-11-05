@@ -2,7 +2,7 @@ name: Mac Store Release on Release
 on:
   push:
     tags:
-      - v*
+      - super-tasks-v*
   workflow_dispatch:
     inputs:
       build_only:
@@ -43,6 +43,11 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
         with:
           persist-credentials: false
+      - name: Classify fork release tag
+        id: release-version
+        shell: bash
+        run: node tools/release-version.js >> "$GITHUB_OUTPUT"
+
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v6
         with:
           node-version-file: .nvmrc
@@ -216,16 +221,15 @@ jobs:
 
       # Upload the MAS .pkg to App Store Connect and (for final release tags)
       # submit it for review with automatic release on approval. Pre-release
-      # tags (any tag containing "-", e.g. -rc.0/-beta.1) and manual runs only
-      # upload the build. The "-" check is case-insensitive by construction,
-      # unlike contains(...,'RC'); the repo's RC tags are mostly lowercase.
+      # tags (any version containing "-", e.g. -rc.0/-beta.1) and manual runs only
+      # upload the build. Classification ignores hyphens in the product prefix.
       - name: Upload to App Store Connect and submit for review
         if: ${{ !inputs.build_only }}
         env:
           ASC_KEY_ID: ${{ secrets.mac_api_key_id }}
           ASC_ISSUER_ID: ${{ secrets.mac_api_key_issuer_id }}
           ASC_KEY_CONTENT: ${{ secrets.mac_api_key }}
-          SUBMIT_FOR_REVIEW: ${{ startsWith(github.ref, 'refs/tags/v') && !contains(github.ref, '-') }}
+          SUBMIT_FOR_REVIEW: ${{ steps.release-version.outputs.stable == 'true' }}
         run: |
           set -euo pipefail
           shopt -s nullglob

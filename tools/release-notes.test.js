@@ -195,27 +195,44 @@ const silenceWarnings = async (run) => {
 };
 
 const releases = [
-  { tag_name: 'v19.0.0', draft: true, prerelease: false }, // tagged, never published
-  { tag_name: 'v18.22.1', draft: false, prerelease: true }, // stable-shaped tag, flagged
-  { tag_name: 'v18.22.0-RC.1', draft: false, prerelease: false }, // pre-release tag, unflagged
-  { tag_name: 'v18.21.1', draft: false, prerelease: false },
+  { tag_name: 'v99.0.0', draft: false, prerelease: false }, // inherited upstream release
+  { tag_name: 'super-tasks-v19.0.0', draft: true, prerelease: false }, // tagged, never published
+  { tag_name: 'super-tasks-v18.22.1', draft: false, prerelease: true }, // stable-shaped tag, flagged
+  { tag_name: 'super-tasks-v18.22.0-RC.1', draft: false, prerelease: false }, // pre-release tag, unflagged
+  { tag_name: 'super-tasks-v18.21.1', draft: false, prerelease: false },
 ];
+
+test('calculates the fork initial Android version code', () => {
+  assert.equal(getAndroidVersionInfo('0.1.0').versionCode, 1009000);
+  assert.equal(getAndroidVersionInfo('0.1.0').versionCodeWithUnderscores, '1_00_9000');
+});
+
+test('upstream releases cannot become the fork release-note base', () => {
+  assert.equal(
+    __test.pickPublishedBaseTag({
+      releases: [{ tag_name: 'v19.1.0', draft: false, prerelease: false }],
+      version: '0.1.0',
+      stableOnly: true,
+    }),
+    undefined,
+  );
+});
 
 test('bases the notes on the last published release, not the newest tag', () => {
   // The tags of the unpublished 18.22.0 and 19.0.0 drafts must not win.
   assert.equal(
     __test.pickPublishedBaseTag({ releases, version: '19.0.1', stableOnly: true }),
-    'v18.21.1',
+    'super-tasks-v18.21.1',
   );
   // A pre-release may base on a published pre-release.
   assert.equal(
     __test.pickPublishedBaseTag({ releases, version: '19.0.0-RC.1', stableOnly: false }),
-    'v18.22.1',
+    'super-tasks-v18.22.1',
   );
   // Nothing published yet, or only the version being released.
   assert.equal(
     __test.pickPublishedBaseTag({
-      releases: [{ tag_name: 'v18.21.1', draft: false, prerelease: false }],
+      releases: [{ tag_name: 'super-tasks-v18.21.1', draft: false, prerelease: false }],
       version: '18.21.1',
       stableOnly: true,
     }),
@@ -229,36 +246,44 @@ test('falls back to the newest tag when published releases are unreadable', asyn
       resolveReleaseBaseTag({
         version: '19.0.1',
         stableOnly: true,
-        env: { GITHUB_REPOSITORY: 'super-productivity/super-productivity' },
+        env: { GITHUB_REPOSITORY: 'ac9492/super-tasks' },
         fetchImpl,
-        getFallbackTag: () => 'v19.0.0',
+        getFallbackTag: () => 'super-tasks-v19.0.0',
       }),
     );
 
   assert.equal(
     await resolve(async () => ({ ok: true, json: async () => releases })),
-    'v18.21.1',
+    'super-tasks-v18.21.1',
   );
   assert.equal(
     await resolve(async () => {
       throw new Error('network down');
     }),
-    'v19.0.0',
+    'super-tasks-v19.0.0',
   );
-  assert.equal(await resolve(async () => ({ ok: false, status: 403 })), 'v19.0.0');
+  assert.equal(
+    await resolve(async () => ({ ok: false, status: 403 })),
+    'super-tasks-v19.0.0',
+  );
 });
 
 test('reads commits with a two-dot range so a divergent base still works', () => {
   // Three dots would add the commits only the base side has.
-  assert.deepEqual(__test.toCommitRangeArgs('v18.21.1'), ['v18.21.1..HEAD']);
+  assert.deepEqual(__test.toCommitRangeArgs('super-tasks-v18.21.1'), [
+    'super-tasks-v18.21.1..HEAD',
+  ]);
   assert.deepEqual(__test.toCommitRangeArgs(undefined), ['-20']);
 });
 
 test('treats npm version commits as noise, not release notes', () => {
   assert.deepEqual(
-    ['19.0.1', 'v18.22.0', '19.1.0-RC.2', 'fix(sync): keep section order'].map(
-      __test.isVersionBumpSubject,
-    ),
+    [
+      '19.0.1',
+      'super-tasks-v18.22.0',
+      '19.1.0-RC.2',
+      'fix(sync): keep section order',
+    ].map(__test.isVersionBumpSubject),
     [true, true, true, false],
   );
 });

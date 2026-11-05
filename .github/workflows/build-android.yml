@@ -3,7 +3,7 @@ on:
   push:
     branches: [master, release/*, test/git-actions]
     tags:
-      - v*
+      - super-tasks-v*
   workflow_dispatch:
     inputs: {}
 
@@ -11,7 +11,7 @@ permissions:
   contents: write
 
 # Per-ref so rapid non-tag master pushes supersede each other (newest dev build
-# wins). Groups are keyed by ref, so a master push can never cancel a `v*` tag
+# wins). Groups are keyed by ref, so a master push can never cancel a `super-tasks-v*` tag
 # release build (different ref = different group).
 concurrency:
   group: build-android-${{ github.ref }}
@@ -31,6 +31,11 @@ jobs:
           # per-push dev versionCode from the last stable tag.
           fetch-depth: 0
           filter: blob:none
+      - name: Classify fork release tag
+        id: release-version
+        shell: bash
+        run: node tools/release-version.js >> "$GITHUB_OUTPUT"
+
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v6
         with:
           node-version-file: .nvmrc
@@ -240,7 +245,7 @@ jobs:
           status: completed
 
       - name: Wait for main release to be created
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: startsWith(github.ref, 'refs/tags/super-tasks-v')
         run: |
           echo "Waiting for main release to be created..."
           for i in {1..40}; do
@@ -261,7 +266,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload APK to existing GitHub Release
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: startsWith(github.ref, 'refs/tags/super-tasks-v')
         run: |
           set -euo pipefail
           shopt -s nullglob
@@ -286,11 +291,11 @@ jobs:
           REPO: ${{ github.repository }}
 
       - name: Prepare Google Play release notes
-        if: startsWith(github.ref, 'refs/tags/v') && !contains(github.ref, '-')
+        if: steps.release-version.outputs.stable == 'true'
         run: npm run release-notes:prepare-play-store
 
       - name: Upload to Google Play Console
-        if: startsWith(github.ref, 'refs/tags/v') && !contains(github.ref, '-')
+        if: steps.release-version.outputs.stable == 'true'
         uses: r0adkll/upload-google-play@e738b9dd8f2476ea806d921b64aacd24f34515a5 # v1.1.5
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}

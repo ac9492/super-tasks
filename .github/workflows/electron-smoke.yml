@@ -33,7 +33,7 @@ on:
       - '.github/workflows/electron-smoke.yml'
   push:
     branches: [master]
-    tags: ['v*']
+    tags: ['super-tasks-v*']
   workflow_dispatch:
 
 permissions:

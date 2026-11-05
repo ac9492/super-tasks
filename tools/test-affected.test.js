@@ -207,6 +207,26 @@ test('CLI handles deleted global resources and specs', () => {
       '-m',
       'fixture',
     );
+    // The fork uses main even when the host's git init defaults to master.
+    git('branch', '-M', 'main');
+    git('update-ref', 'refs/remotes/origin/main', 'HEAD');
+
+    const defaultBase = spawnSync(
+      process.execPath,
+      ['tools/test-affected.js', '--list'],
+      {
+        cwd: directory,
+        encoding: 'utf8',
+        env: {
+          ...env,
+          NODE_PATH: path.dirname(
+            path.dirname(require.resolve('typescript/package.json')),
+          ),
+        },
+      },
+    );
+    assert.equal(defaultBase.status, 0, defaultBase.stderr);
+    assert.match(defaultBase.stdout, /0 affected spec files/);
 
     for (const file of [
       'src/styles.scss',

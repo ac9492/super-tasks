@@ -1,5 +1,6 @@
 'use strict';
 
+const { TAG_PREFIX, STABLE_TAG_PATTERN } = require('./release-version');
 const fs = require('node:fs');
 const { execFileSync } = require('node:child_process');
 
@@ -12,8 +13,9 @@ const parsePackageVersion = (value) => {
 };
 
 const parseStableTag = (tag) => {
-  const match = /^v(\d+)\.(\d+)\.(\d+)$/.exec(tag);
-  return match ? match.slice(1).map(Number) : null;
+  return STABLE_TAG_PATTERN.test(tag)
+    ? tag.slice(TAG_PREFIX.length).split('.').map(Number)
+    : null;
 };
 
 const compareVersions = (a, b) => {
@@ -49,7 +51,7 @@ const main = () => {
   if (mergedRef) {
     tagArgs.push('--merged', mergedRef);
   }
-  tagArgs.push('--list', 'v*');
+  tagArgs.push('--list', `${TAG_PREFIX}*`);
   const tags = execFileSync('git', tagArgs, { encoding: 'utf8' })
     .split('\n')
     .filter(Boolean);

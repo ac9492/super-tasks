@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Runs only the Angular specs that (transitively) import a file changed since
- * the merge base with master — a fast local pre-check, NOT a replacement for
+ * the merge base with main — a fast local pre-check, NOT a replacement for
  * `npm test`: CI still runs everything.
  *
  * Usage: npm run test:affected [-- --base <ref>] [-- --list]
@@ -171,14 +171,14 @@ const parseArgs = (argv) => {
 // ref after branching don't count as changes.
 const resolveBase = (ref) => {
   if (ref) return git('merge-base', 'HEAD', ref)[0];
-  for (const ref of ['origin/master', 'master']) {
+  for (const ref of ['origin/main', 'main']) {
     try {
       return git('merge-base', 'HEAD', ref)[0];
     } catch {
       // ref missing in this clone; try the next one
     }
   }
-  throw new Error('No master ref found; pass --base <ref>');
+  throw new Error('No main ref found; pass --base <ref>');
 };
 
 const runNg = (tz, specs) => {
