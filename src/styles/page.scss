@@ -244,26 +244,20 @@ body {
 }
 
 .task-list-wrapper {
-  padding: 0 var(--s) var(--s7);
+  // The task column is anchored at the page gutter, the one left edge shared by
+  // the header title, the summary line, section headers, cards, the add row and
+  // Finish Day. It is not centred: opening a side panel then never moves the
+  // list, and the title above it stays on the same x on every page.
+  padding: 0 var(--page-gutter) var(--s7);
   // for a little bit of extra space for 800 width
   max-width: calc(var(--component-max-width) - 40px);
-  margin: auto;
-
-  @include media-queries.mq(xxs) {
-    padding: 0 var(--s) var(--s7);
-  }
-
-  @include media-queries.mq(xs) {
-    padding: 0 calc(var(--s) * 1.5) var(--s7);
-  }
+  margin: 0;
 
   @include media-queries.mq(sm) {
-    padding: 0 var(--s3) var(--s7);
     max-width: var(--component-max-width);
   }
 
   @include media-queries.mq(lg) {
-    padding: 0 var(--s3) var(--s7);
     max-width: calc(var(--component-max-width) + 100px);
   }
 

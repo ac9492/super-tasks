@@ -120,6 +120,10 @@
   --mat-dialog-actions-padding: var(--s) var(--dialog-gutter) var(--dialog-gutter);
   --mat-dialog-container-small-max-width: 94vw;
   --mat-dialog-container-max-width: 85vw;
+  // A dialog without a size class (dialogSize()) is at least S wide, never wider
+  // than the viewport minus its gutters.
+  --mat-dialog-container-min-width: min(var(--dialog-w-s), calc(100vw - 2 * var(--s2)));
+  --dialog-w-window: 1040px; // Settings and Plugins windows
 
   --calendar-hover-bg: color-mix(in srgb, var(--c-primary) 35%, transparent);
 }
@@ -278,12 +282,29 @@ body.isNativeMobile .mat-mdc-menu-panel {
   margin: 0;
   display: flex;
   align-items: center;
+  gap: var(--s);
 
   // MDC's 40px baseline strut: the title box is the headline padding plus one
   // 24px line.
   &::before {
     display: none;
   }
+
+  // A leading icon names the object type (repeat, sync); it is a control-size
+  // icon, never larger than the title line.
+  > mat-icon:first-child,
+  > .dialog-header-icon {
+    flex: none;
+    margin: 0;
+    font-size: var(--icon-md);
+    width: var(--icon-md);
+    height: var(--icon-md);
+  }
+}
+
+// A dialog with a help button (help-section) keeps its title clear of it.
+.mat-mdc-dialog-surface:has(help-section) .mat-mdc-dialog-title {
+  padding-inline-end: calc(var(--dialog-gutter) + var(--ctl-md));
 }
 
 // Buttons in an action row are spaced by the row's gap (also when they wrap,
@@ -299,6 +320,13 @@ body.isNativeMobile .mat-mdc-menu-panel {
   margin-inline: 0;
 }
 
+// A secondary or destructive action (Delete, Remove, Unschedule) sits at the
+// start edge, apart from Cancel and the primary action, which stay together at
+// the end. Keep the primary action last in the DOM (e2e DIALOG_SUBMIT).
+.mat-mdc-dialog-actions .dialog-action-start {
+  margin-inline-end: auto;
+}
+
 // Dialog widths: dialogSize() in src/app/ui/dialog-size.util.ts sets the
 // class; the pane's max-width keeps every size inside the viewport.
 .cdk-overlay-pane.mat-mdc-dialog-panel {
@@ -312,6 +340,11 @@ body.isNativeMobile .mat-mdc-menu-panel {
 
   &.dialog-l {
     width: var(--dialog-w-l);
+  }
+
+  &.dialog-window {
+    width: var(--dialog-w-window);
+    max-width: 96vw;
   }
 }
 
@@ -347,24 +380,6 @@ body .mat-mdc-dialog-surface {
   // Enable flex layout for proper content scrolling
   display: flex;
   flex-direction: column;
-}
-
-.mat-mdc-dialog-panel {
-  @include media-queries.mq(xs) {
-    //--mat-dialog-container-min-width: 350px;
-  }
-}
-
-.mat-mdc-dialog-title {
-  vertical-align: middle;
-
-  > * {
-    vertical-align: middle;
-  }
-
-  > mat-icon:first-child {
-    margin-right: 8px;
-  }
 }
 
 .big {
