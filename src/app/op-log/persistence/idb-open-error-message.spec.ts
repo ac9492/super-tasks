@@ -154,7 +154,7 @@ describe('buildIdbOpenErrorMessage', () => {
 
       expect(msg).toBe(
         'Database Error - Cannot Load Data\n\n' +
-          'Super Productivity cannot open its database. This may be caused by:\n\n' +
+          'Ultra Tasks cannot open its database. This may be caused by:\n\n' +
           '- Low disk space\n' +
           '- Temporary file lock (try closing other tabs)\n' +
           '- Storage corruption\n\n' +

@@ -3,7 +3,7 @@
     "B_INSTALL": {
       "IGNORE": "Ignore",
       "INSTALL": "Install",
-      "MSG": "Do you want to install Super Productivity as a PWA (Progressive Web App)?"
+      "MSG": "Do you want to install Ultra Tasks as a PWA (Progressive Web App)?"
     },
     "B_OFFLINE": "You are disconnected from the internet. Syncing and requesting issue provider data will not work.",
     "B_SUPER_SYNC_ENCRYPTION": {
@@ -19,12 +19,12 @@
     },
     "B_SYNC_SAFETY": {
       "DISMISS": "Not now",
-      "MSG": "You've been using Super Productivity for a while. Set up sync to back up your data and keep it safe across devices.",
+      "MSG": "You've been using Ultra Tasks for a while. Set up sync to back up your data and keep it safe across devices.",
       "SETUP": "Set up sync"
     },
     "B_UPDATE_AVAILABLE": {
       "DOWNLOAD": "Download",
-      "MSG": "A new version of Super Productivity is available ({{version}})."
+      "MSG": "A new version of Ultra Tasks is available ({{version}})."
     },
     "CONTEXT_MENU": {
       "CHANGE_PROJECT_SETTINGS": "Change Project Settings",
@@ -53,7 +53,7 @@
   },
   "CONFIRM": {
     "DELETE_SECTION": "Are you sure you want to delete this section? Tasks in it will be moved to the task list.",
-    "RELOAD_AFTER_IDB_ERROR": "Database Error - App Will Restart\n\nSuper Productivity cannot save data! This is usually caused by:\n• Low disk space (most common)\n• App update in background\n• Linux Snap users: run 'snap set core experimental.refresh-app-awareness=true'\n\nYour recent changes may not have been saved. Please free up disk space if low. The app will restart after you close this dialog.",
+    "RELOAD_AFTER_IDB_ERROR": "Database Error - App Will Restart\n\nUltra Tasks cannot save data! This is usually caused by:\n• Low disk space (most common)\n• App update in background\n• Linux Snap users: run 'snap set core experimental.refresh-app-awareness=true'\n\nYour recent changes may not have been saved. Please free up disk space if low. The app will restart after you close this dialog.",
     "RESTORE_FILE_BACKUP": "There seems to be NO DATA, but there are backups available at \"{{dir}}\". Do you want to restore the latest backup from {{from}}?",
     "RESTORE_FILE_BACKUP_ANDROID": "There seems to be NO DATA, but there is a backup available. Do you want to load it?",
     "RESTORE_FILE_BACKUP_MOBILE": "No data was found on this device, but a backup is available to restore (tasks: {{tasks}}, projects: {{projects}}). Restore it?",
@@ -91,7 +91,7 @@
   },
   "DONATE_PAGE": {
     "BUTTON_TEXT": "Donate via GitHub Sponsors",
-    "INTRO_1": "Super Productivity is funded entirely by the community. There is no tracking, no ads, and no data collection — your tasks stay on your device.",
+    "INTRO_1": "Ultra Tasks is funded entirely by the community. There is no tracking, no ads, and no data collection — your tasks stay on your device.",
     "INTRO_2": "If you value this approach and want to keep the project healthy and evolving, a voluntary donation is greatly appreciated."
   },
   "EXAMPLE_TASKS": {
@@ -104,7 +104,7 @@
     "IOS_SHARE": {
       "SAVE": "Save",
       "DESTINATION": "Inbox",
-      "NEXT_OPEN": "Added when you next open Super Productivity",
+      "NEXT_OPEN": "Added when you next open Ultra Tasks",
       "SAVE_ERROR": "Could not save. Please try again.",
       "IMPORT_ERROR": "Could not import shared content. It has been kept on this device; reopen the app to retry.",
       "INVALID": "Share a link or text (up to 100,000 characters)."
@@ -214,9 +214,9 @@
         "POLL_INTERVAL_MINUTES": "Poll interval (minutes)",
         "TWO_WAY_SYNC_BOTH": "Both (bidirectional)",
         "TWO_WAY_SYNC_CREATE_ON_SERVER": "Create a CalDAV task for each new task in the default project",
-        "TWO_WAY_SYNC_CREATE_ON_SERVER_DESCRIPTION": "Needs a \"Default Super Productivity Project\" (Advanced Config). Only top-level tasks you add there; subtasks, repeating tasks and tasks added from an issue stay local. If a category filter is set, the new CalDAV task gets that category.",
+        "TWO_WAY_SYNC_CREATE_ON_SERVER_DESCRIPTION": "Needs a \"Default Ultra Tasks Project\" (Advanced Config). Only top-level tasks you add there; subtasks, repeating tasks and tasks added from an issue stay local. If a category filter is set, the new CalDAV task gets that category.",
         "TWO_WAY_SYNC_DELETE_ON_SERVER": "Delete the CalDAV task when the linked task is deleted",
-        "TWO_WAY_SYNC_DELETE_ON_SERVER_DESCRIPTION": "Only tasks deleted in Super Productivity. A single task is deleted on the server once its undo period has passed; several selected tasks right after you confirm.",
+        "TWO_WAY_SYNC_DELETE_ON_SERVER_DESCRIPTION": "Only tasks deleted in Ultra Tasks. A single task is deleted on the server once its undo period has passed; several selected tasks right after you confirm.",
         "TWO_WAY_SYNC_NOTES": "Notes / Description sync direction",
         "TWO_WAY_SYNC_OFF": "Off",
         "TWO_WAY_SYNC_PULL_ONLY": "Pull only (read from CalDAV)",
@@ -226,7 +226,7 @@
         "TWO_WAY_SYNC_TITLE": "Title sync direction"
       },
       "FORM_SECTION": {
-        "HELP": "<p>Here you can configure Super Productivity to list uncompleted CalDAV tasks for a specific project in the task creation panel in the daily planning view. They will be listed as suggestions and will provide a link to the task as well as more information about it.</p><p>In addition, you can automatically add and sync all uncompleted tasks to your task backlog.</p><p>To make it work for Nextcloud in the webapp, you may need to allow \"https://app.super-productivity.com\" in the Nextcloud app <a href='https://apps.nextcloud.com/apps/webapppassword'>webapppassword</a>.</p>"
+        "HELP": "<p>Here you can configure Ultra Tasks to list uncompleted CalDAV tasks for a specific project in the task creation panel in the daily planning view. They will be listed as suggestions and will provide a link to the task as well as more information about it.</p><p>In addition, you can automatically add and sync all uncompleted tasks to your task backlog.</p><p>To make it work for Nextcloud in the webapp, you may need to allow \"https://app.super-productivity.com\" in the Nextcloud app <a href='https://apps.nextcloud.com/apps/webapppassword'>webapppassword</a>.</p>"
       },
       "ISSUE_CONTENT": {
         "DESCRIPTION": "Description",
@@ -304,7 +304,7 @@
       "FEEDBACK_PUBLIC": "Post on GitHub Discussions",
       "FEEDBACK_PUBLIC_DESC": "Others can see and respond",
       "FEEDBACK_TITLE": "How would you like to help?",
-      "TITLE": "Enjoying Super Productivity?",
+      "TITLE": "Enjoying Ultra Tasks?",
       "TXT": "It's a free, open-source project built by enthusiasts – no tracking, no ads. A rating or short message helps more people find it."
     },
     "DROPBOX": {
@@ -423,7 +423,7 @@
         "TOKEN": "Access Token"
       },
       "FORM_SECTION": {
-        "HELP": "<p>Here you can configure Super Productivity to list open Gitea issues for a specific repository in the task creation panel in the daily planning view. They will be listed as suggestions and will provide a link to the issue as well as more information about it.</p><p>In addition, you can automatically add and import all open issues.</p><p>To get by usage limits and gain access, you can provide an access token."
+        "HELP": "<p>Here you can configure Ultra Tasks to list open Gitea issues for a specific repository in the task creation panel in the daily planning view. They will be listed as suggestions and will provide a link to the issue as well as more information about it.</p><p>In addition, you can automatically add and import all open issues.</p><p>To get by usage limits and gain access, you can provide an access token."
       },
       "ISSUE_CONTENT": {
         "ASSIGNEE": "Assignee",
@@ -465,7 +465,7 @@
         "TOKEN": "Access Token"
       },
       "FORM_SECTION": {
-        "HELP": "<p>Here you can configure Super Productivity to list open GitLab (either its the online version or a self-hosted instance) issues for a specific project in the task creation panel in the daily planning view. They will be listed as suggestions and will provide a link to the issue as well as more information about it.</p><p>In addition, you can automatically import all open issues.</p>"
+        "HELP": "<p>Here you can configure Ultra Tasks to list open GitLab (either its the online version or a self-hosted instance) issues for a specific project in the task creation panel in the daily planning view. They will be listed as suggestions and will provide a link to the issue as well as more information about it.</p><p>In addition, you can automatically import all open issues.</p>"
       },
       "ISSUE_CONTENT": {
         "ASSIGNEE": "Assignee",
@@ -483,14 +483,14 @@
       }
     },
     "ISSUE": {
-      "CROSS_ORIGIN_BROWSER_WARNING": "This integration will likely not work in your web browser. Please download the desktop or Android version of Super Productivity!",
+      "CROSS_ORIGIN_BROWSER_WARNING": "This integration will likely not work in your web browser. Please download the desktop or Android version of Ultra Tasks!",
       "DEFAULT": {
         "ISSUE_STR": "issue",
         "ISSUES_STR": "issues"
       },
       "DEFAULT_NOTE_LABEL": "Default note for imported tasks",
       "DEFAULT_PROJECT_DESCRIPTION": "Project assigned to tasks created from issues.",
-      "DEFAULT_PROJECT_LABEL": "Default Super Productivity Project",
+      "DEFAULT_PROJECT_LABEL": "Default Ultra Tasks Project",
       "DEFAULT_TAGS_LABEL": "Default tags for imported tasks",
       "FORM": {
         "AUTO_ADD_TO_BACKLOG": "Auto import to default project (requires a default project)",
@@ -610,7 +610,7 @@
     },
     "JIRA": {
       "BANNER": {
-        "BLOCK_ACCESS_MSG": "Jira: To prevent API lock out, access has been blocked by Super Productivity. You probably should check your Jira settings!",
+        "BLOCK_ACCESS_MSG": "Jira: To prevent API lock out, access has been blocked by Ultra Tasks. You probably should check your Jira settings!",
         "BLOCK_ACCESS_UNBLOCK": "Unblock"
       },
       "CFG_CMP": {
@@ -659,7 +659,7 @@
         "TITLE": "Jira: Submit Worklog"
       },
       "FORM_ADV": {
-        "AUTO_ADD_BACKLOG_JQL_QUERY": "JQL used for importing issues to Super Productivity automatically",
+        "AUTO_ADD_BACKLOG_JQL_QUERY": "JQL used for importing issues to Ultra Tasks automatically",
         "IS_ADD_WORKLOG_ON_SUB_TASK_DONE": "Open dialog to submit worklog to Jira when subtask is completed",
         "IS_CHECK_TO_RE_ASSIGN_TICKET_ON_TASK_START": "Check if the currently worked on issue is assigned to current user",
         "IS_WORKLOG_ENABLED": "Open dialog to submit worklog to Jira when task is completed",
@@ -717,7 +717,7 @@
       },
       "S": {
         "ADDED_WORKLOG_FOR": "Jira: Added worklog for {{issueKey}}",
-        "EXTENSION_NOT_LOADED": "Super Productivity Extension not loaded. Reloading the page may help",
+        "EXTENSION_NOT_LOADED": "Browser extension not loaded. Reloading the page may help",
         "INSUFFICIENT_SETTINGS": "Insufficient settings provided for Jira",
         "INVALID_RESPONSE": "Jira: Response contained invalid data",
         "NO_AUTO_IMPORT_JQL": "Jira: No search query defined for auto-import",
@@ -758,7 +758,7 @@
         "FOCUS_SESSION_TRENDS": "Focus sessions over time",
         "GLOBAL_METRICS": "Global Metrics",
         "HEATMAP_SHARE_FAILED": "Failed to share heatmap",
-        "HEATMAP_SHARE_TAGLINE": "{{title}} – With the Super Productivity App",
+        "HEATMAP_SHARE_TAGLINE": "{{title}} – With the Ultra Tasks App",
         "HEATMAP_SHARED_TO_DEVICE": "Heatmap saved to device storage",
         "HEATMAP_SHARED_TO_PATH": "Heatmap saved to {{path}}",
         "NO_ADDITIONAL_DATA_YET": "No additional data collected yet. Use the form on the daily summary \"Evaluation\" panel to do so.",
@@ -905,7 +905,7 @@
         "TOKEN": "Access Token"
       },
       "FORM_SECTION": {
-        "HELP": "<p>Here you can configure Super Productivity to list open OpenProject work packages. Please note that for this to work in the web browser version, you need to probably configure CORS for your OpenProject server to allow access from app.super-productivity.com</p>"
+        "HELP": "<p>Here you can configure Ultra Tasks to list open OpenProject work packages. Please note that for this to work in the web browser version, you need to probably configure CORS for your OpenProject server to allow access from app.super-productivity.com</p>"
       },
       "ISSUE_CONTENT": {
         "ASSIGNEE": "Assignee",
@@ -1473,7 +1473,7 @@
           "CAPTURE_CONNECTIONS": "Connected assistants",
           "CAPTURE_A_COPY_CODE": "Copy connection code",
           "CAPTURE_INFO": "Lets AI assistants add tasks to your Inbox. They can't read your tasks or sync data.",
-          "CAPTURE_SHARE_INFO": "On Android, shares to Super Productivity are also sent this way, encrypted on the phone, so your other devices get them without the app being opened on the phone.",
+          "CAPTURE_SHARE_INFO": "On Android, shares to Ultra Tasks are also sent this way, encrypted on the phone, so your other devices get them without the app being opened on the phone.",
           "CAPTURE_L_CLIENT_NAME": "Assistant name",
           "CAPTURE_L_MCP_URL": "Server URL for assistants (MCP)",
           "CAPTURE_L_SETUP": "Claude Code: run this in a terminal",
@@ -1572,9 +1572,9 @@
         },
         "TITLE": "Sync",
         "WEB_DAV": {
-          "CORS_INFO": "<strong>Making it work in a web browser:</strong> You need to allow Super Productivity to make CORS requests to your server. For Nextcloud, one approach is allowing \"https://app.super-productivity.com\" via the <a href='https://apps.nextcloud.com/apps/webapppassword'>webapppassword</a> app. Refer to <a href='https://github.com/nextcloud/server/issues/3131'>this GitHub thread</a> for more information.",
+          "CORS_INFO": "<strong>Making it work in a web browser:</strong> You need to allow Ultra Tasks to make CORS requests to your server. For Nextcloud, one approach is allowing \"https://app.super-productivity.com\" via the <a href='https://apps.nextcloud.com/apps/webapppassword'>webapppassword</a> app. Refer to <a href='https://github.com/nextcloud/server/issues/3131'>this GitHub thread</a> for more information.",
           "D_SYNC_FOLDER_PATH": "Path relative to the WebDAV server root where sync files will be stored (e.g. '/super-productivity' or '/'). This is NOT your server's internal directory path.",
-          "INFO": "<strong>Warning:</strong> Generic WebDAV sync is <strong>experimental and provided as-is, without support</strong>. WebDAV implementations differ enormously between servers, and the vast majority of sync problems are caused by your provider's setup or quirks (CORS, authentication, non-standard behavior, file locking, etc.) — <strong>not by Super Productivity</strong>. We cannot debug individual WebDAV servers, so please troubleshoot such issues with your provider and do not report them to us as bugs. If you are using Nextcloud, use the dedicated Nextcloud option instead. For reliable, fully supported sync consider Dropbox or SuperSync.",
+          "INFO": "<strong>Warning:</strong> Generic WebDAV sync is <strong>experimental and provided as-is, without support</strong>. WebDAV implementations differ enormously between servers, and the vast majority of sync problems are caused by your provider's setup or quirks (CORS, authentication, non-standard behavior, file locking, etc.) — <strong>not by Ultra Tasks</strong>. We cannot debug individual WebDAV servers, so please troubleshoot such issues with your provider and do not report them to us as bugs. If you are using Nextcloud, use the dedicated Nextcloud option instead. For reliable, fully supported sync consider Dropbox or SuperSync.",
           "L_BASE_URL": "Base URL",
           "L_PASSWORD": "Password",
           "L_SYNC_FOLDER_PATH": "Sync Folder Path",
@@ -1618,7 +1618,7 @@
         "ERROR_REMOTE_FILE_EMPTY": "Remote sync file is empty. This can happen after an interrupted sync. Overwrite remote with your local data?",
         "ERROR_REMOTE_FILE_LOCKED": "Remote sync file is locked by the server. This may resolve on the next sync attempt.",
         "ERROR_REMOTE_RESPONSE_NOT_SYNC_DATA": "The sync server answered with a web page instead of your sync data (e.g. a login, proxy or error page). Your remote data is probably intact — check your server URL, credentials and network, then try again. If the problem persists, you can overwrite the remote via Sync Settings → Force Overwrite.",
-        "ERROR_SYNC_VERSION_MISMATCH": "Remote sync data uses an incompatible format version. Ensure all devices run the same version of Super Productivity.",
+        "ERROR_SYNC_VERSION_MISMATCH": "Remote sync data uses an incompatible format version. Ensure all devices run the same version of Ultra Tasks.",
         "WARN_CLIENT_ID_REGENERATED": "Sync device ID was invalid and has been regenerated. A sync conflict may occur on next sync.",
         "ERROR_UNABLE_TO_READ_REMOTE_DATA": "Error while syncing. Unable to read remote data. Maybe you enabled encryption and your local password does not match the one used to encrypt the remote data?",
         "FINISH_DAY_SYNC_ERROR": "Sync error while finishing day. Please try again.",
@@ -2504,11 +2504,11 @@
     "IMPORT_FROM_TICKTICK": "Import from TickTick",
     "IMPORT_FROM_TODOIST": "Import from Todoist",
     "IMPORT_FROM_URL": "Import from URL",
-    "IMPORT_FROM_URL_DIALOG_DESCRIPTION": "Please enter the full URL of the Super Productivity backup JSON file to import.",
+    "IMPORT_FROM_URL_DIALOG_DESCRIPTION": "Please enter the full URL of the Ultra Tasks backup JSON file to import.",
     "IMPORT_FROM_URL_DIALOG_TITLE": "Import from URL",
     "OPEN_IMPORT_FROM_URL_DIALOG": "Import from URL",
     "PRIVACY_EXPORT": "Export Data (anonymized)",
-    "PRIVACY_EXPORT_DESCRIPTION": "Export diagnostic data for a private report to the Super Tasks maintainer",
+    "PRIVACY_EXPORT_DESCRIPTION": "Export diagnostic data for a private report to the Ultra Tasks maintainer",
     "S_BACKUP_DOWNLOADED": "Backup exported",
     "S_ERR_IMPORT_FAILED": "Importing data failed",
     "S_ERR_IMPORT_UNREPAIRABLE": "Import failed: this backup contains data that can't be repaired. Please try an older backup, and export your logs and report the issue.",
@@ -2642,7 +2642,7 @@
     },
     "CALENDARS": {
       "AUTO_IMPORT_FOR_CURRENT_DAY": "Auto import events as tasks for current day",
-      "BROWSER_WARNING": "Due to cross-origin and WebView restrictions <b>this will likely NOT work with the web browser or Android app versions of Super Productivity.<br /> Please <a href=\"https://super-productivity.com/download/\">download the desktop version</a> to use this feature!</b>",
+      "BROWSER_WARNING": "Due to cross-origin and WebView restrictions <b>this will likely NOT work with the web browser or Android app versions of Ultra Tasks.<br /> Please <a href=\"https://super-productivity.com/download/\">download the desktop version</a> to use this feature!</b>",
       "CAL_COLOR": "Calendar color",
       "CAL_PATH": "URL of the iCal source",
       "CHECK_UPDATES": "Check for remote updates every X",
@@ -2652,7 +2652,7 @@
       "FILTER_INCLUDE_REGEX": "Include events matching regex (optional)",
       "FILTER_INCLUDE_REGEX_DESCRIPTION": "Only events whose title matches this regular expression will be shown. Leave empty to include all events. Example: meeting|standup",
       "INVALID_REGEX": "Invalid regular expression",
-      "HELP": "You can integrate calendars to be reminded and add them as tasks within Super Productivity. The integration works by using the iCal format. For this to work your calendars need to be accessible either over the internet or via file system.",
+      "HELP": "You can integrate calendars to be reminded and add them as tasks within Ultra Tasks. The integration works by using the iCal format. For this to work your calendars need to be accessible either over the internet or via file system.",
       "REFERENCE_CALENDAR": "Reference calendar (display only, no task creation)",
       "SHOW_BANNER_THRESHOLD": "Show a notification X before the event (blank for disabled)"
     },
@@ -2738,7 +2738,7 @@
       "EXPAND_SUB_TASKS": "Expand subtasks",
       "GLOBAL_ADD_NOTE": "Add new note",
       "GLOBAL_ADD_TASK": "Add new task",
-      "GLOBAL_SHOW_HIDE": "Show/hide Super Productivity",
+      "GLOBAL_SHOW_HIDE": "Show/hide Ultra Tasks",
       "GLOBAL_TOGGLE_TASK_START": "Start/stop time tracking for last active task",
       "GLOBAL_TOGGLE_TASK_WIDGET": "Show/hide task widget",
       "GO_TO_DAILY_AGENDA": "Go to agenda",
@@ -2878,7 +2878,7 @@
       "IS_LOCAL_REST_API_ENABLED_HINT": "Allows local scripts to control the running app via http://127.0.0.1:3876. Requests require the access token shown below; keep it private and regenerate it if it may have been exposed. Any application running as you on this computer can read the token and modify your tasks. This setting applies to this computer only and is not synced.",
       "LOCAL_REST_API_TOKEN": "Access Token",
       "LOCAL_REST_API_TOKEN_REGENERATE": "Regenerate Access Token",
-      "LOCAL_REST_API_TOKEN_ERROR": "Could not store the access token, so the API is not running. Check that Super Productivity can write to its data folder, then use Regenerate to retry.",
+      "LOCAL_REST_API_TOKEN_ERROR": "Could not store the access token, so the API is not running. Check that Ultra Tasks can write to its data folder, then use Regenerate to retry.",
       "LOCAL_REST_API_TOKEN_REGENERATE_ERROR": "Could not save the new access token. The previous token is still valid.",
       "LOCAL_REST_API_TOGGLE_ERROR": "Could not save the local REST API setting.",
       "LOCAL_REST_API_STATUS_LISTENING": "Running at {{url}}",
@@ -2953,7 +2953,7 @@
       "DEFAULT_TASK_REMIND_OPTION": "Default reminder timing",
       "DISABLE_REMINDERS": "Disable all reminders",
       "DUE_DATE_NOTIFICATION_HOUR": "Hour to show planned-task notifications (0-23)",
-      "HELP": "<p><strong>Important:</strong> Reminders use <strong>local notifications</strong>, not push notifications. This means the app needs to have been opened at least once on your device for reminders to be scheduled. Reminders set on another device will only appear after the app syncs on the target device.</p><p>On <strong>iOS</strong>, make sure notifications are enabled for Super Productivity in your device settings under 'Settings' > 'Notifications'.</p>",
+      "HELP": "<p><strong>Important:</strong> Reminders use <strong>local notifications</strong>, not push notifications. This means the app needs to have been opened at least once on your device for reminders to be scheduled. Reminders set on another device will only appear after the app syncs on the target device.</p><p>On <strong>iOS</strong>, make sure notifications are enabled for Ultra Tasks in your device settings under 'Settings' > 'Notifications'.</p>",
       "IS_COUNTDOWN_BANNER_ENABLED": "Show countdown banner before reminders are due",
       "IS_FOCUS_WINDOW": "Focus application window when reminder is triggered",
       "NOTIFY_ON_DUE_DATE": "Show notifications for tasks planned for today",
@@ -3182,8 +3182,8 @@
     "ARCHIVED_PROJECTS": "Archived Projects"
   },
   "MIGRATE": {
-    "C_DOWNLOAD_BACKUP": "Do you want to download a backup of your legacy data (can be used with older versions of Super Productivity)?",
-    "C_IMPORT_PRE_V13_DATA": "Data from Super Productivity 12 or older was found on this device ({{tasks}} tasks, {{projects}} projects), but this version did not carry it over. Import it now? A copy is offered as a download first.\n\nIf you cancel, the old data stays untouched on this device, but you will not be asked again.",
+    "C_DOWNLOAD_BACKUP": "Do you want to download a backup of your legacy data (can be used with older versions of the upstream app)?",
+    "C_IMPORT_PRE_V13_DATA": "Data from version 12 or older was found on this device ({{tasks}} tasks, {{projects}} projects), but this version did not carry it over. Import it now? A copy is offered as a download first.\n\nIf you cancel, the old data stays untouched on this device, but you will not be asked again.",
     "DETECTED_LEGACY": "Detected legacy data. We will migrate it for you!",
     "DIALOG_MESSAGE": "We're updating how your data is stored for improved sync reliability. A backup will be downloaded automatically.",
     "DIALOG_TITLE": "Migrating Your Data",
@@ -3237,7 +3237,7 @@
       "FOCUS_MODE": "<b>Focus mode</b> · Pomodoro and distraction-free work",
       "FOOTER": "Find this again under Help → Quick tour.",
       "HABITS": "<b>Habits</b> · Track routines day by day",
-      "INTRO": "Super Productivity starts calm. More is there when you need it:",
+      "INTRO": "Ultra Tasks starts calm. More is there when you need it:",
       "OPEN_SETTINGS": "Open settings ›",
       "PLUGINS": "<b>Plugins & integrations</b> · Jira, GitHub, CalDAV and more",
       "SCHEDULE": "<b>Schedule</b> · Your day on a timeline",
@@ -3324,7 +3324,7 @@
       "OTHER_ACCOUNT": "That account isn't a member of this project's Space. Connect with the account you shared it with.",
       "RATE_LIMITED": "Too many attempts. Please wait {{minutes}} minutes, then try again.",
       "REPLACE": "Replace key",
-      "REPLACE_WARNING": "Replacing it disconnects the old key. Super Productivity on your other devices gets the new key when it syncs (without sync, they ask you to reconnect); any other app using the old key needs the new one.",
+      "REPLACE_WARNING": "Replacing it disconnects the old key. Ultra Tasks on your other devices gets the new key when it syncs (without sync, they ask you to reconnect); any other app using the old key needs the new one.",
       "RESEND": "Resend code",
       "RESEND_IN": "Resend in {{seconds}} s",
       "RETRY": "Retry",
@@ -3382,7 +3382,7 @@
     "SHARE_SUCCESS": "Project shared on Plainspace. Tasks assigned to you will import automatically.",
     "SPACE_PICKER": {
       "CREATE_NEW": "Create new space",
-      "DATA_NOTICE": "Task titles, done state and scheduled times of shared tasks are stored on {{host}}. Notes, subtasks and tracked time stay in Super Productivity.",
+      "DATA_NOTICE": "Task titles, done state and scheduled times of shared tasks are stored on {{host}}. Notes, subtasks and tracked time stay in Ultra Tasks.",
       "DISCONNECT": "Disconnect account",
       "DISCONNECT_HINT": "Disconnecting removes the saved account from this device. Existing project integrations keep syncing. To stop them, open each relevant Plainspace integration in the issue provider panel and choose its gear icon → Delete.",
       "ERROR": "Couldn't reach Plainspace. Check your connection and that your token is still valid, then try again.",
@@ -3497,11 +3497,11 @@
     "VALIDATION_FAILED": "Validation failed: {{errors}}",
     "NODE_EXECUTION_BRIDGE_UNAVAILABLE": "Could not connect to the Node.js execution bridge. Please try disabling and re-enabling the plugin.",
     "PLUGIN_LOAD_FAILED": "Plugin \"{{pluginName}}\" failed to load: {{error}}",
-    "INTRO": "Plugins run inside the app without a sandbox. Built-in plugins are maintained by the Super Productivity team; plugins you upload are not reviewed and can access all your data, so only install ones you trust.",
+    "INTRO": "Plugins run inside the app without a sandbox. Built-in plugins are maintained by the app maintainers; plugins you upload are not reviewed and can access all your data, so only install ones you trust.",
     "THIRD_PARTY": "Third-party",
     "DETAILS": "Details",
     "COMMUNITY_PLUGINS": "Community Plugins",
-    "COMMUNITY_WARNING": "Community plugins are not reviewed by the Super Productivity team. Install them at your own risk.",
+    "COMMUNITY_WARNING": "Community plugins are not reviewed by the app maintainers. Install them at your own risk.",
     "COMMUNITY_GET_LISTED": "Get your plugin to show up here",
     "COMMUNITY_INSTALL": "Install v{{version}}",
     "COMMUNITY_UPDATE": "Update to v{{version}}",
@@ -3535,7 +3535,7 @@
       "RESET_FILTERS": "Reset filters",
       "INSTALLED_HELP": "Built-in integrations are already installed. Enable one when you need it, then choose Set up to connect your account.",
       "MANUAL_INSTALL": "Install from a ZIP file",
-      "COMPATIBILITY": "Community listings come from the Super Productivity ecosystem; compatibility with Super Tasks is not verified. Themes and changes to the Super Tasks interface are not supported.",
+      "COMPATIBILITY": "Community listings come from the upstream plugin ecosystem; compatibility with Ultra Tasks is not verified. Themes and changes to the Ultra Tasks interface are not supported.",
       "PAGES": "Catalog pages",
       "PREVIOUS": "Previous",
       "NEXT": "Next",

@@ -63,6 +63,30 @@ describe('TranslateHttpLoaderWithFallback', () => {
       .error(new ProgressEvent('error'), { status: 0, statusText: '' });
   });
 
+  it('brands nested locale strings and arrays without changing keys or integration URLs', (done) => {
+    const translations = {
+      APP: {
+        TITLE: 'Super Productivity öffnen',
+        HELP: ['Super productivity {{version}}', null],
+        URL: 'superproductivity://oauth-callback/onedrive',
+        SITE: 'https://app.super-productivity.com',
+      },
+    };
+    loader.getTranslation('de').subscribe((result: unknown) => {
+      expect(result).toEqual({
+        APP: {
+          TITLE: 'Ultra Tasks öffnen',
+          HELP: ['Ultra Tasks {{version}}', null],
+          URL: translations.APP.URL,
+          SITE: translations.APP.SITE,
+        },
+      });
+      expect(translations.APP.TITLE).toBe('Super Productivity öffnen');
+      done();
+    });
+    httpMock.expectOne('./assets/i18n/de.json').flush(translations);
+  });
+
   it('falls back to bundled English even for a non-English language on a status-0 error', (done) => {
     loader.getTranslation('de').subscribe({
       next: (res: unknown) => {

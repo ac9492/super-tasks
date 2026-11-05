@@ -10,8 +10,8 @@ export interface PalettePair {
 }
 
 export const DEFAULT_PALETTE: PalettePair = {
-  light: { background: '#f8f8f7', surface: '#ffffff', accent: '#397f86' },
-  dark: { background: '#131314', surface: '#242426', accent: '#80cbc4' },
+  light: { background: '#f8f8f7', surface: '#ffffff', accent: '#075b5e' },
+  dark: { background: '#131314', surface: '#242426', accent: '#63c5c3' },
 };
 
 export const isPaletteColors = (value: unknown): value is PaletteColors => {

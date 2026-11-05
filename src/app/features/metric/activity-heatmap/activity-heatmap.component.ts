@@ -442,7 +442,7 @@ export class ActivityHeatmapComponent {
 
     const normalizedTitle = contextTitle?.trim().length
       ? contextTitle.trim()
-      : 'Super Productivity';
+      : 'Ultra Tasks';
     const shareLabel = this._translateService.instant(
       T.F.METRIC.CMP.HEATMAP_SHARE_TAGLINE,
       { title: normalizedTitle },

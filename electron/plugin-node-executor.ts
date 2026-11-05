@@ -455,7 +455,7 @@ class PluginNodeExecutor {
         `Name (self-declared, unverified): ${name}`,
         `Version (self-declared): ${version}`,
         '',
-        'This is a third-party plugin. Super Productivity cannot verify its identity and cannot sandbox it.',
+        'This is a third-party plugin. Ultra Tasks cannot verify its identity and cannot sandbox it.',
         'If you allow it, the plugin can run any program with full access to your files and system.',
         'Your choice is remembered on this device until you disable, remove, or re-upload this plugin.',
         '',
@@ -656,7 +656,7 @@ class PluginNodeExecutor {
 
       // Run the script with our own binary in node mode (ELECTRON_RUN_AS_NODE is set
       // below). In packaged builds the executable name doesn't contain "electron"
-      // (e.g. "Super Productivity"), and the stripped child env has no PATH, so
+      // (e.g. "Ultra Tasks"), and the stripped child env has no PATH, so
       // falling back to spawn('node') fails with ENOENT unless node happens to live
       // in /usr/bin. process.execPath works in every mode: dev (Electron from
       // node_modules), packaged apps, and plain node (tests).

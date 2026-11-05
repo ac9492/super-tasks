@@ -175,7 +175,7 @@ export const fitToResponseCap = <T>(items: T[], wrap: (items: T[]) => unknown): 
 // --- renderer replies ----------------------------------------------------------
 
 const RENDERER_ERRORS: Record<string, string> = {
-  APP_NOT_READY: 'Super Productivity is still loading. Retry in a few seconds.',
+  APP_NOT_READY: 'Ultra Tasks is still loading. Retry in a few seconds.',
   TASK_NOT_FOUND: 'No active task has this id.',
 };
 
@@ -198,9 +198,9 @@ export const forwardSafely = async (
     return await forward(request);
   } catch (error) {
     if (error instanceof RendererTimeoutError) {
-      return fail('APP_UNAVAILABLE', 'Super Productivity did not respond in time.');
+      return fail('APP_UNAVAILABLE', 'Ultra Tasks did not respond in time.');
     }
-    return fail('APP_UNAVAILABLE', 'Super Productivity could not handle the request.');
+    return fail('APP_UNAVAILABLE', 'Ultra Tasks could not handle the request.');
   }
 };
 

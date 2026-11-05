@@ -61,7 +61,7 @@ const getStatus: ToolSpec = {
   definition: {
     name: 'get_status',
     description:
-      'Reports whether Super Productivity is ready and which permissions this connection has. Returns no task data.',
+      'Reports whether Ultra Tasks is ready and which permissions this connection has. Returns no task data.',
     inputSchema: { type: 'object', properties: {}, additionalProperties: false },
   },
   run: async (args, scopes, forward) => {
@@ -198,7 +198,7 @@ const getTask: ToolSpec = {
     if (includeNotes && !scopes.includes('tasks:read_notes')) {
       return fail(
         'NOTES_NOT_PERMITTED',
-        'This connection may not read notes. The user can allow it in Super Productivity settings.',
+        'This connection may not read notes. The user can allow it in Ultra Tasks settings.',
       );
     }
 
@@ -223,7 +223,7 @@ const getTask: ToolSpec = {
       // Revoked while the task was being fetched.
       return fail(
         'NOTES_NOT_PERMITTED',
-        'This connection may not read notes. The user can allow it in Super Productivity settings.',
+        'This connection may not read notes. The user can allow it in Ultra Tasks settings.',
       );
     }
     if (includeNotes) {
@@ -289,9 +289,9 @@ const CAPTURE_MESSAGES: Record<
   Exclude<AssistantCaptureResult['status'], 'created'>,
   string
 > = {
-  APP_BUSY: 'Super Productivity is applying synced changes. Retry in a few seconds.',
+  APP_BUSY: 'Ultra Tasks is applying synced changes. Retry in a few seconds.',
   PERSIST_DEGRADED:
-    'Super Productivity could not save recent changes. Nothing was added; ask the user to check the app.',
+    'Ultra Tasks could not save recent changes. Nothing was added; ask the user to check the app.',
   OUTCOME_UNKNOWN:
     'The task may or may not have been saved. Ask the user to check the Inbox before retrying.',
 };

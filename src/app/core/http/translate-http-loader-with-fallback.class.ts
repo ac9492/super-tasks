@@ -3,10 +3,27 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateLoader, TranslationObject } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Log } from '../log';
 import { DEFAULT_LANGUAGE } from '../locale.constants';
 import EN_TRANSLATIONS from '../../../assets/i18n/en.json';
+
+// Upstream locale files retain their translated prose. Apply the fork's product
+// name once when loading them, without changing keys, placeholders, or URLs.
+const withProductName = (value: TranslationObject[string]): TranslationObject[string] => {
+  if (typeof value === 'string')
+    return value.replace(/super productivity|super tasks/gi, 'Ultra Tasks');
+  if (Array.isArray(value)) return value.map(withProductName);
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, translation]) => [
+        key,
+        withProductName(translation),
+      ]),
+    );
+  }
+  return value;
+};
 
 /**
  * TranslateLoader that degrades gracefully when the translation JSON cannot be
@@ -37,6 +54,7 @@ export class TranslateHttpLoaderWithFallback implements TranslateLoader {
 
   getTranslation(lang: string): Observable<TranslationObject> {
     return this._httpLoader.getTranslation(lang).pipe(
+      map((translations) => withProductName(translations) as TranslationObject),
       catchError((err: unknown) => {
         if (err instanceof HttpErrorResponse && err.status === 0) {
           // Expected, recoverable offline degrade — warn, don't err.

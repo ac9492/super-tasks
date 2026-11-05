@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Super Productivity</string>
+	<string>Ultra Tasks</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Super Productivity</string>
+	<string>Ultra Tasks</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -48,9 +48,9 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 	<key>NSUserNotificationsUsageDescription</key>
-	<string>Super Productivity uses notifications to remind you about tasks and scheduled events.</string>
+	<string>Ultra Tasks uses notifications to remind you about tasks and scheduled events.</string>
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>Super Productivity uses your local network to sync with sync servers you host yourself, such as a WebDAV or Super Sync server on your network.</string>
+	<string>Ultra Tasks uses your local network to sync with sync servers you host yourself, such as a WebDAV or Super Sync server on your network.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

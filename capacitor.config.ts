@@ -2,7 +2,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.super-productivity.app',
-  appName: 'Super Productivity',
+  appName: 'Ultra Tasks',
   webDir: 'dist/browser',
   plugins: {
     CapacitorHttp: {

@@ -42,7 +42,7 @@
 // ===============================
 
 :root {
-  --st-brand: #16845b;
+  --st-brand: var(--palette-accent);
   --st-radius: 14px;
   --st-blur: 18px;
   --st-glass-alpha: 86%;
@@ -54,15 +54,15 @@
   // Device-local palette defaults, replaced synchronously at startup.
   --palette-background: #f8f8f7;
   --palette-surface: #ffffff;
-  --palette-accent: #397f86;
+  --palette-accent: #075b5e;
   --palette-background-ink: #000000;
   --palette-surface-ink: #000000;
   --palette-accent-ink: #ffffff;
   --palette-background-ink-channel: 0, 0, 0;
   --palette-surface-ink-channel: 0, 0, 0;
-  --palette-selected: #dbe8e9;
+  --palette-selected: #d2e1e2;
   --palette-selected-ink: #000000;
-  --palette-hover: #eff5f5;
+  --palette-hover: #ebf2f2;
   --palette-hover-ink: #000000;
   // -----------------------------
   // Safe Areas (iOS notch, home indicator)

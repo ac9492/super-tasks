@@ -20,6 +20,11 @@ Presets select a coordinated pair; editing a color changes the currently display
 mode only. Reset restores both default palettes. Switching modes preserves edits.
 The saved pair is applied synchronously before the startup splash is dismissed.
 
+The default accent is the icon's deep teal (`#075b5e`) in light mode and
+`#63c5c3` in dark mode. `--st-brand` aliases `--palette-accent`, so workspace
+highlights follow both the default and custom accent. Existing saved palettes
+remain unchanged until the user chooses Default or resets colors.
+
 ## Color and contrast
 
 `palette.util.ts` computes WCAG relative luminance with the sRGB transfer function

@@ -1,5 +1,5 @@
 appId: superProductivity
-productName: Super Productivity
+productName: Ultra Tasks
 artifactName: ${name}-${arch}.${ext}
 
 files:
@@ -88,7 +88,7 @@ portable:
   artifactName: ${name}.${ext}
 appx:
   applicationId: SuperProductivity
-  displayName: Super Productivity
+  displayName: Ultra Tasks
   publisherDisplayName: Adrian Chase
   publisher: CN=___-___
   identityName: ___johannesjo.SuperProductivity
@@ -122,7 +122,7 @@ rpm:
   fpm: ['--rpm-rpmbuild-define=_build_id_links none']
 # leads to Error: Please specify executable name as linux.executableName instead of linux.desktop.Exec
 #  desktop:
-#    Name: Super Productivity
+#    Name: Ultra Tasks
 #    Comment: A todo list and time tracking app
 #    Exec: superProductivity
 #    Terminal: false
@@ -223,7 +223,7 @@ mac:
   extendInfo:
     ITSAppUsesNonExemptEncryption: false
     # hardened runtime denies Apple Events without it; used by the app-auto-track plugin
-    NSAppleEventsUsageDescription: Super Productivity reads the frontmost app and window title to suggest which task to track.
+    NSAppleEventsUsageDescription: Ultra Tasks reads the frontmost app and window title to suggest which task to track.
   publish:
     - github
   target:
