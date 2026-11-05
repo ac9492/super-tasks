@@ -20,7 +20,10 @@
           [label]="T.F.TASK.D_TIME.TIME_SPENT | translate"
         >
         </input-duration-slider>
+        <!-- cdkFocusInitial: the dialog opens on the estimate field, not on
+             the help button above it. -->
         <input-duration-slider
+          cdkFocusInitial
           [(model)]="taskCopy.timeEstimate"
           [label]="T.F.TASK.D_TIME.ESTIMATE | translate"
         >

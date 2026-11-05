@@ -394,7 +394,6 @@ export class WorkViewComponent implements OnInit, OnDestroy {
     () => this.isOnTodayList() && this.overdueTasks().length > 0,
   );
 
-  isShowTimeWorkedWithoutBreak: boolean = true;
   splitInputPos: number = 100;
   T: typeof T = T;
 

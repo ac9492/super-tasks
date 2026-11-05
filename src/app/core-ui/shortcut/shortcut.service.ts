@@ -260,12 +260,6 @@ export class ShortcutService {
       this._configService.appFeatures().isPlannerEnabled
     ) {
       this._router.navigate(['/planner']);
-
-      // } else if (checkKeyCombo(ev, keys.goToDailyAgenda)) {
-      //   this._router.navigate(['/daily-agenda']);
-      //
-      // } else if (checkKeyCombo(ev, keys.goToFocusMode)) {
-      //   this._router.navigate(['/focus-view']);
     } else if (
       checkKeyCombo(ev, keys.showSearchBar) &&
       this._configService.appFeatures().isSearchEnabled
@@ -333,12 +327,6 @@ export class ShortcutService {
       }
     } else if (this._taskShortcutService.handleTogglePlayFallback(ev)) {
       return;
-    } else if (
-      checkKeyCombo(ev, 'Ctrl+Shift+*') &&
-      document.activeElement &&
-      document.activeElement.getAttribute('routerlink') === '/procrastination'
-    ) {
-      throw new Error('Intentional Error Fun (dont worry)');
     }
 
     // special hidden dev tools combo to use them for production

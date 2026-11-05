@@ -14,6 +14,7 @@ import { BodyClass, IS_ELECTRON, IS_GNOME_WAYLAND } from '../../app.constants';
 import { IS_MAC } from '../../util/is-mac';
 import { distinctUntilChanged, map, startWith, switchMap, take } from 'rxjs/operators';
 import { IS_TOUCH_ONLY } from '../../util/is-touch-only';
+import { isAnimationDisabled } from '../../util/prefers-reduced-motion';
 import { MaterialCssVarsService } from 'angular-material-css-vars';
 import { DOCUMENT } from '@angular/common';
 import { MatIconRegistry } from '@angular/material/icon';
@@ -475,8 +476,7 @@ export class GlobalThemeService {
 
     // Use effect to reactively update animation class
     effect(() => {
-      const misc = this._globalConfigService.misc();
-      if (misc?.isDisableAnimations) {
+      if (isAnimationDisabled(this._globalConfigService.misc())) {
         this.document.body.classList.add(BodyClass.isDisableAnimations);
       } else {
         this.document.body.classList.remove(BodyClass.isDisableAnimations);

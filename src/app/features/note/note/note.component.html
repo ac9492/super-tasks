@@ -37,8 +37,15 @@
       [class.isOver]="note.imgUrl"
     >
       @if (note.projectId) {
+        @let pinLabel =
+          (note.isPinnedToToday
+            ? T.F.TASK.CMP.REMOVE_FROM_MY_DAY
+            : T.F.TASK.CMP.ADD_TO_MY_DAY
+          ) | translate;
         <button
           mat-icon-button
+          [matTooltip]="pinLabel"
+          [attr.aria-label]="pinLabel"
           (click)="togglePinToToday()"
         >
           @if (!note.isPinnedToToday) {

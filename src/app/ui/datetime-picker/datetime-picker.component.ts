@@ -15,6 +15,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatCalendar, MatCalendarView } from '@angular/material/datepicker';
+import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import {
   MatFormField,
@@ -72,6 +73,7 @@ const QUICK_ACCESS_ITEMS = [
     MatLabel,
     MatPrefix,
     MatSuffix,
+    MatIconButton,
     MatInput,
     MatSelect,
     MatOption,

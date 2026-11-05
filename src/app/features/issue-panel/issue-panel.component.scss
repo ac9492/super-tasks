@@ -72,6 +72,22 @@
   }
 }
 
+// Tab of a provider whose plugin is not installed.
+.missing-plugin {
+  padding: var(--s2);
+  text-align: center;
+  color: var(--text-color-muted);
+
+  mat-icon {
+    vertical-align: middle;
+    margin-right: var(--s-half);
+  }
+}
+
+.missing-plugin-actions {
+  margin-top: var(--s2);
+}
+
 .initials {
   margin-top: 1px;
   font-size: 12px;

@@ -6,7 +6,7 @@ test('settings opens over the workspace, finds advanced options, and dismisses h
   await page.goto('/#/tag/TODAY/tasks');
   const settingsLink = page.locator('a[href="#/config"]');
   await settingsLink.click();
-  const dialog = page.getByRole('dialog', { name: 'Global Settings', exact: true });
+  const dialog = page.getByRole('dialog', { name: 'Settings', exact: true });
   await expect(dialog).toBeVisible();
   await expect(page).toHaveURL(/tag\/TODAY\/tasks/);
   await expect(dialog.locator('.settings-categories')).toBeVisible();

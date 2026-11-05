@@ -37,9 +37,21 @@
                     ></tag-list>
                   </div>
 
+                  <!-- role="button" rather than a <button>: this page's styles
+                       are not reset for one. -->
                   <div
                     (click)="editTaskRepeatCfg(taskRepeatCfg)"
-                    class="repeat-text-and-icon"
+                    (keydown.enter)="editTaskRepeatCfg(taskRepeatCfg)"
+                    (keydown.space)="$event.preventDefault(); editTaskRepeatCfg(taskRepeatCfg)"
+                    role="button"
+                    tabindex="0"
+                    [attr.aria-label]="
+                      (T.F.PLANNER.EDIT_REPEATED_TASK
+                        | translate: { taskName: taskRepeatCfg.title }) +
+                      ': ' +
+                      getRepeatInfoText(taskRepeatCfg)
+                    "
+                    class="repeat-text-and-icon focus-ring"
                     [matTooltip]="getTooltipText(taskRepeatCfg)"
                     mat-ripple
                   >

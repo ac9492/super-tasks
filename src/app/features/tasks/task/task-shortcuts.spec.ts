@@ -1042,4 +1042,32 @@ describe('TaskComponent shortcut handling', () => {
       expect(taskServiceSpy.setSelectedId).toHaveBeenCalledWith(null);
     });
   });
+
+  describe('openContextMenu()', () => {
+    let open: jasmine.Spy;
+
+    beforeEach(() => {
+      open = jasmine.createSpy('open');
+      (component as unknown as { taskContextMenu: () => unknown }).taskContextMenu =
+        () => ({ open });
+      component.isContextMenuLoaded.set(true);
+    });
+
+    // Q / ContextMenu key / Shift+F10: the menu keeps focus and opens at the row
+    it('opens a keyboard-opened menu for a keyboard shortcut', () => {
+      const ev = new KeyboardEvent('keydown', { key: 'q' });
+
+      component.openContextMenu(ev);
+
+      expect(open).toHaveBeenCalledWith(ev, true);
+    });
+
+    it('opens a pointer-opened menu for a right-click', () => {
+      const ev = new MouseEvent('contextmenu');
+
+      component.openContextMenu(ev);
+
+      expect(open).toHaveBeenCalledWith(ev, false);
+    });
+  });
 });

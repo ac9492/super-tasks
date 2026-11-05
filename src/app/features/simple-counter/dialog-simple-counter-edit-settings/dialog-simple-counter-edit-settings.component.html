@@ -1,6 +1,12 @@
 <form (ngSubmit)="save()">
   <h1 mat-dialog-title>
-    {{ dialogData.simpleCounter.title }} – {{ T.MH.SETTINGS | translate }}
+    @if (!dialogData.simpleCounter.id) {
+      {{ T.F.SIMPLE_COUNTER.HABIT_TRACKER.ADD_HABIT | translate }}
+    } @else if (dialogData.simpleCounter.title) {
+      {{ dialogData.simpleCounter.title }} – {{ T.MH.SETTINGS | translate }}
+    } @else {
+      {{ T.MH.SETTINGS | translate }}
+    }
   </h1>
 
   <mat-dialog-content>

@@ -436,15 +436,18 @@
     border-color: var(--text-color-most-intense);
   }
 
+  // The label sits outside the work period (above the start line, below the
+  // end line), where events rarely are, and above events (z-index 2) and the
+  // now-line, so the first and last blocks of the day never cover it.
   > div {
     left: 0;
     font-weight: bold;
     font-size: var(--font-size-xs);
     position: absolute;
     bottom: 100%;
+    z-index: 3;
     line-height: 1;
     padding: var(--s-quarter) var(--s);
-    margin-bottom: -6px;
     background: var(--bg);
   }
 
@@ -456,9 +459,7 @@
 .work-end {
   > div {
     bottom: auto;
-    top: 100%;
-    margin-bottom: 0;
-    margin-top: -16px;
+    top: 0;
   }
 }
 

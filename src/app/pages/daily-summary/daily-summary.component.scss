@@ -173,6 +173,10 @@ $summary-point-inner-margin: var(--s);
 
 .day-end-note {
   margin-bottom: var(--s6);
+
+  .add-day-end-note-btn {
+    color: var(--text-color-muted);
+  }
   //margin-top: -8px;
 
   &::ng-deep inline-markdown {
@@ -210,4 +214,13 @@ $summary-point-inner-margin: var(--s);
       background-color: inherit;
     }
   }
+}
+
+.week-section {
+  margin-top: var(--s6);
+}
+
+.week-section-title {
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--s-half);
 }

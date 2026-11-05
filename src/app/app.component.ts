@@ -93,6 +93,7 @@ import { OnboardingHintService } from './features/onboarding/onboarding-hint.ser
 import { QuickTourService } from './features/onboarding/quick-tour.service';
 import { MaterialIconsLoaderService } from './ui/material-icons-loader.service';
 import { BrowserTitleService } from './core/browser-title/browser-title.service';
+import { isAnimationDisabled } from './util/prefers-reduced-motion';
 
 const ENTRANCE_ANIMATION_DURATION = 1500;
 
@@ -202,10 +203,9 @@ export class AppComponent implements OnDestroy, AfterViewInit {
     return this._isDisableAnimations();
   }
 
-  private _isDisableAnimations = computed(() => {
-    const misc = this._globalConfigService.misc();
-    return misc?.isDisableAnimations ?? false;
-  });
+  private _isDisableAnimations = computed(() =>
+    isAnimationDisabled(this._globalConfigService.misc()),
+  );
 
   // Experimental: vertical action strip on the right edge instead of the
   // horizontal top header. Switches the DOM layout live (see template).

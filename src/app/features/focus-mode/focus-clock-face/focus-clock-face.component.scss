@@ -7,10 +7,18 @@
   --clock-face-size: var(--clock-face-size-default);
 
   // Derived from the face size so everything scales together.
-  // --clock-time-size: digits in the center.
+  // --clock-time-size: digits in the center. They share the centre line with
+  //                    the 40px -/+ buttons; "25:00" is about 2.9em wide, so on
+  //                    small faces (phones) the digits shrink to the space
+  //                    between the buttons instead of running under them.
   // --control-offset:  distance the in-circle controls (pause/done/+/-) sit
   //                    from the rim.
-  --clock-time-size: calc(var(--clock-face-size) * 0.22);
+  --clock-time-size: min(
+    calc(var(--clock-face-size) * 0.22),
+    calc(
+      (var(--clock-face-size) - 2 * var(--control-offset) - 2 * 40px - var(--s2)) / 2.9
+    )
+  );
   --control-offset: calc(var(--clock-face-size) * 0.07);
 
   display: block;

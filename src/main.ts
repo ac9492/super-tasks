@@ -105,6 +105,7 @@ import { LocalRestApiSimpleCounterRoutesService } from './app/features/simple-co
 import { PluginOAuthRedirectHandler } from './app/plugins/oauth/plugin-oauth-redirect.handler';
 import { OAuthCallbackHandlerService } from './app/imex/sync/oauth-callback-handler.service';
 import { GlobalConfigService } from './app/features/config/global-config.service';
+import { isAnimationDisabled } from './app/util/prefers-reduced-motion';
 import { LocaleDatePipe } from './app/ui/pipes/locale-date.pipe';
 import { DateTimeFormatService } from './app/core/date-time-format/date-time-format.service';
 import { CustomDateAdapter } from './app/core/date-time-format/custom-date-adapter';
@@ -316,7 +317,7 @@ bootstrapApplication(AppComponent, {
       deps: [GlobalConfigService],
       useFactory: (globalConfigService: GlobalConfigService) => ({
         get animationsDisabled(): boolean {
-          return globalConfigService.misc()?.isDisableAnimations ?? false;
+          return isAnimationDisabled(globalConfigService.misc());
         },
       }),
     },

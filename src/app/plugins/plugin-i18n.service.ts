@@ -63,9 +63,10 @@ export class PluginI18nService {
         translations[lang] =
           lang === DEFAULT_LANGUAGE
             ? parsed
-            : (withProductName(
-                parsed as Parameters<typeof withProductName>[0],
-              ) as Record<string, unknown>);
+            : (withProductName(parsed as Parameters<typeof withProductName>[0]) as Record<
+                string,
+                unknown
+              >);
         PluginLog.log(
           `[PluginI18n] Loaded ${lang} translations for ${pluginId} from cache`,
         );

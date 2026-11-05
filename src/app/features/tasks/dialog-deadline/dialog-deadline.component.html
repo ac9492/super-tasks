@@ -1,3 +1,5 @@
+<!-- Names the dialog; schedule and deadline dialogs otherwise look alike. -->
+<h2 mat-dialog-title>{{ T.F.TASK.ADDITIONAL_INFO.DEADLINE | translate }}</h2>
 <mat-dialog-content>
   @if (isConfigReady()) {
     <datetime-picker
