@@ -209,7 +209,7 @@ describe('AgentCaptureSettingsComponent', () => {
     expect(component.grants().map((g) => g.id)).toEqual(['g1', 'g2']);
     // Ready to paste: no environment variable the user has to set first.
     expect(component.setupCommand()).toBe(
-      'claude mcp add --transport http super-productivity https://sync.example/mcp ' +
+      'claude mcp add --transport http ultra-tasks https://sync.example/mcp ' +
         '--header "Authorization: Bearer sp_cap_secret"',
     );
   });
