@@ -80,8 +80,11 @@ website until DNS and hosting are connected.
 
 If validation and both package jobs pass but publication fails, dispatch
 `publish-desktop-artifacts.yml` with the original build run ID. It verifies those
-three successful jobs and publishes their existing artifacts against their exact
-source commit using `GITHUB_TOKEN`. It does not rebuild or move an existing tag.
+three successful jobs and reuses their artifacts. It verifies that only release
+workflows and documentation differ from the tested source before tagging the
+current publication commit with `GITHUB_TOKEN`; the release notes record the
+original build commit. This avoids GitHub's restriction on tagging historical
+workflow revisions. It does not rebuild or move an existing tag.
 macOS currently also produces a Universal DMG through the inherited target list,
 so publication expects three DMGs, two ZIPs, and two Windows executables.
 
