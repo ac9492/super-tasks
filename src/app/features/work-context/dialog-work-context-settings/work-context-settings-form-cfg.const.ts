@@ -54,7 +54,7 @@ export const buildWorkContextSettingsFormCfg = (
   }
 
   const sharedItems = WORK_CONTEXT_THEME_CONFIG_FORM_CONFIG.items!;
-  const colorFields = sharedItems.slice(0, 3).map((field, index) =>
+  const colorFields = sharedItems.slice(0, 1).map((field, index) =>
     !isProject && index === 0
       ? {
           ...field,
@@ -65,14 +65,12 @@ export const buildWorkContextSettingsFormCfg = (
         }
       : field,
   );
-  const remainingFields = sharedItems.slice(3);
 
   const themeFields: FormlyFieldConfig[] = [
     {
       fieldGroupClassName: 'formly-row',
       fieldGroup: colorFields,
     },
-    ...remainingFields,
   ];
 
   return [

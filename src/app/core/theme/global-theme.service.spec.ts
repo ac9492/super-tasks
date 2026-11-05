@@ -1,4 +1,4 @@
-import { EnvironmentInjector, signal, Signal, WritableSignal } from '@angular/core';
+import { EnvironmentInjector, signal, WritableSignal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { type WorkContextThemeCfg } from '../../features/work-context/work-context.model';
 import {
@@ -7,16 +7,17 @@ import {
   resolveBackground,
   resolveSystemSurfaceColor,
 } from './global-theme.service';
-import { CustomThemeRef } from './custom-theme.service';
 
 interface GlobalThemeInitHarness {
   init(): void;
   darkMode: WritableSignal<'system' | 'dark' | 'light'>;
   _hasInitialized: boolean;
   _environmentInjector: EnvironmentInjector;
-  _customThemeService: { activeRef: Signal<CustomThemeRef> };
+  _paletteThemeService: { apply: jasmine.Spy };
+  isDarkTheme: WritableSignal<boolean>;
   _setBackgroundTint(value: boolean): void;
   _initIcons(): void;
+  _setChartTheme(isDark: boolean): Promise<void>;
   _initHandlersForInitialBodyClasses(): void;
   _initThemeWatchers(): void;
 }
@@ -54,39 +55,29 @@ describe('resolveSystemSurfaceColor()', () => {
   });
 });
 
-describe('GlobalThemeService fixed-mode initialization', () => {
+describe('GlobalThemeService palette initialization', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
-
-  for (const testCase of [
-    { themeId: 'arc', initial: 'light' as const, expected: 'dark' as const },
-    {
-      themeId: 'nord-snow-storm',
-      initial: 'dark' as const,
-      expected: 'light' as const,
-    },
-  ]) {
-    it(`forces ${testCase.themeId} to ${testCase.expected} during init`, () => {
-      const activeRef = signal<CustomThemeRef>({
-        kind: 'builtin',
-        id: testCase.themeId,
-      });
-      const service = Object.create(
-        GlobalThemeService.prototype,
-      ) as GlobalThemeInitHarness;
-      service.darkMode = signal<'system' | 'dark' | 'light'>(testCase.initial);
-      service._hasInitialized = false;
-      service._environmentInjector = TestBed.inject(EnvironmentInjector);
-      service._customThemeService = { activeRef: activeRef.asReadonly() };
-      service._setBackgroundTint = (): void => undefined;
-      service._initIcons = (): void => undefined;
-      service._initHandlersForInitialBodyClasses = (): void => undefined;
-      service._initThemeWatchers = (): void => undefined;
-
-      service.init();
-
-      expect(service.darkMode()).toBe(testCase.expected);
-    });
-  }
+  it('applies palettes on mode changes without overriding the chosen mode', () => {
+    const service = Object.create(GlobalThemeService.prototype) as GlobalThemeInitHarness;
+    service.darkMode = signal<'system' | 'dark' | 'light'>('light');
+    service.isDarkTheme = signal(false);
+    service._hasInitialized = false;
+    service._environmentInjector = TestBed.inject(EnvironmentInjector);
+    const apply = jasmine.createSpy('apply');
+    service._paletteThemeService = { apply };
+    service._setBackgroundTint = (): void => undefined;
+    service._initIcons = (): void => undefined;
+    service._setChartTheme = async (): Promise<void> => undefined;
+    service._initHandlersForInitialBodyClasses = (): void => undefined;
+    service._initThemeWatchers = (): void => undefined;
+    service.init();
+    TestBed.tick();
+    expect(apply).toHaveBeenCalledWith(false);
+    service.isDarkTheme.set(true);
+    TestBed.tick();
+    expect(apply).toHaveBeenCalledWith(true);
+    expect(service.darkMode()).toBe('light');
+  });
 });
 
 describe('resolveBackground()', () => {

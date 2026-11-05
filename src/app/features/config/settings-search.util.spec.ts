@@ -87,8 +87,8 @@ describe('searchSettings', () => {
   });
 
   it('should find non-formly settings via the hand-written targets', () => {
-    const [hit] = searchSettings(TABS, 'wallpaper', translate);
-    expect(hit.scrollSelector).toBe('.wallpaper-select');
+    const [hit] = searchSettings(TABS, 'title', translate);
+    expect(hit.scrollSelector).toBe('.theme-select');
     expect(hit.tabIndex).toBe(0);
   });
 

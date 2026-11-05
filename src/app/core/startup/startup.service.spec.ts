@@ -16,7 +16,7 @@ import { LegacyPfDbService } from '../persistence/legacy-pf-db.service';
 import { OperationLogStoreService } from '../../op-log/persistence/operation-log-store.service';
 import { LegacySupDbService } from '../persistence/legacy-sup-db.service';
 import { DataInitStateService } from '../data-init/data-init-state.service';
-import { CustomThemeService } from '../theme/custom-theme.service';
+import { PaletteThemeService } from '../theme/palette-theme.service';
 import { of } from 'rxjs';
 import { signal } from '@angular/core';
 import { LS } from '../persistence/storage-keys.const';
@@ -129,10 +129,8 @@ describe('StartupService', () => {
       isAllDataLoadedInitially$: of(true),
     };
 
-    const customThemeServiceSpy = jasmine.createSpyObj('CustomThemeService', [
-      'applyActiveTheme',
-    ]);
-    customThemeServiceSpy.applyActiveTheme.and.resolveTo(undefined);
+    const paletteThemeServiceSpy = jasmine.createSpyObj('PaletteThemeService', ['apply']);
+    paletteThemeServiceSpy.apply.and.returnValue(undefined);
 
     TestBed.configureTestingModule({
       providers: [
@@ -157,7 +155,7 @@ describe('StartupService', () => {
         { provide: LegacyPfDbService, useValue: legacyPfDbServiceSpy },
         { provide: LegacySupDbService, useValue: legacySupDbServiceSpy },
         { provide: DataInitStateService, useValue: dataInitStateServiceSpy },
-        { provide: CustomThemeService, useValue: customThemeServiceSpy },
+        { provide: PaletteThemeService, useValue: paletteThemeServiceSpy },
         provideMockStore({
           selectors: [
             { selector: selectSyncConfig, value: { syncProvider: null } },

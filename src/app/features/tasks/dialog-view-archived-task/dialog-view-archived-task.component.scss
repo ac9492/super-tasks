@@ -112,8 +112,8 @@
     display: inline-flex;
     align-items: center;
     gap: var(--s-half);
-    color: var(--c-accent);
-    text-decoration: none;
+    color: var(--link-color);
+    text-decoration: underline;
     word-break: break-all;
 
     mat-icon {

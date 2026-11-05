@@ -48,16 +48,10 @@ const CUSTOM_TARGETS: readonly SettingsSearchTarget[] = [
     scrollSelector: '.dark-mode-select',
   },
   {
-    labelKey: T.GCF.MISC.THEME_EXPERIMENTAL,
+    labelKey: T.GCF.MISC.PALETTE.TITLE,
     tabLabelKey: T.PS.TABS.GENERAL,
     tabIndex: 0,
     scrollSelector: '.theme-select',
-  },
-  {
-    labelKey: T.GCF.MISC.WALLPAPER,
-    tabLabelKey: T.PS.TABS.GENERAL,
-    tabIndex: 0,
-    scrollSelector: '.wallpaper-select',
   },
   {
     labelKey: T.GCF.SOUND.TITLE,

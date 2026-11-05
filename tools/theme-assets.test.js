@@ -16,7 +16,6 @@ const THEME_REGISTRY = join(
   'custom-theme.service.ts',
 );
 const SHARED_THEME_VARS = join(__dirname, '..', 'src', 'styles', '_css-variables.scss');
-const BUTTON_LABEL_PALETTE_WEIGHT = 18;
 const FETCH_BEARING_CSS = /(?:@import\b|\b(?:url|src|image|image-set)\s*\()/i;
 
 const themeFiles = readdirSync(THEME_DIR)
@@ -145,13 +144,6 @@ const contrastRatio = (foreground, background) => {
   return (lighter + 0.05) / (darker + 0.05);
 };
 
-const mixOpaqueColors = (accent, ink, accentWeight) => [
-  ...[0, 1, 2].map(
-    (channel) => accent[channel] * accentWeight + ink[channel] * (1 - accentWeight),
-  ),
-  1,
-];
-
 test('every built-in theme asset is registered exactly once', () => {
   const registry = withoutRegistryComments(readFileSync(THEME_REGISTRY, 'utf8'));
   const registeredFiles = [...registry.matchAll(/url:\s*'assets\/themes\/([^']+\.css)'/g)]
@@ -277,23 +269,12 @@ test('resolvable muted text meets normal-text contrast on theme surfaces', () =>
   }
 });
 
-test('role-colored button labels stay contrast-safe for arbitrary palette extremes', () => {
+test('neutral button labels stay contrast-safe on built-in surfaces', () => {
   const sharedVars = readFileSync(SHARED_THEME_VARS, 'utf8');
   for (const role of ['primary', 'accent', 'warn']) {
-    assert.match(
-      sharedVars,
-      new RegExp(
-        `--button-${role}-label:\\s*color-mix\\(\\s*in\\s+srgb\\s*,\\s*var\\(--palette-${role}-500\\)\\s+${BUTTON_LABEL_PALETTE_WEIGHT}%\\s*,\\s*var\\(--ink-strong\\)\\s*\\)`,
-        'i',
-      ),
-      `${role} button labels must use the guarded palette weight`,
-    );
+    assert.ok(sharedVars.includes(`--button-${role}-label: var(--ink-strong);`));
   }
 
-  const paletteExtremes = [
-    [0, 0, 0, 1],
-    [255, 255, 255, 1],
-  ];
   for (const file of themeFiles) {
     const css = withoutComments(readTheme(file));
     let checkedModes = 0;
@@ -313,14 +294,11 @@ test('role-colored button labels stay contrast-safe for arbitrary palette extrem
           : [0, 0, 0, 1]);
       if (!background || !ink) continue;
       checkedModes++;
-      for (const palette of paletteExtremes) {
-        const label = mixOpaqueColors(palette, ink, BUTTON_LABEL_PALETTE_WEIGHT / 100);
-        const ratio = contrastRatio(label, background);
-        assert.ok(
-          ratio >= 4.5,
-          `${file} ${block[1].trim()} worst-case button label contrast is ${ratio.toFixed(2)}:1`,
-        );
-      }
+      const ratio = contrastRatio(ink, background);
+      assert.ok(
+        ratio >= 4.5,
+        `${file} ${block[1].trim()} neutral button label contrast is ${ratio.toFixed(2)}:1`,
+      );
     }
     assert.ok(checkedModes > 0, `${file} has no resolvable body palette for buttons`);
   }

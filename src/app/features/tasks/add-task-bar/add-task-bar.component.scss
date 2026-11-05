@@ -211,7 +211,7 @@
 
     .syntax-highlight {
       border-radius: var(--radius-xs);
-      background: color-mix(in srgb, var(--c-accent) 22%, transparent);
+      background: color-mix(in srgb, var(--brand) 22%, transparent);
     }
   }
 
@@ -276,38 +276,12 @@
     }
 
     .add-task-submit-btn {
-      width: 36px;
-      height: 36px;
-      padding: 0;
-      // The primary action while composing — colours and shape go through the
-      // button tokens rather than a .mat-*/.mdc-* override.
-      --mat-icon-button-container-shape: var(--radius-md);
-      --mat-icon-button-icon-color: var(--c-contrast);
-      --mat-icon-button-state-layer-color: var(--c-contrast);
-      --mat-icon-button-ripple-color: color-mix(
-        in srgb,
-        var(--c-contrast) 20%,
-        transparent
-      );
-      border-radius: var(--radius-md);
-      background-color: var(--c-primary);
-      color: var(--c-contrast);
+      align-self: stretch;
+      height: auto;
+      border-radius: 0;
+      // Follow the selected CSS theme accent.
       opacity: 1;
-      box-shadow: var(--whiteframe-shadow-2dp);
-      transition:
-        box-shadow var(--transition-fast),
-        transform var(--transition-fast);
-
-      &:hover,
-      &:focus-visible {
-        box-shadow: var(--whiteframe-shadow-4dp);
-        transform: translateY(-1px);
-      }
-
-      &:active {
-        box-shadow: var(--whiteframe-shadow-1dp);
-        transform: translateY(0);
-      }
+      --mat-icon-button-icon-color: var(--brand);
     }
   }
 
@@ -527,7 +501,7 @@
         color: var(--text-color-muted);
 
         &.archived {
-          color: var(--c-accent);
+          color: var(--brand);
         }
       }
 

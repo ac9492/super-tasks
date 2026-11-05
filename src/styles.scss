@@ -127,3 +127,5 @@ body.isIPad {
 }
 
 @include meta.load-css('styles/components/super-tasks');
+
+@include meta.load-css('styles/components/palette-theme');

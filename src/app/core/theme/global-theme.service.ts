@@ -12,15 +12,7 @@ import {
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { BodyClass, IS_ELECTRON, IS_GNOME_WAYLAND } from '../../app.constants';
 import { IS_MAC } from '../../util/is-mac';
-import {
-  distinctUntilChanged,
-  filter,
-  map,
-  startWith,
-  switchMap,
-  take,
-} from 'rxjs/operators';
-import { NavigationEnd, Router } from '@angular/router';
+import { distinctUntilChanged, map, startWith, switchMap, take } from 'rxjs/operators';
 import { IS_TOUCH_ONLY } from '../../util/is-touch-only';
 import { MaterialCssVarsService } from 'angular-material-css-vars';
 import { DOCUMENT } from '@angular/common';
@@ -38,9 +30,7 @@ import {
   isBackgroundImageSet,
   normalizeBackgroundImageBlur,
 } from '../../features/work-context/work-context.const';
-// eslint-disable-next-line @typescript-eslint/no-restricted-imports -- grandfathered layer-boundary debt
-import { WorkContextService } from '../../features/work-context/work-context.service';
-import { combineLatest, fromEvent, Observable, of } from 'rxjs';
+import { fromEvent, Observable, of } from 'rxjs';
 import { IS_FIREFOX } from '../../util/is-firefox';
 import { ImexViewService } from '../../imex/imex-meta/imex-view.service';
 import {
@@ -69,7 +59,8 @@ import { IosKeyboardService } from './ios-keyboard.service';
 import { CSS_VAR_KEYBOARD_HEIGHT } from './keyboard-css-vars.const';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { sanitizeSvgIconContent } from '../../util/sanitize-svg-icon.util';
-import { CustomThemeService, getRequiredThemeMode } from './custom-theme.service';
+import { PaletteThemeService } from './palette-theme.service';
+import { contrastingInk } from './palette.util';
 import { BUILT_IN_SVG_ICONS } from './built-in-svg-icons.const';
 
 interface NavigationBarPlugin {
@@ -190,18 +181,16 @@ export class GlobalThemeService {
   private document = inject<Document>(DOCUMENT);
   private _layoutService = inject(LayoutService);
   private _materialCssVarsService = inject(MaterialCssVarsService);
-  private _workContextService = inject(WorkContextService);
   private _globalConfigService = inject(GlobalConfigService);
   private _matIconRegistry = inject(MatIconRegistry);
   private readonly _registeredPluginIcons = new Set<string>();
   private _domSanitizer = inject(DomSanitizer);
-  private _router = inject(Router);
 
   private _chromeExtensionInterfaceService = inject(ChromeExtensionInterfaceService);
   private _imexMetaService = inject(ImexViewService);
   private _http = inject(HttpClient);
   private _platformService = inject(CapacitorPlatformService);
-  private _customThemeService = inject(CustomThemeService);
+  private _paletteThemeService = inject(PaletteThemeService);
   private _environmentInjector = inject(EnvironmentInjector);
   private _destroyRef = inject(DestroyRef);
   private _inputIntentService = inject(InputIntentService);
@@ -251,47 +240,11 @@ export class GlobalThemeService {
 
   isDarkTheme = toSignal(this._isDarkThemeObs$, { initialValue: false });
 
-  // Emits the current URL after each completed navigation, starting with the
-  // current URL so the stream is immediately available before any navigation.
-  private _currentUrl$: Observable<string> = this._router.events.pipe(
-    filter((e) => e instanceof NavigationEnd),
-    map((e) => (e as NavigationEnd).urlAfterRedirects),
-    startWith(this._router.url),
-  );
-
-  private _resolvedBackground$: Observable<ResolvedBackground> = combineLatest([
-    this._workContextService.currentTheme$,
-    this._isDarkThemeObs$,
-    this._currentUrl$,
-    this._globalConfigService.misc$,
-  ]).pipe(
-    map(([theme, isDarkMode, url, misc]) =>
-      resolveBackground(theme, misc, isDarkMode, url),
-    ),
-    distinctUntilChanged(
-      (a, b) =>
-        a.imageUrl === b.imageUrl &&
-        a.overlayOpacity === b.overlayOpacity &&
-        a.blur === b.blur,
-    ),
-  );
-
-  private _resolvedBackground = toSignal(this._resolvedBackground$, {
-    initialValue: {
-      imageUrl: null,
-      overlayOpacity: DEFAULT_BACKGROUND_OVERLAY_OPACITY * 0.01,
-      blur: 0,
-    } satisfies ResolvedBackground,
-  });
-
-  /** The resolved background image URL for the current route (null if none). */
-  readonly backgroundImg = computed(() => this._resolvedBackground().imageUrl);
-
-  /** Final CSS overlay opacity for the resolved background image. */
-  readonly bgOverlayOpacity = computed(() => this._resolvedBackground().overlayOpacity);
-
-  /** Blur radius (px) for the resolved background image. */
-  readonly bgImageBlur = computed(() => this._resolvedBackground().blur);
+  // Legacy wallpaper values remain in saved data for older clients. The palette
+  // canvas is always opaque so its foreground contrast is deterministic.
+  readonly backgroundImg = computed<string | null>(() => null);
+  readonly bgOverlayOpacity = computed(() => 0);
+  readonly bgImageBlur = computed(() => 0);
 
   init(): void {
     if (this._hasInitialized) {
@@ -303,7 +256,12 @@ export class GlobalThemeService {
       // This is here to make web page reloads on non-work-context pages at least usable
       this._setBackgroundTint(true);
       this._initIcons();
-      this._initRequiredThemeMode();
+      effect(() => {
+        this._paletteThemeService.apply(this.isDarkTheme());
+        this._setChartTheme(this.isDarkTheme()).catch((err) => {
+          Log.warn('Failed to set chart theme', err);
+        });
+      });
       this._initHandlersForInitialBodyClasses();
       this._initThemeWatchers();
 
@@ -317,41 +275,8 @@ export class GlobalThemeService {
 
   private _setDarkTheme(isDarkTheme: boolean): void {
     this._materialCssVarsService.setDarkTheme(isDarkTheme);
-    this._setChartTheme(isDarkTheme).catch((err) => {
-      Log.warn('Failed to set chart theme', err);
-    });
     // this._materialCssVarsService.setDarkTheme(true);
     // this._materialCssVarsService.setDarkTheme(false);
-  }
-
-  private _initRequiredThemeMode(): void {
-    const enforceActiveThemeMode = (): void => {
-      const requiredMode = getRequiredThemeMode(this._customThemeService.activeRef());
-      if (requiredMode && this.darkMode() !== requiredMode) {
-        this.darkMode.set(requiredMode);
-      }
-    };
-
-    // Effects run during change detection; enforce once synchronously so the
-    // cold-start stylesheet never waits a frame for its required body class.
-    enforceActiveThemeMode();
-    effect(enforceActiveThemeMode);
-  }
-
-  private _setColorTheme(theme: WorkContextThemeCfg): void {
-    this._materialCssVarsService.setAutoContrastEnabled(!!theme.isAutoContrast);
-    this._setBackgroundTint(!!theme.isDisableBackgroundTint);
-
-    // NOTE: setting undefined values does not seem to be a problem so we use !
-    if (!theme.isAutoContrast) {
-      this._materialCssVarsService.setContrastColorThresholdPrimary(theme.huePrimary!);
-      this._materialCssVarsService.setContrastColorThresholdAccent(theme.hueAccent!);
-      this._materialCssVarsService.setContrastColorThresholdWarn(theme.hueWarn!);
-    }
-
-    this._materialCssVarsService.setPrimaryColor(theme.primary!);
-    this._materialCssVarsService.setAccentColor(theme.accent!);
-    this._materialCssVarsService.setWarnColor(theme.warn!);
   }
 
   private _setBackgroundTint(isDisableBackgroundTint: boolean): void {
@@ -436,9 +361,6 @@ export class GlobalThemeService {
 
   private _initThemeWatchers(): void {
     // init theme watchers
-    this._workContextService.currentTheme$
-      .pipe(takeUntilDestroyed(this._destroyRef))
-      .subscribe((theme: WorkContextThemeCfg) => this._setColorTheme(theme));
     this._isDarkThemeObs$
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe((isDarkTheme) => this._setDarkTheme(isDarkTheme));
@@ -446,7 +368,9 @@ export class GlobalThemeService {
     // Update Electron title bar overlay when dark mode changes
     if (IS_ELECTRON && !IS_MAC) {
       effect(() => {
-        const isDark = this.isDarkTheme();
+        const palette =
+          this._paletteThemeService.palettes()[this.isDarkTheme() ? 'dark' : 'light'];
+        const isDark = contrastingInk(palette.background) === '#ffffff';
         // Use untracked to prevent creating additional dependencies in this effect
         const isCustomWindowTitleBarEnabled = untracked(() =>
           this._isCustomWindowTitleBarEnabled(),
@@ -628,31 +552,23 @@ export class GlobalThemeService {
 
     const chartThemeService = this._environmentInjector.get(ThemeService);
 
-    const overrides: import('chart.js').ChartConfiguration['options'] = isDarkTheme
-      ? {
-          scales: {
-            x: {
-              ticks: {
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255,255,255,0.1)',
-              },
-            },
-
-            y: {
-              ticks: {
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255,255,255,0.1)',
-              },
-            },
-          },
-        }
-      : {
-          scales: {},
-        };
+    const palette = this._paletteThemeService.palettes()[isDarkTheme ? 'dark' : 'light'];
+    const ink = contrastingInk(palette.background);
+    const overrides: import('chart.js').ChartConfiguration['options'] = {
+      color: ink,
+      scales: {
+        x: { ticks: { color: ink }, grid: { color: ink + '25' } },
+        y: { ticks: { color: ink }, grid: { color: ink + '25' } },
+      },
+      plugins: {
+        legend: { labels: { color: ink } },
+        tooltip: {
+          backgroundColor: palette.surface,
+          titleColor: contrastingInk(palette.surface),
+          bodyColor: contrastingInk(palette.surface),
+        },
+      },
+    };
     chartThemeService.setColorschemesOptions(overrides);
   }
 
@@ -780,10 +696,14 @@ export class GlobalThemeService {
       const isDark = this.isDarkTheme();
       // Re-read computed tokens only after the loader has atomically swapped
       // the stylesheet. Theme changes do not necessarily change dark mode.
-      this._customThemeService.appliedThemeVersion();
-      StatusBar.setStyle({ style: isDark ? Style.Dark : Style.Light }).catch((err) => {
-        Log.warn('Failed to set status bar style', err);
-      });
+      this._paletteThemeService.appliedVersion();
+      const palette = this._paletteThemeService.palettes()[isDark ? 'dark' : 'light'];
+      const lightIcons = contrastingInk(palette.background) === '#ffffff';
+      StatusBar.setStyle({ style: lightIcons ? Style.Dark : Style.Light }).catch(
+        (err) => {
+          Log.warn('Failed to set status bar style', err);
+        },
+      );
       if (this._platformService.isAndroid()) {
         const bgColor = resolveSystemSurfaceColor(
           getComputedStyle(this.document.body).getPropertyValue(CSS_VAR_SYSTEM_SURFACE),
@@ -803,7 +723,7 @@ export class GlobalThemeService {
         // Status-bar icon light/dark is set via StatusBar.setStyle above.
         NavigationBar.setColor({
           color: bgColor,
-          style: isDark ? 'DARK' : 'LIGHT',
+          style: lightIcons ? 'DARK' : 'LIGHT',
         }).catch((err) => {
           Log.warn('Failed to set navigation bar appearance', err);
         });

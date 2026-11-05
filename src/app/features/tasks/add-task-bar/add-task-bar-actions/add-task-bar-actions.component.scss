@@ -180,7 +180,7 @@
     }
 
     &.deadline-chip {
-      color: var(--c-warn) !important;
+      color: var(--text-color) !important;
 
       mat-icon {
         color: var(--c-warn) !important;
@@ -234,7 +234,7 @@
           }
 
           mat-icon {
-            color: var(--c-accent);
+            color: var(--brand);
           }
         }
 

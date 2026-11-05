@@ -300,27 +300,21 @@ mat-option.isDone {
   --mat-button-tonal-label-text-tracking: var(--letter-spacing-normal);
 }
 
-// Ensure proper contrast for text and stroked buttons on standard backgrounds
-// Text buttons use theme colors directly on background, so we need good contrast
+// Unfilled labels use neutral ink; accent stays in the outline.
 .mat-mdc-button,
 .mat-mdc-outlined-button {
-  &[color='primary'] {
-    --mdc-text-button-label-text-color: var(--button-primary-label);
-    --mdc-outlined-button-label-text-color: var(--button-primary-label);
-    --mdc-outlined-button-outline-color: var(--button-primary-label);
-  }
-
-  &[color='accent'] {
-    --mdc-text-button-label-text-color: var(--button-accent-label);
-    --mdc-outlined-button-label-text-color: var(--button-accent-label);
-    --mdc-outlined-button-outline-color: var(--button-accent-label);
-  }
-
+  &[color='primary'],
+  &[color='accent'],
   &[color='warn'] {
-    --mdc-text-button-label-text-color: var(--button-warn-label);
-    --mdc-outlined-button-label-text-color: var(--button-warn-label);
-    --mdc-outlined-button-outline-color: var(--button-warn-label);
+    --mat-button-text-label-text-color: var(--text-color);
+    --mat-button-outlined-label-text-color: var(--text-color);
+    --mat-button-outlined-outline-color: var(--brand);
   }
+}
+
+// Primary icon actions follow the CSS theme accent, including the header +.
+.mat-mdc-icon-button.mat-primary {
+  --mat-icon-button-icon-color: var(--brand);
 }
 
 .mat-mdc-menu-item-text {

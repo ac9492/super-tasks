@@ -98,7 +98,9 @@ export class DialogCreateProjectComponent implements OnInit, OnDestroy {
       CREATE_PROJECT_BASIC_CONFIG_FORM_CONFIG.items as FormlyFieldConfig[],
     );
     this.themeFormCfg = removeDebounceFromFormItems(
-      WORK_CONTEXT_THEME_CONFIG_FORM_CONFIG.items as FormlyFieldConfig[],
+      WORK_CONTEXT_THEME_CONFIG_FORM_CONFIG.items!.filter(
+        (field) => field.key === 'primary',
+      ),
     );
   }
 

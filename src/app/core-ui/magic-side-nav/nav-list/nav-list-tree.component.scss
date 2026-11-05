@@ -50,8 +50,8 @@
     transition: var(--transition-standard);
 
     &.drop-target-active {
-      background: var(--palette-primary-50);
-      border: 2px dashed var(--c-primary);
+      background: var(--state-selected);
+      border: 2px dashed var(--brand);
 
       // Add some padding to make the drop zone more visible
       padding: var(--s-quarter);
@@ -121,7 +121,7 @@
 .drop-indicator {
   position: relative;
   height: 2px;
-  background: var(--c-primary);
+  background: var(--brand);
   border-radius: 1px;
   transition: opacity 0.2s ease;
 
@@ -133,10 +133,10 @@
     top: -3px;
     width: 8px;
     height: 8px;
-    background: var(--c-primary);
+    background: var(--brand);
     border: 2px solid var(--bg);
     border-radius: 50%;
-    box-shadow: 0 0 0 1px var(--c-primary);
+    box-shadow: 0 0 0 1px var(--brand);
   }
 }
 
@@ -150,7 +150,7 @@
   font-size: 18px;
   line-height: 1;
   margin-right: var(--s-half);
-  color: var(--c-primary);
+  color: var(--brand);
 
   &.nav-icon-emoji {
     color: inherit;
@@ -210,8 +210,8 @@
       }
 
       &.drop-target-active::before {
-        border-color: var(--c-primary);
-        background: var(--palette-primary-50);
+        border-color: var(--brand);
+        background: var(--state-selected);
       }
     }
   }

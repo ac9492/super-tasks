@@ -51,6 +51,19 @@
   --st-line-width: 1px;
   --st-focus-width: 2px;
 
+  // Device-local palette defaults, replaced synchronously at startup.
+  --palette-background: #f8f8f7;
+  --palette-surface: #ffffff;
+  --palette-accent: #397f86;
+  --palette-background-ink: #000000;
+  --palette-surface-ink: #000000;
+  --palette-accent-ink: #ffffff;
+  --palette-background-ink-channel: 0, 0, 0;
+  --palette-surface-ink-channel: 0, 0, 0;
+  --palette-selected: #dbe8e9;
+  --palette-selected-ink: #000000;
+  --palette-hover: #eff5f5;
+  --palette-hover-ink: #000000;
   // -----------------------------
   // Safe Areas (iOS notch, home indicator)
   // Uses env() for native iOS safe areas
@@ -403,10 +416,8 @@ body {
 
   // Ink (foreground)
   --ink-strong: rgb(0, 0, 0);
-  --ink: rgb(44, 44, 44);
-  // 0.66 remains visibly secondary while meeting WCAG AA against the default
-  // light surfaces (including white cards).
-  --ink-muted: rgba(44, 44, 44, 0.66);
+  --ink: var(--ink-strong);
+  --ink-muted: var(--ink);
   // RGB triplet (no `rgb()` wrapper) — keystone for `rgba(var(--ink-on-channel), α)` overlays.
   --ink-on-channel: 0, 0, 0;
 
@@ -441,8 +452,8 @@ body.isDarkTheme {
   --surface-4: var(--dark24);
 
   --ink-strong: rgb(255, 255, 255);
-  --ink: rgb(230, 230, 230);
-  --ink-muted: rgba(235, 235, 235, 0.65);
+  --ink: var(--ink-strong);
+  --ink-muted: var(--ink);
   --ink-on-channel: 255, 255, 255;
 
   --separator: rgba(255, 255, 255, 0.1);
@@ -490,20 +501,10 @@ body.isDarkTheme {
   --sidenav-text-hover: var(--text-color-most-intense);
   --sidenav-text-secondary: var(--text-color-muted);
 
-  // Text/outlined actions sit directly on theme surfaces. Keep a restrained
-  // role-color cue while anchoring arbitrary project palettes in mode-safe ink.
-  // The worst-case black/white palette contrast is guarded by theme-assets.test.
-  --button-primary-label: color-mix(
-    in srgb,
-    var(--palette-primary-500) 18%,
-    var(--ink-strong)
-  );
-  --button-accent-label: color-mix(
-    in srgb,
-    var(--palette-accent-500) 18%,
-    var(--ink-strong)
-  );
-  --button-warn-label: color-mix(in srgb, var(--palette-warn-500) 18%, var(--ink-strong));
+  // Labels use neutral ink; accent belongs to surfaces, icons and borders.
+  --button-primary-label: var(--ink-strong);
+  --button-accent-label: var(--ink-strong);
+  --button-warn-label: var(--ink-strong);
 
   --right-panel-bg: transparent;
   --bottom-nav-height: 44px;
@@ -517,9 +518,7 @@ body.isDarkTheme {
   --text-color: var(--ink);
   --text-color-muted: var(--ink-muted);
   --text-color-most-intense: var(--ink-strong);
-  // Keep links recognizably branded while anchoring arbitrary project palettes
-  // in mode-safe ink for normal-text contrast.
-  --link-color: color-mix(in srgb, var(--brand) 42%, var(--ink-strong));
+  --link-color: var(--ink);
   --task-detail-value-color: var(--text-color-muted);
 
   // Borders / separators / scrim (Cat A)
@@ -632,7 +631,7 @@ body {
   --bottom-panel-bg: #fff;
 
   // Text colors (Cat B)
-  --text-color-less-intense: rgba(44, 44, 44, 0.9);
+  --text-color-less-intense: var(--ink);
   --text-color-more-intense: var(--text-color);
 
   // Selected task (Cat B)
@@ -716,8 +715,8 @@ body.isDarkTheme {
   --bottom-panel-bg: var(--dark1);
 
   // Text colors (Cat B)
-  --text-color-less-intense: rgba(235, 235, 235, 0.8);
-  --text-color-more-intense: rgb(245, 245, 245);
+  --text-color-less-intense: var(--ink);
+  --text-color-more-intense: var(--ink);
 
   // Selected task (Cat B)
   --selected-task-bg-color: var(--dark6);

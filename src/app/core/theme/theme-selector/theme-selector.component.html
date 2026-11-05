@@ -1,0 +1,104 @@
+<div class="theme-selector-container">
+  <h3>{{ T.GCF.MISC.APPEARANCE | translate }}</h3>
+  <div class="dark-mode-select">
+    <span>{{ T.GCF.MISC.DARK_MODE | translate }}</span>
+    <mat-button-toggle-group
+      [attr.aria-label]="T.GCF.MISC.DARK_MODE_ARIA_LABEL | translate"
+      [value]="globalThemeService.darkMode()"
+      (change)="globalThemeService.darkMode.set($event.value)"
+    >
+      <mat-button-toggle value="system">{{
+        T.GCF.MISC.DARK_MODE_SYSTEM | translate
+      }}</mat-button-toggle>
+      <mat-button-toggle value="light">{{
+        T.GCF.MISC.DARK_MODE_LIGHT | translate
+      }}</mat-button-toggle>
+      <mat-button-toggle value="dark">{{
+        T.GCF.MISC.DARK_MODE_DARK | translate
+      }}</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <div class="theme-select">
+    <h4>{{ T.GCF.MISC.PALETTE.TITLE | translate }}</h4>
+    <p>{{ T.GCF.MISC.PALETTE.DESCRIPTION | translate }}</p>
+    <div
+      class="palette-presets"
+      role="group"
+      [attr.aria-label]="T.GCF.MISC.PALETTE.TITLE | translate"
+    >
+      @for (preset of presets(); track preset.label) {
+        <button
+          type="button"
+          class="palette-preset focus-ring"
+          [attr.aria-pressed]="preset.selected"
+          (click)="paletteService.select(preset.colors)"
+        >
+          <span
+            class="palette-swatches"
+            aria-hidden="true"
+          >
+            @for (color of preset.swatches; track $index) {
+              <span [style.background]="color"></span>
+            }
+          </span>
+          <span>{{ preset.label | translate }}</span>
+          @if (preset.selected) {
+            <mat-icon aria-hidden="true">check</mat-icon>
+          }
+        </button>
+      }
+    </div>
+    <p class="editing-mode">
+      {{
+        (mode() === 'dark' ? T.GCF.MISC.PALETTE.DARK_EDIT : T.GCF.MISC.PALETTE.LIGHT_EDIT)
+          | translate
+      }}
+    </p>
+    <div class="palette-inputs">
+      @for (field of colorFields; track field.key) {
+        <label>
+          <span>{{ field.label | translate }}</span>
+          <input
+            type="color"
+            [attr.data-color]="field.key"
+            [attr.aria-label]="field.label | translate"
+            [value]="colors()[field.key]"
+            (input)="updateColor(field.key, $event)"
+          />
+          <span class="color-value">{{ colors()[field.key] }}</span>
+        </label>
+      }
+    </div>
+    <div
+      class="palette-preview"
+      [style.background]="colors().background"
+      [style.color]="previewInk().background"
+      role="region"
+      [attr.aria-label]="T.GCF.MISC.PALETTE.PREVIEW | translate"
+    >
+      <span>{{ T.GCF.MISC.PALETTE.PREVIEW | translate }}</span>
+      <div
+        class="preview-card"
+        [style.background]="colors().surface"
+        [style.color]="previewInk().surface"
+      >
+        <mat-icon aria-hidden="true">radio_button_unchecked</mat-icon>
+        <span>{{ T.GCF.MISC.PALETTE.PREVIEW_TASK | translate }}</span>
+        <span
+          class="preview-action"
+          [style.background]="colors().accent"
+          [style.color]="previewInk().accent"
+          ><mat-icon aria-hidden="true">add</mat-icon
+          >{{ T.GCF.MISC.PALETTE.PREVIEW_ACTION | translate }}</span
+        >
+      </div>
+    </div>
+    <button
+      mat-button
+      type="button"
+      (click)="paletteService.reset()"
+    >
+      {{ T.GCF.MISC.PALETTE.RESET | translate }}
+    </button>
+  </div>
+</div>
