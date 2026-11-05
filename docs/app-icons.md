@@ -1,8 +1,13 @@
 # Ultra Tasks app icon
 
-The official icon is the white, rounded handwritten checkmark on a solid deep-teal
-(`#075b5e`) rounded square. The approved artwork is maintained as a vector in
+The official icon is **Faceted**: a white octagonal comet head with three straight,
+geometric trails on a solid deep-teal (`#075b5e`) rounded square. The approved
+artwork is maintained as a vector in
 [`src/assets/ultra-tasks/logo.svg`](../src/assets/ultra-tasks/logo.svg).
+
+The master preserves the approved geometry with one compound path for the head
+and all three trails. Its transparent outer padding follows desktop icon
+conventions; mobile assets use the same artwork within their platform masks.
 
 Regenerate platform assets after editing that master:
 
@@ -26,18 +31,18 @@ The generator uses the existing pinned Sharp tool installation under
   Packaging on macOS recompiles that iconset with `iconutil`.
 - **Web:** the navigation/loading logo, favicons, PWA install icons, and Microsoft
   tile image use the same rounded square. Safari pinned tabs use the monochrome
-  checkmark with the deep-teal tint declared in `src/index.html`.
+  comet with the deep-teal tint declared in `src/index.html`.
 - **iOS and Apple touch icons:** the square, opaque artwork in `build/icons/sq*`
   fills the background with teal. iOS applies its rounded-square mask. The iOS
   app icon is a 1024-pixel RGB PNG without an alpha channel.
   The three iOS splash images use the rounded-square artwork centered on their
   existing white canvas.
 - **Android:** both legacy launcher resources use the rounded-square artwork.
-  Adaptive icons use a teal background and the same checkmark within the safe
+  Adaptive icons use a teal background and the same comet within the safe
   zone. Android launchers choose their own outer mask, including circular masks;
   this cannot be forced to a rounded square by the artwork. Store artwork uses
   the opaque square source so the store can apply its own mask.
-- **Tray and notification icons:** use the same checkmark as a monochrome glyph
+- **Tray and notification icons:** use the same comet as a monochrome glyph
   so system tinting, menu-bar inversion, and notification rendering work. The
   play/progress indicators keep their existing time-tracking meaning.
 

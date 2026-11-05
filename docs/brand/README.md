@@ -1,9 +1,9 @@
 # Ultra Tasks identity
 
-The production mark is [logo.svg](../../src/assets/ultra-tasks/logo.svg): a larger white checkmark on an emerald task-note tile with a folded corner. The check is about 27% wider than the first version; transparent outer padding is retained. Its raster export is [logo.png](../../src/assets/ultra-tasks/logo.png); desktop packaging uses the matching [512px PNG](../../build/ultra-tasks.png).
+The production mark is **Faceted**: a white octagonal comet head with three straight geometric trails on a solid deep-teal (`#075b5e`) rounded square. The editable source is [logo.svg](../../src/assets/ultra-tasks/logo.svg). Its raster export is [logo.png](../../src/assets/ultra-tasks/logo.png); desktop packaging uses the matching [512px PNG](../../build/ultra-tasks.png).
 
-The built-in image generator was used for exploration. [generated-concept.png](generated-concept.png) preserves that exploration, but its texture was unsuitable for small icons. The production artwork is an intentionally flat vector implementation, not the textured generated image.
+Keep the approved proportions, sharp trail edges, flat white fill, and transparent outer padding when exporting. The rounded-square background is shared across platforms; monochrome tray and notification assets use the comet silhouette.
 
-Final generation prompt: strictly flat two-color app icon; uniform opaque emerald green #16845B rounded square, white centered minimal checkmark under half the square width, even outer transparent margins, no text, holes, gradients, or texture.
+Run `npm run generate:icons` after editing the master to regenerate desktop, web, Android, iOS, store, tray, and notification assets. Platform details and validation are documented in [app-icons.md](../app-icons.md).
 
-The production SVG is the editable source of truth. Keep its transparent outer padding and checkmark proportions when exporting.
+[generated-concept.png](generated-concept.png) archives an earlier identity exploration.
