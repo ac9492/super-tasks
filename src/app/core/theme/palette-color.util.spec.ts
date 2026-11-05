@@ -74,7 +74,9 @@ describe('palette colour maths', () => {
   });
 
   it('mixes like color-mix in sRGB and measures perceptual distance', () => {
-    expect(mixSrgb('#ffffff', '#075b5e', 0.18)).toBe(mixColors('#ffffff', '#075b5e', 0.18));
+    expect(mixSrgb('#ffffff', '#075b5e', 0.18)).toBe(
+      mixColors('#ffffff', '#075b5e', 0.18),
+    );
     expect(mixSrgb('#000000', '#ffffff', 0.5)).toBe('#808080');
     expect(deltaE('#123456', '#123456')).toBe(0);
     expect(deltaE('#000000', '#ffffff')).toBeCloseTo(1, 3);

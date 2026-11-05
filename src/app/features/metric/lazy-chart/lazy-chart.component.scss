@@ -26,7 +26,7 @@
 
 .timeframe-label {
   font-size: 0.875rem;
-  color: #666;
+  color: var(--text-color-muted);
 }
 
 .timeframe-radios {
@@ -59,7 +59,7 @@
   align-items: center;
   justify-content: center;
   height: 200px;
-  color: #666;
+  color: var(--text-color-muted);
 }
 
 .share-btn {

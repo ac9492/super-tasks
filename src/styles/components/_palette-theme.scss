@@ -1,15 +1,41 @@
-// One layout, three chosen colors. All derived surfaces have paired neutral ink.
-// Scope aliases at the painted container, never observe individual task rows.
-@mixin ink($color, $channels) {
+// One layout, three chosen colors. PaletteThemeService normalises them into
+// roles (palette-normalize.util.ts) and writes those on the root element;
+// docs/theming-contract.md lists every role and its contrast guarantee.
+// Every painted container gets its paired ink and muted tier here. Scope
+// aliases at the painted container, never observe individual task rows.
+// First-paint defaults (the default light palette's roles) for the roles not
+// declared with the other palette defaults in _css-variables.scss.
+// PaletteThemeService replaces every one synchronously at startup.
+:root {
+  --palette-surface-raised: #ffffff;
+  --palette-ink-muted: #6c6c6c;
+  --palette-selected-ink-muted: #616161;
+  --palette-accent-text: #075b5e;
+  --palette-focus-ring: #075b5e;
+  --palette-border: rgba(var(--palette-surface-ink-channel), 0.123);
+  --palette-disabled: rgba(var(--palette-surface-ink-channel), 0.053);
+  --palette-disabled-ink: rgba(var(--palette-surface-ink-channel), 0.376);
+  --palette-scrollbar: rgba(var(--palette-background-ink-channel), 0.224);
+  --palette-danger: #c0161b;
+  --palette-danger-ink: #ffffff;
+  --palette-warning: #8d5300;
+  --palette-warning-ink: #ffffff;
+  --palette-success: #00703e;
+  --palette-success-ink: #ffffff;
+  --palette-upcoming: #823cc3;
+  --palette-upcoming-ink: #ffffff;
+}
+
+@mixin ink($color, $channels, $muted) {
   --ink: #{$color};
   --ink-strong: #{$color};
-  --ink-muted: #{$color};
+  --ink-muted: #{$muted};
   --ink-on-channel: #{$channels};
   --text-color: #{$color};
   --text-color-most-intense: #{$color};
   --text-color-more-intense: #{$color};
   --text-color-less-intense: #{$color};
-  --text-color-muted: #{$color};
+  --text-color-muted: #{$muted};
   --link-color: #{$color};
   --button-primary-label: #{$color};
   --button-accent-label: #{$color};
@@ -17,26 +43,38 @@
   --task-detail-value-color: #{$color};
   --mat-expansion-container-text-color: #{$color};
   --mat-expansion-header-text-color: #{$color};
-  --mat-expansion-header-description-color: #{$color};
+  --mat-expansion-header-description-color: #{$muted};
   color: #{$color};
 }
 
 body:is(.isLightTheme, .isDarkTheme) {
-  @include ink(var(--palette-background-ink), var(--palette-background-ink-channel));
+  @include ink(
+    var(--palette-background-ink),
+    var(--palette-background-ink-channel),
+    var(--palette-ink-muted)
+  );
   --surface-0: var(--palette-background);
   --surface-1: var(--palette-background);
   --surface-2: var(--palette-surface);
   --surface-3: var(--palette-surface);
   --surface-4: var(--palette-surface);
   --brand: var(--palette-accent);
-  --focus-ring: var(--text-color);
+  --focus-ring: var(--palette-focus-ring);
   --system-surface: var(--palette-background);
   --c-primary: var(--palette-accent);
   --c-accent: var(--palette-accent);
-  // State colors (--c-warn, --color-danger/-warning/-success) are deliberately
-  // not mapped here: overdue, destructive and callout tones must stay
-  // distinguishable from the accent (see _css-variables.scss).
   --c-contrast: var(--palette-accent-ink);
+  // One semantic set, solved for 4.5:1 text on every layer and independent of
+  // the accent. The older names stay as aliases.
+  --c-warn: var(--palette-danger);
+  --c-warn-contrast: var(--palette-danger-ink);
+  --color-danger: var(--palette-danger);
+  --color-warning: var(--palette-warning);
+  --color-success: var(--palette-success);
+  --success-green: var(--palette-success);
+  --scheduled-date-today: var(--palette-success);
+  --scheduled-date-tomorrow: var(--palette-warning);
+  --scheduled-date-upcoming: var(--palette-upcoming);
   --sun-yellow: var(--palette-accent);
   --dark0: var(--palette-surface);
   --dark0-5: var(--palette-surface);
@@ -60,7 +98,7 @@ body:is(.isLightTheme, .isDarkTheme) {
   --sidenav-active-text: var(--palette-accent-ink);
   --sidenav-text: var(--text-color);
   --sidenav-text-hover: var(--palette-surface-ink);
-  --sidenav-text-secondary: var(--text-color);
+  --sidenav-text-secondary: var(--palette-ink-muted);
   --right-panel-bg-mobile: var(--palette-surface);
   --bottom-panel-bg: var(--palette-surface);
   --selected-task-bg-color: var(--palette-selected);
@@ -76,27 +114,41 @@ body:is(.isLightTheme, .isDarkTheme) {
   --improvement-button-text: var(--palette-accent-ink);
   --input-bg: var(--palette-surface);
   --input-bg-hover: var(--palette-surface);
-  --input-border-color: var(--divider-color);
+  // Lines are ink alphas solved on background and surface: hairline
+  // separators, quiet card borders, and 3:1 field outlines (WCAG 1.4.11).
+  --separator: var(--palette-separator);
+  --divider: var(--palette-border);
+  --extra-border-color: var(--palette-border);
+  --grid-color: var(--palette-separator);
+  --input-border-color: var(--palette-outline);
   --input-border-color-focus: var(--text-color);
-  --extra-border-color: var(--divider-color);
-  --separator: color-mix(
-    in srgb,
-    var(--palette-background-ink) 20%,
-    var(--palette-background)
-  );
-  --divider: color-mix(
-    in srgb,
-    var(--palette-background-ink) 25%,
-    var(--palette-background)
-  );
-  --scrollbar-thumb: var(--palette-accent);
-  --scrollbar-thumb-hover: var(--palette-background-ink);
+  --input-border-color-invalid: var(--palette-danger);
+  --scrollbar-thumb: var(--palette-scrollbar);
+  --scrollbar-thumb-hover: var(--palette-ink-muted);
   --scrollbar-track: transparent;
-  --grid-color: var(--divider);
   --attachment-bg: var(--palette-surface);
   --attachment-control-bg: var(--palette-surface);
   --attachment-control-hover-bg: var(--palette-hover);
   --schedule-event-bg-in-side-panel: var(--palette-surface);
+
+  // Material's mode-based foreground tokens already match the mode (the
+  // normaliser keeps light palettes light and dark ones dark); these point the
+  // ones that carry a contrast duty at measured roles.
+  --mat-form-field-outlined-outline-color: var(--palette-outline);
+  --mat-form-field-error-text-color: var(--palette-danger);
+  --mat-select-enabled-arrow-color: var(--palette-ink-muted);
+  --mat-checkbox-unselected-icon-color: var(--palette-ink-muted);
+  --mat-radio-unselected-icon-color: var(--palette-ink-muted);
+  --mat-slide-toggle-unselected-handle-color: var(--palette-ink-muted);
+  --mat-slide-toggle-unselected-track-color: var(--palette-border);
+  --mat-card-subtitle-text-color: var(--palette-ink-muted);
+  --mat-option-selected-state-label-text-color: var(--palette-accent-text);
+  --mat-button-filled-disabled-container-color: var(--palette-disabled);
+  --mat-button-filled-disabled-label-text-color: var(--palette-disabled-ink);
+  --mat-button-protected-disabled-container-color: var(--palette-disabled);
+  --mat-button-protected-disabled-label-text-color: var(--palette-disabled-ink);
+  --mat-tooltip-container-color: var(--palette-tooltip-bg);
+  --mat-tooltip-supporting-text-color: var(--palette-tooltip-ink);
 
   // Remove the former project tint and wallpaper overlay from the three-color canvas.
   &::before {
@@ -104,21 +156,15 @@ body:is(.isLightTheme, .isDarkTheme) {
   }
 }
 
-// Cards, panels, sheets, and overlays share the second chosen color.
+// Cards, panels and sheets share the second chosen color.
 body
   :is(
-    .mat-mdc-dialog-surface,
-    .mat-mdc-menu-panel,
-    .mat-mdc-select-panel,
-    .mat-mdc-autocomplete-panel,
     .mat-bottom-sheet-container,
     .mat-expansion-panel,
     .mat-mdc-card,
     .config-section,
     .add-task-container,
     board-panel,
-    .mat-mdc-snack-bar-container,
-    .mdc-snackbar__surface,
     .bottom-panel-sheet,
     right-panel .side-inner,
     task-detail-panel,
@@ -128,60 +174,57 @@ body
     .time-badge,
     .progress-badge,
     .toggle-sub-tasks-btn,
-    .mat-mdc-tooltip-surface,
     .standard-note,
     .task-detail-bg,
     .shepherd-element,
     .color-panel
   ) {
-  @include ink(var(--palette-surface-ink), var(--palette-surface-ink-channel));
+  @include ink(
+    var(--palette-surface-ink),
+    var(--palette-surface-ink-channel),
+    var(--palette-ink-muted)
+  );
   background-color: var(--palette-surface);
 }
 
-// Legacy feature styles may color individual labels. Text inherits the ink of
-// its painted container; icons keep the accent and selection retains shape cues.
-// Warn buttons keep their semantic label color (_overwrite-material.scss).
+// Overlays sit one step above the cards (the same colour in light mode, where
+// shadows separate them; lifted in dark mode, where shadows vanish).
 body
   :is(
-    p,
-    span,
-    small,
-    strong,
-    em,
-    label,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    input,
-    textarea,
-    a,
-    button,
-    time,
-    code,
-    pre
-  ):where(:not(.mat-mdc-icon-button, .tag-ico-emoji, .mat-warn)) {
-  color: inherit !important;
+    .mat-mdc-dialog-surface,
+    .mat-mdc-menu-panel,
+    .mat-mdc-select-panel,
+    .mat-mdc-autocomplete-panel,
+    .mat-mdc-snack-bar-container,
+    .mdc-snackbar__surface
+  ) {
+  @include ink(
+    var(--palette-surface-ink),
+    var(--palette-surface-ink-channel),
+    var(--palette-ink-muted)
+  );
+  background-color: var(--palette-surface-raised);
 }
-// Placeholders are examples, not content: a muted share of the field's ink
-// keeps them distinguishable from typed text (still >= 4.5:1 on black/white
-// ink). `!important` because component placeholder rules use
-// --text-color-muted, which the ink mixin above sets to the full ink.
+
+// Elements whose browser default colour is not `inherit` take their painted
+// container's ink. Zero specificity, so component and token colours win.
+:where(body) :where(a, button, input, textarea, select) {
+  color: inherit;
+}
+// Placeholders are examples, not content: the container's muted tier.
 body :is(input, textarea)::placeholder {
-  color: color-mix(in srgb, currentColor 65%, transparent) !important;
+  color: var(--ink-muted);
   opacity: 1;
 }
 body a[href] {
   text-decoration: underline;
 }
 
-// Enabled filled buttons only: disabled ones keep Material's dimmed container
-// and label, warn buttons keep the warn palette, the flat icon-only FAB
-// (`.mat-mini-fab-icon`, _overwrite-material.scss) keeps its muted icon on a
-// transparent background, and the subtask toggle is a card-colored control
-// (listed with the surfaces above).
+// Enabled filled buttons only: disabled ones use the disabled roles, warn
+// buttons keep the danger role, the flat icon-only FAB (`.mat-mini-fab-icon`,
+// _overwrite-material.scss) keeps its muted icon on a transparent background,
+// and the subtask toggle is a card-colored control (listed with the surfaces
+// above). Fills carry no muted tier: everything on them is the accent ink.
 body
   :is(
     .mat-mdc-unelevated-button,
@@ -190,22 +233,38 @@ body
     .mat-mdc-mini-fab:not(.mat-mini-fab-icon, .toggle-sub-tasks-btn)
   ):not(:disabled, .mat-mdc-button-disabled, .mat-warn),
 body .preview-action {
-  @include ink(var(--palette-accent-ink), var(--palette-background-ink-channel));
+  @include ink(
+    var(--palette-accent-ink),
+    var(--palette-background-ink-channel),
+    var(--palette-accent-ink)
+  );
   color: var(--palette-accent-ink) !important;
   background-color: var(--palette-accent);
 }
 
 // Work-context rows (buttons) and route rows (anchors) share one active look.
 body nav-item :is(button.active, .nav-link.active) {
-  @include ink(var(--palette-accent-ink), var(--palette-background-ink-channel));
+  @include ink(
+    var(--palette-accent-ink),
+    var(--palette-background-ink-channel),
+    var(--palette-accent-ink)
+  );
   color: var(--palette-accent-ink) !important;
 }
 body nav-item button:not(.active):hover {
-  @include ink(var(--palette-surface-ink), var(--palette-surface-ink-channel));
+  @include ink(
+    var(--palette-surface-ink),
+    var(--palette-surface-ink-channel),
+    var(--palette-ink-muted)
+  );
   color: var(--palette-surface-ink) !important;
 }
 body :is(task, planner-task):is(.isCurrent, .isSelected, .isMultiSelected) {
-  @include ink(var(--palette-selected-ink), var(--palette-surface-ink-channel));
+  @include ink(
+    var(--palette-selected-ink),
+    var(--palette-surface-ink-channel),
+    var(--palette-selected-ink-muted)
+  );
 }
 
 // Material's generated foreground/background palettes otherwise bypass the app tokens.
@@ -237,38 +296,55 @@ body
   --mat-form-field-outlined-input-text-color: var(--text-color);
   --mat-form-field-outlined-label-text-color: var(--text-color);
   --mat-form-field-outlined-focus-label-text-color: var(--text-color);
+  --mat-form-field-outlined-outline-color: var(--palette-outline);
   --mat-select-enabled-trigger-text-color: var(--text-color);
-  --mat-dialog-container-color: var(--palette-surface);
+  --mat-dialog-container-color: var(--palette-surface-raised);
   --mat-dialog-subhead-color: var(--palette-surface-ink);
   --mat-dialog-supporting-text-color: var(--palette-surface-ink);
-  --mat-menu-container-color: var(--palette-surface);
+  --mat-menu-container-color: var(--palette-surface-raised);
   --mat-menu-item-label-text-color: var(--palette-surface-ink);
-  --mat-autocomplete-background-color: var(--palette-surface);
-  --mat-select-panel-background-color: var(--palette-surface);
+  --mat-autocomplete-background-color: var(--palette-surface-raised);
+  --mat-select-panel-background-color: var(--palette-surface-raised);
   --mat-option-label-text-color: var(--palette-surface-ink);
-  --mat-option-selected-state-label-text-color: var(--palette-surface-ink);
-  --mat-option-selected-state-layer-color: var(--palette-surface);
+  --mat-option-selected-state-label-text-color: var(--palette-accent-text);
+  --mat-option-selected-state-layer-color: var(--palette-selected);
   --mat-button-toggle-background-color: var(--palette-surface);
   --mat-button-toggle-text-color: var(--palette-surface-ink);
   --mat-button-toggle-selected-state-background-color: var(--palette-accent);
   --mat-button-toggle-selected-state-text-color: var(--palette-accent-ink);
 }
 body .mat-button-toggle {
-  @include ink(var(--palette-surface-ink), var(--palette-surface-ink-channel));
+  @include ink(
+    var(--palette-surface-ink),
+    var(--palette-surface-ink-channel),
+    var(--palette-ink-muted)
+  );
 }
 body .mat-button-toggle-checked {
-  @include ink(var(--palette-accent-ink), var(--palette-background-ink-channel));
+  @include ink(
+    var(--palette-accent-ink),
+    var(--palette-background-ink-channel),
+    var(--palette-accent-ink)
+  );
 }
 body .mdc-text-field--filled {
-  @include ink(var(--palette-surface-ink), var(--palette-surface-ink-channel));
+  @include ink(
+    var(--palette-surface-ink),
+    var(--palette-surface-ink-channel),
+    var(--palette-ink-muted)
+  );
 }
 
 body :is(.input-item, .mat-expansion-panel-header):hover {
-  @include ink(var(--palette-hover-ink), var(--palette-surface-ink-channel));
+  @include ink(
+    var(--palette-hover-ink),
+    var(--palette-surface-ink-channel),
+    var(--palette-ink-muted)
+  );
 }
 
 body .mat-mdc-snack-bar-container {
-  --mat-snack-bar-container-color: var(--palette-surface);
+  --mat-snack-bar-container-color: var(--palette-surface-raised);
   --mat-snack-bar-supporting-text-color: var(--palette-surface-ink);
   --mat-snack-bar-button-color: var(--palette-surface-ink);
 }

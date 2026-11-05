@@ -17,10 +17,11 @@
 // static strips and side panels blur. Anything that slides (mobile drawer,
 // full-width right panel) gets a stronger tint without blur.
 //
-// Tokens, from palette roles so the colour normaliser can feed them. It writes
-// the tints, the alphas (max(design value, contrast floor), the floor counting
-// muted text on glass), `--glass-ink-muted` and `--glass-edge-line` inline on
-// the root element at runtime, which overrides these design defaults.
+// Tokens come from palette roles: PaletteThemeService writes the normalised
+// tints, alphas (max(design value, contrast floor), the floor counting muted
+// text on glass), `--glass-ink-muted`, `--glass-focus-ring` and
+// `--glass-edge-line` inline on the root element, overriding these defaults
+// (docs/theming-contract.md § Glass roles).
 :root {
   --glass-panel-tint: var(--palette-background);
   --glass-canvas-tint: var(--palette-background);
@@ -28,6 +29,7 @@
   --glass-canvas-alpha: 92%;
   --glass-overlay-alpha: 95%;
   --glass-ink-muted: var(--palette-background-ink);
+  --glass-focus-ring: var(--palette-accent);
   --glass-edge-line: rgba(var(--palette-background-ink-channel), 0.12);
 }
 body.ultra-tasks {
@@ -63,15 +65,25 @@ body.ultra-tasks.st-glass {
     background: transparent;
   }
 
+  // Muted text and focus rings straight on glass (frame and content sheet) use
+  // the tiers solved for the worst backdrop; opaque cards re-scope their own.
+  .nav-sidenav,
+  main-header .wrapper,
+  .right-panel,
+  .mobile-bottom-nav,
+  .route-wrapper {
+    --ink-muted: var(--glass-ink-muted);
+    --text-color-muted: var(--glass-ink-muted);
+    --text-color-less-intense: var(--glass-ink-muted);
+    --focus-ring: var(--glass-focus-ring);
+    --focus-ring-color: var(--glass-focus-ring);
+  }
+
   // Frosted frame. `!important` outranks the panels' own opaque fills.
   .nav-sidenav,
   main-header .wrapper,
   .right-panel,
   .mobile-bottom-nav {
-    // Muted text on glass uses the tier solved for the worst backdrop.
-    --ink-muted: var(--glass-ink-muted);
-    --text-color-muted: var(--glass-ink-muted);
-    --text-color-less-intense: var(--glass-ink-muted);
     background: var(--glass-panel-bg) !important;
     backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate)) !important;
   }
@@ -80,6 +92,11 @@ body.ultra-tasks.st-glass {
   .nav-sidenav {
     border-inline-end: var(--st-line-width) solid var(--glass-edge-line);
     box-shadow: inset 0 var(--st-line-width) 0 var(--glass-edge-highlight);
+  }
+  // The header's own hairline replaces the wrapper's transparent border, which
+  // would otherwise show the raw backdrop as a 1px seam.
+  .header-wrapper {
+    border-bottom-width: 0;
   }
   main-header .wrapper {
     box-shadow:

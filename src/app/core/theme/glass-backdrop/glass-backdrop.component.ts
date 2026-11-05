@@ -37,11 +37,9 @@ export class GlassBackdropComponent {
   readonly imageUrl = input<string | null>(null);
 
   private readonly _canvas = viewChild.required<ElementRef<HTMLCanvasElement>>('canvas');
-  private readonly _colors = computed(
-    () =>
-      this._paletteThemeService.palettes()[
-        this._globalThemeService.isDarkTheme() ? 'dark' : 'light'
-      ],
+  // The normalised roles the app paints with, not the raw picks.
+  private readonly _colors = computed(() =>
+    this._paletteThemeService.roles(this._globalThemeService.isDarkTheme()),
   );
   private readonly _image = signal<{
     state: 'none' | 'loading' | 'ready' | 'failed';

@@ -1,24 +1,209 @@
 # Styling Guide
 
+One calm design language for every surface. This guide describes the scale in
+`src/styles/_css-variables.scss`, how Angular Material is mapped onto it in
+`src/styles/components/_overwrite-material.scss`, and the rules every component
+follows. Colour roles come from the palette normaliser; see
+[theming-contract.md](theming-contract.md).
+
 ## Rules
 
-- **All visual styling must use CSS variables** from `src/styles/_css-variables.scss` — never hardcode colors, spacing, shadows, transitions, or z-index.
+- **All visual styling uses tokens** from `src/styles/_css-variables.scss`: spacing, radius, elevation, type, icon sizes, control heights, colours, transitions and z-index. Never hardcode them.
 - **Positioning/layout is fine as plain CSS** — flexbox, grid, display, position, dimensions.
 - **Check `src/app/ui/` first** before creating new styled elements — 40+ reusable components exist.
 - **Component SCSS should be minimal** — shared styles belong in `src/styles/components/` or as a mixin.
-- **Material overlay components** (menus, dialogs, tooltips) render outside component scope — style them in `src/styles/components/` and add a comment in the component pointing there.
+- **Angular Material is mapped once, in the shared layer.** `_overwrite-material.scss` sets Material's public `--mat-*` tokens for typography, shape, elevation and height. Never restyle Material or shared `src/app/ui/` components for a one-off (local `.mat-*`, `.mdc-*`, `button[mat-*]` or component-internal overrides). If a surface needs a variant, make it reusable in the shared layer (for example `.mat-button-compact`).
+- **Material overlay components** (menus, dialogs, tooltips, snackbars) render outside component scope — style them in `src/styles/components/` and add a comment in the component pointing there.
 - **Only reference custom properties that can reach the rule** — a `var(--x)` whose `--x` is undeclared, or declared only inside some component's `:host`, silently voids the whole declaration. Enforced across SCSS, theme CSS and inline `styles:`/`[ngStyle]` by `npm run lint:css-vars` (`tools/check-css-vars.js`), which explains the fix when it fails.
 
 ## Anti-Patterns
 
-| Avoid                                | Do Instead                                                                |
-| ------------------------------------ | ------------------------------------------------------------------------- |
-| Hardcoded colors (`#fff`, `red`)     | CSS variables (`--text-color`, `--card-bg`, `--color-danger`)             |
-| Hardcoded spacing (`16px`, `1rem`)   | Spacing variables (`--s2`, `--s`, `--s-half`)                             |
-| Hardcoded shadows                    | Elevation variables (`--whiteframe-shadow-*dp`, `--md-sys-level*`)        |
-| Hardcoded transitions/durations      | Transition variables (`--transition-standard`, `--transition-duration-*`) |
-| Custom z-index values                | Z-index variables (`--z-main-header`, `--z-backdrop`, etc.)               |
-| New styled elements without checking | Check `src/app/ui/` for existing reusable components first                |
+| Avoid                                       | Do Instead                                                             |
+| ------------------------------------------- | ---------------------------------------------------------------------- |
+| Hardcoded colors (`#fff`, `red`)            | Colour tokens (`--text-color`, `--card-bg`, `--palette-*` roles)       |
+| Hardcoded spacing (`16px`, `1rem`)          | Spacing tokens (`--s2`, `--s1-5`, `--s-half`)                          |
+| Ad-hoc radii (`4px`, `12px`, `50%`)         | Radius by role (`--r-sm`, `--r-md`, `--r-lg`, `--r-full`)              |
+| Hardcoded or resting shadows                | `--elev-1` / `--elev-2`, on floating surfaces only                     |
+| Ad-hoc font sizes, weights and line heights | A type role (`font: var(--type-body)`)                                 |
+| Icons at 13, 15.75 or 18px                  | `--icon-sm` / `--icon-md` / `--icon-lg`, glyph equal to its box        |
+| Hardcoded transitions/durations             | Transition tokens (`--transition-standard`, `--transition-duration-*`) |
+| Custom z-index values                       | Z-index tokens (`--z-main-header`, `--z-backdrop`, etc.)               |
+| New styled elements without checking        | Check `src/app/ui/` for existing reusable components first             |
+
+## Scale
+
+All tokens live on `:root` in `src/styles/_css-variables.scss`. Older names stay
+as aliases (see [Legacy aliases](#legacy-aliases)) so existing rules keep working;
+new code uses the scale names.
+
+### Spacing (4/8 grid)
+
+| Token         | Value | Token  | Value |
+| ------------- | ----- | ------ | ----- |
+| `--s-quarter` | 2px   | `--s4` | 32px  |
+| `--s-half`    | 4px   | `--s5` | 40px  |
+| `--s`         | 8px   | `--s6` | 48px  |
+| `--s1-5`      | 12px  | `--s7` | 56px  |
+| `--s2`        | 16px  | `--s8` | 64px  |
+| `--s3`        | 24px  | `--s9` | 72px  |
+
+`--s1-5` is the icon-to-label gap in rows and the inset of menu items; it replaces
+`calc(var(--s) * 1.5)` and ad-hoc 12px values.
+
+```scss
+// ✅ Good
+padding: var(--s2) var(--s3);
+gap: var(--s-half);
+
+// ❌ Bad
+padding: 16px 24px;
+gap: 4px;
+```
+
+### Radius
+
+Radius follows the role of a shape, not its height.
+
+| Token      | Value  | Role                                                                                   |
+| ---------- | ------ | -------------------------------------------------------------------------------------- |
+| `--r-sm`   | 6px    | Inline: tooltip, kbd, checkbox, inline edit field, hover-control group, select options |
+| `--r-md`   | 10px   | Controls and list items: buttons, fields, nav rows, task and note cards, menu items    |
+| `--r-lg`   | 14px   | Floating surfaces: dialogs, menus, snackbars, date picker, add-task bar, sheets        |
+| `--r-full` | 9999px | Icon buttons, FAB, chips, badges, counts, toggles                                      |
+
+A nested shape is never rounder than its parent. An inner shape inset by _p_
+inside radius _R_ uses _R − p_: a menu (14) with 4px inner padding has 10px
+items; a select panel (10) with 4px padding has 6px options.
+
+### Elevation
+
+Resting UI has no shadow. Only floating surfaces are elevated:
+
+| Token      | Use                                                                    |
+| ---------- | ---------------------------------------------------------------------- |
+| `--elev-1` | Menus, popovers, select and autocomplete panels, date picker, snackbar |
+| `--elev-2` | Dialogs, the add-task bar, sheets, drag previews                       |
+
+Each level carries its own hairline: a 1px `--palette-separator` ring is part of
+the `box-shadow`, so the edge stays visible where shadows vanish (dark palettes,
+glass, a busy background image) and the ring never changes layout. Don't add a
+border to an elevated surface. Cards are not elevated: they are a surface with a
+hairline border and no shadow.
+
+### Type roles
+
+Every text style is one of six roles. Each is a `font` shorthand with a
+whole-pixel line height on the 4px grid; `font` does not set tracking, so title
+and label pair with a tracking token and the others track at 0.
+
+| Token                | Value       | Tracking        | Use                                                        |
+| -------------------- | ----------- | --------------- | ---------------------------------------------------------- |
+| `--type-title`       | 600 18/24px | `--track-title` | Page, dialog and settings-window titles                    |
+| `--type-heading`     | 600 16/24px | 0               | Panel and section headings, detail task title, empty state |
+| `--type-body`        | 400 14/20px | 0               | Default UI text: nav, fields, menus, rows                  |
+| `--type-body-strong` | 500 14/20px | 0               | Task titles, button labels, values                         |
+| `--type-label`       | 600 12/16px | `--track-label` | Section and group labels (chrome around content)           |
+| `--type-meta`        | 400 12/16px | 0               | Tags, counts, hints, summary labels, badges                |
+
+```scss
+.section-title {
+  font: var(--type-heading);
+}
+```
+
+- **Base text** is the body role: `html`, `body` and `.mat-typography` (on `body`) set `font: var(--type-body)` and tracking 0 (`src/styles/page.scss`), which also stops Material's M2 body tracking (0.25px) from reaching every text node.
+- **Form controls** inherit the app font: `:where(button, input, textarea, select) { font-family: inherit }`. Without it, Chromium's UA Arial reaches custom buttons and badges.
+- **Global heading ramp** (`page.scss`) types `h1`–`h6` that have no rule of their own: 28/36, 22/28, 18/24, 16/24, 14/20, 12/16, all 600. It replaces Material's M2 hierarchy (`.mat-typography h1 { font: 400 24px/32px }`) at that hierarchy's specificity (0,1,1), placed after it, so every component heading rule wins over it. Material dialog and card titles keep their mapped typography.
+- **Material's M2 typography classes** (`.mat-h1`, `.mat-headline-5`, `.mat-h3`, `.mat-caption`, …) are mapped onto the roles in `_overwrite-material.scss`. Prefer the role tokens in new code.
+- **Text-entry fields** use the body size, and 16/24 under `(pointer: coarse)`: iOS zooms into a focused field below 16px (see [Angular Material](#angular-material)). Bare inputs outside a `mat-form-field` use the `noIosFocusZoom*` mixins in `src/styles/mixins/_ios-focus-zoom.scss`.
+- **Numbers** that change in place (times, counts) use `.tabular-nums`.
+- **Size primitives** `--font-size-xs` (11) … `--font-size-3xl` (28), `--font-weight-*`, `--line-height-*` and `--letter-spacing-*` stay for the roles, the heading ramp and legacy rules. Snap an off-scale size to the nearest role instead of adding a primitive.
+
+Deliberately proportional `em` sizes that track their parent (`font-size: 1em`
+on an inline icon) are the one exception.
+
+### Icons
+
+| Token         | Value | Use                                                         |
+| ------------- | ----- | ----------------------------------------------------------- |
+| `--icon-sm`   | 16px  | Inline with 12–14px text: meta rows, chips, compact buttons |
+| `--icon-md`   | 20px  | Every control: buttons, menus, nav, header, field rows      |
+| `--icon-lg`   | 24px  | Touch-first surfaces: bottom nav, FAB, empty state          |
+| `--icon-slot` | 24px  | Leading icons centre in this slot                           |
+
+- The glyph equals its box: set `font-size`, `width` and `height` together, or the glyph decentres. Icon boxes that are deliberately off this scale (a 48px empty-state illustration) keep a matched set.
+- One icon font: Material Symbols Outlined, `FILL` 0. `FILL` 1 means "on" (active nav, pressed toggle, playing).
+- No icon goes below 16px.
+
+### Control heights
+
+| Token      | Value | Use                                                              |
+| ---------- | ----- | ---------------------------------------------------------------- |
+| `--ctl-sm` | 32px  | Compact: add-bar actions, in-row buttons, section headers        |
+| `--ctl-md` | 40px  | Default: buttons, icon buttons, nav rows, fields, menu items     |
+| `--ctl-lg` | 48px  | Touch surfaces: bottom nav, drawer rows, sheet rows, touch menus |
+
+Under `(pointer: coarse)` `--ctl-sm` becomes 40px, so no hit area on a touch
+device is below 40px.
+
+### Layout
+
+| Token                   | Value                       | Notes                                   |
+| ----------------------- | --------------------------- | --------------------------------------- |
+| `--page-gutter`         | 8px, 16px ≥ 600, 24px ≥ 960 | Page content's one left edge            |
+| `--component-max-width` | `clamp(800px, 65vw, 960px)` | 900–1000px on iPad (`body.isIPad`)      |
+| `--bar-height-large`    | 56px                        | Header band and brand row               |
+| `--dialog-gutter`       | 16px, 24px ≥ 600            | Dialog title, content and actions inset |
+| `--dialog-w-s/m/l`      | 440 / 560 / 720px           | Dialog widths, see [Dialogs](#dialogs)  |
+
+### Legacy aliases
+
+These names keep working and point at the scale:
+
+| Legacy name                                                                   | Now                    |
+| ----------------------------------------------------------------------------- | ---------------------- |
+| `--radius-xs`, `--radius-sm`                                                  | `--r-sm`               |
+| `--st-radius`, `--radius-md`, `--card-border-radius`, `--input-border-radius` | `--r-md`               |
+| `--radius-lg`, `--radius-xl`                                                  | `--r-lg`               |
+| `--radius-pill`                                                               | `--r-full`             |
+| `--md-sys-level1` … `--md-sys-level2`, `--whiteframe-shadow-1dp` … `4dp`      | `--elev-1`             |
+| `--md-sys-level3` … `--md-sys-level5`, `--whiteframe-shadow-6dp` … `24dp`     | `--elev-2`             |
+| `--bar-height`, `--bar-height-small`                                          | `--ctl-lg`, `--ctl-md` |
+| `--task-first-line-min-height`, `--task-icon-size`                            | `--ctl-md`             |
+
+## Angular Material
+
+Material is mapped onto the scale in `src/styles/components/_overwrite-material.scss`,
+through its public `--mat-*` tokens. The M2 theme declares its tokens on `html`;
+the mapping sets them on `:root`, which outranks it. Tokens Material declares on
+a component element (chips, tabs, slide toggles, form fields) are set on that
+element. Structural rules are kept to what Material does not expose as tokens,
+each commented in place.
+
+- **Typography:** dialog titles use the title role (18/24, 600) and dialog text the body role. Fields, selects, options, menu items, checkbox, radio and toggle labels are 14px; hints and tooltips 12/16; snackbars 14/20; date-picker headers 12px. Material's 0.25–1.25px tracking is 0 everywhere (titles keep `--track-title`).
+- **Shapes:** dialogs, menus, snackbars and the date picker `--r-lg`; buttons, button toggles, fields, expansion panels, cards and select/autocomplete panels `--r-md`; options `--r-sm`; tooltips `--r-sm`; chips `--r-full`.
+- **Elevation:** dialogs `--elev-2`; menus, select and autocomplete panels, the date picker and snackbars `--elev-1`. Raised buttons have no shadow.
+- **Buttons:** text, filled, outlined, raised and tonal buttons are 40px (`--ctl-md`). Add `class="mat-button-compact"` to a button, or to the row that holds them, for 32px buttons (40px on touch). Icon buttons are 40px round.
+- **Button toggles** (segmented controls) are 40px with `--r-md`.
+- **Menus:** the panel has 4px inner padding; items are 40px (48px under `(pointer: coarse)`), `--r-md`, with 12px insets and 20px icons. Dividers use `--palette-separator` with 4px above and below. Item rules are scoped to `.mat-mdc-menu-panel` because side-nav links also carry `.mat-mdc-menu-item`. Opt into a 320px panel with `class="mat-menu-wide"`.
+- **Select and autocomplete panels:** 4px inner padding, 40px options (48px on touch).
+- **Tooltips:** 12/16 type, `--r-sm`, and the inverse colour pair `--palette-tooltip-bg` / `--palette-tooltip-ink` (mapped in `_palette-theme.scss`), so a tooltip reads on any surface.
+
+### Fields
+
+One field look for both appearances:
+
+- A `--r-md` box with a 1px `--input-border-color` edge, which is the palette's `--palette-outline` role (3:1 against its surface, WCAG 1.4.11). Hover strengthens the edge (`--input-border-color-hover`); focus is a 2px ink edge (`--input-border-color-focus`); invalid uses `--input-border-color-invalid`. Material's grey hover and focus wash is off.
+- `appearance="outline"` renders the same box through the outline tokens (colour, width, shape). Prefer the default fill appearance in new templates.
+- A labelled field is 56px plus its edge. A field without a label (search, filter, toolbar select) is 40px, like a button.
+- Field text is 14/20 on pointer devices and 16/24 under `(pointer: coarse)`. The floating label rests at the text size and floats at 12px.
+- Toggle fields keep their edge on focus and show the focus ring instead.
+
+### Dialogs
+
+- **Anatomy:** one `--dialog-gutter` (24px, 16px below 600px) insets title, content and actions. The title box is `24 24 12` around one 24px line (Material's 40px baseline strut is hidden); content is `24 24 16`; actions are `8 24 24`, with buttons 8px apart through the row's gap (also when they wrap).
+- **Widths:** spread `dialogSize('s' | 'm' | 'l')` from `src/app/ui/dialog-size.util.ts` into `MatDialog.open()`. S 440px for confirm, prompt, estimate, schedule, deadline and reminder; M 560px for entity forms (project, tag, habit, repeat, sync, import); L 720px for reference content (keyboard help, logs, conflict details). The pane's max-width (`--mat-dialog-container-max-width`, 94vw below 600px) keeps every size on screen. The Settings and Plugins windows use their own `settings-window` panel class.
+- Don't set `min-width`, `max-width` or `width: max-content` on a dialog's content; pick a size.
 
 ## Dialog action buttons
 
@@ -75,42 +260,23 @@ Sibling: `.info-panel` (`_info-panel.scss`) is the same idea for
 formly-generated markup, where no icon element can be added and the glyph has to
 come from a `::before`.
 
-## Typography Scale
-
-| Variable         | Value | Variable          | Value |
-| ---------------- | ----- | ----------------- | ----- |
-| `--font-size-xs` | 11px  | `--font-size-xl`  | 18px  |
-| `--font-size-sm` | 12px  | `--font-size-2xl` | 22px  |
-| `--font-size-md` | 14px  | `--font-size-3xl` | 28px  |
-| `--font-size-lg` | 16px  |                   |       |
-
-Text sizes go through the scale; snap an off-scale value to the nearest step.
-Companion tokens: `--font-weight-medium/-semibold/-bold`,
-`--line-height-tight/-snug/-normal`, `--font-mono-stack`.
-
-Two deliberate exceptions — leave these as plain px/em:
-
-- **Material icon glyph sizes** written as a matched set — `font-size`, `width` and `height` all 20px. The glyph must equal its box or it decenters, and the scale has no 20/24px step. See `main-header.component.scss` and the `.tab-icon` rules in `config-page.component.scss`.
-- **Deliberately proportional `em`** sizes that track their parent
-  (`font-size: 1em` on an inline icon).
-
 ## Key Files
 
-| File                                        | Purpose                                                       |
-| ------------------------------------------- | ------------------------------------------------------------- |
-| `src/styles/_css-variables.scss`            | All CSS custom properties (design tokens)                     |
-| `src/styles/components/_palette-theme.scss` | Maps the three palette colors onto the shared tokens          |
-| `src/styles/components/_ultra-tasks.scss`   | Ultra Tasks workspace: card task rows, shell panels, nav      |
-| `src/styles/themes.scss`                    | Material theme setup + utility classes                        |
-| `src/styles/page.scss`                      | Global page/body styles                                       |
-| `src/styles/util.scss`                      | Utility classes                                               |
-| `src/styles/components/`                    | Global component styles (Material overrides, shared patterns) |
-| `src/styles/mixins/`                        | Reusable SCSS mixins                                          |
-| `src/app/ui/`                               | 40+ reusable Angular UI components                            |
+| File                                             | Purpose                                                           |
+| ------------------------------------------------ | ----------------------------------------------------------------- |
+| `src/styles/_css-variables.scss`                 | Design tokens: the scale, layout, z-index, colour aliases         |
+| `src/styles/components/_overwrite-material.scss` | Angular Material on the scale (tokens + the few structural rules) |
+| `src/styles/components/_palette-theme.scss`      | Maps the palette roles onto the shared tokens and containers      |
+| `src/styles/components/_ultra-tasks.scss`        | Ultra Tasks workspace: card task rows, shell panels, nav          |
+| `src/styles/components/_glass.scss`              | Glass shell panels                                                |
+| `src/styles/page.scss`                           | Base text, control font reset, heading ramp, page wrappers        |
+| `src/styles/themes.scss`                         | Material theme setup + utility classes                            |
+| `src/styles/util.scss`                           | Utility classes                                                   |
+| `src/styles/components/`                         | Global component styles (Material overrides, shared patterns)     |
+| `src/styles/mixins/`                             | Reusable SCSS mixins                                              |
+| `src/app/ui/`                                    | 40+ reusable Angular UI components                                |
 
-## Spacing Variables (8px Grid)
-
-### Settings layout
+## Settings layout
 
 Settings opens in a centered dialog over a dimmed, blurred workspace on desktop.
 Use labeled category navigation on the left. On small screens, show the category
@@ -138,63 +304,28 @@ for installed items, with secondary metadata in Details, and a responsive grid f
 discovery. Render at most 24 results per page; reset to page one after a search or
 filter changes. Empty results must offer a way to clear filters.
 
-### Spacing tokens
+## Colour
 
-| Variable      | Value | Variable | Value |
-| ------------- | ----- | -------- | ----- |
-| `--s-quarter` | 2px   | `--s4`   | 32px  |
-| `--s-half`    | 4px   | `--s5`   | 40px  |
-| `--s`         | 8px   | `--s6`   | 48px  |
-| `--s2`        | 16px  | `--s7`   | 56px  |
-| `--s3`        | 24px  | `--s8`   | 64px  |
+Colours come from the device-local three-colour palette (background, cards and
+panels, accent) per mode. `PaletteThemeService` normalises it into roles and
+writes them on the root element; `_palette-theme.scss` maps the roles onto the
+shared tokens and painted containers. [theming-contract.md](theming-contract.md)
+lists every role, its contrast guarantee and the aliases it feeds. New colours go
+through these roles, never a hex value.
 
-```scss
-// ✅ Good
-padding: var(--s2) var(--s3);
-gap: var(--s-half);
+| Use case    | Tokens                                                                                                                   |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Text        | `--text-color`, `--text-color-muted` (the `--palette-ink-muted` tier), `--text-color-most-intense`                       |
+| Surfaces    | `--bg`, `--card-bg`, overlays on `--palette-surface-raised`                                                              |
+| Interaction | `--palette-hover`, `--palette-selected` (+ `-ink`), `--state-hover` / `--state-pressed` overlays                         |
+| Lines       | `--separator` (`--palette-separator`) for hairlines, `--input-border-color` (`--palette-outline`) for field edges        |
+| Focus       | `--focus-ring` (`--palette-focus-ring`)                                                                                  |
+| Semantic    | `--c-warn` / `--color-danger`, `--color-warning`, `--color-success` (the normaliser's danger, warning and success roles) |
+| Tooltips    | `--palette-tooltip-bg`, `--palette-tooltip-ink`                                                                          |
 
-// ❌ Bad
-padding: 16px 24px;
-gap: 4px;
-```
-
-## Color Variables
-
-| Use case           | Variables                                                                                                                 |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------- |
-| Text               | `--text-color`, `--text-color-muted`, `--text-color-most-intense`                                                         |
-| Backgrounds        | `--bg`, `--card-bg`, `--task-c-bg`, `--sub-task-c-bg`                                                                     |
-| Palette            | `--palette-background`, `--palette-surface`, `--palette-accent` and their `-ink`; `--palette-selected`, `--palette-hover` |
-| Semantic           | `--color-success` (#4caf50), `--color-warning` (#ff9800), `--color-danger` (#f44336), `--c-warn`                          |
-| Material palette   | `--palette-primary-500`, `--palette-accent-500`, `--palette-warn-500` (100–900)                                           |
-| Overlays           | `--c-dark-10` through `--c-dark-90`, `--c-light-05` through `--c-light-90`                                                |
-| Alpha coefficients | `--border-alpha` (0.12), `--overlay-alpha` (0.1), `--muted-alpha` (0.6), `--separator-alpha` (0.3)                        |
-
-### Palette Values
-
-The app has one layout and a device-local three-color palette per mode (see
-[theming-contract.md](theming-contract.md)). `PaletteThemeService` writes the
-`--palette-*` tokens on the root element and `_palette-theme.scss` maps them onto
-the shared tokens:
-
-- **Background** (`--palette-background`): `--bg` and the canvas/navigation. Default
-  `#f8f8f7` light, `#131314` dark.
-- **Cards and panels** (`--palette-surface`): `--card-bg`, menus, dialogs, form
-  fields, task detail. Default `#ffffff` light, `#242426` dark. The `--dark0` …
-  `--dark24` elevation steps all resolve to this surface.
-- **Accent** (`--palette-accent`): `--brand`, `--c-primary`, `--c-accent`,
-  `--st-brand`, filled buttons and every `--palette-primary-*` / `--palette-accent-*`
-  stop, so Angular Material's own tokens follow it. Default `#075b5e` light,
-  `#63c5c3` dark.
-
-Text is pure black or white: each painted container sets the `-ink` that contrasts
-best with its own color, and every `--text-color*` variant (including
-`--text-color-muted`) resolves to that full ink. Input placeholders use a muted share
-of the field's ink so examples don't read as typed text. State colors stay
-independent of the palette: `--palette-warn-*` keeps Material's warn red, so
-`--c-warn`, overdue dates and `color="warn"` buttons are red, and the
-`--color-success` / `--color-warning` / `--color-danger` callout tones keep their
-semantic values.
+Each painted container sets the ink that contrasts with its own colour, so text
+inherits a readable colour from its container. `color="warn"` buttons, overdue
+dates and destructive actions stay red and never follow the accent.
 
 ### Theme-Specific Overrides in Components
 
@@ -214,8 +345,8 @@ Mixins are in `src/styles/mixins/_theming.scss`.
 `src/index.html` always sets `body.ultra-tasks`, and `_ultra-tasks.scss` turns every
 `task` row into a card: a full `--st-line-width` border in `--task-border-color` (a
 low-contrast mix of the surface ink into `--card-bg`), the `--card-bg` surface,
-`--st-radius` corners, a `--s-half` gap between rows and no separator. Subtasks are
-cards too, nested inside their parent's card. The inherited tokens in
+`--st-radius` (`--r-md`) corners, a `--s-half` gap between rows and no separator.
+Subtasks are cards too, nested inside their parent's card. The inherited tokens in
 `_css-variables.scss` still describe flat, hairline-separated rows, and planner,
 board and issue-panel items keep that flat default:
 
@@ -231,7 +362,8 @@ Change the row look in these tokens and in `_ultra-tasks.scss` only — never
 hardcode a border or surface on a row in component styles. Rows that draw their own
 box (planner, board and issue-panel items) take their top/bottom edge from
 `--task-row-edge`, so the separator and the box border never cancel each other out
-on one element. Bare `task` hosts use `--task-separator`.
+on one element. Bare `task` hosts use `--task-separator`. Task rows are a
+performance hot path: CSS only, and no per-row shadow, filter or blur.
 
 Chrome around task lists — section headings (`collapsible.task-section`), board panel
 titles, the collapsed "+ n completed subtasks" label — is typed one level below the
@@ -249,9 +381,7 @@ it is the weaker channel, so the outline stays: `background` on a task row is
 contested (the `isCurrent` chain and the `isSelected` `!important` rule win over it),
 and author backgrounds are dropped in forced-colors mode while outlines survive.
 Never make a row state depend on `background` alone. The task open in the detail
-panel uses `--task-c-selected-bg`. Under the palette theme the selected,
-multi-selected and current-task backgrounds all resolve to `--palette-selected` (the
-surface mixed with 18% accent).
+panel uses `--task-c-selected-bg`.
 
 Focus rings on rows and other focusable containers (anything carrying a `tabindex`,
 as opposed to a button or control — those keep the `.focus-ring` utility from the Focus
@@ -270,11 +400,6 @@ to `:focus-visible` alone removes that, at the cost of no ring on plain mouse cl
 the ring on click is the deliberate choice here. Where a cue must show regardless of
 input, use a class instead (see `highlight-searched-task`).
 
-## Shadows & Elevation
-
-- `--whiteframe-shadow-1dp` through `--whiteframe-shadow-24dp` — classic Material shadows
-- `--md-sys-level1` through `--md-sys-level5` — Material Design 3 style
-
 ## Transitions & Animations
 
 | Type       | Variables                                                                                                          |
@@ -284,28 +409,25 @@ input, use a class instead (see `highlight-searched-task`).
 | Additional | `--transition-duration-enter` (225ms), `--transition-duration-leave` (195ms), `--page-transition-duration` (225ms) |
 | Timing     | `--ani-standard-timing`, `--ani-enter-timing`, `--ani-leave-timing`, `--ani-sharp-timing`                          |
 
-When migrating hardcoded durations, pick the nearest bucket — up to ~15% drift is acceptable for UI transitions.
+When migrating hardcoded durations, pick the nearest bucket — up to ~15% drift is acceptable for UI transitions. Under touch intent (`body.isTouchPrimary`) the `-s` and `-m` durations are shorter.
 
 ## Focus Ring
 
-Keyboard-accessibility tokens for custom interactive elements. Material components keep their own focus treatment; use these for non-Material buttons, cards, and custom controls.
+One ring everywhere: 2px in `--focus-ring`, which resolves to the palette's
+`--palette-focus-ring` (the accent as text, at least 4.5:1 on every layer).
+Material components keep their own focus treatment; use these tokens for
+non-Material buttons, cards, rows and custom controls.
 
-| Variable              | Value                                                                           |
-| --------------------- | ------------------------------------------------------------------------------- |
-| `--focus-ring-width`  | 2px                                                                             |
-| `--focus-ring-offset` | 2px                                                                             |
-| `--focus-ring`        | `var(--text-color)` (palette theme); `var(--brand)` in the inherited base layer |
-| `--focus-ring-color`  | `var(--focus-ring)`                                                             |
+| Variable              | Value                                               |
+| --------------------- | --------------------------------------------------- |
+| `--focus-ring-width`  | 2px                                                 |
+| `--focus-ring-offset` | 2px (outside on controls; inset on full-bleed rows) |
+| `--focus-ring`        | `--palette-focus-ring`                              |
+| `--focus-ring-color`  | `var(--focus-ring)`, the name existing rules use    |
 
-The palette theme (`_palette-theme.scss`) sets `--focus-ring` on `body` to the text
-ink, so custom controls (nav links, collapsible headers, chips, dialog content) show
-a black ring in light palettes and a white ring in dark ones; the value is resolved
-on `body`, so it follows the background's ink, not a card's. Task rows use their own
-accent ring (`--palette-primary-400`, see Task rows), and the Ultra Tasks brand link
-and planning actions use `--st-brand`. `--focus-ring-color` is the compatibility
-alias consumed by existing components; change the ring through `--focus-ring`.
-
-Quickest adoption — add the `.focus-ring` utility class from `util.scss`, which applies an `outline` on `:focus-visible` only (so it doesn't fire on mouse clicks).
+Change the ring through `--focus-ring`. Quickest adoption — add the `.focus-ring`
+utility class from `util.scss`, which applies an `outline` on `:focus-visible` only
+(so it doesn't fire on mouse clicks).
 
 ```scss
 // opt-in per-element
@@ -326,21 +448,13 @@ Quickest adoption — add the `.focus-ring` utility class from `util.scss`, whic
 | `--z-mobile-bottom-nav` | 50    | Mobile bottom navigation |
 | `--z-side-nav`          | 60    | Side navigation          |
 | `--z-backdrop`          | 222   | Backdrop overlay         |
+| `--z-onboarding-hint`   | 998   | First-run hints          |
 | `--z-add-task-bar`      | 999   | Add task bar             |
 | `--z-search-bar`        | 999   | Search bar               |
 | `--z-tour`              | 1001  | Tour overlay             |
-| `--z-onboarding-hint`   | 1100  | First-run hints          |
 
-## Layout Variables
-
-| Variable                | Value | Notes              |
-| ----------------------- | ----- | ------------------ |
-| `--component-max-width` | 800px | 900–1000px on iPad |
-| `--side-nav-width`      | 200px |                    |
-| `--side-nav-width-l`    | 400px |                    |
-| `--bar-height-large`    | 56px  |                    |
-| `--bar-height`          | 48px  |                    |
-| `--bar-height-small`    | 40px  |                    |
+Menus and dialogs (the CDK overlay container, 1000) cover the onboarding hint and
+the add-task bar.
 
 ## Responsive Breakpoints
 
@@ -356,6 +470,10 @@ Available as CSS vars (`--layout-xxxs` through `--layout-xl`) and as SCSS variab
 | `lg`       | 1920px |
 | `xl`       | 2000px |
 
+Device input is a separate axis: use `(pointer: coarse)` for touch hit areas and
+field sizes (the scale does), and the `isTouchPrimary` / `isMousePrimary` body
+classes for behaviour that follows the current input intent.
+
 ## Utility Classes
 
 Defined in `src/styles/util.scss` and `src/styles/themes.scss`:
@@ -365,13 +483,14 @@ Defined in `src/styles/util.scss` and `src/styles/themes.scss`:
 - Input: `.show-only-on-touch-primary`, `.show-only-on-mouse-primary`
 - Theme: `.show-dark-only`, `.show-light-only`
 - Color: `.bg-primary`, `.bgc-accent`, `.color-primary`, `.bg-success`, `.bg-warning`, `.bg-danger`
-- Effects: `.milk-glass` (backdrop blur)
+- Focus: `.focus-ring`
+- Type: `.tabular-nums`
 
 ## Palette theme
 
 There are no CSS themes: the app does not load theme files or user CSS. Colors come
 from the three-color palette described in [theming-contract.md](theming-contract.md)
-and § Palette Values above; new colors go through those tokens.
+and § Colour above; new colors go through those roles.
 
 ## Side nav: never apply CB-creating properties to the `magic-side-nav` host
 
@@ -379,19 +498,19 @@ The mobile drawer (`.nav-sidenav`) and its overlay (`.nav-backdrop-mobile`) are 
 
 Any property that establishes a [new containing block for fixed-position descendants](https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block#identifying_the_containing_block) — `backdrop-filter`, `filter`, `transform`, `perspective`, `contain: paint|layout|strict`, or a matching `will-change` — re-anchors the drawer and backdrop to the 0-wide host. The drawer never appears when the user taps the menu.
 
-Apply blur or tint to the inner `.nav-sidenav` instead, as `_ultra-tasks.scss` does for its shell panels:
+Apply blur or tint to the inner `.nav-sidenav` instead, as `_glass.scss` does for its shell panels:
 
 ```css
 /* ❌ Bad — collapses the mobile drawer */
 body.ultra-tasks magic-side-nav {
   background: var(--my-pane);
-  backdrop-filter: blur(var(--st-blur));
+  backdrop-filter: blur(var(--glass-blur));
 }
 
 /* ✅ Good — host stays visually inert */
 body.ultra-tasks magic-side-nav .nav-sidenav {
   background: var(--my-pane);
-  backdrop-filter: blur(var(--st-blur));
+  backdrop-filter: blur(var(--glass-blur));
 }
 ```
 
@@ -401,8 +520,9 @@ Properties that do NOT create a containing block — `background`, `border`, `bo
 
 Located in `src/styles/components/`, these are needed for elements that render outside component scope:
 
-- `_overwrite-material.scss` — Material component customizations
-- `_customizer-menu.scss`, `backdrop.scss`, `bottom-panel.scss`
+- `_overwrite-material.scss` — Angular Material on the scale (see [Angular Material](#angular-material))
+- `_settings.scss` — Settings and Plugins windows
+- `_customizer-menu.scss`, `backdrop.scss`, `_bottom-panel.scss`
 - `markdown.scss`, `mentions.scss`, `table.scss`
 - `fab-wrapper.scss`, `wrap-buttons.scss`, `multi-btn-wrapper.scss`
 - `planner-shared.scss`, `formly-rows.scss`, `scrollbars.scss`

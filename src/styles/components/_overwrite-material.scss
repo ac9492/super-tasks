@@ -112,10 +112,6 @@
   --mat-menu-divider-top-spacing: var(--s-half);
   --mat-menu-divider-bottom-spacing: var(--s-half);
 
-  // TOOLTIPS: the inverse colour pair, so a tooltip reads on any surface.
-  --mat-tooltip-container-color: var(--palette-tooltip-bg);
-  --mat-tooltip-supporting-text-color: var(--palette-tooltip-ink);
-
   // DIALOGS: one gutter for title, content and actions (24, 16 on phones).
   --mat-dialog-headline-padding: var(--dialog-gutter) var(--dialog-gutter) var(--s1-5);
   --mat-dialog-content-padding: var(--dialog-gutter) var(--dialog-gutter) var(--s2);
@@ -161,6 +157,37 @@ body .mat-mdc-tab-header {
 
 body.isDarkTheme {
   --calendar-hover-bg: color-mix(in srgb, var(--c-primary) 20%, transparent);
+}
+
+// Material's M2 typography classes (.mat-h1, .mat-headline-5, .mat-caption …)
+// still sit on a few report and settings headings. Map them onto the type
+// roles at the specificity of Material's `.mat-typography .mat-h1` rule, after
+// it; a component rule on the same element still wins.
+.mat-typography {
+  :is(.mat-h1, .mat-headline-5, .mat-h2, .mat-headline-6) {
+    font: var(--type-title);
+    letter-spacing: var(--track-title);
+  }
+
+  :is(.mat-h3, .mat-subtitle-1, .mat-h4) {
+    font: var(--type-heading);
+    letter-spacing: 0;
+  }
+
+  :is(.mat-body-strong, .mat-subtitle-2) {
+    font: var(--type-body-strong);
+    letter-spacing: 0;
+  }
+
+  :is(.mat-body, .mat-body-1, .mat-body-2) {
+    font: var(--type-body);
+    letter-spacing: 0;
+  }
+
+  :is(.mat-caption, .mat-small) {
+    font: var(--type-meta);
+    letter-spacing: 0;
+  }
 }
 
 // Apply tab colors explicitly to tab components
@@ -272,11 +299,9 @@ body.isNativeMobile .mat-mdc-menu-panel {
   margin-inline: 0;
 }
 
-// Dialog widths: dialogSize() in src/app/ui/dialog-size.util.ts sets the class.
-// A dialog without a size is at least S wide; none exceeds the viewport.
+// Dialog widths: dialogSize() in src/app/ui/dialog-size.util.ts sets the
+// class; the pane's max-width keeps every size inside the viewport.
 .cdk-overlay-pane.mat-mdc-dialog-panel {
-  --mat-dialog-container-min-width: min(var(--dialog-w-s), calc(100vw - 2 * var(--s2)));
-
   &.dialog-s {
     width: var(--dialog-w-s);
   }
@@ -390,7 +415,8 @@ body.isNativeMobile .project-complete-fullscreen-dialog {
 // --input-border-color edge (the palette's --palette-outline, 3:1 against its
 // surface), a stronger edge on hover and a 2px ink edge on focus. Material's
 // grey hover/focus wash is off. The notched outline of appearance="outline"
-// follows the same tokens.
+// draws the same box (its resting colour, --palette-outline, is mapped in
+// _palette-theme.scss).
 .mat-mdc-form-field {
   margin-bottom: var(--s2);
 
@@ -400,7 +426,6 @@ body.isNativeMobile .project-complete-fullscreen-dialog {
   --mat-form-field-hover-state-layer-opacity: 0;
   --mat-form-field-focus-state-layer-opacity: 0;
   --mat-form-field-outlined-container-shape: var(--input-border-radius);
-  --mat-form-field-outlined-outline-color: var(--input-border-color);
   --mat-form-field-outlined-hover-outline-color: var(--input-border-color-hover);
   --mat-form-field-outlined-focus-outline-color: var(--input-border-color-focus);
   --mat-form-field-outlined-outline-width: var(--st-line-width);
@@ -772,7 +797,7 @@ body .mat-mdc-button-base .mat-icon {
 
     // Material sizes the icon box from --mat-menu-item-icon-size but not the
     // glyph; the glyph must equal its box or it decentres.
-    > .mat-icon {
+    .mat-icon {
       font-size: var(--mat-menu-item-icon-size);
     }
   }
@@ -896,6 +921,12 @@ body.isVerticalActionBar .cdk-overlay-pane.mat-mdc-tooltip-panel {
 
 // SLIDE TOGGLE
 // ------------
+// The M2 theme declares the toggle's label typography on the toggle element
+// itself (`html .mat-mdc-slide-toggle`), so the :root mapping cannot reach it.
+body .mat-mdc-slide-toggle {
+  --mat-slide-toggle-label-text-tracking: 0;
+}
+
 .mat-mdc-slide-toggle {
   // Inherit all unchecked state ripple configurations (both colors and opacities)
   // for the checked state to ensure they match exactly in color and strength.

@@ -50,7 +50,8 @@ small {
   background: var(--bg);
 }
 
+// On narrow screens the buttons wrap below the label instead of squeezing it.
 .mode-label {
-  flex: 1;
+  flex: 1 1 8em;
   min-width: 0;
 }

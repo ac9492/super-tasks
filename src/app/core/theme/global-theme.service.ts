@@ -53,7 +53,7 @@ import { CSS_VAR_KEYBOARD_HEIGHT } from './keyboard-css-vars.const';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { sanitizeSvgIconContent } from '../../util/sanitize-svg-icon.util';
 import { PaletteThemeService } from './palette-theme.service';
-import { contrastingInk } from './palette.util';
+import { colorChannels } from './palette.util';
 import { BUILT_IN_SVG_ICONS } from './built-in-svg-icons.const';
 import { UltraTasksAppearanceService } from './ultra-tasks-appearance.service';
 import { pickGlassBackgroundImage } from './glass-backdrop/glass-backdrop.util';
@@ -325,12 +325,10 @@ export class GlobalThemeService {
 
     if (this._appearanceService.nativeMaterial) {
       effect(() => {
-        const palette =
-          this._paletteThemeService.palettes()[this.isDarkTheme() ? 'dark' : 'light'];
         window.ea.setNativeGlass({
           isEnabled: this._appearanceService.backdrop() === 'native',
           themeSource: this.darkMode(),
-          solidColor: palette.background,
+          solidColor: this._paletteThemeService.roles(this.isDarkTheme()).background,
         });
       });
     }
@@ -345,9 +343,8 @@ export class GlobalThemeService {
     // Update Electron title bar overlay when dark mode changes
     if (IS_ELECTRON && !IS_MAC) {
       effect(() => {
-        const palette =
-          this._paletteThemeService.palettes()[this.isDarkTheme() ? 'dark' : 'light'];
-        const isDark = contrastingInk(palette.background) === '#ffffff';
+        const isDark =
+          this._paletteThemeService.roles(this.isDarkTheme()).backgroundInk === '#ffffff';
         // Use untracked to prevent creating additional dependencies in this effect
         const isCustomWindowTitleBarEnabled = untracked(() =>
           this._isCustomWindowTitleBarEnabled(),
@@ -519,20 +516,22 @@ export class GlobalThemeService {
 
     const chartThemeService = this._environmentInjector.get(ThemeService);
 
-    const palette = this._paletteThemeService.palettes()[isDarkTheme ? 'dark' : 'light'];
-    const ink = contrastingInk(palette.background);
+    // Normalised roles: the ink always matches the painted background.
+    const roles = this._paletteThemeService.roles(isDarkTheme);
+    const ink = roles.backgroundInk;
+    const grid = `rgba(${colorChannels(ink).join(', ')}, ${roles.alphas.separator})`;
     const overrides: import('chart.js').ChartConfiguration['options'] = {
       color: ink,
       scales: {
-        x: { ticks: { color: ink }, grid: { color: ink + '25' } },
-        y: { ticks: { color: ink }, grid: { color: ink + '25' } },
+        x: { ticks: { color: ink }, grid: { color: grid } },
+        y: { ticks: { color: ink }, grid: { color: grid } },
       },
       plugins: {
         legend: { labels: { color: ink } },
         tooltip: {
-          backgroundColor: palette.surface,
-          titleColor: contrastingInk(palette.surface),
-          bodyColor: contrastingInk(palette.surface),
+          backgroundColor: roles.surfaceRaised,
+          titleColor: roles.surfaceInk,
+          bodyColor: roles.surfaceInk,
         },
       },
     };
@@ -664,8 +663,8 @@ export class GlobalThemeService {
       // Re-read computed tokens only after the loader has atomically swapped
       // the stylesheet. Theme changes do not necessarily change dark mode.
       this._paletteThemeService.appliedVersion();
-      const palette = this._paletteThemeService.palettes()[isDark ? 'dark' : 'light'];
-      const lightIcons = contrastingInk(palette.background) === '#ffffff';
+      const lightIcons =
+        this._paletteThemeService.roles(isDark).backgroundInk === '#ffffff';
       StatusBar.setStyle({ style: lightIcons ? Style.Dark : Style.Light }).catch(
         (err) => {
           Log.warn('Failed to set status bar style', err);

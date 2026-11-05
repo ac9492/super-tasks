@@ -142,7 +142,8 @@ const STRESS_PALETTES: { key: string; colors: PalettePair }[] = [
 const failingPairs = (r: PaletteRoles): string[] => {
   const failures: string[] = [];
   const range = (id: string, value: number, min: number, max = Infinity): void => {
-    if (value < min - 1e-9 || value > max + 1e-9) failures.push(`${id} ${value.toFixed(3)}`);
+    if (value < min - 1e-9 || value > max + 1e-9)
+      failures.push(`${id} ${value.toFixed(3)}`);
   };
   const c = contrastRatio;
   const ink = r.ink;
@@ -196,12 +197,25 @@ const failingPairs = (r: PaletteRoles): string[] => {
     1.75,
   );
   range('Q02 border on surface', c(onSurface(r.alphas.border), r.surface), 1.2, 1.7);
-  range('Q03 surface vs background', c(r.surface, r.background), r.mode === 'light' ? 1.06 : 1.15);
+  range(
+    'Q03 surface vs background',
+    c(r.surface, r.background),
+    r.mode === 'light' ? 1.06 : 1.15,
+  );
   range('Q04 hover vs surface', c(r.hover, r.surface), 1.06);
   range('Q05 selected vs surface', c(r.selected, r.surface), 1.2);
   range('Q06 selected vs hover', c(r.selected, r.hover), 1.06);
-  range('Q07 disabled label', c(mixColors(disabled, ink, r.alphas.disabledInk), disabled), 2, 4.2);
-  range('Q08 scrollbar', c(mixColors(r.background, ink, r.alphas.scrollbar), r.background), 1.6);
+  range(
+    'Q07 disabled label',
+    c(mixColors(disabled, ink, r.alphas.disabledInk), disabled),
+    2,
+    4.2,
+  );
+  range(
+    'Q08 scrollbar',
+    c(mixColors(r.background, ink, r.alphas.scrollbar), r.background),
+    1.6,
+  );
   // Glass: worst backdrop = the ink colour; typical = palette-gradient stops.
   range('GL1 ink on glass panel', c(r.backgroundInk, r.glass.panelWorst), 4.5);
   range('GL2 muted on glass panel', c(r.glass.inkMuted, r.glass.panelWorst), 4.5);
@@ -209,13 +223,23 @@ const failingPairs = (r: PaletteRoles): string[] => {
   range('GL4 focus ring on glass panel', c(r.glass.focusRing, r.glass.panelWorst), 3);
   for (const panel of r.glass.panelTypical) {
     // --glass-edge-line is --palette-separator.
-    range('GL5 glass edge line', c(mixColors(panel, ink, r.alphas.separator), panel), 1.15, 1.75);
+    range(
+      'GL5 glass edge line',
+      c(mixColors(panel, ink, r.alphas.separator), panel),
+      1.15,
+      1.75,
+    );
     range('GL4b focus ring on typical glass', c(r.glass.focusRing, panel), 3);
   }
   range('GL6 glass muted distinct from ink', c(r.glass.inkMuted, r.backgroundInk), 2);
   // Hierarchy / identity
   range('H01 muted distinct from ink', c(r.inkMuted, r.surfaceInk), 2);
-  for (const role of ['backgroundInk', 'surfaceInk', 'hoverInk', 'selectedInk'] as const) {
+  for (const role of [
+    'backgroundInk',
+    'surfaceInk',
+    'hoverInk',
+    'selectedInk',
+  ] as const) {
     if (r[role] !== ink) failures.push(`H02 ${role} is not the mode ink`);
   }
   range('H05 disabled distinct from accent', deltaE(disabled, r.accent), 0.1);
@@ -233,9 +257,19 @@ const seededHex = (seed: number): (() => string) => {
 };
 
 const renormalize = (r: PaletteRoles): PaletteRoles =>
-  normalizePalette({ background: r.background, surface: r.surface, accent: r.accent }, r.mode);
+  normalizePalette(
+    { background: r.background, surface: r.surface, accent: r.accent },
+    r.mode,
+  );
 
-const STABLE_ROLES = ['background', 'surface', 'accent', 'hover', 'selected', 'inkMuted'] as const;
+const STABLE_ROLES = [
+  'background',
+  'surface',
+  'accent',
+  'hover',
+  'selected',
+  'inkMuted',
+] as const;
 
 describe('normalizePalette', () => {
   for (const { key, colors } of STRESS_PALETTES) {
@@ -255,12 +289,16 @@ describe('normalizePalette', () => {
         expect(r.background).withContext(context).toBe(input.background);
         expect(r.surface).withContext(context).toBe(input.surface);
         expect(r.accent).withContext(context).toBe(input.accent);
-        expect(r.hover).withContext(context).toBe(mixColors(input.surface, input.accent, 0.08));
+        expect(r.hover)
+          .withContext(context)
+          .toBe(mixColors(input.surface, input.accent, 0.08));
         expect(r.selected)
           .withContext(context)
           .toBe(mixColors(input.surface, input.accent, 0.18));
         expect(r.adjusted).toEqual({ background: false, surface: false, accent: false });
-        expect(r.glass.alpha).withContext(context).toEqual({ ...GLASS_DESIGN_ALPHA });
+        expect(r.glass.alpha)
+          .withContext(context)
+          .toEqual({ ...GLASS_DESIGN_ALPHA });
       }
     }
   });
@@ -319,7 +357,11 @@ describe('normalizePalette', () => {
         for (const role of STABLE_ROLES) {
           expect(again[role]).withContext(`${key}/${mode} ${role}`).toBe(r[role]);
         }
-        expect(again.adjusted).toEqual({ background: false, surface: false, accent: false });
+        expect(again.adjusted).toEqual({
+          background: false,
+          surface: false,
+          accent: false,
+        });
       }
     }
   });
@@ -365,7 +407,11 @@ describe('normalizePalette', () => {
       null;
     for (const mode of MODES) {
       for (let i = 0; i < 300; i++) {
-        const input = { background: randomHex(), surface: randomHex(), accent: randomHex() };
+        const input = {
+          background: randomHex(),
+          surface: randomHex(),
+          accent: randomHex(),
+        };
         const r = normalizePalette(input, mode);
         const ids = failingPairs(r);
         const again = renormalize(r);

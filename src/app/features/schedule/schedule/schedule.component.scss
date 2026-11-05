@@ -121,7 +121,7 @@
 
     &.active {
       background: var(--c-primary);
-      color: white;
+      color: var(--c-contrast);
     }
 
     &:not(:last-child) {

@@ -19,6 +19,15 @@ app-root,
   letter-spacing: var(--letter-spacing-normal);
 }
 
+// body carries .mat-typography, whose M2 rule (`font: 400 14px/20px …;
+// letter-spacing: 0.0179em`) outranks the element selector above. Restate the
+// body role at the same specificity, after it, so Material's 0.25px tracking
+// stops leaking into every text node.
+.mat-typography {
+  font: var(--type-body);
+  letter-spacing: var(--letter-spacing-normal);
+}
+
 // UA stylesheets give form controls their own font (Arial 13.33px in
 // Chromium), which leaks into custom buttons and badges. Zero specificity so
 // any component or Material rule still wins.
@@ -32,47 +41,51 @@ app-root,
   font-feature-settings: 'tnum' 1;
 }
 
-// Global heading ramp for headings that have no rule of their own. Each
-// selector sits whole inside :where(), so its specificity is (0,0,0) and any
-// component or Material rule wins; Material dialog and card titles are left
-// to their own typography. Line heights are whole pixels on the 4px grid.
-$not-material-title: ':not([mat-dialog-title], .mat-mdc-dialog-title, .mat-mdc-card-title)';
+// Global heading ramp for headings that have no rule of their own. It
+// replaces Material's M2 hierarchy (`.mat-typography h1 { font: 400 24px/32px }`
+// …, body carries .mat-typography): each selector has that hierarchy's
+// specificity (0,1,1) and comes after it, so it wins over Material while every
+// component rule wins over it (an encapsulated `h2` is already (0,1,1) and is
+// injected later). The exclusions sit in :where() and add nothing. Material
+// dialog and card titles keep their own typography. Line heights are whole
+// pixels on the 4px grid.
+$not-material-title: ':where(:not([mat-dialog-title], .mat-mdc-dialog-title, .mat-mdc-card-title))';
 
-:where(:is(h1, h2, h3, h4, h5, h6)#{$not-material-title}) {
+.mat-typography :is(h1, h2, h3, h4, h5, h6)#{$not-material-title} {
   font-family: inherit;
   font-weight: var(--font-weight-semibold);
   letter-spacing: var(--letter-spacing-tight);
   color: var(--text-color-most-intense);
 }
 
-:where(h1#{$not-material-title}) {
+.mat-typography h1#{$not-material-title} {
   font-size: var(--font-size-3xl);
   line-height: 36px;
   letter-spacing: var(--letter-spacing-tighter);
 }
 
-:where(h2#{$not-material-title}) {
+.mat-typography h2#{$not-material-title} {
   font-size: var(--font-size-2xl);
   line-height: 28px;
   letter-spacing: var(--letter-spacing-tighter);
 }
 
-:where(h3#{$not-material-title}) {
+.mat-typography h3#{$not-material-title} {
   font-size: var(--font-size-xl);
   line-height: 24px;
 }
 
-:where(h4#{$not-material-title}) {
+.mat-typography h4#{$not-material-title} {
   font-size: var(--font-size-lg);
   line-height: 24px;
 }
 
-:where(h5#{$not-material-title}) {
+.mat-typography h5#{$not-material-title} {
   font-size: var(--font-size-md);
   line-height: 20px;
 }
 
-:where(h6#{$not-material-title}) {
+.mat-typography h6#{$not-material-title} {
   font-size: var(--font-size-sm);
   line-height: 16px;
   text-transform: uppercase;

@@ -1,4 +1,10 @@
-import { EnvironmentInjector, signal, WritableSignal } from '@angular/core';
+import {
+  createEnvironmentInjector,
+  EnvironmentInjector,
+  runInInjectionContext,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { GlobalThemeService, resolveSystemSurfaceColor } from './global-theme.service';
 import { GlassBackdrop } from './ultra-tasks-appearance.service';
@@ -29,10 +35,7 @@ interface GlassHarness {
     nativeMaterial: 'vibrancy' | 'acrylic' | null;
   };
   _paletteThemeService: {
-    palettes: () => {
-      light: { background: string };
-      dark: { background: string };
-    };
+    roles: (isDark: boolean) => { background: string };
   };
 }
 
@@ -104,6 +107,13 @@ describe('GlobalThemeService glass appearance', () => {
     'st-glass-acrylic',
   ];
   let originalEa: unknown;
+  let glassInjector: EnvironmentInjector | undefined;
+
+  // Own injector per test, so its effects are destroyed with it.
+  const initGlass = (service: GlassHarness): void => {
+    glassInjector = createEnvironmentInjector([], TestBed.inject(EnvironmentInjector));
+    runInInjectionContext(glassInjector, () => service._initGlass());
+  };
 
   const createHarness = (
     backdrop: GlassBackdrop,
@@ -115,10 +125,7 @@ describe('GlobalThemeService glass appearance', () => {
     service.isDarkTheme = signal(true);
     service._appearanceService = { backdrop: signal(backdrop), nativeMaterial };
     service._paletteThemeService = {
-      palettes: () => ({
-        light: { background: '#f8f8f7' },
-        dark: { background: '#131314' },
-      }),
+      roles: (isDark) => ({ background: isDark ? '#131314' : '#f8f8f7' }),
     };
     return service;
   };
@@ -130,13 +137,16 @@ describe('GlobalThemeService glass appearance', () => {
     originalEa = (window as unknown as { ea?: unknown }).ea;
   });
   afterEach(() => {
+    // Destroy the effects before the stubbed bridge goes away.
+    glassInjector?.destroy();
+    glassInjector = undefined;
     document.body.classList.remove(...GLASS_CLASSES);
     (window as unknown as { ea?: unknown }).ea = originalEa;
   });
 
   it('sets the body classes synchronously and keeps them current', () => {
     const service = createHarness('bitmap', null);
-    TestBed.runInInjectionContext(() => service._initGlass());
+    initGlass(service);
     expect(bodyGlassClasses()).toEqual(['st-glass', 'st-glass-bitmap']);
     service._appearanceService.backdrop.set('solid');
     TestBed.tick();
@@ -146,7 +156,7 @@ describe('GlobalThemeService glass appearance', () => {
   it('marks acrylic so the content sheet stays opaque', () => {
     const service = createHarness('native', 'acrylic');
     (window as unknown as { ea: unknown }).ea = { setNativeGlass: () => undefined };
-    TestBed.runInInjectionContext(() => service._initGlass());
+    initGlass(service);
     expect(bodyGlassClasses()).toEqual([
       'st-glass',
       'st-glass-native',
@@ -160,7 +170,7 @@ describe('GlobalThemeService glass appearance', () => {
       setNativeGlass: (state: NativeGlassState) => sent.push(state),
     };
     const service = createHarness('native', 'vibrancy');
-    TestBed.runInInjectionContext(() => service._initGlass());
+    initGlass(service);
     TestBed.tick();
     expect(sent.at(-1)).toEqual({
       isEnabled: true,
@@ -181,7 +191,7 @@ describe('GlobalThemeService glass appearance', () => {
     const setNativeGlass = jasmine.createSpy('setNativeGlass');
     (window as unknown as { ea: unknown }).ea = { setNativeGlass };
     const service = createHarness('bitmap', null);
-    TestBed.runInInjectionContext(() => service._initGlass());
+    initGlass(service);
     TestBed.tick();
     expect(setNativeGlass).not.toHaveBeenCalled();
   });

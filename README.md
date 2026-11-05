@@ -31,7 +31,7 @@ These additions sit on top of the inherited tasks, projects, tags, notes, planni
 
 The first workspace refresh adds restrained glass panels, a white checkmark on a deep-teal tile as the app identity, search at the top of navigation, clearer active navigation, a visible capture destination, and direct scheduling actions.
 
-**Glass appearance** can be disabled under Settings → General → Appearance. Its preference stays on the device, outside synced task data, and accessibility preferences can force solid panels.
+**Glass appearance** frosts the navigation and header over a slight, blurred view of the desktop (macOS and Windows 11 desktop app) or of your background image or palette gradient (web, mobile, Linux). It can be turned off under Settings → General → Appearance; the switch stays on the device, outside synced task data, and accessibility preferences can force solid panels.
 
 ## Three UX priorities
 

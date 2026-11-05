@@ -88,6 +88,26 @@ h4 {
   font-family: var(--font-mono-stack);
   font-size: var(--font-size-sm);
 }
+// The color the app paints when normalisation changed the chosen one.
+.adjusted-color {
+  grid-column: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-half);
+  font-size: var(--font-size-sm);
+  color: var(--text-color-muted);
+}
+.adjusted-swatch {
+  flex: none;
+  width: var(--s2);
+  height: var(--s2);
+  border: 1px solid var(--divider-color);
+  border-radius: var(--radius-xs);
+}
+.palette-hint {
+  font-size: var(--font-size-sm);
+  color: var(--text-color-muted);
+}
 .editing-mode {
   font-size: var(--font-size-sm);
 }

@@ -58,7 +58,7 @@ import { PRIORITY_ICON_PRESET_SELECT_FORMLY_CONFIG } from './app/features/config
 import { AGENT_CAPTURE_SETTINGS_FORMLY_CONFIG } from './app/features/tasks/agent-capture/agent-capture-settings/agent-capture-settings.component';
 import { markedOptionsFactory } from './app/ui/marked-options-factory';
 import { MaterialCssVarsModule } from 'angular-material-css-vars';
-import { DEFAULT_TODAY_TAG_COLOR } from './app/features/work-context/work-context.const';
+import { DEFAULT_PALETTE } from './app/core/theme/palette.util';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { ReminderModule } from './app/features/reminder/reminder.module';
@@ -179,7 +179,7 @@ bootstrapApplication(AppComponent, {
         sanitize: { provide: SANITIZE, useValue: SecurityContext.HTML },
       }),
       MaterialCssVarsModule.forRoot({
-        primary: DEFAULT_TODAY_TAG_COLOR,
+        primary: DEFAULT_PALETTE.light.accent,
       }),
       MatSidenavModule,
       MatBottomSheetModule,

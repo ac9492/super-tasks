@@ -30,7 +30,12 @@ describe('GlassSettingsComponent', () => {
           provide: UltraTasksAppearanceService,
           useValue: { glassEnabled, nativeMaterial, setGlass },
         },
-        { provide: PaletteThemeService, useValue: { palettes: signal(DEFAULT_PALETTE) } },
+        {
+          provide: PaletteThemeService,
+          useValue: {
+            roles: (isDark: boolean) => DEFAULT_PALETTE[isDark ? 'dark' : 'light'],
+          },
+        },
         { provide: GlobalConfigService, useValue: { misc, updateSection } },
         { provide: SnackService, useValue: { open: snackOpen } },
       ],

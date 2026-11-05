@@ -66,10 +66,10 @@
   --palette-selected-ink: #000000;
   --palette-hover: #ebf2f2;
   --palette-hover-ink: #000000;
-  // Normaliser roles read by the shared Material mapping
-  // (_overwrite-material.scss). PaletteThemeService writes the solved values
-  // on the root element; these defaults only cover the first paint and follow
-  // the mode through the inks above (docs/theming-contract.md).
+  // Normaliser roles the scale reads: the elevation hairline, the field edge
+  // and the tooltip pair. PaletteThemeService writes the solved values on the
+  // root element; these defaults only cover the first paint and follow the
+  // mode through the inks above (docs/theming-contract.md).
   --palette-separator: rgba(var(--palette-background-ink-channel), 0.1);
   --palette-outline: rgba(var(--palette-surface-ink-channel), 0.42);
   --palette-tooltip-bg: var(--palette-surface-ink);

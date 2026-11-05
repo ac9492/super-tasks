@@ -77,7 +77,6 @@ export class GlassSettingsComponent {
   readonly slots = computed<ImageSlot[]>(() => {
     const raw = this._raw();
     const resolved = this._resolved();
-    const palettes = this._paletteThemeService.palettes();
     return (
       [
         ['backgroundImageLight', 'light', T.F.ULTRA_TASKS.BG_IMAGE_LIGHT],
@@ -88,7 +87,9 @@ export class GlassSettingsComponent {
       mode,
       label,
       isSet: !!raw[key]?.trim(),
-      preview: raw[key]?.trim() ? resolved[key] : glassGradientDataUrl(palettes[mode]),
+      preview: raw[key]?.trim()
+        ? resolved[key]
+        : glassGradientDataUrl(this._paletteThemeService.roles(mode === 'dark')),
     }));
   });
 

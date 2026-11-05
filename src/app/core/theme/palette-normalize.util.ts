@@ -9,7 +9,12 @@
 // - Separation steps are WCAG contrast ratios, which stay meaningful at the
 //   dark end where OKLab lightness over-states differences between near-blacks.
 // Numbers and rationale: docs/theming-contract.md.
-import { contrastingInk, mixColors, PaletteColors, relativeLuminance } from './palette.util';
+import {
+  contrastingInk,
+  mixColors,
+  PaletteColors,
+  relativeLuminance,
+} from './palette.util';
 import {
   contrastRatio,
   deltaE,
@@ -190,15 +195,19 @@ const clamp = (value: number, min: number, max: number): number =>
 
 const smoothstep = (a: number, b: number, x: number): number => {
   const t = clamp((x - a) / (b - a), 0, 1);
-  return t * t * (3 - 2 * t);
+  const twice = 2 * t;
+  const rise = 3 - twice;
+  return t * t * rise;
 };
 
 const hueDiff = (from: number, to: number): number => ((to - from + 540) % 360) - 180;
 
 /** Chromatic accents need 3:1; near-greys ramp up to 6:1 so they don't read as disabled. */
-const accentTarget = (chroma: number): number =>
-  GRAPHIC_CONTRAST +
-  (MONO_TARGET - GRAPHIC_CONTRAST) * (1 - smoothstep(0.02, 0.08, chroma));
+const accentTarget = (chroma: number): number => {
+  const greyness = 1 - smoothstep(0.02, 0.08, chroma);
+  const extra = (MONO_TARGET - GRAPHIC_CONTRAST) * greyness;
+  return GRAPHIC_CONTRAST + extra;
+};
 
 /**
  * Moves `hex` along OKLCH lightness in `dir` (+1 lighter, -1 darker), keeping
@@ -290,7 +299,10 @@ const interactionTints = (
 };
 
 /** Normalises one mode's chosen colours into the roles the UI paints with. */
-export const normalizePalette = (input: PaletteColors, mode: PaletteMode): PaletteRoles => {
+export const normalizePalette = (
+  input: PaletteColors,
+  mode: PaletteMode,
+): PaletteRoles => {
   const rules = PALETTE_RULES[mode];
   const ink = rules.ink;
   const raw = {
@@ -397,7 +409,15 @@ export const normalizePalette = (input: PaletteColors, mode: PaletteMode): Palet
   //    distant accent hue or away from a near one, lightness solved for text
   //    contrast on every layer.
   const [, accentC, accentH] = hexToOklch(accent);
-  const tone = ({ h, c, win }: { h: number; c: number; win: readonly number[] }): string => {
+  const tone = ({
+    h,
+    c,
+    win,
+  }: {
+    h: number;
+    c: number;
+    win: readonly number[];
+  }): string => {
     let hue = h;
     if (accentC >= HARMONIZE.minAccentC) {
       const d = hueDiff(h, accentH);

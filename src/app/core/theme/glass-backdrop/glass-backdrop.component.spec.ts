@@ -31,7 +31,9 @@ describe('GlassBackdropComponent', () => {
         { provide: GlobalThemeService, useValue: { isDarkTheme } },
         {
           provide: PaletteThemeService,
-          useValue: { palettes: signal(DEFAULT_PALETTE) },
+          useValue: {
+            roles: (isDark: boolean) => DEFAULT_PALETTE[isDark ? 'dark' : 'light'],
+          },
         },
       ],
     });

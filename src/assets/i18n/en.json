@@ -2945,7 +2945,7 @@
       "TITLE": "Startup & interface",
       "PALETTE": {
         "TITLE": "Color palette",
-        "DESCRIPTION": "Choose three colors. Text automatically uses black or white for the strongest contrast. Changes are saved on this device.",
+        "DESCRIPTION": "Choose three colors. They are adjusted automatically so text and controls stay readable. Changes are saved on this device.",
         "BACKGROUND": "Background",
         "SURFACE": "Cards and panels",
         "ACCENT": "Accent",
@@ -2958,7 +2958,11 @@
         "PRESET_DEFAULT": "Default",
         "PRESET_SAND": "Sand",
         "PRESET_FOREST": "Forest",
-        "PRESET_PLUM": "Plum"
+        "PRESET_PLUM": "Plum",
+        "ADJUSTED": "Adjusted so text and controls stay readable.",
+        "ADJUSTED_LIGHT": "Adjusted so text and controls stay readable. Light mode keeps light backgrounds.",
+        "ADJUSTED_DARK": "Adjusted so text and controls stay readable. Dark mode keeps dark backgrounds.",
+        "ADJUSTED_TO": "Shown as {{color}}"
       }
     },
     "POMODORO": {
