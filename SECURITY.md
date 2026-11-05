@@ -20,6 +20,7 @@ then be coordinated with Super Productivity as appropriate.
 
 ## Supported versions
 
-Ultra Tasks is in pre-1.0 development and has no stable release series yet.
-Security fixes are made on `main`; report the exact commit or development build
-you tested. Older development builds are not maintained as separate branches.
+Ultra Tasks is in pre-1.0 development; 0.1.0 is the first public release.
+Security fixes are made on `main` and ship in the next release. Older releases
+and development builds are not maintained as separate branches. Report the
+release version (for example `0.1.0`) or the exact commit you tested.

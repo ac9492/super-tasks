@@ -33,12 +33,10 @@ body:is(.isLightTheme, .isDarkTheme) {
   --system-surface: var(--palette-background);
   --c-primary: var(--palette-accent);
   --c-accent: var(--palette-accent);
-  --c-warn: var(--palette-accent);
+  // State colors (--c-warn, --color-danger/-warning/-success) are deliberately
+  // not mapped here: overdue, destructive and callout tones must stay
+  // distinguishable from the accent (see _css-variables.scss).
   --c-contrast: var(--palette-accent-ink);
-  --color-success: var(--palette-accent);
-  --color-warning: var(--palette-accent);
-  --color-danger: var(--palette-accent);
-  --success-green: var(--palette-accent);
   --sun-yellow: var(--palette-accent);
   --dark0: var(--palette-surface);
   --dark0-5: var(--palette-surface);
@@ -128,7 +126,7 @@ body
     .input-item,
     .repeat-date-badge,
     .time-badge,
-    .checklist-progress-badge,
+    .progress-badge,
     .mat-mdc-tooltip-surface,
     .standard-note,
     .task-detail-bg,
@@ -165,28 +163,35 @@ body
   ):where(:not(.mat-mdc-icon-button, .tag-ico-emoji)) {
   color: inherit !important;
 }
+// Placeholders are examples, not content: a muted share of the field's ink
+// keeps them distinguishable from typed text (still >= 4.5:1 on black/white ink).
 body :is(input, textarea)::placeholder {
-  color: inherit;
+  color: color-mix(in srgb, currentColor 65%, transparent);
   opacity: 1;
 }
 body a[href] {
   text-decoration: underline;
 }
 
+// Enabled filled buttons only: disabled ones keep Material's dimmed container
+// and label, warn buttons keep the warn palette, and the flat icon-only FAB
+// (`.mat-mini-fab-icon`, _overwrite-material.scss) keeps its muted icon on a
+// transparent background.
 body
   :is(
     .mat-mdc-unelevated-button,
     .mat-mdc-raised-button,
     .mat-mdc-fab,
-    .mat-mdc-mini-fab,
-    .preview-action
-  ) {
+    .mat-mdc-mini-fab:not(.mat-mini-fab-icon)
+  ):not(:disabled, .mat-mdc-button-disabled, .mat-warn),
+body .preview-action {
   @include ink(var(--palette-accent-ink), var(--palette-background-ink-channel));
   color: var(--palette-accent-ink) !important;
   background-color: var(--palette-accent);
 }
 
-body nav-item :is(button.active, button.nav-link.active) {
+// Work-context rows (buttons) and route rows (anchors) share one active look.
+body nav-item :is(button.active, .nav-link.active) {
   @include ink(var(--palette-accent-ink), var(--palette-background-ink-channel));
   color: var(--palette-accent-ink) !important;
 }

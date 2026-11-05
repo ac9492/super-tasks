@@ -342,6 +342,10 @@ export class FileImexComponent implements OnInit {
       if (!instance) {
         throw new Error('Plugin activation returned no instance');
       }
+      // The importer is a page, not a dialog: close Settings (opened as a
+      // dialog by settingsDialogGuard) or it stays on top of the importer.
+      // MatDialog only closes on popstate, not on this navigation.
+      this._matDialog.getDialogById('settings-window')?.close();
       await this._router.navigate(['/plugins', pluginId, 'index']);
     } catch (e) {
       Log.err('Failed to open importer', { pluginId }, e);

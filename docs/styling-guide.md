@@ -43,7 +43,7 @@ Rules:
 
 Tinted message boxes inside dialogs and config panes use the global `.callout`
 class from `src/styles/components/_callout.scss` — never a local `.warning-box`
-clone with its own `rgba(255, 152, 0, …)`, which is invisible to the 15 themes.
+clone with its own `rgba(255, 152, 0, …)`, which ignores the palette and dark mode.
 
 ```html
 <div class="callout callout--warning">
@@ -96,15 +96,17 @@ Two deliberate exceptions — leave these as plain px/em:
 
 ## Key Files
 
-| File                             | Purpose                                                       |
-| -------------------------------- | ------------------------------------------------------------- |
-| `src/styles/_css-variables.scss` | All CSS custom properties (design tokens)                     |
-| `src/styles/themes.scss`         | Material theme setup + utility classes                        |
-| `src/styles/page.scss`           | Global page/body styles                                       |
-| `src/styles/util.scss`           | Utility classes                                               |
-| `src/styles/components/`         | Global component styles (Material overrides, shared patterns) |
-| `src/styles/mixins/`             | Reusable SCSS mixins                                          |
-| `src/app/ui/`                    | 40+ reusable Angular UI components                            |
+| File                                        | Purpose                                                       |
+| ------------------------------------------- | ------------------------------------------------------------- |
+| `src/styles/_css-variables.scss`            | All CSS custom properties (design tokens)                     |
+| `src/styles/components/_palette-theme.scss` | Maps the three palette colors onto the shared tokens          |
+| `src/styles/components/_ultra-tasks.scss`   | Ultra Tasks workspace: card task rows, shell panels, nav      |
+| `src/styles/themes.scss`                    | Material theme setup + utility classes                        |
+| `src/styles/page.scss`                      | Global page/body styles                                       |
+| `src/styles/util.scss`                      | Utility classes                                               |
+| `src/styles/components/`                    | Global component styles (Material overrides, shared patterns) |
+| `src/styles/mixins/`                        | Reusable SCSS mixins                                          |
+| `src/app/ui/`                               | 40+ reusable Angular UI components                            |
 
 ## Spacing Variables (8px Grid)
 
@@ -158,21 +160,41 @@ gap: 4px;
 
 ## Color Variables
 
-| Use case           | Variables                                                                                          |
-| ------------------ | -------------------------------------------------------------------------------------------------- |
-| Text               | `--text-color`, `--text-color-muted`, `--text-color-most-intense`                                  |
-| Backgrounds        | `--bg`, `--card-bg`, `--task-c-bg`, `--sub-task-c-bg`                                              |
-| Semantic           | `--color-success` (#4caf50), `--color-warning` (#ff9800), `--color-danger` (#f44336)               |
-| Material palette   | `--palette-primary-500`, `--palette-accent-500`, `--palette-warn-500` (100–900)                    |
-| Overlays           | `--c-dark-10` through `--c-dark-90`, `--c-light-05` through `--c-light-90`                         |
-| Alpha coefficients | `--border-alpha` (0.12), `--overlay-alpha` (0.1), `--muted-alpha` (0.6), `--separator-alpha` (0.3) |
+| Use case           | Variables                                                                                                                 |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| Text               | `--text-color`, `--text-color-muted`, `--text-color-most-intense`                                                         |
+| Backgrounds        | `--bg`, `--card-bg`, `--task-c-bg`, `--sub-task-c-bg`                                                                     |
+| Palette            | `--palette-background`, `--palette-surface`, `--palette-accent` and their `-ink`; `--palette-selected`, `--palette-hover` |
+| Semantic           | `--color-success` (#4caf50), `--color-warning` (#ff9800), `--color-danger` (#f44336), `--c-warn`                          |
+| Material palette   | `--palette-primary-500`, `--palette-accent-500`, `--palette-warn-500` (100–900)                                           |
+| Overlays           | `--c-dark-10` through `--c-dark-90`, `--c-light-05` through `--c-light-90`                                                |
+| Alpha coefficients | `--border-alpha` (0.12), `--overlay-alpha` (0.1), `--muted-alpha` (0.6), `--separator-alpha` (0.3)                        |
 
-### Theme-Specific Values
+### Palette Values
 
-Light theme sets: `--bg: #f8f8f7`, `--card-bg: #ffffff`, `--text-color: rgb(44, 44, 44)`
-Dark theme sets: `--bg: #131314`, `--card-bg: var(--dark3)`, `--text-color: rgb(230, 230, 230)`
+The app has one layout and a device-local three-color palette per mode (see
+[theming-contract.md](theming-contract.md)). `PaletteThemeService` writes the
+`--palette-*` tokens on the root element and `_palette-theme.scss` maps them onto
+the shared tokens:
 
-Dark elevation colors: `--dark0` (rgb(0,0,0)) through `--dark24` (rgb(56,56,56))
+- **Background** (`--palette-background`): `--bg` and the canvas/navigation. Default
+  `#f8f8f7` light, `#131314` dark.
+- **Cards and panels** (`--palette-surface`): `--card-bg`, menus, dialogs, form
+  fields, task detail. Default `#ffffff` light, `#242426` dark. The `--dark0` …
+  `--dark24` elevation steps all resolve to this surface.
+- **Accent** (`--palette-accent`): `--brand`, `--c-primary`, `--c-accent`,
+  `--st-brand`, filled buttons and every `--palette-primary-*` / `--palette-accent-*`
+  stop, so Angular Material's own tokens follow it. Default `#075b5e` light,
+  `#63c5c3` dark.
+
+Text is pure black or white: each painted container sets the `-ink` that contrasts
+best with its own color, and every `--text-color*` variant (including
+`--text-color-muted`) resolves to that full ink. Input placeholders use a muted share
+of the field's ink so examples don't read as typed text. State colors stay
+independent of the palette: `--palette-warn-*` keeps Material's warn red, so
+`--c-warn`, overdue dates and `color="warn"` buttons are red, and the
+`--color-success` / `--color-warning` / `--color-danger` callout tones keep their
+semantic values.
 
 ### Theme-Specific Overrides in Components
 
@@ -187,24 +209,29 @@ Dark elevation colors: `--dark0` (rgb(0,0,0)) through `--dark24` (rgb(56,56,56))
 
 Mixins are in `src/styles/mixins/_theming.scss`.
 
-## Task rows (flat vs boxed)
+## Task rows (cards vs flat)
 
-Tasks, planner and board rows, and issue-panel items are flat, hairline-separated
-rows by default. The boxed look lives in the `classic` theme and is token-only, so
-every switch must stay token-driven — never hardcode a border or surface on a row:
+`src/index.html` always sets `body.ultra-tasks`, and `_ultra-tasks.scss` turns every
+`task` row into a card: a full `--st-line-width` border in `--task-border-color` (a
+low-contrast mix of the surface ink into `--card-bg`), the `--card-bg` surface,
+`--st-radius` corners, a `--s-half` gap between rows and no separator. Subtasks are
+cards too, nested inside their parent's card. The inherited tokens in
+`_css-variables.scss` still describe flat, hairline-separated rows, and planner,
+board and issue-panel items keep that flat default:
 
-| Token                  | Default                            | Classic                              |
-| ---------------------- | ---------------------------------- | ------------------------------------ |
-| `--task-border`        | `none`                             | `1px solid var(--task-border-color)` |
-| `--task-separator`     | `1px solid var(--separator-color)` | `none`                               |
-| `--task-row-edge`      | `var(--task-separator)`            | `var(--task-border)`                 |
-| `--task-border-radius` | `0`                                | `var(--radius-sm)`                   |
-| `--task-list-row-gap`  | `0`                                | `var(--s-half)`                      |
-| `--task-c-bg` & co     | `transparent`                      | surfaces                             |
+| Token                  | Inherited default (flat)           | Ultra Tasks `task` rows               |
+| ---------------------- | ---------------------------------- | ------------------------------------- |
+| `--task-separator`     | `1px solid var(--separator-color)` | `none`                                |
+| `--task-border-color`  | `var(--divider-color)`             | surface ink mixed into `--card-bg`    |
+| `--task-border-radius` | `0`                                | `var(--st-radius)`                    |
+| `--task-list-row-gap`  | `0`                                | `var(--s-half)`                       |
+| Row border and surface | none / `--task-c-bg: transparent`  | `--st-line-width` border, `--card-bg` |
 
-Rows that draw their own box (planner, board and issue-panel items) take their
-top/bottom edge from `--task-row-edge`, so the separator and the box border never
-cancel each other out on one element. Bare `task` hosts use `--task-separator`.
+Change the row look in these tokens and in `_ultra-tasks.scss` only — never
+hardcode a border or surface on a row in component styles. Rows that draw their own
+box (planner, board and issue-panel items) take their top/bottom edge from
+`--task-row-edge`, so the separator and the box border never cancel each other out
+on one element. Bare `task` hosts use `--task-separator`.
 
 Chrome around task lists — section headings (`collapsible.task-section`), board panel
 titles, the collapsed "+ n completed subtasks" label — is typed one level below the
@@ -215,14 +242,16 @@ often long and user-authored, where caps only add width. Meta counts follow the 
 label style and are omitted entirely when zero rather than shown as `-` or `0`.
 
 Task multi-selection is a `--task-c-multi-selected-bg` tint plus a 1px
-`--palette-primary-400` outline; keyboard focus is a `--focus-ring-width` (2px) outline
-in the same color and no tint. The tint is what separates them — a 1px vs 2px line in
-one color is not readable as two states — but it is the weaker channel, so the outline
-stays: `background` on a task row is contested (the `isCurrent` chain and the
-`isSelected` `!important` rule win over it, and several bundled themes force it with
-`!important`), and author backgrounds are dropped in forced-colors mode while outlines
-survive. Never make a row state depend on `background` alone. The task open in the
-detail panel uses the neutral `--task-c-selected-bg`.
+`--palette-primary-400` (palette accent) outline; keyboard focus is a
+`--focus-ring-width` (2px) outline in the same color and no tint. The tint is what
+separates them — a 1px vs 2px line in one color is not readable as two states — but
+it is the weaker channel, so the outline stays: `background` on a task row is
+contested (the `isCurrent` chain and the `isSelected` `!important` rule win over it),
+and author backgrounds are dropped in forced-colors mode while outlines survive.
+Never make a row state depend on `background` alone. The task open in the detail
+panel uses `--task-c-selected-bg`. Under the palette theme the selected,
+multi-selected and current-task backgrounds all resolve to `--palette-selected` (the
+surface mixed with 18% accent).
 
 Focus rings on rows and other focusable containers (anything carrying a `tabindex`,
 as opposed to a button or control — those keep the `.focus-ring` utility from the Focus
@@ -261,14 +290,20 @@ When migrating hardcoded durations, pick the nearest bucket — up to ~15% drift
 
 Keyboard-accessibility tokens for custom interactive elements. Material components keep their own focus treatment; use these for non-Material buttons, cards, and custom controls.
 
-| Variable              | Value               |
-| --------------------- | ------------------- |
-| `--focus-ring-width`  | 2px                 |
-| `--focus-ring-offset` | 2px                 |
-| `--focus-ring`        | `var(--brand)`      |
-| `--focus-ring-color`  | `var(--focus-ring)` |
+| Variable              | Value                                                                           |
+| --------------------- | ------------------------------------------------------------------------------- |
+| `--focus-ring-width`  | 2px                                                                             |
+| `--focus-ring-offset` | 2px                                                                             |
+| `--focus-ring`        | `var(--text-color)` (palette theme); `var(--brand)` in the inherited base layer |
+| `--focus-ring-color`  | `var(--focus-ring)`                                                             |
 
-Themes should override the public `--focus-ring` primitive on `body` / `body.isDarkTheme`. `--focus-ring-color` is the compatibility alias consumed by existing components.
+The palette theme (`_palette-theme.scss`) sets `--focus-ring` on `body` to the text
+ink, so custom controls (nav links, collapsible headers, chips, dialog content) show
+a black ring in light palettes and a white ring in dark ones; the value is resolved
+on `body`, so it follows the background's ink, not a card's. Task rows use their own
+accent ring (`--palette-primary-400`, see Task rows), and the Ultra Tasks brand link
+and planning actions use `--st-brand`. `--focus-ring-color` is the compatibility
+alias consumed by existing components; change the ring through `--focus-ring`.
 
 Quickest adoption — add the `.focus-ring` utility class from `util.scss`, which applies an `outline` on `:focus-visible` only (so it doesn't fire on mouse clicks).
 
@@ -332,33 +367,35 @@ Defined in `src/styles/util.scss` and `src/styles/themes.scss`:
 - Color: `.bg-primary`, `.bgc-accent`, `.color-primary`, `.bg-success`, `.bg-warning`, `.bg-danger`
 - Effects: `.milk-glass` (backdrop blur)
 
-## Authoring Themes
+## Palette theme
 
-Theme files live in `src/assets/themes/*.css` and are loaded at runtime.
+There are no CSS themes: the app does not load theme files or user CSS. Colors come
+from the three-color palette described in [theming-contract.md](theming-contract.md)
+and § Palette Values above; new colors go through those tokens.
 
-### Side nav: never apply CB-creating properties to the `magic-side-nav` host
+## Side nav: never apply CB-creating properties to the `magic-side-nav` host
 
 The mobile drawer (`.nav-sidenav`) and its overlay (`.nav-backdrop-mobile`) are `position: fixed` children of the `magic-side-nav` host. On mobile the host shrinks to `width: 0` (`hostWidthSignal` in `magic-side-nav.component.ts`).
 
 Any property that establishes a [new containing block for fixed-position descendants](https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block#identifying_the_containing_block) — `backdrop-filter`, `filter`, `transform`, `perspective`, `contain: paint|layout|strict`, or a matching `will-change` — re-anchors the drawer and backdrop to the 0-wide host. The drawer never appears when the user taps the menu.
 
-Apply glass/blur/tint to the inner `.nav-sidenav` instead:
+Apply blur or tint to the inner `.nav-sidenav` instead, as `_ultra-tasks.scss` does for its shell panels:
 
 ```css
 /* ❌ Bad — collapses the mobile drawer */
-body.isDarkTheme magic-side-nav {
+body.ultra-tasks magic-side-nav {
   background: var(--my-pane);
-  backdrop-filter: blur(32px);
+  backdrop-filter: blur(var(--st-blur));
 }
 
 /* ✅ Good — host stays visually inert */
-body.isDarkTheme magic-side-nav .nav-sidenav {
+body.ultra-tasks magic-side-nav .nav-sidenav {
   background: var(--my-pane);
-  backdrop-filter: blur(32px);
+  backdrop-filter: blur(var(--st-blur));
 }
 ```
 
-Properties that do NOT create a containing block — `background`, `border`, `box-shadow`, `margin` — are safe on the host. See `velvet.css` and `liquid-glass.css` for full reference patterns.
+Properties that do NOT create a containing block — `background`, `border`, `box-shadow`, `margin` — are safe on the host.
 
 ## Global Component Styles
 

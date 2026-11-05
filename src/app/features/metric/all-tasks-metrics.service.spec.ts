@@ -6,7 +6,7 @@ import { TaskService } from '../tasks/task.service';
 import { WorklogService } from '../worklog/worklog.service';
 import { WorkContextService } from '../work-context/work-context.service';
 import { TimeTrackingService } from '../time-tracking/time-tracking.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { createTask } from '../tasks/task.test-helper';
 import { Worklog } from '../worklog/worklog.model';
 import { TimeTrackingState } from '../time-tracking/time-tracking.model';
@@ -431,6 +431,61 @@ describe('AllTasksMetricsService', () => {
       metrics = service.simpleMetrics();
       expect(metrics).toBeDefined();
       expect(metrics?.timeSpent).toBe(99999);
+    }));
+  });
+  describe('when the worklog loads after the context', () => {
+    // Real WorklogService: worklog$ only emits once the worklog for the active
+    // context has loaded, which is after the context itself has emitted.
+    let lateWorklog$: ReplaySubject<Worklog>;
+    let lateTotalTimeSpent$: ReplaySubject<number>;
+
+    beforeEach(() => {
+      lateWorklog$ = new ReplaySubject<Worklog>(1);
+      lateTotalTimeSpent$ = new ReplaySubject<number>(1);
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        providers: [
+          AllTasksMetricsService,
+          provideMockStore(),
+          {
+            provide: TaskService,
+            useValue: {
+              getAllTasksEverywhere: () => Promise.resolve([createTask({ id: '1' })]),
+            },
+          },
+          {
+            provide: WorklogService,
+            useValue: {
+              worklog$: lateWorklog$.asObservable(),
+              totalTimeSpent$: lateTotalTimeSpent$.asObservable(),
+            },
+          },
+          {
+            provide: WorkContextService,
+            useValue: { activeWorkContext$: activeWorkContext$.asObservable() },
+          },
+          {
+            provide: TimeTrackingService,
+            useValue: { state$: timeTrackingState$.asObservable() },
+          },
+        ],
+      });
+      service = TestBed.inject(AllTasksMetricsService);
+    });
+
+    it('should compute metrics on the first visit of TODAY', fakeAsync(() => {
+      activeWorkContext$.next(
+        createMockWorkContext(TODAY_TAG.id, WorkContextType.TAG, 'Today'),
+      );
+      tick(200);
+      expect(service.simpleMetrics()).toBeUndefined();
+
+      lateWorklog$.next(createWorklog(5400000));
+      lateTotalTimeSpent$.next(5400000);
+      tick(200);
+      flush();
+
+      expect(service.simpleMetrics()?.timeSpent).toBe(5400000);
     }));
   });
 });

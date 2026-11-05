@@ -38,6 +38,10 @@ containers, including cards, menus, dialogs, forms, selected tasks, and filled
 buttons. Labels inherit that container's ink; icons and state shapes can use the
 accent. The shared styles bridge Angular Material's component tokens and the
 legacy palette aliases so these do not introduce another unrelated color.
+State colors are not part of the palette: `--palette-warn-*` keeps Material's warn
+red, and `--color-success`, `--color-warning` and `--color-danger` keep their
+semantic values, so overdue dates, destructive actions and callout tones stay
+distinct from the accent. Input placeholders use a muted share of their field's ink.
 Disabled controls can still dim to communicate their state. Project/tag identity
 colors remain available for their identifying icons/dots, rather than recoloring
 the entire application. Wallpapers and per-project contrast/hue controls are no
@@ -48,8 +52,16 @@ longer shown or applied.
 `--palette-background`, `--palette-surface`, and `--palette-accent` hold the chosen
 colors. Their `-ink` counterparts hold black or white. `--palette-selected` and
 `--palette-hover` are opaque accent/surface mixes with corresponding `-ink`
-tokens. Existing `--surface-*`, `--brand`, `--text-color*`, and Material palette
-variables remain internal compatibility aliases. New components should use the
+tokens. `PaletteThemeService` writes them on the root element, together with every
+`--palette-primary-*` and `--palette-accent-*` stop (all set to the accent), so
+Angular Material's own component tokens follow the accent in both modes. Existing
+`--surface-*`, `--brand`, `--text-color*`, and Material palette variables remain
+internal compatibility aliases.
+
+Focus: `--focus-ring` (and its alias `--focus-ring-color`) resolves to the body's
+text ink, so custom controls show a black ring in light palettes and a white ring in
+dark ones. Task rows use the accent (`--palette-primary-400`) for their focus and
+multi-selection outlines. New components should use the
 shared surface styles and semantic tokens, rather than hardcoded colors.
 
 Native system bars use the background color and its contrasting icon style.

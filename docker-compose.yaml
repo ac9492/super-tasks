@@ -106,9 +106,10 @@ services:
       retries: 3
       start_period: 10s
 
-  # Super Productivity app
+  # Ultra Tasks web app, built from this repository (no prebuilt image is
+  # published). Start with: docker compose up -d --build app webdav
   app:
-    image: johannesjo/super-productivity:latest
+    build: .
     ports:
       - '8080:80'
     environment:

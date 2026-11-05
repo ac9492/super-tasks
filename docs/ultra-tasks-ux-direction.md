@@ -67,4 +67,4 @@ The next iteration puts the existing Search entry first under the brand, in DOM 
 
 Glass appearance is restrained to a few shell panels, with high-opacity task surfaces and no per-task blur. Users can choose solid surfaces in General → Appearance. The preference is device-local; reduced-transparency and forced-color preferences take precedence. The existing wallpaper setting remains the source of background images.
 
-The task-note logo now has a larger check and one folded corner for a recognizable silhouette.
+The logo is a white hand-drawn check on a deep-teal (`#075b5e`) rounded square, which the default accent color also uses.

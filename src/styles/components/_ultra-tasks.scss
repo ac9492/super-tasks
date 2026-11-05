@@ -37,9 +37,9 @@ body.ultra-tasks {
     outline: var(--st-focus-width) solid var(--st-brand);
     outline-offset: var(--s-half);
   }
+  // Every active row (work contexts and routes) takes the solid accent fill and
+  // accent ink from nav-item.component.scss / _palette-theme.scss.
   nav-item .nav-link.active {
-    border-inline-start: var(--st-focus-width) solid var(--st-brand);
-    background: color-mix(in srgb, var(--st-brand) var(--st-tint-alpha), var(--bg));
     font-weight: bold;
   }
   task {
@@ -166,6 +166,8 @@ body.ultra-tasks {
   .st-search-entry .nav-link {
     border: var(--st-line-width) solid var(--separator);
     border-radius: var(--st-radius);
+  }
+  .st-search-entry .nav-link:not(.active) {
     background: var(--card-bg);
   }
   .st-glass-setting {

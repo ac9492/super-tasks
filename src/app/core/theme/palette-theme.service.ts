@@ -54,10 +54,15 @@ export class PaletteThemeService {
     this.select(DEFAULT_PALETTE);
   }
 
-  /** Runs only on palette/mode changes. No task-row observers or DOM reads. */
+  /**
+   * Runs only on palette/mode changes. No task-row observers or DOM reads.
+   * Writes to the root element: Angular Material declares its light-mode
+   * component tokens on `html`, where they resolve `--palette-*`, and `body`
+   * inherits everything from there.
+   */
   apply(isDark: boolean): void {
     const colors = this._palettes()[isDark ? 'dark' : 'light'];
-    const style = this._document.body.style;
+    const style = this._document.documentElement.style;
     const set = (name: string, value: string): void => style.setProperty(name, value);
     for (const name of ['background', 'surface', 'accent'] as const) {
       const color = colors[name];
@@ -80,8 +85,10 @@ export class PaletteThemeService {
     );
 
     // Bridge existing Material consumers, including RGB and contrast variants.
-    // Every stop uses the chosen accent; states are derived separately above.
-    for (const role of ['primary', 'accent', 'warn']) {
+    // Every primary/accent stop uses the chosen accent; states are derived
+    // separately above. The warn palette keeps Material's red so overdue dates
+    // and destructive actions stay distinct from the accent.
+    for (const role of ['primary', 'accent']) {
       for (const shade of [
         '50',
         '100',

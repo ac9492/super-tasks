@@ -92,6 +92,12 @@
     visibility 0s linear var(--transition-duration-xs, 0.09s);
 }
 
+// The count is a sibling of the row button, so it does not inherit the active
+// row's ink; without this it keeps the muted background ink on the accent fill.
+.nav-link.active ~ .task-count {
+  color: var(--sidenav-active-text);
+}
+
 // On touch the row's menu opens on long-press (`isTouchLongPress` on its
 // context-menu), so the "more" button is taken out of the layout: a kebab on
 // every row doubled the drawer's weight. It stays in the accessibility tree and

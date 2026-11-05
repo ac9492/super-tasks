@@ -41,7 +41,7 @@
     "buildFrontend:stageWeb": "npm run prebuild && ng build --configuration stageWeb",
     "buildFrontend:stageWeb:unminified": "npm run prebuild && ng build --configuration stageWeb --optimization=false --aot=false",
     "dist": "npm run buildAllElectron:prod && electron-builder",
-    "dist:android": "npm run buildFrontend:stageWeb:unminified && npm run sync:android && npm run assemble:android:stage && echo 'Staging Android APK generated at android/app/build/outputs/apk/debug/'",
+    "dist:android": "npm run buildFrontend:stageWeb:unminified && npm run sync:android && npm run assemble:android:stage && echo 'Staging Android APKs generated at android/app/build/outputs/apk/{fdroid,play}/debug/'",
     "dist:android:prod": "npm run buildFrontend:prodWeb && npm run sync:android && npm run assemble:android:prod && echo 'Production Android APK generated at android/app/build/outputs/apk/release/'",
     "dist:linuxAndWin": "npm run buildAllElectron:prod && electron-builder --linux --win",
     "dist:mac:dl": "cp tools/mac-profiles/dl.provisionprofile embedded.provisionprofile && electron-builder --mac",

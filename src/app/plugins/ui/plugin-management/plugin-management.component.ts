@@ -815,6 +815,10 @@ export class PluginManagementComponent {
    * panel only renders there, then reveals it (guarded so we never toggle it shut).
    */
   goToIssuePanel(): Promise<void> {
+    // Close the plugins window explicitly: it closes itself on NavigationEnd,
+    // but from a work view /active/tasks redirects back to the current URL and
+    // no navigation ends, so it would stay on top of the panel.
+    this._dialog.getDialogById('plugins-window')?.close();
     return this._router.navigate(['/active/tasks']).then(() => {
       if (!this._layoutService.isShowIssuePanel()) {
         this._layoutService.toggleAddTaskPanel();

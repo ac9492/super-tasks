@@ -36,7 +36,11 @@ describe('PaletteThemeService', () => {
     service.updateColor('light', 'surface', '#ffffff');
     service.updateColor('light', 'accent', '#0000ff');
     service.apply(false);
-    const style = documentMock.body.style;
+    // Material declares its light-mode tokens on `html`, so the palette must
+    // resolve there too; `body` inherits it.
+    const style = documentMock.documentElement.style;
+    expect(documentMock.body.style.getPropertyValue('--palette-accent')).toBe('');
+    expect(style.getPropertyValue('--palette-primary-500')).toBe('#0000ff');
     expect(style.getPropertyValue('--palette-background-ink')).toBe('#ffffff');
     expect(style.getPropertyValue('--palette-surface-ink')).toBe('#000000');
     expect(style.getPropertyValue('--palette-primary-500-no-rgb')).toBe('0, 0, 255');
@@ -45,13 +49,23 @@ describe('PaletteThemeService', () => {
       '255, 255, 255, 1',
     );
   });
+  it('leaves the warn palette to Material so state colors stay red', () => {
+    const service = TestBed.inject(PaletteThemeService);
+    service.apply(false);
+    const style = documentMock.documentElement.style;
+    expect(style.getPropertyValue('--palette-accent-500')).toBe(
+      DEFAULT_PALETTE.light.accent,
+    );
+    expect(style.getPropertyValue('--palette-warn-500')).toBe('');
+    expect(style.getPropertyValue('--palette-warn-contrast-500')).toBe('');
+  });
   it('keeps live editing usable when persistence is blocked', () => {
     const service = TestBed.inject(PaletteThemeService);
     spyOn(localStorage, 'setItem').and.throwError('blocked');
     service.updateColor('dark', 'accent', '#ff0000');
     service.apply(true);
-    expect(documentMock.body.style.getPropertyValue('--palette-accent-ink')).toBe(
-      '#000000',
-    );
+    expect(
+      documentMock.documentElement.style.getPropertyValue('--palette-accent-ink'),
+    ).toBe('#000000');
   });
 });

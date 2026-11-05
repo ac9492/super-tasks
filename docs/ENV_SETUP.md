@@ -3,7 +3,7 @@
 This project uses a hybrid approach for environment configuration:
 
 - **Base configuration** (production/stage flags) are in static TypeScript files
-- **Secrets and dynamic values** are loaded from `.env` files and converted to TypeScript constants
+- **Per-developer values** (such as client IDs for optional integrations) are loaded from `.env` files and converted to TypeScript constants
 
 ## Overview
 
@@ -20,7 +20,7 @@ These files contain base configuration like `production`, `stage`, and `version`
 - `.env` - Environment variables for all environments
 - `src/app/config/env.generated.ts` - Auto-generated TypeScript constants (gitignored)
 
-The `.env` file contains secrets and environment-specific values that should not be committed to version control.
+The `.env` file contains environment-specific values that should not be committed to version control. Everything in it is compiled into the client bundle, so it must contain only values that may be public.
 
 ## Setup Instructions
 
@@ -34,8 +34,7 @@ The `.env` file contains secrets and environment-specific values that should not
 
    ```bash
    # .env
-   GOOGLE_DRIVE_TOKEN=your-token-here
-   DROPBOX_API_KEY=your-api-key-here
+   ONEDRIVE_CLIENT_ID=your-client-id
    ```
 
 3. **Access environment variables in your code**
@@ -45,13 +44,14 @@ The `.env` file contains secrets and environment-specific values that should not
    import { ENV } from './app/config/env.generated';
 
    // Direct access
-   const googleToken = ENV.GOOGLE_DRIVE_TOKEN;
+   const clientId = ENV.ONEDRIVE_CLIENT_ID;
 
    // Or using utility functions (with type safety)
-   import { getEnv, getEnvOrDefault } from './app/util/env';
+   import { getEnv, getEnvOptional } from './app/util/env';
 
-   const googleToken = getEnv('GOOGLE_DRIVE_TOKEN');
-   const dropboxKey = getEnvOrDefault('DROPBOX_API_KEY', 'default-key');
+   const clientId = getEnv('ONEDRIVE_CLIENT_ID');
+   // For keys that may be missing from .env, with a fallback
+   const optionalValue = getEnvOptional('SOME_OPTIONAL_KEY') ?? 'default';
    ```
 
 ## Running the Application
@@ -73,7 +73,7 @@ Note: All commands use the same `.env` file. The difference between environments
 
 ## Build Commands
 
-Build commands also generate constants before building:
+Build commands also generate constants before building. A bare `ng serve` or `ng build` does not; run `npm run env` first:
 
 ```bash
 # Production build
@@ -88,13 +88,13 @@ npm run buildFrontend:stage:es6
 1. **load-env.js** reads the `.env` file and generates `src/app/config/env.generated.ts`
 2. **TypeScript constants** are imported and used throughout the app (no process.env needed!)
 3. **Type safety** - The utility functions use `keyof typeof ENV` for autocomplete and type checking
-4. **Gitignored** - The generated file is never committed, keeping secrets safe
+4. **Gitignored** - The generated file is never committed
 
 ## Security Notes
 
 - Never commit `.env` files to version control
 - The generated `env.generated.ts` is gitignored automatically
-- Secrets are compiled into the bundle at build time (not exposed as environment variables)
+- Values are compiled into the client bundle at build time, where anyone using the built app can read them. Never put private secrets (passwords, private API keys, server credentials) in `.env`; use only client IDs and keys that are designed to be public
 - Only add non-sensitive values to `.env.example`
 
 ## Adding New Environment Variables
@@ -105,7 +105,7 @@ npm run buildFrontend:stage:es6
    NEW_API_KEY=your-api-key-here
    ```
 
-2. The TypeScript types are automatically generated when you run any build/serve command
+2. Regenerate the TypeScript constants with `npm run env` (`npm run startFrontend` and the `buildFrontend:*` scripts do this automatically)
 
 3. Use in your code with full type safety:
 
@@ -124,4 +124,4 @@ npm run buildFrontend:stage:es6
 - ✅ **No Runtime Dependencies**: Constants are compiled into the bundle
 - ✅ **Works Everywhere**: No need for process.env or special webpack config
 - ✅ **Simple**: Just import and use the constants
-- ✅ **Secure**: Secrets stay in `.env` and never in version control
+- ✅ **Out of version control**: Per-developer values stay in `.env`, not in the repository (they are still public in built bundles)
