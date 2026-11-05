@@ -198,7 +198,7 @@
         "CREATE_NEW_TAGS_BTN": "Create Tags",
         "CREATE_NEW_TAGS_MSG": "{{nr}} new tags need to be created for this board to work",
         "EDIT_BOARD": "Edit board",
-        "TASK_COUNT": "{{count}} tasks",
+        "TASK_COUNT": "Tasks: {{count}}",
         "NO_PANELS_BTN": "Configure Board",
         "NO_PANELS_MSG": "This board has no panels configured. Add some panels to it."
       }
@@ -948,7 +948,7 @@
       "DAY_LOAD": "Planned: {{planned}} / Available: {{available}}",
       "DEADLINES": "Deadlines",
       "EDIT_REPEATED_TASK": "Edit recurring task \"{{taskName}}\"",
-      "ITEMS_TOTAL": "{{count}} items",
+      "ITEMS_TOTAL": "Tasks and events: {{count}}",
       "NO_TASKS": "No tasks",
       "PLANNED_LOAD": "Planned: {{planned}}",
       "PLAN_VIEW": {
@@ -1771,7 +1771,6 @@
     "TASK": {
       "ADD_TASK_BAR": {
         "ADD_EXISTING_TASK": "Add existing task \"{{taskTitle}}\"",
-        "CREATE_NEW_TAGS": "Create new tags",
         "DUE_BUTTON": "Schedule",
         "ESTIMATE_BUTTON": "Estimate",
         "NOTE_PLACEHOLDER": "Add a note… (Ctrl+Enter to add task)",

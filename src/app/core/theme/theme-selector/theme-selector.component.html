@@ -28,12 +28,20 @@
     [open]="colorsExpanded()"
     (toggle)="colorsExpanded.set(colorDetails.open)"
   >
-    <summary>{{ T.PS.REDESIGN.COLORS | translate }}</summary>
-    <h4>{{ T.GCF.MISC.PALETTE.TITLE | translate }}</h4>
-    <setting-help
-      [label]="T.GCF.MISC.PALETTE.TITLE | translate"
-      [text]="T.PS.REDESIGN.PALETTE_HELP | translate"
-    />
+    <summary>
+      <mat-icon
+        class="summary-icon"
+        aria-hidden="true"
+        >expand_more</mat-icon
+      >{{ T.PS.REDESIGN.COLORS | translate }}
+    </summary>
+    <div class="setting-row palette-heading">
+      <h4 class="setting-control">{{ T.GCF.MISC.PALETTE.TITLE | translate }}</h4>
+      <setting-help
+        [label]="T.GCF.MISC.PALETTE.TITLE | translate"
+        [text]="T.PS.REDESIGN.PALETTE_HELP | translate"
+      />
+    </div>
     <p>{{ T.GCF.MISC.PALETTE.DESCRIPTION | translate }}</p>
     <div
       class="palette-presets"

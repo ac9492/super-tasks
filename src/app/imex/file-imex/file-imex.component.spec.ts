@@ -445,7 +445,9 @@ describe('FileImexComponent', () => {
       mockMatDialog.getDialogById.and.callFake((id: string) =>
         id === 'settings-window' ? settingsDialogRef : undefined,
       );
-      const pluginService = TestBed.inject(PluginService) as jasmine.SpyObj<PluginService>;
+      const pluginService = TestBed.inject(
+        PluginService,
+      ) as jasmine.SpyObj<PluginService>;
       pluginService.activatePlugin.and.returnValue(Promise.resolve({} as any));
       mockRouter.navigate.and.callFake(() => {
         expect(settingsDialogRef.close).toHaveBeenCalled();

@@ -101,11 +101,11 @@ export class ScheduleMonthComponent {
   // only recomputes when the days or the locale change.
   readonly dayNumberByDay = computed<Record<string, string>>(() => {
     const locale = this._dateTimeFormatService.currentLocale();
-    const map: Record<string, string> = {};
+    const labels: Record<string, string> = {};
     for (const day of this.daysToShow()) {
-      map[day] = safeFormatDate(day, 'd', locale);
+      labels[day] = safeFormatDate(day, 'd', locale);
     }
-    return map;
+    return labels;
   });
 
   readonly deadlineBadgesByDay = computed<

@@ -1,7 +1,8 @@
+// The surrounding .appearance-section already insets this block like the
+// other settings sections, so headings and help buttons share their edges.
 .theme-selector-container {
   display: grid;
   gap: var(--s3);
-  padding: var(--s2);
   container-type: inline-size;
 }
 h3,
@@ -138,8 +139,32 @@ h4 {
   > * {
     margin-top: var(--s2);
   }
+  // Same look as the settings' "More options" disclosures: chevron, no marker.
   > summary {
+    display: flex;
+    align-items: center;
+    gap: var(--s);
     margin-top: 0;
+    padding: var(--s) var(--s2);
+    font-size: var(--font-size-lg);
+    list-style: none;
     cursor: pointer;
+    user-select: none;
+    &::-webkit-details-marker {
+      display: none;
+    }
+    &:focus-visible {
+      outline: var(--focus-ring-width) solid var(--focus-ring-color);
+      outline-offset: calc(-1 * var(--focus-ring-width));
+    }
   }
+  .summary-icon {
+    transition: var(--transition-standard);
+  }
+  &[open] .summary-icon {
+    transform: rotate(180deg);
+  }
+}
+.palette-heading {
+  align-items: center;
 }

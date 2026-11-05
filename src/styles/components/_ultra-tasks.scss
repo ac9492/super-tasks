@@ -183,13 +183,17 @@ body.ultra-tasks {
   .st-search-entry .nav-link:not(.active) {
     background: var(--card-bg);
   }
+  // Aligned with the Appearance rows above it (no extra inline inset).
   .st-glass-setting {
     display: flex;
     align-items: center;
     gap: var(--s);
-    padding: var(--s2);
+    padding: var(--s2) 0;
     color: var(--text-color);
     cursor: pointer;
+  }
+  .st-glass-setting input {
+    accent-color: var(--c-accent);
   }
   .st-glass-setting small {
     display: block;

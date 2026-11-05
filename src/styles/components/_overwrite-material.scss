@@ -304,11 +304,43 @@ mat-option.isDone {
 .mat-mdc-button,
 .mat-mdc-outlined-button {
   &[color='primary'],
-  &[color='accent'],
-  &[color='warn'] {
+  &[color='accent'] {
     --mat-button-text-label-text-color: var(--text-color);
     --mat-button-outlined-label-text-color: var(--text-color);
     --mat-button-outlined-outline-color: var(--brand);
+  }
+}
+
+// Destructive (warn) buttons stay red so they never read as primary
+// (docs/styling-guide.md § Dialog action buttons). --c-warn/--c-warn-contrast
+// are mode-aware and readable on every palette surface. The doubled class
+// outranks the theme's `.isDarkTheme .mat-mdc-*.mat-warn` variant rules.
+.mat-mdc-button,
+.mat-mdc-outlined-button {
+  &.mat-warn.mat-warn {
+    --mat-button-text-label-text-color: var(--c-warn);
+    --mat-button-outlined-label-text-color: var(--c-warn);
+    --mat-button-outlined-outline-color: var(--c-warn);
+  }
+}
+
+.mat-mdc-unelevated-button,
+.mat-mdc-raised-button {
+  &.mat-warn.mat-warn {
+    --mat-button-filled-container-color: var(--c-warn);
+    --mat-button-filled-label-text-color: var(--c-warn-contrast);
+    --mat-button-protected-container-color: var(--c-warn);
+    --mat-button-protected-label-text-color: var(--c-warn-contrast);
+  }
+}
+
+.mat-mdc-fab,
+.mat-mdc-mini-fab {
+  &.mat-warn.mat-warn {
+    --mat-fab-container-color: var(--c-warn);
+    --mat-fab-foreground-color: var(--c-warn-contrast);
+    --mat-fab-small-container-color: var(--c-warn);
+    --mat-fab-small-foreground-color: var(--c-warn-contrast);
   }
 }
 

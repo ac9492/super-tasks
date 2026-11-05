@@ -614,6 +614,12 @@ body.isDarkTheme {
 
 /* stylelint-disable-next-line no-duplicate-selectors -- layered token file: Cat B follows Layer 1 primitives on the same selector */
 body {
+  // Warn/overdue red (overdue dates, deadlines, destructive buttons): a darker
+  // stop on light surfaces and a lighter one on dark surfaces keep it >= 4.5:1
+  // as text on every palette preset. --c-warn-contrast is the ink on a warn
+  // fill. Never mapped to the palette accent.
+  --c-warn: var(--palette-warn-800);
+  --c-warn-contrast: #fff;
   // Saturated schedule text colors on light surfaces.
   --scheduled-date-today: #007a29;
   --scheduled-date-tomorrow: #b45b00;
@@ -701,6 +707,8 @@ body {
 
 /* stylelint-disable-next-line no-duplicate-selectors -- layered token file: Cat B follows Layer 1 primitives on the same selector */
 body.isDarkTheme {
+  --c-warn: var(--palette-warn-A100);
+  --c-warn-contrast: #000;
   --scheduled-date-today: #00d45a;
   --scheduled-date-tomorrow: #ffaa00;
   --scheduled-date-upcoming: #d580ff;

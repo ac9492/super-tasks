@@ -140,6 +140,7 @@ body
 
 // Legacy feature styles may color individual labels. Text inherits the ink of
 // its painted container; icons keep the accent and selection retains shape cues.
+// Warn buttons keep their semantic label color (_overwrite-material.scss).
 body
   :is(
     p,
@@ -161,7 +162,7 @@ body
     time,
     code,
     pre
-  ):where(:not(.mat-mdc-icon-button, .tag-ico-emoji)) {
+  ):where(:not(.mat-mdc-icon-button, .tag-ico-emoji, .mat-warn)) {
   color: inherit !important;
 }
 // Placeholders are examples, not content: a muted share of the field's ink

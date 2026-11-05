@@ -51,6 +51,7 @@ export class ContextMenuComponent implements OnInit {
   contextMenuPosition: { x: string; y: string } = { x: '0px', y: '0px' };
   private _longPressTimeout: number | undefined;
   private _isDestroyed = false;
+  private _leftClickEl: HTMLElement | null = null;
 
   constructor() {
     inject(DestroyRef).onDestroy(() => {
@@ -92,6 +93,11 @@ export class ContextMenuComponent implements OnInit {
         leftClickEl instanceof HTMLElement
           ? leftClickEl
           : (leftClickEl as any)._elementRef.nativeElement;
+      // A menu button: `aria-expanded` also keeps a hover-revealed button on
+      // screen while its menu is open, so focus can return to it.
+      htmlLeftClickEl.setAttribute('aria-haspopup', 'menu');
+      htmlLeftClickEl.setAttribute('aria-expanded', 'false');
+      this._leftClickEl = htmlLeftClickEl;
       htmlLeftClickEl.addEventListener('click', (ev) => {
         this.openContextMenu(ev);
       });
@@ -212,8 +218,10 @@ export class ContextMenuComponent implements OnInit {
     };
     if (!contextMenuTriggerEl.menuOpen) {
       const focusOrigin = this._getFocusOrigin(event);
+      const isFromLeftClickEl =
+        !!this._leftClickEl && event.currentTarget === this._leftClickEl;
       contextMenuTriggerEl.openMenu();
-      this._initMenuKeyboard(focusOrigin);
+      this._initMenuKeyboard(focusOrigin, isFromLeftClickEl);
     }
     return true;
   }
@@ -224,14 +232,21 @@ export class ContextMenuComponent implements OnInit {
    * moves focus into the panel nor handles the arrow keys, and closing it
    * returns focus to the hidden trigger div, i.e. to <body>. Do those here.
    */
-  private _initMenuKeyboard(focusOrigin: HTMLElement | null): void {
+  private _initMenuKeyboard(
+    focusOrigin: HTMLElement | null,
+    isFromLeftClickEl: boolean,
+  ): void {
     const isOpenedByKeyboard = this._inputModality.mostRecentModality === 'keyboard';
     const menu = this._menu();
+    if (isFromLeftClickEl) {
+      this._leftClickEl?.setAttribute('aria-expanded', 'true');
+    }
     menu.closed.pipe(take(1)).subscribe((reason) => {
       const active = document.activeElement;
       const panel = document.getElementById(menu.panelId);
       const isFocusInMenuOrLost =
         !active || active === document.body || !!panel?.contains(active);
+      // Before aria-expanded drops: that may hide a hover-revealed button.
       if (
         focusOrigin?.isConnected &&
         isFocusInMenuOrLost &&
@@ -239,6 +254,7 @@ export class ContextMenuComponent implements OnInit {
       ) {
         focusOrigin.focus();
       }
+      this._leftClickEl?.setAttribute('aria-expanded', 'false');
     });
     afterNextRender(
       () => {

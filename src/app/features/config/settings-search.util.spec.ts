@@ -119,7 +119,13 @@ describe('searchSettings', () => {
   });
 
   it('should find every Sound option under the Tasks & planning tab', () => {
-    for (const query of ['volume', 'done_sound', 'pitch', 'break_reminder', 'track_time']) {
+    for (const query of [
+      'volume',
+      'done_sound',
+      'pitch',
+      'break_reminder',
+      'track_time',
+    ]) {
       const hits = searchSettings(TABS, query, translate);
       expect(hits.length).withContext(query).toBe(1);
       expect(hits[0].scrollSelector).withContext(query).toBe('.sound-section');

@@ -42,7 +42,9 @@
                   <div
                     (click)="editTaskRepeatCfg(taskRepeatCfg)"
                     (keydown.enter)="editTaskRepeatCfg(taskRepeatCfg)"
-                    (keydown.space)="$event.preventDefault(); editTaskRepeatCfg(taskRepeatCfg)"
+                    (keydown.space)="
+                      $event.preventDefault(); editTaskRepeatCfg(taskRepeatCfg)
+                    "
                     role="button"
                     tabindex="0"
                     [attr.aria-label]="

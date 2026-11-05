@@ -46,9 +46,8 @@
                     class="time-val"
                     [matTooltip]="T.WW.WORKING_TODAY | translate"
                     matTooltipPosition="above"
-                    >{{
-                    (workingToday() | msToString: false : true) || '0m'
-                  }}</strong>
+                    >{{ (workingToday() | msToString: false : true) || '0m' }}</strong
+                  >
                   @if (
                     workContextService.workingTodayArchived$ | async;
                     as workingTodayArchived
@@ -65,34 +64,34 @@
                 </span>
               </div>
               <div class="item hide-xs">
-                  <span class="label">{{ T.WW.WITHOUT_BREAK | translate }} </span>
-                  <span
-                    class="no-wrap"
-                    matTooltip="{{ T.F.TIME_TRACKING.D_IDLE.BREAK | translate }}: {{
-                      breakTimeToday() | msToString
-                    }}"
-                    [matTooltipDisabled]="!breakTimeToday()"
-                    matTooltipPosition="above"
+                <span class="label">{{ T.WW.WITHOUT_BREAK | translate }} </span>
+                <span
+                  class="no-wrap"
+                  matTooltip="{{ T.F.TIME_TRACKING.D_IDLE.BREAK | translate }}: {{
+                    breakTimeToday() | msToString
+                  }}"
+                  [matTooltipDisabled]="!breakTimeToday()"
+                  matTooltipPosition="above"
+                >
+                  <strong class="time-val">{{
+                    (takeABreakService.timeWorkingWithoutABreak$
+                      | async
+                      | msToString: false : true) || '0m'
+                  }}</strong
+                  ><mat-icon>timer</mat-icon>
+                </span>
+                <div class="take-a-break-reset-btn">
+                  <button
+                    (click)="resetBreakTimer()"
+                    [matTooltip]="T.WW.RESET_BREAK_TIMER | translate"
+                    [attr.aria-label]="T.WW.RESET_BREAK_TIMER | translate"
+                    color="lighter"
+                    mat-mini-fab
                   >
-                    <strong class="time-val">{{
-                      (takeABreakService.timeWorkingWithoutABreak$
-                        | async
-                        | msToString: false : true) || '0m'
-                    }}</strong
-                    ><mat-icon>timer</mat-icon>
-                  </span>
-                  <div class="take-a-break-reset-btn">
-                    <button
-                      (click)="resetBreakTimer()"
-                      [matTooltip]="T.WW.RESET_BREAK_TIMER | translate"
-                      [attr.aria-label]="T.WW.RESET_BREAK_TIMER | translate"
-                      color="lighter"
-                      mat-mini-fab
-                    >
-                      <mat-icon>timer_off</mat-icon>
-                    </button>
-                  </div>
+                    <mat-icon>timer_off</mat-icon>
+                  </button>
                 </div>
+              </div>
             </div>
           }
         </header>

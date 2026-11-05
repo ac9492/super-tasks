@@ -79,7 +79,7 @@ import { DEFAULT_TASK_REPEAT_CFG } from '../../task-repeat-cfg/task-repeat-cfg.m
 import { getQuickSettingUpdates } from '../../task-repeat-cfg/dialog-edit-task-repeat-cfg/get-quick-setting-updates';
 import { getIntervalRepeatUpdates } from '../../task-repeat-cfg/dialog-edit-task-repeat-cfg/get-interval-repeat-updates';
 import { getDefaultSkipOverdue } from '../../task-repeat-cfg/dialog-edit-task-repeat-cfg/get-default-skip-overdue';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { ShortSyntaxTag, shortSyntaxToTags } from './short-syntax-to-tags';
 import { DEFAULT_PROJECT_COLOR } from '../../work-context/work-context.const';
 import { Log } from '../../../core/log';
@@ -92,6 +92,10 @@ import { DateService } from '../../../core/date/date.service';
 import { MenuTreeService } from '../../menu-tree/menu-tree.service';
 import { SelectOptionRowComponent } from '../../../ui/select-option-row/select-option-row.component';
 import { toPersistableRemindOption } from '../../planner/dialog-schedule-task/task-reminder-options.const';
+import { escapeHtml } from '../../../util/escape-html';
+import { ShortSyntaxConfig } from '../../config/global-config.model';
+import { Project } from '../../project/project.model';
+import { Tag } from '../../tag/tag.model';
 
 export interface TaskAddEvent {
   taskId: string;
@@ -147,7 +151,6 @@ export class AddTaskBarComponent implements AfterViewInit, OnInit, OnDestroy {
   private readonly _snackService = inject(SnackService);
   private readonly _parserService = inject(AddTaskBarParserService);
   private readonly _destroyRef = inject(DestroyRef);
-  private readonly _translateService = inject(TranslateService);
   private readonly _store = inject(Store);
   private readonly _taskRepeatCfgService = inject(TaskRepeatCfgService);
   private readonly _markdownPasteService = inject(MarkdownPasteService);
@@ -357,6 +360,16 @@ export class AddTaskBarComponent implements AfterViewInit, OnInit, OnDestroy {
   private _processingAutocompleteSelection = false;
   private _isAddingTask = false;
   private _defaultTagIds: string[] = [];
+  // Everything but the text that the last parse ran with, so a submit can parse
+  // the exact text it adds (see _parseInputBeforeAdd)
+  private _lastParseArgs: {
+    config: ShortSyntaxConfig | null;
+    allTags: Tag[];
+    allProjects: Project[];
+    defaultProject: Project;
+    date?: string;
+    time?: string;
+  } | null = null;
 
   ngOnInit(): void {
     const isAddToBottomInitially = this.isAddToBottomInitially();
@@ -438,6 +451,14 @@ export class AddTaskBarComponent implements AfterViewInit, OnInit, OnDestroy {
         switchMap(
           ([title, config, allTags, allProjects, defaultProject, defaultDateInfo]) => {
             const { date, time } = defaultDateInfo;
+            this._lastParseArgs = {
+              config,
+              allTags,
+              allProjects,
+              defaultProject: defaultProject!,
+              date,
+              time,
+            };
             return from(
               this._parserService.parseAndUpdateText(
                 title || '',
@@ -492,16 +513,16 @@ export class AddTaskBarComponent implements AfterViewInit, OnInit, OnDestroy {
       return;
     }
 
-    const currentState = this.stateService.state();
     const rawInput = this.stateService.inputTxt().trim();
     if (!rawInput) return;
 
-    const title = currentState.cleanText || rawInput;
-    if (!title) return;
-
     this._isAddingTask = true;
     try {
-      const state = currentState;
+      await this._parseInputBeforeAdd();
+      const state = this.stateService.state();
+      const title = state.cleanText || rawInput;
+      if (!title) return;
+
       let finalTagIds = [...state.tagIds, ...state.tagIdsFromTxt];
 
       if (this.hasNewTags()) {
@@ -851,6 +872,12 @@ export class AddTaskBarComponent implements AfterViewInit, OnInit, OnDestroy {
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
+    // A click that removed its own target (a dialog or menu button closing its
+    // overlay) can no longer be traced to where it happened; it was not a
+    // click outside the bar.
+    if (!target.isConnected) {
+      return;
+    }
     const component = target.closest('add-task-bar');
     const overlayContainer = target.closest('.cdk-overlay-container');
 
@@ -983,13 +1010,60 @@ export class AddTaskBarComponent implements AfterViewInit, OnInit, OnDestroy {
     );
   }
 
+  /**
+   * The parse runs async (switchMap), so text typed in a burst and submitted at
+   * once (text expanders, dictation, AutoHotkey) can find the state still
+   * describing an older, shorter string — a title missing its last characters,
+   * and stale tags, date or estimate. Parse the exact text being added first.
+   */
+  private async _parseInputBeforeAdd(): Promise<void> {
+    const text = this.stateService.inputTxt();
+    const args = this._lastParseArgs;
+    if (!args) {
+      // Parsing is not set up yet: there is no parse to be stale against
+      return;
+    }
+    // Bounded: a pass is only superseded by a parse the pipeline started for
+    // this same text, which then publishes the same result.
+    for (let i = 0; i < 3 && !this._parserService.isParsedFor(text); i++) {
+      await this._parserService.parseAndUpdateText(
+        text,
+        args.config,
+        args.allProjects,
+        args.allTags,
+        args.defaultProject,
+        args.date,
+        args.time,
+        this._dateTimeFormatService.dateInputLocale(),
+      );
+    }
+  }
+
   private async _confirmNewTags(): Promise<boolean> {
+    const newTagTitles = unique(this.stateService.state().newTagTitles);
+    const isMultiple = newTagTitles.length > 1;
+    // Same dialog as creating tags from a title edit. The confirm button has
+    // focus: Enter creates the tags the user just typed instead of silently
+    // dropping them.
     const dialogRef = this._matDialog.open(DialogConfirmComponent, {
+      restoreFocus: true,
       data: {
-        message: `${this._translateService.instant(T.F.TASK.ADD_TASK_BAR.CREATE_NEW_TAGS)}: ${this.stateService.state().newTagTitles.join(', ')}?`,
+        okTxt: isMultiple
+          ? T.F.TASK.D_CONFIRM_SHORT_SYNTAX_NEW_TAGS.OK
+          : T.F.TASK.D_CONFIRM_SHORT_SYNTAX_NEW_TAG.OK,
+        message: isMultiple
+          ? T.F.TASK.D_CONFIRM_SHORT_SYNTAX_NEW_TAGS.MSG
+          : T.F.TASK.D_CONFIRM_SHORT_SYNTAX_NEW_TAG.MSG,
+        translateParams: {
+          tagsTxt: `<strong>${escapeHtml(newTagTitles.join(', '))}</strong>`,
+        },
+        isFocusConfirm: true,
       },
     });
-    return await dialogRef.afterClosed().toPromise();
+    const isConfirmed = await dialogRef.afterClosed().toPromise();
+    // Back to the bar for the next task
+    this.focusInput();
+    return !!isConfirmed;
   }
 
   private async _createNewTags(tagTitles: string[]): Promise<string[]> {

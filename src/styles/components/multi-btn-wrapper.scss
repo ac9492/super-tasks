@@ -46,7 +46,8 @@
   }
 
   // `:focus-within`: the wrapper itself never takes focus, but a focused row
-  // reveals its "more" button so Tab reaches it next.
+  // reveals its "more" button so Tab reaches it next. An open menu keeps its
+  // button shown, so focus can return to it when the menu closes.
   &:focus-within,
   &:hover {
     > button:nth-of-type(n + 2),
@@ -55,6 +56,22 @@
         opacity: 0.8;
         display: inline-flex;
       }
+    }
+  }
+
+  > .additional-btn[aria-expanded='true'] {
+    @include is-touch-device.mousePrimaryDevice(true) {
+      opacity: 0.8;
+      display: inline-flex;
+    }
+  }
+
+  // The nav row's task count sits where the revealed button goes; hover
+  // already hides it (nav-item.component.scss).
+  &:focus-within > .task-count,
+  &:has(> .additional-btn[aria-expanded='true']) > .task-count {
+    @include is-touch-device.mousePrimaryDevice(true) {
+      display: none;
     }
   }
 

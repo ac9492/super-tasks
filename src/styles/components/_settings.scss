@@ -21,6 +21,12 @@
     margin: 0;
     font-size: var(--font-size-2xl);
   }
+  // The dialog focuses its title on open (autoFocus: 'first-heading') so
+  // screen readers start there. The title is not interactive (tabindex -1),
+  // so it gets no focus box.
+  h1[tabindex='-1']:focus {
+    outline: none;
+  }
 }
 
 .setting-row {

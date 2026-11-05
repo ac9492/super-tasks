@@ -310,7 +310,9 @@ describe('ScheduleMonthComponent', () => {
 
       expect(fixture.debugElement.queryAll(By.css('.month-event')).length).toBe(2);
       expect(
-        fixture.nativeElement.querySelector('.month-more-events-count').textContent.trim(),
+        fixture.nativeElement
+          .querySelector('.month-more-events-count')
+          .textContent.trim(),
       ).toBe('+4');
 
       setRoomForEvents(3);
@@ -318,7 +320,9 @@ describe('ScheduleMonthComponent', () => {
 
       expect(fixture.debugElement.queryAll(By.css('.month-event')).length).toBe(3);
       expect(
-        fixture.nativeElement.querySelector('.month-more-events-count').textContent.trim(),
+        fixture.nativeElement
+          .querySelector('.month-more-events-count')
+          .textContent.trim(),
       ).toBe('+3');
     });
 
