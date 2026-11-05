@@ -39,7 +39,7 @@
 #   METADATA_PATH      release-notes dir (default: fastlane/appstore_metadata)
 #   SUBMIT_FOR_REVIEW  "false" to only upload the build without submitting
 
-APP_IDENTIFIER = 'com.super-productivity.app'
+APP_IDENTIFIER = 'app.ultratasks'
 
 def asc_api_key
   app_store_connect_api_key(
@@ -81,7 +81,7 @@ def deliver_options(extra)
   }.merge(extra)
 end
 
-# Both release lanes run on the same `super-tasks-v*` tag push (see the two release
+# Both release lanes run on the same `ultra-tasks-v*` tag push (see the two release
 # workflows) and can race on App Store Connect's per-app review-submission
 # state. When they collide, the lane that submits second gets "Cannot submit
 # for review - A review submission is already in progress" -- but only AFTER its

@@ -33,7 +33,7 @@ const isQuickActionHost = (host: string): host is QuickActionHost =>
   (QUICK_ACTION_HOSTS as readonly string[]).includes(host);
 
 /**
- * Parses the UI-only actions on the `com.super-productivity.app://` custom URL
+ * Parses the UI-only actions on the `app.ultratasks://` custom URL
  * scheme: `add-task` (opens the quick-add-task input bar) and the two
  * navigation actions `today` / `inbox`. These are what the iOS home
  * screen quick actions and the Android launcher shortcuts (long-press the app

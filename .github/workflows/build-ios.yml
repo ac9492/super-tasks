@@ -2,7 +2,7 @@ name: iOS App Store Release on Release
 on:
   push:
     tags:
-      - super-tasks-v*
+      - ultra-tasks-v*
   workflow_dispatch:
     inputs:
       build_only:
@@ -130,7 +130,7 @@ jobs:
               <string>manual</string>
               <key>provisioningProfiles</key>
               <dict>
-                  <key>com.super-productivity.app</key>
+                  <key>app.ultratasks</key>
                   <string>${{ env.PROVISIONING_PROFILE_UUID }}</string>
               </dict>
           </dict>
@@ -143,20 +143,20 @@ jobs:
               exit 1
             fi
             /usr/libexec/PlistBuddy -c \
-              "Add :provisioningProfiles:com.super-productivity.app.ShareExtension string $SHARE_PROVISIONING_PROFILE_UUID" \
+              "Add :provisioningProfiles:app.ultratasks.ShareExtension string $SHARE_PROVISIONING_PROFILE_UUID" \
               "$RUNNER_TEMP/ExportOptions.plist"
           fi
 
           if [ -f ios/App/SupWidget/Info.plist ]; then
             if [ -z "${WIDGET_PROVISIONING_PROFILE_UUID:-}" ]; then
               echo "ERROR: SupWidget target requires the IOS_WIDGET_PROVISION_PROFILE secret"
-              echo "(an App Store profile for com.super-productivity.app.widget; the app"
+              echo "(an App Store profile for app.ultratasks.widget; the app"
               echo "profile must also carry the App Group). Setup steps:"
               echo "ios/App/SupWidget/README.md"
               exit 1
             fi
             /usr/libexec/PlistBuddy -c \
-              "Add :provisioningProfiles:com.super-productivity.app.widget string $WIDGET_PROVISIONING_PROFILE_UUID" \
+              "Add :provisioningProfiles:app.ultratasks.widget string $WIDGET_PROVISIONING_PROFILE_UUID" \
               "$RUNNER_TEMP/ExportOptions.plist"
           fi
 

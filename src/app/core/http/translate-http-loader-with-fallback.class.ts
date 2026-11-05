@@ -9,10 +9,18 @@ import { DEFAULT_LANGUAGE } from '../locale.constants';
 import EN_TRANSLATIONS from '../../../assets/i18n/en.json';
 
 // Upstream locale files retain their translated prose. Apply the fork's product
-// name once when loading them, without changing keys, placeholders, or URLs.
+// identity once when loading them. Keep keys, placeholders and service URLs stable.
 const withProductName = (value: TranslationObject[string]): TranslationObject[string] => {
   if (typeof value === 'string')
-    return value.replace(/super productivity|super tasks/gi, 'Ultra Tasks');
+    return value
+      .replace(/super productivity|super tasks/gi, 'Ultra Tasks')
+      .replaceAll('superproductivity://', 'ultratasks://')
+      .replaceAll('com.super-productivity.app://', 'app.ultratasks://')
+      .replaceAll('https://app.super-productivity.com', 'https://ultratasks.app')
+      .replaceAll(
+        'https://super-productivity.com/download/',
+        'https://github.com/ac9492/ultra-tasks/releases/latest',
+      );
   if (Array.isArray(value)) return value.map(withProductName);
   if (value && typeof value === 'object') {
     return Object.fromEntries(

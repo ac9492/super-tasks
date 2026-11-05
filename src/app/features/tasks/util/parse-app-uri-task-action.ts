@@ -24,7 +24,7 @@ const isTaskActionHost = (host: string): boolean =>
   (TASK_ACTION_HOSTS as readonly string[]).includes(host);
 
 /**
- * Parses the `com.super-productivity.app://create-task?title=...` and
+ * Parses the `app.ultratasks://create-task?title=...` and
  * `.../complete-task?title=...` custom URL scheme actions (used by iOS
  * Shortcuts' "Open URLs" action and Android automation apps — both platforms
  * declare VIEW filters for these hosts and route through the same Capacitor

@@ -1,11 +1,10 @@
-name: Master Web Deploy
+name: Main Web Deploy
 
-# Keeps the development build (test-app.super-productivity.com) on the latest
-# master. Reuses the PR preview Cloudflare Pages project; the custom domain
-# points at its `master` branch alias.
+# Deploys main to the fork's Cloudflare Pages preview project when configured.
+# Domain and hosting setup are separate from the product rename.
 on:
   push:
-    branches: [master]
+    branches: [main]
     # No app change, nothing to redeploy.
     paths-ignore:
       - 'docs/**'
@@ -15,13 +14,14 @@ on:
 permissions:
   contents: read
 
-# A newer master push supersedes an in-progress deploy.
+# A newer main push supersedes an in-progress deploy.
 concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: true
 
 jobs:
-  deploy-master:
+  deploy-main:
+    if: ${{ vars.ULTRA_TASKS_WEB_DEPLOY == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 25
     environment: preview-deployments
@@ -46,4 +46,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist/browser --project-name=super-productivity-preview --branch=master
+          command: pages deploy dist/browser --project-name=ultra-tasks-preview --branch=main

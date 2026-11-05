@@ -10,15 +10,15 @@ names change.
 
 ## Fork branches and upstream updates
 
-`main` is the canonical Super Tasks development branch. Before stable `1.0.0`,
-work lands directly on it; afterward, PRs target `ac9492/super-tasks:main`.
-Use `gh pr create --repo ac9492/super-tasks --base main` when opening a fork PR.
+`main` is the canonical Ultra Tasks development branch. Before stable `1.0.0`,
+work lands directly on it; afterward, PRs target `ac9492/ultra-tasks:main`.
+Use `gh pr create --repo ac9492/ultra-tasks --base main` when opening a fork PR.
 The affected-spec runner and sync-fuzz comparison default to `origin/main`.
 
 Keep the GitHub fork relationship and the `upstream` remote. Track only
 `upstream/master` and disable automatic upstream tag fetching to keep the local
 branch list focused; existing historical tags remain available. Fetching upstream
-does not change Super Tasks files. To inspect future updates, run
+does not change Ultra Tasks files. To inspect future updates, run
 `git fetch upstream` and `git log --oneline main..upstream/master`. Incorporate
 them in a separate, tested change by merge, rebase or selected cherry-picks.
 Rebasing a published `main` rewrites its history and requires coordinating with
@@ -31,9 +31,11 @@ head branches after future PRs merge. Inherited store-publishing workflows still
 target their original release infrastructure; changing the development branch
 does not migrate app identities, signing, or distribution destinations.
 
-## Super Tasks version policy
+## Ultra Tasks version policy
 
-Super Tasks has its own product version, starting at `0.1.0`. Use `0.x` while
+The project was renamed from Super Tasks to **Ultra Tasks** before its first stable release. Its planned website is `https://ultratasks.app`, the repository is `ac9492/ultra-tasks`, and new releases use `ultra-tasks-v…` tags. Historical tags and upstream attribution remain intact. Android and iOS use the independent `app.ultratasks` application ID (with a separate share-extension ID and app group on iOS); Android retains its inherited Java/Kotlin namespace as an internal source compatibility detail. Store listings, signing certificates, provisioning profiles, OAuth registrations, and domain hosting must be configured for the new identity before publishing through those channels. No email address or live domain service is assumed.
+
+Ultra Tasks has its own product version, starting at `0.1.0`. Use `0.x` while
 the fork's core experience is taking shape, then `1.0.0` for the first dependable
 stable experience. Testing releases use suffixes such as `0.1.0-alpha.1`,
 `0.1.0-beta.1`, and `0.1.0-rc.1`.
@@ -45,11 +47,11 @@ interfaces, imports, shortcuts and automation interfaces must be considered when
 assessing compatibility. Product versions do not automatically change persisted
 schemas, sync protocols or independently versioned package APIs.
 
-The repository's `.npmrc` makes `npm version` create `super-tasks-vX.Y.Z` tags.
+The repository's `.npmrc` makes `npm version` create `ultra-tasks-vX.Y.Z` tags.
 Inherited upstream `v*` tags remain historical references and released-client
 test fixtures; they are excluded from fork release selection and TestFlight
 version calculation. Incorporating upstream changes does not dictate the next
-Super Tasks version: choose it from the resulting user-visible changes.
+Ultra Tasks version: choose it from the resulting user-visible changes.
 
 [`build/upstream-base.json`](../build/upstream-base.json) records the upstream
 repository and incorporated commit separately. Update it when incorporating a
@@ -58,28 +60,35 @@ notes rather than implying that an entire newer upstream release was merged.
 The release-note generator includes this provenance and uses the recorded commit
 as the first release's comparison base when there is no earlier fork release.
 
-Before distributing the fork, migrate the inherited app/store identifiers,
-desktop data location, update feeds and publishing destinations to Super Tasks.
-This version change does not perform that identity migration. In particular,
-the reset Android version code belongs to a new application identity; it cannot
-upgrade the existing Super Productivity store package. Keep the apps' data
-separate and provide an explicit import path.
+Ultra Tasks uses independent app identifiers, release tags, and update links.
+Store distribution still requires the fork's own registrations and signing
+credentials. The reset Android version code belongs to a new application
+identity; it cannot upgrade the existing Super Productivity store package.
+Transfer mobile data through an explicit backup/import. Desktop builds reuse
+existing profiles from the fork's former name without moving them; upstream
+profiles remain separate. Configure `DOCKER_IMAGE` to the fork's own Docker Hub
+repository before enabling container publishing.
+
+The main-branch web preview uses the fork's `ultra-tasks-preview` Cloudflare
+Pages project. After configuring hosting and its credentials, set the repository
+variable `ULTRA_TASKS_WEB_DEPLOY=true` to enable it. The domain is a planned
+website until DNS and hosting are connected.
 
 ## Release boundaries
 
 ### GitHub-only desktop releases
 
-For Super Tasks desktop downloads, dispatch **Desktop GitHub Release**
+For Ultra Tasks desktop downloads, dispatch **Desktop GitHub Release**
 (`desktop-release.yml`) from the reviewed `main` commit. It validates the app,
 builds Windows x64/ARM64 executables and macOS Intel/Apple Silicon DMG/ZIP files,
 and smoke-tests the native packaged app on each runner. Only after every job
-passes does it create `super-tasks-v<package version>` and publish the GitHub
+passes does it create `ultra-tasks-v<package version>` and publish the GitHub
 release with SHA-256 checksums and `build/desktop-release-notes.md`.
 
-This workflow uses `electron-builder.desktop.yaml` for the independent Super
+This workflow uses `electron-builder.desktop.yaml` for the independent Ultra
 Tasks desktop identity. The initial packages are unsigned on Windows and ad-hoc
 signed, without notarization, on macOS. Signing status must appear in the notes.
-The package name (`super-tasks`) supplies the independent default data directory;
+The package name (`ultra-tasks`) supplies the independent default data directory;
 existing Super Productivity data is imported explicitly from a backup.
 
 The publish job deliberately uses `GITHUB_TOKEN`: GitHub does not trigger other
@@ -93,8 +102,8 @@ The remaining sections describe the inherited multi-channel release path.
 
 Releasing has two distinct boundaries:
 
-1. **Push a `super-tasks-v*` tag:** builds artifacts and creates a draft GitHub release. A
-   final tag (`super-tasks-vX.Y.Z`, with no prerelease suffix) also uploads and submits the iOS and Mac App
+1. **Push a `ultra-tasks-v*` tag:** builds artifacts and creates a draft GitHub release. A
+   final tag (`ultra-tasks-vX.Y.Z`, with no prerelease suffix) also uploads and submits the iOS and Mac App
    Store builds for review with automatic release after Apple approval. Treat a
    final tag as production-affecting even while the GitHub release remains a draft.
 2. **Publish the GitHub release:** triggers the release-event workflows that
@@ -122,7 +131,7 @@ changes, and creates the npm version commit and tag.
 
 ### The release-notes base
 
-Notes span from the **last published Super Tasks GitHub release** to `HEAD`, not from the
+Notes span from the **last published Ultra Tasks GitHub release** to `HEAD`, not from the
 newest tag: a version whose draft release was abandoned, deleted, or left
 unpublished still leaves its tag behind, and basing the notes on that tag drops
 everything the unpublished versions contained. A final version bases on the last
@@ -162,7 +171,7 @@ the placeholder with the tag created by `npm version`; do not use
 `--follow-tags`, which can include other reachable annotated tags.
 
 ```bash
-git push --atomic origin HEAD "super-tasks-vX.Y.Z"
+git push --atomic origin HEAD "ultra-tasks-vX.Y.Z"
 ```
 
 ## What the tag triggers
@@ -275,7 +284,7 @@ A warning is not a safety net, though, so the outcome is asserted where it can b
 checked: `build-android.yml` verifies on the packaged APK that no
 `assets/public/` service-worker entry survived. That covers build, `cap sync`,
 strip and package together rather than any single step. It never runs on a pull
-request — push (`master`, `release/*`, `test/git-actions`, `super-tasks-v*` tags) and
+request — push (`master`, `release/*`, `test/git-actions`, `ultra-tasks-v*` tags) and
 `workflow_dispatch` only — so it gates the publish rather than the merge. No PR
 workflow could host it: `android-tests.yml` does assemble an APK, but it
 substitutes a stand-in smoke page for the Angular bundle, so the assertion would
@@ -356,6 +365,6 @@ for development-only labels, secrets, and personal data before upload.
   is authorized for the organization. If those checks do not explain a rejection,
   report the run URL and submission timestamp to SignPath support so they can
   inspect the server-side request record.
-- Windows signing runs only on a `super-tasks-v*` tag, so a signing fix can only be
+- Windows signing runs only on a `ultra-tasks-v*` tag, so a signing fix can only be
   exercised by re-running `windows-bin` or by pushing a pre-release tag. Never
   move a released tag to retest.

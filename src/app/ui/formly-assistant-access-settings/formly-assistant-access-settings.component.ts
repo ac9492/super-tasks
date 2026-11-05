@@ -60,7 +60,7 @@ export class FormlyAssistantAccessSettingsComponent
 
   readonly claudeCodeSnippet = computed(
     () =>
-      `claude mcp add --scope user --transport http super-productivity ${this.url} ` +
+      `claude mcp add --scope user --transport http ultra-tasks ${this.url} ` +
       `--header "Authorization: Bearer ${this.newKey() ?? KEY_PLACEHOLDER}"`,
   );
   readonly jsonSnippet = computed(() =>
@@ -68,7 +68,7 @@ export class FormlyAssistantAccessSettingsComponent
       {
         mcpServers: {
           // eslint-disable-next-line @typescript-eslint/naming-convention
-          'super-productivity': {
+          'ultra-tasks': {
             type: 'http',
             url: this.url,
             headers: { Authorization: `Bearer ${this.newKey() ?? KEY_PLACEHOLDER}` },

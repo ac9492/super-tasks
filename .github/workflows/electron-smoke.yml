@@ -33,7 +33,7 @@ on:
       - '.github/workflows/electron-smoke.yml'
   push:
     branches: [master]
-    tags: ['super-tasks-v*']
+    tags: ['ultra-tasks-v*']
   workflow_dispatch:
 
 permissions:
@@ -122,7 +122,7 @@ jobs:
             --auto-servernum \
             --server-args="-screen 0 1280x720x24" \
             node e2e/electron/packaged-app-smoke.cjs \
-              '.tmp/app-builds/# packaged app/superproductivity' \
+              '.tmp/app-builds/# packaged app/ultratasks' \
             2>&1 | tee .tmp/smoke/launch.log
 
       - name: Smoke test packaged assistant access
@@ -130,7 +130,7 @@ jobs:
           set -o pipefail
           xvfb-run --auto-servernum --server-args="-screen 0 1280x720x24" \
             node e2e/electron/assistant-access-smoke.cjs \
-              '.tmp/app-builds/# packaged app/superproductivity' \
+              '.tmp/app-builds/# packaged app/ultratasks' \
             2>&1 | tee .tmp/smoke/assistant-access.log
 
       - name: Upload logs on failure

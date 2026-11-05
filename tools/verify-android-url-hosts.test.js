@@ -20,7 +20,7 @@ const { join } = require('node:path');
 const ROOT = join(__dirname, '..');
 const readRoot = (...p) => readFileSync(join(ROOT, ...p), 'utf8').replace(/\r\n/g, '\n');
 
-const SCHEME = 'com.super-productivity.app';
+const SCHEME = 'app.ultratasks';
 
 const MANIFEST = readRoot('android', 'app', 'src', 'main', 'AndroidManifest.xml');
 const TASK_PARSER = readRoot(

@@ -227,16 +227,16 @@ jobs:
             expect_plist "$1" CFBundleVersion "$EXPECTED_BUILD"
           }
 
-          expect_bundle "$APP_PLIST" com.super-productivity.app
+          expect_bundle "$APP_PLIST" app.ultratasks
 
           EXTENSION_PLIST="$ARCHIVE/Products/Applications/App.app/PlugIns/ShareExtension.appex/Info.plist"
           if [ -f "$EXTENSION_PLIST" ]; then
-            expect_bundle "$EXTENSION_PLIST" com.super-productivity.app.ShareExtension
+            expect_bundle "$EXTENSION_PLIST" app.ultratasks.ShareExtension
           fi
 
           WIDGET_PLIST="$ARCHIVE/Products/Applications/App.app/PlugIns/SupWidget.appex/Info.plist"
           if [ -f "$WIDGET_PLIST" ]; then
-            expect_bundle "$WIDGET_PLIST" com.super-productivity.app.widget
+            expect_bundle "$WIDGET_PLIST" app.ultratasks.widget
           fi
 
           # Reject any .appex directly under App.app/PlugIns that is not one
@@ -350,7 +350,7 @@ jobs:
               <string>manual</string>
               <key>provisioningProfiles</key>
               <dict>
-                  <key>com.super-productivity.app</key>
+                  <key>app.ultratasks</key>
                   <string>${{ env.PROVISIONING_PROFILE_UUID }}</string>
               </dict>
           </dict>
@@ -364,18 +364,18 @@ jobs:
               exit 1
             fi
             /usr/libexec/PlistBuddy -c \
-              "Add :provisioningProfiles:com.super-productivity.app.ShareExtension string $SHARE_PROVISIONING_PROFILE_UUID" \
+              "Add :provisioningProfiles:app.ultratasks.ShareExtension string $SHARE_PROVISIONING_PROFILE_UUID" \
               "$RUNNER_TEMP/ExportOptions.plist"
           fi
 
           WIDGET_PLIST="$RUNNER_TEMP/App.xcarchive/Products/Applications/App.app/PlugIns/SupWidget.appex/Info.plist"
           if [ -f "$WIDGET_PLIST" ]; then
             if [ -z "${WIDGET_PROVISIONING_PROFILE_UUID:-}" ]; then
-              echo "::error::SupWidget requires the IOS_WIDGET_PROVISION_PROFILE secret (an App Store profile for com.super-productivity.app.widget) - see ios/App/SupWidget/README.md"
+              echo "::error::SupWidget requires the IOS_WIDGET_PROVISION_PROFILE secret (an App Store profile for app.ultratasks.widget) - see ios/App/SupWidget/README.md"
               exit 1
             fi
             /usr/libexec/PlistBuddy -c \
-              "Add :provisioningProfiles:com.super-productivity.app.widget string $WIDGET_PROVISIONING_PROFILE_UUID" \
+              "Add :provisioningProfiles:app.ultratasks.widget string $WIDGET_PROVISIONING_PROFILE_UUID" \
               "$RUNNER_TEMP/ExportOptions.plist"
           fi
 

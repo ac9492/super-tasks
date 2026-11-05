@@ -1,12 +1,12 @@
 name: Question
-description: Ask a question about Super Tasks.
+description: Ask a question about Ultra Tasks.
 title: 'Question: '
 body:
   - type: markdown
     attributes:
       value: |
-        Super Tasks is maintained by Adrian Chase (@ac9492).
-        For vulnerabilities, use [private security reporting](https://github.com/ac9492/super-tasks/security/advisories/new).
+        Ultra Tasks is maintained by Adrian Chase (@ac9492).
+        For vulnerabilities, use [private security reporting](https://github.com/ac9492/ultra-tasks/security/advisories/new).
         Use sample data and leave out personal information, credentials, and private task contents.
   - type: textarea
     id: question

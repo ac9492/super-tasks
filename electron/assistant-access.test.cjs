@@ -50,7 +50,7 @@ test('initialize echoes a supported version and advertises tools only', async ()
   assert.deepEqual(reply.body.result, {
     protocolVersion: '2025-06-18',
     capabilities: { tools: {} },
-    serverInfo: { name: 'super-productivity', version: '1.2.3' },
+    serverInfo: { name: 'ultra-tasks', version: '1.2.3' },
   });
 });
 

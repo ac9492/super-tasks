@@ -33,14 +33,14 @@ import { evaluateGpuStartupGuard } from './gpu-startup-guard';
 import * as fs from 'fs';
 
 const ICONS_FOLDER = __dirname + '/assets/icons/';
-const APP_DISPLAY_NAME = 'Super Tasks';
+const APP_DISPLAY_NAME = 'Ultra Tasks';
 // Filename of the .desktop entry electron-builder installs, i.e.
 // `${linux.executableName}.desktop`. The `.desktop` suffix is required and is
 // what Electron's own default uses: `Browser::SetAsDefaultProtocolClient` hands
 // this value straight to `g_desktop_app_info_new()`, which wants a desktop-file
 // id, while the window identity strips the suffix itself. Coupled to the
 // desktop entry by `tools/verify-linux-wm-class.test.js`.
-const LINUX_DESKTOP_NAME = 'superproductivity.desktop';
+const LINUX_DESKTOP_NAME = 'ultratasks.desktop';
 const IS_MAC = process.platform === 'darwin';
 // const DESKTOP_ENV = process.env.DESKTOP_SESSION;
 // const IS_GNOME = DESKTOP_ENV === 'gnome' || DESKTOP_ENV === 'gnome-xorg';

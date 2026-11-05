@@ -69,7 +69,7 @@ export class AgentCaptureSettingsComponent extends FieldType<FormlyFieldConfig> 
   /** Ready to paste: the token is filled in, so setup is one copy. */
   readonly setupCommand = computed(
     () =>
-      `claude mcp add --transport http super-productivity ${this.mcpUrl()} ` +
+      `claude mcp add --transport http ultra-tasks ${this.mcpUrl()} ` +
       `--header "Authorization: Bearer ${this.newToken()}"`,
   );
 

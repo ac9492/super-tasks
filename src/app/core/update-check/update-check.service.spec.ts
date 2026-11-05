@@ -14,7 +14,7 @@ import { LS } from '../persistence/storage-keys.const';
 import { environment } from '../../../environments/environment';
 
 const RELEASES_API_URL =
-  'https://api.github.com/repos/super-productivity/super-productivity/releases/latest';
+  'https://api.github.com/repos/ac9492/ultra-tasks/releases/latest';
 
 describe('UpdateCheckService', () => {
   let service: UpdateCheckService;
@@ -59,29 +59,36 @@ describe('UpdateCheckService', () => {
   });
 
   describe('checkForUpdate()', () => {
+    it('rejects upstream release tags instead of offering an upstream update', async () => {
+      await checkAndRespond({ tag_name: 'v99.0.0' }, { isUserTriggered: true });
+      expect(bannerService.open).not.toHaveBeenCalled();
+      expect(snackService.open).toHaveBeenCalledWith(
+        jasmine.objectContaining({ type: 'ERROR' }),
+      );
+    });
     it('should open a banner when a newer version is available', async () => {
-      await checkAndRespond({ tag_name: 'v99.0.0' });
+      await checkAndRespond({ tag_name: 'ultra-tasks-v99.0.0' });
       expect(bannerService.open).toHaveBeenCalledTimes(1);
       const banner: Banner = bannerService.open.calls.mostRecent().args[0];
       expect(banner.id).toBe(BannerId.UpdateAvailable);
-      expect(banner.translateParams).toEqual({ version: 'v99.0.0' });
+      expect(banner.translateParams).toEqual({ version: 'ultra-tasks-v99.0.0' });
       expect(snackService.open).not.toHaveBeenCalled();
     });
 
     it('should do nothing when already on the latest version', async () => {
-      await checkAndRespond({ tag_name: `v${environment.version}` });
+      await checkAndRespond({ tag_name: `ultra-tasks-v${environment.version}` });
       expect(bannerService.open).not.toHaveBeenCalled();
       expect(snackService.open).not.toHaveBeenCalled();
     });
 
     it('should do nothing when the latest release is older (dev build)', async () => {
-      await checkAndRespond({ tag_name: 'v0.0.1' });
+      await checkAndRespond({ tag_name: 'ultra-tasks-v0.0.1' });
       expect(bannerService.open).not.toHaveBeenCalled();
     });
 
     it('should show an up-to-date snack for a user-triggered check', async () => {
       await checkAndRespond(
-        { tag_name: `v${environment.version}` },
+        { tag_name: `ultra-tasks-v${environment.version}` },
         { isUserTriggered: true },
       );
       expect(snackService.open).toHaveBeenCalledWith(
@@ -91,20 +98,23 @@ describe('UpdateCheckService', () => {
     });
 
     it('should not re-show the banner for a dismissed version', async () => {
-      localStorage.setItem(LS.UPDATE_CHECK_DISMISSED_VERSION, 'v99.0.0');
-      await checkAndRespond({ tag_name: 'v99.0.0' });
+      localStorage.setItem(LS.UPDATE_CHECK_DISMISSED_VERSION, 'ultra-tasks-v99.0.0');
+      await checkAndRespond({ tag_name: 'ultra-tasks-v99.0.0' });
       expect(bannerService.open).not.toHaveBeenCalled();
     });
 
     it('should show the banner for a dismissed version when user-triggered', async () => {
-      localStorage.setItem(LS.UPDATE_CHECK_DISMISSED_VERSION, 'v99.0.0');
-      await checkAndRespond({ tag_name: 'v99.0.0' }, { isUserTriggered: true });
+      localStorage.setItem(LS.UPDATE_CHECK_DISMISSED_VERSION, 'ultra-tasks-v99.0.0');
+      await checkAndRespond(
+        { tag_name: 'ultra-tasks-v99.0.0' },
+        { isUserTriggered: true },
+      );
       expect(bannerService.open).toHaveBeenCalledTimes(1);
     });
 
     it('should show the banner again for a newer version than the dismissed one', async () => {
-      localStorage.setItem(LS.UPDATE_CHECK_DISMISSED_VERSION, 'v99.0.0');
-      await checkAndRespond({ tag_name: 'v99.0.1' });
+      localStorage.setItem(LS.UPDATE_CHECK_DISMISSED_VERSION, 'ultra-tasks-v99.0.0');
+      await checkAndRespond({ tag_name: 'ultra-tasks-v99.0.1' });
       expect(bannerService.open).toHaveBeenCalledTimes(1);
     });
 
@@ -163,7 +173,7 @@ describe('UpdateCheckService', () => {
       const p1 = service.checkForUpdate();
       const p2 = service.checkForUpdate();
       // expectOne throws if the guard failed and two requests were made
-      httpMock.expectOne(RELEASES_API_URL).flush({ tag_name: 'v99.0.0' });
+      httpMock.expectOne(RELEASES_API_URL).flush({ tag_name: 'ultra-tasks-v99.0.0' });
       await Promise.all([p1, p2]);
       expect(bannerService.open).toHaveBeenCalledTimes(1);
     });
@@ -173,7 +183,7 @@ describe('UpdateCheckService', () => {
     let banner: Banner;
 
     beforeEach(async () => {
-      await checkAndRespond({ tag_name: 'v99.0.0' });
+      await checkAndRespond({ tag_name: 'ultra-tasks-v99.0.0' });
       banner = bannerService.open.calls.mostRecent().args[0];
     });
 
@@ -181,18 +191,22 @@ describe('UpdateCheckService', () => {
       const openExternalUrl = jasmine.createSpy('openExternalUrl');
       (window as unknown as { ea: unknown }).ea = { openExternalUrl };
       banner.action?.fn();
-      expect(localStorage.getItem(LS.UPDATE_CHECK_DISMISSED_VERSION)).toBe('v99.0.0');
+      expect(localStorage.getItem(LS.UPDATE_CHECK_DISMISSED_VERSION)).toBe(
+        'ultra-tasks-v99.0.0',
+      );
       expect(openExternalUrl).toHaveBeenCalledWith(
-        'https://super-productivity.com/download/',
+        'https://github.com/ac9492/ultra-tasks/releases/latest',
       );
     });
 
     it('should persist the version on dismiss so it is not shown again', async () => {
       banner.action2?.fn();
-      expect(localStorage.getItem(LS.UPDATE_CHECK_DISMISSED_VERSION)).toBe('v99.0.0');
+      expect(localStorage.getItem(LS.UPDATE_CHECK_DISMISSED_VERSION)).toBe(
+        'ultra-tasks-v99.0.0',
+      );
 
       bannerService.open.calls.reset();
-      await checkAndRespond({ tag_name: 'v99.0.0' });
+      await checkAndRespond({ tag_name: 'ultra-tasks-v99.0.0' });
       expect(bannerService.open).not.toHaveBeenCalled();
     });
   });

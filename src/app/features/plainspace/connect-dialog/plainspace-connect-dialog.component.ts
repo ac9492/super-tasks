@@ -138,7 +138,7 @@ export class PlainspaceConnectDialogComponent {
   readonly connectUrl =
     `${this._origin}/connect/super-productivity` +
     (IS_ELECTRON
-      ? `?return=${encodeURIComponent('supertasks://plainspace-connect')}`
+      ? `?return=${encodeURIComponent('ultratasks://plainspace-connect')}`
       : '');
   // The host's own terms apply (self-hosters' included); SP copies no legal text.
   readonly legalParams = {

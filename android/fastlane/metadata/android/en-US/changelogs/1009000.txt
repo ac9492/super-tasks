@@ -1,8 +1,8 @@
 - add optional glass appearance and top search
 - introduce glass workspace and task editing shortcuts
-- restore relative-date colors in Super Tasks
+- restore relative-date colors in Ultra Tasks
 - add weekday labels and task date styles
-- brand the combined fork as Super Tasks
+- brand the combined fork as Ultra Tasks
 - show subtask completion counts in every visibility mode #10501
 - split inline task creation from #10501
 - bulk move selected tasks between project sections

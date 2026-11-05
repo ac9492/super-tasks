@@ -1,10 +1,10 @@
-# Super Tasks UX direction
+# Ultra Tasks UX direction
 
 Status: discovery draft, November 2026. This document identifies problems to investigate; it does not commit the project to a new layout or interaction model.
 
 ## Scope and evidence
 
-Super Tasks focuses on individual task management, daily planning, and time tracking. The inherited [market position](market/README.md#target) and [scorecard](market/scorecard.md) identify quick capture, organization, and everyday polish as areas where users may struggle to reach the app's stronger capabilities. Those documents are upstream context, not independent usability evidence for this fork.
+Ultra Tasks focuses on individual task management, daily planning, and time tracking. The inherited [market position](market/README.md#target) and [scorecard](market/scorecard.md) identify quick capture, organization, and everyday polish as areas where users may struggle to reach the app's stronger capabilities. Those documents are upstream context, not independent usability evidence for this fork.
 
 The initial demand is concrete but limited: the fork began with reports about mismatched task counts, hard-to-read dates, missing relative-date colors, and task insertion/organization. The three priorities below are hypotheses to validate with more users. They do not justify a complete rewrite or a new UI framework by themselves.
 
@@ -18,7 +18,7 @@ Checked November 2026 against vendor documentation; these are documented behavio
 | Things: [default lists](https://culturedcode.com/things/support/articles/4001304/) and [Quick Find](https://culturedcode.com/things/support/articles/2803584/)                                                     | Today and Upcoming have explicitly documented roles in daily planning.                         | Its scheduling model documents when a task becomes available; that model differs from Super Productivity's. | Quick Find searches tasks and navigates to lists/projects from the keyboard.         |
 | [Apple Reminders: adding and changing reminders](https://support.apple.com/guide/reminders/add-or-change-reminders-remndc729e28/mac)                                                                               | Task details expose dates, tags, and flags.                                                    | Quick-entry fields and an Edit Details action provide different depths of editing.                          | Reminders are created in the selected list, giving capture an explicit list context. |
 
-Take: explicit destinations and date meanings, clear daily-view labels, a shallow path to common edits, and keyboard access to frequent destinations. These support a calm interface and extend concepts already present in Super Tasks.
+Take: explicit destinations and date meanings, clear daily-view labels, a shallow path to common edits, and keyboard access to frequent destinations. These support a calm interface and extend concepts already present in Ultra Tasks.
 
 Deliberately do not take: another app's scheduling semantics, cloud-account requirement, collaboration model, or additional task states. Do not duplicate upstream search, capture, or planning features just to copy a visual pattern.
 

@@ -183,7 +183,7 @@ export const createErrorAlert = (
     btnExport.addEventListener('click', async () => {
       try {
         await download(
-          'super-productivity-crash-user-data-export.json',
+          'ultra-tasks-crash-user-data-export.json',
           JSON.stringify(userData),
         );
       } catch (e) {
@@ -195,12 +195,12 @@ export const createErrorAlert = (
     const btnPrivacyExport = document.createElement('BUTTON');
     btnPrivacyExport.innerText = 'PE';
     btnPrivacyExport.title =
-      'Export anonymized data (to send to contact@super-productivity.com for debugging)';
+      'Export diagnostic data for a private report to the Ultra Tasks maintainer';
     btnPrivacyExport.addEventListener('click', async () => {
       // Type assertion needed for privacy export function
       try {
         await download(
-          'ANONYMIZED-super-productivity-crash-user-data-export.json',
+          'ANONYMIZED-ultra-tasks-crash-user-data-export.json',
           privacyExport(userData as Parameters<typeof privacyExport>[0]),
         );
       } catch (e) {
@@ -273,8 +273,8 @@ export const getGithubErrorUrl = (
   isHideActionsBeforeError = false,
 ): string => {
   return newGithubIssueUrl({
-    user: 'johannesjo',
-    repo: 'super-productivity',
+    user: 'ac9492',
+    repo: 'ultra-tasks',
     title: '💥 ' + title,
     template: 'in_app_bug_report.md',
     body: getGithubIssueErrorMarkdown(stackTrace, origErr, isHideActionsBeforeError),

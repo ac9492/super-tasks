@@ -10,7 +10,7 @@ struct SharedCapture: Codable {
 /// never overwrite each other, including when either process is suspended.
 /// https://developer.apple.com/library/archive/technotes/tn2408/_index.html
 enum ShareInbox {
-    static let group = "group.com.super-productivity.app"
+    static let group = "group.app.ultratasks"
 
     static func directory() throws -> URL {
         guard let container = FileManager.default.containerURL(

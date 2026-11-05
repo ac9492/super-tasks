@@ -1,10 +1,10 @@
-# Super Tasks 0.1.0
+# Ultra Tasks 0.1.0
 
-The first public desktop release of Super Tasks, a personal task and deep-work app based on Super Productivity.
+The first public desktop release of Ultra Tasks, a personal task and deep-work app based on Super Productivity.
 
 - A redesigned settings window with category navigation, search, progressive disclosure, and help tooltips.
 - A dedicated Plugins & integrations window with Installed and Discover views, search, filters, and pagination.
-- Super Tasks branding, app icons, and device-local color palettes.
+- Ultra Tasks branding, app icons, and device-local color palettes.
 - Offline task management and time tracking, with optional integrations and sync inherited from Super Productivity.
 
 ## Downloads
@@ -15,8 +15,8 @@ The first public desktop release of Super Tasks, a personal task and deep-work a
 
 These first-release Windows binaries are unsigned. Mac binaries are ad-hoc signed and are not Apple-notarized. Windows SmartScreen or macOS Gatekeeper may require explicit permission to open them. On macOS, use System Settings → Privacy & Security → Open Anyway if required.
 
-Super Tasks installs separately from Super Productivity. To bring existing tasks across, export a backup from Super Productivity and explicitly import it in Super Tasks. Keep the original backup. Community plugin compatibility with Super Tasks is not yet verified; themes and replacements of the host interface are outside the supported catalog.
+Ultra Tasks installs separately from Super Productivity. To bring existing tasks across, export a backup from Super Productivity and explicitly import it in Ultra Tasks. Keep the original backup. Community plugin compatibility with Ultra Tasks is not yet verified; themes and replacements of the host interface are outside the supported catalog.
 
 This release covers GitHub desktop downloads only. It does not publish to the Microsoft, Apple, Google Play, or Snap stores.
 
-Built on the upstream commit recorded in [build/upstream-base.json](https://github.com/ac9492/super-tasks/blob/super-tasks-v0.1.0/build/upstream-base.json). Thanks to the Super Productivity contributors.
+Built on the upstream commit recorded in [build/upstream-base.json](https://github.com/ac9492/ultra-tasks/blob/ultra-tasks-v0.1.0/build/upstream-base.json). Thanks to the Super Productivity contributors.

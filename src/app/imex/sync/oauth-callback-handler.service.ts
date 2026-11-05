@@ -58,7 +58,8 @@ export class OAuthCallbackHandlerService implements OnDestroy {
       if (url.includes('plugin-oauth-callback')) {
         this._handlePluginOAuthCallback(url);
       } else if (
-        url.startsWith('com.super-productivity.app://oauth-callback') ||
+        url.startsWith('app.ultratasks://oauth-callback') ||
+        url.startsWith('ultratasks://oauth-callback') ||
         url.startsWith('superproductivity://oauth-callback')
       ) {
         const callbackData = this._parseOAuthCallback(url);
@@ -96,6 +97,7 @@ export class OAuthCallbackHandlerService implements OnDestroy {
       }
 
       if (
+        !callbackUrl.startsWith('ultratasks://oauth-callback') &&
         !callbackUrl.startsWith('supertasks://oauth-callback') &&
         !callbackUrl.startsWith('superproductivity://oauth-callback')
       ) {

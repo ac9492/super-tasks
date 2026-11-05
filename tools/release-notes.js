@@ -14,7 +14,7 @@ const ROOT_DIR = path.join(__dirname, '..');
 const PLAY_STORE_MAX_CHARS = 500;
 const DEFAULT_CHANGELOG = 'Bug fixes and improvements';
 const DOWNLOADS_NOTE =
-  'For all current downloads, package links, and platform-specific notes: [check the releases](https://github.com/ac9492/super-tasks/releases).';
+  'For all current downloads, package links, and platform-specific notes: [check the releases](https://github.com/ac9492/ultra-tasks/releases).';
 
 const GENERATED_RELEASE_NOTES_DIR = path.join(
   ROOT_DIR,
@@ -32,7 +32,7 @@ const GITHUB_API_URL = 'https://api.github.com';
 const GITHUB_API_TIMEOUT_MS = 10000;
 // `npm version` commits carry the bare version as their subject. A base that is
 // the last published release can span several of them, so drop them as noise.
-const VERSION_BUMP_SUBJECT_PATTERN = /^(?:super-tasks-v|v)?\d+\.\d+\.\d+(?:-[\w.]+)?$/;
+const VERSION_BUMP_SUBJECT_PATTERN = /^(?:ultra-tasks-v|v)?\d+\.\d+\.\d+(?:-[\w.]+)?$/;
 
 const USER_FACING_TYPES = new Set(['feat', 'fix', 'perf']);
 const LOW_SIGNAL_TYPES = new Set([

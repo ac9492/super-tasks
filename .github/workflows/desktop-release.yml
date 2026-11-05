@@ -50,12 +50,18 @@ jobs:
         shell: bash
         run: |
           if [ '${{ matrix.platform }}' = 'win' ]; then
-            APP='.tmp/app-builds/win-unpacked/Super Tasks.exe'
+            SOURCE='.tmp/app-builds/win-unpacked'
+            EXECUTABLE='Ultra Tasks.exe'
           elif [ "$(node -p process.arch)" = 'arm64' ]; then
-            APP='.tmp/app-builds/mac-arm64/Super Tasks.app/Contents/MacOS/Super Tasks'
+            SOURCE='.tmp/app-builds/mac-arm64'
+            EXECUTABLE='Ultra Tasks.app/Contents/MacOS/Ultra Tasks'
           else
-            APP='.tmp/app-builds/mac/Super Tasks.app/Contents/MacOS/Super Tasks'
+            SOURCE='.tmp/app-builds/mac'
+            EXECUTABLE='Ultra Tasks.app/Contents/MacOS/Ultra Tasks'
           fi
+          # The shared smoke test also verifies URLs from a path containing '#'.
+          mv "$SOURCE" "${SOURCE} # packaged app"
+          APP="${SOURCE} # packaged app/$EXECUTABLE"
           node e2e/electron/packaged-app-smoke.cjs "$APP"
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
@@ -85,11 +91,12 @@ jobs:
         run: |
           set -euo pipefail
           VERSION=$(node -p "require('./package.json').version")
-          TAG="super-tasks-v${VERSION}"
+          TAG="ultra-tasks-v${VERSION}"
           test "$(find downloads -name '*.exe' | wc -l)" -eq 2
           test "$(find downloads -name '*.dmg' | wc -l)" -eq 2
           test "$(find downloads -name '*.zip' | wc -l)" -eq 2
           (cd downloads && sha256sum * > SHA256SUMS.txt)
           # GITHUB_TOKEN deliberately prevents inherited tag/release workflows
           # from submitting this GitHub-only release to upstream stores.
-          gh release create "$TAG" downloads/* --target "$GITHUB_SHA" --title "Super Tasks ${VERSION}" --notes-file build/desktop-release-notes.md --latest
+          gh release create "$TAG" downloads/* --target "$GITHUB_SHA" --title "Ultra Tasks ${VERSION}" --notes-file build/desktop-release-notes.md --draft
+          gh release edit "$TAG" --draft=false --latest

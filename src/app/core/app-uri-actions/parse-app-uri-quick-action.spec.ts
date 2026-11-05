@@ -1,6 +1,6 @@
 import { QUICK_ACTION_HOSTS, parseAppUriQuickAction } from './parse-app-uri-quick-action';
 
-const SCHEME = 'com.super-productivity.app://';
+const SCHEME = 'app.ultratasks://';
 
 describe('parseAppUriQuickAction', () => {
   it('should recognize add-task as the quick-add-bar action', () => {

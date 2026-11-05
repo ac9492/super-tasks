@@ -1,9 +1,9 @@
 'use strict';
 
 // Product release tags are separate from the inherited Super Productivity tags.
-const TAG_PREFIX = 'super-tasks-v';
-const STABLE_TAG_PATTERN = /^super-tasks-v\d+\.\d+\.\d+$/;
-const RELEASE_TAG_PATTERN = /^super-tasks-v\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/;
+const TAG_PREFIX = 'ultra-tasks-v';
+const STABLE_TAG_PATTERN = /^ultra-tasks-v\d+\.\d+\.\d+$/;
+const RELEASE_TAG_PATTERN = /^ultra-tasks-v\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/;
 
 const getReleaseInfo = (tag) => {
   if (!RELEASE_TAG_PATTERN.test(tag)) {

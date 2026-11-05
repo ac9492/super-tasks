@@ -1,5 +1,5 @@
 import { SettingHelpComponent } from '../../ui/setting-help/setting-help.component';
-import { SuperTasksAppearanceService } from '../../core/theme/super-tasks-appearance.service';
+import { UltraTasksAppearanceService } from '../../core/theme/ultra-tasks-appearance.service';
 import {
   afterNextRender,
   ChangeDetectionStrategy,
@@ -115,7 +115,7 @@ const OPEN_BY_DEFAULT_SECTION_KEY = 'appFeatures';
   ],
 })
 export class ConfigPageComponent implements OnInit {
-  readonly superTasksAppearance = inject(SuperTasksAppearanceService);
+  readonly ultraTasksAppearance = inject(UltraTasksAppearanceService);
   private readonly _cd = inject(ChangeDetectorRef);
   private readonly _injector = inject(Injector);
   private readonly _elRef = inject<ElementRef<HTMLElement>>(ElementRef);

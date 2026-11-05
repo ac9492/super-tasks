@@ -31,7 +31,7 @@ const yaml = require('js-yaml');
 // asserted by tools/verify-windows-artifact-contract.test.js, which runs as
 // part of `npm run lint` — long before this step spends any SignPath quota.
 const BLOCK_MAP_MODULE = 'app-builder-lib/out/targets/blockmap/blockmap';
-const SETUP_PREFIX = 'Super-Productivity-Setup';
+const SETUP_PREFIX = 'Ultra-Tasks-Setup';
 const BLOCK_MAP_SUFFIX = '.blockmap';
 const DEFAULT_BUILD_DIR = '.tmp/app-builds';
 

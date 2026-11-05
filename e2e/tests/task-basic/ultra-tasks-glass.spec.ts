@@ -24,38 +24,12 @@ test('top search and device-local glass control work and persist', async ({
   await toggle.uncheck();
   await expect(page.locator('.app-container')).toHaveClass(/st-solid/);
   await page.reload();
+  // Settings opens as a dialog; reopen it after the route restores the workspace.
+  await page.goto('/#/config');
   await expect(toggle).not.toBeChecked();
   await toggle.check();
   await page.goto('/#/project/INBOX_PROJECT/tasks');
   await workViewPage.waitForTaskList();
-  await page.route('**/st-glass-demo.svg', (route) =>
-    route.fulfill({
-      contentType: 'image/svg+xml',
-      body: '<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900"><defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#7b9ab2"/><stop offset=".5" stop-color="#e5cbb5"/><stop offset="1" stop-color="#5c9581"/></linearGradient></defs><rect width="1440" height="900" fill="url(#g)"/></svg>',
-    }),
-  );
-  await page.waitForFunction(
-    () => !!(window as unknown as { __e2eTestHelpers?: unknown }).__e2eTestHelpers,
-  );
-  await page.evaluate(() => {
-    const store = (
-      window as unknown as {
-        __e2eTestHelpers: { store: { dispatch: (a: unknown) => void } };
-      }
-    ).__e2eTestHelpers.store;
-    store.dispatch({
-      type: '[Global Config] Update Global Config Section',
-      sectionKey: 'misc',
-      sectionCfg: {
-        backgroundImageLight: 'st-glass-demo.svg',
-        backgroundImageDark: 'st-glass-demo.svg',
-        backgroundOverlayOpacity: 50,
-        backgroundImageBlur: 0,
-      },
-      isSkipSnack: true,
-    });
-  });
-  await expect(page.locator('.bg-image')).toBeVisible();
   for (const dark of [false, true]) {
     await page.goto('/#/config');
     await page

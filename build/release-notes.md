@@ -1,4 +1,4 @@
-For all current downloads, package links, and platform-specific notes: [check the releases](https://github.com/ac9492/super-tasks/releases).
+For all current downloads, package links, and platform-specific notes: [check the releases](https://github.com/ac9492/ultra-tasks/releases).
 
 Upstream base: [Super Productivity 25cce3b3](https://github.com/super-productivity/super-productivity/commit/25cce3b318e0609cfd93f55236da70d0917c501b).
 
@@ -6,9 +6,9 @@ Upstream base: [Super Productivity 25cce3b3](https://github.com/super-productivi
 
 - **ui:** add optional glass appearance and top search
 - **ui:** introduce glass workspace and task editing shortcuts
-- **tasks:** restore relative-date colors in Super Tasks
+- **tasks:** restore relative-date colors in Ultra Tasks
 - **tasks:** add weekday labels and task date styles
-- **desktop:** brand the combined fork as Super Tasks
+- **desktop:** brand the combined fork as Ultra Tasks
 - **tasks:** show subtask completion counts in every visibility mode #10501
 - **tasks:** split inline task creation from #10501
 - **tasks:** bulk move selected tasks between project sections
@@ -18,7 +18,7 @@ Upstream base: [Super Productivity 25cce3b3](https://github.com/super-productivi
 
 - **tasks:** align Today sidebar and desktop badge counts
 - **tasks:** count independently scheduled subtasks in the desktop badge #10501
-- **mac:** ad-hoc sign Super Tasks and verify distributed app bundles
+- **mac:** ad-hoc sign Ultra Tasks and verify distributed app bundles
 - **build:** canonicalize temporary paths when checking packaged modules
 - **tasks:** preserve inline suggestion context moves #10922
 - **work-view:** retain inline task creation beside section insertion #10922

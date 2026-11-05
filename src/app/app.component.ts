@@ -1,4 +1,4 @@
-import { SuperTasksAppearanceService } from './core/theme/super-tasks-appearance.service';
+import { UltraTasksAppearanceService } from './core/theme/ultra-tasks-appearance.service';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -133,7 +133,7 @@ interface BeforeInstallPromptEvent extends Event {
   ],
 })
 export class AppComponent implements OnDestroy, AfterViewInit {
-  readonly superTasksAppearance = inject(SuperTasksAppearanceService);
+  readonly ultraTasksAppearance = inject(UltraTasksAppearanceService);
   private _globalConfigService = inject(GlobalConfigService);
   private _shortcutService = inject(ShortcutService);
   private _bannerService = inject(BannerService);

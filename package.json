@@ -1,6 +1,6 @@
 {
-  "name": "super-tasks",
-  "productName": "Super Tasks",
+  "name": "ultra-tasks",
+  "productName": "Ultra Tasks",
   "version": "0.1.0",
   "description": "ToDo list and Time Tracking",
   "keywords": [
@@ -10,15 +10,15 @@
     "GitHub",
     "Time Tracking"
   ],
-  "homepage": "https://github.com/ac9492/super-tasks",
+  "homepage": "https://ultratasks.app",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ac9492/super-tasks.git"
+    "url": "https://github.com/ac9492/ultra-tasks.git"
   },
   "license": "MIT",
   "author": "Adrian Chase",
   "bugs": {
-    "url": "https://github.com/ac9492/super-tasks/issues"
+    "url": "https://github.com/ac9492/ultra-tasks/issues"
   },
   "main": "./electron/main.js",
   "scripts": {
@@ -124,11 +124,11 @@
     "lint:ts": "ng lint",
     "lint:scss": "stylelint \"**/*.scss\" \"src/assets/themes/*.css\" -- --custom-formatter @csstools/stylelint-formatter-github",
     "lint:css-vars": "node tools/check-css-vars.js",
-    "localInstall": "sudo echo 'Starting local install' && rm -Rf ./.tmp/angular-dist/ && rm -Rf ./.tmp/app-builds/ && npm run buildAllElectron:stage && electron-builder --linux deb && sudo dpkg -i .tmp/app-builds/superProductivity*.deb",
-    "localInstall:mac": "sudo echo 'Starting local install MAC. Don`t forget APPLEID & APPLEIDPASS !!' && npm run buildAllElectron:noTests:prod && sudo echo '' && electron-builder && sudo cp -rf .tmp/app-builds/mac/superProductivity.app/ /Applications/superProductivity.app",
-    "localInstall:prod": "sudo echo 'Starting local install PROD' && rm -Rf ./.tmp/angular-dist/ && rm -Rf ./.tmp/app-builds/ && npm run buildAllElectron:prod && electron-builder --linux deb && sudo dpkg -i .tmp/app-builds/superProductivity*.deb",
-    "localInstall:quick": "sudo echo 'Starting local install QUICK' && rm -Rf ./.tmp/angular-dist/ && rm -Rf ./.tmp/app-builds/ && npm run buildFrontend:stage:es6 && npm run electron:build && electron-builder --linux deb && sudo dpkg -i .tmp/app-builds/superProductivity*.deb",
-    "localInstall:test:snap": "sudo echo 'Starting local install SNAP QUICK' && rm -Rf ./.tmp/angular-dist/ && rm -Rf ./.tmp/app-builds/ && npm run buildFrontend:stage:es6 && npm run electron:build && electron-builder --linux snap && sudo snap install --dangerous .tmp/app-builds/superProductivity*.snap",
+    "localInstall": "sudo echo 'Starting local install' && rm -Rf ./.tmp/angular-dist/ && rm -Rf ./.tmp/app-builds/ && npm run buildAllElectron:stage && electron-builder --linux deb && sudo dpkg -i .tmp/app-builds/ultra-tasks*.deb",
+    "localInstall:mac": "sudo echo 'Starting local install MAC. Don`t forget APPLEID & APPLEIDPASS !!' && npm run buildAllElectron:noTests:prod && sudo echo '' && electron-builder && sudo cp -rf .tmp/app-builds/mac/ultra-tasks.app/ /Applications/ultra-tasks.app",
+    "localInstall:prod": "sudo echo 'Starting local install PROD' && rm -Rf ./.tmp/angular-dist/ && rm -Rf ./.tmp/app-builds/ && npm run buildAllElectron:prod && electron-builder --linux deb && sudo dpkg -i .tmp/app-builds/ultra-tasks*.deb",
+    "localInstall:quick": "sudo echo 'Starting local install QUICK' && rm -Rf ./.tmp/angular-dist/ && rm -Rf ./.tmp/app-builds/ && npm run buildFrontend:stage:es6 && npm run electron:build && electron-builder --linux deb && sudo dpkg -i .tmp/app-builds/ultra-tasks*.deb",
+    "localInstall:test:snap": "sudo echo 'Starting local install SNAP QUICK' && rm -Rf ./.tmp/angular-dist/ && rm -Rf ./.tmp/app-builds/ && npm run buildFrontend:stage:es6 && npm run electron:build && electron-builder --linux snap && sudo snap install --dangerous .tmp/app-builds/ultra-tasks*.snap",
     "ng": "ng",
     "pack": "electron-builder --dir",
     "preCheck": "npm run lint && npm run test:ci && npm run int:test && npm run e2e",
@@ -382,7 +382,7 @@
   "publish": [
     {
       "provider": "github",
-      "repo": "super-tasks",
+      "repo": "ultra-tasks",
       "owner": "ac9492"
     }
   ],

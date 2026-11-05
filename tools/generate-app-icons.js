@@ -9,7 +9,7 @@ const { execFileSync } = require('node:child_process');
 const { generateMacIcon, loadSharp } = require('./generate-mac-icon');
 
 const ROOT = join(__dirname, '..');
-const SOURCE = 'src/assets/super-tasks/logo.svg';
+const SOURCE = 'src/assets/ultra-tasks/logo.svg';
 const svg = readFileSync(join(ROOT, SOURCE), 'utf8');
 const color = svg.match(/<rect[^>]+fill="([^"]+)"/)[1];
 const path = svg.match(/<path[^>]+d="([^"]+)"/)[1];
@@ -60,7 +60,7 @@ async function generateAppIcons() {
   write('build/icon-mac.svg', svg);
   await render('build/icon.png', 512);
   await render('build/512x512.png', 512);
-  await render('build/super-tasks.png', 512);
+  await render('build/ultra-tasks.png', 512);
   for (const file of readdirSync(join(ROOT, 'build/icons'))) {
     const match = file.match(/^(sq)?(\d+)x\2\.png$/);
     if (match)
@@ -71,7 +71,7 @@ async function generateAppIcons() {
         Boolean(match[1]),
       );
   }
-  await render('src/assets/super-tasks/logo.png', 512);
+  await render('src/assets/ultra-tasks/logo.png', 512);
   for (const pixels of [72, 96, 128, 144, 192, 512]) {
     await render(`src/assets/icons/icon-${pixels}x${pixels}.png`, pixels);
   }

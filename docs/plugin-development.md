@@ -971,7 +971,7 @@ the app. To be listed, open a PR that adds an entry:
 - `category` is optional: use `integration` for connections to another service,
   or `plugin` (the default) for other functionality. This drives the discovery
   type filter; it does not change the plugin manifest or certify compatibility.
-- Super Tasks listings exclude themes and replacements or restyling of the host
+- Ultra Tasks listings exclude themes and replacements or restyling of the host
   interface. A plugin's own functional view is distinct from changing the app's
   interface. Review this when adding a listing; catalog metadata cannot enforce
   the behavior of arbitrary uploaded code.

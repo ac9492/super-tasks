@@ -43,7 +43,7 @@ export interface ShareFormatterOptions {
   utmSource?: string;
   /** UTM medium override (default: 'social') */
   utmMedium?: string;
-  /** Base URL for the app (default: https://super-productivity.com) */
+  /** Base URL for the app (default: https://ultratasks.app) */
   baseUrl?: string;
   /** Maximum length for text (for Twitter, etc.) */
   maxLength?: number;
@@ -51,7 +51,7 @@ export interface ShareFormatterOptions {
   includeHashtags?: boolean;
 }
 
-const DEFAULT_BASE_URL = 'https://super-productivity.com';
+const DEFAULT_BASE_URL = 'https://ultratasks.app';
 const DEFAULT_UTM_SOURCE = 'share';
 const DEFAULT_UTM_MEDIUM = 'social';
 const TWITTER_MAX_LENGTH = 280;

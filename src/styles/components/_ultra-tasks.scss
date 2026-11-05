@@ -1,5 +1,5 @@
 // Fork presentation only; glass is confined to shell surfaces.
-body.super-tasks {
+body.ultra-tasks {
   .app-container {
     background: radial-gradient(
       ellipse at top left,
@@ -122,21 +122,21 @@ body.super-tasks {
   }
 }
 @media (prefers-reduced-transparency: reduce), (forced-colors: active) {
-  body.super-tasks .nav-sidenav,
-  body.super-tasks main-header .wrapper {
+  body.ultra-tasks .nav-sidenav,
+  body.ultra-tasks main-header .wrapper {
     background: var(--bg) !important;
     backdrop-filter: none !important;
   }
 }
 
-body.super-tasks:has(.bg-image) .app-container {
+body.ultra-tasks:has(.bg-image) .app-container {
   background: transparent;
 }
 
 // One blur per shell panel, never one per task in a long list.
 // Explicit priority overrides the inherited wallpaper milkglass rules so the
 // local opt-out and accessibility preferences remain authoritative.
-body.super-tasks:not(:has(.st-solid)) {
+body.ultra-tasks:not(:has(.st-solid)) {
   .nav-sidenav,
   main-header .wrapper,
   .right-panel {
@@ -151,7 +151,7 @@ body.super-tasks:not(:has(.st-solid)) {
     background: color-mix(in srgb, var(--card-bg) var(--st-card-alpha), transparent);
   }
 }
-body.super-tasks:has(.st-solid) {
+body.ultra-tasks:has(.st-solid) {
   .nav-sidenav,
   main-header .wrapper,
   .right-panel {
@@ -159,7 +159,7 @@ body.super-tasks:has(.st-solid) {
     backdrop-filter: none !important;
   }
 }
-body.super-tasks {
+body.ultra-tasks {
   .st-search-entry {
     margin-bottom: var(--s);
   }
@@ -183,7 +183,7 @@ body.super-tasks {
   }
 }
 @media (prefers-reduced-transparency: reduce), (forced-colors: active) {
-  body.super-tasks:not(:has(.st-solid)) {
+  body.ultra-tasks:not(:has(.st-solid)) {
     .nav-sidenav,
     main-header .wrapper,
     .right-panel {

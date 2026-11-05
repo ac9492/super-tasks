@@ -162,7 +162,7 @@ describe('BrowserTitleService', () => {
         0,
       );
 
-      expect(result).toBe('Super Tasks');
+      expect(result).toBe('Ultra Tasks');
     });
 
     it('should show remaining time when running', () => {
@@ -275,7 +275,7 @@ describe('BrowserTitleService', () => {
     it('should show base title when nothing is tracked', () => {
       TestBed.flushEffects();
 
-      expect(titleService.setTitle).toHaveBeenCalledWith('Super Tasks');
+      expect(titleService.setTitle).toHaveBeenCalledWith('Ultra Tasks');
     });
 
     it("should show today's time and the task title", () => {
@@ -363,7 +363,7 @@ describe('BrowserTitleService', () => {
 
       TestBed.flushEffects();
 
-      expect(titleService.setTitle).toHaveBeenCalledWith('Super Tasks');
+      expect(titleService.setTitle).toHaveBeenCalledWith('Ultra Tasks');
     });
   });
 });

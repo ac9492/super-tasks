@@ -1,5 +1,5 @@
-appId: com.super-productivity.app
-productName: Super Productivity
+appId: app.ultratasks
+productName: Ultra Tasks
 artifactName: ${name}-${arch}.${ext}
 files:
   - electron/**/*
@@ -47,7 +47,7 @@ mac:
 
 mas:
   type: distribution
-  appId: com.super-productivity.app
+  appId: app.ultratasks
   category: public.app-category.productivity
   gatekeeperAssess: false
   darkModeSupport: true

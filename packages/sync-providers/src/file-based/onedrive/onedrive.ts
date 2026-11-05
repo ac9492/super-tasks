@@ -41,7 +41,7 @@ const ONEDRIVE_PROTOCOL = {
   graphApiBaseUrl: 'https://graph.microsoft.com/v1.0',
   scope: 'offline_access Files.ReadWrite.AppFolder',
   redirectUri: 'https://login.microsoftonline.com/common/oauth2/nativeclient',
-  electronRedirectUri: 'superproductivity://oauth-callback/onedrive',
+  electronRedirectUri: 'ultratasks://oauth-callback/onedrive',
   tokenRefreshSkewMs: 60_000,
 } as const;
 

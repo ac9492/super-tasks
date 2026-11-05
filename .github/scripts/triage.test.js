@@ -194,7 +194,7 @@ test('buildComment never echoes a model-authored version string', () => {
 });
 
 test('parseVersion accepts fork release tags', () => {
-  assert.deepEqual(parseVersion('super-tasks-v0.1.0'), {
+  assert.deepEqual(parseVersion('ultra-tasks-v0.1.0'), {
     major: 0,
     minor: 1,
     text: '0.1.0',

@@ -5,7 +5,37 @@ const path = require('node:path');
 
 require('ts-node/register/transpile-only');
 
-const { resolveSnapUserDataDir, applySnapUserDataDir } = require('./user-data-dir.ts');
+const {
+  resolveSnapUserDataDir,
+  applySnapUserDataDir,
+  resolveLegacyForkUserDataDir,
+  applyLegacyForkUserDataDir,
+} = require('./user-data-dir.ts');
+
+test('Ultra Tasks reuses the old fork profile, never upstream or an explicit profile', () => {
+  const root = fs.mkdtempSync(path.join(require('node:os').tmpdir(), 'ultra-profile-'));
+  const current = path.join(root, 'Ultra Tasks');
+  const previous = path.join(root, 'Super Tasks');
+  try {
+    fs.mkdirSync(path.join(root, 'superProductivity'));
+    assert.equal(resolveLegacyForkUserDataDir(root, current), undefined);
+    fs.mkdirSync(previous);
+    assert.equal(resolveLegacyForkUserDataDir(root, current), previous);
+    fs.mkdirSync(current);
+    assert.equal(resolveLegacyForkUserDataDir(root, current), undefined);
+    const originalArgv = process.argv;
+    try {
+      process.argv = [...originalArgv, '--user-data-dir=/explicit'];
+      applyLegacyForkUserDataDir({
+        getPath: () => assert.fail('explicit profile must win'),
+      });
+    } finally {
+      process.argv = originalArgv;
+    }
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
 
 const SNAP_ENV = {
   SNAP: '/snap/superproductivity/4925',

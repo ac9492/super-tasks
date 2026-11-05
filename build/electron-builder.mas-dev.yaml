@@ -1,5 +1,5 @@
-appId: com.super-productivity.app
-productName: Super Productivity
+appId: app.ultratasks
+productName: Ultra Tasks
 artifactName: ${name}-${arch}.${ext}
 files:
   - electron/**/*
@@ -39,7 +39,7 @@ beforePack: ./tools/beforePack.js
 afterPack: ./tools/afterPack.js
 
 mac:
-  appId: com.super-productivity.app
+  appId: app.ultratasks
   icon: build/icon.icns
   type: development
   category: public.app-category.productivity

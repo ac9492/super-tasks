@@ -47,7 +47,7 @@ const sectionValue = (sectionName, key) => {
 };
 
 test('Windows release builds only the two universal executables', () => {
-  assert.equal(sectionValue('nsis', 'artifactName'), 'Super-Productivity-Setup.${ext}');
+  assert.equal(sectionValue('nsis', 'artifactName'), 'Ultra-Tasks-Setup.${ext}');
   assert.equal(sectionValue('portable', 'artifactName'), '${name}.${ext}');
 });
 
@@ -89,10 +89,10 @@ test('signed universal executables are published under compatibility aliases', (
   assert.ok(publishStep > signatureStep, 'publish only after signature verification');
 
   for (const alias of [
-    'Super-Productivity-Setup-x64.exe',
-    'Super-Productivity-Setup-arm64.exe',
-    'superProductivity-x64.exe',
-    'superProductivity-arm64.exe',
+    'Ultra-Tasks-Setup-x64.exe',
+    'Ultra-Tasks-Setup-arm64.exe',
+    'ultra-tasks-x64.exe',
+    'ultra-tasks-arm64.exe',
   ]) {
     assert.match(RELEASE_WORKFLOW, new RegExp(`Copy-Item.*${alias}`));
   }
@@ -137,7 +137,7 @@ test('the tool builds a blockmap with the installed electron-builder', async (t)
 
   // Content-defined chunking needs incompressible, non-repeating bytes to find
   // any boundaries at all; a zero-filled file yields a single block.
-  const exe = join(dir, 'Super-Productivity-Setup.exe');
+  const exe = join(dir, 'Ultra-Tasks-Setup.exe');
   writeFileSync(exe, randomBytes(512 * 1024));
   const blockMapFile = `${exe}.blockmap`;
 
@@ -159,8 +159,8 @@ test('the tool rewrites latest.yml over the signed files', async (t) => {
   const buildDir = mkdtempSync(join(tmpdir(), 'sp-app-builds-'));
   t.after(() => rmSync(buildDir, { recursive: true, force: true }));
 
-  const setup = 'Super-Productivity-Setup.exe';
-  const portable = 'superProductivity.exe';
+  const setup = 'Ultra-Tasks-Setup.exe';
+  const portable = 'ultra-tasks.exe';
   const signedSetup = randomBytes(256 * 1024);
   writeFileSync(join(buildDir, setup), signedSetup);
   writeFileSync(join(buildDir, portable), randomBytes(128 * 1024));

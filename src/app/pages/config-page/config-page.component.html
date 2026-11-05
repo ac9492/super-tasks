@@ -119,18 +119,18 @@
                         <input
                           #glassToggle
                           type="checkbox"
-                          [checked]="superTasksAppearance.glassEnabled()"
-                          (change)="superTasksAppearance.setGlass(glassToggle.checked)"
+                          [checked]="ultraTasksAppearance.glassEnabled()"
+                          (change)="ultraTasksAppearance.setGlass(glassToggle.checked)"
                         />
                         <span
-                          ><strong>{{ T.F.SUPER_TASKS.GLASS | translate }}</strong
+                          ><strong>{{ T.F.ULTRA_TASKS.GLASS | translate }}</strong
                           ><small>{{
-                            T.F.SUPER_TASKS.GLASS_HINT | translate
+                            T.F.ULTRA_TASKS.GLASS_HINT | translate
                           }}</small></span
                         > </label
                       ><setting-help
-                        [label]="T.F.SUPER_TASKS.GLASS | translate"
-                        [text]="T.F.SUPER_TASKS.GLASS_HINT | translate"
+                        [label]="T.F.ULTRA_TASKS.GLASS | translate"
+                        [text]="T.F.ULTRA_TASKS.GLASS_HINT | translate"
                       />
                     </div>
                   </section>
@@ -279,7 +279,7 @@
   class="version-footer"
   title="Rev {{ versions?.revision }} {{ versions?.branch }} {{ versions?.version }}"
 >
-  Super Tasks
+  Ultra Tasks
   <a
     class="version"
     [matTooltip]="T.PS.CLICK_TO_COPY_VERSION | translate"
@@ -289,7 +289,7 @@
   >
   –
   <a
-    href="https://github.com/super-productivity/super-productivity/releases/latest"
+    href="https://github.com/ac9492/ultra-tasks/releases/latest"
     target="_blank"
     >Changelog</a
   >
@@ -309,13 +309,13 @@
   >
   –
   <a
-    href="https://super-productivity.com/privacy/"
+    href="https://github.com/ac9492/ultra-tasks/blob/main/docs/privacy.md"
     target="_blank"
     >{{ T.PS.PRIVACY_POLICY | translate }}</a
   >
   –
   <a
-    href="https://github.com/super-productivity/super-productivity/discussions/new"
+    href="https://github.com/ac9492/ultra-tasks/issues/new?template=question.yml"
     target="_blank"
     >{{ T.PS.PROVIDE_FEEDBACK | translate }}</a
   >

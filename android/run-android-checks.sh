@@ -18,7 +18,7 @@
 # exercises the real launcher, WebView and JS bridge instead.
 set -uo pipefail
 
-PACKAGE=com.superproductivity.superproductivity
+PACKAGE=app.ultratasks
 DIAG=build/instrumentation-diagnostics
 APK=app/build/outputs/apk/play/r8Test/app-play-r8Test.apk
 mkdir -p "$DIAG"

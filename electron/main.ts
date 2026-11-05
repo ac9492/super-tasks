@@ -1,15 +1,16 @@
 import { app } from 'electron';
 import { PROTOCOL_PREFIX } from './protocol-handler';
 import { startApp } from './start-app';
-import { applySnapUserDataDir } from './user-data-dir';
+import { applyLegacyForkUserDataDir, applySnapUserDataDir } from './user-data-dir';
 
 const IS_MAC = process.platform === 'darwin';
 
 if (process.platform === 'win32') {
-  app.setAppUserModelId('io.github.ac9492.supertasks');
+  app.setAppUserModelId('app.ultratasks');
 }
 
 // Before the single-instance lock, which lives in the userData dir (#11049).
+applyLegacyForkUserDataDir(app);
 applySnapUserDataDir(app);
 
 if (!IS_MAC) {

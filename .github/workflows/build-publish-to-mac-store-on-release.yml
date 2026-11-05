@@ -2,7 +2,7 @@ name: Mac Store Release on Release
 on:
   push:
     tags:
-      - super-tasks-v*
+      - ultra-tasks-v*
   workflow_dispatch:
     inputs:
       build_only:

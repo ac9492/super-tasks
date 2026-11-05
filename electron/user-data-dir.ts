@@ -1,5 +1,29 @@
 import type { App } from 'electron';
 import { join } from 'path';
+import { existsSync } from 'fs';
+
+/** Reuse this fork's existing profile after its rename; never adopt upstream data. */
+export const resolveLegacyForkUserDataDir = (
+  appDataDir: string,
+  currentUserDataDir: string,
+): string | undefined => {
+  if (existsSync(currentUserDataDir)) return undefined;
+  return ['Super Tasks', 'super-tasks']
+    .map((name) => join(appDataDir, name))
+    .find((dir) => existsSync(dir));
+};
+
+export const applyLegacyForkUserDataDir = (app: App): void => {
+  if (process.argv.some((arg) => arg.includes('--user-data-dir='))) return;
+  const dir = resolveLegacyForkUserDataDir(
+    app.getPath('appData'),
+    app.getPath('userData'),
+  );
+  if (dir) {
+    app.setPath('userData', dir);
+    app.setAppLogsPath();
+  }
+};
 
 /**
  * The snap userData dir: $SNAP_USER_COMMON, which survives refreshes, instead

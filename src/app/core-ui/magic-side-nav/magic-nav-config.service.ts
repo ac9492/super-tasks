@@ -273,7 +273,7 @@ export class MagicNavConfigService {
             id: 'help-online',
             label: T.MH.HM.GET_HELP_ONLINE,
             icon: 'help_center',
-            href: 'https://github.com/super-productivity/super-productivity/blob/master/README.md#question-how-to-use-it',
+            href: 'https://github.com/ac9492/ultra-tasks/blob/main/README.md#question-how-to-use-it',
           },
           {
             type: 'action',
@@ -287,7 +287,7 @@ export class MagicNavConfigService {
             id: 'help-feedback',
             label: T.MH.HM.SEND_FEEDBACK,
             icon: 'feedback',
-            href: 'https://github.com/super-productivity/super-productivity/discussions',
+            href: 'https://github.com/ac9492/ultra-tasks/issues',
           },
           // Donation links are disabled on native iOS and every macOS desktop
           // build to keep App Store review behavior deterministic.
@@ -298,7 +298,7 @@ export class MagicNavConfigService {
                   id: 'help-contribute',
                   label: T.MH.HM.CONTRIBUTE,
                   icon: 'volunteer_activism',
-                  href: 'https://github.com/super-productivity/super-productivity/blob/master/CONTRIBUTING.md',
+                  href: 'https://github.com/ac9492/ultra-tasks/blob/main/CONTRIBUTING.md',
                 },
               ]
             : []),

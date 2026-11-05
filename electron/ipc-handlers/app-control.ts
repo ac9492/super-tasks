@@ -26,7 +26,7 @@ import { setDueTaskBadge } from '../due-task-badge';
 // relaunch. Point execPath at the sibling wrapper when it's present.
 const getRelaunchExecPath = (): string | undefined => {
   if (process.platform !== 'linux') return undefined;
-  const wrapperPath = join(dirname(process.execPath), 'superproductivity');
+  const wrapperPath = join(dirname(process.execPath), 'ultratasks');
   return existsSync(wrapperPath) ? wrapperPath : undefined;
 };
 

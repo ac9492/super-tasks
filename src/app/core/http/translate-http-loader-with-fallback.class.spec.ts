@@ -63,22 +63,24 @@ describe('TranslateHttpLoaderWithFallback', () => {
       .error(new ProgressEvent('error'), { status: 0, statusText: '' });
   });
 
-  it('brands nested locale strings and arrays without changing keys or integration URLs', (done) => {
+  it('brands nested locale strings and product links while preserving service URLs', (done) => {
     const translations = {
       APP: {
         TITLE: 'Super Productivity öffnen',
-        HELP: ['Super productivity {{version}}', null],
+        HELP: ['Super productivity {{version}}', 'Super Tasks', null],
         URL: 'superproductivity://oauth-callback/onedrive',
         SITE: 'https://app.super-productivity.com',
+        SERVICE: 'https://sync.super-productivity.com',
       },
     };
     loader.getTranslation('de').subscribe((result: unknown) => {
       expect(result).toEqual({
         APP: {
           TITLE: 'Ultra Tasks öffnen',
-          HELP: ['Ultra Tasks {{version}}', null],
-          URL: translations.APP.URL,
-          SITE: translations.APP.SITE,
+          HELP: ['Ultra Tasks {{version}}', 'Ultra Tasks', null],
+          URL: 'ultratasks://oauth-callback/onedrive',
+          SITE: 'https://ultratasks.app',
+          SERVICE: translations.APP.SERVICE,
         },
       });
       expect(translations.APP.TITLE).toBe('Super Productivity öffnen');

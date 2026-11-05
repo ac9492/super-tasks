@@ -1,8 +1,8 @@
-# Super Tasks app icon
+# Ultra Tasks app icon
 
 The official icon is the white, rounded handwritten checkmark on a solid deep-teal
 (`#075b5e`) rounded square. The approved artwork is maintained as a vector in
-[`src/assets/super-tasks/logo.svg`](../src/assets/super-tasks/logo.svg).
+[`src/assets/ultra-tasks/logo.svg`](../src/assets/ultra-tasks/logo.svg).
 
 Regenerate platform assets after editing that master:
 

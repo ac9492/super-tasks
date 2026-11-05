@@ -89,7 +89,7 @@ const main = () => {
     const tag = lastStableTag();
     if (!tag) {
       console.log(
-        '::warning::no stable super-tasks-v* tag reachable from HEAD; skipping dev build',
+        '::warning::no stable ultra-tasks-v* tag reachable from HEAD; skipping dev build',
       );
       return setOutput({ skip: true });
     }

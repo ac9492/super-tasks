@@ -241,7 +241,7 @@ export const createWindow = async ({
     height: mainWindowState.height,
     minHeight: 240,
     minWidth: 300,
-    title: IS_DEV ? 'Super Tasks D' : 'Super Tasks',
+    title: IS_DEV ? 'Ultra Tasks D' : 'Ultra Tasks',
     titleBarStyle,
     titleBarOverlay,
     enableLargerThanScreen: isScreenshotMode,
@@ -403,7 +403,7 @@ export const createWindow = async ({
   mainWin.loadURL(url).then(() => {
     // Set window title for dev mode
     if (IS_DEV) {
-      mainWin.setTitle('Super Tasks D');
+      mainWin.setTitle('Ultra Tasks D');
     }
   });
 

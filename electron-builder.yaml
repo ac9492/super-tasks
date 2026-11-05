@@ -1,4 +1,4 @@
-appId: superProductivity
+appId: app.ultratasks
 productName: Ultra Tasks
 artifactName: ${name}-${arch}.${ext}
 
@@ -70,7 +70,7 @@ nsis:
   # so keeping only it halves the signing volume without asking users which
   # architecture they are on. Do not reintroduce ${arch} without re-checking
   # the quota headroom.
-  artifactName: Super-Productivity-Setup.${ext}
+  artifactName: Ultra-Tasks-Setup.${ext}
   # allow to install to custom location
   oneClick: false
   allowToChangeInstallationDirectory: true
@@ -87,18 +87,18 @@ portable:
   # release workflow creates the old architecture-specific names after signing.
   artifactName: ${name}.${ext}
 appx:
-  applicationId: SuperProductivity
+  applicationId: UltraTasks
   displayName: Ultra Tasks
   publisherDisplayName: Adrian Chase
   publisher: CN=___-___
-  identityName: ___johannesjo.SuperProductivity
+  identityName: UltraTasks
 
 linux:
   # Fix for issue #5259: Set executable name without spaces for snap compatibility
-  executableName: superproductivity
+  executableName: ultratasks
   category: Office;ProjectManagement
   mimeTypes:
-    - x-scheme-handler/superproductivity
+    - x-scheme-handler/ultratasks
   desktop:
     entry:
       # Must equal LINUX_DESKTOP_NAME in electron/start-app.ts, which pins the
@@ -108,7 +108,7 @@ linux:
       # Electron <= 41, where it came from the renamed binary's basename (#9450).
       # The Electron 43 bump (#9571, v18.20.0) moved it to the XDG app id, so the
       # `-bin` value now matches nothing on either session type.
-      StartupWMClass: superproductivity
+      StartupWMClass: ultratasks
   target:
     - AppImage
     - deb
@@ -122,7 +122,7 @@ rpm:
   fpm: ['--rpm-rpmbuild-define=_build_id_links none']
 # leads to Error: Please specify executable name as linux.executableName instead of linux.desktop.Exec
 #  desktop:
-#    Name: Ultra Tasks
+#    Name: Super Productivity
 #    Comment: A todo list and time tracking app
 #    Exec: superProductivity
 #    Terminal: false
@@ -209,7 +209,7 @@ flatpak:
     - --env=ELECTRON_TRASH=gio
 
 mac:
-  appId: com.super-productivity.app
+  appId: app.ultratasks
   icon: build/icon.icns
   type: distribution
   category: public.app-category.productivity

@@ -1,6 +1,6 @@
 # Documentation Guide
 
-Rules and conventions for keeping Super Productivity's documentation in sync with the code.
+Rules and conventions for keeping Ultra Tasks's documentation in sync with the code.
 
 ## Why this matters
 

@@ -166,7 +166,7 @@ export const handleMcpMessage = async (
           result: {
             protocolVersion,
             capabilities: { tools: {} },
-            serverInfo: { name: 'super-productivity', version: ctx.serverVersion },
+            serverInfo: { name: 'ultra-tasks', version: ctx.serverVersion },
           },
         },
       };

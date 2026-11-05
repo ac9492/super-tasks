@@ -1,6 +1,6 @@
 import { expect, test } from '../../fixtures/test.fixture';
 
-test('Super Tasks workspace stays readable across themes and narrow screens', async ({
+test('Ultra Tasks workspace stays readable across themes and narrow screens', async ({
   page,
   workViewPage,
   taskPage,
@@ -24,7 +24,7 @@ test('Super Tasks workspace stays readable across themes and narrow screens', as
   await page.locator('add-task-bar.global .main-input').click();
   await page.screenshot({
     animations: 'disabled',
-    path: '.tmp/e2e-test-results/super-tasks-capture.png',
+    path: '.tmp/e2e-test-results/ultra-tasks-capture.png',
     fullPage: true,
   });
   await page.keyboard.press('Escape');
@@ -38,14 +38,14 @@ test('Super Tasks workspace stays readable across themes and narrow screens', as
     );
     await page.screenshot({
       animations: 'disabled',
-      path: `.tmp/e2e-test-results/super-tasks-${dark ? 'dark' : 'light'}.png`,
+      path: `.tmp/e2e-test-results/ultra-tasks-${dark ? 'dark' : 'light'}.png`,
       fullPage: true,
     });
   }
   await taskPage.openTaskDetail(taskPage.getTaskByText('Review the design proposal'));
   await expect(page.locator('.st-date-hint')).toContainText('Deadline');
   await page.screenshot({
-    path: '.tmp/e2e-test-results/super-tasks-details.png',
+    path: '.tmp/e2e-test-results/ultra-tasks-details.png',
     fullPage: true,
   });
   await page.locator('.st-planning-actions button').first().click();
@@ -58,7 +58,7 @@ test('Super Tasks workspace stays readable across themes and narrow screens', as
   await workViewPage.waitForTaskList();
   await page.setViewportSize({ width: 390, height: 844 });
   await page.screenshot({
-    path: '.tmp/e2e-test-results/super-tasks-mobile.png',
+    path: '.tmp/e2e-test-results/ultra-tasks-mobile.png',
     fullPage: true,
   });
   expect(

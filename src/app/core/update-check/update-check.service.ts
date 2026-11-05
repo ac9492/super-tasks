@@ -15,12 +15,12 @@ import { Log } from '../log';
 import { isUpdateCheckPossible } from './is-update-check-possible.util';
 
 const RELEASES_API_URL =
-  'https://api.github.com/repos/super-productivity/super-productivity/releases/latest';
+  'https://api.github.com/repos/ac9492/ultra-tasks/releases/latest';
 // Fixed instead of the response's html_url: openExternalUrl only checks the
 // scheme, so a forged response could otherwise point "Download" at an
 // arbitrary https host. The website page is easier for most users than the
 // GitHub release asset list.
-const DOWNLOAD_PAGE_URL = 'https://super-productivity.com/download/';
+const DOWNLOAD_PAGE_URL = 'https://github.com/ac9492/ultra-tasks/releases/latest';
 const INITIAL_CHECK_DELAY = 30 * 1000;
 const CHECK_INTERVAL = 24 * 60 * 60 * 1000;
 const REQUEST_TIMEOUT = 15 * 1000;
@@ -28,7 +28,7 @@ const REQUEST_TIMEOUT = 15 * 1000;
 // Strict (anchored) on purpose, unlike the lenient parser in is-newer-version.ts:
 // the tag is remote input that ends up in a banner and in the release URL we
 // open, so anything that isn't exactly a version tag is treated as malformed.
-const RELEASE_TAG_REGEX = /^v?\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/;
+const RELEASE_TAG_REGEX = /^ultra-tasks-v\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/;
 
 /**
  * Desktop-only "new version available" check (#5463). Fetches the latest
@@ -85,7 +85,7 @@ export class UpdateCheckService {
         throw new Error('Malformed release data');
       }
 
-      if (!isNewerVersion(tagName, environment.version)) {
+      if (!isNewerVersion(tagName.slice('ultra-tasks-v'.length), environment.version)) {
         if (isUserTriggered) {
           this._snackService.open({
             type: 'SUCCESS',

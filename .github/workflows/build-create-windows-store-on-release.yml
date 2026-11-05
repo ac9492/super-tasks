@@ -5,7 +5,7 @@ on:
   push:
     branches: [test/git-actions]
     tags:
-      - super-tasks-v*
+      - ultra-tasks-v*
   workflow_dispatch:
     inputs: {}
 
@@ -92,7 +92,7 @@ jobs:
       # The release may not exist yet when this job runs (parallel release workflow);
       # in that case we leave a clear pointer and don't fail the build.
       - name: Collect release notes for Partner Center upload
-        if: startsWith(github.ref, 'refs/tags/super-tasks-v')
+        if: startsWith(github.ref, 'refs/tags/ultra-tasks-v')
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.github_token }}
@@ -120,13 +120,13 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload release notes alongside appx
-        if: startsWith(github.ref, 'refs/tags/super-tasks-v')
+        if: startsWith(github.ref, 'refs/tags/ultra-tasks-v')
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: WinStoreReleaseNotes
           path: .tmp/RELEASE_NOTES.md
 #      - name: Upload to Microsoft Store
-#        if: startsWith(github.ref, 'refs/tags/super-tasks-v')
+#        if: startsWith(github.ref, 'refs/tags/ultra-tasks-v')
 #        uses: isaacrlevin/windows-store-action@1.0
 #        with:
 #          tenant-id: ${{ secrets.AZURE_AD_TENANT_ID }}

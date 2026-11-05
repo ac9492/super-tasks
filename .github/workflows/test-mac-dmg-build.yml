@@ -92,7 +92,7 @@ jobs:
       - name: Verify DMG signature
         run: |
           set -euo pipefail
-          DMG_PATH=$(ls .tmp/app-builds/superProductivity-*.dmg | head -n 1)
+          DMG_PATH=$(ls .tmp/app-builds/ultra-tasks-*.dmg | head -n 1)
           if [ -z "$DMG_PATH" ]; then
             echo "No DMG artefact found"
             exit 1
@@ -102,7 +102,7 @@ jobs:
           hdiutil attach "$DMG_PATH" -mountpoint "$MOUNT_POINT" -nobrowse
           trap 'hdiutil detach "$MOUNT_POINT" || true' EXIT
 
-          APP_PATH="$MOUNT_POINT/Super Productivity.app"
+          APP_PATH="$MOUNT_POINT/Ultra Tasks.app"
           /usr/bin/codesign --verify --deep --strict --verbose=4 "$APP_PATH"
           spctl --assess --verbose "$APP_PATH"
           AUTHORITY_OUTPUT=$(/usr/bin/codesign -dv "$APP_PATH" 2>&1 | grep Authority || true)

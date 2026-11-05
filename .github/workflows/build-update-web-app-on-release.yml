@@ -9,10 +9,10 @@ permissions:
   contents: read
 
 jobs:
-  upload-to-app-super-productivity:
+  upload-ultra-tasks-web:
     runs-on: ubuntu-latest
     timeout-minutes: 45
-    if: ${{ github.event_name == 'workflow_dispatch' || (startsWith(github.event.release.tag_name, 'super-tasks-v') && !github.event.release.prerelease) }}
+    if: ${{ github.event_name == 'workflow_dispatch' || (startsWith(github.event.release.tag_name, 'ultra-tasks-v') && !github.event.release.prerelease) }}
     env:
       UNSPLASH_KEY: ${{ secrets.UNSPLASH_KEY }}
       UNSPLASH_CLIENT_ID: ${{ secrets.UNSPLASH_CLIENT_ID }}

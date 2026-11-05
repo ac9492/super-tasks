@@ -3,7 +3,7 @@ on:
   push:
     branches: [master, release/*, test/git-actions]
     tags:
-      - super-tasks-v*
+      - ultra-tasks-v*
   workflow_dispatch:
     inputs: {}
 
@@ -11,7 +11,7 @@ permissions:
   contents: write
 
 # Per-ref so rapid non-tag master pushes supersede each other (newest dev build
-# wins). Groups are keyed by ref, so a master push can never cancel a `super-tasks-v*` tag
+# wins). Groups are keyed by ref, so a master push can never cancel a `ultra-tasks-v*` tag
 # release build (different ref = different group).
 concurrency:
   group: build-android-${{ github.ref }}
@@ -238,14 +238,14 @@ jobs:
         uses: r0adkll/upload-google-play@e738b9dd8f2476ea806d921b64aacd24f34515a5 # v1.1.5
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
-          packageName: com.superproductivity.superproductivity
+          packageName: app.ultratasks
           releaseFiles: android/app/build/outputs/apk/play/release/*.apk
           releaseName: 'dev ${{ steps.devvc.outputs.code }} (${{ steps.devvc.outputs.sha }})'
           tracks: internal
           status: completed
 
       - name: Wait for main release to be created
-        if: startsWith(github.ref, 'refs/tags/super-tasks-v')
+        if: startsWith(github.ref, 'refs/tags/ultra-tasks-v')
         run: |
           echo "Waiting for main release to be created..."
           for i in {1..40}; do
@@ -266,7 +266,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload APK to existing GitHub Release
-        if: startsWith(github.ref, 'refs/tags/super-tasks-v')
+        if: startsWith(github.ref, 'refs/tags/ultra-tasks-v')
         run: |
           set -euo pipefail
           shopt -s nullglob
@@ -299,7 +299,7 @@ jobs:
         uses: r0adkll/upload-google-play@e738b9dd8f2476ea806d921b64aacd24f34515a5 # v1.1.5
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
-          packageName: com.superproductivity.superproductivity
+          packageName: app.ultratasks
           releaseFiles: android/app/build/outputs/apk/play/release/*.apk
           tracks: internal
           status: completed

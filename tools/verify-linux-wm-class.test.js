@@ -15,7 +15,7 @@
 //
 // Measured against a real Electron 43.4.0 binary on X11 (2026-08): with this
 // repo's `name: superProductivity` and no `productName`, WM_CLASS comes out as
-// "superproductivity", "superproductivity" whether or not `app.setName()` runs.
+// "ultratasks", "ultratasks" whether or not `app.setName()` runs.
 // Adding a `productName` without the pin moves it to "super-productivity".
 //
 // Blind spot: this asserts the inputs, not a packaged binary's actual WM_CLASS.

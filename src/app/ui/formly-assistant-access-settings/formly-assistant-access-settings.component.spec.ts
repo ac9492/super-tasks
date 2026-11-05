@@ -130,7 +130,7 @@ describe('FormlyAssistantAccessSettingsComponent', () => {
     expect(JSON.parse(component.jsonSnippet())).toEqual({
       mcpServers: {
         // eslint-disable-next-line @typescript-eslint/naming-convention
-        'super-productivity': {
+        'ultra-tasks': {
           type: 'http',
           url: 'http://127.0.0.1:3876/mcp',
           headers: { Authorization: 'Bearer sp_mcp_NEWKEY' },

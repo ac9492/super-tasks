@@ -2,7 +2,7 @@
 <!--
   Launcher shortcuts (long-press the app icon), mirroring the iOS Home Screen
   quick actions in ios/App/App/Info.plist. Each one opens a
-  com.super-productivity.app://<host> URL that parse-app-uri-quick-action.ts
+  app.ultratasks://<host> URL that parse-app-uri-quick-action.ts
   handles; tools/verify-android-shortcuts.test.js checks the hosts, targets and
   labels against the parser, the manifest and strings.xml.
 
@@ -19,9 +19,9 @@
     android:shortcutShortLabel="@string/shortcut_add_task">
     <intent
       android:action="android.intent.action.VIEW"
-      android:data="com.super-productivity.app://add-task"
+      android:data="app.ultratasks://add-task"
       android:targetClass="com.superproductivity.superproductivity.AppShortcutActivity"
-      android:targetPackage="com.superproductivity.superproductivity" />
+      android:targetPackage="app.ultratasks" />
   </shortcut>
   <shortcut
     android:shortcutId="today"
@@ -30,9 +30,9 @@
     android:shortcutShortLabel="@string/shortcut_today">
     <intent
       android:action="android.intent.action.VIEW"
-      android:data="com.super-productivity.app://today"
+      android:data="app.ultratasks://today"
       android:targetClass="com.superproductivity.superproductivity.AppShortcutActivity"
-      android:targetPackage="com.superproductivity.superproductivity" />
+      android:targetPackage="app.ultratasks" />
   </shortcut>
   <shortcut
     android:shortcutId="inbox"
@@ -41,8 +41,8 @@
     android:shortcutShortLabel="@string/shortcut_inbox">
     <intent
       android:action="android.intent.action.VIEW"
-      android:data="com.super-productivity.app://inbox"
+      android:data="app.ultratasks://inbox"
       android:targetClass="com.superproductivity.superproductivity.AppShortcutActivity"
-      android:targetPackage="com.superproductivity.superproductivity" />
+      android:targetPackage="app.ultratasks" />
   </shortcut>
 </shortcuts>

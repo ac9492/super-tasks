@@ -43,7 +43,10 @@ export class SyncIncompatibleVersionNoticeService {
           msg: T.F.SYNC.S.VERSION_TOO_OLD,
           actionStr: T.PS.UPDATE_APP,
           actionFn: () =>
-            window.open('https://super-productivity.com/download', '_blank'),
+            window.open(
+              'https://github.com/ac9492/ultra-tasks/releases/latest',
+              '_blank',
+            ),
         });
       }
       return;
