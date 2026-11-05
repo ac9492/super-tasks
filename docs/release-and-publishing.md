@@ -78,6 +78,13 @@ website until DNS and hosting are connected.
 
 ### GitHub-only desktop releases
 
+If validation and both package jobs pass but publication fails, dispatch
+`publish-desktop-artifacts.yml` with the original build run ID. It verifies those
+three successful jobs and publishes their existing artifacts against their exact
+source commit using `GITHUB_TOKEN`. It does not rebuild or move an existing tag.
+macOS currently also produces a Universal DMG through the inherited target list,
+so publication expects three DMGs, two ZIPs, and two Windows executables.
+
 For Ultra Tasks desktop downloads, dispatch **Desktop GitHub Release**
 (`desktop-release.yml`) from the reviewed `main` commit. It validates the app,
 builds Windows x64/ARM64 executables and macOS Intel/Apple Silicon DMG/ZIP files,

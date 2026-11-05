@@ -93,7 +93,7 @@ jobs:
           VERSION=$(node -p "require('./package.json').version")
           TAG="ultra-tasks-v${VERSION}"
           test "$(find downloads -name '*.exe' | wc -l)" -eq 2
-          test "$(find downloads -name '*.dmg' | wc -l)" -eq 2
+          test "$(find downloads -name '*.dmg' | wc -l)" -eq 3
           test "$(find downloads -name '*.zip' | wc -l)" -eq 2
           (cd downloads && sha256sum * > SHA256SUMS.txt)
           # GITHUB_TOKEN deliberately prevents inherited tag/release workflows
