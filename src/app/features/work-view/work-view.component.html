@@ -131,6 +131,9 @@
                     hasDoneTasks() || (workContextService.doneTodayArchived$ | async)
                   ) {
                     {{ T.WW.NO_PLANNED_TASK_ALL_DONE | translate }}
+                  } @else if (isProjectContext()) {
+                    <!-- "Planned" is day-planning wording; a project just has none. -->
+                    {{ T.WW.NO_TASKS_IN_PROJECT | translate }}
                   } @else {
                     {{ T.WW.NO_PLANNED_TASKS | translate }}
                   }

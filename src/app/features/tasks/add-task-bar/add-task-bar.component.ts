@@ -518,7 +518,9 @@ export class AddTaskBarComponent implements AfterViewInit, OnInit, OnDestroy {
 
     this._isAddingTask = true;
     try {
-      await this._parseInputBeforeAdd();
+      if (this._isParseBehindInput()) {
+        await this._parseInputBeforeAdd();
+      }
       const state = this.stateService.state();
       const title = state.cleanText || rawInput;
       if (!title) return;
@@ -1016,11 +1018,18 @@ export class AddTaskBarComponent implements AfterViewInit, OnInit, OnDestroy {
    * describing an older, shorter string — a title missing its last characters,
    * and stale tags, date or estimate. Parse the exact text being added first.
    */
+  private _isParseBehindInput(): boolean {
+    // Without parse args parsing is not set up yet: nothing to be stale against
+    return (
+      !!this._lastParseArgs &&
+      !this._parserService.isParsedFor(this.stateService.inputTxt())
+    );
+  }
+
   private async _parseInputBeforeAdd(): Promise<void> {
     const text = this.stateService.inputTxt();
     const args = this._lastParseArgs;
     if (!args) {
-      // Parsing is not set up yet: there is no parse to be stale against
       return;
     }
     // Bounded: a pass is only superseded by a parse the pipeline started for

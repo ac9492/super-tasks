@@ -488,7 +488,9 @@ export class AppComponent implements OnDestroy, AfterViewInit {
     if (!ctxId || !ctxType) return;
     const title = await firstValueFrom(
       this._matDialog
-        .open(DialogPromptComponent, { data: { placeholder: T.WW.ADD_SECTION_TITLE } })
+        .open(DialogPromptComponent, {
+          data: { message: T.MH.ADD_SECTION, placeholder: T.WW.ADD_SECTION_TITLE },
+        })
         .afterClosed(),
     );
     if (typeof title === 'string' && title.trim()) {

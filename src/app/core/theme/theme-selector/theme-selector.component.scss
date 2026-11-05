@@ -5,16 +5,20 @@
   gap: var(--s3);
   container-type: inline-size;
 }
-h3,
-h4,
-p {
-  margin: 0;
-}
-h3 {
-  font-size: var(--font-size-lg);
-}
-h4 {
-  font-size: var(--font-size-md);
+// Scoped under the container to outrank the global heading scale (its
+// `:not()` chain), so "Appearance" matches the other section headings.
+.theme-selector-container {
+  h3,
+  h4,
+  p {
+    margin: 0;
+  }
+  h3 {
+    font-size: var(--font-size-lg);
+  }
+  h4 {
+    font-size: var(--font-size-md);
+  }
 }
 .dark-mode-select,
 .theme-select {

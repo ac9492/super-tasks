@@ -3603,7 +3603,6 @@
       "MORE": "More options",
       "COLORS": "Customize colors",
       "HELP": "Help",
-      "KEYBOARD_HELP": "Choose the key combination that triggers this action. Click the shortcut field and press the desired keys.",
       "MODE_HELP": "System follows this device’s light or dark appearance.",
       "COLOR_HELP": "Adjust this color for the current light or dark mode on this device.",
       "PALETTE_HELP": "Apply a coordinated set of background, panel, and accent colors.",
@@ -3723,7 +3722,7 @@
   "WW": {
     "ADD_MORE": "Add more",
     "ADD_SCHEDULED_FOR_TOMORROW": "Add tasks planned for tomorrow ({{nr}})",
-    "ADD_SECTION_TITLE": "Add section",
+    "ADD_SECTION_TITLE": "Section title",
     "SECTION_OPTIONS": "Section options",
     "DONE_TASKS": "Completed tasks",
     "DONE_TASKS_IN_ARCHIVE": "There are currently no completed tasks here, but there are some already archived.",

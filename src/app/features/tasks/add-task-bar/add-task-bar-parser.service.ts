@@ -479,8 +479,16 @@ export class AddTaskBarParserService {
    *    deleted their syntax", which would clear the value instead of keeping it.
    */
   applyUserRepeatPick(repeat: AddTaskBarRepeat): void {
+    const input = this._stateService.inputTxt();
     const cleanedInput = this._stripSyntaxForUserPick('repeat');
-    this._recordUserPick({ repeat, isRepeatFromSyntax: false });
+    // The strip takes the whole due token, so the date that token set lives on
+    // in the state alone: take ownership of it too, or the queued parse would
+    // read the vanished token as "date removed" and reset it to the default.
+    this._recordUserPick({
+      repeat,
+      isRepeatFromSyntax: false,
+      ...(cleanedInput !== input ? { isDateFromSyntax: false } : {}),
+    });
     this._stateService.updateRepeatSetting(repeat, cleanedInput);
   }
 
