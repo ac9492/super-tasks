@@ -82,6 +82,8 @@ it wrong: any claim about which releases carry a change must be re-derived with
 any code changing.
 
 - [Recurring events implementation plan](research/recurring-events-implementation-plan.md)
+- [Main interface UI/UX simplification audit](research/2026-11-05-main-interface-ui-ux-audit.md)
+  — recommendations against Claude's November 5 shell/task-surface checkpoint
 - [Snap Wayland GPU root cause and shipped fix](research/snap-wayland-gpu-fix-research.md)
   — kept past its research life because `electron-builder.yaml`,
   `tools/afterPack.js` and `build/linux/snap-wrapper.sh` cite it for the reason
