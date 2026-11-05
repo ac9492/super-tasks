@@ -356,11 +356,14 @@
     padding: var(--title-padding-y);
   }
 
+  // The single line may exceed a 10-minute event by a pixel; letting it
+  // overflow keeps descenders readable (`.title-text` still truncates).
   :host.very-short-event & {
-    max-height: 100%;
+    max-height: none;
+    overflow: visible;
     padding: 0 6px;
     font-size: var(--font-size-sm);
-    line-height: 1;
+    line-height: var(--line-height-tight);
   }
 
   // Keep padding off the clamped element. Padding on a line-clamped box can

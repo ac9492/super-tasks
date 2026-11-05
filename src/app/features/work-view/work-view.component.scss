@@ -1,5 +1,18 @@
 @use '../../../styles/_globals.scss' as *;
 
+// Same rules as `.cdk-visually-hidden`: out of sight, still read out.
+@mixin visuallyHidden() {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
 :host {
   overflow: hidden !important;
 }
@@ -42,9 +55,11 @@ h2 {
     padding-bottom: var(--s2);
   }
 
+  // Out of sight, not out of the accessibility tree: the bare numbers and
+  // icons need their names (the items' tooltips show them on hover).
   @include smallMainContainer() {
     .label {
-      display: none;
+      @include visuallyHidden();
     }
 
     p {
@@ -54,7 +69,7 @@ h2 {
 
   @include mq(xs, max) {
     .label {
-      display: none;
+      @include visuallyHidden();
     }
     p {
       margin: 0;
@@ -113,6 +128,8 @@ h2 {
   }
 }
 
+// Hidden by size and opacity, not by visibility, so Tab still reaches the
+// button and its focus reveals it.
 .take-a-break-reset-btn {
   display: none;
   position: absolute;
@@ -122,16 +139,15 @@ h2 {
   transform: translateY(-50%) scale(0);
   transition: var(--transition-standard);
   opacity: 0;
-  visibility: hidden;
   @include mq(xs) {
     display: block;
   }
 }
 
-.item:hover .take-a-break-reset-btn {
+.item:hover .take-a-break-reset-btn,
+.take-a-break-reset-btn:focus-within {
   opacity: 1;
   transform: translateY(-50%) scale(1);
-  visibility: visible;
 }
 
 .hide-controls-icon {
@@ -232,19 +248,11 @@ finish-day-btn,
   }
 
   .no-tasks-label {
-    font-size: 17px;
-    @include center;
+    font-size: var(--font-size-lg);
+    margin: var(--s2) 0 0;
     text-align: center;
     font-weight: 400;
     color: var(--text-color);
-
-    @include darkTheme() {
-      color: var(--text-color-most-intense);
-      font-weight: 500;
-      text-shadow:
-        0 0 2px black,
-        0 0 5px black;
-    }
   }
 }
 

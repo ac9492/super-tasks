@@ -38,14 +38,15 @@
                   <mat-icon>hourglass_empty</mat-icon>
                 </span>
               </div>
-              <div
-                class="item"
-                [matTooltip]="T.WW.WORKING_TODAY | translate"
-                matTooltipPosition="above"
-              >
+              <div class="item">
                 <span class="label">{{ T.WW.WORKING_TODAY | translate }}</span>
+                <!-- Not on .item: the archived time below has its own tooltip. -->
                 <span class="no-wrap">
-                  <strong class="time-val">{{
+                  <strong
+                    class="time-val"
+                    [matTooltip]="T.WW.WORKING_TODAY | translate"
+                    matTooltipPosition="above"
+                    >{{
                     (workingToday() | msToString: false : true) || '0m'
                   }}</strong>
                   @if (
@@ -56,7 +57,11 @@
                       >(+{{ workingTodayArchived | msToString }})</span
                     >
                   }
-                  <mat-icon>timelapse</mat-icon>
+                  <mat-icon
+                    [matTooltip]="T.WW.WORKING_TODAY | translate"
+                    matTooltipPosition="above"
+                    >timelapse</mat-icon
+                  >
                 </span>
               </div>
               <div class="item hide-xs">

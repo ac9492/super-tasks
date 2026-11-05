@@ -198,6 +198,7 @@
         "CREATE_NEW_TAGS_BTN": "Create Tags",
         "CREATE_NEW_TAGS_MSG": "{{nr}} new tags need to be created for this board to work",
         "EDIT_BOARD": "Edit board",
+        "TASK_COUNT": "{{count}} tasks",
         "NO_PANELS_BTN": "Configure Board",
         "NO_PANELS_MSG": "This board has no panels configured. Add some panels to it."
       }
@@ -326,6 +327,7 @@
       }
     },
     "FOCUS_MODE": {
+      "ADD_TASK_AND_FOCUS": "Add as new task and focus on it",
       "ADD_TIME_MINUTE": "Add 1 minute",
       "B": {
         "BREAK_RUNNING": "Break is running",
@@ -552,6 +554,14 @@
         "REMOTE_ISSUE_DELETED_WITH_TIME": "Remote issue was deleted but task \"{{taskTitle}}\" has tracked time. Delete anyway?",
         "TWO_WAY_SYNC_PUSH_FAILED": "Two-way sync push failed: {{errorMsg}}",
         "POST_TIME_SUCCESS": "{{providerName}}: Successfully created time entry for {{issueTitle}}"
+      },
+      "SETUP_OVERVIEW": {
+        "ADD_INTEGRATION": "Connect a calendar or issue provider",
+        "CALDAV_TODO": "CalDAV Todo",
+        "CONNECT_CALENDAR": "Connect calendar",
+        "GOOGLE_CALENDAR_ICAL": "Google Calendar (iCal)",
+        "OTHER_ICAL": "Other (iCal)",
+        "SET_UP_ISSUE_PROVIDER": "Set up issue provider"
       },
       "SYNC_STATE": {
         "COULD_NOT_SYNC": "Couldn't sync: {{reason}}",
@@ -936,13 +946,16 @@
         }
       },
       "DAY_LOAD": "Planned: {{planned}} / Available: {{available}}",
+      "DEADLINES": "Deadlines",
       "EDIT_REPEATED_TASK": "Edit recurring task \"{{taskName}}\"",
+      "ITEMS_TOTAL": "{{count}} items",
       "NO_TASKS": "No tasks",
       "PLANNED_LOAD": "Planned: {{planned}}",
       "PLAN_VIEW": {
         "NO_DEADLINES": "No deadlines",
         "NO_SCHEDULED_ITEMS": "No scheduled items"
       },
+      "SCHEDULED_ITEMS": "At a set time",
       "S": {
         "REMOVED_PLAN_DATE": "Removed plan date for task \"{{taskTitle}}\"",
         "TASK_ALREADY_PLANNED": "Task is already planned for {{date}}",
@@ -3142,21 +3155,27 @@
       "SEND_FEEDBACK": "Send feedback"
     },
     "HISTORY": "History",
+    "MAIN_NAVIGATION": "Main navigation",
     "METRICS": "Metrics",
     "NO_TASKS_TO_TRACK": "Add a task first to start tracking time",
     "NOTES": "Notes",
     "NOTES_PANEL_INFO": "Notes can only be shown in the schedule and the regular task list views.",
     "OPEN_APP_FEATURES": "Open Settings",
+    "OPEN_NAVIGATION": "Open navigation",
     "PLANNER": "Planner",
     "PROJECT_MENU": "Project Menu",
     "PROJECT_SETTINGS": "Project Settings",
     "PROJECTS": "Projects",
+    "RESIZE_SIDE_NAV": "Resize side navigation",
     "SCHEDULE": "Schedule",
     "SEARCH": "Search",
     "SETTINGS": "Settings",
     "SHARE_TASK_LIST_MARKDOWN": "Share task list",
     "SHOW_TRACKED_TASK": "Show tracked task",
     "SIDE_PANEL_MENU": "Side Panel Menu",
+    "SKIP_TO_CONTENT": "Skip to main content",
+    "SWITCH_TO_COMPACT_MODE": "Switch to compact mode",
+    "SWITCH_TO_FULL_MODE": "Switch to full mode",
     "SYNC_STATE": {
       "ERROR": "Sync problem — click to retry",
       "IN_SYNC": "In sync — click to sync now",
@@ -3168,6 +3187,7 @@
     "TASKS": "Tasks",
     "TOGGLE_SHOW_ISSUE_PANEL": "Show/hide issue provider panel",
     "TOGGLE_SHOW_NOTES": "Show/hide project notes",
+    "TOGGLE_SHOW_SCHEDULE_PANEL": "Show/hide schedule panel",
     "TOGGLE_TRACK_TIME": "Start/stop tracking time",
     "TRIGGER_SYNC": "Sync now",
     "UNPLAN_ALL_TASKS": "Unschedule all tasks",

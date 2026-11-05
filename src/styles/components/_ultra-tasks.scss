@@ -50,6 +50,10 @@ body.ultra-tasks {
     --task-list-row-gap: var(--s-half);
     --task-separator: none;
     --task-border-radius: var(--st-radius);
+  }
+  // Recurring-task rows (Recurring tasks page) are the same card.
+  task,
+  .repeat-task-cfg {
     --task-border-color: color-mix(
       in srgb,
       var(--palette-surface-ink) calc(var(--border-alpha) * 100%),
@@ -58,11 +62,15 @@ body.ultra-tasks {
     border-radius: var(--st-radius);
     background: var(--card-bg);
   }
+  .repeat-task-cfg {
+    margin-bottom: var(--s-half);
+  }
   // Keep all card edges, including those suppressed by flat-row/subtask styles.
   task,
   task:last-of-type,
   .sub-tasks task:first-of-type,
-  .sub-tasks task:last-of-type {
+  .sub-tasks task:last-of-type,
+  .repeat-task-cfg {
     border: var(--st-line-width) solid var(--task-border-color);
   }
   task .time-wrapper {
@@ -151,7 +159,8 @@ body.ultra-tasks:not(:has(.st-solid)) {
     ) !important;
     backdrop-filter: blur(var(--st-blur)) !important;
   }
-  task {
+  task,
+  .repeat-task-cfg {
     background: color-mix(in srgb, var(--card-bg) var(--st-card-alpha), transparent);
   }
 }
@@ -196,7 +205,8 @@ body.ultra-tasks {
       background: var(--bg) !important;
       backdrop-filter: none !important;
     }
-    task {
+    task,
+    .repeat-task-cfg {
       background: var(--card-bg);
     }
   }

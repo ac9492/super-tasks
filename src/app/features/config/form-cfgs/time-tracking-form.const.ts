@@ -1,5 +1,10 @@
-import { ConfigFormSection, TimeTrackingConfig } from '../global-config.model';
+import {
+  ConfigFormSection,
+  LimitedFormlyFieldConfig,
+  TimeTrackingConfig,
+} from '../global-config.model';
 import { T } from '../../../t.const';
+import { IS_ELECTRON } from '../../../app.constants';
 
 export const TIME_TRACKING_FORM_CFG: ConfigFormSection<TimeTrackingConfig> = {
   title: T.GCF.TIME_TRACKING.TITLE,
@@ -61,14 +66,20 @@ export const TIME_TRACKING_FORM_CFG: ConfigFormSection<TimeTrackingConfig> = {
         label: T.GCF.TIME_TRACKING.L_IS_TRACKING_REMINDER_NOTIFY,
       },
     },
-    {
-      key: 'isTrackingReminderFocusWindow',
-      type: 'checkbox',
-      hideExpression: (model) => !model.isTrackingReminderEnabled,
-      templateOptions: {
-        label: T.GCF.TIME_TRACKING.L_IS_TRACKING_REMINDER_FOCUS_WINDOW,
-      },
-    },
+    // Only the desktop app can bring its window to the front
+    ...(IS_ELECTRON
+      ? ([
+          {
+            key: 'isTrackingReminderFocusWindow',
+            type: 'checkbox',
+            hideExpression: (model: TimeTrackingConfig) =>
+              !model.isTrackingReminderEnabled,
+            templateOptions: {
+              label: T.GCF.TIME_TRACKING.L_IS_TRACKING_REMINDER_FOCUS_WINDOW,
+            },
+          },
+        ] as LimitedFormlyFieldConfig<TimeTrackingConfig>[])
+      : []),
     {
       key: 'trackingReminderMinTime',
       type: 'duration',

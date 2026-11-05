@@ -15,6 +15,8 @@ import { TaskService } from '../../tasks/task.service';
 import { MatMiniFabButton } from '@angular/material/button';
 import { fadeAnimation } from '../../../ui/animations/fade.ani';
 import { MatIcon } from '@angular/material/icon';
+import { TranslatePipe } from '@ngx-translate/core';
+import { T } from '../../../t.const';
 
 @Component({
   selector: 'focus-mode-task-selector',
@@ -22,9 +24,10 @@ import { MatIcon } from '@angular/material/icon';
   styleUrls: ['./focus-mode-task-selector.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeAnimation],
-  imports: [SelectTaskComponent, MatIcon, MatMiniFabButton],
+  imports: [SelectTaskComponent, MatIcon, MatMiniFabButton, TranslatePipe],
 })
 export class FocusModeTaskSelectorComponent implements AfterViewInit {
+  readonly T = T;
   private readonly _taskService = inject(TaskService);
 
   readonly taskSelected = output<string>();

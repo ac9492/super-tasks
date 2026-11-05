@@ -1,11 +1,10 @@
+// Same column as the list below (.component-wrapper), so field and rows align.
 .search-header {
-  margin-bottom: 1rem;
-  display: flex;
-  justify-content: center;
+  max-width: var(--component-max-width);
+  margin: 0 auto var(--s2);
 
   .search-field {
     width: 100%;
-    max-width: 600px;
   }
 }
 
