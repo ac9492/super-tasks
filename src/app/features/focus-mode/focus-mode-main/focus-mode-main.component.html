@@ -157,6 +157,7 @@
           >
             <input-duration-slider
               [model]="displayDuration()"
+              [ariaLabel]="T.F.FOCUS_MODE.FOCUS_TIME_TOOLTIP | translate"
               [bareRing]="true"
               [hideHandle]="isPomodoro()"
               [useFlexibleIncrement]="!isPomodoro()"

@@ -62,15 +62,21 @@
   align-items: center;
   flex: 1;
   min-width: 0;
-  padding-top: var(--s-quarter);
-  padding-bottom: var(--s-quarter);
-}
+  // Button reset: the card keeps the look of its sibling task cards.
+  margin: 0;
+  border: 0;
+  border-radius: inherit;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  padding: var(--s-quarter) 0;
 
-.menu-trigger {
-  position: absolute;
-  width: 0;
-  height: 0;
-  visibility: hidden;
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
 }
 
 .title {

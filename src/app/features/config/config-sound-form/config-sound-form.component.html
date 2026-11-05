@@ -36,9 +36,15 @@
     </div>
     <div class="setting-row">
       <div class="setting-control">
-        <mat-form-field class="width100">
+        <mat-form-field
+          class="width100"
+          floatLabel="always"
+        >
           <mat-label>{{ T.GCF.SOUND.DONE_SOUND | translate }}</mat-label>
-          <mat-select formControlName="doneSound">
+          <mat-select
+            formControlName="doneSound"
+            [placeholder]="T.G.NONE | translate"
+          >
             @for (sound of soundOpts; track sound) {
               <mat-option [value]="sound.value">{{ sound.label | translate }}</mat-option>
             }
@@ -66,9 +72,15 @@
     </div>
     <div class="setting-row">
       <div class="setting-control">
-        <mat-form-field class="width100">
+        <mat-form-field
+          class="width100"
+          floatLabel="always"
+        >
           <mat-label>{{ T.GCF.SOUND.BREAK_REMINDER_SOUND | translate }}</mat-label>
-          <mat-select formControlName="breakReminderSound">
+          <mat-select
+            formControlName="breakReminderSound"
+            [placeholder]="T.G.NONE | translate"
+          >
             @for (sound of soundOpts; track sound) {
               <mat-option [value]="sound.value">{{ sound.label | translate }}</mat-option>
             }
@@ -82,9 +94,15 @@
     </div>
     <div class="setting-row">
       <div class="setting-control">
-        <mat-form-field class="width100">
+        <mat-form-field
+          class="width100"
+          floatLabel="always"
+        >
           <mat-label>{{ T.GCF.SOUND.TRACK_TIME_SOUND | translate }}</mat-label>
-          <mat-select formControlName="trackTimeSound">
+          <mat-select
+            formControlName="trackTimeSound"
+            [placeholder]="T.G.NONE | translate"
+          >
             @for (sound of soundOpts; track sound) {
               <mat-option [value]="sound.value">{{ sound.label | translate }}</mat-option>
             }

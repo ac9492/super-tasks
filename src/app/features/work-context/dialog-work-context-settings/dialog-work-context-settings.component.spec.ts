@@ -72,6 +72,7 @@ describe('DialogWorkContextSettingsComponent', () => {
     expect(tagService.updateTag).toHaveBeenCalledWith(
       'TODAY',
       jasmine.objectContaining({ theme: TODAY_TAG.theme }),
+      true,
     );
   });
 
@@ -102,6 +103,7 @@ describe('DialogWorkContextSettingsComponent', () => {
     expect(tagService.updateTag).toHaveBeenCalledWith(
       't1',
       jasmine.objectContaining({ theme: DEFAULT_TAG.theme }),
+      true,
     );
   });
 
@@ -138,6 +140,7 @@ describe('DialogWorkContextSettingsComponent', () => {
     expect(tagService.updateTag).toHaveBeenCalledWith(
       't1',
       jasmine.objectContaining({ theme: DEFAULT_TAG.theme }),
+      true,
     );
   });
 
@@ -171,6 +174,19 @@ describe('DialogWorkContextSettingsComponent', () => {
       expect(projectService.update).toHaveBeenCalledWith(
         'p1',
         jasmine.objectContaining({ title: 'Work 2' }),
+        true,
+      );
+    });
+
+    it('should not show the "updated" snack for each live tag edit', () => {
+      const tag = { ...DEFAULT_TAG, id: 't1', title: 'Home' } as Tag;
+      const dialog = setup({ isProject: false, entity: tag });
+
+      dialog.onModelChange({ ...dialog.entityData, title: 'Home 2' });
+
+      expect(tagService.updateTag).toHaveBeenCalledWith(
+        't1',
+        jasmine.objectContaining({ title: 'Home 2' }),
         true,
       );
     });

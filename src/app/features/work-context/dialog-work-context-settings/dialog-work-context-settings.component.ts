@@ -207,12 +207,16 @@ export class DialogWorkContextSettingsComponent {
       // persisted.
       const persistColor = this._userTouchedTagColor;
       const persistPrimary = this._userTouchedThemePrimary || this._userTouchedTagColor;
-      this._tagService.updateTag(t.id, {
-        title: t.title,
-        icon: t.icon,
-        color: persistColor ? t.color : orig.color,
-        theme: persistPrimary ? theme : { ...theme, primary: orig.theme?.primary },
-      });
+      this._tagService.updateTag(
+        t.id,
+        {
+          title: t.title,
+          icon: t.icon,
+          color: persistColor ? t.color : orig.color,
+          theme: persistPrimary ? theme : { ...theme, primary: orig.theme?.primary },
+        },
+        isSkipSnack,
+      );
     }
   }
 }

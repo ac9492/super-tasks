@@ -178,10 +178,11 @@ export class MagicNavConfigService {
         action: () => this._toggleProjectsExpanded(),
         additionalButtons: [
           {
+            // No action: nav-list-tree renders this one as the visibility
+            // menu trigger.
             id: 'project-visibility',
             icon: 'visibility',
             tooltip: T.F.PROJECT_FOLDER.TOOLTIP_VISIBILITY,
-            action: () => this._openProjectVisibilityMenu(),
           },
           {
             id: 'add-project-folder',
@@ -594,11 +595,6 @@ export class MagicNavConfigService {
 
   private _startTour(tourId: TourId): void {
     void this._shepherdService.show(tourId);
-  }
-
-  private _openProjectVisibilityMenu(): void {
-    // Project visibility is handled by the nav-list component's additional buttons
-    // This method is called but the actual menu is rendered in the template
   }
 
   toggleProjectVisibility(projectId: string): void {
