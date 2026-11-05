@@ -96,7 +96,7 @@
     > .inner-wrapper
     > .inner-wrapper
     > & {
-    outline: var(--focus-ring-width) solid var(--c-accent);
+    outline: var(--focus-ring-width) solid var(--palette-focus-ring);
   }
 
   :host.isCurrent.isCurrent.isCurrent.isCurrent.isCurrent
@@ -279,7 +279,7 @@
   > .inner-wrapper
   > .box,
 :host:focus-visible > swipe-block ::ng-deep > .inner-wrapper > .inner-wrapper > .box {
-  outline: var(--focus-ring-width) solid var(--palette-primary-400);
+  outline: var(--focus-ring-width) solid var(--palette-focus-ring);
   outline-offset: calc(-1 * var(--focus-ring-width));
 }
 

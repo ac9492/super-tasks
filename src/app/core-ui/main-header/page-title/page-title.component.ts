@@ -326,8 +326,8 @@ import { PluginIconComponent } from '../../../plugins/ui/plugin-icon/plugin-icon
 
         /* An active filter is a pressed toggle: the "selected" role. */
         &.isCustomized {
-          color: var(--palette-selected-ink, var(--c-accent));
-          background-color: var(--palette-selected, transparent);
+          color: var(--palette-selected-ink);
+          background-color: var(--palette-selected);
           box-shadow: none;
 
           .mat-icon {
@@ -356,8 +356,8 @@ import { PluginIconComponent } from '../../../plugins/ui/plugin-icon/plugin-icon
       }
 
       .project-settings-btn[aria-expanded='true'] {
-        color: var(--palette-selected-ink, var(--brand));
-        background-color: var(--palette-selected, transparent);
+        color: var(--palette-selected-ink);
+        background-color: var(--palette-selected);
       }
     `,
   ],

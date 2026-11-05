@@ -116,8 +116,9 @@
   }
 }
 
+// The muted text tier (4.5:1 on its container), not a dimmed ink.
 .display-value.is-placeholder {
-  opacity: 0.6;
+  color: var(--text-color-muted);
   font-style: italic;
 }
 

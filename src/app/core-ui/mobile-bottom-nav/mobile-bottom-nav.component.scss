@@ -59,21 +59,21 @@
     // Active is the one "selected" role (tonal fill, its paired ink, a filled
     // glyph); the accent fill is reserved for the add button.
     &.active {
-      background: var(--palette-selected, var(--sidenav-item-active-bg));
-      color: var(--palette-selected-ink, var(--sidenav-active-text));
+      background: var(--palette-selected);
+      color: var(--palette-selected-ink);
       box-shadow: none;
       margin-bottom: 0;
 
       mat-icon {
-        color: var(--palette-selected-ink, var(--sidenav-active-text));
+        color: var(--palette-selected-ink);
         font-variation-settings: 'FILL' 1;
       }
 
       // Maintain active state on hover/focus
       &:hover,
       &:focus {
-        background: var(--palette-selected, var(--sidenav-item-active-bg));
-        color: var(--palette-selected-ink, var(--sidenav-active-text));
+        background: var(--palette-selected);
+        color: var(--palette-selected-ink);
       }
     }
   }

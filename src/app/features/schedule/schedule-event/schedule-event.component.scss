@@ -168,14 +168,14 @@
   }
 
   &.ScheduledRepeatProjection .ico {
-    color: var(--c-primary);
+    color: var(--palette-accent-text);
   }
 
   &.ScheduledTask {
     border-radius: 0;
 
     .ico {
-      color: var(--c-primary);
+      color: var(--palette-accent-text);
       font-size: 24px;
       height: 24px;
       min-width: 24px;
@@ -217,11 +217,11 @@
       border-color: var(--c-accent);
 
       &.CalendarEvent {
-        color: var(--c-accent);
+        color: var(--palette-accent-text);
       }
 
       .ico {
-        color: var(--c-accent);
+        color: var(--palette-accent-text);
       }
 
       > * {
@@ -532,7 +532,7 @@
   border-color: var(--c-accent);
 
   .ico {
-    color: var(--c-accent);
+    color: var(--palette-accent-text);
   }
 
   .resize-handle {

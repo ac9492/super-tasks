@@ -74,15 +74,15 @@ export type PasswordStrengthLevel = 'weak' | 'fair' | 'strong';
         white-space: nowrap;
 
         &.weak {
-          color: var(--c-warn);
+          color: var(--color-danger);
         }
 
         &.fair {
-          color: var(--c-accent);
+          color: var(--color-warning);
         }
 
         &.strong {
-          color: var(--palette-primary-500);
+          color: var(--color-success);
         }
       }
     `,

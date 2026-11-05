@@ -473,6 +473,14 @@ done-toggle {
   }
 }
 
+// The date controls carry a coloured text badge: at the 0.7 resting opacity of
+// the other icon buttons its semantic colour fell to 3.8-4.4:1, so they stay at
+// full strength.
+.first-line .schedule-btn,
+.first-line .deadline-btn {
+  opacity: 1;
+}
+
 // Time conflict indicator: a danger "!" shown next to the schedule control,
 // replacing the former task-box border. It's a bare <mat-icon> dropped into the
 // stretch-aligned controls row, so it needs explicit centering and sizing.

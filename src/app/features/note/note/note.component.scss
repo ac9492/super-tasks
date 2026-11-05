@@ -16,12 +16,7 @@
   // A note is a list item like a task: a card with a hairline and no resting
   // shadow (it lifts on hover/focus below).
   box-shadow: none;
-  border: var(--st-line-width) solid
-    color-mix(
-      in srgb,
-      var(--standard-note-fg) calc(var(--border-alpha) * 100%),
-      var(--standard-note-bg)
-    );
+  border: var(--st-line-width) solid var(--palette-border);
   overflow: hidden;
 
   &:hover,

@@ -86,8 +86,8 @@ import { GlobalConfigService } from '../../../features/config/global-config.serv
            paired ink and a filled glyph (never the accent). */
         &.isActive {
           box-shadow: none;
-          color: var(--palette-selected-ink, var(--brand));
-          background-color: var(--palette-selected, var(--state-selected));
+          color: var(--palette-selected-ink);
+          background-color: var(--palette-selected);
 
           .mat-icon {
             font-variation-settings: 'FILL' 1;

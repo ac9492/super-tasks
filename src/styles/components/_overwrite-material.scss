@@ -198,8 +198,11 @@ body.isDarkTheme {
 .mat-mdc-tab-group,
 .mat-mdc-tab-nav-bar {
   // Active tab label color
+  // Direct ink, not the token: Material's primary theme sets the token on the
+  // group itself and would turn the label accent-coloured, which fails
+  // contrast on a neon accent.
   .mdc-tab--active .mdc-tab__text-label {
-    color: var(--mat-tab-header-active-label-text-color);
+    color: var(--text-color-most-intense);
   }
 
   // Active tab indicator (underline)
@@ -209,7 +212,7 @@ body.isDarkTheme {
 
   // Inactive tab labels
   .mdc-tab:not(.mdc-tab--active) .mdc-tab__text-label {
-    color: var(--mat-tab-header-inactive-label-text-color);
+    color: var(--text-color-muted);
   }
 }
 
@@ -948,6 +951,24 @@ body.isVerticalActionBar .cdk-overlay-pane.mat-mdc-tooltip-panel {
   .mat-calendar-body-cell:not(.mat-calendar-body-disabled):focus
     > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected) {
     background-color: var(--calendar-hover-bg) !important;
+  }
+}
+
+// SEGMENTED CONTROL
+// -----------------
+// A button-toggle group is a segmented control (view switchers, Dark mode,
+// docs/styling-guide.md § Forms and disclosures): the chosen segment is the
+// tonal "selected" role, the same as the active nav row. The doubled selectors
+// outrank the palette mapping in _palette-theme.scss, which fills it with the
+// accent.
+body .mat-button-toggle-group.mat-button-toggle-group {
+  --mat-button-toggle-selected-state-background-color: var(--palette-selected);
+  --mat-button-toggle-selected-state-text-color: var(--palette-selected-ink);
+
+  .mat-button-toggle-checked {
+    --text-color: var(--palette-selected-ink);
+    --text-color-muted: var(--palette-selected-ink-muted);
+    color: var(--palette-selected-ink);
   }
 }
 

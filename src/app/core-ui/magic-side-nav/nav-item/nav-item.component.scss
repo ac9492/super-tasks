@@ -122,15 +122,15 @@
 // Work-context rows (buttons) and route rows (anchors) share this one look: the
 // tonal "selected" role, restated for the whole row in _ultra-tasks.scss.
 .nav-link[mat-menu-item].active {
-  color: var(--palette-selected-ink, var(--sidenav-active-text)) !important;
-  background: var(--palette-selected, var(--sidenav-item-active-bg)) !important;
+  color: var(--palette-selected-ink) !important;
+  background: var(--palette-selected) !important;
 
   .nav-label {
-    color: var(--palette-selected-ink, var(--sidenav-active-text)) !important;
+    color: var(--palette-selected-ink) !important;
   }
 
   .nav-icon {
-    color: var(--palette-selected-ink, var(--sidenav-active-text)) !important;
+    color: var(--palette-selected-ink) !important;
   }
 }
 
@@ -295,29 +295,29 @@
   }
 
   &.active {
-    background: var(--palette-selected, var(--sidenav-item-active-bg));
-    color: var(--palette-selected-ink, var(--sidenav-active-text));
+    background: var(--palette-selected);
+    color: var(--palette-selected-ink);
     font-weight: var(--font-weight-semibold);
 
     .nav-icon {
-      color: var(--palette-selected-ink, var(--sidenav-active-text));
+      color: var(--palette-selected-ink);
     }
 
     .nav-label {
-      color: var(--palette-selected-ink, var(--sidenav-active-text));
+      color: var(--palette-selected-ink);
       font-weight: var(--font-weight-semibold);
     }
 
     // Prevent Material focus styles from reducing contrast on active items
     &:focus,
     &:focus-visible {
-      background: var(--palette-selected, var(--sidenav-item-active-bg));
-      color: var(--palette-selected-ink, var(--sidenav-active-text)) !important;
+      background: var(--palette-selected);
+      color: var(--palette-selected-ink) !important;
 
       .nav-label,
       .nav-icon,
       .mat-mdc-menu-item-text {
-        color: var(--palette-selected-ink, var(--sidenav-active-text)) !important;
+        color: var(--palette-selected-ink) !important;
       }
     }
   }
@@ -414,8 +414,8 @@
     }
 
     &.active {
-      color: var(--palette-selected-ink, var(--sidenav-active-text)) !important;
-      background: var(--palette-selected, var(--sidenav-item-active-bg)) !important;
+      color: var(--palette-selected-ink) !important;
+      background: var(--palette-selected) !important;
 
       &::after {
         position: absolute;
@@ -423,11 +423,11 @@
       }
 
       .nav-icon {
-        color: var(--palette-selected-ink, var(--sidenav-active-text)) !important;
+        color: var(--palette-selected-ink) !important;
       }
 
       .nav-label {
-        color: var(--palette-selected-ink, var(--sidenav-active-text)) !important;
+        color: var(--palette-selected-ink) !important;
       }
     }
   }

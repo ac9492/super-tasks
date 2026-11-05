@@ -50,7 +50,7 @@ body.ultra-tasks {
     padding: 0;
   }
   .st-brand:focus-visible {
-    outline: var(--st-focus-width) solid var(--st-brand);
+    outline: var(--st-focus-width) solid var(--palette-focus-ring);
     outline-offset: var(--s-half);
   }
 
@@ -93,11 +93,7 @@ body.ultra-tasks {
   // Recurring-task rows (Recurring tasks page) are the same card.
   task,
   .repeat-task-cfg {
-    --task-border-color: color-mix(
-      in srgb,
-      var(--palette-surface-ink) calc(var(--border-alpha) * 100%),
-      var(--card-bg)
-    );
+    --task-border-color: var(--palette-border);
     border-radius: var(--r-md);
     background: var(--card-bg);
   }
@@ -128,14 +124,10 @@ body.ultra-tasks {
   // Tracking (the current task) is an accent edge, no extra paint; the tint
   // belongs to "selected". Subtasks show it through their play indicator.
   task.isCurrent {
-    --task-border-color: var(--palette-accent-text, var(--c-accent));
+    --task-border-color: var(--palette-accent-text);
   }
   .sub-tasks task.isCurrent {
-    --task-border-color: color-mix(
-      in srgb,
-      var(--palette-surface-ink) calc(var(--border-alpha) * 100%),
-      var(--card-bg)
-    );
+    --task-border-color: var(--palette-border);
   }
   task .time-wrapper {
     font-variant-numeric: tabular-nums;
@@ -180,7 +172,7 @@ body.ultra-tasks {
     gap: var(--s);
     height: var(--ctl-md);
     padding: 0 var(--s1-5);
-    border: var(--st-line-width) solid var(--palette-outline, var(--separator));
+    border: var(--st-line-width) solid var(--palette-outline);
     border-radius: var(--r-md);
     background: transparent;
     color: var(--text-color);
@@ -196,14 +188,13 @@ body.ultra-tasks {
     background: var(--state-hover);
   }
   .st-planning-actions button:focus-visible {
-    outline: var(--st-focus-width) solid var(--focus-ring, var(--st-brand));
+    outline: var(--st-focus-width) solid var(--palette-focus-ring);
     outline-offset: var(--focus-ring-offset);
   }
   .st-date-hint {
     margin: 0 var(--s2) var(--s);
     padding: 0 0 0 var(--s1-5);
-    border-inline-start: var(--st-focus-width) solid
-      var(--palette-outline, var(--st-brand));
+    border-inline-start: var(--st-focus-width) solid var(--palette-outline);
     color: var(--text-color-less-intense);
     font: var(--type-meta);
   }
@@ -215,7 +206,7 @@ body.ultra-tasks {
     margin-bottom: var(--s);
   }
   .st-search-entry .nav-link {
-    border: var(--st-line-width) solid var(--palette-outline, var(--separator));
+    border: var(--st-line-width) solid var(--palette-outline);
     border-radius: var(--r-md);
     // The border takes 1px of the row's 8px inset: the icon stays on the
     // column of the rows below.
