@@ -73,7 +73,10 @@ describe('glass backdrop drawing', () => {
     ctx.fillRect(800, 0, 800, 800);
     const canvas = document.createElement('canvas');
     drawBlurredImage(canvas, source);
-    expect([canvas.width, canvas.height]).toEqual([GLASS_IMAGE_EDGE, GLASS_IMAGE_EDGE / 2]);
+    expect([canvas.width, canvas.height]).toEqual([
+      GLASS_IMAGE_EDGE,
+      GLASS_IMAGE_EDGE / 2,
+    ]);
     // Edges keep the image's own colors (no transparent bleed from the blur).
     expect(pixel(canvas, 0, 48)[3]).toBe(255);
     expect(pixel(canvas, 0, 48)[0]).toBeGreaterThan(200);
@@ -96,7 +99,10 @@ describe('pickGlassBackgroundImage()', () => {
   });
   it('treats empty and cleared values as no image', () => {
     expect(
-      pickGlassBackgroundImage({ backgroundImageLight: '  ', backgroundImageDark: null }, false),
+      pickGlassBackgroundImage(
+        { backgroundImageLight: '  ', backgroundImageDark: null },
+        false,
+      ),
     ).toBeNull();
     expect(pickGlassBackgroundImage(undefined, true)).toBeNull();
   });

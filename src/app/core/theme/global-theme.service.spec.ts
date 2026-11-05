@@ -115,7 +115,10 @@ describe('GlobalThemeService glass appearance', () => {
     service.isDarkTheme = signal(true);
     service._appearanceService = { backdrop: signal(backdrop), nativeMaterial };
     service._paletteThemeService = {
-      palettes: () => ({ light: { background: '#f8f8f7' }, dark: { background: '#131314' } }),
+      palettes: () => ({
+        light: { background: '#f8f8f7' },
+        dark: { background: '#131314' },
+      }),
     };
     return service;
   };
@@ -144,7 +147,11 @@ describe('GlobalThemeService glass appearance', () => {
     const service = createHarness('native', 'acrylic');
     (window as unknown as { ea: unknown }).ea = { setNativeGlass: () => undefined };
     TestBed.runInInjectionContext(() => service._initGlass());
-    expect(bodyGlassClasses()).toEqual(['st-glass', 'st-glass-native', 'st-glass-acrylic']);
+    expect(bodyGlassClasses()).toEqual([
+      'st-glass',
+      'st-glass-native',
+      'st-glass-acrylic',
+    ]);
   });
 
   it('reports the effective state to the desktop window', () => {

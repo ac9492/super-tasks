@@ -236,6 +236,12 @@
   // Page content starts at the gutter (the one left edge): 8, 16 from 600px,
   // 24 from 960px (media queries below).
   --page-gutter: var(--s);
+  // Dialogs: one gutter for title, content and actions (24, 16 below 600px)
+  // and three widths, set through dialogSize() (src/app/ui/dialog-size.util.ts).
+  --dialog-gutter: var(--s2);
+  --dialog-w-s: 440px; // confirm, prompt, estimate, schedule, deadline, reminder
+  --dialog-w-m: 560px; // entity forms: project, tag, habit, repeat, sync, import
+  --dialog-w-l: 720px; // reference: keyboard help, logs, conflict details
   --mat-mini-fab-size: 48px;
   --mac-title-bar-padding: 20px;
   --vertical-action-bar-width: 48px;
@@ -465,6 +471,7 @@
 @media (min-width: 600px) {
   :root {
     --page-gutter: var(--s2);
+    --dialog-gutter: var(--s3);
   }
 }
 @media (min-width: 960px) {
@@ -542,7 +549,8 @@ body {
   // Input fields
   --input-bg: rgba(var(--ink-on-channel), 0.04);
   --input-bg-hover: rgba(var(--ink-on-channel), 0.07);
-  --input-border-color: rgba(var(--ink-on-channel), 0.08);
+  // Field edge: the palette's 3:1 outline role.
+  --input-border-color: var(--palette-outline);
 }
 
 body.isDarkTheme {
@@ -569,7 +577,6 @@ body.isDarkTheme {
   // Input fields
   --input-bg: rgba(var(--ink-on-channel), 0.06);
   --input-bg-hover: rgba(var(--ink-on-channel), 0.1);
-  --input-border-color: transparent;
 }
 
 // -----------------------------
@@ -701,6 +708,7 @@ body.isDarkTheme {
   --state-selected: rgba(var(--ink-on-channel), var(--state-selected-alpha));
 
   // Input fields semantic aliases
+  --input-border-color-hover: color-mix(in srgb, var(--text-color) 60%, transparent);
   --input-border-color-focus: var(--focus-ring-color);
   --input-border-color-invalid: var(--palette-warn-500);
   --input-border-radius: var(--card-border-radius);

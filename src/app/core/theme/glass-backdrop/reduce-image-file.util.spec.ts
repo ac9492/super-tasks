@@ -49,13 +49,17 @@ describe('reduceImageFile()', () => {
     const svg = new File(['<svg xmlns="http://www.w3.org/2000/svg"/>'], 'a.svg', {
       type: 'image/svg+xml',
     });
-    await expectAsync(reduceImageFile(svg)).toBeRejectedWith(new ReduceImageError('type'));
+    await expectAsync(reduceImageFile(svg)).toBeRejectedWith(
+      new ReduceImageError('type'),
+    );
   });
 
   it('rejects files too large to decode safely', async () => {
     const file = new File(['x'], 'huge.png', { type: 'image/png' });
     Object.defineProperty(file, 'size', { value: MAX_SOURCE_IMAGE_BYTES + 1 });
-    await expectAsync(reduceImageFile(file)).toBeRejectedWith(new ReduceImageError('size'));
+    await expectAsync(reduceImageFile(file)).toBeRejectedWith(
+      new ReduceImageError('size'),
+    );
   });
 
   it('reports a file that cannot be decoded', async () => {

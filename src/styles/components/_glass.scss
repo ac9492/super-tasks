@@ -18,30 +18,35 @@
 // full-width right panel) gets a stronger tint without blur.
 //
 // Tokens, from palette roles so the colour normaliser can feed them. It writes
-// the tints and alphas (max(design value, contrast floor), the floor counting
-// muted text on glass), `--glass-ink-muted` and `--glass-edge-line`; the
-// fallbacks below are the design values used until it does.
+// the tints, the alphas (max(design value, contrast floor), the floor counting
+// muted text on glass), `--glass-ink-muted` and `--glass-edge-line` inline on
+// the root element at runtime, which overrides these design defaults.
+:root {
+  --glass-panel-tint: var(--palette-background);
+  --glass-canvas-tint: var(--palette-background);
+  --glass-panel-alpha: 84%;
+  --glass-canvas-alpha: 92%;
+  --glass-overlay-alpha: 95%;
+  --glass-ink-muted: var(--palette-background-ink);
+  --glass-edge-line: rgba(var(--palette-background-ink-channel), 0.12);
+}
 body.ultra-tasks {
   --glass-blur: 20px;
   --glass-saturate: 125%;
   --glass-edge-highlight: var(--c-light-50);
-  --glass-edge: var(
-    --glass-edge-line,
-    rgba(var(--palette-background-ink-channel), 0.12)
-  );
   --glass-panel-bg: color-mix(
     in srgb,
-    var(--glass-panel-tint, var(--palette-background)) var(--glass-panel-alpha, 84%),
+    var(--glass-panel-tint) var(--glass-panel-alpha),
     transparent
   );
   --glass-canvas-bg: color-mix(
     in srgb,
-    var(--glass-canvas-tint, var(--palette-background)) var(--glass-canvas-alpha, 92%),
+    var(--glass-canvas-tint) var(--glass-canvas-alpha),
     transparent
   );
   --glass-overlay-bg: color-mix(
     in srgb,
-    var(--glass-panel-tint, var(--palette-background)) var(--glass-overlay-alpha, 95%),
+    var(--glass-panel-tint) var(--glass-overlay-alpha),
     transparent
   );
 }
@@ -64,31 +69,31 @@ body.ultra-tasks.st-glass {
   .right-panel,
   .mobile-bottom-nav {
     // Muted text on glass uses the tier solved for the worst backdrop.
-    --ink-muted: var(--glass-ink-muted, var(--palette-background-ink));
-    --text-color-muted: var(--glass-ink-muted, var(--palette-background-ink));
-    --text-color-less-intense: var(--glass-ink-muted, var(--palette-background-ink));
+    --ink-muted: var(--glass-ink-muted);
+    --text-color-muted: var(--glass-ink-muted);
+    --text-color-less-intense: var(--glass-ink-muted);
     background: var(--glass-panel-bg) !important;
     backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate)) !important;
   }
 
   // Thin light rim on top, hairline on the edge that faces the content.
   .nav-sidenav {
-    border-inline-end: var(--st-line-width) solid var(--glass-edge);
+    border-inline-end: var(--st-line-width) solid var(--glass-edge-line);
     box-shadow: inset 0 var(--st-line-width) 0 var(--glass-edge-highlight);
   }
   main-header .wrapper {
     box-shadow:
       inset 0 var(--st-line-width) 0 var(--glass-edge-highlight),
-      inset 0 calc(-1 * var(--st-line-width)) 0 var(--glass-edge);
+      inset 0 calc(-1 * var(--st-line-width)) 0 var(--glass-edge-line);
   }
   right-panel .side {
-    border-inline-start-color: var(--glass-edge);
+    border-inline-start-color: var(--glass-edge-line);
   }
   .right-panel {
     box-shadow: inset 0 var(--st-line-width) 0 var(--glass-edge-highlight);
   }
   .mobile-bottom-nav {
-    border-top-color: var(--glass-edge);
+    border-top-color: var(--glass-edge-line);
   }
 
   // Sliding surfaces: a stronger tint, never an animated blur.

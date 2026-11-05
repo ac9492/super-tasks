@@ -117,12 +117,10 @@
   --mat-tooltip-supporting-text-color: var(--palette-tooltip-ink);
 
   // DIALOGS: one gutter for title, content and actions (24, 16 on phones).
-  --mat-dialog-headline-padding: var(--dialog-gutter) var(--dialog-gutter)
-    var(--s1-5);
-  --mat-dialog-content-padding: var(--dialog-gutter) var(--dialog-gutter)
+  --mat-dialog-headline-padding: var(--dialog-gutter) var(--dialog-gutter) var(--s1-5);
+  --mat-dialog-content-padding: var(--dialog-gutter) var(--dialog-gutter) var(--s2);
+  --mat-dialog-with-actions-content-padding: var(--dialog-gutter) var(--dialog-gutter)
     var(--s2);
-  --mat-dialog-with-actions-content-padding: var(--dialog-gutter)
-    var(--dialog-gutter) var(--s2);
   --mat-dialog-actions-padding: var(--s) var(--dialog-gutter) var(--dialog-gutter);
   --mat-dialog-container-small-max-width: 94vw;
   --mat-dialog-container-max-width: 85vw;
@@ -274,13 +272,10 @@ body.isNativeMobile .mat-mdc-menu-panel {
   margin-inline: 0;
 }
 
-// Dialog widths: dialogSize() in src/app/ui/dialog-size.ts sets the class.
+// Dialog widths: dialogSize() in src/app/ui/dialog-size.util.ts sets the class.
 // A dialog without a size is at least S wide; none exceeds the viewport.
 .cdk-overlay-pane.mat-mdc-dialog-panel {
-  --mat-dialog-container-min-width: min(
-    var(--dialog-w-s),
-    calc(100vw - 2 * var(--s2))
-  );
+  --mat-dialog-container-min-width: min(var(--dialog-w-s), calc(100vw - 2 * var(--s2)));
 
   &.dialog-s {
     width: var(--dialog-w-s);
@@ -502,6 +497,17 @@ mat-option.isDone {
   --mat-button-protected-label-text-tracking: var(--letter-spacing-normal);
   --mat-button-outlined-label-text-tracking: var(--letter-spacing-normal);
   --mat-button-tonal-label-text-tracking: var(--letter-spacing-normal);
+}
+
+// Compact buttons (32px, 40px on touch through --ctl-sm): opt in with
+// `class="mat-button-compact"` on a button or on the row that holds them, for
+// dense rows such as the add-task bar actions. Default buttons are 40.
+.mat-button-compact {
+  --mat-button-text-container-height: var(--ctl-sm);
+  --mat-button-filled-container-height: var(--ctl-sm);
+  --mat-button-outlined-container-height: var(--ctl-sm);
+  --mat-button-protected-container-height: var(--ctl-sm);
+  --mat-button-tonal-container-height: var(--ctl-sm);
 }
 
 // Unfilled labels use neutral ink; accent stays in the outline.
@@ -752,8 +758,50 @@ body .mat-mdc-button-base .mat-icon {
   max-width: none;
 }
 
-.mat-mdc-menu-content {
-  padding: 0 !important;
+// Menu panels keep a 4px inner padding so their --r-md rows sit
+// concentrically inside the --r-lg panel. Item rules are scoped to panels:
+// side-nav links also carry .mat-mdc-menu-item.
+.mat-mdc-menu-panel {
+  .mat-mdc-menu-content {
+    padding: var(--s-half);
+  }
+
+  .mat-mdc-menu-item {
+    min-height: var(--ctl-md);
+    border-radius: var(--r-md);
+
+    // Material sizes the icon box from --mat-menu-item-icon-size but not the
+    // glyph; the glyph must equal its box or it decentres.
+    > .mat-icon {
+      font-size: var(--mat-menu-item-icon-size);
+    }
+  }
+
+  @media (pointer: coarse) {
+    .mat-mdc-menu-item {
+      min-height: var(--ctl-lg);
+    }
+  }
+}
+
+// Select and autocomplete panels: --r-md with the same 4px inset and 40px
+// options. Doubled scope to outrank Material's `.mat-mdc-select-panel-above`
+// corner rule.
+.cdk-overlay-container
+  .cdk-overlay-pane
+  div:is(.mat-mdc-select-panel, .mat-mdc-autocomplete-panel) {
+  padding: var(--s-half);
+  border-radius: var(--r-md);
+}
+
+.mat-mdc-select-panel .mat-mdc-option,
+.mat-mdc-autocomplete-panel .mat-mdc-option {
+  min-height: var(--ctl-md);
+  border-radius: var(--r-sm);
+
+  @media (pointer: coarse) {
+    min-height: var(--ctl-lg);
+  }
 }
 
 task.cdk-drag-preview .box {
@@ -776,6 +824,11 @@ body.isVerticalActionBar .cdk-overlay-pane.mat-mdc-tooltip-panel {
 }
 
 // SNACK
+// A floating surface like menus: Material hardcodes its shadow.
+.mat-mdc-snack-bar-container .mat-mdc-snackbar-surface {
+  box-shadow: var(--elev-1);
+}
+
 // Move snack bar above mobile bottom nav for all touch devices
 @include media-queries.mq(xs, max) {
   // Apply to all touch devices, not just when mobile bottom nav is shown
