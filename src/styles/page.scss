@@ -11,13 +11,19 @@ app-root,
   height: 100%;
   height: -webkit-fill-available;
   box-sizing: border-box;
+  // Base text is the body role (14/20).
+  font: var(--type-body);
   font-optical-sizing: auto;
-  font-family: var(--font-primary-stack);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: var(--font-size-md);
-  line-height: var(--line-height-normal);
   letter-spacing: var(--letter-spacing-normal);
+}
+
+// UA stylesheets give form controls their own font (Arial 13.33px in
+// Chromium), which leaks into custom buttons and badges. Zero specificity so
+// any component or Material rule still wins.
+:where(button, input, textarea, select) {
+  font-family: inherit;
 }
 
 // Tabular figures — opt-in only (avoid applying to non-numeric <time> content)
@@ -26,44 +32,49 @@ app-root,
   font-feature-settings: 'tnum' 1;
 }
 
-// Wrapped in :where() so the global rules specificity is (0,0,0) — any
-// component or Material typography override wins trivially.
-// Excludes Material dialog/card titles explicitly.
-:where(h1, h2, h3, h4, h5, h6):not([mat-dialog-title]):not(.mat-mdc-dialog-title):not(
-    .mat-mdc-card-title
-  ) {
+// Global heading ramp for headings that have no rule of their own. Each
+// selector sits whole inside :where(), so its specificity is (0,0,0) and any
+// component or Material rule wins; Material dialog and card titles are left
+// to their own typography. Line heights are whole pixels on the 4px grid.
+$not-material-title: ':not([mat-dialog-title], .mat-mdc-dialog-title, .mat-mdc-card-title)';
+
+:where(:is(h1, h2, h3, h4, h5, h6)#{$not-material-title}) {
   font-family: inherit;
   font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-snug);
   letter-spacing: var(--letter-spacing-tight);
   color: var(--text-color-most-intense);
 }
 
-:where(h1):not([mat-dialog-title]):not(.mat-mdc-dialog-title):not(.mat-mdc-card-title) {
+:where(h1#{$not-material-title}) {
   font-size: var(--font-size-3xl);
+  line-height: 36px;
   letter-spacing: var(--letter-spacing-tighter);
-  line-height: var(--line-height-tight);
 }
 
-:where(h2):not([mat-dialog-title]):not(.mat-mdc-dialog-title):not(.mat-mdc-card-title) {
+:where(h2#{$not-material-title}) {
   font-size: var(--font-size-2xl);
+  line-height: 28px;
   letter-spacing: var(--letter-spacing-tighter);
 }
 
-:where(h3):not([mat-dialog-title]):not(.mat-mdc-dialog-title):not(.mat-mdc-card-title) {
+:where(h3#{$not-material-title}) {
   font-size: var(--font-size-xl);
+  line-height: 24px;
 }
 
-:where(h4):not([mat-dialog-title]):not(.mat-mdc-dialog-title):not(.mat-mdc-card-title) {
+:where(h4#{$not-material-title}) {
   font-size: var(--font-size-lg);
+  line-height: 24px;
 }
 
-:where(h5):not([mat-dialog-title]):not(.mat-mdc-dialog-title):not(.mat-mdc-card-title) {
+:where(h5#{$not-material-title}) {
   font-size: var(--font-size-md);
+  line-height: 20px;
 }
 
-:where(h6):not([mat-dialog-title]):not(.mat-mdc-dialog-title):not(.mat-mdc-card-title) {
+:where(h6#{$not-material-title}) {
   font-size: var(--font-size-sm);
+  line-height: 16px;
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-wide);
   color: var(--text-color-muted);

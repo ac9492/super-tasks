@@ -312,17 +312,20 @@ export const normalizePalette = (input: PaletteColors, mode: PaletteMode): Palet
     const apart = (s: string): boolean =>
       contrastRatio(s, background) >= rules.layerSeparation;
     const limit = dir > 0 ? rules.surface.maxL : rules.surface.minL;
-    const moved = solveL(surface, dir, apart, undefined, limit);
+    // Moving keeps the envelope's chroma cap, so a second pass leaves it alone.
+    const [, sC, sH] = hexToOklch(surface);
+    const surfaceC = Math.min(sC, rules.surface.maxC);
+    const moved = solveL(surface, dir, apart, surfaceC, limit);
     if (apart(moved)) {
       surface = moved;
     } else {
-      const [, sC, sH] = hexToOklch(surface);
-      surface = oklchToHex([limit, sC, sH]);
+      surface = oklchToHex([limit, surfaceC, sH]);
       const separated = surface;
       background = solveL(
         background,
         dir > 0 ? -1 : 1,
         (b) => contrastRatio(b, separated) >= rules.layerSeparation,
+        Math.min(hexToOklch(background)[1], rules.background.maxC),
       );
     }
   }
@@ -338,7 +341,7 @@ export const normalizePalette = (input: PaletteColors, mode: PaletteMode): Palet
   //    judged by the target for its own chroma (moving can lose chroma to the
   //    gamut), and the tints follow the accent, so iterate to the fixed point:
   //    normalising a normalised palette then changes nothing. The accent only
-  //    ever moves toward the ink, so this terminates (<= 4 rounds in the fuzz).
+  //    ever moves toward the ink, so this terminates (<= 6 rounds in the fuzz).
   let accent = raw.accent;
   let tints = interactionTints(surface, accent, rules);
   for (let round = 0; round < MAX_ACCENT_ROUNDS; round++) {

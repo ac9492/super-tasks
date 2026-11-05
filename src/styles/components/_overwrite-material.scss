@@ -1,12 +1,145 @@
 @use '../mixins/_media-queries';
 
+// Angular Material on the app scale (docs/styling-guide.md § Angular
+// Material). Material is mapped here, once, through its public --mat-* tokens,
+// so no component restyles Material locally. The M2 theme declares its tokens
+// on `html`, which `:root` outranks; tokens Material declares on a component
+// element (chips, tabs, slide toggles, form fields) are set on that element
+// further down.
 :root {
-  //--mat-fab-small-container-elevation-shadow: var(--whiteframe-shadow-4dp);
+  // TYPOGRAPHY: the M2 ramp gives 16px fields and dialog text, 20/32 dialog
+  // titles and 0.4-1.25px tracking. Map it onto the six type roles, tracking 0.
+  --mat-dialog-subhead-size: var(--font-size-xl);
+  --mat-dialog-subhead-line-height: 24px;
+  --mat-dialog-subhead-weight: var(--font-weight-semibold);
+  --mat-dialog-subhead-tracking: var(--track-title);
+  --mat-dialog-supporting-text-size: var(--font-size-md);
+  --mat-dialog-supporting-text-line-height: 20px;
+  --mat-dialog-supporting-text-tracking: 0;
+  --mat-form-field-container-text-size: var(--font-size-md);
+  --mat-form-field-container-text-line-height: 20px;
+  --mat-form-field-container-text-tracking: 0;
+  --mat-form-field-filled-label-text-size: var(--font-size-md);
+  --mat-form-field-filled-label-text-tracking: 0;
+  --mat-form-field-outlined-label-text-size: var(--font-size-md);
+  --mat-form-field-outlined-label-text-populated-size: var(--font-size-sm);
+  --mat-form-field-outlined-label-text-tracking: 0;
+  --mat-form-field-subscript-text-size: var(--font-size-sm);
+  --mat-form-field-subscript-text-line-height: 16px;
+  --mat-form-field-subscript-text-tracking: 0;
+  --mat-select-trigger-text-size: var(--font-size-md);
+  --mat-select-trigger-text-line-height: 20px;
+  --mat-select-trigger-text-tracking: 0;
+  --mat-option-label-text-size: var(--font-size-md);
+  --mat-option-label-text-line-height: 20px;
+  --mat-option-label-text-tracking: 0;
+  --mat-menu-item-label-text-size: var(--font-size-md);
+  --mat-menu-item-label-text-line-height: 20px;
+  --mat-menu-item-label-text-tracking: 0;
+  --mat-checkbox-label-text-tracking: 0;
+  --mat-radio-label-text-tracking: 0;
+  --mat-button-toggle-label-text-size: var(--font-size-md);
+  --mat-button-toggle-label-text-line-height: 20px;
+  --mat-button-toggle-label-text-tracking: 0;
+  --mat-expansion-container-text-tracking: 0;
+  --mat-card-title-text-tracking: 0;
+  --mat-card-subtitle-text-tracking: 0;
+  --mat-list-list-item-label-text-tracking: 0;
+  --mat-list-list-item-supporting-text-tracking: 0;
+  --mat-table-header-headline-tracking: 0;
+  --mat-table-row-item-label-text-tracking: 0;
+  --mat-slider-label-label-text-tracking: 0;
+  --mat-tooltip-supporting-text-size: var(--font-size-sm);
+  --mat-tooltip-supporting-text-line-height: 16px;
+  --mat-tooltip-supporting-text-tracking: 0;
+  --mat-snack-bar-supporting-text-size: var(--font-size-md);
+  --mat-snack-bar-supporting-text-line-height: 20px;
+  --mat-datepicker-calendar-header-text-size: var(--font-size-sm);
+  --mat-datepicker-calendar-body-label-text-size: var(--font-size-sm);
+  // MDC floats a filled field's label with a fixed scale(0.75), which only
+  // lands on the 12px meta size from a 16px label (see FORMS).
+  --field-label-float-scale: calc(12 / 14);
+
+  // SHAPE: radius by role.
+  --mat-dialog-container-shape: var(--r-lg);
+  --mat-menu-container-shape: var(--r-lg);
+  --mat-snack-bar-container-shape: var(--r-lg);
+  --mat-datepicker-calendar-container-shape: var(--r-lg);
+  --mat-datepicker-calendar-container-touch-shape: var(--r-lg);
+  --mat-autocomplete-container-shape: var(--r-md);
+  --mat-tooltip-container-shape: var(--r-sm);
+  --mat-button-text-container-shape: var(--r-md);
+  --mat-button-filled-container-shape: var(--r-md);
+  --mat-button-outlined-container-shape: var(--r-md);
+  --mat-button-protected-container-shape: var(--r-md);
+  --mat-button-tonal-container-shape: var(--r-md);
+  --mat-button-toggle-shape: var(--r-md);
+  --mat-expansion-container-shape: var(--r-md);
+  --mat-card-elevated-container-shape: var(--r-md);
+  --mat-card-filled-container-shape: var(--r-md);
+  --mat-card-outlined-container-shape: var(--r-md);
+
+  // ELEVATION: floating surfaces only, each with its hairline (--elev-*).
+  --mat-dialog-container-elevation-shadow: var(--elev-2);
+  --mat-menu-container-elevation-shadow: var(--elev-1);
+  --mat-select-container-elevation-shadow: var(--elev-1);
+  --mat-autocomplete-container-elevation-shadow: var(--elev-1);
+  --mat-datepicker-calendar-container-elevation-shadow: var(--elev-1);
+  --mat-datepicker-calendar-container-touch-elevation-shadow: var(--elev-2);
+  // Raised buttons read as filled ones: no resting shadow.
+  --mat-button-protected-container-elevation-shadow: none;
+  --mat-button-protected-hover-container-elevation-shadow: none;
+  --mat-button-protected-focus-container-elevation-shadow: none;
+  --mat-button-protected-pressed-container-elevation-shadow: none;
+
+  // CONTROL HEIGHTS: buttons and segmented controls are 40 (compact: see
+  // BUTTONS).
+  --mat-button-text-container-height: var(--ctl-md);
+  --mat-button-filled-container-height: var(--ctl-md);
+  --mat-button-outlined-container-height: var(--ctl-md);
+  --mat-button-protected-container-height: var(--ctl-md);
+  --mat-button-tonal-container-height: var(--ctl-md);
+  --mat-button-toggle-height: var(--ctl-md);
+
+  // MENUS: 12px insets, 20px icons, separator-coloured dividers with 4px air.
+  --mat-menu-item-icon-size: var(--icon-md);
+  --mat-menu-item-spacing: var(--s1-5);
+  --mat-menu-item-leading-spacing: var(--s1-5);
+  --mat-menu-item-trailing-spacing: var(--s1-5);
+  --mat-menu-item-with-icon-leading-spacing: var(--s1-5);
+  --mat-menu-item-with-icon-trailing-spacing: var(--s1-5);
+  --mat-menu-divider-color: var(--palette-separator);
+  --mat-menu-divider-top-spacing: var(--s-half);
+  --mat-menu-divider-bottom-spacing: var(--s-half);
+
+  // TOOLTIPS: the inverse colour pair, so a tooltip reads on any surface.
+  --mat-tooltip-container-color: var(--palette-tooltip-bg);
+  --mat-tooltip-supporting-text-color: var(--palette-tooltip-ink);
+
+  // DIALOGS: one gutter for title, content and actions (24, 16 on phones).
+  --mat-dialog-headline-padding: var(--dialog-gutter) var(--dialog-gutter)
+    var(--s1-5);
+  --mat-dialog-content-padding: var(--dialog-gutter) var(--dialog-gutter)
+    var(--s2);
+  --mat-dialog-with-actions-content-padding: var(--dialog-gutter)
+    var(--dialog-gutter) var(--s2);
+  --mat-dialog-actions-padding: var(--s) var(--dialog-gutter) var(--dialog-gutter);
   --mat-dialog-container-small-max-width: 94vw;
   --mat-dialog-container-max-width: 85vw;
-  --mat-menu-item-label-text-size: 14px;
 
   --calendar-hover-bg: color-mix(in srgb, var(--c-primary) 35%, transparent);
+}
+
+// iOS zooms into a focused text field below 16px: text entry stays 16/24 on
+// touch (e2e/tests/task-detail/ios-focus-zoom-9556.spec.ts).
+@media (pointer: coarse) {
+  :root {
+    --mat-form-field-container-text-size: var(--font-size-lg);
+    --mat-form-field-container-text-line-height: 24px;
+    --mat-form-field-filled-label-text-size: var(--font-size-lg);
+    --mat-form-field-outlined-label-text-size: var(--font-size-lg);
+    --field-label-float-scale: 0.75;
+  }
 }
 
 :where(body, body.isDarkTheme) {
@@ -51,8 +184,10 @@ body.isDarkTheme {
   }
 }
 
+// Chips declare their tokens on the chip element itself, hence `*`.
 * {
-  --mat-chip-container-shape-radius: 4px !important;
+  --mat-chip-container-shape-radius: var(--r-full) !important;
+  --mat-chip-label-text-tracking: 0 !important;
   --mat-chip-elevated-container-color: transparent !important;
   //--mat-chip-outline-color: var(--mat-chip-outline-color, var(--mat-sys-outline)) !important;
   --mat-chip-outline-color: var(--chip-outline-color) !important;
@@ -115,10 +250,49 @@ body.isNativeMobile .mat-mdc-menu-panel {
 // ----------
 .mat-mdc-dialog-title.mat-mdc-dialog-title,
 .mdc-dialog__title.mdc-dialog__title {
-  margin-bottom: 0;
-  margin-top: 8px;
+  margin: 0;
   display: flex;
   align-items: center;
+
+  // MDC's 40px baseline strut: the title box is the headline padding plus one
+  // 24px line.
+  &::before {
+    display: none;
+  }
+}
+
+// Buttons in an action row are spaced by the row's gap (also when they wrap,
+// see wrap-buttons.scss), not by Material's sibling margin.
+.mat-mdc-dialog-actions {
+  gap: var(--s);
+}
+
+.mat-mdc-dialog-surface
+  .mat-mdc-dialog-actions
+  .mat-mdc-button-base.mat-mdc-button-base
+  + .mat-mdc-button-base {
+  margin-inline: 0;
+}
+
+// Dialog widths: dialogSize() in src/app/ui/dialog-size.ts sets the class.
+// A dialog without a size is at least S wide; none exceeds the viewport.
+.cdk-overlay-pane.mat-mdc-dialog-panel {
+  --mat-dialog-container-min-width: min(
+    var(--dialog-w-s),
+    calc(100vw - 2 * var(--s2))
+  );
+
+  &.dialog-s {
+    width: var(--dialog-w-s);
+  }
+
+  &.dialog-m {
+    width: var(--dialog-w-m);
+  }
+
+  &.dialog-l {
+    width: var(--dialog-w-l);
+  }
 }
 
 .cdk-overlay-pane.mat-mdc-dialog-panel {
@@ -217,12 +391,25 @@ body.isNativeMobile .project-complete-fullscreen-dialog {
 
 // FORMS
 // --------
+// One field look for both appearances: an --r-md box with a 1px
+// --input-border-color edge (the palette's --palette-outline, 3:1 against its
+// surface), a stronger edge on hover and a 2px ink edge on focus. Material's
+// grey hover/focus wash is off. The notched outline of appearance="outline"
+// follows the same tokens.
 .mat-mdc-form-field {
   margin-bottom: var(--s2);
 
   // Feed semantic input tokens to official Material CSS variables
   --mat-form-field-filled-container-color: var(--input-bg);
   --mat-form-field-filled-container-shape: var(--input-border-radius);
+  --mat-form-field-hover-state-layer-opacity: 0;
+  --mat-form-field-focus-state-layer-opacity: 0;
+  --mat-form-field-outlined-container-shape: var(--input-border-radius);
+  --mat-form-field-outlined-outline-color: var(--input-border-color);
+  --mat-form-field-outlined-hover-outline-color: var(--input-border-color-hover);
+  --mat-form-field-outlined-focus-outline-color: var(--input-border-color-focus);
+  --mat-form-field-outlined-outline-width: var(--st-line-width);
+  --mat-form-field-outlined-focus-outline-width: var(--st-focus-width);
 
   // Hide the active indicators (underline ripple) by setting their color to transparent,
   // but leave the error indicators intact so the red invalid line shows up.
@@ -232,27 +419,24 @@ body.isNativeMobile .project-complete-fullscreen-dialog {
 
   // Targets default filled text boxes to transform them into flat, token-driven containers
   .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-    border: 1px solid var(--input-border-color) !important;
+    border: var(--st-line-width) solid var(--input-border-color) !important;
     // Material hardcodes the filled field's bottom corner radii to 0 (the
     // container-shape token above only rounds the top two corners), so a full
-    // border would render rounded-top/square-bottom. Round all four corners to
-    // read as a card, matching the task-detail panel this style is copied from.
+    // border would render rounded-top/square-bottom. Round all four corners.
     border-radius: var(--input-border-radius) !important;
     transition:
-      background var(--transition-duration-s) ease-out,
       border-color var(--transition-duration-s) ease-out,
       box-shadow var(--transition-duration-s) ease-out !important;
 
     &:hover {
-      background: var(--input-bg-hover) !important;
+      border-color: var(--input-border-color-hover) !important;
     }
   }
 
   // Active / Focus state
   &.mat-focused .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-    background: var(--input-bg-hover) !important;
     border-color: var(--input-border-color-focus) !important;
-    box-shadow: 0 0 0 1px var(--input-border-color-focus) !important;
+    box-shadow: 0 0 0 var(--st-line-width) var(--input-border-color-focus) !important;
   }
 
   // Specialized focus treatment for toggle fields:
@@ -271,6 +455,26 @@ body.isNativeMobile .project-complete-fullscreen-dialog {
   // Error / Invalid state
   &.mat-form-field-invalid .mdc-text-field--filled:not(.mdc-text-field--disabled) {
     border-color: var(--input-border-color-invalid) !important;
+  }
+
+  // MDC floats a filled label with a fixed scale(0.75): from a 14px label
+  // that is 10.5px. Scale it to the 12px meta size instead.
+  .mdc-text-field--filled .mdc-floating-label--float-above {
+    transform: translateY(-106%) scale(var(--field-label-float-scale));
+  }
+
+  // Label-less fields (search, filters, toolbar selects) are as tall as a
+  // button. A filled field's 1px border sits outside its infix.
+  .mdc-text-field--no-label {
+    --field-box-height: var(--ctl-md);
+    --mat-form-field-container-height: var(--field-box-height);
+    --mat-form-field-container-vertical-padding: calc(
+      (var(--field-box-height) - var(--mat-form-field-container-text-line-height)) / 2
+    );
+  }
+
+  .mdc-text-field--filled.mdc-text-field--no-label {
+    --field-box-height: calc(var(--ctl-md) - 2 * var(--st-line-width));
   }
 }
 

@@ -27,29 +27,7 @@ import { Log } from '../../log';
     #canvas
     [class.is-image]="isImageShown()"
   ></canvas>`,
-  styles: [
-    `
-      :host {
-        // Fixed to the viewport inside the safe areas, so system bars keep the
-        // solid palette color their icon style was chosen for.
-        position: fixed;
-        inset: var(--safe-area-top) var(--safe-area-right) var(--safe-area-bottom)
-          var(--safe-area-left);
-        z-index: -1;
-        pointer-events: none;
-      }
-      canvas {
-        display: block;
-        width: 100%;
-        height: 100%;
-        // A soft gradient stretches invisibly; an image keeps its aspect.
-        object-fit: fill;
-      }
-      canvas.is-image {
-        object-fit: cover;
-      }
-    `,
-  ],
+  styleUrl: './glass-backdrop.component.scss',
 })
 export class GlassBackdropComponent {
   private readonly _globalThemeService = inject(GlobalThemeService);
