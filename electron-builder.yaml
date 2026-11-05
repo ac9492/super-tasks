@@ -89,7 +89,7 @@ portable:
 appx:
   applicationId: SuperProductivity
   displayName: Super Productivity
-  publisherDisplayName: johannesjo
+  publisherDisplayName: Adrian Chase
   publisher: CN=___-___
   identityName: ___johannesjo.SuperProductivity
 

@@ -72,6 +72,8 @@ For desktop packaging, follow the [Super Tasks build instructions](docs/super-ta
 
 ## Help shape Super Tasks
 
+Super Tasks is maintained and published by **Adrian Chase** ([@ac9492](https://github.com/ac9492)). General questions, bug reports, and ideas belong in this repository; private vulnerability reports go through the [security policy](SECURITY.md).
+
 Designers, accessibility reviewers, testers, documentation contributors, and developers are welcome.
 
 - [Report an issue or suggest an improvement](https://github.com/ac9492/super-tasks/issues/new). Describe the task you were trying to do, what happened, and the outcome you expected.

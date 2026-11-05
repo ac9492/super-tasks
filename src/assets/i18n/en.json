@@ -2508,7 +2508,7 @@
     "IMPORT_FROM_URL_DIALOG_TITLE": "Import from URL",
     "OPEN_IMPORT_FROM_URL_DIALOG": "Import from URL",
     "PRIVACY_EXPORT": "Export Data (anonymized)",
-    "PRIVACY_EXPORT_DESCRIPTION": "Export anonymized data (to send to contact@super-productivity.com for debugging)",
+    "PRIVACY_EXPORT_DESCRIPTION": "Export diagnostic data for a private report to the Super Tasks maintainer",
     "S_BACKUP_DOWNLOADED": "Backup exported",
     "S_ERR_IMPORT_FAILED": "Importing data failed",
     "S_ERR_IMPORT_UNREPAIRABLE": "Import failed: this backup contains data that can't be repaired. Please try an older backup, and export your logs and report the issue.",

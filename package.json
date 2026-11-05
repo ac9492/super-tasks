@@ -10,13 +10,16 @@
     "GitHub",
     "Time Tracking"
   ],
-  "homepage": "https://super-productivity.com",
+  "homepage": "https://github.com/ac9492/super-tasks",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ac9492/super-productivity.git"
+    "url": "https://github.com/ac9492/super-tasks.git"
   },
   "license": "MIT",
-  "author": "Johannes Millan <contact@super-productivity.com> (http://super-productivity.com)",
+  "author": "Adrian Chase",
+  "bugs": {
+    "url": "https://github.com/ac9492/super-tasks/issues"
+  },
   "main": "./electron/main.js",
   "scripts": {
     "env": "node ./tools/load-env.js",
@@ -378,7 +381,7 @@
   "publish": [
     {
       "provider": "github",
-      "repo": "super-productivity",
+      "repo": "super-tasks",
       "owner": "ac9492"
     }
   ],

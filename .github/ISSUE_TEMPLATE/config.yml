@@ -2,8 +2,8 @@ blank_issues_enabled: false
 
 contact_links:
   - name: Ask a question
-    url: https://github.com/super-productivity/super-productivity/discussions/categories/q-a
-    about: Please ask and answer questions here.
+    url: https://github.com/ac9492/super-tasks/issues/new?template=question.yml
+    about: Ask Adrian Chase and other Super Tasks contributors a question.
   - name: Submit an idea
-    url: https://github.com/super-productivity/super-productivity/discussions/categories/ideas
-    about: Got an non fleshed out improvement idea you want to discuss? Post it here!
+    url: https://github.com/ac9492/super-tasks/issues/new?template=feature_request.yml
+    about: Discuss an improvement to Super Tasks.

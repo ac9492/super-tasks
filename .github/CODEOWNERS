@@ -1,8 +1,8 @@
 # CODEOWNERS - Define code ownership for security-critical files
 # https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
 #
-# Changes to files listed below require approval from @johannesjo
-# This protects against unauthorized workflow modifications and supply chain attacks
+# Maintainer: Adrian Chase (@ac9492).
+# These entries route reviews; required approval is enforced by repository rules.
 
 # ==========================================
 # GitHub Actions Workflows (CRITICAL)
@@ -11,74 +11,75 @@
 # - Secret exfiltration via workflow modification
 # - Malicious deployment to production
 # - Supply chain attacks on users
-/.github/workflows/*.yml @johannesjo
-/.github/workflows/*.yaml @johannesjo
+/.github/workflows/*.yml @ac9492
+/.github/workflows/*.yaml @ac9492
 
 # CODEOWNERS file itself (prevent removal of protections)
-/.github/CODEOWNERS @johannesjo
+/.github/CODEOWNERS @ac9492
 
 # Agent instructions and reusable agent workflows
-AGENTS.md @johannesjo
-CLAUDE.md @johannesjo
-/.agents/ @johannesjo
-/.codex/ @johannesjo
+AGENTS.md @ac9492
+CLAUDE.md @ac9492
+/.agents/ @ac9492
+/.codex/ @ac9492
 
 # ==========================================
 # Build & Deployment Configuration (HIGH)
 # ==========================================
 # Electron application entry point and build config
-/electron/ @johannesjo
+/electron/ @ac9492
 
 # Docker deployment configuration
-/Dockerfile @johannesjo
-/docker-entrypoint.sh @johannesjo
-/docker-compose*.yml @johannesjo
-/docker-compose*.yaml @johannesjo
+/Dockerfile @ac9492
+/docker-entrypoint.sh @ac9492
+/docker-compose*.yml @ac9492
+/docker-compose*.yaml @ac9492
 
 # Mobile app build configuration
-/android/ @johannesjo
-/ios/ @johannesjo
-/capacitor.config.ts @johannesjo
+/android/ @ac9492
+/ios/ @ac9492
+/capacitor.config.ts @ac9492
 
 # Electron Builder configuration (code signing, auto-update)
-/build/ @johannesjo
-/electron-builder*.yml @johannesjo
-/electron-builder*.yaml @johannesjo
+/build/ @ac9492
+/electron-builder*.yml @ac9492
+/electron-builder*.yaml @ac9492
+/electron-builder*.cjs @ac9492
 
 # ==========================================
 # Package Management (HIGH)
 # ==========================================
 # Dependencies and lock files (supply chain risk)
-/package.json @johannesjo
-/package-lock.json @johannesjo
+/package.json @ac9492
+/package-lock.json @ac9492
 
 # ==========================================
 # Security & Environment (HIGH)
 # ==========================================
 # Security documentation
-/SECURITY.md @johannesjo
+/SECURITY.md @ac9492
 
 # Environment configuration
-/.env.example @johannesjo
-/tools/load-env.js @johannesjo
+/.env.example @ac9492
+/tools/load-env.js @ac9492
 
 # ==========================================
 # Web Server Configuration (MEDIUM)
 # ==========================================
 # Nginx reverse proxy and web server config
-/nginx/ @johannesjo
+/nginx/ @ac9492
 
 # ==========================================
 # Git Configuration (MEDIUM)
 # ==========================================
 # Git hooks and configuration
-/.husky/ @johannesjo
-/.gitignore @johannesjo
+/.husky/ @ac9492
+/.gitignore @ac9492
 
 # ==========================================
 # Documentation Changes (LOW - Optional)
 # ==========================================
 # Uncomment if you want to review all README changes
-# /README.md @johannesjo
-# /CLAUDE.md @johannesjo
-# /docs/ @johannesjo
+# /README.md @ac9492
+# /CLAUDE.md @ac9492
+# /docs/ @ac9492
