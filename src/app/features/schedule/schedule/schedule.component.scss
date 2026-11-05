@@ -166,13 +166,12 @@
 }
 
 .day {
-  line-height: 32px;
-  font-size: 18px;
+  font: var(--type-body);
+  line-height: var(--s4);
   @include extraBorder('-left');
 
   @include mq(xs, max) {
-    font-size: 14px;
-    line-height: 20px;
+    line-height: var(--s3);
   }
 }
 
@@ -184,5 +183,5 @@
 
 .day-day {
   display: inline;
-  font-weight: 100;
+  color: var(--text-color-muted);
 }

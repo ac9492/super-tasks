@@ -94,6 +94,10 @@ div.material-table {
     }
   }
 
+  th {
+    font: var(--type-body-strong);
+  }
+
   th,
   td {
     vertical-align: middle;

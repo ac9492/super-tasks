@@ -65,13 +65,14 @@
     justify-content: center;
     font-family: var(--font-mono-stack);
     font-weight: var(--font-weight-semibold);
+    line-height: var(--s2);
     color: var(--text-color-most-intense);
     background: var(--bg-lighter);
     padding: var(--s-half) var(--s-half);
     border: 1px solid var(--separator);
     border-bottom-width: 2px;
     border-radius: var(--r-sm);
-    font-size: var(--font-size-xs);
+    font-size: var(--font-size-sm);
     min-width: var(--s3);
   }
 }
