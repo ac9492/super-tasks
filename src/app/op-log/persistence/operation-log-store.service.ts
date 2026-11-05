@@ -881,27 +881,20 @@ export class OperationLogStoreService implements RemoteOperationApplyStorePort<O
     return this._appendBatchSkipDuplicates(ops, 'remote', undefined, true);
   }
 
-  /**
-   * Atomically commits every durable part of a file-snapshot baseline.
-   *
-   * The downloaded state, its archives/vector clock, and the remote operations
-   * already represented by that state are one commit point. Keeping them in a
-   * single transaction means a failed write leaves the previous baseline fully
-   * intact, so local actions deferred during the download can safely be written
-   * against it instead of being stranded behind a partial snapshot.
-   */
+  /** Read an account-namespaced encrypted native-sync projection baseline. */
+  async loadNativeSyncBaseline(id: string): Promise<unknown> {
+    await this._ensureInit();
+    return this._adapter.get(STORE_NAMES.META, id);
+  }
+
   async commitFileSnapshotBaseline(opts: {
     state: unknown;
     lastAppliedOpSeq: number;
     vectorClock: VectorClock;
     compactedAt: number;
     snapshotIncludedOps: readonly Operation[];
-    // Superseded local ops to mark rejected atomically within this same commit.
-    // A standalone markRejected() commits in its own transaction, so it would
-    // persist even when this baseline transaction later rolls back (e.g. the
-    // op-log tail changed): those ops become non-uploadable while the old state
-    // was never replaced — a permanent local edit loss. Rejecting them here ties
-    // their fate to the state replacement.
+    nativeBaseline?: { id: string; data: unknown };
+    // Reject represented local ops atomically with the replacement, never before it.
     rejectOpIds?: readonly string[];
     archiveYoung?: ArchiveStoreEntry['data'];
     archiveOld?: ArchiveStoreEntry['data'];
@@ -918,7 +911,10 @@ export class OperationLogStoreService implements RemoteOperationApplyStorePort<O
       STORE_NAMES.STATE_CACHE,
       STORE_NAMES.VECTOR_CLOCK,
     ];
-    if (opts.snapshotIncludedOps.some((op) => isFullStateOpType(op.opType))) {
+    if (
+      opts.nativeBaseline ||
+      opts.snapshotIncludedOps.some((op) => isFullStateOpType(op.opType))
+    ) {
       storeNames.push(STORE_NAMES.META);
     }
     if (opts.archiveYoung !== undefined) {
@@ -993,6 +989,8 @@ export class OperationLogStoreService implements RemoteOperationApplyStorePort<O
             writtenOps.push(op);
           }
 
+          if (opts.nativeBaseline)
+            await tx.put(STORE_NAMES.META, opts.nativeBaseline, opts.nativeBaseline.id);
           await tx.put(STORE_NAMES.STATE_CACHE, {
             id: SINGLETON_KEY,
             state: opts.state,

@@ -14,6 +14,14 @@ import {
 import { TagTaskPageComponent } from './pages/tag-task-page/tag-task-page.component';
 
 export const APP_ROUTES: Routes = [
+  {
+    path: 'native-sync',
+    loadComponent: () =>
+      import('./features/native-sync/native-sync.component').then(
+        (m) => m.NativeSyncComponent,
+      ),
+    canActivate: [FocusOverlayOpenGuard],
+  },
   // Eagerly loaded — this is the main view
   {
     path: 'tag/:id/tasks',

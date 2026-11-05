@@ -2,18 +2,33 @@
 
 Status: In progress for the Ultra Tasks fork.
 Owner: Ultra Tasks maintainer.
-Tracking: feat/native-encrypted-accounts for the account foundation; subsequent milestones remain in this plan.
-Last verified against code: November 5, 2026, commit 34e80b136.
+Tracking: feat/native-encrypted-accounts.
+Last verified against code: November 5, 2026, on the feature branch.
 Completion condition: Ship the milestones and their migration and acceptance
 checks; move the resulting contracts into maintained architecture, API,
 self-hosting, and user documentation, then retire this plan.
 
-Implementation progress: the first two requested steps (crypto/protocol
-foundation and password accounts/key vault) are available behind the opt-in
-account service. See the [account guide](../../packages/super-sync-server/docs/ultra-accounts.md)
-and [crypto package](../../packages/account-crypto/README.md). Live v2 task sync,
-shared-project membership, and its automatic rekey workflow remain later steps.
-Native worker integration and independent security review remain release gates.
+Implementation progress: requested steps 1–4 are implemented behind the opt-in
+account service: crypto/accounts, periodic personal sync, and native project
+sharing. The app's Sync settings links to Native encrypted sync and sharing.
+See the [account guide](../../packages/super-sync-server/docs/ultra-accounts.md),
+[native sync contract](../../packages/super-sync-server/docs/native-sync.md),
+and [crypto package](../../packages/account-crypto/README.md).
+Shared projects currently use the same 60-second/manual scheduling as personal
+data; near real-time delivery is the next requested implementation step.
+Member removal already performs automatic staged rekeying. Ownership transfer,
+native workers, automatic legacy write fencing/provider retirement, and an
+independent security review remain later milestones/release gates.
+
+Initial integration deliberately keeps shared projects in a dedicated native
+page inside the app. Personal data continues in existing task views through a
+snapshot/intents bridge. Shared records are not projected into legacy plugin,
+Today, reminder, board, or worklog paths yet; these require scope-aware references
+before they can safely accept shared tasks. Shared private plans/time can be
+exported from the native page. Changed scopes currently download consistent
+heads rather than a paginated incremental stream. Legacy bulk changes larger
+than 100 records publish in bounded transactions. These are explicit differences
+from the target architecture below, not completed near-real-time/cutover work.
 
 Ultra Tasks will support native project sharing by email or username,
 password-based accounts with two-factor authentication, mandatory end-to-end

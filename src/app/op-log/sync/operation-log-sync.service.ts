@@ -1467,18 +1467,34 @@ export class OperationLogSyncService {
    * `writeFlushService.flushThenRunExclusive` — no other op-log writer can
    * interleave.
    */
+  async applyNativeSnapshot(
+    prepare: () => Promise<{
+      snapshotState: Record<string, unknown>;
+      nativeBaseline: { id: string; data: unknown };
+    }>,
+  ): Promise<void> {
+    await this.writeFlushService.flushThenRunExclusive(async () => {
+      const initial = new Set(
+        (await this.opLogStore.getUnsynced()).map((entry) => entry.op.id),
+      );
+      await this._hydrateSnapshotExclusive({}, initial, [], null, prepare);
+    });
+  }
+
   private async _hydrateSnapshotExclusive(
     result: {
       snapshotState?: unknown;
       snapshotVectorClock?: Record<string, number>;
       remoteLastModified?: number;
+      nativeBaseline?: { id: string; data: unknown };
     },
     initialUnsyncedOpIds: Set<string>,
     snapshotIncludedOps: Operation[],
-    // Baseline decision captured by the caller before the snapshot attempt, so
-    // the late-durable-op conflict below classifies never-synced clients the
-    // same way as the pre-hydration conflict gate (#9166).
     lastSyncedVectorClock: Record<string, number> | null,
+    prepareNative?: () => Promise<{
+      snapshotState: Record<string, unknown>;
+      nativeBaseline: { id: string; data: unknown };
+    }>,
   ): Promise<void> {
     let deferredActionsOverwrittenBySnapshot: ReturnType<typeof getDeferredActions> = [];
     let didReplaceArchive = false;
@@ -1486,13 +1502,10 @@ export class OperationLogSyncService {
     let hydrationFailed = false;
     let hydrationError: unknown;
     let isRemoteApplyWindowOpen = true;
-    // Keep capture in deferred mode from the last pre-hydration durability
-    // check through the snapshot dispatch. Otherwise an action can be
-    // persisted against the old state and then silently overwritten by
-    // loadAllData while this async hydration is in progress.
     this.hydrationState.startApplyingRemoteOps();
     try {
       try {
+        if (prepareNative) Object.assign(result, await prepareNative());
         const pendingAtHydrationCutoff = await this.opLogStore.getUnsynced();
         const lateDurableOps = pendingAtHydrationCutoff.filter(
           (entry) => !initialUnsyncedOpIds.has(entry.op.id),
@@ -1507,17 +1520,12 @@ export class OperationLogSyncService {
           );
         }
 
-        // Hydrate state from snapshot. No SYNC_IMPORT is created, so
-        // concurrent ops from other clients are not clean-slate filtered.
         await this.syncHydrationService.hydrateFromRemoteSync(
           result.snapshotState as Record<string, unknown>,
           result.snapshotVectorClock,
           {
             snapshotIncludedOps,
-            // Capture only actions that ran on the old state. Actions emitted
-            // by loadAllData effects run after the snapshot reducer and are
-            // already valid on top of the new state, so replaying those would
-            // double-apply additive reducers.
+            ...(result.nativeBaseline ? { nativeBaseline: result.nativeBaseline } : {}),
             beforeStateLoad: () => {
               deferredActionsOverwrittenBySnapshot = getDeferredActions();
             },
@@ -1534,16 +1542,9 @@ export class OperationLogSyncService {
         hydrationError = error;
       }
 
-      // The file snapshot baseline transaction either committed state, clock,
-      // archives, and included remote ops together or left the old baseline
-      // intact. Deferred intents therefore always drain against a complete
-      // frontier, including when hydration failed before live-state dispatch.
       await this._processSnapshotDeferredActionsWithRetry();
 
       if (didCommitStateLoad) {
-        // Persistent actions dispatched before loadAllData already ran once on
-        // the old NgRx state. Re-dispatch remote-marked clones synchronously on
-        // top of the snapshot without capturing a second operation.
         for (const action of deferredActionsOverwrittenBySnapshot) {
           this.store.dispatch({
             ...action,

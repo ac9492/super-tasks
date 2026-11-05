@@ -204,7 +204,9 @@
     "ultra-accounts:test": "npm --prefix packages/super-sync-server run test:ultra-accounts",
     "ultra-accounts:build": "npm --prefix packages/super-sync-server run build",
     "ultra-accounts:regression": "npm --prefix packages/super-sync-server run test:regression",
-    "ultra-accounts:browser": "npm --prefix packages/super-sync-server run test:ultra-accounts:browser"
+    "ultra-accounts:browser": "npm --prefix packages/super-sync-server run test:ultra-accounts:browser",
+    "ultra-sync:test": "npm --prefix packages/super-sync-server run test:ultra-sync",
+    "ultra-sync:browser": "npm run buildFrontend:dev && npm --prefix packages/super-sync-server run test:ultra-sync:browser"
   },
   "resolutions": {
     "sass": "1.32.6",
