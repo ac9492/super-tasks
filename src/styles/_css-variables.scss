@@ -228,7 +228,7 @@
   --side-nav-width-switch-mobile: 500px;
   --side-nav-width-switch-l: 1500px;
   --side-nav-width-mobile: calc(100vw - var(--s9));
-  --side-nav-width: 200px;
+  --side-nav-width: 260px; // the default panel width (defaultWidth in magic-nav-config)
   --side-nav-width-l: 400px;
   --bar-height-large: 56px; // header band and brand row
   --bar-height: var(--ctl-lg);
@@ -615,7 +615,9 @@ body.isDarkTheme {
   --button-warn-label: var(--ink-strong);
 
   --right-panel-bg: transparent;
-  --bottom-nav-height: 44px;
+  --bottom-nav-height: var(
+    --s7
+  ); // 56px: icon pills are 48px (--ctl-lg) with 4px above and below
   --bottom-nav-extra-offset: 0px;
   --bottom-nav-bg: var(--sidenav-bg-mobile);
   --bottom-nav-shadow: var(--whiteframe-shadow-2dp);

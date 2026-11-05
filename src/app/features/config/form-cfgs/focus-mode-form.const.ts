@@ -40,7 +40,7 @@ export const FOCUS_MODE_FORM_CFG: ConfigFormSection<FocusModeConfig> = {
     },
     {
       type: 'collapsible',
-      props: { label: T.G.ADVANCED_CFG },
+      props: { label: T.PS.REDESIGN.MORE },
       fieldGroup: [
         {
           key: 'isPauseTrackingDuringBreak',

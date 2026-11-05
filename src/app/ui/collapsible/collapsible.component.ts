@@ -38,6 +38,8 @@ export class CollapsibleComponent implements OnInit, OnDestroy {
   private static _idCounter = 0;
   readonly panelId = this.createPanelId();
   readonly title = input<string>();
+  // names the toggle when its visible title repeats ("More options")
+  readonly ariaLabel = input<string>();
   // TODO: Skipped for migration because:
   //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
   //  and migrating would break narrowing currently.

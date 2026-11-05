@@ -201,9 +201,11 @@ One field look for both appearances:
 
 ### Dialogs
 
-- **Anatomy:** one `--dialog-gutter` (24px, 16px below 600px) insets title, content and actions. The title box is `24 24 12` around one 24px line (Material's 40px baseline strut is hidden); content is `24 24 16`; actions are `8 24 24`, with buttons 8px apart through the row's gap (also when they wrap).
-- **Widths:** spread `dialogSize('s' | 'm' | 'l')` from `src/app/ui/dialog-size.util.ts` into `MatDialog.open()`. S 440px for confirm, prompt, estimate, schedule, deadline and reminder; M 560px for entity forms (project, tag, habit, repeat, sync, import); L 720px for reference content (keyboard help, logs, conflict details). The pane's max-width (`--mat-dialog-container-max-width`, 94vw below 600px) keeps every size on screen. The Settings and Plugins windows use their own `settings-window` panel class.
-- Don't set `min-width`, `max-width` or `width: max-content` on a dialog's content; pick a size.
+- **Anatomy:** one `--dialog-gutter` (24px, 16px below 600px) insets title, content and actions. The title box is `24 24 12` around one 24px line (Material's 40px baseline strut is hidden); content is `24 24 16`; actions are `8 24 24`, with buttons 8px apart through the row's gap (also when they wrap). Title, `mat-dialog-content` and `mat-dialog-actions` are siblings: no dialog nests its actions in its content.
+- **Title:** every dialog has a visible `h2 mat-dialog-title` in the title role. It is also the dialog's accessible name. (`h1` belongs to the page.) A leading 20px icon is allowed only when it names the object type (repeat, sync). `dialog-confirm` shows `data.title`, or "Confirm"; `dialog-prompt` shows its plain `message` or the field's label.
+- **Help:** a dialog that needs help puts `<help-section>` in its content. Its button is a plain 40px icon button at the end of the title row, never a floating button over the corner.
+- **Widths:** S 440px (the default: a dialog without a size is at least this wide) for confirm, prompt, estimate, schedule, deadline and reminder; M 560px for entity forms (project, tag, habit, repeat, sync, import, board); L 720px for reference content (keyboard help, logs, conflict details); `window` 1040px for the Settings and Plugins windows. A dialog that always has the same size declares it itself, `private readonly _size = useDialogSize('m')`, so every call site opens it at that size; a single call site spreads `dialogSize('m')` into `MatDialog.open()`. Both live in `src/app/ui/dialog-size.util.ts`. The pane's max-width (`--mat-dialog-container-max-width`, 94vw below 600px) keeps every size on screen.
+- Don't set `width`, `min-width`, `max-width` or `width: max-content` on a dialog (config, component or content); pick a size.
 
 ## Dialog action buttons
 
@@ -218,11 +220,30 @@ One treatment per role so dialogs feel consistent. Classify by **function, not l
 
 Rules:
 
-- **Icons:** drop generic `check`/`close` icons on OK/Cancel/Save/Submit — they add nothing. Keep icons that carry meaning (`alarm`/`today`/`event_busy` in scheduling, `wb_sunny`, `save`, `cloud_upload`, `delete_forever`).
+- **Order:** `[start-edge actions] … [Cancel] [Primary]`. Cancel sits directly before the primary action, at the end edge; the primary action is the last button in the DOM (the e2e `DIALOG_SUBMIT` selector). A secondary destructive or alternative action (Delete, Remove, Unschedule, Duplicate, Test connection) goes first, at the start edge, as `mat-stroked-button` (`color="warn"` when it destroys) with `class="dialog-action-start"` on the last button of that group. Dialogs align their actions with `align="end"`.
+- **Icons:** drop generic `check`/`close`/`save` icons on OK/Cancel/Save/Submit — they add nothing. Keep icons that tell side-by-side actions apart (`alarm`/`today`/`event_busy` in scheduling, `content_copy`, `online_prediction`). A destructive action's label already says what it does.
+- **No raised buttons** in dialogs: a primary action is `mat-flat-button`.
 - **No `color` on cancel/close** — leftover `color="primary"` on a Cancel just tints it; remove it.
 - **Reactive appearance** — when a button's appearance must change at runtime, bind it on a single element (`[matButton]="cond ? 'filled' : 'outlined'"`) instead of swapping two buttons in an `@if`/`@else`. The attribute form is fixed at construction, and the swap re-creates the node, dropping focus and any click that lands mid-flip. See `finish-day-btn.component.html`.
 - **No dead classes** — the legacy Bootstrap `btn btn-primary` classes are gone; don't reintroduce them. `submit-button` is only styled inside `dialog-create-tag`.
 - **Symmetric choice dialogs** (e.g. sync "use remote" vs "use local") may use two matched `mat-stroked-button`s — there is no single primary.
+
+## Forms and disclosures
+
+- **One field look** (see [Fields](#fields)). New templates use the default appearance; there is no `appearance="outline"`.
+- **One disclosure.** "More options", Sound, the repeat dialog's Options, native `<details>` ("Customize colors", a plugin's details) are one pattern: a 40px row, a 20px chevron leading the label (14/500, the `--type-body-strong` role), on the content's own left edge; the chevron turns 180° when open. `collapsible` and `formly-collapsible` get it from `src/app/ui/_collapsible-shared.scss`, `<details>` from `src/styles/components/_disclosure.scss`. Give `collapsible` `[isIconBefore]="true"`. A section's "More options" is named for assistive tech with its section (`aria-label`: "More options – Language & region").
+- **Boolean rows** are a field-height bordered row, control first, label after it, hint below. A toggle outside formly sits in a `mat-form-field` with a hidden input, as `formly-slide-toggle` does.
+- **View switchers** (Plugins Installed/Discover, Appearance Dark mode) are a `mat-button-toggle-group`: 40px, `--r-md`, the chosen segment is the tonal "selected" role. A toggle button's role is `radio`.
+- **Selection** is one role: the active side-nav row, the open settings category, a pressed segment and the chosen customizer entry share `--palette-selected` / `--palette-selected-ink`.
+
+## Page layout
+
+Secondary pages (Habits, Recurring tasks, Archived projects, Metrics, Worklog and History, Daily summary, Support us) are one column:
+
+- **Column:** `.page-wrapper` puts the content at the page gutter (`--page-gutter`, the header title's left edge), 16px from the top and 72px from the bottom (FAB and bottom nav). `.component-wrapper` caps it at `--component-max-width`. Neither centres: the column lines up with the task list.
+- **Canvas pages** (Planner, Schedule, Boards) span the width and use the same gutter: day columns, the schedule toolbar and the board tabs and panels start at `--page-gutter`.
+- **No second page title.** The shell header names the page. Sections inside a report use the title role (`--type-title`), then the heading role (`--type-heading`); no centred headings. Report tables are `--r-md` hairline cards (`.material-table`), never shadowed.
+- **Empty states** are one layout, `.empty-state` (`src/styles/components/_empty-state.scss`): on the column's start edge, an optional 24px muted icon, one line of muted body text (a heading line may lead it) and at most one action. `<p class="empty-state">text</p>` is the text-only form.
 
 ## Callouts (info / warning / danger / success)
 
@@ -279,8 +300,16 @@ come from a `::before`.
 ## Settings layout
 
 Settings opens in a centered dialog over a dimmed, blurred workspace on desktop.
-Use labeled category navigation on the left. On small screens, show the category
-list first and provide a Back action within the selected category.
+Use labeled category navigation on the left: 40px rows, the open category in the
+tonal "selected" role like the side nav's active row. On small screens, show the
+category list first and provide a Back action within the selected category.
+
+The window header is 64px: the title role, a 40px close button, a hairline below.
+Everything in the content starts at one left edge: the category title (title
+role), section headings (heading role, a 40px row that also holds the help
+button), fields and disclosures. Sections are `--s4` apart, a category title is
+`--s3` above its first section. The footer is meta text; its links are plain
+until hovered.
 
 Use `--s` (8px) between related elements, `--s2` (16px) inside sections,
 `--s3` (24px) between groups, and `--s4` (32px) between major sections.

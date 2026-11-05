@@ -1,11 +1,11 @@
-<h1 mat-dialog-title>
+<h2 mat-dialog-title>
   @if (projectData.id) {
     <span>{{ T.F.PROJECT.D_CREATE.EDIT | translate }}</span>
   }
   @if (!projectData.id) {
     <span>{{ T.F.PROJECT.D_CREATE.CREATE | translate }}</span>
   }
-</h1>
+</h2>
 
 <form
   (ngSubmit)="$event.preventDefault(); submit()"

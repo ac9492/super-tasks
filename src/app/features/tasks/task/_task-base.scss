@@ -60,9 +60,10 @@
 
 .inner-wrapper {
   position: relative;
-  // NOTE: -1 px because we move the box slightly up
-  padding: calc(var(--task-inner-padding-top-bottom) - 1px) 0
-    var(--task-inner-padding-top-bottom);
+  // Symmetric: with the card's 1px border, content sits 4px inside the card
+  // edge on every side, so a title-only row is exactly 48px and a row with a
+  // meta line exactly 56px (no fractional heights).
+  padding: calc(var(--task-inner-padding-top-bottom) - 1px) 0;
   margin-bottom: 0;
 }
 
@@ -104,9 +105,10 @@
     > .inner-wrapper
     > .inner-wrapper
     > & {
-    background: var(--task-c-current-bg);
+    // The tracked task is marked by an accent card edge (_ultra-tasks.scss) and
+    // its play indicator, not by a tint or a shadow: the tint is the "selected"
+    // role, and a tracked task must not look like the one open in the panel.
     border-radius: var(--task-border-radius);
-    box-shadow: var(--task-current-shadow);
   }
 
   // Time conflict no longer draws a border/bar on the task box — it's surfaced as
@@ -124,23 +126,28 @@
 }
 
 .sub-tasks {
-  margin: var(--s) var(--s) var(--s) var(--s3);
+  // Rows inside the parent card (hairlines between siblings are drawn by
+  // _ultra-tasks.scss), indented so a subtask's toggle sits under the parent's
+  // title text.
+  margin: 0 var(--s) var(--s-half) var(--s3);
   position: relative;
 
   @include mq(xs) {
-    //margin: var(--s) var(--s2) var(--s) var(--s3);
-    margin: var(--s) var(--s) var(--s) var(--s5);
+    margin: 0 var(--s) var(--s-half) var(--s5);
   }
 
+  // Four px of content inset on both sides of a row, as in a top-level card,
+  // although a subtask has no border of its own (its hairline sits on top).
+  ::ng-deep task {
+    --task-inner-padding-top-bottom: calc(var(--s-half) + 1px);
+  }
+
+  // A subtask is a row, not a card: no radius, border or shadow. Its selected
+  // and current tints still paint on this same box.
   ::ng-deep .box {
     box-shadow: var(--task-shadow-sub-task);
     border-color: var(--sub-task-border-color);
     border-radius: 0;
-    top: -1px;
-    // Overlap neighbours by 1px so adjacent subtask borders collapse to a single
-    // hairline. Was light-only (dark relied on a shadow); dark now uses a border
-    // too, so it needs the collapse as well.
-    bottom: 0;
 
     @include darkTheme {
       background: var(--sub-task-c-bg);

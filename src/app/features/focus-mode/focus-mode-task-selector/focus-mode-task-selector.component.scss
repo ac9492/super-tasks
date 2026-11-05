@@ -18,9 +18,9 @@
 .task-selector-overlay {
   // Highest-elevation surface so the panel + input read as opaque against the
   // scrim (the previous --c-bg-raised was undefined → transparent panel).
-  background: var(--bg-lightest);
-  border-radius: 8px;
-  box-shadow: var(--whiteframe-shadow-8dp);
+  background: var(--palette-surface-raised);
+  border-radius: var(--r-lg);
+  box-shadow: var(--elev-2);
   padding: var(--s2);
   width: 90%;
   max-width: 500px;

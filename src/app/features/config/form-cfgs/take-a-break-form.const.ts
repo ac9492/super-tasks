@@ -109,6 +109,8 @@ export const TAKE_A_BREAK_FORM_CFG: ConfigFormSection<TakeABreakConfig> = {
       expressionProperties: { 'templateOptions.required': 'model.isTakeABreakEnabled' },
       type: 'repeat',
       templateOptions: {
+        // names the field's help button; the repeat type draws no label
+        label: T.GCF.TAKE_A_BREAK.MOTIVATIONAL_IMGS,
         addText: T.GCF.TAKE_A_BREAK.ADD_NEW_IMG,
         defaultValue: '',
       },

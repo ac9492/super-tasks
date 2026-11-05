@@ -10,6 +10,7 @@ import { ShareDialogOptions, ShareResult, ShareTarget } from '../share.model';
 import { ShareFormatter } from '../share-formatter';
 import { T } from '../../../t.const';
 import { TranslatePipe } from '@ngx-translate/core';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 interface ShareTargetButton {
   target: ShareTarget;
@@ -34,6 +35,7 @@ interface ShareTargetButton {
   ],
 })
 export class DialogShareComponent {
+  private readonly _dialogSize = useDialogSize('m');
   private _dialogRef = inject(MatDialogRef<DialogShareComponent>);
   private _shareService = inject(ShareService);
 

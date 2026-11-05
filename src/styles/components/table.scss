@@ -26,15 +26,16 @@ table {
 
 .table-wrapper {
   overflow: auto;
-  border-radius: var(--card-border-radius);
+  border-radius: var(--r-md);
 }
 
 $this-table-min-height: var(--s2);
-$this-table-shadow: var(--whiteframe-shadow-1dp);
 
+// Report tables are cards: a hairline edge and --r-md corners, never a shadow
+// (cards are not elevated, docs/styling-guide.md § Elevation).
 div.material-table {
-  box-shadow: $this-table-shadow;
-  border-radius: var(--card-border-radius);
+  border: 1px solid var(--separator);
+  border-radius: var(--r-md);
 
   table {
     width: 100%;
@@ -44,8 +45,8 @@ div.material-table {
 
 table.material-table,
 div.material-table {
-  box-shadow: $this-table-shadow;
-  font-size: 13px;
+  box-shadow: none;
+  font: var(--type-body);
   white-space: nowrap;
   background-color: var(--card-bg);
 

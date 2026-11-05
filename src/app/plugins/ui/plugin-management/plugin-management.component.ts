@@ -18,15 +18,11 @@ import { MAX_PLUGIN_ZIP_SIZE } from '../../plugin.const';
 import { MatSlideToggle, MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { MatChip, MatChipSet } from '@angular/material/chips';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatError } from '@angular/material/form-field';
-import {
-  MatFormField,
-  MatLabel,
-  MatPrefix,
-  MatSuffix,
-} from '@angular/material/form-field';
+import { MatFormField, MatPrefix, MatSuffix } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
@@ -116,6 +112,8 @@ const getLanguageName = (
     MatSlideToggle,
     MatIcon,
     MatButton,
+    MatButtonToggle,
+    MatButtonToggleGroup,
     MatIconButton,
     MatChip,
     MatChipSet,
@@ -124,7 +122,6 @@ const getLanguageName = (
     TranslatePipe,
     PluginIconComponent,
     MatFormField,
-    MatLabel,
     MatPrefix,
     MatSuffix,
     MatInput,
@@ -850,8 +847,6 @@ export class PluginManagementComponent {
           manifest: plugin.manifest,
           schema,
         },
-        width: '600px',
-        maxHeight: '80vh',
       });
 
       const result = await dialogRef.afterClosed().toPromise();

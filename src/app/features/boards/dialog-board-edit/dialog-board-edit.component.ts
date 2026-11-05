@@ -14,6 +14,7 @@ import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DialogConfirmComponent } from '../../../ui/dialog-confirm/dialog-confirm.component';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 @Component({
   selector: 'dialog-board-edit',
@@ -32,6 +33,7 @@ import { DialogConfirmComponent } from '../../../ui/dialog-confirm/dialog-confir
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DialogBoardEditComponent {
+  private readonly _dialogSize = useDialogSize('m');
   private _matDialogRef = inject<MatDialogRef<DialogBoardEditComponent>>(MatDialogRef);
   private _matDialog = inject(MatDialog);
 
@@ -53,6 +55,7 @@ export class DialogBoardEditComponent {
         data: {
           cancelTxt: T.G.CANCEL,
           okTxt: T.G.DELETE,
+          isDestructive: true,
           message: T.F.BOARDS.V.CONFIRM_DELETE,
         },
       })

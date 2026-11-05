@@ -545,8 +545,6 @@ export class ConfigPageComponent implements OnInit {
 
   showLogs(): void {
     this._matDialog.open(DialogLogsComponent, {
-      width: '600px',
-      maxWidth: '95vw',
       data: { logs: Log.exportLogHistory() },
     });
   }

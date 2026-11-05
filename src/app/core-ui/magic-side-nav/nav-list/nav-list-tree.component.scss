@@ -74,32 +74,35 @@
   }
 }
 
+// Group header tools (visibility, new folder, add): compact 32px round icon
+// buttons with 20px glyphs, in line with the 32px header row.
 .additional-btns {
   display: flex;
+  align-items: center;
+  gap: var(--s-half);
   margin-left: auto;
+  padding-right: var(--s-half);
 }
 
 .additional-btn {
   flex-shrink: 0;
-  width: 32px !important;
-  height: 32px !important;
-  min-width: 32px !important;
-  padding: var(--s-half) !important;
-  margin-left: var(--s);
+  width: var(--ctl-sm) !important;
+  height: var(--ctl-sm) !important;
+  min-width: var(--ctl-sm) !important;
+  padding: 0 !important;
   color: var(--sidenav-text-secondary);
   background: transparent;
   border: none;
-  border-radius: 0 !important; // Override Material Design rounded corners
+  border-radius: var(--r-full) !important;
   cursor: pointer;
 
-  // Override Material Design button styles
   &.mat-mdc-icon-button {
-    --mdc-icon-button-state-layer-size: 32px;
-    --mdc-icon-button-icon-size: 18px;
-    border-radius: 0 !important;
-    width: 32px !important;
-    height: 32px !important;
-    padding: var(--s-half) !important;
+    --mat-icon-button-state-layer-size: var(--ctl-sm);
+    --mat-icon-button-icon-size: var(--icon-md);
+    border-radius: var(--r-full) !important;
+    width: var(--ctl-sm) !important;
+    height: var(--ctl-sm) !important;
+    padding: 0 !important;
   }
 
   @include interactiveHighlight {
@@ -108,9 +111,9 @@
   }
 
   mat-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
+    font-size: var(--icon-md);
+    width: var(--icon-md);
+    height: var(--icon-md);
   }
 }
 
@@ -152,7 +155,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: var(--icon-md);
   line-height: 1;
   margin-right: var(--s-half);
   color: var(--brand);
@@ -160,7 +163,7 @@
   &.nav-icon-emoji {
     color: inherit;
     font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
-    font-size: 16px;
+    font-size: var(--icon-sm);
     font-feature-settings: normal;
     font-variation-settings: normal;
     text-transform: none;
@@ -194,7 +197,7 @@
     &.dragging {
       opacity: 0.8;
       transform: rotate(2deg);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      box-shadow: var(--elev-2);
       z-index: 1000;
       cursor: grabbing;
     }
@@ -235,11 +238,6 @@
 // it. Hover and active states keep their own tokens.
 .archived-projects-link {
   --sidenav-text: var(--sidenav-text-secondary);
-  // Not a tree row, so it takes the top-level rows' indent itself and moves
-  // with them when the panel collapses (see `.item` in tree-dnd).
-  transition: padding-left
-    var(--sidenav-transition-duration, var(--transition-duration-m))
-    var(--sidenav-transition-timing, var(--ani-standard-timing));
 }
 
 // Drag performance optimizations - keep these for smooth drag operations

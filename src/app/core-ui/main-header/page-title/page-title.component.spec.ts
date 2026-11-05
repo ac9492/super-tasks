@@ -335,6 +335,33 @@ describe('PageTitleComponent', () => {
       expect(c.contextIconColor()).toBe('#123456');
     });
 
+    it('does not colour the Today and Inbox icons (they read like the nav destinations)', () => {
+      activeWorkContext$.next(
+        wc({
+          id: 'TODAY',
+          title: 'Today',
+          type: WorkContextType.TAG,
+          icon: 'wb_sunny',
+          color: '#3f51b5',
+          theme: { primary: '#3f51b5' } as WorkContext['theme'],
+        }),
+      );
+      expect(setupComponent('/tag/TODAY/tasks').contextIconColor()).toBeNull();
+
+      activeWorkContext$.next(
+        wc({
+          id: 'INBOX_PROJECT',
+          title: 'Inbox',
+          type: WorkContextType.PROJECT,
+          icon: 'inbox',
+          theme: { primary: 'rgb(144, 187, 165)' } as WorkContext['theme'],
+        }),
+      );
+      expect(
+        setupComponent('/project/INBOX_PROJECT/tasks').contextIconColor(),
+      ).toBeNull();
+    });
+
     it('detects an emoji icon', () => {
       activeWorkContext$.next(
         wc({

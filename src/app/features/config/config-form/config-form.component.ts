@@ -29,12 +29,19 @@ export class ConfigFormComponent {
   cfg = input.required<Record<string, unknown>>();
   formCfg = input.required<FormlyFieldConfig[]>();
   sectionKey = input<GlobalConfigFormSectionKey | ProjectCfgFormKey>();
+  // translation key of the section's title: names the section's "More options"
+  sectionTitle = input<string>();
   settingsLayout = input(false);
   expandedField = input('');
   fields = computed(() => {
     const fields = adjustToLiveFormlyForm(this.formCfg());
     return this.settingsLayout()
-      ? prepareSettingsFields(fields, String(this.sectionKey()), this.expandedField())
+      ? prepareSettingsFields(
+          fields,
+          String(this.sectionKey()),
+          this.expandedField(),
+          this.sectionTitle(),
+        )
       : fields;
   });
   // formly (`immutable: true`) re-creates every field, dropping focus, unless

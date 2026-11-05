@@ -1,5 +1,5 @@
 <div class="page-wrapper">
-  <h1 class="done-headline">
+  <h2 class="done-headline">
     <!-- `isDisableCelebration` gates the confetti only (see ngAfterViewInit). The
     headline is static text, not an attention-grabbing loop, so it stays for
     today's summary regardless of that opt-out. -->
@@ -8,7 +8,7 @@
     } @else {
       <span>{{ T.PDS.SUMMARY_FOR | translate: { dayStr: dayStr } }}</span>
     }
-  </h1>
+  </h2>
   <div
     class="daily-summary-summary"
     [class.is-loading-archive]="!isArchiveLoaded()"

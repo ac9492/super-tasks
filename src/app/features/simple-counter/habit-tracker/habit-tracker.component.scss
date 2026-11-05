@@ -2,8 +2,7 @@
 
 :host {
   display: flex;
-  justify-content: center;
-  padding: var(--s);
+  justify-content: flex-start;
   width: 100%;
   box-sizing: border-box;
   container-type: inline-size;
@@ -14,7 +13,7 @@
   flex-direction: column;
   width: fit-content;
   max-width: 100%;
-  margin: 0 auto;
+  margin: 0;
 }
 
 @container (max-width: #{$layout-xs - 1px}) {
@@ -26,11 +25,11 @@
 .navigation-bar {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
-  gap: 12px var(--s);
+  gap: var(--s1-5) var(--s);
   margin-bottom: var(--s2);
-  padding: 0 var(--s-half);
+  padding: 0;
   width: 100%;
   box-sizing: border-box;
   min-width: 0;
@@ -275,8 +274,7 @@
 
   .habit-name {
     display: block;
-    font-size: 13px;
-    font-weight: 500;
+    font: var(--type-body-strong);
     @include truncateText();
     min-width: 0;
 
@@ -288,31 +286,8 @@
 
 .footer-actions {
   display: flex;
-  justify-content: center;
-  padding: var(--s4) var(--s2);
-
-  .add-habit-btn {
-    opacity: 0.6;
-    transition: var(--transition-standard);
-    background-color: transparent !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    padding: var(--s-quarter) var(--s2);
-
-    &:hover {
-      opacity: 1;
-      background-color: var(--c-light-05) !important;
-      border: 1px solid var(--c-light-40) !important;
-    }
-
-    mat-icon {
-      margin-right: var(--s);
-    }
-
-    .mdc-button__label {
-      vertical-align: middle;
-      font-size: 13px;
-    }
-  }
+  justify-content: flex-start;
+  padding: var(--s2) 0;
 }
 
 .disabled-section {

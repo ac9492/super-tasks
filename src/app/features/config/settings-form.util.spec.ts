@@ -81,6 +81,22 @@ describe('settings presentation', () => {
     expect(keyboardRows.filter(({ field }) => field.props?.['helpKey'])).toEqual([]);
   });
 
+  // Every section's expander is labelled "More options": the section title tells
+  // them apart for assistive tech.
+  it('names the section on its "More options" collapsible', () => {
+    const source: FormlyFieldConfig[] = [
+      { key: 'defaultProjectId', type: 'input' },
+      { key: 'notesTemplate', type: 'textarea' },
+    ];
+    const grouped = prepareSettingsFields(source, 'tasks', '', T.PS.REDESIGN.TASKS);
+    const more = grouped.find((field) => field.type === 'collapsible');
+    expect(more?.props?.['sectionTitle']).toBe(T.PS.REDESIGN.TASKS);
+    const unnamed = prepareSettingsFields(source, 'tasks', '').find(
+      (field) => field.type === 'collapsible',
+    );
+    expect(unnamed?.props?.['sectionTitle']).toBeUndefined();
+  });
+
   // In the web build without the browser extension the idle toggles are hidden;
   // the paragraph explaining that must not be tucked away in "More options"
   it('keeps the idle extension info up front and hides an all-desktop collapsible', () => {

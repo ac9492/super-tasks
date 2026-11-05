@@ -25,6 +25,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { SnackService } from '../../../core/snack/snack.service';
 import { IS_ELECTRON } from '../../../app.constants';
 import { validateOAuthState } from '../oauth-state.util';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 @Component({
   selector: 'dialog-get-and-enter-auth-code',
@@ -48,6 +49,7 @@ import { validateOAuthState } from '../oauth-state.util';
   ],
 })
 export class DialogGetAndEnterAuthCodeComponent implements OnDestroy {
+  private readonly _dialogSize = useDialogSize('m');
   private _matDialogRef =
     inject<MatDialogRef<DialogGetAndEnterAuthCodeComponent>>(MatDialogRef);
   private _oauthCallbackHandler = inject(OAuthCallbackHandlerService);

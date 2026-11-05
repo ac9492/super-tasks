@@ -268,7 +268,7 @@ describe('DialogImportFromUrlComponent', () => {
 
   describe('template rendering', () => {
     it('should render dialog title', () => {
-      const titleElement = fixture.debugElement.query(By.css('h1[mat-dialog-title]'));
+      const titleElement = fixture.debugElement.query(By.css('h2[mat-dialog-title]'));
       expect(titleElement).toBeTruthy();
     });
 
@@ -350,7 +350,7 @@ describe('DialogImportFromUrlComponent', () => {
 
   describe('translation and accessibility', () => {
     it('should use translation pipes in template', () => {
-      const titleElement = fixture.debugElement.query(By.css('h1[mat-dialog-title]'));
+      const titleElement = fixture.debugElement.query(By.css('h2[mat-dialog-title]'));
       const descElement = fixture.debugElement.query(By.css('mat-dialog-content p'));
       const labelElement = fixture.debugElement.query(By.css('mat-label'));
 

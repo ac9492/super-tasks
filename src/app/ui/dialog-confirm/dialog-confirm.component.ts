@@ -33,7 +33,6 @@ export interface DialogConfirmData {
 @Component({
   selector: 'dialog-confirm',
   templateUrl: './dialog-confirm.component.html',
-  styleUrls: ['./dialog-confirm.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MatDialogContent,

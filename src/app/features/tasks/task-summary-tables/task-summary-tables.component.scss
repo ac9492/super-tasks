@@ -3,13 +3,15 @@
   margin-bottom: var(--s3);
 }
 
-// Keeps the project colour as an accent next to the collapsible heading.
-collapsible.project-section {
-  border-left: 2px solid var(--extra-border-color);
-}
-
 .project-time {
   white-space: nowrap;
-  font-size: var(--font-size-sm);
+  font: var(--type-meta);
   color: var(--text-color-muted);
+}
+
+.project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s);
+  margin: var(--s) 0 var(--s2);
 }

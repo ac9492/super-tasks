@@ -79,6 +79,7 @@ import {
   PLUGIN_OAUTH_TOKEN_KEY_CFG_KEY,
   shouldScopePluginOAuth,
 } from '../../../plugins/oauth/plugin-oauth-token-key.util';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 type OptionsLoadState = 'idle' | 'loading' | 'loaded' | 'empty' | 'failed';
 
@@ -108,6 +109,7 @@ type OptionsLoadState = 'idle' | 'loading' | 'loaded' | 'empty' | 'failed';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DialogEditIssueProviderComponent {
+  private readonly _dialogSize = useDialogSize('m');
   readonly T: typeof T = T;
   readonly HelperClasses = HelperClasses;
   readonly d = inject<{
@@ -362,6 +364,7 @@ export class DialogEditIssueProviderComponent {
         data: {
           cancelTxt: T.G.CANCEL,
           okTxt: T.G.DELETE,
+          isDestructive: true,
           message: T.F.ISSUE.DIALOG.DELETE_CONFIRM,
         },
       })

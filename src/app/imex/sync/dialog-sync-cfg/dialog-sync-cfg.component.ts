@@ -56,6 +56,7 @@ import { discoverNextcloudUserId } from '../../../op-log/sync-providers/file-bas
 import type { OneDrivePrivateCfg } from '../../../op-log/sync-providers/file-based/onedrive/onedrive.model';
 import type { LocalFileSyncPrivateCfg } from '@sp/sync-providers/local-file';
 import type { SuperSyncPrivateCfg } from '@sp/sync-providers/super-sync';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 // `testWebdavConnection` reports a 404 (auth ok, wrong DAV path) via this
 // HTTP status; the package-side `WebDavHttpStatus` enum is not exported to
@@ -70,7 +71,6 @@ type SyncFormModel = SyncConfig & {
 @Component({
   selector: 'dialog-sync-cfg',
   templateUrl: './dialog-sync-cfg.component.html',
-  styleUrls: ['./dialog-sync-cfg.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MatDialogTitle,
@@ -84,6 +84,7 @@ type SyncFormModel = SyncConfig & {
   ],
 })
 export class DialogSyncCfgComponent implements AfterViewInit {
+  private readonly _dialogSize = useDialogSize('m');
   syncConfigService = inject(SyncConfigService);
   syncWrapperService = inject(SyncWrapperService);
   private _providerManager = inject(SyncProviderManager);
@@ -844,7 +845,6 @@ export class DialogSyncCfgComponent implements AfterViewInit {
     const { DialogEnableEncryptionComponent } =
       await import('../dialog-enable-encryption/dialog-enable-encryption.component');
     const dialogRef = this._matDialog.open(DialogEnableEncryptionComponent, {
-      width: '450px',
       disableClose: true,
       data: {
         providerType: 'file-based',
@@ -907,18 +907,12 @@ export class DialogSyncCfgComponent implements AfterViewInit {
   }
 
   restoreFromHistory(): void {
-    this._matDialog.open(DialogRestorePointComponent, {
-      width: '500px',
-      maxWidth: '90vw',
-    });
+    this._matDialog.open(DialogRestorePointComponent);
   }
 
   showDevices(): void {
     this._matDialog
-      .open<DialogSyncDevicesComponent, undefined, boolean>(DialogSyncDevicesComponent, {
-        width: '500px',
-        maxWidth: '90vw',
-      })
+      .open<DialogSyncDevicesComponent, undefined, boolean>(DialogSyncDevicesComponent)
       .afterClosed()
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe((didSignOut) => {

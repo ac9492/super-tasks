@@ -13,6 +13,11 @@
       height: 100%;
     }
 
+    // Tabs start at the page gutter, like every page's content.
+    .mat-mdc-tab-header {
+      padding-inline: var(--page-gutter);
+    }
+
     .mat-mdc-tab {
       min-width: 40px !important;
 
@@ -29,7 +34,7 @@
           display: contents;
 
           div {
-            padding: 0px var(--s3);
+            padding: 0px var(--s2);
             display: flex;
             align-items: center;
           }
@@ -68,17 +73,23 @@
 
 .board-add-wrapper {
   max-width: var(--component-max-width);
-  margin: 0 auto;
-  padding: var(--s2);
+  margin: 0;
+  padding: var(--s2) var(--page-gutter) var(--s9);
   max-height: 100%;
   overflow: auto;
+
+  h2 {
+    margin: 0 0 var(--s2);
+    font: var(--type-title);
+    letter-spacing: var(--track-title);
+  }
 }
 
 ::ng-deep .boards-drag-preview {
   min-width: 0 !important;
   background: transparent;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: var(--r-md);
 }
 
 ::ng-deep .boards-drag-preview.cdk-drag-animating {

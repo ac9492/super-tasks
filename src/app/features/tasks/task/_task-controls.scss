@@ -81,14 +81,16 @@
   // The title is the one thing on the row that should read first; project,
   // tags and estimate are muted secondary text (see .parent-title, .time).
   .task-title {
-    font-weight: var(--font-weight-medium);
+    font: var(--type-body-strong);
   }
 
   // note: we use .tags-container, since we don't want margins for an empty list
   ::ng-deep .tags-container {
     // to match task title padding
     margin-left: var(--s);
-    margin-bottom: var(--s-half);
+    // The meta line sits 4px under the title, which is what makes a two-line
+    // row exactly 56px tall.
+    margin-top: var(--s-half);
   }
 
   // A single long tag is a flex item, so cap it at the title area and allow its
@@ -400,9 +402,9 @@ done-toggle {
 
   mat-icon {
     transition: var(--transition-standard);
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
+    font-size: var(--icon-sm);
+    width: var(--icon-sm);
+    height: var(--icon-sm);
 
     &.isHideDoneTasks {
       transform: rotate(-45deg);
@@ -431,7 +433,7 @@ done-toggle {
   margin-bottom: -2px;
 
   .title {
-    font-size: var(--font-size-sm);
+    font: var(--type-meta);
     color: var(--text-color-muted);
     @include truncateText();
   }
@@ -500,13 +502,14 @@ done-toggle {
 .time-badge {
   @include center;
   margin-top: 10px;
-  font-size: 12px;
+  // Meta size in the app font (buttons inherit it from the base reset).
+  font-size: var(--font-size-sm);
   z-index: 10;
   line-height: 1;
   text-align: center;
   padding: 1px var(--s-quarter) 0;
   @include extraBorder();
-  border-radius: var(--card-border-radius);
+  border-radius: var(--r-full);
   white-space: nowrap;
   background: var(--card-bg);
 
@@ -518,8 +521,9 @@ done-toggle {
     background: var(--bg-lighter);
   }
 
+  // "PM" is a proportional exception: it tracks the badge's own size.
   ::ng-deep span {
-    font-size: 10px;
+    font-size: 0.85em;
   }
 }
 
@@ -535,13 +539,13 @@ done-toggle {
 .progress-badge {
   @include center;
   margin-top: 10px;
-  font-size: 10px;
+  font-size: var(--font-size-sm);
   z-index: 10;
   line-height: 1;
   text-align: center;
   padding: 1px var(--s-quarter) 0;
   @include extraBorder();
-  border-radius: var(--card-border-radius);
+  border-radius: var(--r-full);
   white-space: nowrap;
   background: var(--card-bg);
 

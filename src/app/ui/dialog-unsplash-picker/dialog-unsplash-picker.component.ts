@@ -18,6 +18,7 @@ import { UnsplashPhoto, UnsplashService } from '../../core/unsplash/unsplash.ser
 import { GlobalThemeService } from '../../core/theme/global-theme.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { T } from '../../t.const';
+import { useDialogSize } from '../dialog-size.util';
 
 @Component({
   selector: 'dialog-unsplash-picker',
@@ -37,6 +38,7 @@ import { T } from '../../t.const';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DialogUnsplashPickerComponent implements OnInit, OnDestroy {
+  private readonly _dialogSize = useDialogSize('l');
   private _dialogRef = inject<MatDialogRef<DialogUnsplashPickerComponent>>(MatDialogRef);
   private _unsplashService = inject(UnsplashService);
   private _globalThemeService = inject(GlobalThemeService);

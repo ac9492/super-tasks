@@ -1,16 +1,16 @@
 @use '../../../../styles/_globals.scss' as *;
 
 .form-wrapper {
-  &.settings-form-wrapper {
-    padding: 0 var(--s2) !important;
-  }
   // overflow:hidden here caused the browser's focus-scrolling to reset the
   // parent config-page scroll position when any form control received focus.
   overflow: visible;
-  padding: var(--s2) var(--s2) var(--s) !important;
+  // One left edge: fields start where the section heading starts.
+  padding: 0 !important;
 
   config-form {
     display: block;
+    // Sections are --s4 apart (.config-section); the form adds no gap of its own.
+    padding-bottom: 0;
   }
 
   // Reads as one more field row (same input tokens as the formly rows above),
@@ -67,9 +67,9 @@
   }
 
   &.keyboard {
-    ::ng-deep formly-field > formly-group {
+    ::ng-deep formly-field > formly-group,
+    ::ng-deep formly-collapsible .collapsible-panel {
       box-sizing: border-box;
-      padding: 0 var(--s);
       display: grid;
       grid: auto-flow / 1fr;
       gap: 0;
@@ -79,6 +79,11 @@
         grid: auto-flow / 1fr 1fr;
       }
     }
+
+    // "More options" is a row of its own, not half a shortcut row.
+    ::ng-deep formly-field:has(> formly-collapsible) {
+      grid-column: 1 / -1;
+    }
   }
 }
 
@@ -87,26 +92,8 @@
   display: block;
 }
 
-$this-panel-padding-left-right: 12px;
-
-:host ::ng-deep .collapsible-header {
-  font-size: 16px;
-  margin-top: 0;
-  padding: 10px $this-panel-padding-left-right;
-}
-
 :host ::ng-deep .collapsible-panel {
-  //border-top: 1px solid black;
   overflow: visible;
-
-  > * {
-    // for help icon positioning
-    // does not work because of translate on the slide down ani element
-    // position: static;
-
-    // add a padding
-    padding: 0 $this-panel-padding-left-right;
-  }
 }
 
 :host ::ng-deep .extra-margin-top {
@@ -119,15 +106,22 @@ $this-panel-padding-left-right: 12px;
   text-align: center;
 }
 
+// A 40px row: room for the help button column; the first field is 8px below.
 .settings-section-heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--s);
-  padding-inline: var(--s2);
+  min-height: var(--ctl-md);
   margin-bottom: var(--s);
   h3 {
     margin: 0;
-    font-size: var(--font-size-lg);
+    font: var(--type-heading);
+    letter-spacing: 0;
   }
+}
+
+:host ::ng-deep .help-heading {
+  font: var(--type-label);
+  letter-spacing: var(--track-label);
 }

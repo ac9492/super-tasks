@@ -1,9 +1,8 @@
 <div class="dialog-help-wrapper">
-  <h1 mat-dialog-title>{{ T.F.TASK.D_TIME.TITLE | translate }}</h1>
+  <h2 mat-dialog-title>{{ T.F.TASK.D_TIME.TITLE | translate }}</h2>
 
   <form
     (submit)="$event.preventDefault(); submit()"
-    class="mat-body"
     name="time-estimate-form"
   >
     <mat-dialog-content>
@@ -84,14 +83,12 @@
       >
         {{ T.G.CANCEL | translate }}
       </button>
-
       <button
         (click)="submit()"
         color="primary"
         mat-flat-button
         type="submit"
       >
-        <mat-icon>save</mat-icon>
         {{ T.G.SAVE | translate }}
       </button>
     </mat-dialog-actions>

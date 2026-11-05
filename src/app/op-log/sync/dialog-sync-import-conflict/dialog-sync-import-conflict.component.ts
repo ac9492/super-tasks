@@ -15,6 +15,7 @@ import { ShortTimePipe } from '../../../ui/pipes/short-time.pipe';
 import type { SyncImportReason } from '../../core/operation.types';
 import { confirmDialog } from '../../../util/native-dialogs';
 import { DateTimeFormatService } from '../../../core/date-time-format/date-time-format.service';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 export interface SyncImportConflictData {
   filteredOpCount: number;
@@ -49,6 +50,7 @@ export type SyncImportConflictResolution = 'USE_LOCAL' | 'USE_REMOTE' | 'CANCEL'
   ],
 })
 export class DialogSyncImportConflictComponent {
+  private readonly _dialogSize = useDialogSize('l');
   private _matDialogRef =
     inject<MatDialogRef<DialogSyncImportConflictComponent>>(MatDialogRef);
   private _translateService = inject(TranslateService);

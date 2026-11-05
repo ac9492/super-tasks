@@ -13,6 +13,15 @@
 .note {
   @include noteStyle;
 
+  // A note is a list item like a task: a card with a hairline and no resting
+  // shadow (it lifts on hover/focus below).
+  box-shadow: none;
+  border: var(--st-line-width) solid
+    color-mix(
+      in srgb,
+      var(--standard-note-fg) calc(var(--border-alpha) * 100%),
+      var(--standard-note-bg)
+    );
   overflow: hidden;
 
   &:hover,
@@ -20,7 +29,7 @@
     transform-origin: center center;
     position: relative;
     z-index: 4;
-    box-shadow: var(--whiteframe-shadow-3dp);
+    box-shadow: var(--elev-1);
     //outline: 2px dashed var(--c-accent);
   }
 

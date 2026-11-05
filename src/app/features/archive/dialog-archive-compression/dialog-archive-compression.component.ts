@@ -25,6 +25,7 @@ import {
 import { compressArchive } from '../store/archive.actions';
 import { T } from '../../../t.const';
 import { DialogConfirmComponent } from '../../../ui/dialog-confirm/dialog-confirm.component';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 const ONE_YEAR_MS = 365 * 24 * 60 * 60 * 1000;
 
@@ -44,6 +45,7 @@ const ONE_YEAR_MS = 365 * 24 * 60 * 60 * 1000;
   ],
 })
 export class DialogArchiveCompressionComponent implements OnInit {
+  private readonly _dialogSize = useDialogSize('m');
   private _dialogRef = inject(MatDialogRef<DialogArchiveCompressionComponent>);
   private _matDialog = inject(MatDialog);
   private _store = inject(Store);

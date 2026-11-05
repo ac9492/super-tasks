@@ -28,6 +28,7 @@ export const prepareSettingsFields = (
   fields: FormlyFieldConfig[],
   section: string,
   expandedField: string,
+  sectionTitle?: string,
 ): FormlyFieldConfig[] => {
   const helpKeys: Readonly<Record<string, string>> = T.PS.OPTION_HELP;
   const decorate = (items: FormlyFieldConfig[]): FormlyFieldConfig[] =>
@@ -75,6 +76,8 @@ export const prepareSettingsFields = (
       props: {
         label: T.PS.REDESIGN.MORE,
         settingsStateKey: section,
+        // every section has its own "More options": the title tells them apart
+        ...(sectionTitle ? { sectionTitle } : {}),
         settingsExpanded: !!expandedField && containsKey(more, expandedField),
       },
       fieldGroup: more,

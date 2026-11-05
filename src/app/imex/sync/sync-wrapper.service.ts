@@ -1577,7 +1577,6 @@ export class SyncWrapperService {
 
     // Open dialog for password entry
     this._passwordDialog = this._matDialog.open(DialogEnterEncryptionPasswordComponent, {
-      width: '450px',
       disableClose: true,
     });
 

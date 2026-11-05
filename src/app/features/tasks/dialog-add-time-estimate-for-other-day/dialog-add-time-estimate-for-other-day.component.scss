@@ -12,6 +12,12 @@
   }
 }
 
+.entry-heading {
+  margin: 0 0 var(--s);
+  font: var(--type-label);
+  letter-spacing: var(--track-label);
+}
+
 .side-info {
   margin-top: var(--s);
 }

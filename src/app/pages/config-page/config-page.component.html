@@ -13,7 +13,6 @@
     <div class="settings-container">
       <mat-form-field
         class="settings-search"
-        appearance="outline"
         subscriptSizing="dynamic"
       >
         <mat-icon matPrefix>search</mat-icon>
@@ -93,7 +92,7 @@
           </button>
           @if (selectedTabIndex === 0) {
             <div class="tab-content">
-              <h2 class="mat-h2 section-title">
+              <h2 class="section-title">
                 {{ 'PS.TABS.GENERAL' | translate }}
               </h2>
 
@@ -123,7 +122,7 @@
 
           @if (selectedTabIndex === 1) {
             <div class="tab-content">
-              <h2 class="mat-h2 section-title">
+              <h2 class="section-title">
                 {{ T.PS.REDESIGN.TASKS | translate }}
               </h2>
               @for (section of globalTasksFormCfg; track section.key) {
@@ -155,7 +154,7 @@
 
           @if (selectedTabIndex === 2) {
             <div class="tab-content">
-              <h2 class="mat-h2 section-title">
+              <h2 class="section-title">
                 {{ T.PS.REDESIGN.TIME | translate }}
               </h2>
               @for (section of timeTrackingFormCfg; track section.key) {
@@ -176,7 +175,7 @@
 
           @if (selectedTabIndex === 5) {
             <div class="tab-content">
-              <h2 class="mat-h2 section-title">
+              <h2 class="section-title">
                 {{ 'PS.TABS.SYNC_BACKUP' | translate }}
               </h2>
               <section class="config-section sync-summary">

@@ -66,6 +66,8 @@
   min-height: 48px;
   color: var(--text-color);
   background: transparent;
+  // The toolbar starts at the page gutter like every page's content.
+  padding-left: var(--page-gutter);
   padding-right: $schedule-header-scrollbar-padding;
   @include extraBorder('-top');
   @include extraBorder('-bottom');
@@ -73,15 +75,16 @@
   .title {
     margin-left: auto;
     padding-right: var(--s);
-    font-weight: 600;
-    font-size: 18px;
+    font: var(--type-title);
+    letter-spacing: var(--track-title);
     text-align: right;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 
     @include mq(xs, max) {
-      font-size: 14px;
+      font: var(--type-body-strong);
+      letter-spacing: 0;
     }
   }
 
@@ -101,10 +104,10 @@
   .time-view-selector {
     display: flex;
     margin-left: var(--s);
-    border-radius: var(--card-border-radius);
+    border-radius: var(--r-md);
     overflow: hidden;
-    border: 1px solid var(--extra-border-color);
-    background: var(--bg-lighter);
+    border: 1px solid var(--separator);
+    background: transparent;
   }
 
   .time-view-btn {
@@ -119,13 +122,14 @@
       background: var(--separator-color);
     }
 
+    // The pressed segment is the tonal "selected" role, like the nav's.
     &.active {
-      background: var(--c-primary);
-      color: var(--c-contrast);
+      background: var(--palette-selected);
+      color: var(--palette-selected-ink);
     }
 
     &:not(:last-child) {
-      border-right: 1px solid var(--extra-border-color);
+      border-right: 1px solid var(--separator);
     }
   }
 }
@@ -140,7 +144,7 @@
   display: inline-block;
   width: 8px;
   height: 8px;
-  border-radius: 50%;
+  border-radius: var(--r-full);
   flex-shrink: 0;
 }
 

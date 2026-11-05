@@ -4,6 +4,7 @@ import {
   MatDialogActions,
   MatDialogContent,
   MatDialogRef,
+  MatDialogTitle,
 } from '@angular/material/dialog';
 import { TaskService } from '../../tasks/task.service';
 import { Observable } from 'rxjs';
@@ -12,7 +13,6 @@ import { T } from '../../../t.const';
 import { FormsModule } from '@angular/forms';
 import { SelectTaskComponent } from '../../tasks/select-task/select-task.component';
 import { MatButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
 import { AsyncPipe } from '@angular/common';
 import { MsToStringPipe } from '../../../ui/duration/ms-to-string.pipe';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -24,11 +24,11 @@ import { TranslatePipe } from '@ngx-translate/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,
+    MatDialogTitle,
     MatDialogContent,
     SelectTaskComponent,
     MatDialogActions,
     MatButton,
-    MatIcon,
     AsyncPipe,
     MsToStringPipe,
     TranslatePipe,

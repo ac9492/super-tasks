@@ -5,6 +5,11 @@
   role="button"
   tabindex="0"
   [attr.aria-expanded]="isExpanded()"
+  [attr.aria-label]="
+    props['sectionTitle']
+      ? (to.label || '' | translate) + ' – ' + (props['sectionTitle'] | translate)
+      : null
+  "
   class="collapsible-header sub-section-heading"
 >
   <mat-icon class="collapsible-expand-icon">expand_more</mat-icon>

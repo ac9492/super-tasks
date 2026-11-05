@@ -1,8 +1,12 @@
+<div class="settings-section-heading">
+  <h3>{{ title | translate }}</h3>
+</div>
 <collapsible
   [isExpanded]="expanded()"
   (isExpandedChange)="expanded.set($event)"
   [isIconBefore]="true"
-  [title]="title | translate"
+  [title]="T.PS.REDESIGN.MORE | translate"
+  [ariaLabel]="(T.PS.REDESIGN.MORE | translate) + ' – ' + (title | translate)"
   [formGroup]="soundForm"
 >
   <div class="form-wrapper">
@@ -58,12 +62,23 @@
     </div>
     <div class="setting-row">
       <div class="setting-control">
-        <mat-slide-toggle
-          class="width100"
-          [checked]="$safeNavigationMigration(this.config?.isIncreaseDoneSoundPitch)"
-          formControlName="isIncreaseDoneSoundPitch"
-          >{{ T.GCF.SOUND.IS_INCREASE_DONE_PITCH | translate }}</mat-slide-toggle
-        >
+        <!-- A toggle row is a field box like the formly toggles; the hidden
+             input only gives the box something to focus. -->
+        <mat-form-field class="width100 toggle-field">
+          <mat-slide-toggle
+            color="primary"
+            [checked]="$safeNavigationMigration(this.config?.isIncreaseDoneSoundPitch)"
+            formControlName="isIncreaseDoneSoundPitch"
+            >{{ T.GCF.SOUND.IS_INCREASE_DONE_PITCH | translate }}</mat-slide-toggle
+          >
+          <input
+            aria-hidden="true"
+            matInput
+            tabindex="-1"
+            readonly
+            class="toggle-field-input"
+          />
+        </mat-form-field>
       </div>
       <setting-help
         [label]="T.GCF.SOUND.IS_INCREASE_DONE_PITCH | translate"

@@ -10,6 +10,7 @@ import {
   MatDialogActions,
   MatDialogContent,
   MatDialogRef,
+  MatDialogTitle,
 } from '@angular/material/dialog';
 import { TaskService } from '../../tasks/task.service';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -45,6 +46,7 @@ import { SelectTaskComponent } from '../../tasks/select-task/select-task.compone
 import { MsToStringPipe } from '../../../ui/duration/ms-to-string.pipe';
 import { InputDurationDirective } from '../../../ui/duration/input-duration.directive';
 import { expandAnimation } from '../../../ui/animations/expand.ani';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 export type IdleDialogMode = 'BREAK' | 'TASK' | 'SPLIT';
 
@@ -55,6 +57,7 @@ export type IdleDialogMode = 'BREAK' | 'TASK' | 'SPLIT';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,
+    MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
     MatButton,
@@ -79,6 +82,7 @@ export type IdleDialogMode = 'BREAK' | 'TASK' | 'SPLIT';
   animations: [expandAnimation],
 })
 export class DialogIdleComponent implements OnInit, OnDestroy {
+  private readonly _dialogSize = useDialogSize('m');
   configService = inject(GlobalConfigService);
   private _taskService = inject(TaskService);
   private _matDialogRef =
@@ -277,19 +281,6 @@ export class DialogIdleComponent implements OnInit, OnDestroy {
         return T.F.TIME_TRACKING.D_IDLE.CONFIRM_SPLIT;
       default:
         return T.F.TIME_TRACKING.D_IDLE.CONFIRM_TRACK;
-    }
-  }
-
-  get confirmIcon(): string {
-    switch (this.mode) {
-      case 'BREAK':
-        return 'free_breakfast';
-      case 'TASK':
-        return this._isCreateNewTask ? 'add' : 'track_changes';
-      case 'SPLIT':
-        return 'done_all';
-      default:
-        return 'check';
     }
   }
 

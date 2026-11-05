@@ -1,4 +1,5 @@
-import { MatDialogConfig } from '@angular/material/dialog';
+import { inject } from '@angular/core';
+import { MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 
 /**
  * Dialog widths of the design language (docs/styling-guide.md § Dialogs):
@@ -14,8 +15,9 @@ import { MatDialogConfig } from '@angular/material/dialog';
 export type DialogSize = 's' | 'm' | 'l' | 'window';
 
 /**
- * Spread into `MatDialog.open()`: `open(Cmp, { ...dialogSize('m'), data })`.
- * Extra panel classes (the Settings window's own) ride along.
+ * For one call site: spread into `MatDialog.open()`,
+ * `open(Cmp, { ...dialogSize('window', 'settings-window'), data })`. Extra panel
+ * classes ride along.
  */
 export const dialogSize = (
   size: DialogSize,
@@ -25,3 +27,12 @@ export const dialogSize = (
     ? [`dialog-${size}`, ...extraClasses]
     : `dialog-${size}`,
 });
+
+/**
+ * For a dialog that always has the same size, wherever it is opened from: call
+ * it in a field initialiser, `private readonly _size = useDialogSize('m')`. The
+ * call sites then set no width of their own.
+ */
+export const useDialogSize = (size: DialogSize): void => {
+  inject(MatDialogRef, { optional: true })?.addPanelClass?.(`dialog-${size}`);
+};

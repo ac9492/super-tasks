@@ -8,12 +8,11 @@ import {
 import type { WorkContextSettingsDialogData } from './dialog-work-context-settings.component';
 
 describe('openWorkContextSettingsDialog', () => {
-  it('uses a shared responsive width for project and tag settings dialogs', () => {
+  it('uses the shared M dialog size for project and tag settings dialogs', () => {
     expect(WORK_CONTEXT_SETTINGS_DIALOG_CONFIG).toEqual({
       restoreFocus: true,
       backdropClass: 'cdk-overlay-transparent-backdrop',
-      width: '600px',
-      maxWidth: '95vw',
+      panelClass: 'dialog-m',
     });
   });
 

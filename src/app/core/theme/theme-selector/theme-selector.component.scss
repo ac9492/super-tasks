@@ -13,10 +13,15 @@ p {
 // Scoped under the container to outrank the global heading scale (its
 // `:not()` chain), so "Appearance" matches the other section headings.
 .theme-selector-container h3 {
-  font-size: var(--font-size-lg);
+  display: flex;
+  align-items: center;
+  min-height: var(--ctl-md);
+  font: var(--type-heading);
+  letter-spacing: 0;
 }
 h4 {
-  font-size: var(--font-size-md);
+  font: var(--type-body-strong);
+  letter-spacing: 0;
 }
 .dark-mode-select,
 .theme-select {
@@ -101,7 +106,8 @@ h4 {
   flex: none;
   width: var(--s2);
   height: var(--s2);
-  border: 1px solid var(--divider-color);
+  // 3:1 edge: the adjusted color often matches the panel behind it.
+  border: 1px solid var(--input-border-color);
   border-radius: var(--radius-xs);
 }
 .palette-hint {
@@ -167,8 +173,9 @@ h4 {
     align-items: center;
     gap: var(--s);
     margin-top: 0;
-    padding: var(--s) var(--s2);
-    font-size: var(--font-size-lg);
+    min-height: var(--ctl-md);
+    border-radius: var(--r-md);
+    font: var(--type-body-strong);
     list-style: none;
     cursor: pointer;
     user-select: none;
@@ -177,10 +184,13 @@ h4 {
     }
     &:focus-visible {
       outline: var(--focus-ring-width) solid var(--focus-ring-color);
-      outline-offset: calc(-1 * var(--focus-ring-width));
+      outline-offset: var(--focus-ring-offset);
     }
   }
   .summary-icon {
+    font-size: var(--icon-md);
+    width: var(--icon-md);
+    height: var(--icon-md);
     transition: var(--transition-standard);
   }
   &[open] .summary-icon {

@@ -9,22 +9,8 @@
   bottom: 0;
   z-index: var(--z-hover-controls);
   display: none;
-  border-radius: var(--card-border-radius);
-
-  &:before {
-    content: '';
-    border-left: var(--hover-controls-border);
-    width: 1px;
-    height: 90%;
-    position: absolute;
-    left: 0;
-    top: 5%;
-    opacity: var(--hover-controls-border-opacity);
-
-    :host-context([dir='rtl']) & {
-      right: 0;
-    }
-  }
+  // One group, inline radius, no divider bar.
+  border-radius: var(--r-sm);
 
   :host-context([dir='rtl']) & {
     position: absolute;
@@ -63,48 +49,36 @@
     // underneath is what actually covers the title.
     background:
       linear-gradient(var(--task-c-bg), var(--task-c-bg)),
-      var(--task-hover-underlay, var(--bg));
+      var(--task-hover-underlay, var(--card-bg));
 
     :host-context(.isMultiSelected) & {
       background:
         linear-gradient(var(--task-c-multi-selected-bg), var(--task-c-multi-selected-bg)),
-        var(--task-hover-underlay, var(--bg));
+        var(--task-hover-underlay, var(--card-bg));
     }
 
     :host-context(.isLightTheme .isSelected) & {
       background:
         linear-gradient(var(--task-c-selected-bg), var(--task-c-selected-bg)),
-        var(--task-hover-underlay, var(--bg));
+        var(--task-hover-underlay, var(--card-bg));
     }
 
     :host-context(.isDarkTheme .isSelected) & {
       background:
         linear-gradient(var(--task-c-selected-bg), var(--task-c-selected-bg)),
-        var(--task-hover-underlay, var(--bg));
-    }
-
-    :host-context(.isCurrent) & {
-      background:
-        linear-gradient(var(--task-c-current-bg), var(--task-c-current-bg)),
-        var(--task-hover-underlay, var(--bg));
+        var(--task-hover-underlay, var(--card-bg));
     }
 
     :host-context(.isDarkTheme .sub-tasks.sub-tasks) ::ng-deep & {
       background:
         linear-gradient(var(--sub-task-c-bg), var(--sub-task-c-bg)),
-        var(--task-hover-underlay, var(--bg));
+        var(--task-hover-underlay, var(--card-bg));
     }
 
     :host-context(.isDarkTheme .sub-tasks.sub-tasks .isSelected) ::ng-deep & {
       background:
         linear-gradient(var(--task-c-selected-bg), var(--task-c-selected-bg)),
-        var(--task-hover-underlay, var(--bg));
-    }
-
-    :host-context(.sub-tasks.sub-tasks .isCurrent) ::ng-deep & {
-      background:
-        linear-gradient(var(--task-c-current-bg), var(--task-c-current-bg)),
-        var(--task-hover-underlay, var(--bg));
+        var(--task-hover-underlay, var(--card-bg));
     }
   }
 

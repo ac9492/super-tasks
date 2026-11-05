@@ -24,6 +24,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { EMPTY_SIMPLE_COUNTER } from '../simple-counter.const';
 import { SimpleCounterService } from '../simple-counter.service';
 import { DialogConfirmComponent } from '../../../ui/dialog-confirm/dialog-confirm.component';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 @Component({
   selector: 'dialog-simple-counter-edit-settings',
@@ -42,6 +43,7 @@ import { DialogConfirmComponent } from '../../../ui/dialog-confirm/dialog-confir
   ],
 })
 export class DialogSimpleCounterEditSettingsComponent {
+  private readonly _dialogSize = useDialogSize('m');
   private readonly _dialogRef = inject(
     MatDialogRef<DialogSimpleCounterEditSettingsComponent>,
   );
@@ -99,6 +101,7 @@ export class DialogSimpleCounterEditSettingsComponent {
         data: {
           message: T.F.SIMPLE_COUNTER.D_CONFIRM_REMOVE.MSG,
           okTxt: T.F.SIMPLE_COUNTER.D_CONFIRM_REMOVE.OK,
+          isDestructive: true,
         },
       })
       .afterClosed()

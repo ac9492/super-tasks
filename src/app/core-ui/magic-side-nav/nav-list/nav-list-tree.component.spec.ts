@@ -236,7 +236,7 @@ class NavListTreeIndentHostComponent {
   readonly showLabels = signal(true);
 }
 
-describe('NavListTreeComponent row indent (#10472)', () => {
+describe('NavListTreeComponent row indent', () => {
   let fixture: ComponentFixture<NavListTreeIndentHostComponent>;
 
   const getIndent = (nodeId: string): string =>
@@ -272,10 +272,12 @@ describe('NavListTreeComponent row indent (#10472)', () => {
     fixture.detectChanges();
   });
 
-  it('indents the top-level rows one step under the section header', () => {
-    expect(getIndent('project-top')).toBe('16px');
-    expect(getIndent('folder-folder')).toBe('16px');
-    expect(getIndent('project-nested')).toBe('32px');
+  // The top-level rows sit on the same icon column as the destinations above
+  // them; only folder contents step in, one level at a time.
+  it('does not indent the top-level rows, and steps each folder level in by one', () => {
+    expect(getIndent('project-top')).toBe('0px');
+    expect(getIndent('folder-folder')).toBe('0px');
+    expect(getIndent('project-nested')).toBe('16px');
   });
 
   it('names the tree after its section label', () => {
@@ -373,18 +375,18 @@ describe('NavListTreeComponent archived projects link (#10473)', () => {
     expect(getLabel()).toBe('Archived (3)');
   });
 
-  // The tree indents its top-level rows by the same step (#10472).
+  // The tree does not indent its top-level rows, so the link carries no indent.
   it('lines up with the top-level project rows', () => {
     const getRowIndent = (): string =>
       (fixture.nativeElement.querySelector('.archived-projects-link') as HTMLElement)
         .style.paddingLeft;
 
-    expect(getRowIndent()).toBe('16px');
+    expect(getRowIndent()).toBe('');
 
     fixture.componentInstance.showLabels.set(false);
     fixture.detectChanges();
 
-    expect(getRowIndent()).toBe('0px');
+    expect(getRowIndent()).toBe('');
   });
 
   it('is not shown while no project is archived', () => {

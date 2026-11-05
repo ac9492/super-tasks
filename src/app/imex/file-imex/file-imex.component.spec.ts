@@ -315,9 +315,7 @@ describe('FileImexComponent', () => {
 
       component.openUrlImportDialog();
 
-      expect(mockMatDialog.open).toHaveBeenCalledWith(DialogImportFromUrlComponent, {
-        width: '500px',
-      });
+      expect(mockMatDialog.open).toHaveBeenCalledWith(DialogImportFromUrlComponent);
       expect(component.importFromUrlHandler).toHaveBeenCalledWith(
         'https://example.com/backup.json',
       );

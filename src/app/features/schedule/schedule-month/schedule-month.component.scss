@@ -24,16 +24,15 @@
 
 .weekday-header {
   text-align: center;
-  font-weight: 600;
-  padding: 6px;
+  font: var(--type-label);
+  padding: var(--s-half) var(--s-half);
   background: var(--bg);
   color: var(--text-color);
   border: 1px solid var(--grid-color);
   grid-row: 1;
 
   @include mq(xs, max) {
-    padding: 3px;
-    font-size: 11px;
+    padding: var(--s-quarter);
   }
 
   &:nth-child(1) {
@@ -161,8 +160,7 @@
   // Pushes itself and the deadline badge after it to the end of the header
   margin-left: auto;
   color: var(--text-color-muted);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
+  font: var(--type-meta);
   white-space: nowrap;
 }
 
@@ -170,9 +168,9 @@
   margin-bottom: 1px;
 
   .month-schedule-event {
-    font-size: 11px;
+    font: var(--type-meta);
     padding: var(--s-quarter) var(--s-half);
-    border-radius: 3px;
+    border-radius: var(--r-sm);
     cursor: pointer;
     display: flex;
     width: 100%;
@@ -180,7 +178,7 @@
     box-sizing: border-box;
 
     @include mq(xs, max) {
-      font-size: 10px;
+      font-size: var(--font-size-xs);
       padding: 1px var(--s-quarter);
     }
 

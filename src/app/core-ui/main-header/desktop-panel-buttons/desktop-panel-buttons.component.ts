@@ -73,25 +73,24 @@ import { GlobalConfigService } from '../../../features/config/global-config.serv
 
       .panel-btn {
         position: relative;
-        transition: all 0.2s ease;
+        transition:
+          background-color var(--transition-duration-s) var(--ani-standard-timing),
+          color var(--transition-duration-s) var(--ani-standard-timing);
         overflow: visible !important;
 
         .mat-icon {
-          transition: transform 0.2s ease;
           display: block;
         }
 
+        /* A pressed toggle is the one "selected" role: the tonal fill, its
+           paired ink and a filled glyph (never the accent). */
         &.isActive {
           box-shadow: none;
-          color: var(--brand);
-          background-color: var(--state-selected);
-
-          &::after {
-            border-radius: 4px;
-          }
+          color: var(--palette-selected-ink, var(--brand));
+          background-color: var(--palette-selected, var(--state-selected));
 
           .mat-icon {
-            transform: none;
+            font-variation-settings: 'FILL' 1;
           }
         }
 

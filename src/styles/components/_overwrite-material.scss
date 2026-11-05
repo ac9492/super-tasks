@@ -120,8 +120,8 @@
   --mat-dialog-actions-padding: var(--s) var(--dialog-gutter) var(--dialog-gutter);
   --mat-dialog-container-small-max-width: 94vw;
   --mat-dialog-container-max-width: 85vw;
-  // A dialog without a size class (dialogSize()) is at least S wide, never wider
-  // than the viewport minus its gutters.
+  // A dialog is never narrower than S, nor wider than the viewport minus its
+  // gutters.
   --mat-dialog-container-min-width: min(var(--dialog-w-s), calc(100vw - 2 * var(--s2)));
   --dialog-w-window: 1040px; // Settings and Plugins windows
 
@@ -302,6 +302,13 @@ body.isNativeMobile .mat-mdc-menu-panel {
   }
 }
 
+// A title followed by a <form> that wraps the content keeps the same
+// title-to-content gap as when they are siblings (Material zeroes the content's
+// top padding only for an adjacent sibling).
+.mat-mdc-dialog-title + form > .mat-mdc-dialog-content:first-child {
+  padding-top: 0;
+}
+
 // A dialog with a help button (help-section) keeps its title clear of it.
 .mat-mdc-dialog-surface:has(help-section) .mat-mdc-dialog-title {
   padding-inline-end: calc(var(--dialog-gutter) + var(--ctl-md));
@@ -327,9 +334,12 @@ body.isNativeMobile .mat-mdc-menu-panel {
   margin-inline-end: auto;
 }
 
-// Dialog widths: dialogSize() in src/app/ui/dialog-size.util.ts sets the
-// class; the pane's max-width keeps every size inside the viewport.
+// Dialog widths: dialogSize() / useDialogSize() in src/app/ui/dialog-size.util.ts
+// set the class; the pane's max-width keeps every size inside the viewport. A
+// dialog without a size class is S (440px) wide.
 .cdk-overlay-pane.mat-mdc-dialog-panel {
+  width: var(--dialog-w-s);
+
   &.dialog-s {
     width: var(--dialog-w-s);
   }
@@ -510,6 +520,13 @@ body.isNativeMobile .project-complete-fullscreen-dialog {
 
   .mdc-text-field--filled.mdc-text-field--no-label {
     --field-box-height: calc(var(--ctl-md) - 2 * var(--st-line-width));
+  }
+
+  // A select's trigger is as tall as its 24px arrow, taller than a text line.
+  .mdc-text-field--no-label:has(.mat-mdc-select) {
+    --mat-form-field-container-vertical-padding: calc(
+      (var(--field-box-height) - 24px) / 2
+    );
   }
 }
 

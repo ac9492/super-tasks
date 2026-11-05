@@ -1,5 +1,5 @@
 @if (view() === 'main') {
-  <h1 mat-dialog-title>{{ T.F.D_RATE.TITLE | translate }}</h1>
+  <h2 mat-dialog-title>{{ T.F.D_RATE.TITLE | translate }}</h2>
 
   <mat-dialog-content>
     <p [innerHTML]="T.F.D_RATE.TXT | translate"></p>
@@ -28,16 +28,15 @@
     </div>
   </mat-dialog-content>
 
-  <mat-dialog-actions class="footer-actions">
+  <mat-dialog-actions align="end">
     <button
       mat-button
       type="button"
-      class="opt-out-link"
+      class="dialog-action-start"
       (click)="close('never')"
     >
       {{ T.F.D_RATE.BTN_DONT_BOTHER | translate }}
     </button>
-    <span class="spacer"></span>
     <button
       mat-button
       type="button"
@@ -47,7 +46,7 @@
     </button>
   </mat-dialog-actions>
 } @else {
-  <h1 mat-dialog-title>{{ T.F.D_RATE.FEEDBACK_TITLE | translate }}</h1>
+  <h2 mat-dialog-title>{{ T.F.D_RATE.FEEDBACK_TITLE | translate }}</h2>
 
   <mat-dialog-content>
     <div class="action-list">
@@ -84,10 +83,11 @@
     </div>
   </mat-dialog-content>
 
-  <mat-dialog-actions align="start">
+  <mat-dialog-actions align="end">
     <button
       mat-button
       type="button"
+      class="dialog-action-start"
       (click)="showMain()"
     >
       <mat-icon>arrow_back</mat-icon>

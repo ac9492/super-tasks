@@ -26,7 +26,7 @@ $summary-point-inner-margin: var(--s);
   }
 
   ::ng-deep .mat-mdc-tab-labels {
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
   }
 
@@ -48,17 +48,10 @@ $summary-point-inner-margin: var(--s);
   //}
 }
 
-.page-wrapper {
-  //display: flex;
-  //align-items: center;
-  //flex-direction: column;
-  text-align: center;
-}
-
 .tab-inner {
-  margin: auto;
+  margin: 0;
   max-width: var(--component-max-width);
-  padding: var(--s);
+  padding: var(--s) 0;
 
   &.full-width {
     max-width: none;
@@ -70,15 +63,17 @@ $summary-point-inner-margin: var(--s);
 }
 
 .done-headline {
-  margin-top: var(--s4);
-  margin-bottom: calc(var(--s3) - var(--s));
+  margin: 0 0 var(--s3);
+  font: var(--type-title);
+  letter-spacing: var(--track-title);
 }
 
 .daily-summary-summary {
   margin-bottom: var(--s5);
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
+  gap: var(--s3);
 
   // Dim the points, not the container: the route animation fades the container
   // in, and dimming it too would snap its opacity when that animation ends.
@@ -96,28 +91,15 @@ $summary-point-inner-margin: var(--s);
 }
 
 .summary-point {
-  vertical-align: center;
   display: inline-block;
-  align-items: center;
-  text-align: center;
-  margin: $summary-point-inner-margin;
-  //flex-grow: 1;
+  text-align: start;
   flex-basis: 160px;
   position: relative;
 
   .summary-val {
     display: flex;
-    justify-content: center;
-
-    :first-child {
-      justify-content: right;
-      padding-right: var(--s-half);
-    }
-
-    :not(:first-child) {
-      justify-content: left;
-      padding-left: var(--s-half);
-    }
+    justify-content: flex-start;
+    gap: var(--s-half);
   }
 
   inline-input {
@@ -136,7 +118,7 @@ $summary-point-inner-margin: var(--s);
 }
 
 .summary-val {
-  font-weight: bold;
+  font: var(--type-body-strong);
 }
 
 .tabs {
@@ -148,9 +130,8 @@ $summary-point-inner-margin: var(--s);
 .simple-counter-summary {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   margin-bottom: var(--s6);
-  margin-top: calc(-1 * var(--s));
 
   simple-counter-summary-item {
     flex-basis: 140px;
@@ -182,7 +163,6 @@ $summary-point-inner-margin: var(--s);
   &::ng-deep inline-markdown {
     max-width: 400px;
     text-align: left;
-    margin: auto;
 
     &.isFocused {
       border-color: transparent;
@@ -221,6 +201,6 @@ $summary-point-inner-margin: var(--s);
 }
 
 .week-section-title {
-  font-weight: var(--font-weight-bold);
+  font: var(--type-heading);
   margin-bottom: var(--s-half);
 }

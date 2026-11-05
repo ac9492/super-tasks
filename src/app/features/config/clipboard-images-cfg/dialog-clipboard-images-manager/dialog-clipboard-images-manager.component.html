@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{ T.GCF.CLIPBOARD_IMAGES.MANAGER_TITLE | translate }}</h1>
+<h2 mat-dialog-title>{{ T.GCF.CLIPBOARD_IMAGES.MANAGER_TITLE | translate }}</h2>
 
 <mat-dialog-content>
   @if (isLoading()) {
@@ -24,10 +24,7 @@
             <strong>{{ getTotalSize() }}</strong>
           </p>
         </div>
-        <mat-form-field
-          appearance="outline"
-          class="sort-field"
-        >
+        <mat-form-field class="sort-field">
           <mat-label>{{ T.GCF.CLIPBOARD_IMAGES.SORT_BY | translate }}</mat-label>
           <mat-select
             [value]="sortOrder()"
@@ -91,16 +88,18 @@
   @if (!isLoading() && images().length > 0) {
     <button
       (click)="deleteAll()"
+      class="dialog-action-start"
       color="warn"
-      mat-button
+      mat-stroked-button
+      type="button"
     >
-      <mat-icon>delete_sweep</mat-icon>
       {{ T.GCF.CLIPBOARD_IMAGES.DELETE_ALL | translate }}
     </button>
   }
   <button
     (click)="close()"
     mat-button
+    type="button"
   >
     {{ T.G.CLOSE | translate }}
   </button>

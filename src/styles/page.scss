@@ -230,17 +230,17 @@ body {
   }
 }
 
+// Secondary pages (docs/styling-guide.md § Page layout): one column that
+// starts at the page gutter, the left edge of the header title, and is at most
+// --component-max-width wide. Never centred: it lines up with the task column.
+// 16px above, 72px below for the FAB and the bottom nav.
 .page-wrapper {
-  padding: var(--s) var(--s) calc(var(--s) * 9);
-
-  @include media-queries.mq(xs) {
-    padding: var(--s) var(--s2) calc(var(--s) * 9);
-  }
+  padding: var(--s2) var(--page-gutter) var(--s9);
 }
 
 .component-wrapper {
   max-width: var(--component-max-width);
-  margin: auto;
+  margin: 0;
 }
 
 .task-list-wrapper {

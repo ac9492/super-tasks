@@ -1,18 +1,9 @@
-.page-wrapper {
-  padding: calc(var(--s) * 2);
-  max-width: 600px;
-  margin: 0 auto;
-  text-align: center;
-}
-
 .content {
-  margin-top: calc(var(--s) * 4);
+  max-width: var(--component-max-width);
 }
 
 p {
-  margin-bottom: calc(var(--s) * 2);
-  font-size: 1.2rem;
-  line-height: 1.6;
+  margin: 0 0 var(--s2);
 }
 
 //.mat-mdc-raised-button {

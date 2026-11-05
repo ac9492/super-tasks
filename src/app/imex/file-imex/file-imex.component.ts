@@ -168,9 +168,7 @@ export class FileImexComponent implements OnInit {
 
   openUrlImportDialog(): void {
     this._matDialog
-      .open(DialogImportFromUrlComponent, {
-        width: '500px', // Or any other appropriate width
-      })
+      .open(DialogImportFromUrlComponent)
       .afterClosed()
       .subscribe(async (url: string | undefined) => {
         if (url) {
@@ -311,10 +309,7 @@ export class FileImexComponent implements OnInit {
   }
 
   openArchiveCompression(): void {
-    this._matDialog.open(DialogArchiveCompressionComponent, {
-      width: '500px',
-      maxWidth: '90vw',
-    });
+    this._matDialog.open(DialogArchiveCompressionComponent);
   }
 
   openTodoistImport(): Promise<void> {

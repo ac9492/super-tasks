@@ -31,6 +31,7 @@ import {
   PlainspaceAuthApiService,
   PlainspaceAuthFailure,
 } from '../plainspace-auth-api.service';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 export interface PlainspaceConnectDialogData {
   host?: string | null;
@@ -110,6 +111,7 @@ const MAX_DISPLAY_NAME_LENGTH = 40;
   ],
 })
 export class PlainspaceConnectDialogComponent {
+  private readonly _dialogSize = useDialogSize('m');
   private _dialogRef =
     inject<
       MatDialogRef<

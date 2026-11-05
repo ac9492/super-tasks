@@ -217,7 +217,6 @@ export class DialogSimpleCounterEditComponent {
       .open(DialogSimpleCounterEditSettingsComponent, {
         data: { simpleCounter: this.localCounter() },
         restoreFocus: true,
-        width: '600px',
       })
       .afterClosed()
       .subscribe((settings?: Partial<SimpleCounterCopy>) => {

@@ -13,6 +13,13 @@
     padding-left: var(--s);
   }
 
+  // Tag chips are meta-sized: 28px tall, 12/16 label (Material tokens).
+  ::ng-deep .mat-mdc-standard-chip {
+    --mat-chip-container-height: 28px;
+    --mat-chip-label-text-size: var(--font-size-sm);
+    --mat-chip-label-text-line-height: 16px;
+  }
+
   input {
     appearance: none;
     display: block;
@@ -22,8 +29,10 @@
     color: var(--text-color);
     // matChipInput only inherits Material's form-field typography when it sits
     // inside a mat-form-field; in the task detail panel it does not, so this
-    // input fell back to the UA default for form controls (~13px).
-    @include noIosFocusZoom();
+    // input fell back to the UA default for form controls (~13px). Body size,
+    // and 16px only where touch is primary (iOS zooms into a smaller field).
+    font-size: var(--font-size-md);
+    @include noIosFocusZoomOnTouch();
     // The UA `font` shorthand also forces its own family here; follow the app stack.
     font-family: inherit;
     border-top: 1px solid transparent;

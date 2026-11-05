@@ -1,24 +1,9 @@
-<mat-dialog-content [class.isNoMsg]="!data.message">
-  @if (data.message) {
-    <div
-      [innerHtml]="data.message | translate: data.translateParams"
-      class="content"
-    ></div>
+<h2 mat-dialog-title>{{ title }}</h2>
+
+<mat-dialog-content>
+  @if (isMessageHtml) {
+    <div [innerHtml]="message"></div>
   }
-  <!--  <form-->
-  <!--    #formEl-->
-  <!--    (submit)="formEl.checkValidity() && close(true)"-->
-  <!--  >-->
-  <!--    <mat-form-field>-->
-  <!--      <mat-label>{{ data.placeholder }}</mat-label>-->
-  <!--      <input-->
-  <!--        [(ngModel)]="txtVal"-->
-  <!--        matInput-->
-  <!--        required="true"-->
-  <!--        type="text"-->
-  <!--      />-->
-  <!--    </mat-form-field>-->
-  <!--  </form>-->
 
   <form
     #formEl="ngForm"

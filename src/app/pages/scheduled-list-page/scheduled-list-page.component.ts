@@ -9,7 +9,6 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { DialogEditTaskRepeatCfgComponent } from '../../features/task-repeat-cfg/dialog-edit-task-repeat-cfg/dialog-edit-task-repeat-cfg.component';
 import { TaskRepeatCfgService } from '../../features/task-repeat-cfg/task-repeat-cfg.service';
 import { DateTimeFormatService } from '../../core/date-time-format/date-time-format.service';
-import { MatCard, MatCardContent } from '@angular/material/card';
 import { TaskTitleComponent } from '../../ui/task-title/task-title.component';
 import { MatRipple } from '@angular/material/core';
 import { MatIcon } from '@angular/material/icon';
@@ -29,8 +28,6 @@ import { getRepeatCfgTooltipText } from './get-repeat-cfg-tooltip-text.util';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [standardListAnimation],
   imports: [
-    MatCard,
-    MatCardContent,
     TaskTitleComponent,
     MatRipple,
     MatIcon,

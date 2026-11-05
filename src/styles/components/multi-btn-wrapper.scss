@@ -6,11 +6,17 @@
   align-items: stretch;
   justify-content: stretch;
 
+  // Side-nav rows are one control height (40, 48 on touch); the line height
+  // comes from the row's type role, not from the box.
   a,
   button {
-    height: 44px !important;
-    line-height: 44px !important;
-    min-height: 44px !important;
+    height: var(--ctl-md) !important;
+    min-height: var(--ctl-md) !important;
+
+    @media (pointer: coarse) {
+      height: var(--ctl-lg) !important;
+      min-height: var(--ctl-lg) !important;
+    }
   }
 
   button:first-of-type {
@@ -20,7 +26,7 @@
   > button:nth-of-type(n + 2),
   > .additional-btn {
     //>  button:last-of-type {
-    border-radius: 0;
+    border-radius: var(--r-md);
     align-self: stretch;
     display: inline-flex;
     min-width: 48px;
@@ -31,7 +37,7 @@
     justify-content: center;
 
     .mat-mdc-button-persistent-ripple {
-      border-radius: 0 !important;
+      border-radius: var(--r-md) !important;
     }
 
     .mat-mdc-button-touch-target {
