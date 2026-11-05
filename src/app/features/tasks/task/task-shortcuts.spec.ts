@@ -1032,7 +1032,7 @@ describe('TaskComponent shortcut handling', () => {
       expect(taskServiceSpy.setSelectedId).toHaveBeenCalledWith(null);
     });
 
-    it('closes the panel on mobile where the icon stays "chat" while open', () => {
+    it('closes the panel on mobile where the notes icon stays visible while open', () => {
       isXs().set(true);
       setTask({ notes: 'some notes' });
       selectedTaskId().set('top-1');

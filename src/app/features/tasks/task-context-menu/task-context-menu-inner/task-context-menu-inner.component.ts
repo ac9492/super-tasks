@@ -1,3 +1,4 @@
+import { TagIconPipe } from '../../../tag/tag-icon.pipe';
 import { TaskPriorityIndicatorComponent } from '../../task-priority-indicator/task-priority-indicator.component';
 import {
   TASK_PRIORITY_LABEL_KEY,
@@ -105,6 +106,7 @@ import { PlainspaceMember } from '../../../issue/providers/plainspace/plainspace
 @Component({
   selector: 'task-context-menu-inner',
   imports: [
+    TagIconPipe,
     AsyncPipe,
     MatIcon,
     MatMenu,

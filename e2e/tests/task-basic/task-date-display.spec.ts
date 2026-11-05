@@ -84,6 +84,10 @@ test('task date styles and weekday preference work through settings and persist 
     .click();
   await style().click();
   await page.getByRole('option', { name: 'December 3rd (English)', exact: true }).click();
+  await page
+    .getByRole('dialog', { name: 'Global Settings' })
+    .getByRole('button', { name: 'Close', exact: true })
+    .click();
   await page.getByRole('menuitem', { name: 'Inbox', exact: true }).click();
   for (let i = 0; i < 3; i++) {
     const row = taskPage.getTaskByText(`${testPrefix} date ${i}`);
@@ -115,6 +119,10 @@ test('task date styles and weekday preference work through settings and persist 
   await style().click();
   await page
     .getByRole('option', { name: '3-Dec (abbreviated month)', exact: true })
+    .click();
+  await page
+    .getByRole('dialog', { name: 'Global Settings' })
+    .getByRole('button', { name: 'Close', exact: true })
     .click();
   await page.getByRole('menuitem', { name: 'Inbox', exact: true }).click();
   await expect(

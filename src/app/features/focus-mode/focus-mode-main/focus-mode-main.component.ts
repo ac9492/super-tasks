@@ -39,7 +39,12 @@ import { TaskSharedActions } from '../../../root-store/meta/task-shared.actions'
 import { SimpleCounterService } from '../../simple-counter/simple-counter.service';
 import { SimpleCounter } from '../../simple-counter/simple-counter.model';
 import { ICAL_TYPE } from '../../issue/issue.const';
-import { MatFabButton, MatIconButton, MatMiniFabButton } from '@angular/material/button';
+import {
+  MatButton,
+  MatFabButton,
+  MatIconButton,
+  MatMiniFabButton,
+} from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatIcon } from '@angular/material/icon';
@@ -103,6 +108,7 @@ import { LayoutService } from '../../../core-ui/layout/layout.service';
     FocusClockFaceComponent,
     FocusModeTaskRowComponent,
     MatIconButton,
+    MatButton,
     MatTooltip,
     MatIcon,
     InlineMarkdownComponent,
@@ -279,7 +285,7 @@ export class FocusModeMainComponent {
     const options: ReadonlyArray<SegmentedButtonOption> = [
       {
         id: FocusModeMode.Flowtime,
-        icon: 'auto_awesome',
+        icon: 'all_inclusive',
         labelKey: T.F.FOCUS_MODE.FLOWTIME,
         hintKey: T.F.FOCUS_MODE.FLOWTIME_HINT,
       },

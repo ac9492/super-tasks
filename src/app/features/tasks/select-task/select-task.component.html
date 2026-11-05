@@ -9,7 +9,7 @@
     required
   />
   @if (!isCreate()) {
-    <mat-icon matSuffix="">track_changes</mat-icon>
+    <mat-icon matSuffix="">checklist</mat-icon>
   }
   @if (isCreate()) {
     <mat-icon matSuffix="">add</mat-icon>
@@ -35,7 +35,7 @@
         @if (task.projectId) {
           <!---->
           @if (!task.issueType && !projectMap()[task.projectId]) {
-            <mat-icon>library_books</mat-icon>
+            <mat-icon>list_alt</mat-icon>
           }
           @if (projectMap()[task.projectId]) {
             <tag [tag]="projectMap()[task.projectId]"></tag>

@@ -155,9 +155,9 @@ const setPinnedToToday = async (
   const note = client.page.locator(`#n-${noteId} note`);
   await note.hover();
   const toggle = pinned
-    ? note
-        .locator('button')
-        .filter({ has: client.page.locator('mat-icon', { hasText: /^wb_sunny$/ }) })
+    ? note.locator('button').filter({
+        has: client.page.locator('mat-icon', { hasText: /^(wb_sunny|today)$/ }),
+      })
     : note.locator('button:has(mat-icon[data-mat-icon-name="remove_today"])');
   await toggle.click();
   await expect

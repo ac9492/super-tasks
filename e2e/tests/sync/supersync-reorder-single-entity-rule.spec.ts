@@ -294,7 +294,7 @@ const editNote = async (page: Page, id: string, edit: EditName): Promise<void> =
     await note
       .locator(
         edit === 'pin'
-          ? 'button:has(mat-icon:text-is("wb_sunny"))'
+          ? 'button:has(mat-icon:text-matches("^(wb_sunny|today)$"))'
           : 'button:has(mat-icon[data-mat-icon-name="remove_today"])',
       )
       .click();
@@ -303,9 +303,9 @@ const editNote = async (page: Page, id: string, edit: EditName): Promise<void> =
     await page
       .locator('.mat-mdc-menu-content button')
       .filter({
-        has: page.locator(
-          `mat-icon:text-is("${edit === 'lock' ? 'lock_open' : 'lock'}")`,
-        ),
+        has: page.locator('mat-icon', {
+          hasText: edit === 'lock' ? /^(lock_open|code)$/ : /^(lock|visibility)$/,
+        }),
       })
       .click();
   } else {
@@ -1027,7 +1027,9 @@ test.describe('@supersync released reorder rule (#10364)', () => {
               );
               const note = released.page.locator(`#n-${ids[0]}`);
               await note.hover();
-              await note.locator('button:has(mat-icon:text-is("wb_sunny"))').click();
+              await note
+                .locator('button:has(mat-icon:text-matches("^(wb_sunny|today)$"))')
+                .click();
               await expect
                 .poll(async () => pending(await rows(released.page)).map((r) => r.op.a))
                 .toContain('NU');

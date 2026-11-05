@@ -54,12 +54,15 @@
         (keydown)="onTimeKeyDown($event)"
       />
       @if (selectedTime()) {
-        <mat-icon
-          class="time-clear-btn"
+        <button
+          type="button"
+          mat-icon-button
           matSuffix
+          [attr.aria-label]="T.DATETIME_SCHEDULE.CLEAR_TIME | translate"
           (click)="onTimeClear($event)"
-          >close
-        </mat-icon>
+        >
+          <mat-icon>close</mat-icon>
+        </button>
       }
     </mat-form-field>
     <!-- Lets a host place a compact control (e.g. repeat) beside the time field. -->

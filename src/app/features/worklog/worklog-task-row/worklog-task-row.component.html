@@ -29,7 +29,10 @@
 </td>
 <td class="worked">
   @if (entry().task.subTaskIds && entry().task.subTaskIds.length > 0) {
-    <span>∑ {{ entry().task.timeSpentOnDay[dateStr()] | msToClockString }}</span>
+    <span class="duration-total">
+      <mat-icon inline="true">timer</mat-icon>
+      {{ entry().task.timeSpentOnDay[dateStr()] | msToClockString }}
+    </span>
   } @else {
     <inline-input
       (changed)="timeChange.emit($event)"
@@ -50,7 +53,7 @@
         color=""
         mat-icon-button
       >
-        <mat-icon>settings_backup_restore</mat-icon>
+        <mat-icon>unarchive</mat-icon>
       </button>
     }
   </td>

@@ -60,7 +60,7 @@ const archiveDoneTasks = async (page: SimulatedE2EClient['page']): Promise<void>
   await page.waitForURL(/daily-summary/);
 
   const saveAndGoHomeBtn = page.locator(
-    'daily-summary button[mat-flat-button]:has(mat-icon:has-text("wb_sunny"))',
+    'daily-summary button[mat-flat-button]:has(mat-icon:text-matches("^(wb_sunny|check_circle)$"))',
   );
   await saveAndGoHomeBtn.waitFor({ state: 'visible', timeout: 10000 });
   await saveAndGoHomeBtn.click();

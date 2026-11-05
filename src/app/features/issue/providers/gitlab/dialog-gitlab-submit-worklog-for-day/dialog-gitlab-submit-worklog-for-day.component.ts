@@ -206,7 +206,7 @@ export class DialogGitlabSubmitWorklogForDayComponent {
 
       this._snackService.open({
         type: 'SUCCESS',
-        ico: 'file_upload',
+        ico: 'cloud_upload',
         // TODO translate
         msg: 'Gitlab: Successfully posted time tracking data for GitLab tasks',
       });

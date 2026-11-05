@@ -15,6 +15,7 @@ import { filter, map, switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { WorkContextService } from '../../../features/work-context/work-context.service';
 import { WorkContextType } from '../../../features/work-context/work-context.model';
+import { resolveTagIcon } from '../../../features/tag/resolve-tag-icon.util';
 import { DEFAULT_PROJECT_ICON } from '../../../features/project/project.const';
 import { NAV_SECTION_ICON } from '../../magic-side-nav/nav-section-icons.const';
 import { isSingleEmoji } from '../../../util/extract-first-emoji';
@@ -112,7 +113,7 @@ import { PluginIconComponent } from '../../../plugins/ui/plugin-icon/plugin-icon
                   : ''
               }}"
             >
-              <mat-icon>filter_list</mat-icon>
+              <mat-icon>tune</mat-icon>
             </button>
             <!-- Inside the trigger's own block, which is a constraint rather
                  than a preference: a template reference declared in a sibling
@@ -447,7 +448,9 @@ export class PageTitleComponent {
       return DEFAULT_PROJECT_ICON;
     }
     const defaultIcon = wc.type === WorkContextType.TAG ? 'label' : DEFAULT_PROJECT_ICON;
-    return wc.icon || defaultIcon;
+    return (
+      (wc.type === WorkContextType.TAG ? resolveTagIcon(wc) : wc.icon) || defaultIcon
+    );
   });
 
   isContextEmojiIcon = computed<boolean>(() => isSingleEmoji(this.contextIcon()));

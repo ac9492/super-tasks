@@ -560,7 +560,7 @@ export class FocusModeEffects {
           if (!isOverlayShown) {
             this.bannerService.open({
               id: BannerId.FocusModeSessionDone,
-              ico: 'celebration',
+              ico: 'check_circle',
               msg: T.F.FOCUS_MODE.SESSION_COMPLETED_BANNER,
               translateParams: { duration: msToString(duration, true) },
               action: {

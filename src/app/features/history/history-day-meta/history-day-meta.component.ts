@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MsToMinuteClockStringPipe } from '../../../ui/duration/ms-to-minute-clock-string.pipe';
+import { SimpleCounterIconPipe } from '../../simple-counter/simple-counter-icon.pipe';
 import { SimpleCounter } from '../../simple-counter/simple-counter.model';
 
 /**
@@ -14,7 +15,7 @@ import { SimpleCounter } from '../../simple-counter/simple-counter.model';
   templateUrl: './history-day-meta.component.html',
   styleUrls: ['./history-day-meta.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatIcon, MatTooltip, MsToMinuteClockStringPipe],
+  imports: [MatIcon, MatTooltip, MsToMinuteClockStringPipe, SimpleCounterIconPipe],
 })
 export class HistoryDayMetaComponent {
   readonly counters = input.required<SimpleCounter[]>();

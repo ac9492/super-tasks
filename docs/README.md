@@ -82,6 +82,10 @@ it wrong: any claim about which releases carry a change must be re-derived with
 any code changing.
 
 - [Recurring events implementation plan](research/recurring-events-implementation-plan.md)
+- [UI icon audit](research/icon-audit.md) — dated semantic inventory, contextual
+  replacement recommendations, source locations and a searchable visual review
+- [Icon replacement approval report](research/icon-replacements.md) — concrete
+  before/after artwork, visual-identity findings, review choices and an SVG pack
 - [Snap Wayland GPU root cause and shipped fix](research/snap-wayland-gpu-fix-research.md)
   — kept past its research life because `electron-builder.yaml`,
   `tools/afterPack.js` and `build/linux/snap-wrapper.sh` cite it for the reason

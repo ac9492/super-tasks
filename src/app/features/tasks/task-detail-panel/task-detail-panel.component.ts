@@ -405,10 +405,9 @@ export class TaskDetailPanelComponent implements OnInit, AfterViewInit, OnDestro
 
   showScheduleIcon = computed(() => {
     const task = this.task();
-    if (task.dueDay) return 'today';
-    if (task.dueWithTime && !task.remindAt) return 'schedule';
-    if (task.repeatCfgId) return 'repeat';
-    return 'alarm';
+    if (task.dueDay) return this.isPlannedForTodayDay() ? 'today' : 'calendar_month';
+    if (task.dueWithTime) return 'schedule';
+    return 'calendar_month';
   });
 
   scheduleLabelKey = computed(() => {

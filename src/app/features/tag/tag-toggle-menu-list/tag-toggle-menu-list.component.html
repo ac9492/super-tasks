@@ -18,7 +18,7 @@
         >
           <select-option-row
             [title]="tag.title"
-            [icon]="tag.icon"
+            [icon]="tag.displayIcon"
             defaultIcon="label"
             [color]="tag.color || tag.theme?.primary"
             [isSelected]="task().tagIds.includes(tag.id)"

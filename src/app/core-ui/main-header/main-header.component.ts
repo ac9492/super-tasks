@@ -187,7 +187,7 @@ export class MainHeaderComponent implements OnDestroy {
   );
   isOnline = toSignal(isOnline$);
   // State-aware tooltip for the sync button: the icon alone (sync_error /
-  // wifi_off) signals a problem but never explains it. Surfacing the state in
+  // cloud_off) signals a problem but never explains it. Surfacing the state in
   // the tooltip is the ambient counterpart to suppressing the transient
   // network snack on automatic syncs — a persistent problem stays discoverable
   // by glancing at / hovering the always-present header button.
@@ -213,7 +213,7 @@ export class MainHeaderComponent implements OnDestroy {
     }
     return T.MH.TRIGGER_SYNC;
   });
-  // One icon per state, nothing drawn over it (#10427). All but `wifi_off` are
+  // One icon per state, nothing drawn over it (#10427). All but `cloud_off` are
   // the SVG icons in `BUILT_IN_SVG_ICONS`: one sync ring at the header's icon
   // size, with a check, "!" or slash inside, so the arrows stay identical
   // across states and in-sync differs from pending only by the check.
@@ -223,7 +223,7 @@ export class MainHeaderComponent implements OnDestroy {
       return 'sync_off';
     }
     if (!this.isOnline()) {
-      return 'wifi_off';
+      return 'cloud_off';
     }
     if (this.syncState() === 'ERROR') {
       return 'sync_error';

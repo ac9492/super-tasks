@@ -1,3 +1,4 @@
+import { SimpleCounterIconPipe } from '../../simple-counter/simple-counter-icon.pipe';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -54,6 +55,7 @@ export type IdleDialogMode = 'BREAK' | 'TASK' | 'SPLIT';
   styleUrls: ['./dialog-idle.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    SimpleCounterIconPipe,
     FormsModule,
     MatDialogContent,
     MatDialogActions,
@@ -285,7 +287,7 @@ export class DialogIdleComponent implements OnInit, OnDestroy {
       case 'BREAK':
         return 'free_breakfast';
       case 'TASK':
-        return this._isCreateNewTask ? 'add' : 'track_changes';
+        return this._isCreateNewTask ? 'add' : 'more_time';
       case 'SPLIT':
         return 'done_all';
       default:

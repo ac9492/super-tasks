@@ -15,6 +15,8 @@ import {
 } from '@angular/cdk/overlay';
 import { PRESET_COLORS } from '../work-context-color';
 import { MatIcon } from '@angular/material/icon';
+import { TranslatePipe } from '@ngx-translate/core';
+import { T } from '../../t.const';
 
 const PANEL_GAP = 4;
 const VIEWPORT_MARGIN = 8;
@@ -24,9 +26,10 @@ const VIEWPORT_MARGIN = 8;
   templateUrl: './input-color-picker.component.html',
   styleUrls: ['./input-color-picker.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatIcon, CdkOverlayOrigin, CdkConnectedOverlay],
+  imports: [MatIcon, CdkOverlayOrigin, CdkConnectedOverlay, TranslatePipe],
 })
 export class InputColorPickerComponent {
+  readonly T = T;
   readonly value = input<string>('#000000');
   readonly label = input<string>('');
   readonly valueChange = output<string>();

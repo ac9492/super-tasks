@@ -6,7 +6,11 @@
   #triggerOrigin="cdkOverlayOrigin"
   cdkOverlayOrigin
   type="button"
-  class="color-trigger"
+  class="color-trigger focus-ring"
+  [attr.aria-label]="
+    (label() || (T.UI.COLOR_PICKER.SELECT_COLOR | translate)) + ': ' + value()
+  "
+  [attr.aria-expanded]="isOpen()"
   [style.background-color]="value()"
   (click)="toggle()"
 ></button>
@@ -28,7 +32,9 @@
       @for (color of presetColors; track color) {
         <button
           type="button"
-          class="color-swatch"
+          class="color-swatch focus-ring"
+          [attr.aria-label]="(T.UI.COLOR_PICKER.SELECT_COLOR | translate) + ' ' + color"
+          [attr.aria-pressed]="value() === color"
           [style.background-color]="color"
           [class.selected]="value() === color"
           (click)="selectColor(color)"
@@ -40,16 +46,14 @@
       }
       <button
         type="button"
-        class="color-swatch custom-color-btn"
+        class="color-swatch custom-color-btn focus-ring"
+        [attr.aria-label]="T.UI.COLOR_PICKER.CUSTOM_COLOR | translate"
+        [attr.aria-pressed]="!isPresetColor()"
         [style.background-color]="isPresetColor() ? '' : value()"
         [class.selected]="!isPresetColor()"
         (click)="openNativePicker()"
       >
-        @if (!isPresetColor()) {
-          <mat-icon>check</mat-icon>
-        } @else {
-          <mat-icon>colorize</mat-icon>
-        }
+        <mat-icon>palette</mat-icon>
       </button>
     </div>
   </div>
@@ -58,6 +62,8 @@
 <input
   #nativeInput
   type="color"
+  tabindex="-1"
+  [attr.aria-label]="T.UI.COLOR_PICKER.CUSTOM_COLOR | translate"
   class="native-color-input"
   [value]="value()"
   (change)="onNativeChange($event)"

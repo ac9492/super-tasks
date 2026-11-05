@@ -1,3 +1,4 @@
+import { TagIconPipe } from '../../tag/tag-icon.pipe';
 import { TaskPriorityIndicatorComponent } from '../task-priority-indicator/task-priority-indicator.component';
 import { TASK_PRIORITY_LABEL_KEY, TASK_PRIORITY_LEVELS } from '../task-priority.const';
 import {
@@ -58,6 +59,7 @@ const EMPTY_KB = {} as KeyboardConfig;
   styleUrl: './task-multi-select-bar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    TagIconPipe,
     MatMenu,
     MatMenuContent,
     MatMenuItem,

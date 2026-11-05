@@ -8,6 +8,7 @@
 
   <button
     [attr.title]="countTooltip"
+    [attr.aria-label]="workContext()!.title"
     #routeBtn
     [routerLink]="[type() === 'TAG' ? 'tag' : 'project', workContext()!.id, 'tasks']"
     routerLinkActive="active"
@@ -21,7 +22,7 @@
       [style.color]="workContextIconColor() ?? null"
       [class.nav-icon-emoji]="isWorkContextEmojiIcon()"
       [class.drag-handle]="defaultIcon() !== 'today' && defaultIcon() !== 'inbox'"
-      >{{ workContext()!.icon || defaultIcon() }}
+      >{{ workContextIcon() }}
     </mat-icon>
 
     <span
@@ -67,6 +68,7 @@
 } @else if (mode() === 'folder' && folderId()) {
   <button
     #folderBtn
+    [attr.aria-label]="label()"
     class="nav-link"
     mat-menu-item
     [attr.aria-expanded]="expanded()"
@@ -114,6 +116,7 @@
   @if (container() === 'route') {
     <a
       #routeLink
+      [attr.aria-label]="label() | translate"
       [routerLink]="navRoute()"
       routerLinkActive="active"
       mat-menu-item
@@ -187,6 +190,7 @@
   } @else if (container() === 'href') {
     <a
       [href]="navHref()"
+      [attr.aria-label]="label() | translate"
       target="_blank"
       mat-menu-item
       rel="noopener noreferrer"
@@ -232,6 +236,7 @@
     @if (menuTriggerFor(); as menu) {
       <button
         class="nav-link"
+        [attr.aria-label]="label() | translate"
         mat-menu-item
         [class.expanded]="container() === 'group' && expanded()"
         [matMenuTriggerFor]="menu"
@@ -277,6 +282,7 @@
            overwrite aria-expanded and aria-controls. -->
       <button
         class="nav-link"
+        [attr.aria-label]="label() | translate"
         mat-menu-item
         [class.expanded]="container() === 'group' && expanded()"
         [attr.aria-expanded]="container() === 'group' ? expanded() : null"

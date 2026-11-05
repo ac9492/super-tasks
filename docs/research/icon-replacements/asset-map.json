@@ -1,0 +1,1934 @@
+{
+  "doc:add": {
+    "file": "assets/doc_add.svg",
+    "origin": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact existing offline path map, not the same-named bundled font outline.",
+    "kind": "svg"
+  },
+  "doc:drag_indicator": {
+    "file": "assets/doc_drag_indicator.svg",
+    "origin": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact existing offline path map, not the same-named bundled font outline.",
+    "kind": "svg"
+  },
+  "doc:arrow_upward": {
+    "file": "assets/doc_arrow_upward.svg",
+    "origin": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact existing offline path map, not the same-named bundled font outline.",
+    "kind": "svg"
+  },
+  "doc:arrow_downward": {
+    "file": "assets/doc_arrow_downward.svg",
+    "origin": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact existing offline path map, not the same-named bundled font outline.",
+    "kind": "svg"
+  },
+  "doc:content_copy": {
+    "file": "assets/doc_content_copy.svg",
+    "origin": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact existing offline path map, not the same-named bundled font outline.",
+    "kind": "svg"
+  },
+  "doc:delete": {
+    "file": "assets/doc_delete.svg",
+    "origin": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact existing offline path map, not the same-named bundled font outline.",
+    "kind": "svg"
+  },
+  "doc:segment": {
+    "file": "assets/doc_segment.svg",
+    "origin": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact existing offline path map, not the same-named bundled font outline.",
+    "kind": "svg"
+  },
+  "doc:title": {
+    "file": "assets/doc_title.svg",
+    "origin": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact existing offline path map, not the same-named bundled font outline.",
+    "kind": "svg"
+  },
+  "doc:text_fields": {
+    "file": "assets/doc_text_fields.svg",
+    "origin": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact existing offline path map, not the same-named bundled font outline.",
+    "kind": "svg"
+  },
+  "doc:short_text": {
+    "file": "assets/doc_short_text.svg",
+    "origin": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact existing offline path map, not the same-named bundled font outline.",
+    "kind": "svg"
+  },
+  "doc:format_list_bulleted": {
+    "file": "assets/doc_format_list_bulleted.svg",
+    "origin": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact existing offline path map, not the same-named bundled font outline.",
+    "kind": "svg"
+  },
+  "doc:format_list_numbered": {
+    "file": "assets/doc_format_list_numbered.svg",
+    "origin": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact existing offline path map, not the same-named bundled font outline.",
+    "kind": "svg"
+  },
+  "doc:format_quote": {
+    "file": "assets/doc_format_quote.svg",
+    "origin": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact existing offline path map, not the same-named bundled font outline.",
+    "kind": "svg"
+  },
+  "doc:code": {
+    "file": "assets/doc_code.svg",
+    "origin": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact existing offline path map, not the same-named bundled font outline.",
+    "kind": "svg"
+  },
+  "doc:horizontal_rule": {
+    "file": "assets/doc_horizontal_rule.svg",
+    "origin": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact existing offline path map, not the same-named bundled font outline.",
+    "kind": "svg"
+  },
+  "doc:open_in_new": {
+    "file": "assets/doc_open_in_new.svg",
+    "origin": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact existing offline path map, not the same-named bundled font outline.",
+    "kind": "svg"
+  },
+  "doc:check_circle_outline": {
+    "file": "assets/doc_check_circle_outline.svg",
+    "origin": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact existing offline path map, not the same-named bundled font outline.",
+    "kind": "svg"
+  },
+  "ic_shortcut_today": {
+    "file": "assets/ic_shortcut_today.svg",
+    "origin": "android/app/src/main/res/drawable/ic_shortcut_today.xml",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact VectorDrawable paths; light-theme source tint and shortcut colors resolved.",
+    "kind": "svg"
+  },
+  "android/app/src/main/res/drawable/ic_shortcut_today.xml": {
+    "file": "assets/ic_shortcut_today.svg",
+    "origin": "android/app/src/main/res/drawable/ic_shortcut_today.xml",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact VectorDrawable paths; light-theme source tint and shortcut colors resolved.",
+    "kind": "svg"
+  },
+  "ic_shortcut_today_foreground": {
+    "file": "assets/ic_shortcut_today_foreground.svg",
+    "origin": "android/app/src/main/res/drawable/ic_shortcut_today_foreground.xml",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact foreground source vector composed over actual launcher background#075b5e for preview; system applies launcher mask.",
+    "kind": "svg"
+  },
+  "android/app/src/main/res/drawable/ic_shortcut_today_foreground.xml": {
+    "file": "assets/ic_shortcut_today_foreground.svg",
+    "origin": "android/app/src/main/res/drawable/ic_shortcut_today_foreground.xml",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact foreground source vector composed over actual launcher background#075b5e for preview; system applies launcher mask.",
+    "kind": "svg"
+  },
+  "ic_shortcut_add_task": {
+    "file": "assets/ic_shortcut_add_task.svg",
+    "origin": "android/app/src/main/res/drawable/ic_shortcut_add_task.xml",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact VectorDrawable paths; light-theme source tint and shortcut colors resolved.",
+    "kind": "svg"
+  },
+  "android/app/src/main/res/drawable/ic_shortcut_add_task.xml": {
+    "file": "assets/ic_shortcut_add_task.svg",
+    "origin": "android/app/src/main/res/drawable/ic_shortcut_add_task.xml",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact VectorDrawable paths; light-theme source tint and shortcut colors resolved.",
+    "kind": "svg"
+  },
+  "ic_shortcut_inbox": {
+    "file": "assets/ic_shortcut_inbox.svg",
+    "origin": "android/app/src/main/res/drawable/ic_shortcut_inbox.xml",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact VectorDrawable paths; light-theme source tint and shortcut colors resolved.",
+    "kind": "svg"
+  },
+  "android/app/src/main/res/drawable/ic_shortcut_inbox.xml": {
+    "file": "assets/ic_shortcut_inbox.svg",
+    "origin": "android/app/src/main/res/drawable/ic_shortcut_inbox.xml",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact VectorDrawable paths; light-theme source tint and shortcut colors resolved.",
+    "kind": "svg"
+  },
+  "ic_widget_check_outline": {
+    "file": "assets/ic_widget_check_outline.svg",
+    "origin": "android/app/src/main/res/drawable/ic_widget_check_outline.xml",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact VectorDrawable paths; light-theme source tint and shortcut colors resolved.",
+    "kind": "svg"
+  },
+  "android/app/src/main/res/drawable/ic_widget_check_outline.xml": {
+    "file": "assets/ic_widget_check_outline.svg",
+    "origin": "android/app/src/main/res/drawable/ic_widget_check_outline.xml",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact VectorDrawable paths; light-theme source tint and shortcut colors resolved.",
+    "kind": "svg"
+  },
+  "ic_widget_check_done": {
+    "file": "assets/ic_widget_check_done.svg",
+    "origin": "android/app/src/main/res/drawable/ic_widget_check_done.xml",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact VectorDrawable paths; light-theme source tint and shortcut colors resolved.",
+    "kind": "svg"
+  },
+  "android/app/src/main/res/drawable/ic_widget_check_done.xml": {
+    "file": "assets/ic_widget_check_done.svg",
+    "origin": "android/app/src/main/res/drawable/ic_widget_check_done.xml",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact VectorDrawable paths; light-theme source tint and shortcut colors resolved.",
+    "kind": "svg"
+  },
+  "native:android-today-calendar": {
+    "file": "assets/native_android-today-calendar.svg",
+    "origin": "Existing shortcut48 canvas + extracted Material today",
+    "license": "Apache-2.0 for Material outline; existing Android canvas",
+    "notes": "Proposed replacement vector geometry; standard48 disc and translation retained.",
+    "kind": "native-proposal"
+  },
+  "native:android-today-calendar-adaptive": {
+    "file": "assets/native_android-today-calendar-adaptive.svg",
+    "origin": "Existing adaptive108 foreground canvas + extracted Material today",
+    "license": "Apache-2.0 for Material outline; existing Android canvas",
+    "notes": "Proposed adaptive preview composes unchanged108 foreground safe-zone geometry over emerald launcher background; system applies launcher mask.",
+    "kind": "native-proposal"
+  },
+  "sf:calendar": {
+    "file": "assets/sf_calendar.svg",
+    "origin": "Material today preview / proposed iOS SF calendar binding",
+    "license": "Apache-2.0",
+    "notes": "Platform-equivalent preview only; this is not Apple SF Symbol artwork. Bind calendar natively on iOS and verify supported deployment target.",
+    "kind": "platform-equivalent"
+  },
+  "sun.max": {
+    "file": "assets/sun_max.svg",
+    "origin": "Material wb_sunny preview / current iOS SF sun.max binding",
+    "license": "Apache-2.0",
+    "notes": "Platform-equivalent preview only; not the exact Apple SF Symbol. The current native source is Info.plist sun.max.",
+    "kind": "platform-equivalent"
+  },
+  "custom:calendar-minus": {
+    "file": "assets/custom_calendar-minus.svg",
+    "origin": "Material outline base + original composed badge",
+    "license": "Apache-2.0 base; original Ultra Tasks composition",
+    "notes": "24x24 same-family base at90%; custom1.5px round-capped badge; review candidate only.",
+    "kind": "custom-composition"
+  },
+  "custom:calendar-back": {
+    "file": "assets/custom_calendar-back.svg",
+    "origin": "Material outline base + original composed badge",
+    "license": "Apache-2.0 base; original Ultra Tasks composition",
+    "notes": "24x24 same-family base at90%; custom1.5px round-capped badge; review candidate only.",
+    "kind": "custom-composition"
+  },
+  "custom:document-sync": {
+    "file": "assets/custom_document-sync.svg",
+    "origin": "Material outline base + original composed badge",
+    "license": "Apache-2.0 base; original Ultra Tasks composition",
+    "notes": "24x24 same-family base at90%; custom1.5px round-capped badge; review candidate only.",
+    "kind": "custom-composition"
+  },
+  "custom:rounded-checkbox": {
+    "file": "assets/custom_rounded-checkbox.svg",
+    "origin": "src/app/ui/done-toggle/done-toggle.component.html",
+    "license": "Existing project geometry",
+    "notes": "Exact main-list rect/check geometry;1.5px proposal stroke normalized for small native-widget preview (current app stylesheet uses2px).",
+    "kind": "custom-geometry"
+  },
+  "custom:rounded-checkbox-open": {
+    "file": "assets/custom_rounded-checkbox-open.svg",
+    "origin": "src/app/ui/done-toggle/done-toggle.component.html",
+    "license": "Existing project geometry",
+    "notes": "Exact main-list rect/check geometry;1.5px proposal stroke normalized for small native-widget preview (current app stylesheet uses2px).",
+    "kind": "custom-geometry"
+  },
+  "custom:rounded-checkbox-done": {
+    "file": "assets/custom_rounded-checkbox-done.svg",
+    "origin": "src/app/ui/done-toggle/done-toggle.component.html",
+    "license": "Existing project geometry",
+    "notes": "Exact main-list rect/check geometry;1.5px proposal stroke normalized for small native-widget preview (current app stylesheet uses2px). Proposed done-state accent uses production-brand emerald#16845B; unchecked remains neutral.",
+    "kind": "custom-geometry"
+  },
+  "custom:voice-reminder": {
+    "file": "assets/custom_voice-reminder.svg",
+    "origin": "Material Symbols Outlined volume_up",
+    "license": "Apache-2.0",
+    "notes": "One simple speaking-reminder symbol; replaces dense speaker+waves compound identity.",
+    "kind": "material"
+  },
+  "provider:google-calendar": {
+    "file": "assets/provider_google-calendar.svg",
+    "origin": "Simple Icons brand vector source; see provider provenance",
+    "license": "CC0-1.0 library; trademark ownership unaffected",
+    "notes": "Community-sourced brand silhouette, not vendor-hosted download. Source path geometry unchanged; currentColor presentation added.",
+    "kind": "brand"
+  },
+  "provider:todoist": {
+    "file": "assets/provider_todoist.svg",
+    "origin": "Simple Icons brand vector source; see provider provenance",
+    "license": "CC0-1.0 library; trademark ownership unaffected",
+    "notes": "Community-sourced brand silhouette, not vendor-hosted download. Source path geometry unchanged; currentColor presentation added.",
+    "kind": "brand"
+  },
+  "provider:ticktick": {
+    "file": "assets/provider_ticktick.svg",
+    "origin": "Simple Icons brand vector source; see provider provenance",
+    "license": "CC0-1.0 library; trademark ownership unaffected",
+    "notes": "Community-sourced brand silhouette, not vendor-hosted download. Source path geometry unchanged; currentColor presentation added.",
+    "kind": "brand"
+  },
+  "provider:runtime-svg": {
+    "file": "assets/provider_runtime-svg.svg",
+    "origin": "src/assets/icons/github.svg",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Representative actual GitHub provider SVG. Dynamic provider slots render other provider marks at runtime; this example is not an exhaustive runtime choice.",
+    "kind": "representative-provider"
+  },
+  "composite:provider-sync-badge": {
+    "file": "assets/composite_provider-sync-badge.svg",
+    "origin": "Existing GitHub provider SVG + bundled Material sync",
+    "license": "Existing GitHub asset + Apache-2.0 sync outline",
+    "notes": "Representative dynamic-provider state composite; keeps provider identity independent of synchronization badge.",
+    "kind": "custom-composition"
+  },
+  "src/app/features/focus-mode/focus-mode-countdown/rocket/focus-mode-preparation-rocket.component.html": {
+    "file": "assets/src_app_features_focus-mode_focus-mode-countdown_rocket_focus-mode-preparation-rocket_component_html.svg",
+    "origin": "src/app/features/focus-mode/focus-mode-countdown/rocket/focus-mode-preparation-rocket.component.html",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Static source preview: actual paths and flame gradient retained; animated motion not shown. Body uses currentColor; nozzle token represented by same hue at75% opacity.",
+    "kind": "static-source-illustration"
+  },
+  "src/app/ui/done-toggle/done-toggle.component.html": {
+    "file": "assets/custom_rounded-checkbox-done.svg",
+    "origin": "src/app/ui/done-toggle/done-toggle.component.html",
+    "license": "Existing project geometry",
+    "notes": "Exact main-list rect/check geometry;1.5px proposal stroke normalized for small native-widget preview (current app stylesheet uses2px). Proposed done-state accent uses production-brand emerald#16845B; unchecked remains neutral.",
+    "kind": "custom-geometry"
+  },
+  "packages/plugin-dev/doc-mode/src/ui/icons.ts": {
+    "file": "assets/doc_segment.svg",
+    "origin": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact existing offline path map, not the same-named bundled font outline.",
+    "kind": "svg"
+  },
+  "accessibility_new": {
+    "file": "assets/accessibility_new.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "account_tree": {
+    "file": "assets/account_tree.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "add": {
+    "file": "assets/add.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "add_circle": {
+    "file": "assets/add_circle.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "add_task": {
+    "file": "assets/add_task.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "adjust": {
+    "file": "assets/adjust.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "alarm": {
+    "file": "assets/alarm.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "all_inclusive": {
+    "file": "assets/all_inclusive.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "archive": {
+    "file": "assets/archive.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "arrow_back": {
+    "file": "assets/arrow_back.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "arrow_downward": {
+    "file": "assets/arrow_downward.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "arrow_forward": {
+    "file": "assets/arrow_forward.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "arrow_upward": {
+    "file": "assets/arrow_upward.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "assignment": {
+    "file": "assets/assignment.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "attach_file": {
+    "file": "assets/attach_file.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "attachment": {
+    "file": "assets/attachment.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "auto_awesome": {
+    "file": "assets/auto_awesome.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "autorenew": {
+    "file": "assets/autorenew.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "bar_chart": {
+    "file": "assets/bar_chart.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "battery_0_bar": {
+    "file": "assets/battery_0_bar.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "battery_3_bar": {
+    "file": "assets/battery_3_bar.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "battery_full": {
+    "file": "assets/battery_full.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "bedtime": {
+    "file": "assets/bedtime.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "block": {
+    "file": "assets/block.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "bookmark": {
+    "file": "assets/bookmark.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "cable": {
+    "file": "assets/cable.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "cake": {
+    "file": "assets/cake.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "calendar_clock": {
+    "file": "assets/calendar_clock.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "calendar_month": {
+    "file": "assets/calendar_month.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "calendar_today": {
+    "file": "assets/calendar_today.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "calendar_view_week": {
+    "file": "assets/calendar_view_week.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "call_made": {
+    "file": "assets/call_made.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "cancel": {
+    "file": "assets/cancel.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "celebration": {
+    "file": "assets/celebration.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "chat": {
+    "file": "assets/chat.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "chat_bubble_outline": {
+    "file": "assets/chat_bubble_outline.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "check": {
+    "file": "assets/check.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "check_box": {
+    "file": "assets/check_box.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "check_box_outline_blank": {
+    "file": "assets/check_box_outline_blank.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "check_circle": {
+    "file": "assets/check_circle.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "check_circle_outline": {
+    "file": "assets/check_circle_outline.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "checklist": {
+    "file": "assets/checklist.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "checklist_rtl": {
+    "file": "assets/checklist_rtl.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "clear": {
+    "file": "assets/clear.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "close": {
+    "file": "assets/close.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "cloud_download": {
+    "file": "assets/cloud_download.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "cloud_off": {
+    "file": "assets/cloud_off.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "cloud_upload": {
+    "file": "assets/cloud_upload.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "code": {
+    "file": "assets/code.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "code_blocks": {
+    "file": "assets/code_blocks.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "coffee": {
+    "file": "assets/coffee.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "colorize": {
+    "file": "assets/colorize.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "comment": {
+    "file": "assets/comment.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "computer": {
+    "file": "assets/computer.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "content_copy": {
+    "file": "assets/content_copy.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "content_paste": {
+    "file": "assets/content_paste.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "date_range": {
+    "file": "assets/date_range.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "delete": {
+    "file": "assets/delete.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "delete_forever": {
+    "file": "assets/delete_forever.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "delete_outline": {
+    "file": "assets/delete_outline.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "description": {
+    "file": "assets/description.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "desktop_windows": {
+    "file": "assets/desktop_windows.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "directions": {
+    "file": "assets/directions.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "directions_walk": {
+    "file": "assets/directions_walk.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "done": {
+    "file": "assets/done.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "done_all": {
+    "file": "assets/done_all.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "donut_large": {
+    "file": "assets/donut_large.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "download": {
+    "file": "assets/download.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "drag_handle": {
+    "file": "assets/drag_handle.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "drag_indicator": {
+    "file": "assets/drag_indicator.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "drive_file_move": {
+    "file": "assets/drive_file_move.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "edit_calendar": {
+    "file": "assets/edit_calendar.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "emergency": {
+    "file": "assets/emergency.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "emoji_events": {
+    "file": "assets/emoji_events.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "enhanced_encryption": {
+    "file": "assets/enhanced_encryption.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "error": {
+    "file": "assets/error.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "error_outline": {
+    "file": "assets/error_outline.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "event": {
+    "file": "assets/event.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "event_available": {
+    "file": "assets/event_available.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "event_busy": {
+    "file": "assets/event_busy.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "event_note": {
+    "file": "assets/event_note.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "event_repeat": {
+    "file": "assets/event_repeat.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "event_upcoming": {
+    "file": "assets/event_upcoming.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "expand_less": {
+    "file": "assets/expand_less.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "expand_more": {
+    "file": "assets/expand_more.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "extension": {
+    "file": "assets/extension.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "favorite": {
+    "file": "assets/favorite.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "file_copy": {
+    "file": "assets/file_copy.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "file_download": {
+    "file": "assets/file_download.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "file_upload": {
+    "file": "assets/file_upload.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "filter_alt": {
+    "file": "assets/filter_alt.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "filter_list": {
+    "file": "assets/filter_list.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "fitness_center": {
+    "file": "assets/fitness_center.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "flag": {
+    "file": "assets/flag.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "folder": {
+    "file": "assets/folder.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "folder_off": {
+    "file": "assets/folder_off.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "format_h1": {
+    "file": "assets/format_h1.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "format_h2": {
+    "file": "assets/format_h2.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "format_h3": {
+    "file": "assets/format_h3.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "format_indent_decrease": {
+    "file": "assets/format_indent_decrease.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "format_list_bulleted": {
+    "file": "assets/format_list_bulleted.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "format_list_numbered": {
+    "file": "assets/format_list_numbered.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "format_quote": {
+    "file": "assets/format_quote.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "forward": {
+    "file": "assets/forward.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "free_breakfast": {
+    "file": "assets/free_breakfast.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "functions": {
+    "file": "assets/functions.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "grid_view": {
+    "file": "assets/grid_view.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "group": {
+    "file": "assets/group.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "group_work": {
+    "file": "assets/group_work.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "heart_check": {
+    "file": "assets/heart_check.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "help_center": {
+    "file": "assets/help_center.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "help_outline": {
+    "file": "assets/help_outline.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "horizontal_rule": {
+    "file": "assets/horizontal_rule.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "hourglass_empty": {
+    "file": "assets/hourglass_empty.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "image_not_supported": {
+    "file": "assets/image_not_supported.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "info": {
+    "file": "assets/info.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "integration_instructions": {
+    "file": "assets/integration_instructions.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "ios_share": {
+    "file": "assets/ios_share.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "key": {
+    "file": "assets/key.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "keyboard": {
+    "file": "assets/keyboard.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "label_off": {
+    "file": "assets/label_off.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "laptop_windows": {
+    "file": "assets/laptop_windows.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "library_books": {
+    "file": "assets/library_books.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "link": {
+    "file": "assets/link.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "list": {
+    "file": "assets/list.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "list_alt": {
+    "file": "assets/list_alt.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "lock": {
+    "file": "assets/lock.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "lock_open": {
+    "file": "assets/lock_open.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "man": {
+    "file": "assets/man.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "more_time": {
+    "file": "assets/more_time.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "more_vert": {
+    "file": "assets/more_vert.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "move_to_inbox": {
+    "file": "assets/move_to_inbox.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "new_label": {
+    "file": "assets/new_label.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "new_releases": {
+    "file": "assets/new_releases.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "next_week": {
+    "file": "assets/next_week.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "note": {
+    "file": "assets/note.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "note_add": {
+    "file": "assets/note_add.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "note_alt": {
+    "file": "assets/note_alt.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "notes": {
+    "file": "assets/notes.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "numbers": {
+    "file": "assets/numbers.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "online_prediction": {
+    "file": "assets/online_prediction.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "open_in_new": {
+    "file": "assets/open_in_new.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "palette": {
+    "file": "assets/palette.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "person_add": {
+    "file": "assets/person_add.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "person_remove": {
+    "file": "assets/person_remove.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "photo": {
+    "file": "assets/photo.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "photo_library": {
+    "file": "assets/photo_library.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "play_arrow": {
+    "file": "assets/play_arrow.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "playlist_add": {
+    "file": "assets/playlist_add.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "playlist_add_check": {
+    "file": "assets/playlist_add_check.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "priority_high": {
+    "file": "assets/priority_high.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "psychology": {
+    "file": "assets/psychology.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "public": {
+    "file": "assets/public.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "refresh": {
+    "file": "assets/refresh.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "remove_today": {
+    "file": "assets/remove_today.svg",
+    "origin": "src/assets/icons/remove-today-48px.svg",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "Exact registered repository SVG source; original path and fill/stroke retained.",
+    "kind": "svg"
+  },
+  "replay": {
+    "file": "assets/replay.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "restart_alt": {
+    "file": "assets/restart_alt.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "restore": {
+    "file": "assets/restore.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "rocket_launch": {
+    "file": "assets/rocket_launch.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "save": {
+    "file": "assets/save.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "schedule": {
+    "file": "assets/schedule.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "search": {
+    "file": "assets/search.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "segment": {
+    "file": "assets/segment.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "select_check_box": {
+    "file": "assets/select_check_box.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "send": {
+    "file": "assets/send.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "settings": {
+    "file": "assets/settings.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "settings_backup_restore": {
+    "file": "assets/settings_backup_restore.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "short_text": {
+    "file": "assets/short_text.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "smart_toy": {
+    "file": "assets/smart_toy.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "src/assets/bundled-plugins/ai-productivity-prompts/icon.svg": {
+    "file": "assets/src_assets_bundled-plugins_ai-productivity-prompts_icon_svg.svg",
+    "origin": "src/assets/bundled-plugins/ai-productivity-prompts/icon.svg",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "",
+    "kind": "svg"
+  },
+  "src/assets/bundled-plugins/api-test-plugin/icon.svg": {
+    "file": "assets/src_assets_bundled-plugins_api-test-plugin_icon_svg.svg",
+    "origin": "src/assets/bundled-plugins/api-test-plugin/icon.svg",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "",
+    "kind": "svg"
+  },
+  "src/assets/bundled-plugins/app-auto-track/icon.svg": {
+    "file": "assets/src_assets_bundled-plugins_app-auto-track_icon_svg.svg",
+    "origin": "src/assets/bundled-plugins/app-auto-track/icon.svg",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "",
+    "kind": "svg"
+  },
+  "src/assets/bundled-plugins/caldav-calendar-provider/icon.svg": {
+    "file": "assets/src_assets_bundled-plugins_caldav-calendar-provider_icon_svg.svg",
+    "origin": "src/assets/bundled-plugins/caldav-calendar-provider/icon.svg",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "",
+    "kind": "svg"
+  },
+  "src/assets/bundled-plugins/doc-mode/icon.svg": {
+    "file": "assets/src_assets_bundled-plugins_doc-mode_icon_svg.svg",
+    "origin": "src/assets/bundled-plugins/doc-mode/icon.svg",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "",
+    "kind": "svg"
+  },
+  "src/assets/bundled-plugins/google-calendar-provider/icon.svg": {
+    "file": "assets/src_assets_bundled-plugins_google-calendar-provider_icon_svg.svg",
+    "origin": "src/assets/bundled-plugins/google-calendar-provider/icon.svg",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "",
+    "kind": "svg"
+  },
+  "src/assets/bundled-plugins/procrastination-buster/icon.svg": {
+    "file": "assets/src_assets_bundled-plugins_procrastination-buster_icon_svg.svg",
+    "origin": "src/assets/bundled-plugins/procrastination-buster/icon.svg",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "",
+    "kind": "svg"
+  },
+  "src/assets/bundled-plugins/sync-md/icon.svg": {
+    "file": "assets/src_assets_bundled-plugins_sync-md_icon_svg.svg",
+    "origin": "src/assets/bundled-plugins/sync-md/icon.svg",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "",
+    "kind": "svg"
+  },
+  "src/assets/bundled-plugins/ticktick-import/icon.svg": {
+    "file": "assets/src_assets_bundled-plugins_ticktick-import_icon_svg.svg",
+    "origin": "src/assets/bundled-plugins/ticktick-import/icon.svg",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "",
+    "kind": "svg"
+  },
+  "src/assets/bundled-plugins/todoist-import/icon.svg": {
+    "file": "assets/src_assets_bundled-plugins_todoist-import_icon_svg.svg",
+    "origin": "src/assets/bundled-plugins/todoist-import/icon.svg",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "",
+    "kind": "svg"
+  },
+  "src/assets/bundled-plugins/voice-reminder/icon.svg": {
+    "file": "assets/src_assets_bundled-plugins_voice-reminder_icon_svg.svg",
+    "origin": "src/assets/bundled-plugins/voice-reminder/icon.svg",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "",
+    "kind": "svg"
+  },
+  "src/assets/bundled-plugins/yesterday-tasks-plugin/icon.svg": {
+    "file": "assets/src_assets_bundled-plugins_yesterday-tasks-plugin_icon_svg.svg",
+    "origin": "src/assets/bundled-plugins/yesterday-tasks-plugin/icon.svg",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "",
+    "kind": "svg"
+  },
+  "src/assets/icons/caldav.svg": {
+    "file": "assets/src_assets_icons_caldav_svg.svg",
+    "origin": "src/assets/icons/caldav.svg",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "",
+    "kind": "svg"
+  },
+  "src/assets/icons/calendar.svg": {
+    "file": "assets/src_assets_icons_calendar_svg.svg",
+    "origin": "src/assets/icons/calendar.svg",
+    "license": "Repository asset; preserve existing provenance",
+    "notes": "",
+    "kind": "svg"
+  },
+  "star": {
+    "file": "assets/star.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "stop_circle": {
+    "file": "assets/stop_circle.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "storage": {
+    "file": "assets/storage.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "subdirectory_arrow_left": {
+    "file": "assets/subdirectory_arrow_left.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "subdirectory_arrow_right": {
+    "file": "assets/subdirectory_arrow_right.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "sync": {
+    "file": "assets/sync.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "sync_problem": {
+    "file": "assets/sync_problem.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "sync_saved_locally": {
+    "file": "assets/sync_saved_locally.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "system_update_alt": {
+    "file": "assets/system_update_alt.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "task_alt": {
+    "file": "assets/task_alt.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "terminal": {
+    "file": "assets/terminal.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "text_fields": {
+    "file": "assets/text_fields.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "timelapse": {
+    "file": "assets/timelapse.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "timer": {
+    "file": "assets/timer.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "timer_off": {
+    "file": "assets/timer_off.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "title": {
+    "file": "assets/title.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "today": {
+    "file": "assets/today.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "toggle_on": {
+    "file": "assets/toggle_on.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "track_changes": {
+    "file": "assets/track_changes.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "tune": {
+    "file": "assets/tune.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "unarchive": {
+    "file": "assets/unarchive.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "update": {
+    "file": "assets/update.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "upload": {
+    "file": "assets/upload.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "upload_file": {
+    "file": "assets/upload_file.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "vertical_align_bottom": {
+    "file": "assets/vertical_align_bottom.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "vertical_align_top": {
+    "file": "assets/vertical_align_top.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "view_agenda": {
+    "file": "assets/view_agenda.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "view_kanban": {
+    "file": "assets/view_kanban.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "view_week": {
+    "file": "assets/view_week.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "visibility": {
+    "file": "assets/visibility.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "visibility_off": {
+    "file": "assets/visibility_off.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "volume_up": {
+    "file": "assets/volume_up.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "volunteer_activism": {
+    "file": "assets/volunteer_activism.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "vpn_key": {
+    "file": "assets/vpn_key.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "warning": {
+    "file": "assets/warning.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "wb_sunny": {
+    "file": "assets/wb_sunny.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "wb_twilight": {
+    "file": "assets/wb_twilight.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "web": {
+    "file": "assets/web.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "webhook": {
+    "file": "assets/webhook.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "wifi_off": {
+    "file": "assets/wifi_off.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "work": {
+    "file": "assets/work.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "zoom_in": {
+    "file": "assets/zoom_in.svg",
+    "origin": "src/assets/fonts/material-symbols-outlined.woff2",
+    "license": "Apache-2.0",
+    "notes": "Exact bundled font-400 outlined glyph at FILL=0 on24x24 canvas.",
+    "kind": "material"
+  },
+  "native:android-add-emerald": {
+    "file": "assets/native_android-add-emerald.svg",
+    "origin": "android/app/src/main/res/drawable/ic_shortcut_add_task.xml",
+    "license": "Existing source geometry; proposed brand accent",
+    "notes": "Only launcher-disc accent changes from actual teal to production-brand emerald#16845B; source plus/tray geometry retained.",
+    "kind": "native-proposal"
+  },
+  "native:android-inbox-emerald": {
+    "file": "assets/native_android-inbox-emerald.svg",
+    "origin": "android/app/src/main/res/drawable/ic_shortcut_inbox.xml",
+    "license": "Existing source geometry; proposed brand accent",
+    "notes": "Only launcher-disc accent changes from actual teal to production-brand emerald#16845B; source plus/tray geometry retained.",
+    "kind": "native-proposal"
+  },
+  "control:progress-spinner": {
+    "file": "assets/control_progress_spinner.svg",
+    "origin": "Review loading-indicator specimen; 24dp / 1.5px ring and arc",
+    "license": "New repository vector specimen",
+    "notes": "Use an animated loading control with an accessible Loading label; SVG provides the static shape.",
+    "kind": "control-specimen"
+  }
+}

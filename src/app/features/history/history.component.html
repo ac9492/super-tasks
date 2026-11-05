@@ -14,7 +14,7 @@
       color="primary"
       mat-mini-fab
     >
-      <mat-icon>call_made</mat-icon>
+      <mat-icon>download</mat-icon>
     </button>
     <div class="years">
       @for (year of wData.worklog | keyvalue: sortWorklogItems; track year.key) {
@@ -59,7 +59,7 @@
                     color="primary"
                     mat-mini-fab
                   >
-                    <mat-icon>call_made</mat-icon>
+                    <mat-icon>download</mat-icon>
                   </button>
                 </h2>
                 <div class="month-time-spent">
@@ -103,7 +103,7 @@
                             color=""
                             mat-mini-fab
                           >
-                            <mat-icon>call_made</mat-icon>
+                            <mat-icon>download</mat-icon>
                           </button>
                         </div>
                         <div class="week-table-wrapper">
@@ -181,10 +181,10 @@
                                   </td>
                                   <td>
                                     @if (!isDayExpanded(worklogForDay.value.dateStr)) {
-                                      <mat-icon>list </mat-icon>
+                                      <mat-icon>expand_more</mat-icon>
                                     }
                                     @if (isDayExpanded(worklogForDay.value.dateStr)) {
-                                      <mat-icon>close </mat-icon>
+                                      <mat-icon>expand_less</mat-icon>
                                     }
                                   </td>
                                 </tr>
@@ -257,7 +257,7 @@
         class="recently-deleted-btn"
         (click)="openRecentlyDeleted()"
       >
-        <mat-icon>delete_outline</mat-icon>
+        <mat-icon>delete</mat-icon>
         {{ T.F.TASK.D_RECENTLY_DELETED.LINK | translate }}
       </button>
     </div>

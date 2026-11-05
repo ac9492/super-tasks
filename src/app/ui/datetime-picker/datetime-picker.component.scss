@@ -128,38 +128,6 @@
   @include quickAccessLabel;
 }
 
-:host ::ng-deep mat-month-view .mat-calendar-body-today {
-  color: transparent !important;
-  border: none !important;
-  border-color: transparent !important;
-  outline: none !important;
-  box-shadow: none !important;
-
-  &:after {
-    @include materialIcon('wb_sunny');
-    @include center;
-    color: var(--c-accent) !important;
-  }
-
-  &.mat-calendar-body-selected:after {
-    color: var(--c-contrast) !important;
-  }
-}
-
-:host ::ng-deep {
-  mat-year-view .mat-calendar-body-today,
-  mat-multi-year-view .mat-calendar-body-today {
-    border: none !important;
-    border-color: transparent !important;
-    outline: none !important;
-    box-shadow: none !important;
-
-    &:not(.mat-calendar-body-selected) {
-      color: var(--c-accent) !important;
-    }
-  }
-}
-
 .press-enter-msg {
   text-align: center;
   font-weight: bold;
@@ -206,9 +174,5 @@
       flex: 1 1 180px;
       width: auto;
     }
-  }
-
-  .time-clear-btn {
-    cursor: pointer;
   }
 }

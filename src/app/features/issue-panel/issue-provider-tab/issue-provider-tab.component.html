@@ -4,6 +4,7 @@
     mat-icon-button
     style="margin-right: 8px; opacity: 0.5"
     (click)="openSettings()"
+    [attr.aria-label]="T.MH.SETTINGS | translate"
   >
     <mat-icon>settings</mat-icon>
   </button>
@@ -65,25 +66,29 @@
         />
 
         @if (isPinned()) {
-          <mat-icon
-            class="keep-ico"
+          <button
+            mat-icon-button
             matSuffix
-            style="cursor: pointer"
+            type="button"
             (click)="unPinSearch()"
-            [matTooltip]="'Clear pinned search query'"
-            >bookmark</mat-icon
+            [matTooltip]="T.F.ISSUE.UNPIN_SEARCH | translate"
+            [attr.aria-label]="T.F.ISSUE.UNPIN_SEARCH | translate"
           >
+            <mat-icon>bookmark</mat-icon>
+          </button>
         } @else if (
           ip?.pinnedSearch?.length || searchText()?.length >= SEARCH_MIN_LENGTH
         ) {
-          <mat-icon
-            class="keep-ico"
+          <button
+            mat-icon-button
             matSuffix
-            style="cursor: pointer"
+            type="button"
             (click)="pinSearch()"
-            [matTooltip]="'Remember search query'"
-            >bookmark_add</mat-icon
+            [matTooltip]="T.F.ISSUE.PIN_SEARCH | translate"
+            [attr.aria-label]="T.F.ISSUE.PIN_SEARCH | translate"
           >
+            <mat-icon>bookmark_add</mat-icon>
+          </button>
         }
         <!-- -->
         @if (searchText().length === 0 && issueProviderHelpLink()) {

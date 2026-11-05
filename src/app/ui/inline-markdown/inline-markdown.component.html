@@ -55,6 +55,8 @@
       <!--  -->
       <button
         [matTooltip]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.TASK_LIST | translate"
+        [attr.aria-label]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.TASK_LIST | translate"
+        [attr.aria-pressed]="isCurrentlyChecklist()"
         (mousedown)="$event.preventDefault()"
         (click)="toggleChecklistMode($event)"
         mat-icon-button
@@ -65,11 +67,12 @@
     @if (isCurrentlyChecklist()) {
       <button
         [matTooltip]="T.F.TASK.ADDITIONAL_INFO.CHECKLIST_ACTIONS | translate"
+        [attr.aria-label]="T.F.TASK.ADDITIONAL_INFO.CHECKLIST_ACTIONS | translate"
         [matMenuTriggerFor]="checklistMenu"
         (mousedown)="$event.preventDefault()"
         mat-icon-button
       >
-        <mat-icon>playlist_add_check</mat-icon>
+        <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #checklistMenu="matMenu">
         <button
@@ -97,6 +100,7 @@
     }
     <button
       [matTooltip]="T.F.TASK.ADDITIONAL_INFO.OPEN_IN_FULLSCREEN | translate"
+      [attr.aria-label]="T.F.TASK.ADDITIONAL_INFO.OPEN_IN_FULLSCREEN | translate"
       (mousedown)="$event.preventDefault()"
       (click)="openFullScreen()"
       mat-icon-button

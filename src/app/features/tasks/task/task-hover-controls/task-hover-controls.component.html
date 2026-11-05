@@ -35,18 +35,19 @@
     color=""
     mat-icon-button
   >
-    <mat-icon>wb_sunny</mat-icon>
+    <mat-icon>today</mat-icon>
   </button>
 }
 @if (isShowRemoveFromToday()) {
   <button
     (click)="parent.unschedule()"
     [title]="T.F.TASK.CMP.REMOVE_FROM_MY_DAY | translate"
+    [attr.aria-label]="T.F.TASK.CMP.REMOVE_FROM_MY_DAY | translate"
     class="ico-btn"
     color=""
     mat-icon-button
   >
-    <mat-icon>timer_off</mat-icon>
+    <mat-icon>event_busy</mat-icon>
   </button>
 }
 @if (
@@ -72,7 +73,7 @@
     <!--            <mat-icon *ngIf="!task().issueWasUpdated">toc</mat-icon>-->
     <!--            <mat-icon *ngIf="!task().issueWasUpdated">chevron_right</mat-icon>-->
     @if (task().issueWasUpdated) {
-      <mat-icon color="accent">update</mat-icon>
+      <mat-icon color="accent">sync</mat-icon>
     }
   </button>
 }

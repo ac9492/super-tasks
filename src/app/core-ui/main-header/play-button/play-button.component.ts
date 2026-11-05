@@ -98,7 +98,7 @@ import { distinctUntilChanged, observeOn } from 'rxjs/operators';
           mat-menu-item
           (click)="disableTimeTracking()"
         >
-          <mat-icon>visibility_off</mat-icon>
+          <mat-icon>timer_off</mat-icon>
           <span>{{ T.MH.DISABLE_FEATURE | translate }}</span>
         </button>
       </mat-menu>

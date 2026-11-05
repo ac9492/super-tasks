@@ -82,6 +82,7 @@
           <button
             emlDrop
             (click)="layoutService.showAddTaskBar()"
+            [attr.aria-label]="T.MH.ADD_NEW_TASK | translate"
             matTooltip="{{ T.MH.ADD_NEW_TASK | translate }} {{
               kb.addNewTask ? '[' + kb.addNewTask + ']' : ''
             }}"
@@ -135,8 +136,8 @@
             [attr.data-sync-confirmation]="syncConfirmation()"
             mat-icon-button
           >
-            @if (syncIcon() === 'wifi_off') {
-              <mat-icon>wifi_off</mat-icon>
+            @if (syncIcon() === 'cloud_off') {
+              <mat-icon>cloud_off</mat-icon>
             } @else {
               <mat-icon
                 [svgIcon]="syncIcon()"

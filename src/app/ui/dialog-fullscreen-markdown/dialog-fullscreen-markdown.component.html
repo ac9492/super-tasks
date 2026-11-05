@@ -21,7 +21,7 @@
           (mousedown)="$event.preventDefault()"
           (click)="onApplyHeading(1)"
           [matTooltip]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.HEADING_1 | translate"
-          aria-label="Heading 1"
+          [attr.aria-label]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.HEADING_1 | translate"
         >
           <span class="heading-label">H1</span>
         </button>
@@ -31,7 +31,7 @@
           (mousedown)="$event.preventDefault()"
           (click)="onApplyHeading(2)"
           [matTooltip]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.HEADING_2 | translate"
-          aria-label="Heading 2"
+          [attr.aria-label]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.HEADING_2 | translate"
         >
           <span class="heading-label">H2</span>
         </button>
@@ -41,7 +41,7 @@
           (mousedown)="$event.preventDefault()"
           (click)="onApplyHeading(3)"
           [matTooltip]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.HEADING_3 | translate"
-          aria-label="Heading 3"
+          [attr.aria-label]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.HEADING_3 | translate"
         >
           <span class="heading-label">H3</span>
         </button>
@@ -57,7 +57,7 @@
             (T.F.NOTE.D_FULLSCREEN.TOOLBAR.BOLD | translate) +
             shortcutLabels['bold'].tooltip
           "
-          aria-label="Bold"
+          [attr.aria-label]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.BOLD | translate"
         >
           <mat-icon>format_bold</mat-icon>
         </button>
@@ -70,7 +70,7 @@
             (T.F.NOTE.D_FULLSCREEN.TOOLBAR.ITALIC | translate) +
             shortcutLabels['italic'].tooltip
           "
-          aria-label="Italic"
+          [attr.aria-label]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.ITALIC | translate"
         >
           <mat-icon>format_italic</mat-icon>
         </button>
@@ -83,7 +83,7 @@
             (T.F.NOTE.D_FULLSCREEN.TOOLBAR.STRIKETHROUGH | translate) +
             shortcutLabels['strikethrough'].tooltip
           "
-          aria-label="Strikethrough"
+          [attr.aria-label]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.STRIKETHROUGH | translate"
         >
           <mat-icon>strikethrough_s</mat-icon>
         </button>
@@ -99,7 +99,7 @@
             (T.F.NOTE.D_FULLSCREEN.TOOLBAR.BULLET_LIST | translate) +
             shortcutLabels['bullet'].tooltip
           "
-          aria-label="Bulleted list"
+          [attr.aria-label]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.BULLET_LIST | translate"
         >
           <mat-icon>format_list_bulleted</mat-icon>
         </button>
@@ -112,7 +112,7 @@
             (T.F.NOTE.D_FULLSCREEN.TOOLBAR.NUMBERED_LIST | translate) +
             shortcutLabels['numbered'].tooltip
           "
-          aria-label="Numbered list"
+          [attr.aria-label]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.NUMBERED_LIST | translate"
         >
           <mat-icon>format_list_numbered</mat-icon>
         </button>
@@ -122,7 +122,7 @@
           (mousedown)="$event.preventDefault()"
           (click)="onApplyTaskList()"
           [matTooltip]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.TASK_LIST | translate"
-          aria-label="Task list"
+          [attr.aria-label]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.TASK_LIST | translate"
         >
           <mat-icon>checklist</mat-icon>
         </button>
@@ -138,7 +138,7 @@
             (T.F.NOTE.D_FULLSCREEN.TOOLBAR.QUOTE | translate) +
             shortcutLabels['quote'].tooltip
           "
-          aria-label="Quote"
+          [attr.aria-label]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.QUOTE | translate"
         >
           <mat-icon>format_quote</mat-icon>
         </button>
@@ -151,7 +151,7 @@
             (T.F.NOTE.D_FULLSCREEN.TOOLBAR.INLINE_CODE | translate) +
             shortcutLabels['code'].tooltip
           "
-          aria-label="Inline code"
+          [attr.aria-label]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.INLINE_CODE | translate"
         >
           <mat-icon>code</mat-icon>
         </button>
@@ -161,9 +161,9 @@
           (mousedown)="$event.preventDefault()"
           (click)="onApplyCodeBlock()"
           [matTooltip]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.CODE_BLOCK | translate"
-          aria-label="Code block"
+          [attr.aria-label]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.CODE_BLOCK | translate"
         >
-          <mat-icon>integration_instructions</mat-icon>
+          <mat-icon>code_blocks</mat-icon>
         </button>
 
         <span class="toolbar-divider"></span>
@@ -177,7 +177,7 @@
             (T.F.NOTE.D_FULLSCREEN.TOOLBAR.INSERT_LINK | translate) +
             shortcutLabels['link'].tooltip
           "
-          aria-label="Insert link"
+          [attr.aria-label]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.INSERT_LINK | translate"
         >
           <mat-icon>link</mat-icon>
         </button>
@@ -187,7 +187,7 @@
           (mousedown)="$event.preventDefault()"
           (click)="onInsertImage()"
           [matTooltip]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.INSERT_IMAGE | translate"
-          aria-label="Insert image"
+          [attr.aria-label]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.INSERT_IMAGE | translate"
         >
           <mat-icon>image</mat-icon>
         </button>
@@ -197,7 +197,7 @@
           (mousedown)="$event.preventDefault()"
           (click)="onInsertTable()"
           [matTooltip]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.INSERT_TABLE | translate"
-          aria-label="Insert table"
+          [attr.aria-label]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.INSERT_TABLE | translate"
         >
           <mat-icon>table_chart</mat-icon>
         </button>
@@ -257,22 +257,26 @@
       <mat-button-toggle-group
         [(ngModel)]="viewMode"
         (change)="onViewModeChange()"
+        [attr.aria-label]="T.F.NOTE.D_FULLSCREEN.VIEW_MODE | translate"
       >
         <mat-button-toggle
           value="TEXT_ONLY"
           [matTooltip]="T.F.NOTE.D_FULLSCREEN.VIEW_TEXT_ONLY | translate"
-          ><mat-icon>notes</mat-icon></mat-button-toggle
+          [aria-label]="T.F.NOTE.D_FULLSCREEN.VIEW_TEXT_ONLY | translate"
+          ><mat-icon>code</mat-icon></mat-button-toggle
         >
         <mat-button-toggle
           value="SPLIT"
           class="hide-xs"
           [matTooltip]="T.F.NOTE.D_FULLSCREEN.VIEW_SPLIT | translate"
+          [aria-label]="T.F.NOTE.D_FULLSCREEN.VIEW_SPLIT | translate"
           ><mat-icon>vertical_split</mat-icon></mat-button-toggle
         >
         <mat-button-toggle
           value="PARSED"
           [matTooltip]="T.F.NOTE.D_FULLSCREEN.VIEW_PARSED | translate"
-          ><mat-icon>photo</mat-icon></mat-button-toggle
+          [aria-label]="T.F.NOTE.D_FULLSCREEN.VIEW_PARSED | translate"
+          ><mat-icon>visibility</mat-icon></mat-button-toggle
         >
       </mat-button-toggle-group>
     }
@@ -283,7 +287,6 @@
     (click)="close(true)"
     mat-button
   >
-    <mat-icon>close</mat-icon>
     {{ T.G.DISCARD | translate }}
   </button>
 

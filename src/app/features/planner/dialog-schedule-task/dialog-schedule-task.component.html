@@ -87,11 +87,7 @@
           type="button"
           data-test-id="schedule-unschedule-btn"
         >
-          @if (selectedTime) {
-            <mat-icon>alarm_off</mat-icon>
-          } @else {
-            <mat-icon>event_busy</mat-icon>
-          }
+          <mat-icon>event_busy</mat-icon>
           <span class="action-label">
             {{ T.F.TASK.D_SCHEDULE_TASK.UNSCHEDULE | translate }}
           </span>
@@ -106,9 +102,11 @@
         data-test-id="schedule-submit-btn"
       >
         @if (selectedTime) {
-          <mat-icon>alarm</mat-icon>
+          <mat-icon>{{
+            selectedReminderCfgId === DO_NOT_REMIND ? 'schedule' : 'alarm'
+          }}</mat-icon>
         } @else {
-          <mat-icon>today</mat-icon>
+          <mat-icon>calendar_month</mat-icon>
         }
         <span class="action-label">
           {{ T.F.TASK.D_SCHEDULE_TASK.SCHEDULE | translate }}

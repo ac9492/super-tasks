@@ -135,8 +135,13 @@
                 }
                 @if (isPluginLoading(plugin)) {
                   <mat-chip color="accent">
-                    <mat-icon class="loading-icon">autorenew</mat-icon>
-                    {{ T.PLUGINS.LOADING_PLUGIN | translate }}
+                    <span class="loading-status">
+                      <mat-spinner
+                        diameter="18"
+                        aria-hidden="true"
+                      ></mat-spinner>
+                      <span>{{ T.PLUGINS.LOADING_PLUGIN | translate }}</span>
+                    </span>
                   </mat-chip>
                 }
               </div>
@@ -191,7 +196,7 @@
 
             @if (requiresNodeExecution(plugin) && !IS_ELECTRON) {
               <mat-error>
-                <mat-icon>desktop_windows</mat-icon>
+                <mat-icon>computer</mat-icon>
                 {{ getNodeExecutionMessage() }}
               </mat-error>
             }
@@ -259,7 +264,7 @@
                   (click)="goToIssuePanel()"
                   [disabled]="isPluginLoading(plugin)"
                 >
-                  <mat-icon>arrow_forward</mat-icon>
+                  <mat-icon>settings</mat-icon>
                   {{ T.PLUGINS.SETUP_ISSUE_PROVIDER | translate }}
                 </button>
               }
@@ -271,7 +276,7 @@
                     (click)="installCommunityPlugin(update.plugin)"
                     [disabled]="isUploading()"
                   >
-                    <mat-icon>update</mat-icon>
+                    <mat-icon>system_update_alt</mat-icon>
                     {{
                       T.PLUGINS.COMMUNITY_UPDATE
                         | translate: { version: update.release.version }
@@ -344,7 +349,7 @@
               <p class="plugin-desc">{{ plugin.shortDescription }}</p>
               @if (row.status === 'installed') {
                 <p class="community-plugin-action community-plugin-status">
-                  <mat-icon>check</mat-icon>
+                  <mat-icon>check_circle</mat-icon>
                   {{ T.PLUGINS.COMMUNITY_INSTALLED | translate }}
                 </p>
               } @else if (plugin.release && !isInAppInstall) {
@@ -371,7 +376,7 @@
                     [disabled]="isUploading()"
                   >
                     <mat-icon>{{
-                      row.status === 'updateAvailable' ? 'update' : 'download'
+                      row.status === 'updateAvailable' ? 'system_update_alt' : 'download'
                     }}</mat-icon>
                     {{
                       (row.status === 'updateAvailable'
@@ -393,7 +398,7 @@
             mat-button
             color="primary"
           >
-            <mat-icon>add</mat-icon>
+            <mat-icon>open_in_new</mat-icon>
             {{ T.PLUGINS.COMMUNITY_GET_LISTED | translate }}
           </a>
         </div>

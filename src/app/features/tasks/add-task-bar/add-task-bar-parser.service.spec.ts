@@ -1452,7 +1452,7 @@ describe('AddTaskBarParserService', () => {
       expect(attachments.length).toBe(1);
       expect(attachments[0].path).toBe('https://example.com');
       expect(attachments[0].type).toBe('LINK');
-      expect(attachments[0].icon).toBe('bookmark');
+      expect(attachments[0].icon).toBe('link');
       expect(mockStateService.updateCleanText).toHaveBeenCalledWith('Task');
     });
 
