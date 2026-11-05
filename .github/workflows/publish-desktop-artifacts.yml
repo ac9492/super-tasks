@@ -44,6 +44,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # The release token cannot tag a historical workflow revision. Permit
+          # a current tag only when the packaged app source is still identical.
+          gh api "repos/$GH_REPO/compare/$SOURCE_SHA...$GITHUB_SHA" > /tmp/changes.json
+          jq -e '.files | all(.filename | startswith(".github/workflows/") or startswith("docs/"))' /tmp/changes.json
           VERSION=$(node -p "require('./package.json').version")
           TAG="ultra-tasks-v${VERSION}"
           test "$(find downloads -name '*.exe' | wc -l)" -eq 2
@@ -52,6 +56,7 @@ jobs:
           (cd downloads && sha256sum * > SHA256SUMS.txt)
           cp build/desktop-release-notes.md /tmp/notes.md
           printf '\nA Universal Mac DMG supporting both Intel and Apple Silicon is also included.\n' >> /tmp/notes.md
+          printf '\nPackages were built and tested from commit `%s`; subsequent changes affect release automation and documentation only.\n' "$SOURCE_SHA" >> /tmp/notes.md
           # GITHUB_TOKEN avoids triggering the inherited store-publishing workflows.
-          gh release create "$TAG" downloads/* --target "$SOURCE_SHA" --title "Ultra Tasks ${VERSION}" --notes-file /tmp/notes.md --draft
+          gh release create "$TAG" downloads/* --target "$GITHUB_SHA" --title "Ultra Tasks ${VERSION}" --notes-file /tmp/notes.md --draft
           gh release edit "$TAG" --draft=false --latest
