@@ -42,10 +42,21 @@ describe('PlannerCalendarEventComponent', () => {
       ],
       providers: [
         // Stubbed so the pipe chain resolves to a deterministic clock string.
-        { provide: DateService, useValue: { isToday: () => true } },
+        {
+          provide: DateService,
+          useValue: {
+            isToday: () => true,
+            todayStr: () => '2023-11-14',
+            getStartOfNextDayDiffMs: () => 0,
+          },
+        },
         {
           provide: DateTimeFormatService,
-          useValue: { currentLocale: () => 'en-US', formatTime: () => '2:13 PM' },
+          useValue: {
+            currentLocale: () => 'en-US',
+            formatTime: () => '2:13 PM',
+            taskDateDisplay: () => ({}),
+          },
         },
         {
           provide: CalendarEventActionsService,

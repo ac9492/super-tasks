@@ -2,7 +2,7 @@ import { TaskMultiDragService } from '../../features/tasks/task-multi-drag.servi
 import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { Router } from '@angular/router';
+import { provideRouter } from '@angular/router';
 import { DragDropRegistry } from '@angular/cdk/drag-drop';
 import { CdkTrapFocus } from '@angular/cdk/a11y';
 import { By } from '@angular/platform-browser';
@@ -99,7 +99,7 @@ describe('MagicSideNavComponent', () => {
           provide: DataInitStateService,
           useValue: { isAllDataLoadedInitially$: of(false) },
         },
-        { provide: Router, useValue: { events: EMPTY } },
+        provideRouter([]),
         { provide: DragDropRegistry, useValue: { pointerUp: EMPTY } },
         {
           provide: ScheduleExternalDragService,
