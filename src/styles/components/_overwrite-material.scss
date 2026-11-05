@@ -571,9 +571,11 @@ mat-option.isDone {
   --mat-button-tonal-container-height: var(--ctl-sm);
 }
 
-// Unfilled labels use neutral ink; accent stays in the outline.
-.mat-mdc-button,
-.mat-mdc-outlined-button {
+// Unfilled labels use neutral ink; accent stays in the outline. Specificity
+// above the theme's `.isDarkTheme .mat-mdc-button.mat-primary`, which would
+// make the label accent-coloured (4.06:1 on a blue accent in a dark palette).
+body .mat-mdc-button.mat-mdc-button,
+body .mat-mdc-outlined-button.mat-mdc-outlined-button {
   &[color='primary'],
   &[color='accent'] {
     --mat-button-text-label-text-color: var(--text-color);
