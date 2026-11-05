@@ -162,7 +162,7 @@ body
     time,
     code,
     pre
-  ):where(:not(.mat-mdc-icon-button)) {
+  ):where(:not(.mat-mdc-icon-button, .tag-ico-emoji)) {
   color: inherit !important;
 }
 body :is(input, textarea)::placeholder {
