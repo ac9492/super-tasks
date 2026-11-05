@@ -8,6 +8,14 @@ Start with the [repository content map](docs/repository-map.md) (task keywords, 
 
 Read by section, not whole: the long sync docs open with a **Sections** index and `ARCHITECTURE-DECISIONS.md` with a **Decisions** index; for any long doc, `rg -n '^#{1,3} ' <file>` gives line numbers for `sed -n`. For large source files, `rg -n` first, then read the range.
 
+## Fork commit and PR policy
+
+- **Before the initial stable `1.0.0` release:** commit directly to `main`; do not open PRs. This includes the entire `0.x` series and any `1.0.0` alpha, beta, or release-candidate versions.
+- **Temporary local branches before `1.0.0`:** an agent may create one when needed, but must merge its work into `main` and delete that branch before ending its turn. Do not leave the turn's work on an unmerged branch. This cleanup applies to branches the agent creates for its task, not unrelated existing branches.
+- **From the initial non-prerelease `1.0.0` release onward:** use the standard feature-branch and PR workflow targeting `main`. The pre-`1.0.0` end-of-turn merge requirement no longer applies; branches follow the normal PR review, merge, and deletion lifecycle.
+
+Before `1.0.0`, this policy takes precedence over PR-specific delivery requirements elsewhere in this file. Testing, review, and sync-correctness requirements still apply.
+
 ## Product principles
 
 - **Avoid feature creep:** extend existing building blocks; new UI, settings and sync surface must make users faster. A personal deep-work tool, not team management or reporting. Surface the leaner alternative when scope outgrows the problem.
