@@ -7,11 +7,7 @@ body.super-tasks {
       var(--bg)
     );
   }
-  .nav-sidenav,
-  main-header .wrapper {
-    background: color-mix(in srgb, var(--bg) var(--st-glass-alpha), transparent);
-    backdrop-filter: blur(var(--st-blur));
-  }
+
   .nav-sidenav {
     border-inline-end: var(--st-line-width) solid var(--separator);
   }
@@ -117,11 +113,74 @@ body.super-tasks {
 @media (prefers-reduced-transparency: reduce), (forced-colors: active) {
   body.super-tasks .nav-sidenav,
   body.super-tasks main-header .wrapper {
-    background: var(--bg);
-    backdrop-filter: none;
+    background: var(--bg) !important;
+    backdrop-filter: none !important;
   }
 }
 
 body.super-tasks:has(.bg-image) .app-container {
   background: transparent;
+}
+
+// One blur per shell panel, never one per task in a long list.
+// Explicit priority overrides the inherited wallpaper milkglass rules so the
+// local opt-out and accessibility preferences remain authoritative.
+body.super-tasks:not(:has(.st-solid)) {
+  .nav-sidenav,
+  main-header .wrapper,
+  .right-panel {
+    background: color-mix(
+      in srgb,
+      var(--bg) var(--st-glass-alpha),
+      transparent
+    ) !important;
+    backdrop-filter: blur(var(--st-blur)) !important;
+  }
+  task {
+    background: color-mix(in srgb, var(--card-bg) var(--st-card-alpha), transparent);
+  }
+}
+body.super-tasks:has(.st-solid) {
+  .nav-sidenav,
+  main-header .wrapper,
+  .right-panel {
+    background: var(--bg) !important;
+    backdrop-filter: none !important;
+  }
+}
+body.super-tasks {
+  .st-search-entry {
+    margin-bottom: var(--s);
+  }
+  .st-search-entry .nav-link {
+    border: var(--st-line-width) solid var(--separator);
+    border-radius: var(--st-radius);
+    background: var(--card-bg);
+  }
+  .st-glass-setting {
+    display: flex;
+    align-items: center;
+    gap: var(--s);
+    padding: var(--s2);
+    color: var(--text-color);
+    cursor: pointer;
+  }
+  .st-glass-setting small {
+    display: block;
+    margin-top: var(--s-half);
+    color: var(--text-color-less-intense);
+  }
+}
+@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
+  body.super-tasks:not(:has(.st-solid)) {
+    .nav-sidenav,
+    main-header .wrapper,
+    .right-panel {
+      background: var(--bg) !important;
+      backdrop-filter: none !important;
+    }
+    task {
+      background: var(--card-bg);
+    }
+  }
 }

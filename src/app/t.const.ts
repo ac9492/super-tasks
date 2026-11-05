@@ -2554,6 +2554,8 @@ const T = {
     },
     SUPER_TASKS: {
       ADDING_TO: 'F.SUPER_TASKS.ADDING_TO',
+      GLASS: 'F.SUPER_TASKS.GLASS',
+      GLASS_HINT: 'F.SUPER_TASKS.GLASS_HINT',
       DATE_HINT: 'F.SUPER_TASKS.DATE_HINT',
     },
   },

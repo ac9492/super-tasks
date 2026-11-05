@@ -91,6 +91,18 @@
             </h2>
             <section class="config-section appearance-section">
               <theme-selector></theme-selector>
+              <label class="st-glass-setting">
+                <input
+                  #glassToggle
+                  type="checkbox"
+                  [checked]="superTasksAppearance.glassEnabled()"
+                  (change)="superTasksAppearance.setGlass(glassToggle.checked)"
+                />
+                <span
+                  ><strong>{{ T.F.SUPER_TASKS.GLASS | translate }}</strong
+                  ><small>{{ T.F.SUPER_TASKS.GLASS_HINT | translate }}</small></span
+                >
+              </label>
             </section>
             @for (section of generalFormCfg; track section.key) {
               <section class="config-section section-{{ section.key }}">

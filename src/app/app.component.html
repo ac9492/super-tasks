@@ -43,6 +43,7 @@
 } @else {
   <div
     class="app-container"
+    [class.st-solid]="!superTasksAppearance.glassEnabled()"
     [style.height]="iosShellHeight()"
     [style.min-height]="iosShellHeight()"
     [class.has-mobile-bottom-nav]="isShowMobileButtonNav()"

@@ -2485,6 +2485,8 @@
     },
     "SUPER_TASKS": {
       "ADDING_TO": "Adding to",
+      "GLASS": "Glass appearance",
+      "GLASS_HINT": "Subtle transparency and background blur. Turn off for solid surfaces. This setting stays on this device.",
       "DATE_HINT": "Planned for is when you want to work on it. Deadline is when it must be finished."
     }
   },

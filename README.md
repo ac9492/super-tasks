@@ -27,7 +27,9 @@ The direction is practical: improve frequent interactions, keep the interface ca
 
 These additions sit on top of the inherited tasks, projects, tags, notes, planning, time-tracking, and integration features. Some changes may also exist in newer upstream versions.
 
-The first workspace refresh adds restrained glass panels, a green checkmark identity, clearer active navigation, a visible capture destination, and direct scheduling actions.
+The first workspace refresh adds restrained glass panels, a folded-corner green checkmark identity, search at the top of navigation, clearer active navigation, a visible capture destination, and direct scheduling actions.
+
+**Glass appearance** can be disabled under Settings → General → Appearance. Its preference stays on the device, outside synced task data, and accessibility preferences can force solid panels.
 
 ## Three UX priorities
 

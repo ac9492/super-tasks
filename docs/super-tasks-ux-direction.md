@@ -60,3 +60,11 @@ Start with the existing side navigation, page titles, search/shortcuts, and plan
 Gather examples from users, propose one bounded interaction, and extend the prior-art comparison for that specific decision. Produce a small prototype before changing the application. Compare the current and proposed flow with testers, including keyboard users. Implement and validate the smallest useful improvement, with relevant performance, accessibility, and compatibility checks.
 
 No new application behavior, task schema, or sync format is introduced by this documentation draft.
+
+## Search and material refinement, November 2026
+
+The next iteration puts the existing Search entry first under the brand, in DOM and keyboard order, without changing the search page, shortcuts, or search feature visibility setting. This extends the navigation prior art above: expose a frequent destination instead of introducing a second search implementation.
+
+Glass appearance is restrained to a few shell panels, with high-opacity task surfaces and no per-task blur. Users can choose solid surfaces in General → Appearance. The preference is device-local; reduced-transparency and forced-color preferences take precedence. The existing wallpaper setting remains the source of background images.
+
+The task-note logo now has a larger check and one folded corner for a recognizable silhouette.

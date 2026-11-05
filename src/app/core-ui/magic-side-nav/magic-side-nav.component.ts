@@ -83,6 +83,14 @@ const SIDENAV_WIDTH_ANIMATION_DURATION_MS = 425;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MagicSideNavComponent implements OnDestroy, AfterViewInit {
+  readonly navigationItems = computed(() => {
+    const items = this.config().items;
+    return [
+      ...items.filter((item) => item.id === 'search'),
+      ...items.filter((item) => item.id !== 'search'),
+    ];
+  });
+
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _sideNavConfigService = inject(MagicNavConfigService);
   private readonly _taskService = inject(TaskService);

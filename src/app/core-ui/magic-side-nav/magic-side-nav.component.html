@@ -116,7 +116,7 @@
         class="nav-list"
         role="list"
       >
-        @for (item of config().items; track item.id) {
+        @for (item of navigationItems(); track item.id) {
           @switch (item.type) {
             @case ('separator') {
               <hr
@@ -148,6 +148,7 @@
             @default {
               <li
                 class="nav-item"
+                [class.st-search-entry]="item.id === 'search'"
                 role="listitem"
               >
                 @switch (item.type) {

@@ -1,6 +1,6 @@
 # Super Tasks identity
 
-The production mark is [logo.svg](../../src/assets/super-tasks/logo.svg): a white continuous checkmark on emerald green, with generous clear space. Its raster export is [logo.png](../../src/assets/super-tasks/logo.png); desktop packaging uses the matching [512px PNG](../../build/super-tasks.png).
+The production mark is [logo.svg](../../src/assets/super-tasks/logo.svg): a larger white checkmark on an emerald task-note tile with a folded corner. The check is about 27% wider than the first version; transparent outer padding is retained. Its raster export is [logo.png](../../src/assets/super-tasks/logo.png); desktop packaging uses the matching [512px PNG](../../build/super-tasks.png).
 
 The built-in image generator was used for exploration. [generated-concept.png](generated-concept.png) preserves that exploration, but its texture was unsuitable for small icons. The production artwork is an intentionally flat vector implementation, not the textured generated image.
 

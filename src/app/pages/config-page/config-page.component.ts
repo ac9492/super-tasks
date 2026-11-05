@@ -1,3 +1,4 @@
+import { SuperTasksAppearanceService } from '../../core/theme/super-tasks-appearance.service';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -124,6 +125,7 @@ const TAB_ANIMATION_DURATION_MS = 200;
   ],
 })
 export class ConfigPageComponent implements OnInit {
+  readonly superTasksAppearance = inject(SuperTasksAppearanceService);
   private readonly _cd = inject(ChangeDetectorRef);
   private readonly _elRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly _route = inject(ActivatedRoute);
