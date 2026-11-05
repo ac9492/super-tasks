@@ -23,14 +23,6 @@ import { ChromeExtensionInterfaceService } from '../chrome-extension-interface/c
 
 // eslint-disable-next-line @typescript-eslint/no-restricted-imports -- grandfathered layer-boundary debt
 import { GlobalConfigService } from '../../features/config/global-config.service';
-// eslint-disable-next-line @typescript-eslint/no-restricted-imports -- grandfathered layer-boundary debt
-import { WorkContextThemeCfg } from '../../features/work-context/work-context.model';
-// eslint-disable-next-line @typescript-eslint/no-restricted-imports -- grandfathered layer-boundary debt
-import {
-  DEFAULT_BACKGROUND_OVERLAY_OPACITY,
-  isBackgroundImageSet,
-  normalizeBackgroundImageBlur,
-} from '../../features/work-context/work-context.const';
 import { fromEvent, Observable, of } from 'rxjs';
 import { IS_FIREFOX } from '../../util/is-firefox';
 import { ImexViewService } from '../../imex/imex-meta/imex-view.service';
@@ -63,6 +55,8 @@ import { sanitizeSvgIconContent } from '../../util/sanitize-svg-icon.util';
 import { PaletteThemeService } from './palette-theme.service';
 import { contrastingInk } from './palette.util';
 import { BUILT_IN_SVG_ICONS } from './built-in-svg-icons.const';
+import { UltraTasksAppearanceService } from './ultra-tasks-appearance.service';
+import { pickGlassBackgroundImage } from './glass-backdrop/glass-backdrop.util';
 
 interface NavigationBarPlugin {
   setColor(options: { color: string; style: 'LIGHT' | 'DARK' }): Promise<void>;
@@ -115,68 +109,6 @@ export const resolveSystemSurfaceColor = (
   return fallback;
 };
 
-/** The four wallpaper fields of the app-level (global) background config. */
-export type GlobalWallpaperCfg = Pick<
-  WorkContextThemeCfg,
-  | 'backgroundImageDark'
-  | 'backgroundImageLight'
-  | 'backgroundOverlayOpacity'
-  | 'backgroundImageBlur'
->;
-
-export interface ResolvedBackground {
-  /** The image to show, or null when no background applies to this URL. */
-  imageUrl: string | null;
-  /** Final CSS overlay opacity (0..0.99) of the resolved image's source. */
-  overlayOpacity: number;
-  /** Blur radius in px of the resolved image's source. */
-  blur: number;
-}
-
-const _styleOf = (
-  theme: GlobalWallpaperCfg,
-): Pick<ResolvedBackground, 'overlayOpacity' | 'blur'> => ({
-  overlayOpacity:
-    (theme.backgroundOverlayOpacity ?? DEFAULT_BACKGROUND_OVERLAY_OPACITY) * 0.01,
-  blur: normalizeBackgroundImageBlur(theme.backgroundImageBlur),
-});
-
-/**
- * Resolve which background image and styling apply to the current route.
- *
- * Precedence: per-context image → global wallpaper → none. Crucially, on
- * non-work-context routes (Planner, Schedule, Boards, Config, …) the active
- * work context stays "Today" (the reducer default), so we must never use its
- * image there — only the global wallpaper. The overlay-opacity and blur travel
- * with the resolved image so a global wallpaper is never styled by the sticky
- * context's settings.
- */
-export const resolveBackground = (
-  contextTheme: WorkContextThemeCfg,
-  globalCfg: GlobalWallpaperCfg,
-  isDarkMode: boolean,
-  url: string,
-): ResolvedBackground => {
-  // Anchor to the path start so a query/fragment containing "/tag/" or
-  // "/project/" can't misclassify a non-context route.
-  const isWorkContextUrl = /^\/(tag|project)\//.test(url);
-  const contextImg = isDarkMode
-    ? contextTheme.backgroundImageDark
-    : contextTheme.backgroundImageLight;
-
-  if (isWorkContextUrl && isBackgroundImageSet(contextImg)) {
-    return { imageUrl: contextImg, ..._styleOf(contextTheme) };
-  }
-
-  const globalImg = isDarkMode
-    ? globalCfg.backgroundImageDark
-    : globalCfg.backgroundImageLight;
-  return {
-    imageUrl: isBackgroundImageSet(globalImg) ? globalImg : null,
-    ..._styleOf(globalCfg),
-  };
-};
-
 @Injectable({ providedIn: 'root' })
 export class GlobalThemeService {
   private document = inject<Document>(DOCUMENT);
@@ -192,6 +124,7 @@ export class GlobalThemeService {
   private _http = inject(HttpClient);
   private _platformService = inject(CapacitorPlatformService);
   private _paletteThemeService = inject(PaletteThemeService);
+  private _appearanceService = inject(UltraTasksAppearanceService);
   private _environmentInjector = inject(EnvironmentInjector);
   private _destroyRef = inject(DestroyRef);
   private _inputIntentService = inject(InputIntentService);
@@ -241,11 +174,18 @@ export class GlobalThemeService {
 
   isDarkTheme = toSignal(this._isDarkThemeObs$, { initialValue: false });
 
-  // Legacy wallpaper values remain in saved data for older clients. The palette
-  // canvas is always opaque so its foreground contrast is deterministic.
-  readonly backgroundImg = computed<string | null>(() => null);
-  readonly bgOverlayOpacity = computed(() => 0);
-  readonly bgImageBlur = computed(() => 0);
+  /**
+   * The configured background image (raw value: data:, http(s):, legacy
+   * image:<id> or file://) shown blurred behind the glass surfaces. Only the
+   * drawn backdrop uses it: with Solid, reduced transparency or forced colors
+   * the plain palette background shows, and the desktop app on macOS and
+   * Windows 11 blurs the desktop instead.
+   */
+  readonly backgroundImg = computed<string | null>(() =>
+    this._appearanceService.backdrop() === 'bitmap'
+      ? pickGlassBackgroundImage(this._globalConfigService.misc(), this.isDarkTheme())
+      : null,
+  );
 
   init(): void {
     if (this._hasInitialized) {
@@ -264,6 +204,7 @@ export class GlobalThemeService {
         });
       });
       this._initHandlersForInitialBodyClasses();
+      this._initGlass();
       this._initThemeWatchers();
 
       // Set up dark mode persistence effect
@@ -358,6 +299,41 @@ export class GlobalThemeService {
       this._domSanitizer.bypassSecurityTrustHtml(safeSvgContent),
     );
     this._registeredPluginIcons.add(iconName);
+  }
+
+  /**
+   * Glass appearance: body classes for the glass CSS (applied once right away
+   * so the first frame is right, then kept current), and in the desktop app the
+   * OS material, which follows the app's light/dark choice while it is on.
+   */
+  private _initGlass(): void {
+    const applyBodyClasses = (): void => {
+      const backdrop = this._appearanceService.backdrop();
+      const classList = this.document.body.classList;
+      classList.toggle(BodyClass.stSolid, backdrop === 'solid');
+      classList.toggle(BodyClass.stGlass, backdrop !== 'solid');
+      classList.toggle(BodyClass.stGlassNative, backdrop === 'native');
+      classList.toggle(BodyClass.stGlassBitmap, backdrop === 'bitmap');
+      // Acrylic keeps the content sheet opaque so text keeps ClearType.
+      classList.toggle(
+        BodyClass.stGlassAcrylic,
+        backdrop === 'native' && this._appearanceService.nativeMaterial === 'acrylic',
+      );
+    };
+    applyBodyClasses();
+    effect(applyBodyClasses);
+
+    if (this._appearanceService.nativeMaterial) {
+      effect(() => {
+        const palette =
+          this._paletteThemeService.palettes()[this.isDarkTheme() ? 'dark' : 'light'];
+        window.ea.setNativeGlass({
+          isEnabled: this._appearanceService.backdrop() === 'native',
+          themeSource: this.darkMode(),
+          solidColor: palette.background,
+        });
+      });
+    }
   }
 
   private _initThemeWatchers(): void {
@@ -497,15 +473,6 @@ export class GlobalThemeService {
         this.document.body.classList.add(BodyClass.isVerticalActionBar);
       } else {
         this.document.body.classList.remove(BodyClass.isVerticalActionBar);
-      }
-    });
-
-    // Add/remove hasBgImage class to body when background image changes
-    effect(() => {
-      if (this.backgroundImg()) {
-        this.document.body.classList.add(BodyClass.hasBgImage);
-      } else {
-        this.document.body.classList.remove(BodyClass.hasBgImage);
       }
     });
 

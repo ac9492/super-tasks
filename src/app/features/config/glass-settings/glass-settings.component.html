@@ -1,0 +1,95 @@
+<div class="setting-row">
+  <label class="st-glass-setting setting-control">
+    <input
+      #glassToggle
+      type="checkbox"
+      [checked]="appearance.glassEnabled()"
+      (change)="appearance.setGlass(glassToggle.checked)"
+    />
+    <span
+      ><strong>{{ T.F.ULTRA_TASKS.GLASS | translate }}</strong
+      ><small>{{ glassHint | translate }}</small></span
+    >
+  </label>
+  <setting-help
+    [label]="T.F.ULTRA_TASKS.GLASS | translate"
+    [text]="glassHint | translate"
+  />
+</div>
+
+@if (isBackgroundShown()) {
+  <div class="st-glass-background">
+    <div class="setting-row">
+      <div class="setting-control">
+        <strong id="st-glass-background-label">{{
+          T.F.ULTRA_TASKS.BG_IMAGE | translate
+        }}</strong>
+        <small>{{ T.F.ULTRA_TASKS.BG_IMAGE_HINT | translate }}</small>
+      </div>
+      <setting-help
+        [label]="T.F.ULTRA_TASKS.BG_IMAGE | translate"
+        [text]="T.F.ULTRA_TASKS.BG_IMAGE_HINT | translate"
+      />
+    </div>
+    <div
+      class="modes"
+      role="group"
+      aria-labelledby="st-glass-background-label"
+    >
+      @for (slot of slots(); track slot.key) {
+        <div
+          class="mode"
+          [attr.data-mode]="slot.mode"
+        >
+          @if (slot.preview) {
+            <img
+              class="preview"
+              [src]="slot.preview"
+              alt=""
+            />
+          } @else {
+            <span class="preview"></span>
+          }
+          <span class="mode-label"
+            >{{ slot.label | translate }}
+            @if (!slot.isSet) {
+              <small>{{ T.F.ULTRA_TASKS.BG_IMAGE_NONE | translate }}</small>
+            }
+          </span>
+          <button
+            mat-stroked-button
+            type="button"
+            class="choose"
+            [attr.aria-label]="
+              T.F.ULTRA_TASKS.BG_IMAGE_CHOOSE_FOR | translate: { mode: (slot.label | translate) }
+            "
+            (click)="choose(slot.key, fileInput)"
+          >
+            {{ T.F.ULTRA_TASKS.BG_IMAGE_CHOOSE | translate }}
+          </button>
+          @if (slot.isSet) {
+            <button
+              mat-button
+              type="button"
+              class="remove"
+              [attr.aria-label]="
+                T.F.ULTRA_TASKS.BG_IMAGE_REMOVE_FOR
+                  | translate: { mode: (slot.label | translate) }
+              "
+              (click)="remove(slot.key)"
+            >
+              {{ T.F.ULTRA_TASKS.BG_IMAGE_REMOVE | translate }}
+            </button>
+          }
+        </div>
+      }
+    </div>
+    <input
+      #fileInput
+      type="file"
+      hidden
+      [accept]="accept"
+      (change)="onFileSelected($event)"
+    />
+  </div>
+}

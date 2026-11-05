@@ -24,12 +24,6 @@
   z-index: var(--z-mobile-bottom-nav);
   display: flex;
 
-  //// Glass effect only when background image is present
-  :host-context(.hasBgImage) & {
-    //backdrop-filter: blur(10px);
-    //-webkit-backdrop-filter: blur(10px);
-  }
-
   .nav-button {
     flex: 1 1 0;
     display: flex;

@@ -64,6 +64,8 @@ export class TreeDndComponent<TData = unknown> {
   /** Indent of the top-level rows in px; each nesting level adds `indent` on top. */
   readonly baseIndent = input(0);
   readonly canDrop = input<CanDropPredicate<TData>>(() => true);
+  /** Accessible name of the tree, e.g. the translated section label. */
+  readonly ariaLabel = input('');
   readonly moved = output<MoveInstruction>();
 
   // === PUBLIC CONTENT CHILDREN ===

@@ -1,4 +1,4 @@
-// Fork presentation only; glass is confined to shell surfaces.
+// Fork presentation only. Glass rules live in _glass.scss.
 body.ultra-tasks {
   .app-container {
     background: radial-gradient(
@@ -133,45 +133,6 @@ body.ultra-tasks {
     line-height: 1.6;
   }
 }
-@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
-  body.ultra-tasks .nav-sidenav,
-  body.ultra-tasks main-header .wrapper {
-    background: var(--bg) !important;
-    backdrop-filter: none !important;
-  }
-}
-
-body.ultra-tasks:has(.bg-image) .app-container {
-  background: transparent;
-}
-
-// One blur per shell panel, never one per task in a long list.
-// Explicit priority overrides the inherited wallpaper milkglass rules so the
-// local opt-out and accessibility preferences remain authoritative.
-body.ultra-tasks:not(:has(.st-solid)) {
-  .nav-sidenav,
-  main-header .wrapper,
-  .right-panel {
-    background: color-mix(
-      in srgb,
-      var(--bg) var(--st-glass-alpha),
-      transparent
-    ) !important;
-    backdrop-filter: blur(var(--st-blur)) !important;
-  }
-  task,
-  .repeat-task-cfg {
-    background: color-mix(in srgb, var(--card-bg) var(--st-card-alpha), transparent);
-  }
-}
-body.ultra-tasks:has(.st-solid) {
-  .nav-sidenav,
-  main-header .wrapper,
-  .right-panel {
-    background: var(--bg) !important;
-    backdrop-filter: none !important;
-  }
-}
 body.ultra-tasks {
   .st-search-entry {
     margin-bottom: var(--s);
@@ -182,36 +143,5 @@ body.ultra-tasks {
   }
   .st-search-entry .nav-link:not(.active) {
     background: var(--card-bg);
-  }
-  // Aligned with the Appearance rows above it (no extra inline inset).
-  .st-glass-setting {
-    display: flex;
-    align-items: center;
-    gap: var(--s);
-    padding: var(--s2) 0;
-    color: var(--text-color);
-    cursor: pointer;
-  }
-  .st-glass-setting input {
-    accent-color: var(--c-accent);
-  }
-  .st-glass-setting small {
-    display: block;
-    margin-top: var(--s-half);
-    color: var(--text-color-less-intense);
-  }
-}
-@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
-  body.ultra-tasks:not(:has(.st-solid)) {
-    .nav-sidenav,
-    main-header .wrapper,
-    .right-panel {
-      background: var(--bg) !important;
-      backdrop-filter: none !important;
-    }
-    task,
-    .repeat-task-cfg {
-      background: var(--card-bg);
-    }
   }
 }

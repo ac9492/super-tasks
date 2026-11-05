@@ -2499,8 +2499,18 @@
     },
     "ULTRA_TASKS": {
       "ADDING_TO": "Adding to",
+      "BG_IMAGE": "Background image",
+      "BG_IMAGE_CHOOSE": "Choose image",
+      "BG_IMAGE_CHOOSE_FOR": "Choose a background image for {{mode}}",
+      "BG_IMAGE_DARK": "Dark mode",
+      "BG_IMAGE_HINT": "Shown blurred behind the glass surfaces. Without an image, a soft gradient from your colors is used. Images are stored at a small size and sync with your settings.",
+      "BG_IMAGE_LIGHT": "Light mode",
+      "BG_IMAGE_NONE": "Gradient",
+      "BG_IMAGE_REMOVE": "Remove",
+      "BG_IMAGE_REMOVE_FOR": "Remove the background image for {{mode}}",
       "GLASS": "Glass appearance",
-      "GLASS_HINT": "Subtle transparency and background blur. Turn off for solid surfaces. This setting stays on this device.",
+      "GLASS_HINT": "Frosted navigation and header with your background image showing through slightly. Turn off for solid surfaces. Saved on this device.",
+      "GLASS_HINT_DESKTOP": "Frosted navigation and header with your desktop showing through slightly. Turn off for solid surfaces. Saved on this device.",
       "DATE_HINT": "Planned for is when you want to work on it. Deadline is when it must be finished."
     }
   },
@@ -2933,10 +2943,6 @@
       "THEME_REMOVED_TOAST": "Theme removed; reverted to Default.",
       "THEME_SELECT_LABEL": "Select Theme",
       "TITLE": "Startup & interface",
-      "WALLPAPER": "Wallpaper",
-      "WALLPAPER_BUTTON": "Set wallpaper",
-      "WALLPAPER_DIALOG_TITLE": "Global wallpaper",
-      "WALLPAPER_HINT": "Shown on pages without their own background (Planner, Schedule, Boards, Settings…). Tags and projects with their own image override it.",
       "PALETTE": {
         "TITLE": "Color palette",
         "DESCRIPTION": "Choose three colors. Text automatically uses black or white for the strongest contrast. Changes are saved on this device.",
@@ -3162,7 +3168,6 @@
     "OPEN_APP_FEATURES": "Open Settings",
     "OPEN_NAVIGATION": "Open navigation",
     "PLANNER": "Planner",
-    "PROJECT_MENU": "Project Menu",
     "PROJECT_SETTINGS": "Project Settings",
     "PROJECTS": "Projects",
     "RESIZE_SIDE_NAV": "Resize side navigation",

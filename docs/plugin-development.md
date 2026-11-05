@@ -300,10 +300,16 @@ Iframe plugins automatically receive:
 - `getFocusedTask()` - Get the currently focused task row, or `null`. Task-row focus is cleared when focus moves elsewhere, including into iframe side panels; use `getSelectedTask()` for persistent side-panel task context.
 - `addTask(task)` - Create a new task
 - `updateTask(taskId, updates)` - Update existing task
+- `deleteTask(taskId)` - Delete a task
+- `batchUpdateForProject(request)` - Batch create/update/delete/reorder tasks of one project
+- `reorderTasks(taskIds, contextId, contextType)` - Reorder tasks in a project or tag
+- `selectTask(taskId)` - Select a task or subtask and open its detail panel, from any view
 
 #### Application State
 
 - `getAppState()` - Get the current application state (read-only; returns `PluginAppState`). An overview of the data returned is the JSON file exported via `Settings > Sync & Backup > Import/Export > Export data`. Example: `const state = await PluginAPI.getAppState();`
+- `reInitData()` - Reload the app's data from storage
+- `getActiveWorkContext()` - The active project or tag (Today has the id `TODAY`), or `null` before the initial data load
 
 #### Projects
 
@@ -431,6 +437,28 @@ visible while the tag itself is dropped.
 Escape untrusted values before interpolating them into the HTML string: the
 sanitizer is a safety net for the host, not a substitute for escaping in your
 plugin. Use `content` when plain text is sufficient.
+
+#### Views
+
+- `showIndexHtmlAsView()` - Show the plugin's `index.html` as its own view
+- `showInWorkContext()` - Show the plugin's `index.html` in place of the task list while a project or Today is the active context; does nothing in other contexts
+- `closeWorkContextView()` - Return to the task list
+
+### Translation and Formatting
+
+- `translate(key, params?)` - Translate one of the plugin's own i18n keys (see [PLUGIN_I18N.md](../packages/plugin-dev/PLUGIN_I18N.md))
+- `formatDate(date, format)` - Format a date in the app's locale; `format` is `short`, `medium`, `long`, `time` or `datetime`
+- `getCurrentLanguage()` - The app's current language code
+
+### Messaging
+
+- `onMessage(handler)` - Handle messages between the plugin's `plugin.js` and its iframe UI
+
+### OAuth Sign-in (plugin.js only)
+
+- `startOAuthFlow(config)` - Start an OAuth sign-in
+- `getOAuthToken()` - Read the plugin's stored token
+- `clearOAuthToken()` - Remove the stored token
 
 ### Registration Methods (plugin.js only)
 

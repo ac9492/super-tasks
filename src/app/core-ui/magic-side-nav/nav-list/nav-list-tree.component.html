@@ -53,6 +53,7 @@
   >
     <tree-dnd
       [nodes]="treeNodes()"
+      [ariaLabel]="item().label | translate"
       (nodesChange)="onTreeUpdated($event)"
       [indent]="treeIndent()"
       [baseIndent]="treeIndent()"

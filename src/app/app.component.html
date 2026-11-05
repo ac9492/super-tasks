@@ -1,14 +1,5 @@
-@if (resolvedBgImage(); as bgImage) {
-  <div
-    [style.background]="'url(' + bgImage + ')'"
-    [style.filter]="bgImageBlurFilter()"
-    [class.is-blurred]="bgImageBlur() > 0"
-    class="bg-image"
-  ></div>
-  <div
-    class="bg-overlay"
-    [style.opacity]="bgOverlayOpacity()"
-  ></div>
+@if (ultraTasksAppearance.backdrop() === 'bitmap') {
+  <glass-backdrop [imageUrl]="resolvedBgImage()"></glass-backdrop>
 }
 <!--TODO move inside page container somehow -->
 @if (layoutService.isShowAddTaskBar()) {
@@ -43,7 +34,6 @@
 } @else {
   <div
     class="app-container"
-    [class.st-solid]="!ultraTasksAppearance.glassEnabled()"
     [style.height]="iosShellHeight()"
     [style.min-height]="iosShellHeight()"
     [class.has-mobile-bottom-nav]="isShowMobileButtonNav()"

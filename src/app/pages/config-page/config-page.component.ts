@@ -1,5 +1,4 @@
-import { SettingHelpComponent } from '../../ui/setting-help/setting-help.component';
-import { UltraTasksAppearanceService } from '../../core/theme/ultra-tasks-appearance.service';
+import { GlassSettingsComponent } from '../../features/config/glass-settings/glass-settings.component';
 import {
   afterNextRender,
   ChangeDetectionStrategy,
@@ -95,7 +94,7 @@ const OPEN_BY_DEFAULT_SECTION_KEY = 'appFeatures';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ThemeSelectorComponent,
-    SettingHelpComponent,
+    GlassSettingsComponent,
     ConfigSectionComponent,
     ConfigSoundFormComponent,
     TranslatePipe,
@@ -115,7 +114,6 @@ const OPEN_BY_DEFAULT_SECTION_KEY = 'appFeatures';
   ],
 })
 export class ConfigPageComponent implements OnInit {
-  readonly ultraTasksAppearance = inject(UltraTasksAppearanceService);
   private readonly _cd = inject(ChangeDetectorRef);
   private readonly _injector = inject(Injector);
   private readonly _elRef = inject<ElementRef<HTMLElement>>(ElementRef);

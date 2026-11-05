@@ -34,6 +34,7 @@ import { T } from './t.const';
 import { GlobalThemeService } from './core/theme/global-theme.service';
 import { IosKeyboardService } from './core/theme/ios-keyboard.service';
 import { resolveBgImageToDataUrl } from './core/theme/resolve-bg-image-to-data-url.util';
+import { GlassBackdropComponent } from './core/theme/glass-backdrop/glass-backdrop.component';
 import { LanguageService } from './core/language/language.service';
 import { WorkContextService } from './features/work-context/work-context.service';
 import { SyncTriggerService } from './imex/sync/sync-trigger.service';
@@ -131,6 +132,7 @@ interface BeforeInstallPromptEvent extends Event {
     MobileBottomNavComponent,
     OnboardingHintComponent,
     TaskMultiSelectBarComponent,
+    GlassBackdropComponent,
   ],
 })
 export class AppComponent implements OnDestroy, AfterViewInit {
@@ -448,19 +450,6 @@ export class AppComponent implements OnDestroy, AfterViewInit {
       this.layoutService.hideAddTaskBar(taskId);
     }
   }
-
-  // Opacity + blur follow the resolved background source (per-context image or
-  // the global wallpaper), resolved centrally by GlobalThemeService — on
-  // non-context pages the active context is the sticky "Today" default and must
-  // not style the wallpaper.
-  readonly bgOverlayOpacity = this._globalThemeService.bgOverlayOpacity;
-  readonly bgImageBlur = this._globalThemeService.bgImageBlur;
-
-  readonly bgImageBlurFilter = computed((): string => {
-    const blur = this.bgImageBlur();
-
-    return blur > 0 ? `blur(${blur}px)` : 'none';
-  });
 
   async openSettings(): Promise<void> {
     const isForProject =

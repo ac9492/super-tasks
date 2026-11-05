@@ -118,6 +118,13 @@ describe('searchSettings', () => {
     expect(hit.tabIndex).toBe(0);
   });
 
+  it('should land the background image search on the Glass switch', () => {
+    const hit = searchSettings(TABS, 'bg_image', translate).find(
+      (result) => result.labelKey === 'F.ULTRA_TASKS.BG_IMAGE',
+    );
+    expect(hit?.scrollSelector).toBe('.st-glass-setting');
+  });
+
   it('should find every Sound option under the Tasks & planning tab', () => {
     for (const query of [
       'volume',

@@ -114,25 +114,7 @@
                     <theme-selector
                       [(colorsExpanded)]="colorEditorExpanded"
                     ></theme-selector>
-                    <div class="setting-row">
-                      <label class="st-glass-setting setting-control">
-                        <input
-                          #glassToggle
-                          type="checkbox"
-                          [checked]="ultraTasksAppearance.glassEnabled()"
-                          (change)="ultraTasksAppearance.setGlass(glassToggle.checked)"
-                        />
-                        <span
-                          ><strong>{{ T.F.ULTRA_TASKS.GLASS | translate }}</strong
-                          ><small>{{
-                            T.F.ULTRA_TASKS.GLASS_HINT | translate
-                          }}</small></span
-                        > </label
-                      ><setting-help
-                        [label]="T.F.ULTRA_TASKS.GLASS | translate"
-                        [text]="T.F.ULTRA_TASKS.GLASS_HINT | translate"
-                      />
-                    </div>
+                    <glass-settings></glass-settings>
                   </section>
                 }
               }
@@ -291,7 +273,7 @@
   <a
     href="https://github.com/ac9492/ultra-tasks/releases/latest"
     target="_blank"
-    >Changelog</a
+    >{{ T.PS.CHANGELOG | translate }}</a
   >
   @if (isUpdateCheckPossible) {
     –
@@ -305,7 +287,7 @@
   <a
     (click)="showLogs(); $event?.preventDefault()"
     href="#"
-    >Logs</a
+    >{{ T.DIALOG_LOGS.TITLE | translate }}</a
   >
   –
   <a

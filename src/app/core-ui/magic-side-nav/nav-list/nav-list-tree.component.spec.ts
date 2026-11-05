@@ -278,6 +278,11 @@ describe('NavListTreeComponent row indent (#10472)', () => {
     expect(getIndent('project-nested')).toBe('32px');
   });
 
+  it('names the tree after its section label', () => {
+    const tree = fixture.nativeElement.querySelector('[role="tree"]') as HTMLElement;
+    expect(tree.getAttribute('aria-label')).toBe('Projects');
+  });
+
   it('indents no row in the compact rail, so every icon stays in its column', () => {
     fixture.componentInstance.showLabels.set(false);
     fixture.detectChanges();

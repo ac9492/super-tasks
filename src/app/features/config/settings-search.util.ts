@@ -68,6 +68,14 @@ const CUSTOM_TARGETS: readonly SettingsSearchTarget[] = [
     tabIndex: 0,
     scrollSelector: '.st-glass-setting',
   },
+  // The image row sits under the Glass switch and only shows with Glass on
+  // (and not in the macOS / Windows 11 app), so the hit lands on the switch.
+  {
+    labelKey: T.F.ULTRA_TASKS.BG_IMAGE,
+    tabLabelKey: T.PS.TABS.GENERAL,
+    tabIndex: 0,
+    scrollSelector: '.st-glass-setting',
+  },
   _soundTarget(T.GCF.SOUND.TITLE),
   _soundTarget(T.GCF.SOUND.VOLUME),
   _soundTarget(T.GCF.SOUND.DONE_SOUND),

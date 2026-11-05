@@ -1,0 +1,157 @@
+// Glass appearance (Settings → General → Appearance). Every glass rule and
+// token lives here.
+//
+// Body classes come from GlobalThemeService (UltraTasksAppearanceService
+// .backdrop), never from `:has()`, so DOM changes in long task lists never
+// re-match these selectors:
+//   st-solid         Glass off, reduced transparency or forced colors.
+//   st-glass         Glass on; plus exactly one of:
+//   st-glass-native  desktop window shows the OS material (macOS vibrancy,
+//                    Windows 11 acrylic, then also st-glass-acrylic);
+//   st-glass-bitmap  <glass-backdrop> draws a blurred image or palette gradient
+//                    once into a tiny fixed canvas behind the app.
+//
+// Surfaces: the shell frame (side nav, header, side-by-side right panel,
+// mobile bottom nav) is frosted glass; the content sheet behind the task list
+// is a nearly opaque tint; task cards, dialogs and menus stay opaque. Only
+// static strips and side panels blur. Anything that slides (mobile drawer,
+// full-width right panel) gets a stronger tint without blur.
+//
+// Tokens, from palette roles so the colour normaliser can feed them. It writes
+// the tints and alphas (max(design value, contrast floor), the floor counting
+// muted text on glass), `--glass-ink-muted` and `--glass-edge-line`; the
+// fallbacks below are the design values used until it does.
+body.ultra-tasks {
+  --glass-blur: 20px;
+  --glass-saturate: 125%;
+  --glass-edge-highlight: var(--c-light-50);
+  --glass-edge: var(
+    --glass-edge-line,
+    rgba(var(--palette-background-ink-channel), 0.12)
+  );
+  --glass-panel-bg: color-mix(
+    in srgb,
+    var(--glass-panel-tint, var(--palette-background)) var(--glass-panel-alpha, 84%),
+    transparent
+  );
+  --glass-canvas-bg: color-mix(
+    in srgb,
+    var(--glass-canvas-tint, var(--palette-background)) var(--glass-canvas-alpha, 92%),
+    transparent
+  );
+  --glass-overlay-bg: color-mix(
+    in srgb,
+    var(--glass-panel-tint, var(--palette-background)) var(--glass-overlay-alpha, 95%),
+    transparent
+  );
+}
+body.ultra-tasks.isDarkTheme {
+  --glass-edge-highlight: var(--c-light-05);
+}
+
+// The window material or the drawn backdrop shows through the page itself.
+body.ultra-tasks.st-glass-native {
+  background: transparent;
+}
+body.ultra-tasks.st-glass {
+  .app-container {
+    background: transparent;
+  }
+
+  // Frosted frame. `!important` outranks the panels' own opaque fills.
+  .nav-sidenav,
+  main-header .wrapper,
+  .right-panel,
+  .mobile-bottom-nav {
+    // Muted text on glass uses the tier solved for the worst backdrop.
+    --ink-muted: var(--glass-ink-muted, var(--palette-background-ink));
+    --text-color-muted: var(--glass-ink-muted, var(--palette-background-ink));
+    --text-color-less-intense: var(--glass-ink-muted, var(--palette-background-ink));
+    background: var(--glass-panel-bg) !important;
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate)) !important;
+  }
+
+  // Thin light rim on top, hairline on the edge that faces the content.
+  .nav-sidenav {
+    border-inline-end: var(--st-line-width) solid var(--glass-edge);
+    box-shadow: inset 0 var(--st-line-width) 0 var(--glass-edge-highlight);
+  }
+  main-header .wrapper {
+    box-shadow:
+      inset 0 var(--st-line-width) 0 var(--glass-edge-highlight),
+      inset 0 calc(-1 * var(--st-line-width)) 0 var(--glass-edge);
+  }
+  right-panel .side {
+    border-inline-start-color: var(--glass-edge);
+  }
+  .right-panel {
+    box-shadow: inset 0 var(--st-line-width) 0 var(--glass-edge-highlight);
+  }
+  .mobile-bottom-nav {
+    border-top-color: var(--glass-edge);
+  }
+
+  // Sliding surfaces: a stronger tint, never an animated blur.
+  .nav-sidenav.mobile {
+    background: var(--glass-overlay-bg) !important;
+    backdrop-filter: none !important;
+  }
+
+  // The content sheet behind the task list: calm, nearly opaque, no blur.
+  .route-wrapper {
+    background: var(--glass-canvas-bg);
+  }
+}
+// Full-width (phone) right panel slides over the whole column.
+@media (max-width: 599px) {
+  body.ultra-tasks.st-glass .right-panel {
+    background: var(--glass-overlay-bg) !important;
+    backdrop-filter: none !important;
+  }
+}
+// Windows acrylic: an opaque content sheet keeps ClearType text antialiasing;
+// only the frame is translucent.
+body.ultra-tasks.st-glass-acrylic .route-wrapper {
+  background: var(--bg);
+}
+
+// No backdrop-filter: the drawn backdrop is already blurred, so a stronger
+// tint keeps the frame calm without it.
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  body.ultra-tasks.st-glass {
+    .nav-sidenav,
+    main-header .wrapper,
+    .right-panel,
+    .mobile-bottom-nav {
+      background: var(--glass-overlay-bg) !important;
+    }
+  }
+}
+
+// Solid surfaces. Reduced transparency and forced colors also switch the body
+// to st-solid in TypeScript; the media rules hold even before it runs.
+body.ultra-tasks.st-solid {
+  .nav-sidenav,
+  main-header .wrapper,
+  .right-panel {
+    background: var(--bg) !important;
+    backdrop-filter: none !important;
+  }
+}
+@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
+  body.ultra-tasks.st-glass {
+    background: var(--bg);
+
+    .nav-sidenav,
+    main-header .wrapper,
+    .right-panel,
+    .mobile-bottom-nav,
+    .route-wrapper {
+      background: var(--bg) !important;
+      backdrop-filter: none !important;
+    }
+  }
+  glass-backdrop {
+    display: none;
+  }
+}

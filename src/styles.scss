@@ -130,4 +130,7 @@ body.isIPad {
 
 @include meta.load-css('styles/components/palette-theme');
 
+// After the palette surfaces so glass panels override their opaque fills.
+@include meta.load-css('styles/components/glass');
+
 @include meta.load-css('styles/components/settings');

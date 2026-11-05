@@ -7,8 +7,8 @@
 // (hostWidthSignal in magic-side-nav.component.ts), which then collapses the
 // fixed-positioned drawer (.nav-sidenav) and overlay (.nav-backdrop-mobile)
 // to 0 width. The drawer simply won't appear when the user taps the menu.
-// Apply glass/blur/tint to `.nav-sidenav` (inner) instead. See velvet.css and
-// liquid-glass.css for the correct pattern.
+// Apply glass/blur/tint to `.nav-sidenav` (inner) instead, as
+// src/styles/components/_glass.scss does.
 :host {
   --sidenav-width-expanded: var(--side-nav-width, 260px);
   --mobile-breakpoint: 768px;
@@ -173,18 +173,6 @@
     transition: none !important;
   }
 
-  // Milkglass effect when background image is present (light theme)
-  :host-context(.hasBgImage) & {
-    background: var(--c-light-50);
-    backdrop-filter: blur(20px);
-  }
-
-  // Milkglass effect for dark theme with background image
-  :host-context(.isDarkTheme.hasBgImage) & {
-    background: var(--c-dark-50);
-    backdrop-filter: blur(20px) saturate(180%);
-  }
-
   // CompactMode state (desktop)
   &.compactMode {
     scrollbar-width: none;
@@ -224,10 +212,6 @@
     box-shadow: 4px 0 16px var(--c-dark-30);
     // Remove CSS transitions - let Angular animations handle it
     transition: none !important;
-  }
-
-  :host-context(.hasBgImage:not(.isDarkTheme)) &.mobile {
-    background: var(--bg);
   }
 
   :host-context(body.isNativeMobile) &.mobile {
