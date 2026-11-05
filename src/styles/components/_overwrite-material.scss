@@ -197,22 +197,23 @@ body.isDarkTheme {
 // Apply tab colors explicitly to tab components
 .mat-mdc-tab-group,
 .mat-mdc-tab-nav-bar {
-  // Active tab label color
-  // Direct ink, not the token: Material's primary theme sets the token on the
-  // group itself and would turn the label accent-coloured, which fails
-  // contrast on a neon accent.
-  .mdc-tab--active .mdc-tab__text-label {
-    color: var(--text-color-most-intense);
+  // Label colours are ink (active) and the muted tier (inactive), never the
+  // accent: Material's primary theme would turn the active label accent-coloured,
+  // which fails contrast on a neon accent. Set on the tab itself, where
+  // Material's own `.mat-mdc-tab.mdc-tab--active .mdc-tab__text-label` rule
+  // reads them.
+  .mat-mdc-tab {
+    --mat-tab-active-label-text-color: var(--text-color-most-intense);
+    --mat-tab-active-hover-label-text-color: var(--text-color-most-intense);
+    --mat-tab-active-focus-label-text-color: var(--text-color-most-intense);
+    --mat-tab-inactive-label-text-color: var(--text-color-muted);
+    --mat-tab-inactive-hover-label-text-color: var(--text-color-most-intense);
+    --mat-tab-inactive-focus-label-text-color: var(--text-color-most-intense);
   }
 
   // Active tab indicator (underline)
   .mdc-tab-indicator--active .mdc-tab-indicator__content--underline {
     border-color: var(--mdc-tab-indicator-active-indicator-color);
-  }
-
-  // Inactive tab labels
-  .mdc-tab:not(.mdc-tab--active) .mdc-tab__text-label {
-    color: var(--text-color-muted);
   }
 }
 

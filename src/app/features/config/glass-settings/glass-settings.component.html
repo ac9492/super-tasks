@@ -61,7 +61,8 @@
             type="button"
             class="choose"
             [attr.aria-label]="
-              T.F.ULTRA_TASKS.BG_IMAGE_CHOOSE_FOR | translate: { mode: (slot.label | translate) }
+              T.F.ULTRA_TASKS.BG_IMAGE_CHOOSE_FOR
+                | translate: { mode: (slot.label | translate) }
             "
             (click)="choose(slot.key, fileInput)"
           >
