@@ -49,6 +49,11 @@ must link to their replacement, and keep their original number.
 
 ## Active plans
 
+- [Native encrypted collaboration](plans/2026-11-05-native-encrypted-collaboration.md)
+  — proposed Ultra Tasks fork direction: password accounts and 2FA, encrypted
+  project sharing, periodic personal sync, near real-time shared sync, and one
+  protocol for hosted and self-hosted destinations
+
 [`plans/`](plans/) and [`long-term-plans/`](long-term-plans/) contain proposals,
 not current behavior. Every active plan should start with:
 
