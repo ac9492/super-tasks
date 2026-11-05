@@ -3672,7 +3672,7 @@
       "motivationalImgs": "Add image URLs to display with break reminders.",
       "isHideEvaluationSheet": "Hide the evaluation sheet when finishing your day.",
       "taskWidget_isEnabled": "Show the compact task window on this desktop.",
-      "isAlwaysShow": "Keep the task widget visible even when no task is running.",
+      "isAlwaysShow": "Keep the task widget on screen while the main window is open, too. Otherwise it hides when you switch back to the main window.",
       "opacity": "Set how opaque the desktop task widget appears.",
       "localBackup_isEnabled": "Save automatic recovery copies on this device.",
       "isEnableProject": "Recognize project shortcuts when entering task titles.",

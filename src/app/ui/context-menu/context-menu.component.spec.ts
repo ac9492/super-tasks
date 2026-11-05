@@ -1,6 +1,8 @@
 import { Component, ElementRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { By } from '@angular/platform-browser';
+import { MatMenu } from '@angular/material/menu';
 import { ContextMenuComponent } from './context-menu.component';
 
 @Component({
@@ -8,9 +10,11 @@ import { ContextMenuComponent } from './context-menu.component';
   imports: [ContextMenuComponent],
   template: `
     <div #trigger></div>
+    <button #moreBtn>more</button>
     <ng-template #menuTpl><span>menu item</span></ng-template>
     <context-menu
       [rightClickTriggerEl]="trigger"
+      [leftClickTriggerEl]="moreBtn"
       [contextMenu]="menuTpl"
       [isEnabled]="isEnabled"
       [isTouchLongPress]="isTouchLongPress"
@@ -19,6 +23,7 @@ import { ContextMenuComponent } from './context-menu.component';
 })
 class HostComponent {
   readonly triggerRef = viewChild.required<ElementRef<HTMLElement>>('trigger');
+  readonly moreBtnRef = viewChild.required<ElementRef<HTMLButtonElement>>('moreBtn');
   readonly contextMenu = viewChild.required(ContextMenuComponent);
   isEnabled = true;
   isTouchLongPress = false;
@@ -151,5 +156,38 @@ describe('ContextMenuComponent', () => {
       tick(1000);
       expect(openMenuSpy).not.toHaveBeenCalled();
     }));
+  });
+
+  describe('as a menu button', () => {
+    it('reports its "more" button as an expanded menu button while open', () => {
+      const openMenuSpy = setup(true);
+      const btn = host.moreBtnRef().nativeElement;
+      expect(btn.getAttribute('aria-haspopup')).toBe('menu');
+      expect(btn.getAttribute('aria-expanded')).toBe('false');
+
+      btn.click();
+      expect(openMenuSpy).toHaveBeenCalled();
+      expect(btn.getAttribute('aria-expanded')).toBe('true');
+
+      const menu = fixture.debugElement
+        .query(By.directive(MatMenu))
+        .injector.get(MatMenu);
+      menu.closed.emit('click');
+      expect(btn.getAttribute('aria-expanded')).toBe('false');
+    });
+
+    // The menu's real trigger is a hidden div, which cannot take focus back.
+    it('returns focus to the control it was opened from when closed by keyboard', () => {
+      setup(true);
+      const btn = host.moreBtnRef().nativeElement;
+      btn.click();
+      btn.blur();
+
+      const menu = fixture.debugElement
+        .query(By.directive(MatMenu))
+        .injector.get(MatMenu);
+      menu.closed.emit('keydown');
+      expect(document.activeElement).toBe(btn);
+    });
   });
 });

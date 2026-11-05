@@ -426,9 +426,9 @@ describe('PageTitleComponent', () => {
       );
 
     // The work-context menu holds Delete Project / Delete Tag, and `.page-title`
-    // itself is a roleless `<div>` carrying `routerLink` — not focusable, not a
-    // button. So this button is the only keyboard-reachable route to that menu
-    // from the header, which is why it stays rather than folding into the title.
+    // itself is a link to the task list, not a menu button. So this button is
+    // the only keyboard-reachable route to that menu from the header, which is
+    // why it stays rather than folding into the title.
     it('always offers the work-context menu on a context route', async () => {
       expect(buttons(await renderAt('/active/tasks'))).toContain('project-settings-btn');
       expect(buttons(await renderAt('/active/notes'))).toContain('project-settings-btn');
