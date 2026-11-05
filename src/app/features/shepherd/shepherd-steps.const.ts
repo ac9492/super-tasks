@@ -109,7 +109,7 @@ export const SHEPHERD_STEPS = (
     },
     {
       title: 'Short syntax settings',
-      text: '<p>You can enable or disable the individual short syntax options under <strong>Settings / Tasks / Short Syntax</strong>.</p><p>This how-to stays available from the Help menu whenever you want to try it again.</p>',
+      text: '<p>You can enable or disable the individual short syntax options under <strong>Settings → Tasks &amp; planning → Short syntax</strong>.</p><p>This how-to stays available from the Help menu whenever you want to try it again.</p>',
       buttons: [
         {
           text: 'End Tour',
@@ -124,7 +124,7 @@ export const SHEPHERD_STEPS = (
       id: TourId.KeyboardNav,
       title: 'Keyboard Navigation',
       // eslint-disable-next-line max-len
-      text: `<p>The most efficient way to use Ultra Tasks is to make use of the keyboard shortcuts. Don't worry there just a handful of important ones :)</p><p>You can configure most of them under <strong>Settings/Keyboard Shortcuts</strong>, but let's start more practical.</p>`,
+      text: `<p>The most efficient way to use Ultra Tasks is to make use of the keyboard shortcuts. Don't worry, there are just a handful of important ones :)</p><p>You can configure most of them under <strong>Settings → General → Keyboard shortcuts</strong>, but let's start more practical.</p>`,
       buttons: [NEXT_BTN],
     },
     {
@@ -249,7 +249,7 @@ export const SHEPHERD_STEPS = (
         show: () => taskService.focusFirstTaskIfVisible(),
       },
       // eslint-disable-next-line max-len
-      text: `<p>There are more task related shortcuts that can be used when a task is focused. Best you check them all out under <strong>Settings/Keyboard Shortcuts/Tasks</strong>. The most useful are probably:</p>
+      text: `<p>There are more task related shortcuts that can be used when a task is focused. Best you check them all out under <strong>Settings → General → Keyboard shortcuts → Tasks</strong>. The most useful are probably:</p>
           <ul>
           <li>${KEY_COMBO('taskSchedule')}: Schedule task</li>
           <li>${KEY_COMBO('taskDelete')}: Delete Task</li>

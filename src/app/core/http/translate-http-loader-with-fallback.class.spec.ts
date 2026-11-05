@@ -89,6 +89,53 @@ describe('TranslateHttpLoaderWithFallback', () => {
     httpMock.expectOne('./assets/i18n/de.json').flush(translations);
   });
 
+  it('brands CamelCase product names and upstream wiki links in locale strings', (done) => {
+    const translations = {
+      HELP: '<p>Hier kannst du SuperProductivity konfigurieren.</p>',
+      ONEDRIVE:
+        'Siehe <a href="https://github.com/super-productivity/super-productivity/wiki/2.09-Configure-Sync-Backend" target="_blank">Anleitung</a>.',
+    };
+    loader.getTranslation('de').subscribe((result: unknown) => {
+      expect(result).toEqual({
+        HELP: '<p>Hier kannst du Ultra Tasks konfigurieren.</p>',
+        ONEDRIVE:
+          'Siehe <a href="https://github.com/ac9492/ultra-tasks/blob/main/docs/wiki/2.09-Configure-Sync-Backend.md" target="_blank">Anleitung</a>.',
+      });
+      done();
+    });
+    httpMock.expectOne('./assets/i18n/de.json').flush(translations);
+  });
+
+  it('drops locale strings that still send users to the upstream contact email', (done) => {
+    const translations = {
+      FILE_IMEX: {
+        PRIVACY_EXPORT_DESCRIPTION:
+          'Exportiere anonymisierte Daten (zum Senden an contact@super-productivity.com zur Fehlersuche)',
+        PRIVACY_EXPORT: 'Daten exportieren (anonymisiert)',
+      },
+    };
+    loader.getTranslation('de').subscribe((result: unknown) => {
+      // The key is missing, so ngx-translate falls back to the English text.
+      expect(result).toEqual({
+        FILE_IMEX: { PRIVACY_EXPORT: 'Daten exportieren (anonymisiert)' },
+      });
+      done();
+    });
+    httpMock.expectOne('./assets/i18n/de.json').flush(translations);
+  });
+
+  it('never rewrites English, which names upstream services on purpose', (done) => {
+    const translations = {
+      SERVER: 'Run by the upstream Super Productivity project',
+      EXTENSION: 'the Super Productivity Chrome extension',
+    };
+    loader.getTranslation('en').subscribe((result: unknown) => {
+      expect(result).toEqual(translations);
+      done();
+    });
+    httpMock.expectOne('./assets/i18n/en.json').flush(translations);
+  });
+
   it('falls back to bundled English even for a non-English language on a status-0 error', (done) => {
     loader.getTranslation('de').subscribe({
       next: (res: unknown) => {

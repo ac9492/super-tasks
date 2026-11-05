@@ -47,6 +47,12 @@
   padding: 3px 3px 3px 5px;
   cursor: text;
 
+  // Forced colors paint the transparent resting border as text color, boxing
+  // every title; blend it into the canvas until the title is edited.
+  @media (forced-colors: active) {
+    border-color: Canvas;
+  }
+
   &:focus {
     outline: none !important;
   }
@@ -57,6 +63,10 @@
     border: 1px solid var(--focus-ring-color);
     @include inlineEditElevation();
     box-shadow: var(--whiteframe-shadow-4dp);
+
+    @media (forced-colors: active) {
+      border-color: Highlight;
+    }
   }
 
   // In readonly mode, use default cursor instead of text cursor

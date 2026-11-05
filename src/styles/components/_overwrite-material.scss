@@ -379,9 +379,11 @@ mat-icon,
   visibility: hidden;
 }
 
+// `inherit`, not `visible`: an icon must stay hidden inside a container that is
+// hidden with `visibility` (hover-revealed nav and attachment controls).
 body.isMaterialSymbolsLoaded .mat-icon,
 body.isMaterialSymbolsLoaded mat-icon {
-  visibility: visible;
+  visibility: inherit;
 }
 
 .mat-icon.mat-icon {

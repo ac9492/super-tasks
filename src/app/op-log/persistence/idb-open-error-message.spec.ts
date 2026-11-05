@@ -93,11 +93,11 @@ describe('buildIdbOpenErrorMessage', () => {
     });
 
     // These two commands are the only channel-specific instructions left, so
-    // they carry the whole risk of being wrong. Asserted in FULL: a partial
-    // match (e.g. just 'flatpak update') passes with a wrong id, and a wrong id
-    // makes the single command we hand a locked-out user fail. Sources of truth
-    // are the store links in README.md; they differ from the mac/Capacitor
-    // appId `com.super-productivity.app`, which is what a careless grep finds.
+    // they carry the whole risk of being wrong. Asserted in FULL, line end
+    // included: Ultra Tasks publishes no Snap or Flatpak package, so the
+    // commands must name no package id — the upstream ids would update a
+    // different app, and any wrong id makes the single command we hand a
+    // locked-out user fail.
     //
     // The sudo asymmetry is deliberate and verified against polkit policy:
     // snapd's io.snapcraft.snapd.manage is `auth_admin_keep` (bare command dies
@@ -109,16 +109,18 @@ describe('buildIdbOpenErrorMessage', () => {
         ctx({ channel: 'linux-snap' }),
       );
 
-      expect(msg).toContain('sudo snap refresh superproductivity');
+      expect(msg).toContain('Update to the newest version: sudo snap refresh\n');
+      expect(msg).not.toContain('superproductivity');
     });
 
-    it('points Flatpak users at flatpak update with the real Flathub id', () => {
+    it('points Flatpak users at flatpak update without an upstream id', () => {
       const msg = buildIdbOpenErrorMessage(
         versionError(),
         ctx({ channel: 'linux-flatpak' }),
       );
 
-      expect(msg).toContain('flatpak update com.super_productivity.SuperProductivity');
+      expect(msg).toContain('\n   flatpak update\n');
+      expect(msg).not.toContain('super_productivity');
       expect(msg).not.toContain('com.super-productivity.app');
       expect(msg).not.toContain('sudo flatpak');
     });

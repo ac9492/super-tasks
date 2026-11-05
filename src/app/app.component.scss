@@ -59,6 +59,38 @@
   flex-direction: column;
   min-width: 0; // Prevent flex item from growing beyond container
   overflow: hidden;
+
+  // Focused only by the skip link, when no task row is there.
+  &:focus {
+    outline: none;
+  }
+}
+
+// Skip link (WCAG 2.4.1): above the viewport until it has focus, then it slides
+// in over the side nav.
+.skip-link {
+  position: fixed;
+  top: var(--s);
+  inset-inline-start: var(--s);
+  z-index: calc(var(--z-side-nav) + 1);
+  padding: var(--s) var(--s2);
+  border: 0;
+  border-radius: var(--card-border-radius);
+  background: var(--card-bg);
+  color: var(--text-color);
+  font: inherit;
+  box-shadow: var(--whiteframe-shadow-4dp);
+  cursor: pointer;
+  transform: translateY(calc(-100% - var(--s3)));
+
+  &:focus {
+    transform: none;
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
 }
 
 // Mobile bottom nav spacing

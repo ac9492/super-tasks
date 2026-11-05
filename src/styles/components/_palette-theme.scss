@@ -127,6 +127,7 @@ body
     .repeat-date-badge,
     .time-badge,
     .progress-badge,
+    .toggle-sub-tasks-btn,
     .mat-mdc-tooltip-surface,
     .standard-note,
     .task-detail-bg,
@@ -174,15 +175,16 @@ body a[href] {
 }
 
 // Enabled filled buttons only: disabled ones keep Material's dimmed container
-// and label, warn buttons keep the warn palette, and the flat icon-only FAB
+// and label, warn buttons keep the warn palette, the flat icon-only FAB
 // (`.mat-mini-fab-icon`, _overwrite-material.scss) keeps its muted icon on a
-// transparent background.
+// transparent background, and the subtask toggle is a card-colored control
+// (listed with the surfaces above).
 body
   :is(
     .mat-mdc-unelevated-button,
     .mat-mdc-raised-button,
     .mat-mdc-fab,
-    .mat-mdc-mini-fab:not(.mat-mini-fab-icon)
+    .mat-mdc-mini-fab:not(.mat-mini-fab-icon, .toggle-sub-tasks-btn)
   ):not(:disabled, .mat-mdc-button-disabled, .mat-warn),
 body .preview-action {
   @include ink(var(--palette-accent-ink), var(--palette-background-ink-channel));

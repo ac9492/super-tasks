@@ -427,6 +427,20 @@ export class AppComponent implements OnDestroy, AfterViewInit {
     return this._activeWorkContextId() ?? null;
   }
 
+  /** Skip link target: the first task row if the page lists tasks, else <main>. */
+  skipToMainContent(main: HTMLElement): void {
+    const firstTask = main.querySelector<HTMLElement>('task');
+    if (firstTask) {
+      firstTask.focus();
+      return;
+    }
+    // Focusable only for this jump: a permanent tabindex would let any click
+    // on empty space move focus to <main>.
+    main.setAttribute('tabindex', '-1');
+    main.addEventListener('blur', () => main.removeAttribute('tabindex'), { once: true });
+    main.focus();
+  }
+
   onTaskAdded({ taskId }: TaskAddEvent): void {
     this.layoutService.setPendingFocusTaskId(taskId);
     this.layoutService.scrollToNewTask(taskId);

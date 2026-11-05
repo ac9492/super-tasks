@@ -45,7 +45,9 @@
     }
   }
 
-  &:focus,
+  // `:focus-within`: the wrapper itself never takes focus, but a focused row
+  // reveals its "more" button so Tab reaches it next.
+  &:focus-within,
   &:hover {
     > button:nth-of-type(n + 2),
     > .additional-btn {

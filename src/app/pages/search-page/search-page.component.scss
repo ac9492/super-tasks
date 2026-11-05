@@ -24,121 +24,130 @@
     }
   }
 
+  // Same column as the field above, so results line up under it.
   .search-results {
     flex: 1;
     overflow-y: auto;
+    width: 100%;
+    max-width: 600px;
+    margin-inline: auto;
 
-    mat-list-item {
-      cursor: pointer !important;
-      height: auto !important;
-      min-height: var(--s6);
+    .search-results-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
 
-      &::ng-deep .mdc-list-item {
-        height: auto !important;
-        min-height: var(--s6);
-        padding-top: var(--s);
-        padding-bottom: var(--s);
-      }
+    .search-result {
+      display: flex;
+      align-items: center;
+      border-radius: var(--card-border-radius);
 
       &:hover {
-        background-color: var(--state-hover) !important;
+        background-color: var(--state-hover);
 
         .view-details-btn {
           opacity: 0.4;
-
-          &:hover {
-            opacity: 1;
-          }
         }
       }
 
-      &::ng-deep {
-        .search-result-content {
-          width: 100%;
-          cursor: pointer !important;
+      .view-details-btn:hover,
+      .view-details-btn:focus-visible {
+        opacity: 1;
+      }
+    }
 
-          .task-info {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
+    .search-result-main {
+      flex: 1;
+      min-width: 0;
+      min-height: var(--s6);
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--s);
+      padding: var(--s) var(--s2);
+      border: 0;
+      border-radius: var(--card-border-radius);
+      background: none;
+      color: inherit;
+      font: inherit;
+      text-align: start;
+      cursor: pointer;
 
-            .context-tag {
-              flex-shrink: 0;
-            }
+      &:focus-visible {
+        outline: var(--focus-ring-width) solid var(--focus-ring-color);
+        outline-offset: calc(-1 * var(--focus-ring-width));
+      }
 
-            .task-title {
-              font-weight: 500;
-            }
+      .context-tag {
+        flex-shrink: 0;
+      }
 
-            .task-archived,
-            .task-done {
-              text-decoration: line-through;
-            }
+      .task-title {
+        font-weight: 500;
+      }
 
-            .task-subtask {
-              font-style: italic;
-            }
+      .task-archived,
+      .task-done {
+        text-decoration: line-through;
+      }
 
-            .task-deleted {
-              color: var(--text-color-muted);
-            }
+      .task-subtask {
+        font-style: italic;
+      }
 
-            .subtask-icon {
-              font-size: 1.2rem;
-              width: 1.2rem;
-              height: 1.2rem;
-              opacity: 0.7;
-              margin-right: -0.25rem;
-            }
+      .task-deleted {
+        color: var(--text-color-muted);
+      }
 
-            .subtask-breadcrumb {
-              opacity: 0.6;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              max-width: 10rem;
-            }
+      .subtask-icon {
+        font-size: 1.2rem;
+        width: 1.2rem;
+        height: 1.2rem;
+        opacity: 0.7;
+        margin-right: -0.25rem;
+      }
 
-            .task-icons {
-              display: flex;
-              align-items: center;
-              gap: 0.25rem;
+      .subtask-breadcrumb {
+        opacity: 0.6;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 10rem;
+      }
 
-              .issue-icon,
-              .archive-icon {
-                font-size: 1.2rem;
-                width: 1.2rem;
-                height: 1.2rem;
-                opacity: 0.7;
-              }
+      .task-icons {
+        display: flex;
+        align-items: center;
+        gap: var(--s-half);
 
-              .archive-icon {
-                color: var(--text-color-muted);
-              }
-
-              .deleted-label {
-                display: inline-flex;
-                align-items: center;
-                gap: var(--s-half);
-                color: var(--text-color-muted);
-                font-size: var(--font-size-sm);
-              }
-
-              .view-details-btn {
-                opacity: 0.4;
-
-                :host-context(.isMousePrimary) & {
-                  opacity: 0;
-                }
-
-                &:hover {
-                  opacity: 1;
-                }
-              }
-            }
-          }
+        .issue-icon,
+        .archive-icon {
+          font-size: 1.2rem;
+          width: 1.2rem;
+          height: 1.2rem;
+          opacity: 0.7;
         }
+
+        .archive-icon {
+          color: var(--text-color-muted);
+        }
+
+        .deleted-label {
+          display: inline-flex;
+          align-items: center;
+          gap: var(--s-half);
+          color: var(--text-color-muted);
+          font-size: var(--font-size-sm);
+        }
+      }
+    }
+
+    .view-details-btn {
+      opacity: 0.4;
+
+      :host-context(.isMousePrimary) & {
+        opacity: 0;
       }
     }
 
@@ -171,16 +180,8 @@
   .search-page {
     padding: 0.5rem;
 
-    .search-results {
-      .search-result-item {
-        .search-result-content {
-          .task-info {
-            .task-title {
-              font-size: 0.9rem;
-            }
-          }
-        }
-      }
+    .search-result-main .task-title {
+      font-size: 0.9rem;
     }
   }
 }

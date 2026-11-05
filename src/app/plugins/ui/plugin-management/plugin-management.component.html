@@ -172,7 +172,7 @@
                 [checked]="plugin.isEnabled"
                 [disabled]="!canEnablePlugin(plugin) || isPluginLoading(plugin)"
                 (change)="onPluginToggle(plugin, $event)"
-                [attr.aria-label]="
+                [aria-label]="
                   T.PLUGINS.TOGGLE_PLUGIN
                     | translate: { pluginName: plugin.manifest.name }
                 "
@@ -388,7 +388,7 @@
 
         <div class="catalog-contribute">
           <a
-            href="https://github.com/super-productivity/super-productivity/blob/master/docs/plugin-development.md#get-listed-in-the-app"
+            href="https://github.com/ac9492/ultra-tasks/blob/main/docs/plugin-development.md#get-listed-in-the-app"
             target="_blank"
             mat-button
             color="primary"

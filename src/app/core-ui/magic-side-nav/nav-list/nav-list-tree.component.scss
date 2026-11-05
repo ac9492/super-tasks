@@ -29,8 +29,13 @@
     }
   }
 
-  // Show additional buttons on focus/hover (desktop)
-  //&:focus-within .additional-btns,
+  // Show additional buttons on focus/hover (desktop). Keyboard focus on the
+  // header row reveals them, so Tab can reach them next.
+  &:focus-within .additional-btns {
+    visibility: visible;
+    pointer-events: auto;
+  }
+
   @include hoverWithPointer {
     .additional-btns {
       visibility: visible;

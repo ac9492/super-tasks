@@ -52,13 +52,26 @@
     [class.app-entrance]="isAppEntrance()"
     [dir]="isRTL ? 'rtl' : 'ltr'"
   >
+    <!-- Skip link: the first Tab stop, so keyboard users can bypass the side
+         nav. Out of sight until it has focus. -->
+    <button
+      type="button"
+      class="skip-link"
+      (click)="skipToMainContent(mainContent)"
+    >
+      {{ T.MH.SKIP_TO_CONTENT | translate }}
+    </button>
+
     <magic-side-nav
       #magicSideNav
       [activeWorkContextId]="getActiveWorkContextId()"
     >
     </magic-side-nav>
 
-    <main class="main-content">
+    <main
+      #mainContent
+      class="main-content"
+    >
       <right-panel>
         <header
           [class.isNotScrolled]="!layoutService.isWorkViewScrolled()"

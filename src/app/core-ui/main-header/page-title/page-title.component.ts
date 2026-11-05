@@ -47,7 +47,7 @@ import { PluginIconComponent } from '../../../plugins/ui/plugin-icon/plugin-icon
   ],
   template: `
     @if (activeWorkContextTypeAndId()) {
-      <div
+      <a
         [matTooltip]="T.MH.GO_TO_TASK_LIST | translate"
         class="page-title"
         mat-ripple
@@ -73,7 +73,7 @@ import { PluginIconComponent } from '../../../plugins/ui/plugin-icon/plugin-icon
           >
         }
         <span class="page-title-text">{{ displayTitle() }}</span>
-      </div>
+      </a>
       @if (!isXxxs() && !isSpecialSection()) {
         <div class="page-title-actions">
           @if (isSharedOnPlainspace()) {
@@ -88,8 +88,8 @@ import { PluginIconComponent } from '../../../plugins/ui/plugin-icon/plugin-icon
           }
           <button
             [mat-menu-trigger-for]="activeWorkContextMenu"
-            [matTooltip]="T.MH.PROJECT_MENU | translate"
-            [attr.aria-label]="T.MH.PROJECT_MENU | translate"
+            [matTooltip]="T.G.MORE_ACTIONS | translate"
+            [attr.aria-label]="T.G.MORE_ACTIONS | translate"
             class="project-settings-btn"
             mat-icon-button
           >
@@ -208,9 +208,17 @@ import { PluginIconComponent } from '../../../plugins/ui/plugin-icon/plugin-icon
            row exists to avoid. So the token is a floor on the BOX: read it as
            "about six characters", not as an exact promise to the name. */
         min-width: var(--header-title-text-min, 0px);
+        /* A link to the task list: keep the heading look. */
+        color: inherit;
+        text-decoration: none;
 
         &:focus {
           outline: none;
+        }
+
+        &:focus-visible {
+          outline: var(--focus-ring-width) solid var(--focus-ring-color);
+          outline-offset: calc(-1 * var(--focus-ring-width));
         }
       }
 

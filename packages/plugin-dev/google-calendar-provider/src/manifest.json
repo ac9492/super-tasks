@@ -1,6 +1,7 @@
 {
   "id": "google-calendar-provider",
   "name": "Google Calendar",
+  "description": "Shows events from your Google Calendar and lets you add them as tasks. Sign in with your Google account.",
   "version": "1.0.0",
   "manifestVersion": 1,
   "minSupVersion": "13.0.0",

@@ -123,10 +123,10 @@
     cursor: grabbing;
   }
 
-  // `.page-title` is a div with a routerLink, so neither `button` nor `a`
-  // below reaches it -- it needs naming here or the one control that fills the
-  // left of the header is inside the drag region and cannot be clicked. It was
-  // named here, as `.current-work-context-title`, until that class was renamed.
+  // `.page-title` is an `a` now, but stays named here: the one control that
+  // fills the left of the header must never fall inside the drag region, where
+  // it cannot be clicked. It was named here, as `.current-work-context-title`,
+  // until that class was renamed.
   .page-title,
   ::ng-deep .current-task-title,
   button,

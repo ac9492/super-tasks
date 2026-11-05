@@ -367,10 +367,12 @@ done-toggle {
   }
 }
 
+// Centred in the gutter left of the subtask cards (`.sub-tasks` margin-left:
+// --s3, --s5 from xs up), clear of both the parent and the subtask borders.
 .toggle-sub-tasks-btn.toggle-sub-tasks-btn {
   position: absolute !important;
   transform: translateY(-50%);
-  left: -20px;
+  left: calc(-1 * var(--s3));
   top: 50%;
   z-index: var(--z-toggle-sub-task-btn) !important;
   min-width: 0;
@@ -382,6 +384,13 @@ done-toggle {
   transition-property: opacity, transform, background, box-shadow;
   box-shadow: none;
   background: var(--bg-lighter) !important;
+  // The mini FAB's own foreground is the accent ink, which vanishes on this
+  // card-colored background; the icon and the done/total badge inherit this.
+  color: var(--text-color);
+
+  @include mq(xs) {
+    left: calc(-1 * var(--s4));
+  }
 
   @media (hover: hover) {
     :host:hover & {

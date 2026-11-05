@@ -40,7 +40,9 @@ export const FEEDBACK_SUPPRESSION_STARTS = 90;
 // social-proof/discovery signal for the desktop distribution, so that's the CTA
 // there instead of the near-zero-conversion "how to rate" doc.
 const GITHUB_REPO_URL = 'https://github.com/ac9492/ultra-tasks';
-export const DISCUSSIONS_URL =
+// The fork has GitHub Discussions disabled; public questions and suggestions go
+// to the issue tracker's question form.
+export const FEEDBACK_ISSUE_URL =
   'https://github.com/ac9492/ultra-tasks/issues/new?template=question.yml';
 export const CONTRIBUTING_URL =
   'https://github.com/ac9492/ultra-tasks/blob/main/CONTRIBUTING.md';

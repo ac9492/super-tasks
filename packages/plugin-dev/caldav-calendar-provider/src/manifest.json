@@ -1,6 +1,7 @@
 {
   "id": "caldav-calendar-provider",
   "name": "CalDAV Events",
+  "description": "Shows events from a CalDAV calendar (for example Nextcloud) and lets you add them as tasks.",
   "version": "1.0.0",
   "manifestVersion": 1,
   "minSupVersion": "13.0.0",

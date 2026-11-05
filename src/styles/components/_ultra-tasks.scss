@@ -33,6 +33,10 @@ body.ultra-tasks {
   .compactMode .st-brand-name {
     display: none;
   }
+  // In the rail the mode toggle is centred at the top: keep the logo below it.
+  .compactMode .st-brand {
+    margin-top: var(--s5);
+  }
   .st-brand:focus-visible {
     outline: var(--st-focus-width) solid var(--st-brand);
     outline-offset: var(--s-half);

@@ -80,7 +80,7 @@ test.describe('Recently deleted', () => {
 
     await page.goto('/#/search');
     await page.locator('search-page .search-field input').fill(title);
-    const result = page.locator('search-page mat-list-item').filter({ hasText: title });
+    const result = page.locator('search-page .search-result').filter({ hasText: title });
     await expect(result).toHaveCount(1);
     await expect(result).toContainText('Deleted');
 

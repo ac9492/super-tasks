@@ -20,6 +20,7 @@
               class="additional-btn"
               mat-icon-button
               [matTooltip]="btn.tooltip | translate"
+              [attr.aria-label]="btn.tooltip | translate"
               [matMenuTriggerFor]="visibilityMenu"
             >
               <mat-icon>{{ btn.icon }}</mat-icon>
@@ -30,6 +31,7 @@
               mat-icon-button
               [attr.data-nav-btn]="btn.id"
               [matTooltip]="btn.tooltip | translate"
+              [attr.aria-label]="btn.tooltip | translate"
               (click)="btn.action?.()"
             >
               <mat-icon>{{ btn.icon }}</mat-icon>
@@ -62,10 +64,7 @@
         let-expanded="expanded"
         let-toggle="toggle"
       >
-        <div
-          class="nav-child-item folder-item draggable"
-          (contextmenu)="onFolderContextMenu($event, node)"
-        >
+        <div class="nav-child-item folder-item draggable">
           <nav-item
             [mode]="'folder'"
             [expanded]="expanded"
@@ -86,10 +85,8 @@
         #treeItem
         let-node
       >
-        <div
-          class="nav-child-item"
-          [class.draggable]="node.data?.k !== MenuTreeKind.TAG"
-        >
+        <!-- Tags are draggable too: into and out of tag folders. -->
+        <div class="nav-child-item draggable">
           @switch ($safeNavigationMigration(node.data?.k)) {
             @case (MenuTreeKind.PROJECT) {
               <nav-item

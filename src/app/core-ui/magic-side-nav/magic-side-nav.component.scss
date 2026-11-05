@@ -190,6 +190,11 @@
     scrollbar-width: none;
     scrollbar-gutter: stable both-edges;
 
+    // The rail is only as wide as a row's icon column.
+    .nav-list {
+      padding-inline: 0;
+    }
+
     // The toggle rides the panel's animated edge into the rail on its own
     // `right` anchor — what cannot be interpolated is `right: auto` + `left:
     // 50%`, which is what used to jump the button across the panel the instant a
@@ -304,6 +309,9 @@
   //padding: 60px var(--s) var(--s2);
   padding: 0;
   padding-top: var(--pt);
+  // Active rows and the Search entry draw a rounded fill: keep it clear of the
+  // panel edge and the divider (the mobile drawer meets the screen edge).
+  padding-inline: var(--s);
   margin: 0;
   min-height: 100%;
   display: flex;

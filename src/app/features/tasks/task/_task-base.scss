@@ -232,6 +232,13 @@
 :host.isSelected > swipe-block ::ng-deep > .inner-wrapper > .inner-wrapper > .box {
   // Override theme resting surfaces, including nested task surfaces.
   background: var(--task-c-selected-bg) !important;
+
+  // Forced colors drop author backgrounds; a dashed outline keeps the row open
+  // in the detail panel distinguishable from the solid multi-select outline.
+  @media (forced-colors: active) {
+    outline: 1px dashed CanvasText;
+    outline-offset: -1px;
+  }
 }
 
 // Multi-selection stays on the owning row, across SwipeBlock's projection wrapper.

@@ -114,6 +114,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: var(--s-half);
   border-bottom: 1px solid var(--grid-color);
 
   @include mq(xs, max) {
@@ -145,34 +146,24 @@
 .month-day-events {
   flex: 1;
   padding: var(--s-half);
-  overflow-y: auto;
-  overflow-x: hidden;
-  max-height: calc(100% - 35px);
+  // Only as many events as fit are rendered (maxVisibleEvents); the header
+  // counts the rest, so nothing may scroll out of sight in here.
+  overflow: hidden;
   width: 100%;
   box-sizing: border-box;
 
   @include mq(xs, max) {
     padding: var(--s-quarter);
-    max-height: calc(100% - 25px);
-  }
-
-  .month-event:nth-child(n + 4) {
-    display: none;
-
-    @media (min-height: 800px) {
-      display: block;
-    }
-
-    @media (min-height: 800px) and (max-width: 768px) {
-      &:nth-child(n + 3) {
-        display: none;
-      }
-    }
   }
 }
 
 .month-more-events {
-  display: none;
+  // Pushes itself and the deadline badge after it to the end of the header
+  margin-left: auto;
+  color: var(--text-color-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
 }
 
 .month-event {
@@ -210,23 +201,6 @@
 
   .month-day-cell {
     min-height: 60px;
-  }
-
-  .month-day-events {
-    overflow-y: hidden;
-
-    .month-event:nth-child(n + 2) {
-      display: none;
-    }
-  }
-
-  .month-more-events {
-    display: block;
-    padding: 0 var(--s-quarter);
-    color: var(--text-color-muted);
-    font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-medium);
-    white-space: nowrap;
   }
 
   :host ::ng-deep schedule-event .ico-wrapper {

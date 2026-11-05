@@ -12,7 +12,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MatIcon } from '@angular/material/icon';
 import {
   CONTRIBUTING_URL,
-  DISCUSSIONS_URL,
+  FEEDBACK_ISSUE_URL,
   RateDialogResult,
   getPrimaryCta,
 } from './rate-dialog-state';
@@ -42,7 +42,7 @@ export class DialogPleaseRateComponent {
   // native review card is used instead and this dialog isn't shown at all.
   protected readonly view = signal<'main' | 'feedback'>('main');
   protected readonly cta = getPrimaryCta();
-  protected readonly discussionsUrl = DISCUSSIONS_URL;
+  protected readonly feedbackIssueUrl = FEEDBACK_ISSUE_URL;
   protected readonly contributingUrl = CONTRIBUTING_URL;
   // CONTRIBUTING.md links to GitHub Sponsors. This dialog isn't shown on iOS
   // (native StoreReview card), but it is shown on macOS, where the link remains

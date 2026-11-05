@@ -6,13 +6,20 @@
     *cdkDragPlaceholder
   ></div>
 
+  <!-- Active on every page of the context (tasks, worklog, metrics...), not
+       only on the task list the link points to, so no routerLinkActive. -->
   <button
-    [attr.title]="countTooltip"
+    [attr.title]="showLabels() ? countTooltip : null"
     #routeBtn
     [routerLink]="[type() === 'TAG' ? 'tag' : 'project', workContext()!.id, 'tasks']"
-    routerLinkActive="active"
     class="nav-link"
+    [class.active]="isActiveContext()"
+    [attr.aria-current]="isActiveContext() ? 'page' : null"
     [class.has-tasks]="nrOfOpenTasks() > 0"
+    [attr.aria-label]="showLabels() ? null : workContext()!.title"
+    [matTooltip]="showLabels() ? '' : workContext()!.title"
+    matTooltipPosition="right"
+    matTooltipTouchGestures="off"
     mat-menu-item
     (click)="clicked.emit()"
   >
@@ -71,6 +78,10 @@
     mat-menu-item
     [attr.aria-expanded]="expanded()"
     [attr.aria-controls]="ariaControls()"
+    [attr.aria-label]="showLabels() ? null : label()"
+    [matTooltip]="showLabels() ? '' : (label() ?? '')"
+    matTooltipPosition="right"
+    matTooltipTouchGestures="off"
     (click)="clicked.emit()"
   >
     <mat-icon class="nav-icon expand-icon drag-handle folder-icon">
@@ -111,15 +122,23 @@
   </ng-template>
 } @else {
   <!-- Container + presentational row unified here -->
+  <!-- In the collapsed rail the label is clipped, so it names the row and
+       shows as a tooltip instead. -->
+  @let rowLabel = label() ? (label() | translate) : '';
   @if (container() === 'route') {
     <a
       #routeLink
       [routerLink]="navRoute()"
       routerLinkActive="active"
+      ariaCurrentWhenActive="page"
       mat-menu-item
       class="nav-link"
       [class.expanded]="expanded()"
       [class]="tourClass()"
+      [attr.aria-label]="showLabels() ? null : rowLabel"
+      [matTooltip]="showLabels() ? '' : rowLabel"
+      matTooltipPosition="right"
+      matTooltipTouchGestures="off"
       (click)="clicked.emit()"
     >
       @if (customPluginId(); as pluginId) {
@@ -192,6 +211,10 @@
       rel="noopener noreferrer"
       class="nav-link"
       [class.expanded]="expanded()"
+      [attr.aria-label]="showLabels() ? null : rowLabel"
+      [matTooltip]="showLabels() ? '' : rowLabel"
+      matTooltipPosition="right"
+      matTooltipTouchGestures="off"
       (click)="clicked.emit()"
     >
       @if (customPluginId(); as pluginId) {
@@ -236,6 +259,10 @@
         [class.expanded]="container() === 'group' && expanded()"
         [matMenuTriggerFor]="menu"
         [class]="tourClass()"
+        [attr.aria-label]="showLabels() ? null : rowLabel"
+        [matTooltip]="showLabels() ? '' : rowLabel"
+        matTooltipPosition="right"
+        matTooltipTouchGestures="off"
         (click)="clicked.emit()"
       >
         @if (customPluginId(); as pluginId) {
@@ -282,6 +309,10 @@
         [attr.aria-expanded]="container() === 'group' ? expanded() : null"
         [attr.aria-controls]="container() === 'group' ? ariaControls() : null"
         [class]="tourClass()"
+        [attr.aria-label]="showLabels() ? null : rowLabel"
+        [matTooltip]="showLabels() ? '' : rowLabel"
+        matTooltipPosition="right"
+        matTooltipTouchGestures="off"
         (click)="clicked.emit()"
       >
         @if (customPluginId(); as pluginId) {

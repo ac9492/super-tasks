@@ -35,7 +35,6 @@ import { DEFAULT_PROJECT_ICON } from '../../../features/project/project.const';
 import { Project } from '../../../features/project/project.model';
 import { isSingleEmoji } from '../../../util/extract-first-emoji';
 import { expandCollapseAni } from '../../../ui/tree-dnd/tree.animations';
-import { Log } from '../../../core/log';
 import { NAV_SECTION_ICON } from '../nav-section-icons.const';
 
 const TREE_INDENT = 16;
@@ -156,26 +155,6 @@ export class NavListTreeComponent {
     this._navConfigService.toggleProjectVisibility(projectId);
     // Close menu to prevent stale positioning after DOM update (#5955)
     this.visibilityMenuTrigger()?.closeMenu();
-  }
-
-  onFolderMoreButton(event: MouseEvent, node: TreeNode<MenuTreeViewNode>): void {
-    event.preventDefault();
-    event.stopPropagation();
-    this._openFolderContextMenu(event, node);
-  }
-
-  onFolderContextMenu(event: MouseEvent, node: TreeNode<MenuTreeViewNode>): void {
-    event.preventDefault();
-    event.stopPropagation();
-    this._openFolderContextMenu(event, node);
-  }
-
-  private _openFolderContextMenu(
-    event: MouseEvent,
-    node: TreeNode<MenuTreeViewNode>,
-  ): void {
-    // TODO: Implement folder context menu
-    Log.log('Folder context menu for:', { id: node.id, kind: node.data?.k });
   }
 
   private _toggleFolder(treeNodeId: string): void {
