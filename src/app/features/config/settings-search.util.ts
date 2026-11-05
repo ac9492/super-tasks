@@ -14,6 +14,7 @@ export interface SettingsSearchTarget {
   sectionKey?: string;
   /** Translation key of the field label that matched, when it wasn't the title. */
   matchedLabelKey?: string;
+  fieldKey?: string;
 }
 
 /** Index of the Plugins tab in the config page's `mat-tab-group`. */
@@ -59,12 +60,7 @@ const CUSTOM_TARGETS: readonly SettingsSearchTarget[] = [
     tabIndex: 1,
     scrollSelector: '.sound-section',
   },
-  {
-    labelKey: T.PS.PLUGINS,
-    tabLabelKey: T.PS.TABS.PLUGINS,
-    tabIndex: SETTINGS_PLUGINS_TAB_INDEX,
-    scrollSelector: '.plugin-section',
-  },
+
   {
     labelKey: T.PS.SYNC.SET_UP_SYNC,
     tabLabelKey: T.PS.TABS.SYNC_BACKUP,
@@ -114,15 +110,28 @@ export const searchSettings = (
   return tabs.flatMap((tab, tabIndex) => {
     const isTabMatch = has(tab.labelKey);
     const sectionTargets = tab.sections.flatMap((section) => {
-      const matchedLabelKey = _allFields(section.items)
-        // `props` is the modern name, `templateOptions` the legacy alias — both
-        // are in use across the config sections.
-        .map((field) => (field.props ?? field.templateOptions)?.label)
-        .find((val: unknown): val is string => typeof val === 'string' && has(val));
+      const matchedFields = _allFields(section.items).filter((field) => {
+        const props = field.props ?? field.templateOptions;
+        return (
+          has(props?.label) ||
+          has(props?.description) ||
+          String(field.key ?? '')
+            .toLowerCase()
+            .includes(q)
+        );
+      });
       const isMatch = isTabMatch || has(section.title) || has(section.help);
-      if (!isMatch && !matchedLabelKey) {
-        return [];
-      }
+      if (!isMatch && matchedFields.length === 0) return [];
+      if (!isMatch)
+        return matchedFields.map((field) => ({
+          labelKey: (field.props ?? field.templateOptions)?.label ?? section.title,
+          tabLabelKey: tab.labelKey,
+          tabIndex,
+          scrollSelector: '.section-' + section.key,
+          sectionKey: section.key,
+          fieldKey: String(field.key ?? ''),
+          matchedLabelKey: (field.props ?? field.templateOptions)?.label,
+        }));
       return [
         {
           labelKey: section.title,
@@ -131,7 +140,6 @@ export const searchSettings = (
           scrollSelector: `.section-${section.key}`,
           sectionKey: section.key,
           // Only worth showing when the title itself didn't match.
-          ...(isMatch ? {} : { matchedLabelKey }),
         },
       ];
     });

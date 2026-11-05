@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Checks src/assets/community-plugins.json, the plugin listing shown in
- * Settings → Plugins (type: CommunityPlugin in
+ * Plugins & integrations → Discover (type: CommunityPlugin in
  * src/app/plugins/util/community-plugin.util.ts).
  *
  *   node tools/verify-community-plugins.js             # shape only (runs in lint)
@@ -30,6 +30,7 @@ const ENTRY_KEYS = new Set([
   'authorUrl',
   'id',
   'release',
+  'category',
 ]);
 const RELEASE_KEYS = new Set(['version', 'downloadUrl', 'sha256']);
 // Manifest ids must not contain ':' (validatePluginManifest); this is stricter.
@@ -75,6 +76,12 @@ const validateCommunityPlugins = (entries) => {
       if (!isNonEmptyString(entry[key])) {
         errors.push(`${at}: "${key}" must be a non-empty string`);
       }
+    }
+    if (
+      entry.category !== undefined &&
+      !['plugin', 'integration'].includes(entry.category)
+    ) {
+      errors.push(`${at}: "category" must be "plugin" or "integration"`);
     }
     if (!isHttpsUrl(entry.url)) {
       errors.push(`${at}: "url" must be an https URL`);

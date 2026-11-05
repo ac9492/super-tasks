@@ -322,15 +322,14 @@ describe('ConfigPageComponent', () => {
       expect(component.isSectionExpanded(OTHER)).toBe(true);
     });
 
-    it('carries a plugins action that switches to the Plugins tab', async () => {
-      const action = component.generalFormCfg
-        .find((s) => s.key === 'appFeatures')
-        ?.actions?.find((a) => a.label === T.GCF.APP_FEATURES.EXTEND_WITH_PLUGINS);
-
-      await action?.onClick();
-
-      expect(action).toBeDefined();
-      expect(component.selectedTabIndex).toBe(4);
+    it('keeps plugin management out of the settings groups', () => {
+      expect(component.categories.map((category) => category.index)).toEqual([
+        0, 1, 2, 5,
+      ]);
+      expect(
+        component.generalFormCfg.find((section) => section.key === 'appFeatures')
+          ?.actions,
+      ).toBeUndefined();
     });
 
     it('reopens via its search result after being collapsed', () => {

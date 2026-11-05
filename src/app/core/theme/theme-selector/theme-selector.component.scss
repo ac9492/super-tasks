@@ -125,3 +125,21 @@ h4 {
 .theme-select > button {
   justify-self: start;
 }
+
+.dark-mode-select {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  > span {
+    grid-column: 1 / -1;
+  }
+}
+.theme-select {
+  display: block;
+  > * {
+    margin-top: var(--s2);
+  }
+  > summary {
+    margin-top: 0;
+    cursor: pointer;
+  }
+}

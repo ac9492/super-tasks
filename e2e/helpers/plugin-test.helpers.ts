@@ -81,62 +81,14 @@ export const waitForPluginManagementInit = async (
   timeout: number = 30000,
 ): Promise<boolean> => {
   try {
-    // Navigate to settings page if not already there
-    const currentUrl = page.url();
-    if (!currentUrl.includes('#/config')) {
-      await page.goto('/#/config');
+    if (!(await page.locator('plugin-management').isVisible())) {
+      await page.goto('/#/plugins');
     }
-
-    // Wait for settings page to load
-    await page.waitForSelector('.page-settings', { state: 'visible', timeout: 10000 });
-
-    // Navigate to the Plugins tab
-    const pluginsTab = page.locator(
-      'mat-tab-header .mat-mdc-tab:has(mat-icon:has-text("extension"))',
-    );
-    await pluginsTab.waitFor({ state: 'visible', timeout: 10000 });
-    await pluginsTab.click();
-
-    // Expand plugin section if collapsed and scroll it into view
-    await page.waitForSelector('.plugin-section', { state: 'visible', timeout: 5000 });
-    await page.evaluate(() => {
-      const pluginSection = document.querySelector('.plugin-section');
-      if (pluginSection) {
-        pluginSection.scrollIntoView({ behavior: 'instant', block: 'center' });
-      }
-
-      const collapsible = document.querySelector('.plugin-section collapsible');
-      if (collapsible && !collapsible.classList.contains('isExpanded')) {
-        const header = collapsible.querySelector('.collapsible-header');
-        if (header) {
-          (header as HTMLElement).click();
-        }
-      }
+    await page.locator('plugin-management .installed-plugin').first().waitFor({
+      state: 'visible',
+      timeout,
     });
-
-    // Wait for plugin management component with plugin cards
-    await page.waitForSelector('plugin-management', {
-      state: 'attached',
-      timeout: 10000,
-    });
-
-    const result = await page.waitForFunction(
-      () => {
-        const cards = document.querySelectorAll('plugin-management mat-card');
-        return cards.length > 0;
-      },
-      { timeout: 10000 },
-    );
-
-    // Scroll plugin-management into view
-    await page.evaluate(() => {
-      const pluginMgmt = document.querySelector('plugin-management');
-      if (pluginMgmt) {
-        pluginMgmt.scrollIntoView({ behavior: 'instant', block: 'center' });
-      }
-    });
-
-    return !!result;
+    return true;
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     console.error('[Plugin Test] Plugin management init failed:', message);
@@ -158,9 +110,11 @@ export const enablePluginWithVerification = async (
   const pluginCardResult = await page
     .waitForFunction(
       (name) => {
-        const cards = Array.from(document.querySelectorAll('plugin-management mat-card'));
+        const cards = Array.from(
+          document.querySelectorAll('plugin-management .installed-plugin'),
+        );
         const targetCard = cards.find((card) => {
-          const title = card.querySelector('mat-card-title')?.textContent || '';
+          const title = card.querySelector('.plugin-summary h3')?.textContent || '';
           return title.includes(name);
         });
 
@@ -181,9 +135,11 @@ export const enablePluginWithVerification = async (
 
   // Enable the plugin
   const enableResult = await page.evaluate((name) => {
-    const cards = Array.from(document.querySelectorAll('plugin-management mat-card'));
+    const cards = Array.from(
+      document.querySelectorAll('plugin-management .installed-plugin'),
+    );
     const targetCard = cards.find((card) => {
-      const title = card.querySelector('mat-card-title')?.textContent || '';
+      const title = card.querySelector('.plugin-summary h3')?.textContent || '';
       return title.includes(name);
     });
 
@@ -215,9 +171,11 @@ export const enablePluginWithVerification = async (
   // Wait for the toggle state to update
   await page.waitForFunction(
     (name) => {
-      const cards = Array.from(document.querySelectorAll('plugin-management mat-card'));
+      const cards = Array.from(
+        document.querySelectorAll('plugin-management .installed-plugin'),
+      );
       const targetCard = cards.find((card) => {
-        const title = card.querySelector('mat-card-title')?.textContent || '';
+        const title = card.querySelector('.plugin-summary h3')?.textContent || '';
         return title.includes(name);
       });
 
@@ -301,9 +259,11 @@ export const disablePluginWithVerification = async (
   const pluginCardResult = await page
     .waitForFunction(
       (name) => {
-        const cards = Array.from(document.querySelectorAll('plugin-management mat-card'));
+        const cards = Array.from(
+          document.querySelectorAll('plugin-management .installed-plugin'),
+        );
         const targetCard = cards.find((card) => {
-          const title = card.querySelector('mat-card-title')?.textContent || '';
+          const title = card.querySelector('.plugin-summary h3')?.textContent || '';
           return title.includes(name);
         });
         return !!targetCard;
@@ -320,9 +280,11 @@ export const disablePluginWithVerification = async (
 
   // Check current state and click to disable if needed
   const disableResult = await page.evaluate((name) => {
-    const cards = Array.from(document.querySelectorAll('plugin-management mat-card'));
+    const cards = Array.from(
+      document.querySelectorAll('plugin-management .installed-plugin'),
+    );
     const targetCard = cards.find((card) => {
-      const title = card.querySelector('mat-card-title')?.textContent || '';
+      const title = card.querySelector('.plugin-summary h3')?.textContent || '';
       return title.includes(name);
     });
 
@@ -373,9 +335,11 @@ export const disablePluginWithVerification = async (
   try {
     await page.waitForFunction(
       (name) => {
-        const cards = Array.from(document.querySelectorAll('plugin-management mat-card'));
+        const cards = Array.from(
+          document.querySelectorAll('plugin-management .installed-plugin'),
+        );
         const targetCard = cards.find((card) => {
-          const title = card.querySelector('mat-card-title')?.textContent || '';
+          const title = card.querySelector('.plugin-summary h3')?.textContent || '';
           return title.includes(name);
         });
 

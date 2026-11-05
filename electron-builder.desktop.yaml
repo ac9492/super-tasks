@@ -1,0 +1,26 @@
+extends: ./electron-builder.yaml
+appId: io.github.ac9492.supertasks
+productName: Super Tasks
+artifactName: Super-Tasks-${version}-${arch}.${ext}
+nsis:
+  artifactName: Super-Tasks-${version}-Setup.${ext}
+portable:
+  artifactName: Super-Tasks-${version}-Portable.${ext}
+mac:
+  appId: io.github.ac9492.supertasks
+  identity: '-'
+  provisioningProfile: null
+  notarize: false
+  extendInfo:
+    NSAppleEventsUsageDescription: Super Tasks reads the frontmost app and window title to suggest which task to track.
+  target:
+    - target: dmg
+      arch: [arm64, x64]
+    - target: zip
+      arch: [arm64, x64]
+dmg:
+  sign: false
+publish:
+  provider: github
+  owner: ac9492
+  repo: super-tasks

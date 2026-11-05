@@ -67,6 +67,30 @@ separate and provide an explicit import path.
 
 ## Release boundaries
 
+### GitHub-only desktop releases
+
+For Super Tasks desktop downloads, dispatch **Desktop GitHub Release**
+(`desktop-release.yml`) from the reviewed `main` commit. It validates the app,
+builds Windows x64/ARM64 executables and macOS Intel/Apple Silicon DMG/ZIP files,
+and smoke-tests the native packaged app on each runner. Only after every job
+passes does it create `super-tasks-v<package version>` and publish the GitHub
+release with SHA-256 checksums and `build/desktop-release-notes.md`.
+
+This workflow uses `electron-builder.desktop.yaml` for the independent Super
+Tasks desktop identity. The initial packages are unsigned on Windows and ad-hoc
+signed, without notarization, on macOS. Signing status must appear in the notes.
+The package name (`super-tasks`) supplies the independent default data directory;
+existing Super Productivity data is imported explicitly from a backup.
+
+The publish job deliberately uses `GITHUB_TOKEN`: GitHub does not trigger other
+tag/release workflows for these events, so inherited store/deployment workflows
+do not run. Do not push the tag manually or publish through a personal token for
+this path. No npm version lifecycle is needed when package.json already has the
+intended version. Update the version and release notes before a later dispatch;
+an existing published tag must never be moved or overwritten.
+
+The remaining sections describe the inherited multi-channel release path.
+
 Releasing has two distinct boundaries:
 
 1. **Push a `super-tasks-v*` tag:** builds artifacts and creates a draft GitHub release. A

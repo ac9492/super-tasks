@@ -335,6 +335,13 @@ export class MagicNavConfigService {
 
       {
         type: 'route',
+        id: 'plugins',
+        label: T.PS.REDESIGN.PLUGINS,
+        icon: 'extension',
+        route: '/plugins',
+      },
+      {
+        type: 'route',
         id: 'settings',
         label: T.MH.SETTINGS,
         icon: NAV_SECTION_ICON.SETTINGS,

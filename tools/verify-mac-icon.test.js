@@ -20,7 +20,6 @@ const { compareIconsets, verifyIconset, verifyIcns } = require('./verify-mac-ico
 
 const ICON_PATH = join(__dirname, '..', 'build', 'icon.icns');
 const ICONSET_PATH = join(__dirname, '..', 'build', 'icon.iconset');
-const GENERIC_SMALL_ICON = join(__dirname, '..', 'build', 'icons', '16x16.png');
 // 16x16 chunk types: icp4 from the portable compiler, ic04 from iconutil, which
 // rewrites build/icon.icns (in a different chunk order) when packaging on macOS.
 const SMALL_ICON_TYPES = ['icp4', 'ic04'];
@@ -81,11 +80,16 @@ test('macOS icon verification rejects corrupt PNG data', () => {
   assert.throws(() => verifyIcns(corruptIcon, 'corrupt.icns'), /invalid PNG IHDR CRC/);
 });
 
-test('macOS icon verification rejects the full-bleed generic small artwork', (t) => {
+test('macOS icon verification rejects artwork flattened to an opaque square', (t) => {
   const temporaryDirectory = mkdtempSync(join(tmpdir(), 'sp-mac-iconset-test-'));
   const actualIconset = join(temporaryDirectory, 'icon.iconset');
   cpSync(ICONSET_PATH, actualIconset, { recursive: true });
-  copyFileSync(GENERIC_SMALL_ICON, join(actualIconset, 'icon_16x16.png'));
+  const { pixels } = verifyIconset(ICONSET_PATH).get('icon_16x16.png');
+  const opaquePixels = Buffer.from(pixels);
+  for (let offset = 3; offset < opaquePixels.length; offset += 4) {
+    opaquePixels[offset] = 255;
+  }
+  writeFileSync(join(actualIconset, 'icon_16x16.png'), encodePng(16, opaquePixels));
   t.after(() => rmSync(temporaryDirectory, { recursive: true, force: true }));
 
   assert.throws(

@@ -17,9 +17,23 @@
         T.GCF.MISC.DARK_MODE_DARK | translate
       }}</mat-button-toggle>
     </mat-button-toggle-group>
+    <setting-help
+      [label]="T.GCF.MISC.DARK_MODE | translate"
+      [text]="T.PS.REDESIGN.MODE_HELP | translate"
+    />
   </div>
-  <div class="theme-select">
+  <details
+    class="theme-select"
+    #colorDetails
+    [open]="colorsExpanded()"
+    (toggle)="colorsExpanded.set(colorDetails.open)"
+  >
+    <summary>{{ T.PS.REDESIGN.COLORS | translate }}</summary>
     <h4>{{ T.GCF.MISC.PALETTE.TITLE | translate }}</h4>
+    <setting-help
+      [label]="T.GCF.MISC.PALETTE.TITLE | translate"
+      [text]="T.PS.REDESIGN.PALETTE_HELP | translate"
+    />
     <p>{{ T.GCF.MISC.PALETTE.DESCRIPTION | translate }}</p>
     <div
       class="palette-presets"
@@ -56,17 +70,23 @@
     </p>
     <div class="palette-inputs">
       @for (field of colorFields; track field.key) {
-        <label>
-          <span>{{ field.label | translate }}</span>
-          <input
-            type="color"
-            [attr.data-color]="field.key"
-            [attr.aria-label]="field.label | translate"
-            [value]="colors()[field.key]"
-            (input)="updateColor(field.key, $event)"
+        <div class="setting-row">
+          <label class="setting-control">
+            <span>{{ field.label | translate }}</span>
+            <input
+              type="color"
+              [attr.data-color]="field.key"
+              [attr.aria-label]="field.label | translate"
+              [value]="colors()[field.key]"
+              (input)="updateColor(field.key, $event)"
+            />
+            <span class="color-value">{{ colors()[field.key] }}</span>
+          </label>
+          <setting-help
+            [label]="field.label | translate"
+            [text]="T.PS.REDESIGN.COLOR_HELP | translate"
           />
-          <span class="color-value">{{ colors()[field.key] }}</span>
-        </label>
+        </div>
       }
     </div>
     <div
@@ -100,5 +120,5 @@
     >
       {{ T.GCF.MISC.PALETTE.RESET | translate }}
     </button>
-  </div>
+  </details>
 </div>

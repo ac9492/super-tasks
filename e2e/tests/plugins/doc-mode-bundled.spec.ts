@@ -23,14 +23,9 @@ test.describe('Doc Mode bundled plugin', () => {
 
     // Manifest declares the user-visible name as "Doc Mode (Alpha)".
     // Match on the prefix so a future Alpha→Beta label change doesn't break.
-    const titles = await page.evaluate(() => {
-      const cards = Array.from(document.querySelectorAll('plugin-management mat-card'));
-      return cards
-        .map((card) => card.querySelector('mat-card-title')?.textContent?.trim() ?? '')
-        .filter(Boolean);
-    });
-
-    const hasDocMode = titles.some((t) => t.startsWith('Doc Mode'));
-    expect(hasDocMode).toBeTruthy();
+    await page.getByRole('searchbox').fill('Doc Mode');
+    await expect(page.locator('.installed-plugin .plugin-summary h3')).toContainText(
+      'Doc Mode',
+    );
   });
 });

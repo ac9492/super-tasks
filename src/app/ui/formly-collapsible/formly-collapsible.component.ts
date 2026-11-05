@@ -33,11 +33,15 @@ export class FormlyCollapsibleComponent
   isAnimationEnabled = signal(false);
 
   ngOnInit(): void {
-    const key = this.props?.['label'] || 'collapsible';
+    const key =
+      this.props?.['settingsStateKey'] || this.props?.['label'] || 'collapsible';
 
     // Restore state
     if (FormlyCollapsibleComponent._states.has(key)) {
       this.isExpanded.set(FormlyCollapsibleComponent._states.get(key)!);
+    }
+    if (this.props['settingsExpanded']) {
+      this.isExpanded.set(true);
     }
 
     // Enable animations after render
@@ -52,7 +56,7 @@ export class FormlyCollapsibleComponent
     const newValue = !this.isExpanded();
     this.isExpanded.set(newValue);
     FormlyCollapsibleComponent._states.set(
-      this.props?.['label'] || 'collapsible',
+      this.props?.['settingsStateKey'] || this.props?.['label'] || 'collapsible',
       newValue,
     );
   }

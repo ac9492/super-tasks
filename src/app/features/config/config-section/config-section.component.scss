@@ -1,6 +1,9 @@
 @use '../../../../styles/_globals.scss' as *;
 
 .form-wrapper {
+  &.settings-form-wrapper {
+    padding: 0 var(--s2) !important;
+  }
   // overflow:hidden here caused the browser's focus-scrolling to reset the
   // parent config-page scroll position when any form control received focus.
   overflow: visible;
@@ -106,15 +109,6 @@ $this-panel-padding-left-right: 12px;
   }
 }
 
-:host ::ng-deep .help-btn {
-  position: absolute;
-  top: -40px;
-  right: -2px;
-
-  display: block;
-  animation: var(--transition-duration-m) help-ico-animation var(--ani-standard-timing);
-}
-
 :host ::ng-deep .extra-margin-top {
   margin-top: var(--s4);
 }
@@ -125,14 +119,15 @@ $this-panel-padding-left-right: 12px;
   text-align: center;
 }
 
-@keyframes help-ico-animation {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1.4);
-  }
-  100% {
-    transform: scale(1);
+.settings-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s);
+  padding-inline: var(--s2);
+  margin-bottom: var(--s);
+  h3 {
+    margin: 0;
+    font-size: var(--font-size-lg);
   }
 }

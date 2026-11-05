@@ -141,6 +141,7 @@
     "startFrontend:e2e": "npm run env && ng serve --port=4242",
     "startFrontend:prod": "npm run env && ng serve --configuration production",
     "startFrontend:stage": "npm run env && ng serve --configuration stage",
+    "generate:icons": "node tools/generate-app-icons.js",
     "generate:mac-icon": "node tools/generate-mac-icon.js",
     "generate:ios-icon": "node tools/generate-ios-icon.js",
     "sync:android": "npx cap sync android && npm run strip:sw:android",

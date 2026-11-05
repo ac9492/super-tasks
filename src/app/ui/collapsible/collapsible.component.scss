@@ -36,6 +36,7 @@
 
 :host(.task-section.isExpanded) .collapsible-header {
   border-bottom-color: var(--divider-color);
+  margin-bottom: var(--s);
 }
 
 .collapsible-header {

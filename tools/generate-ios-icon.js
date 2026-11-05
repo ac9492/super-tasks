@@ -7,16 +7,8 @@
  * This script resizes the existing logo and ensures it has no alpha channel.
  */
 
-let sharp;
-try {
-  sharp = require('sharp');
-} catch {
-  console.log('sharp not found, installing...');
-  require('child_process').execSync('npm install --no-save --no-package-lock sharp', {
-    stdio: 'inherit',
-  });
-  sharp = require('sharp');
-}
+const { loadSharp } = require('./generate-mac-icon');
+const sharp = loadSharp();
 const fs = require('fs');
 const path = require('path');
 
@@ -50,7 +42,7 @@ async function generateIcon() {
       fit: 'cover',
       position: 'center',
     })
-    .flatten({ background: { r: 100, g: 149, b: 237 } }) // Fallback background if source has transparency
+    .flatten({ background: '#075b5e' })
     .removeAlpha() // Explicitly remove alpha channel
     .toColorspace('srgb')
     .png()

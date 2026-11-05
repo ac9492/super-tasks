@@ -1,7 +1,7 @@
 {
-  "name": "Super Productivity",
-  "short_name": "sup",
-  "theme_color": "#6495ED",
+  "name": "Super Tasks",
+  "short_name": "Super Tasks",
+  "theme_color": "#075b5e",
   "background_color": "#fff",
   "start_url": "./index.html",
   "display": "standalone",

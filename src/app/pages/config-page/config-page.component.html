@@ -1,20 +1,16 @@
-<div class="page-settings page-wrapper">
+<header class="settings-window-header">
+  <h1>{{ T.PS.GLOBAL_SETTINGS | translate }}</h1>
+  <button
+    mat-icon-button
+    mat-dialog-close
+    [aria-label]="T.G.CLOSE | translate"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</header>
+<div class="page-settings">
   @if (globalCfg) {
     <div class="settings-container">
-      <!-- Shared by every tab's `mat-tab-label`: an icon + translated title. -->
-      <ng-template
-        #tabLabel
-        let-icon
-        let-labelKey="labelKey"
-      >
-        <mat-icon
-          class="tab-icon"
-          [matTooltip]="labelKey | translate"
-          >{{ icon }}</mat-icon
-        >
-        <span class="tab-label">{{ labelKey | translate }}</span>
-      </ng-template>
-
       <mat-form-field
         class="settings-search"
         appearance="outline"
@@ -68,266 +64,213 @@
         }
       </mat-autocomplete>
 
-      <mat-tab-group
-        class="settings-tabs"
-        mat-align-tabs="center"
-        [mat-stretch-tabs]="false"
-        [(selectedIndex)]="selectedTabIndex"
-        animationDuration="200ms"
+      <div
+        class="settings-layout"
+        [class.category-visible]="mobileCategoryVisible"
       >
-        <!-- Tab: General -->
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <ng-container
-              *ngTemplateOutlet="
-                tabLabel;
-                context: { $implicit: 'settings', labelKey: 'PS.TABS.GENERAL' }
-              "
-            ></ng-container>
-          </ng-template>
-          <div class="tab-content">
-            <h2 class="mat-h2 section-title">
-              {{ 'PS.TABS.GENERAL' | translate }}
-            </h2>
-            <section class="config-section appearance-section">
-              <theme-selector></theme-selector>
-              <label class="st-glass-setting">
-                <input
-                  #glassToggle
-                  type="checkbox"
-                  [checked]="superTasksAppearance.glassEnabled()"
-                  (change)="superTasksAppearance.setGlass(glassToggle.checked)"
-                />
-                <span
-                  ><strong>{{ T.F.SUPER_TASKS.GLASS | translate }}</strong
-                  ><small>{{ T.F.SUPER_TASKS.GLASS_HINT | translate }}</small></span
-                >
-              </label>
-            </section>
-            @for (section of generalFormCfg; track section.key) {
-              <section class="config-section section-{{ section.key }}">
-                <config-section
-                  (save)="saveGlobalCfg($event)"
-                  (isExpandedChange)="onSectionExpandedChange(section, $event)"
-                  [cfg]="getGlobalCfgSection(section.key)"
-                  [isExpanded]="isSectionExpanded(section)"
-                  [section]="section"
-                ></config-section>
-              </section>
-            }
-          </div>
-        </mat-tab>
+        <nav
+          class="settings-categories"
+          [attr.aria-label]="T.PS.GLOBAL_SETTINGS | translate"
+        >
+          @for (category of categories; track category.index) {
+            <button
+              type="button"
+              [attr.aria-current]="selectedTabIndex === category.index ? 'page' : null"
+              (click)="selectedTabIndex = category.index; mobileCategoryVisible = true"
+            >
+              {{ category.label | translate }}
+            </button>
+          }
+        </nav>
+        <main class="settings-content">
+          <button
+            class="settings-back"
+            mat-button
+            type="button"
+            (click)="mobileCategoryVisible = false"
+          >
+            <mat-icon>arrow_back</mat-icon>{{ T.PS.GLOBAL_SETTINGS | translate }}
+          </button>
+          @if (selectedTabIndex === 0) {
+            <div class="tab-content">
+              <h2 class="mat-h2 section-title">
+                {{ 'PS.TABS.GENERAL' | translate }}
+              </h2>
 
-        <!-- Tab: Tasks -->
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <ng-container
-              *ngTemplateOutlet="
-                tabLabel;
-                context: { $implicit: 'task', labelKey: 'PS.TABS.TASKS' }
-              "
-            ></ng-container>
-          </ng-template>
-          <div class="tab-content">
-            <h2 class="mat-h2 section-title">
-              {{ 'PS.TABS.TASKS' | translate }}
-            </h2>
-            @for (section of globalTasksFormCfg; track section.key) {
-              <section class="config-section section-{{ section.key }}">
-                <config-section
-                  (save)="saveGlobalCfg($event)"
-                  (isExpandedChange)="onSectionExpandedChange(section, $event)"
-                  [cfg]="getGlobalCfgSection(section.key)"
-                  [isExpanded]="isSectionExpanded(section)"
-                  [section]="section"
-                ></config-section>
-              </section>
-            }
+              @for (section of generalFormCfg; track section.key; let index = $index) {
+                <section class="config-section section-{{ section.key }}">
+                  <config-section
+                    [settingsLayout]="true"
+                    [expandedField]="expandedField"
+                    (save)="saveGlobalCfg($event)"
+                    (isExpandedChange)="onSectionExpandedChange(section, $event)"
+                    [cfg]="getGlobalCfgSection(section.key)"
+                    [isExpanded]="isSectionExpanded(section)"
+                    [section]="section"
+                  ></config-section>
+                </section>
+                @if (index === 1) {
+                  <section class="config-section appearance-section">
+                    <theme-selector
+                      [(colorsExpanded)]="colorEditorExpanded"
+                    ></theme-selector>
+                    <div class="setting-row">
+                      <label class="st-glass-setting setting-control">
+                        <input
+                          #glassToggle
+                          type="checkbox"
+                          [checked]="superTasksAppearance.glassEnabled()"
+                          (change)="superTasksAppearance.setGlass(glassToggle.checked)"
+                        />
+                        <span
+                          ><strong>{{ T.F.SUPER_TASKS.GLASS | translate }}</strong
+                          ><small>{{
+                            T.F.SUPER_TASKS.GLASS_HINT | translate
+                          }}</small></span
+                        > </label
+                      ><setting-help
+                        [label]="T.F.SUPER_TASKS.GLASS | translate"
+                        [text]="T.F.SUPER_TASKS.GLASS_HINT | translate"
+                      />
+                    </div>
+                  </section>
+                }
+              }
+            </div>
+          }
 
-            <!-- @todo: Create a single style for forming all the settings elements.
+          @if (selectedTabIndex === 1) {
+            <div class="tab-content">
+              <h2 class="mat-h2 section-title">
+                {{ T.PS.REDESIGN.TASKS | translate }}
+              </h2>
+              @for (section of globalTasksFormCfg; track section.key) {
+                <section class="config-section section-{{ section.key }}">
+                  <config-section
+                    [settingsLayout]="true"
+                    [expandedField]="expandedField"
+                    (save)="saveGlobalCfg($event)"
+                    (isExpandedChange)="onSectionExpandedChange(section, $event)"
+                    [cfg]="getGlobalCfgSection(section.key)"
+                    [isExpanded]="isSectionExpanded(section)"
+                    [section]="section"
+                  ></config-section>
+                </section>
+              }
+
+              <!-- @todo: Create a single style for forming all the settings elements.
                         Make all as "sections" or as "forms" consistently.
             -->
-            <section class="config-section sound-section">
-              <config-sound-form
-                [cfg]="getGlobalCfgSection('sound')"
-                (save)="saveGlobalCfg($event)"
-              ></config-sound-form>
-            </section>
-          </div>
-        </mat-tab>
-
-        <!-- Tab: Time & Tracking -->
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <ng-container
-              *ngTemplateOutlet="
-                tabLabel;
-                context: { $implicit: 'timer', labelKey: 'PS.TABS.TIME_TRACKING' }
-              "
-            ></ng-container>
-          </ng-template>
-          <div class="tab-content">
-            <h2 class="mat-h2 section-title">
-              {{ 'PS.TABS.TIME_TRACKING' | translate }}
-            </h2>
-            @for (section of timeTrackingFormCfg; track section.key) {
-              <section class="config-section section-{{ section.key }}">
-                <config-section
+              <section class="config-section sound-section">
+                <config-sound-form
+                  [(expanded)]="soundExpanded"
+                  [cfg]="getGlobalCfgSection('sound')"
                   (save)="saveGlobalCfg($event)"
-                  (isExpandedChange)="onSectionExpandedChange(section, $event)"
-                  [cfg]="getGlobalCfgSection(section.key)"
-                  [isExpanded]="isSectionExpanded(section)"
-                  [section]="section"
-                ></config-section>
+                ></config-sound-form>
               </section>
-            }
-          </div>
-        </mat-tab>
+            </div>
+          }
 
-        <!-- Tab: Productivity -->
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <ng-container
-              *ngTemplateOutlet="
-                tabLabel;
-                context: { $implicit: 'trending_up', labelKey: 'PS.TABS.PRODUCTIVITY' }
-              "
-            ></ng-container>
-          </ng-template>
-          <div class="tab-content tour-productivityHelper">
-            <h2 class="mat-h2 section-title">
-              {{ 'PS.TABS.PRODUCTIVITY' | translate }}
-            </h2>
-            @for (section of globalProductivityConfigFormCfg; track section.key) {
-              <section class="config-section section-{{ section.key }}">
-                <config-section
-                  (save)="saveGlobalCfg($event)"
-                  (isExpandedChange)="onSectionExpandedChange(section, $event)"
-                  [cfg]="getGlobalCfgSection(section.key)"
-                  [isExpanded]="isSectionExpanded(section)"
-                  [section]="section"
-                ></config-section>
-              </section>
-            }
-          </div>
-        </mat-tab>
-
-        <!-- Tab: Plugins -->
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <ng-container
-              *ngTemplateOutlet="
-                tabLabel;
-                context: { $implicit: 'extension', labelKey: 'PS.TABS.PLUGINS' }
-              "
-            ></ng-container>
-          </ng-template>
-          <div class="tab-content">
-            <h2 class="mat-h2 section-title">
-              {{ 'PS.TABS.PLUGINS' | translate }}
-            </h2>
-            <section class="config-section plugin-section">
-              <plugin-management></plugin-management>
-            </section>
-            @for (section of pluginsShortcutsFormCfg; track section.key) {
-              <section class="config-section section-{{ section.key }}">
-                <config-section
-                  (save)="saveGlobalCfg($event)"
-                  (isExpandedChange)="onSectionExpandedChange(section, $event)"
-                  [cfg]="getGlobalCfgSection(section.key)"
-                  [isExpanded]="isSectionExpanded(section)"
-                  [section]="section"
-                ></config-section>
-              </section>
-            }
-          </div>
-        </mat-tab>
-
-        <!-- Tab: Sync & Backup -->
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <ng-container
-              *ngTemplateOutlet="
-                tabLabel;
-                context: { $implicit: 'cloud_sync', labelKey: 'PS.TABS.SYNC_BACKUP' }
-              "
-            ></ng-container>
-          </ng-template>
-          <div class="tab-content">
-            <h2 class="mat-h2 section-title">
-              {{ 'PS.TABS.SYNC_BACKUP' | translate }}
-            </h2>
-            <section class="config-section sync-summary">
-              @let status = syncStatus();
-              @if (!status.providerId) {
-                <p class="sync-summary__intro">
-                  {{ 'PS.SYNC.EMPTY_STATE_HINT' | translate }}
-                </p>
-                <div class="sync-summary__actions">
-                  <button
-                    (click)="openSyncCfgDialog()"
-                    color="primary"
-                    mat-flat-button
-                    type="button"
-                  >
-                    <mat-icon>cloud_sync</mat-icon>
-                    {{ 'PS.SYNC.SET_UP_SYNC' | translate }}
-                  </button>
-                </div>
-              } @else {
-                <div class="sync-summary__status">
-                  <span class="sync-summary__provider">
-                    <mat-icon>cloud_sync</mat-icon>
-                    {{ status.providerId }}
-                  </span>
-                  @if (status.needsAuth) {
-                    <span class="sync-summary__pill sync-summary__pill--warn">
-                      {{ 'PS.SYNC.NEEDS_AUTH' | translate }}
-                    </span>
-                  }
-                  @if (status.isEncrypted) {
-                    <span class="sync-summary__pill">
-                      <mat-icon>lock</mat-icon>
-                      {{ 'PS.SYNC.ENCRYPTED' | translate }}
-                    </span>
-                  }
-                </div>
-                <div class="sync-summary__actions">
-                  <button
-                    (click)="triggerSync()"
-                    color="primary"
-                    mat-flat-button
-                    type="button"
-                  >
-                    <mat-icon>sync</mat-icon>
-                    {{ 'F.SYNC.BTN_SYNC_NOW' | translate }}
-                  </button>
-                  <button
-                    (click)="openSyncCfgDialog()"
-                    mat-stroked-button
-                    type="button"
-                  >
-                    <mat-icon>tune</mat-icon>
-                    {{ 'PS.SYNC.CONFIGURE' | translate }}
-                  </button>
-                </div>
+          @if (selectedTabIndex === 2) {
+            <div class="tab-content">
+              <h2 class="mat-h2 section-title">
+                {{ T.PS.REDESIGN.TIME | translate }}
+              </h2>
+              @for (section of timeTrackingFormCfg; track section.key) {
+                <section class="config-section section-{{ section.key }}">
+                  <config-section
+                    [settingsLayout]="true"
+                    [expandedField]="expandedField"
+                    (save)="saveGlobalCfg($event)"
+                    (isExpandedChange)="onSectionExpandedChange(section, $event)"
+                    [cfg]="getGlobalCfgSection(section.key)"
+                    [isExpanded]="isSectionExpanded(section)"
+                    [section]="section"
+                  ></config-section>
+                </section>
               }
-            </section>
+            </div>
+          }
 
-            @for (section of globalImexFormCfg; track section.key) {
-              <section class="config-section imex-section section-{{ section.key }}">
-                <config-section
-                  (save)="saveGlobalCfg($event)"
-                  (isExpandedChange)="onSectionExpandedChange(section, $event)"
-                  [cfg]="getGlobalCfgSection(section.key)"
-                  [isExpanded]="isSectionExpanded(section)"
-                  [section]="section"
-                ></config-section>
+          @if (selectedTabIndex === 5) {
+            <div class="tab-content">
+              <h2 class="mat-h2 section-title">
+                {{ 'PS.TABS.SYNC_BACKUP' | translate }}
+              </h2>
+              <section class="config-section sync-summary">
+                @let status = syncStatus();
+                @if (!status.providerId) {
+                  <p class="sync-summary__intro">
+                    {{ 'PS.SYNC.EMPTY_STATE_HINT' | translate }}
+                  </p>
+                  <div class="sync-summary__actions">
+                    <button
+                      (click)="openSyncCfgDialog()"
+                      color="primary"
+                      mat-flat-button
+                      type="button"
+                    >
+                      <mat-icon>cloud_sync</mat-icon>
+                      {{ 'PS.SYNC.SET_UP_SYNC' | translate }}
+                    </button>
+                  </div>
+                } @else {
+                  <div class="sync-summary__status">
+                    <span class="sync-summary__provider">
+                      <mat-icon>cloud_sync</mat-icon>
+                      {{ status.providerId }}
+                    </span>
+                    @if (status.needsAuth) {
+                      <span class="sync-summary__pill sync-summary__pill--warn">
+                        {{ 'PS.SYNC.NEEDS_AUTH' | translate }}
+                      </span>
+                    }
+                    @if (status.isEncrypted) {
+                      <span class="sync-summary__pill">
+                        <mat-icon>lock</mat-icon>
+                        {{ 'PS.SYNC.ENCRYPTED' | translate }}
+                      </span>
+                    }
+                  </div>
+                  <div class="sync-summary__actions">
+                    <button
+                      (click)="triggerSync()"
+                      color="primary"
+                      mat-flat-button
+                      type="button"
+                    >
+                      <mat-icon>sync</mat-icon>
+                      {{ 'F.SYNC.BTN_SYNC_NOW' | translate }}
+                    </button>
+                    <button
+                      (click)="openSyncCfgDialog()"
+                      mat-stroked-button
+                      type="button"
+                    >
+                      <mat-icon>tune</mat-icon>
+                      {{ 'PS.SYNC.CONFIGURE' | translate }}
+                    </button>
+                  </div>
+                }
               </section>
-            }
-          </div>
-        </mat-tab>
-      </mat-tab-group>
+
+              @for (section of globalImexFormCfg; track section.key) {
+                <section class="config-section imex-section section-{{ section.key }}">
+                  <config-section
+                    [settingsLayout]="true"
+                    [expandedField]="expandedField"
+                    (save)="saveGlobalCfg($event)"
+                    (isExpandedChange)="onSectionExpandedChange(section, $event)"
+                    [cfg]="getGlobalCfgSection(section.key)"
+                    [isExpanded]="isSectionExpanded(section)"
+                    [section]="section"
+                  ></config-section>
+                </section>
+              }
+            </div>
+          }
+        </main>
+      </div>
     </div>
   }
 </div>
@@ -336,7 +279,7 @@
   class="version-footer"
   title="Rev {{ versions?.revision }} {{ versions?.branch }} {{ versions?.version }}"
 >
-  Super Productivity
+  Super Tasks
   <a
     class="version"
     [matTooltip]="T.PS.CLICK_TO_COPY_VERSION | translate"

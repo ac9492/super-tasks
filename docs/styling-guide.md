@@ -108,6 +108,36 @@ Two deliberate exceptions — leave these as plain px/em:
 
 ## Spacing Variables (8px Grid)
 
+### Settings layout
+
+Settings opens in a centered dialog over a dimmed, blurred workspace on desktop.
+Use labeled category navigation on the left. On small screens, show the category
+list first and provide a Back action within the selected category.
+
+Use `--s` (8px) between related elements, `--s2` (16px) inside sections,
+`--s3` (24px) between groups, and `--s4` (32px) between major sections.
+Group controls with headings and whitespace. Reserve bordered surfaces for
+self-contained information such as sync status.
+
+Each option has a separate question-mark button at the trailing edge of its row.
+Use the shared `setting-help` component for generated and custom controls. Help
+opens on hover, keyboard focus, or click and fades away when the pointer leaves.
+The button must have its own hit area and an accessible name identifying the
+option. Tooltips explain the effect of a choice. Required formats, validation
+errors, and destructive consequences stay visible alongside the control.
+
+Place less-used options in a local disclosure within their group. Search must
+open that disclosure and locate the matching option without enabling a feature.
+Use the existing setting keys and save behavior when regrouping fields.
+
+The Plugins & integrations window separates Installed from Discover. Keep search,
+type filters, and page navigation outside the scrolling results. Use compact rows
+for installed items, with secondary metadata in Details, and a responsive grid for
+discovery. Render at most 24 results per page; reset to page one after a search or
+filter changes. Empty results must offer a way to clear filters.
+
+### Spacing tokens
+
 | Variable      | Value | Variable | Value |
 | ------------- | ----- | -------- | ----- |
 | `--s-quarter` | 2px   | `--s4`   | 32px  |

@@ -11,7 +11,7 @@ import {
 const { SIDENAV } = cssSelectors;
 
 // Plugin-related selectors
-const PLUGIN_CARD = 'plugin-management mat-card.ng-star-inserted';
+const PLUGIN_CARD = 'plugin-management .installed-plugin';
 const PLUGIN_ITEM = `${PLUGIN_CARD}`;
 const PLUGIN_NAV_ENTRIES = `${SIDENAV} nav-item button`;
 const PLUGIN_IFRAME = 'plugin-index iframe';
@@ -38,9 +38,11 @@ test.describe.serial('Plugin Loading', () => {
 
     // Enable the plugin
     const enableResult = await page.evaluate((pluginName: string) => {
-      const cards = Array.from(document.querySelectorAll('plugin-management mat-card'));
+      const cards = Array.from(
+        document.querySelectorAll('plugin-management .installed-plugin'),
+      );
       const targetCard = cards.find((card) => {
-        const title = card.querySelector('mat-card-title')?.textContent || '';
+        const title = card.querySelector('.plugin-summary h3')?.textContent || '';
         return title.includes(pluginName);
       });
 
@@ -74,10 +76,10 @@ test.describe.serial('Plugin Loading', () => {
       await page.waitForFunction(
         (name) => {
           const cards = Array.from(
-            document.querySelectorAll('plugin-management mat-card'),
+            document.querySelectorAll('plugin-management .installed-plugin'),
           );
           const targetCard = cards.find((card) => {
-            const title = card.querySelector('mat-card-title')?.textContent || '';
+            const title = card.querySelector('.plugin-summary h3')?.textContent || '';
             return title.includes(name);
           });
           const toggle = targetCard?.querySelector(
@@ -103,13 +105,15 @@ test.describe.serial('Plugin Loading', () => {
 
     // Check example plugin is loaded and enabled
     const pluginCardsResult = await page.evaluate(() => {
-      const cards = Array.from(document.querySelectorAll('plugin-management mat-card'));
+      const cards = Array.from(
+        document.querySelectorAll('plugin-management .installed-plugin'),
+      );
       const pluginCards = cards.filter((card) => card.querySelector('mat-slide-toggle'));
       return {
         totalCards: cards.length,
         pluginCardsCount: pluginCards.length,
         pluginTitles: pluginCards.map(
-          (card) => card.querySelector('mat-card-title')?.textContent?.trim() || '',
+          (card) => card.querySelector('.plugin-summary h3')?.textContent?.trim() || '',
         ),
       };
     });
@@ -118,6 +122,10 @@ test.describe.serial('Plugin Loading', () => {
     expect(pluginCardsResult.pluginTitles).toContain('API Test Plugin');
 
     // Navigate back to work view to see plugin menu
+    await page
+      .getByRole('dialog', { name: 'Plugins & integrations' })
+      .getByRole('button', { name: 'Close', exact: true })
+      .click();
     await page.click('text=Today');
     await page.waitForLoadState('networkidle');
     await expect(page).toHaveURL(/\/#\/tag\/TODAY/);
@@ -218,6 +226,10 @@ test.describe.serial('Plugin Loading', () => {
     expect(reEnableResult).toBe(true);
 
     // Navigate back to main view
+    await page
+      .getByRole('dialog', { name: 'Plugins & integrations' })
+      .getByRole('button', { name: 'Close', exact: true })
+      .click();
     await page.click('text=Today'); // Click on Today navigation
     await expect(page).toHaveURL(/\/#\/tag\/TODAY/, { timeout: 10000 });
 

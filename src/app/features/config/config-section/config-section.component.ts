@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -26,6 +27,8 @@ import { customConfigFormSectionComponent } from '../custom-config-form-section-
 import { exists } from '../../../util/exists';
 import { CollapsibleComponent } from '../../../ui/collapsible/collapsible.component';
 import { HelpSectionComponent } from '../../../ui/help-section/help-section.component';
+import { SettingHelpComponent } from '../../../ui/setting-help/setting-help.component';
+import { NgTemplateOutlet } from '@angular/common';
 import { ConfigFormComponent } from '../config-form/config-form.component';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -46,7 +49,9 @@ interface CustomFormInstance {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CollapsibleComponent,
+    SettingHelpComponent,
     HelpSectionComponent,
+    NgTemplateOutlet,
     ConfigFormComponent,
     TranslatePipe,
     MatButton,
@@ -54,7 +59,7 @@ interface CustomFormInstance {
     ExactAlarmHintComponent,
   ],
 })
-export class ConfigSectionComponent implements OnInit, OnDestroy {
+export class ConfigSectionComponent implements OnInit, AfterViewInit, OnDestroy {
   private _cd = inject(ChangeDetectorRef);
   private _workContextService = inject(WorkContextService);
   private _translateService = inject(TranslateService);
@@ -64,6 +69,8 @@ export class ConfigSectionComponent implements OnInit, OnDestroy {
   //  and migrating would break narrowing currently.
   @Input() section?: ConfigFormSection<Record<string, unknown>>;
   @Input() isExpanded: boolean = false;
+  @Input() settingsLayout = false;
+  @Input() expandedField = '';
   readonly isExpandedChange = output<boolean>();
   readonly save = output<{
     sectionKey: GlobalConfigFormSectionKey | ProjectCfgFormKey | TagCfgFormKey;
@@ -91,10 +98,6 @@ export class ConfigSectionComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    if (this.section && this.section.customSection) {
-      this._loadCustomSection(this.section.customSection);
-    }
-
     // mark for check manually to make translations work with ngx formly
     this._subs.add(
       this._translateService.onLangChange.subscribe(() => {
@@ -125,6 +128,13 @@ export class ConfigSectionComponent implements OnInit, OnDestroy {
         }
       }),
     );
+  }
+
+  ngAfterViewInit(): void {
+    if (this.section?.customSection) {
+      this._loadCustomSection(this.section.customSection);
+      this._cd.detectChanges();
+    }
   }
 
   ngOnDestroy(): void {

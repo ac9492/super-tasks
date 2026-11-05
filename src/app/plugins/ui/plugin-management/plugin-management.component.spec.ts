@@ -164,6 +164,9 @@ describe('PluginManagementComponent', () => {
     loadPluginFromZipSpy.and.returnValue(
       Promise.resolve({ manifest: { name: 'My Plugin' } }),
     );
+    component.setView('discover');
+    component.setSearch('unrelated search');
+    component.setTypeFilter('integration');
 
     await component.onFileSelected(zipInputEvent());
 
@@ -173,6 +176,9 @@ describe('PluginManagementComponent', () => {
       translateParams: { name: 'My Plugin' },
     });
     expect(component.uploadError()).toBeNull();
+    expect(component.view()).toBe('installed');
+    expect(component.searchQuery()).toBe('My Plugin');
+    expect(component.typeFilter()).toBe('all');
   });
 
   it('shows no snack when the plugin loads but fails to run', async () => {
@@ -335,6 +341,7 @@ describe('PluginManagementComponent', () => {
       // may lack the optional authorUrl or release.
       (component as { isInAppInstall: boolean }).isInAppInstall = true;
       component.communityPlugins.set([plugin]);
+      component.setView('discover');
       fixture.detectChanges();
     });
 
@@ -342,7 +349,7 @@ describe('PluginManagementComponent', () => {
       fixture.nativeElement.querySelector('.community-plugins-card');
 
     it('translates the title, warning and add-your-plugin link', () => {
-      expect(normalize(card().querySelector('mat-card-title')?.textContent)).toBe(
+      expect(normalize(card().querySelector('h2')?.textContent)).toBe(
         'Topluluk eklentileri',
       );
       expect(normalize(card().querySelector('.community-warning')?.textContent)).toBe(
@@ -387,6 +394,70 @@ describe('PluginManagementComponent', () => {
       fixture.detectChanges();
 
       expect(card().querySelector('.community-plugin-item button')).toBeNull();
+    });
+  });
+
+  describe('catalog browsing at scale', () => {
+    beforeEach(() => {
+      component.communityPlugins.set(
+        Array.from({ length: 500 }, (_, index) => ({
+          name: `Catalog ${String(index).padStart(3, '0')}`,
+          shortDescription: index % 2 === 0 ? 'Connect your notes' : 'Plan your tasks',
+          author: index === 499 ? 'Last Author' : 'Community',
+          url: `https://example.com/plugin-${index}`,
+          category: index % 2 === 0 ? 'integration' : 'plugin',
+        })),
+      );
+      component.setView('discover');
+    });
+
+    it('renders bounded pages and can reach the last entry', () => {
+      fixture.detectChanges();
+      expect(
+        fixture.nativeElement.querySelectorAll('.community-plugin-item').length,
+      ).toBe(24);
+      expect(component.pageCount()).toBe(21);
+      component.goToPage(20);
+      fixture.detectChanges();
+      expect(
+        fixture.nativeElement.querySelectorAll('.community-plugin-item').length,
+      ).toBe(20);
+      expect(fixture.nativeElement.textContent).toContain('Catalog 499');
+      expect(fixture.nativeElement.textContent).not.toContain('Catalog 000');
+    });
+
+    it('searches name, purpose and author together, and resets a later page', () => {
+      component.goToPage(20);
+      component.setSearch('  LAST   tasks  ');
+      expect(component.currentPage()).toBe(0);
+      expect(component.visibleCommunityRows().map((row) => row.plugin.name)).toEqual([
+        'Catalog 499',
+      ]);
+      component.setSearch('connect');
+      component.setTypeFilter('integration');
+      expect(component.resultCount()).toBe(250);
+      component.setTypeFilter('plugin');
+      fixture.detectChanges();
+      expect(component.resultCount()).toBe(0);
+      expect(fixture.nativeElement.querySelector('.empty-state')).not.toBeNull();
+      expect(fixture.nativeElement.querySelector('.catalog-pagination')).toBeNull();
+    });
+
+    it('keeps installed and discover results separate while preserving the search', () => {
+      component.setSearch('Catalog 499');
+      component.setView('installed');
+      fixture.detectChanges();
+      expect(fixture.nativeElement.querySelector('.community-plugins-card')).toBeNull();
+      expect(component.resultCount()).toBe(0);
+      component.setView('discover');
+      expect(component.resultCount()).toBe(1);
+    });
+
+    it('clamps the last page after catalog contents shrink', () => {
+      component.goToPage(20);
+      component.communityPlugins.update((entries) => entries.slice(0, 30));
+      expect(component.currentPage()).toBe(1);
+      expect(component.visibleCommunityRows().length).toBe(6);
     });
   });
 

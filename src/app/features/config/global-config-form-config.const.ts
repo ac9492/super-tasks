@@ -27,24 +27,20 @@ const filterGlobalConfigForm = (cfg: ConfigFormSection<any>): boolean => {
   );
 };
 
-// Tab: General - Theme (specified separately in html), App Features, Language, Misc,
-// Task Widget, Keyboard, Clipboard Images. App Features leads so customizing the
-// app is the first thing the default tab offers.
+// Presentation grouping preserves the stored section keys and platform availability.
 export const GLOBAL_GENERAL_FORM_CONFIG: ConfigFormConfig = [
-  APP_FEATURES_FORM_CFG,
   LANGUAGE_SELECTION_FORM_FORM,
   MISC_SETTINGS_FORM_CFG,
+  APP_FEATURES_FORM_CFG,
   TASK_WIDGET_FORM_CFG,
   KEYBOARD_SETTINGS_FORM_CFG,
   CLIPBOARD_IMAGES_FORM,
 ].filter(filterGlobalConfigForm);
 
-// Tab: Time & Tracking - Time Tracking, Idle, Schedule, Reminder
+// Focus and break sections are appended by the settings page.
 export const GLOBAL_TIME_TRACKING_FORM_CONFIG: ConfigFormConfig = [
   TIME_TRACKING_FORM_CFG,
   IDLE_FORM_CFG,
-  SCHEDULE_FORM_CFG,
-  REMINDER_FORM_CFG,
 ].filter(filterGlobalConfigForm);
 
 // Tab: Plugins
@@ -66,5 +62,7 @@ export const GLOBAL_PRODUCTIVITY_FORM_CONFIG: ConfigFormConfig = [
 
 export const GLOBAL_TASKS_FORM_CONFIG: ConfigFormConfig = [
   TASKS_SETTINGS_FORM_CFG,
+  REMINDER_FORM_CFG,
+  SCHEDULE_FORM_CFG,
   SHORT_SYNTAX_FORM_CFG,
 ].filter(filterGlobalConfigForm);

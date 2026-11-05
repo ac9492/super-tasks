@@ -50,6 +50,16 @@ test('accepts link-only and installable entries', () => {
   assert.deepEqual(validateCommunityPlugins([entry(), listed]), []);
 });
 
+test('accepts discovery categories and rejects theme or appearance listings', () => {
+  assert.deepEqual(validateCommunityPlugins([entry({ category: 'integration' })]), []);
+  assert.deepEqual(validateCommunityPlugins([entry({ category: 'plugin' })]), []);
+  assert.match(validateCommunityPlugins([entry({ category: 'theme' })])[0], /category/);
+  assert.match(
+    validateCommunityPlugins([entry({ category: 'appearance' })])[0],
+    /category/,
+  );
+});
+
 test('rejects unknown keys, e.g. the dropped "stars"', () => {
   const [error] = validateCommunityPlugins([entry({ stars: 3 })]);
   assert.match(error, /unknown key "stars"/);

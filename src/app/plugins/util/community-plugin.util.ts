@@ -20,6 +20,8 @@ export interface CommunityPlugin {
   url: string;
   author: string;
   authorUrl?: string;
+  /** Discovery grouping only; omitted entries remain ordinary plugins. */
+  category?: 'plugin' | 'integration';
   /** The plugin's manifest id; links the entry to an installed plugin. */
   id?: string;
   /** Requires `id`. Without it the entry is a link to the plugin's page only. */

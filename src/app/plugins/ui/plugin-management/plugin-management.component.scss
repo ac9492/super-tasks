@@ -1,226 +1,200 @@
 :host {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-}
-
-th {
-  text-align: left;
-  padding-left: 0;
-}
-
-td {
-  padding-right: 0;
-}
-
-mat-card {
-  margin: var(--s);
-}
-
-mat-card-header {
-  mat-slide-toggle {
-    margin-left: auto;
-  }
-
-  .plugin-controls {
-    display: flex;
-    align-items: center;
-    gap: var(--s);
-    margin-left: auto;
-  }
-}
-
-plugin-icon {
-  width: 40px;
-  height: 40px;
-  margin-right: var(--s);
-}
-
-.label {
-  font-weight: bold;
-  margin-top: 12px;
-}
-
-mat-card-subtitle {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: var(--s);
-
-  mat-chip {
-    margin-left: var(--s);
-  }
-}
-
-.plugin-author {
-  overflow-wrap: anywhere;
-}
-
-.empty-state {
-  text-align: center;
-  padding: var(--s6) var(--s3);
-
-  mat-icon {
-    font-size: 48px;
-    width: 48px;
-    height: 48px;
-    margin-bottom: var(--s2);
-    opacity: 0.5;
-  }
-}
-
-mat-error {
-  display: flex;
-  align-items: center;
-  gap: var(--s);
-  margin: var(--s2) 0;
-
-  mat-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-  }
-}
-
-.intro {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: center;
-  gap: var(--s);
-  margin: var(--s);
-  color: var(--text-color-muted);
-}
-
-// Loading animation for plugins
-.loading-icon {
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.group-title,
-.community-plugins-card,
-.install-card {
-  grid-column: 1 / -1;
-}
-
-.group-title {
-  margin: var(--s2) var(--s) 0;
-}
-
-.community-warning {
-  color: var(--text-color-muted);
-}
-
-.install-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--s);
-}
-
-.community-plugins-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: var(--s2);
-  margin-top: var(--s2);
-}
-
-.community-plugin-item {
-  padding: var(--s2);
-  border: 1px solid var(--extra-border-color);
-  border-radius: var(--card-border-radius);
-  background: var(--card-bg);
   display: flex;
   flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+.plugin-browser-toolbar {
+  padding: var(--s2) var(--s3) var(--s);
+  border-bottom: 1px solid var(--divider-color);
+}
+.plugin-views,
+.plugin-search-controls,
+.plugin-controls,
+.plugin-actions,
+.install-actions {
+  display: flex;
+  align-items: center;
   gap: var(--s);
-
-  .plugin-name {
-    margin: 0;
-    font-size: 16px;
-    font-weight: bold;
-
-    a {
-      color: var(--c-primary);
-      text-decoration: none;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-
-  .plugin-author {
-    margin: 0;
-    font-size: 12px;
-    color: var(--text-color-muted);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--s);
-
-    a {
-      color: inherit;
-      text-decoration: none;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-
-  // Pinned to the bottom so buttons line up across cards of different heights.
-  .community-plugin-action {
-    margin: auto 0 0;
-  }
-
-  .community-plugin-status {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--s-half);
-    font-size: var(--font-size-md);
-    color: var(--text-color-muted);
-
-    mat-icon {
-      font-size: 18px;
-      width: 18px;
-      height: 18px;
-    }
-  }
-
-  .plugin-desc {
-    margin: 0;
-    font-size: 14px;
-    color: var(--text-color-muted);
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+}
+.plugin-views {
+  margin-bottom: var(--s2);
+}
+.plugin-search {
+  flex: 1;
+  min-width: 0;
+}
+.plugin-type {
+  width: 170px;
+}
+.result-count,
+.intro,
+.compatibility-note,
+.community-warning,
+.plugin-meta,
+.plugin-author {
+  color: var(--text-color-muted);
+  font-size: var(--font-size-sm);
+}
+.result-count {
+  margin: var(--s) 0 0;
+}
+.plugin-browser-results {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: var(--s2) var(--s3) var(--s3);
+  scrollbar-gutter: stable;
+}
+.group-title {
+  margin: var(--s3) 0 var(--s);
+  font-size: var(--font-size-lg);
+}
+.installed-plugin {
+  padding: var(--s2) 0;
+  border-bottom: 1px solid var(--divider-color);
+}
+.plugin-header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s2);
+}
+.plugin-summary {
+  flex: 1;
+  min-width: 0;
+  h3 {
+    margin: 0 0 var(--s-half);
+    font-size: var(--font-size-lg);
   }
 }
-
+.plugin-meta,
+.plugin-actions,
+.install-actions {
+  flex-wrap: wrap;
+}
+.plugin-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--s);
+}
+.plugin-description {
+  margin: var(--s) 0;
+}
+.plugin-description,
+.plugin-author,
+.plugin-name,
+td {
+  overflow-wrap: anywhere;
+}
+.plugin-actions {
+  justify-content: flex-end;
+  margin-top: var(--s);
+}
+.plugin-body {
+  margin-left: calc(40px + var(--s2));
+}
+summary {
+  cursor: pointer;
+  padding: var(--s) 0;
+}
+.plugin-info-section,
+.manual-install-content {
+  margin-top: var(--s2);
+}
+.label {
+  font-weight: var(--font-weight-semibold);
+}
+table {
+  width: 100%;
+  table-layout: fixed;
+  th {
+    text-align: start;
+    width: 30%;
+  }
+}
 .api-access {
   margin: var(--s) 0 0;
   padding-left: var(--s3);
 }
-
-.plugin-info-section {
-  margin-bottom: var(--s2);
-
-  &:last-child {
-    margin-bottom: 0;
+.community-plugins-card h2 {
+  font-size: var(--font-size-lg);
+  margin-top: 0;
+}
+.community-plugins-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: var(--s2);
+  margin-top: var(--s2);
+}
+.community-plugin-item {
+  padding: var(--s2);
+  border: 1px solid var(--divider-color);
+  border-radius: var(--card-border-radius);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s);
+  min-width: 0;
+  h3,
+  p {
+    margin: 0;
+  }
+  h3 {
+    font-size: var(--font-size-lg);
+  }
+  .community-plugin-action {
+    margin-top: auto;
+    padding-top: var(--s);
   }
 }
-
-collapsible {
-  ::ng-deep .collapsible-title {
-    font-size: 14px;
+.community-plugin-status,
+mat-error {
+  display: flex;
+  align-items: center;
+  gap: var(--s);
+}
+.catalog-contribute,
+.compatibility-note,
+.install-card {
+  margin-top: var(--s3);
+}
+.catalog-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s);
+  padding: var(--s) var(--s3);
+  border-top: 1px solid var(--divider-color);
+}
+.empty-state {
+  text-align: center;
+  padding: var(--s4) var(--s2);
+  h2 {
+    font-size: var(--font-size-lg);
+  }
+}
+@media (max-width: 600px) {
+  .plugin-browser-toolbar,
+  .plugin-browser-results,
+  .catalog-pagination {
+    padding-left: var(--s2);
+    padding-right: var(--s2);
+  }
+  .plugin-search-controls {
+    flex-wrap: wrap;
+  }
+  .plugin-search {
+    flex-basis: 100%;
+  }
+  .plugin-type {
+    width: 100%;
+  }
+  .plugin-header {
+    flex-wrap: wrap;
+  }
+  .plugin-controls {
+    margin-left: auto;
+  }
+  .plugin-body {
+    margin-left: 0;
   }
 }

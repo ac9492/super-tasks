@@ -1,342 +1,467 @@
-<p class="intro">
-  <mat-icon>info</mat-icon>
-  <span>{{ T.PLUGINS.INTRO | translate }}</span>
-</p>
-
-@if (allPlugins().length === 0) {
-  <mat-card>
-    <mat-card-content class="empty-state">
-      <mat-icon>extension_off</mat-icon>
-      <p>{{ T.PS.NO_PLUGINS_INSTALLED | translate }}</p>
-    </mat-card-content>
-  </mat-card>
-}
-
-@for (group of pluginGroups(); track group.titleKey) {
-  <h3 class="group-title">{{ group.titleKey | translate }}</h3>
-  @for (plugin of group.plugins; track plugin.manifest.id) {
-    <mat-card>
-      <mat-card-header>
-        <div mat-card-avatar>
-          <plugin-icon
-            [pluginId]="plugin.manifest.id"
-            [size]="40"
-            fallbackIcon="extension"
-          ></plugin-icon>
-        </div>
-        <mat-card-title>{{ plugin.manifest.name }}</mat-card-title>
-        <mat-card-subtitle>
-          <span>v{{ plugin.manifest.version }}</span>
-          @if (getPluginAuthor(plugin); as author) {
-            <span class="plugin-author">
-              {{ T.PLUGINS.AUTHORED_BY | translate: { author } }}
-            </span>
-          }
-          @if (isUploadedPlugin(plugin)) {
-            <mat-chip>{{ T.PLUGINS.THIRD_PARTY | translate }}</mat-chip>
-          }
-          @if (isPluginLoading(plugin)) {
-            <mat-chip color="accent">
-              <mat-icon class="loading-icon">autorenew</mat-icon>
-              {{ T.PLUGINS.LOADING_PLUGIN | translate }}
-            </mat-chip>
-          }
-        </mat-card-subtitle>
-        <div class="plugin-controls">
-          @if (plugin.manifest?.jsonSchemaCfg && plugin.isEnabled) {
-            <button
-              mat-icon-button
-              (click)="openConfigDialog(plugin)"
-              [disabled]="isPluginLoading(plugin)"
-              [matTooltip]="T.PLUGINS.CONFIGURE | translate"
-            >
-              <mat-icon>settings</mat-icon>
-            </button>
-          } @else if (hasConfigHandler(plugin) && plugin.isEnabled) {
-            <button
-              mat-icon-button
-              (click)="openPluginConfig(plugin)"
-              [disabled]="isPluginLoading(plugin)"
-              [matTooltip]="T.PLUGINS.CONFIGURE | translate"
-            >
-              <mat-icon>settings</mat-icon>
-            </button>
-          }
-          <mat-slide-toggle
-            [checked]="plugin.isEnabled"
-            [disabled]="!canEnablePlugin(plugin) || isPluginLoading(plugin)"
-            (change)="onPluginToggle(plugin, $event)"
-            [attr.aria-label]="
-              T.PLUGINS.TOGGLE_PLUGIN | translate: { pluginName: plugin.manifest.name }
-            "
-          >
-          </mat-slide-toggle>
-        </div>
-      </mat-card-header>
-
-      <mat-card-content>
-        <p>{{ getPluginDescription(plugin) }}</p>
-
-        @if (plugin.error) {
-          <mat-error>
-            <mat-icon>error</mat-icon>
-            {{ plugin.error }}
-          </mat-error>
-        }
-
-        @if (requiresNodeExecution(plugin) && !IS_ELECTRON) {
-          <mat-error style="margin-top: 8px">
-            <mat-icon>desktop_windows</mat-icon>
-            {{ getNodeExecutionMessage() }}
-          </mat-error>
-        }
-
-        <collapsible [title]="getDetailsTitle(plugin)">
-          <table>
-            <tr>
-              <th>{{ T.PLUGINS.ID | translate }}</th>
-              <td>{{ plugin.manifest.id }}</td>
-            </tr>
-            <tr>
-              <th>{{ T.PLUGINS.LANGUAGES | translate }}</th>
-              <td>{{ getPluginLanguages(plugin) }}</td>
-            </tr>
-          </table>
-          @if (getApiAccess(plugin); as apiAccess) {
-            @if (apiAccess.length > 0) {
-              <div class="plugin-info-section">
-                <div class="label">{{ T.PLUGINS.DECLARED_ACCESS | translate }}:</div>
-                <ul class="api-access">
-                  @for (access of apiAccess; track access.permission) {
-                    <li>{{ access.key | translate: access.params }}</li>
-                  }
-                </ul>
-              </div>
-            }
-          }
-          @if (getOtherPermissions(plugin); as otherPermissions) {
-            @if (otherPermissions.length > 0) {
-              <div class="plugin-info-section">
-                <div class="label">{{ T.PLUGINS.OTHER_PERMISSIONS | translate }}:</div>
-                <mat-chip-set>
-                  @for (permission of otherPermissions; track permission) {
-                    <mat-chip>{{ permission }}</mat-chip>
-                  }
-                </mat-chip-set>
-              </div>
-            }
-          }
-          @if (plugin.manifest.hooks && plugin.manifest.hooks.length > 0) {
-            <div class="plugin-info-section">
-              <div class="label">{{ T.PLUGINS.HOOKS | translate }}:</div>
-              <mat-chip-set>
-                @for (hook of plugin.manifest.hooks; track hook) {
-                  <mat-chip>{{ hook }}</mat-chip>
-                }
-              </mat-chip-set>
-            </div>
-          }
-        </collapsible>
-      </mat-card-content>
-
-      @if (
-        (isIssueProviderPlugin(plugin) && plugin.isEnabled) || isUploadedPlugin(plugin)
-      ) {
-        <mat-card-actions [align]="'end'">
-          @if (isIssueProviderPlugin(plugin) && plugin.isEnabled) {
-            <button
-              mat-button
-              color="primary"
-              (click)="goToIssuePanel()"
-              [disabled]="isPluginLoading(plugin)"
-            >
-              <mat-icon>arrow_forward</mat-icon>
-              {{ T.PLUGINS.SETUP_ISSUE_PROVIDER | translate }}
-            </button>
-          }
-          @if (communityUpdates().get(plugin.manifest.id); as update) {
-            @if (isInAppInstall) {
-              <button
-                mat-button
-                color="primary"
-                (click)="installCommunityPlugin(update.plugin)"
-                [disabled]="isUploading()"
-              >
-                <mat-icon>update</mat-icon>
-                {{
-                  T.PLUGINS.COMMUNITY_UPDATE
-                    | translate: { version: update.release.version }
-                }}
-              </button>
-            } @else {
-              <a
-                mat-button
-                color="primary"
-                [href]="update.release.downloadUrl"
-                target="_blank"
-              >
-                <mat-icon>download</mat-icon>
-                {{
-                  T.PLUGINS.COMMUNITY_DOWNLOAD
-                    | translate: { version: update.release.version }
-                }}
-              </a>
-            }
-          }
-          @if (isUploadedPlugin(plugin)) {
-            <button
-              mat-button
-              color="warn"
-              (click)="removeUploadedPlugin(plugin)"
-              [disabled]="isUploading()"
-            >
-              <mat-icon>delete</mat-icon>
-              {{ T.PLUGINS.REMOVE | translate }}
-            </button>
-          }
-        </mat-card-actions>
-      }
-    </mat-card>
-  }
-}
-
-<mat-card class="community-plugins-card">
-  <mat-card-header>
-    <!-- A heading at the group level, so its items (h4) nest under it. -->
-    <mat-card-title
-      role="heading"
-      aria-level="3"
-      >{{ T.PLUGINS.COMMUNITY_PLUGINS | translate }}</mat-card-title
+<div class="plugin-browser-toolbar">
+  <nav
+    class="plugin-views"
+    [attr.aria-label]="T.PLUGINS.BROWSER.VIEWS | translate"
+  >
+    <button
+      [matButton]="view() === 'installed' ? 'filled' : 'text'"
+      [attr.aria-pressed]="view() === 'installed'"
+      (click)="setView('installed')"
     >
-  </mat-card-header>
-  <mat-card-content>
-    <p class="community-warning">{{ T.PLUGINS.COMMUNITY_WARNING | translate }}</p>
-
-    <div class="community-plugins-list">
-      @for (row of communityPluginRows(); track row.plugin.name) {
-        @let plugin = row.plugin;
-        <div class="community-plugin-item">
-          <h4 class="plugin-name">
-            <a
-              [href]="plugin.url"
-              target="_blank"
-              >{{ plugin.name }}</a
-            >
-          </h4>
-          <p class="plugin-author">
-            @if (plugin.authorUrl) {
-              <a
-                [href]="plugin.authorUrl"
-                target="_blank"
-                >{{ T.PLUGINS.AUTHORED_BY | translate: { author: plugin.author } }}</a
-              >
-            } @else {
-              <span>{{
-                T.PLUGINS.AUTHORED_BY | translate: { author: plugin.author }
-              }}</span>
-            }
-          </p>
-          <p class="plugin-desc">{{ plugin.shortDescription }}</p>
-          @if (row.status === 'installed') {
-            <p class="community-plugin-action community-plugin-status">
-              <mat-icon>check</mat-icon>
-              {{ T.PLUGINS.COMMUNITY_INSTALLED | translate }}
-            </p>
-          } @else if (plugin.release && !isInAppInstall) {
-            <div class="community-plugin-action">
-              <a
-                mat-stroked-button
-                color="primary"
-                [href]="plugin.release.downloadUrl"
-                target="_blank"
-              >
-                <mat-icon>download</mat-icon>
-                {{
-                  T.PLUGINS.COMMUNITY_DOWNLOAD
-                    | translate: { version: plugin.release.version }
-                }}
-              </a>
+      {{ T.PLUGINS.BROWSER.INSTALLED | translate }} ({{ installedCount() }})
+    </button>
+    <button
+      [matButton]="view() === 'discover' ? 'filled' : 'text'"
+      [attr.aria-pressed]="view() === 'discover'"
+      (click)="setView('discover')"
+    >
+      {{ T.PLUGINS.BROWSER.DISCOVER | translate }}
+    </button>
+  </nav>
+  <div class="plugin-search-controls">
+    <mat-form-field
+      appearance="outline"
+      subscriptSizing="dynamic"
+      class="plugin-search"
+    >
+      <mat-icon matPrefix>search</mat-icon>
+      <input
+        #searchInput
+        matInput
+        type="search"
+        [placeholder]="T.PLUGINS.BROWSER.SEARCH | translate"
+        [attr.aria-label]="T.PLUGINS.BROWSER.SEARCH | translate"
+        [value]="searchQuery()"
+        (input)="setSearch(searchInput.value)"
+      />
+      @if (searchQuery()) {
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="setSearch(''); searchInput.focus()"
+          [aria-label]="T.PLUGINS.BROWSER.CLEAR | translate"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline"
+      subscriptSizing="dynamic"
+      class="plugin-type"
+    >
+      <mat-label>{{ T.PLUGINS.BROWSER.TYPE | translate }}</mat-label>
+      <mat-select
+        [value]="typeFilter()"
+        (selectionChange)="setTypeFilter($event.value)"
+      >
+        <mat-option value="all">{{ T.PLUGINS.BROWSER.ALL_TYPES | translate }}</mat-option>
+        <mat-option value="integration">{{
+          T.PLUGINS.BROWSER.INTEGRATIONS | translate
+        }}</mat-option>
+        <mat-option value="plugin">{{
+          T.PLUGINS.BROWSER.PLUGINS | translate
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <p
+    class="result-count"
+    role="status"
+  >
+    {{ T.PLUGINS.BROWSER.RESULTS | translate }}: {{ resultCount() }}
+  </p>
+</div>
+@if (uploadError()) {
+  <p
+    class="callout callout--danger"
+    role="alert"
+  >
+    {{ uploadError() }}
+  </p>
+}
+<div
+  class="plugin-browser-results"
+  #results
+>
+  @if (resultCount() === 0) {
+    <div class="empty-state">
+      <mat-icon>search_off</mat-icon>
+      <h2>{{ T.PLUGINS.BROWSER.NO_RESULTS | translate }}</h2>
+      <p>{{ T.PLUGINS.BROWSER.TRY_SEARCH | translate }}</p>
+      @if (searchQuery() || typeFilter() !== 'all') {
+        <button
+          mat-button
+          (click)="setSearch(''); setTypeFilter('all')"
+        >
+          {{ T.PLUGINS.BROWSER.RESET_FILTERS | translate }}
+        </button>
+      }
+      @if (view() === 'installed') {
+        <button
+          mat-button
+          (click)="setView('discover')"
+        >
+          {{ T.PLUGINS.BROWSER.DISCOVER | translate }}
+        </button>
+      }
+    </div>
+  }
+  @if (view() === 'installed') {
+    <p class="intro">{{ T.PLUGINS.BROWSER.INSTALLED_HELP | translate }}</p>
+    @for (group of visiblePluginGroups(); track group.titleKey) {
+      <h3 class="group-title">{{ group.titleKey | translate }}</h3>
+      @for (plugin of group.plugins; track plugin.manifest.id) {
+        <article class="installed-plugin">
+          <header class="plugin-header">
+            <div class="plugin-avatar">
+              <plugin-icon
+                [pluginId]="plugin.manifest.id"
+                [size]="40"
+                fallbackIcon="extension"
+              ></plugin-icon>
             </div>
-          } @else if (plugin.release) {
-            <div class="community-plugin-action">
-              <button
-                mat-stroked-button
-                color="primary"
-                (click)="installCommunityPlugin(plugin)"
-                [disabled]="isUploading()"
+            <div class="plugin-summary">
+              <h3>{{ plugin.manifest.name }}</h3>
+              <div class="plugin-meta">
+                <span>v{{ plugin.manifest.version }}</span>
+                @if (getPluginAuthor(plugin); as author) {
+                  <span class="plugin-author">
+                    {{ T.PLUGINS.AUTHORED_BY | translate: { author } }}
+                  </span>
+                }
+                @if (isUploadedPlugin(plugin)) {
+                  <mat-chip>{{ T.PLUGINS.THIRD_PARTY | translate }}</mat-chip>
+                }
+                @if (isPluginLoading(plugin)) {
+                  <mat-chip color="accent">
+                    <mat-icon class="loading-icon">autorenew</mat-icon>
+                    {{ T.PLUGINS.LOADING_PLUGIN | translate }}
+                  </mat-chip>
+                }
+              </div>
+              <p class="plugin-description">{{ getPluginDescription(plugin) }}</p>
+            </div>
+            <div class="plugin-controls">
+              @if (plugin.manifest?.jsonSchemaCfg && plugin.isEnabled) {
+                <button
+                  mat-icon-button
+                  (click)="openConfigDialog(plugin)"
+                  [disabled]="isPluginLoading(plugin)"
+                  [matTooltip]="T.PLUGINS.CONFIGURE | translate"
+                  [aria-label]="
+                    (T.PLUGINS.CONFIGURE | translate) + ' — ' + plugin.manifest.name
+                  "
+                >
+                  <mat-icon>settings</mat-icon>
+                </button>
+              } @else if (hasConfigHandler(plugin) && plugin.isEnabled) {
+                <button
+                  mat-icon-button
+                  (click)="openPluginConfig(plugin)"
+                  [disabled]="isPluginLoading(plugin)"
+                  [matTooltip]="T.PLUGINS.CONFIGURE | translate"
+                  [aria-label]="
+                    (T.PLUGINS.CONFIGURE | translate) + ' — ' + plugin.manifest.name
+                  "
+                >
+                  <mat-icon>settings</mat-icon>
+                </button>
+              }
+              <mat-slide-toggle
+                [checked]="plugin.isEnabled"
+                [disabled]="!canEnablePlugin(plugin) || isPluginLoading(plugin)"
+                (change)="onPluginToggle(plugin, $event)"
+                [attr.aria-label]="
+                  T.PLUGINS.TOGGLE_PLUGIN
+                    | translate: { pluginName: plugin.manifest.name }
+                "
               >
-                <mat-icon>{{
-                  row.status === 'updateAvailable' ? 'update' : 'download'
-                }}</mat-icon>
-                {{
-                  (row.status === 'updateAvailable'
-                    ? T.PLUGINS.COMMUNITY_UPDATE
-                    : T.PLUGINS.COMMUNITY_INSTALL
-                  ) | translate: { version: plugin.release.version }
-                }}
-              </button>
+              </mat-slide-toggle>
+            </div>
+          </header>
+
+          <div class="plugin-body">
+            @if (plugin.error) {
+              <mat-error>
+                <mat-icon>error</mat-icon>
+                {{ plugin.error }}
+              </mat-error>
+            }
+
+            @if (requiresNodeExecution(plugin) && !IS_ELECTRON) {
+              <mat-error>
+                <mat-icon>desktop_windows</mat-icon>
+                {{ getNodeExecutionMessage() }}
+              </mat-error>
+            }
+
+            <details class="plugin-details">
+              <summary>{{ getDetailsTitle(plugin) }}</summary>
+              <table>
+                <tr>
+                  <th>{{ T.PLUGINS.ID | translate }}</th>
+                  <td>{{ plugin.manifest.id }}</td>
+                </tr>
+                <tr>
+                  <th>{{ T.PLUGINS.LANGUAGES | translate }}</th>
+                  <td>{{ getPluginLanguages(plugin) }}</td>
+                </tr>
+              </table>
+              @if (getApiAccess(plugin); as apiAccess) {
+                @if (apiAccess.length > 0) {
+                  <div class="plugin-info-section">
+                    <div class="label">{{ T.PLUGINS.DECLARED_ACCESS | translate }}:</div>
+                    <ul class="api-access">
+                      @for (access of apiAccess; track access.permission) {
+                        <li>{{ access.key | translate: access.params }}</li>
+                      }
+                    </ul>
+                  </div>
+                }
+              }
+              @if (getOtherPermissions(plugin); as otherPermissions) {
+                @if (otherPermissions.length > 0) {
+                  <div class="plugin-info-section">
+                    <div class="label">
+                      {{ T.PLUGINS.OTHER_PERMISSIONS | translate }}:
+                    </div>
+                    <mat-chip-set>
+                      @for (permission of otherPermissions; track permission) {
+                        <mat-chip>{{ permission }}</mat-chip>
+                      }
+                    </mat-chip-set>
+                  </div>
+                }
+              }
+              @if (plugin.manifest.hooks && plugin.manifest.hooks.length > 0) {
+                <div class="plugin-info-section">
+                  <div class="label">{{ T.PLUGINS.HOOKS | translate }}:</div>
+                  <mat-chip-set>
+                    @for (hook of plugin.manifest.hooks; track hook) {
+                      <mat-chip>{{ hook }}</mat-chip>
+                    }
+                  </mat-chip-set>
+                </div>
+              }
+            </details>
+          </div>
+
+          @if (
+            (isIssueProviderPlugin(plugin) && plugin.isEnabled) ||
+            isUploadedPlugin(plugin)
+          ) {
+            <div class="plugin-actions">
+              @if (isIssueProviderPlugin(plugin) && plugin.isEnabled) {
+                <button
+                  mat-button
+                  color="primary"
+                  (click)="goToIssuePanel()"
+                  [disabled]="isPluginLoading(plugin)"
+                >
+                  <mat-icon>arrow_forward</mat-icon>
+                  {{ T.PLUGINS.SETUP_ISSUE_PROVIDER | translate }}
+                </button>
+              }
+              @if (communityUpdates().get(plugin.manifest.id); as update) {
+                @if (isInAppInstall) {
+                  <button
+                    mat-button
+                    color="primary"
+                    (click)="installCommunityPlugin(update.plugin)"
+                    [disabled]="isUploading()"
+                  >
+                    <mat-icon>update</mat-icon>
+                    {{
+                      T.PLUGINS.COMMUNITY_UPDATE
+                        | translate: { version: update.release.version }
+                    }}
+                  </button>
+                } @else {
+                  <a
+                    mat-button
+                    color="primary"
+                    [href]="update.release.downloadUrl"
+                    target="_blank"
+                  >
+                    <mat-icon>download</mat-icon>
+                    {{
+                      T.PLUGINS.COMMUNITY_DOWNLOAD
+                        | translate: { version: update.release.version }
+                    }}
+                  </a>
+                }
+              }
+              @if (isUploadedPlugin(plugin)) {
+                <button
+                  mat-button
+                  color="warn"
+                  (click)="removeUploadedPlugin(plugin)"
+                  [disabled]="isUploading()"
+                >
+                  <mat-icon>delete</mat-icon>
+                  {{ T.PLUGINS.REMOVE | translate }}
+                </button>
+              }
+            </div>
+          }
+        </article>
+      }
+    }
+  } @else {
+    <section class="community-plugins-card">
+      <header>
+        <!-- A heading at the group level, so its items (h4) nest under it. -->
+        <h2>{{ T.PLUGINS.COMMUNITY_PLUGINS | translate }}</h2>
+      </header>
+      <div>
+        <p class="community-warning">{{ T.PLUGINS.COMMUNITY_WARNING | translate }}</p>
+
+        <div class="community-plugins-list">
+          @for (row of visibleCommunityRows(); track row.plugin.url) {
+            @let plugin = row.plugin;
+            <div class="community-plugin-item">
+              <h3 class="plugin-name">
+                <a
+                  [href]="plugin.url"
+                  target="_blank"
+                  >{{ plugin.name }}</a
+                >
+              </h3>
+              <p class="plugin-author">
+                @if (plugin.authorUrl) {
+                  <a
+                    [href]="plugin.authorUrl"
+                    target="_blank"
+                    >{{ T.PLUGINS.AUTHORED_BY | translate: { author: plugin.author } }}</a
+                  >
+                } @else {
+                  <span>{{
+                    T.PLUGINS.AUTHORED_BY | translate: { author: plugin.author }
+                  }}</span>
+                }
+              </p>
+              <p class="plugin-desc">{{ plugin.shortDescription }}</p>
+              @if (row.status === 'installed') {
+                <p class="community-plugin-action community-plugin-status">
+                  <mat-icon>check</mat-icon>
+                  {{ T.PLUGINS.COMMUNITY_INSTALLED | translate }}
+                </p>
+              } @else if (plugin.release && !isInAppInstall) {
+                <div class="community-plugin-action">
+                  <a
+                    mat-stroked-button
+                    color="primary"
+                    [href]="plugin.release.downloadUrl"
+                    target="_blank"
+                  >
+                    <mat-icon>download</mat-icon>
+                    {{
+                      T.PLUGINS.COMMUNITY_DOWNLOAD
+                        | translate: { version: plugin.release.version }
+                    }}
+                  </a>
+                </div>
+              } @else if (plugin.release) {
+                <div class="community-plugin-action">
+                  <button
+                    mat-stroked-button
+                    color="primary"
+                    (click)="installCommunityPlugin(plugin)"
+                    [disabled]="isUploading()"
+                  >
+                    <mat-icon>{{
+                      row.status === 'updateAvailable' ? 'update' : 'download'
+                    }}</mat-icon>
+                    {{
+                      (row.status === 'updateAvailable'
+                        ? T.PLUGINS.COMMUNITY_UPDATE
+                        : T.PLUGINS.COMMUNITY_INSTALL
+                      ) | translate: { version: plugin.release.version }
+                    }}
+                  </button>
+                </div>
+              }
             </div>
           }
         </div>
-      }
-    </div>
 
-    <div style="margin-top: 16px; text-align: center">
-      <a
-        href="https://github.com/super-productivity/super-productivity/blob/master/docs/plugin-development.md#get-listed-in-the-app"
-        target="_blank"
-        mat-button
-        color="primary"
-      >
-        <mat-icon>add</mat-icon>
-        {{ T.PLUGINS.COMMUNITY_GET_LISTED | translate }}
-      </a>
-    </div>
-  </mat-card-content>
-</mat-card>
+        <div class="catalog-contribute">
+          <a
+            href="https://github.com/super-productivity/super-productivity/blob/master/docs/plugin-development.md#get-listed-in-the-app"
+            target="_blank"
+            mat-button
+            color="primary"
+          >
+            <mat-icon>add</mat-icon>
+            {{ T.PLUGINS.COMMUNITY_GET_LISTED | translate }}
+          </a>
+        </div>
+      </div>
+    </section>
+  }
+  <p class="compatibility-note">{{ T.PLUGINS.BROWSER.COMPATIBILITY | translate }}</p>
+  <details class="install-card">
+    <summary>{{ T.PLUGINS.BROWSER.MANUAL_INSTALL | translate }}</summary>
 
-<mat-card class="install-card">
-  <mat-card-header>
-    <mat-card-title>{{ T.PLUGINS.INSTALL_PLUGIN | translate }}</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <p>{{ T.PLUGINS.UPLOAD_PLUGIN_INSTRUCTION | translate }}</p>
-    <input
-      #fileInput
-      type="file"
-      accept=".zip"
-      (change)="onFileSelected($event)"
-      style="display: none"
-    />
-    <div class="install-actions">
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="fileInput.click()"
-        [disabled]="isUploading()"
-      >
-        <mat-icon>upload</mat-icon>
-        {{
-          isUploading()
-            ? (T.PLUGINS.INSTALLING | translate)
-            : (T.PLUGINS.CHOOSE_PLUGIN_FILE | translate)
-        }}
-      </button>
-      <button
-        mat-button
-        (click)="clearPluginCache()"
-        [disabled]="isUploading()"
-      >
-        <mat-icon>delete_sweep</mat-icon>
-        {{ T.PLUGINS.REMOVE_ALL_UPLOADED_PLUGINS | translate }}
-      </button>
+    <div class="manual-install-content">
+      <p>{{ T.PLUGINS.UPLOAD_PLUGIN_INSTRUCTION | translate }}</p>
+      <input
+        #fileInput
+        type="file"
+        accept=".zip"
+        (change)="onFileSelected($event)"
+        style="display: none"
+      />
+      <div class="install-actions">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="fileInput.click()"
+          [disabled]="isUploading()"
+        >
+          <mat-icon>upload</mat-icon>
+          {{
+            isUploading()
+              ? (T.PLUGINS.INSTALLING | translate)
+              : (T.PLUGINS.CHOOSE_PLUGIN_FILE | translate)
+          }}
+        </button>
+        <button
+          mat-button
+          color="warn"
+          (click)="clearPluginCache()"
+          [disabled]="isUploading()"
+        >
+          <mat-icon>delete_sweep</mat-icon>
+          {{ T.PLUGINS.REMOVE_ALL_UPLOADED_PLUGINS | translate }}
+        </button>
+      </div>
     </div>
-    @if (uploadError()) {
-      <mat-error style="margin-top: 8px; display: block">
-        {{ uploadError() }}
-      </mat-error>
-    }
-  </mat-card-content>
-</mat-card>
-
-<div class="bottom-bar"></div>
+  </details>
+</div>
+@if (pageCount() > 1) {
+  <nav
+    class="catalog-pagination"
+    [attr.aria-label]="T.PLUGINS.BROWSER.PAGES | translate"
+  >
+    <button
+      mat-button
+      [disabled]="currentPage() === 0"
+      (click)="goToPage(currentPage() - 1)"
+    >
+      {{ T.PLUGINS.BROWSER.PREVIOUS | translate }}
+    </button>
+    <span role="status"
+      >{{ T.PLUGINS.BROWSER.PAGE | translate }} {{ currentPage() + 1 }} /
+      {{ pageCount() }}</span
+    >
+    <button
+      mat-button
+      [disabled]="currentPage() + 1 === pageCount()"
+      (click)="goToPage(currentPage() + 1)"
+    >
+      {{ T.PLUGINS.BROWSER.NEXT | translate }}
+    </button>
+  </nav>
+}

@@ -2,8 +2,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  ElementRef,
   inject,
   signal,
+  viewChild,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
@@ -13,20 +15,21 @@ import { PluginMetaPersistenceService } from '../../plugin-meta-persistence.serv
 import { PluginCacheService } from '../../plugin-cache.service';
 import { PluginConfigService } from '../../plugin-config.service';
 import { MAX_PLUGIN_ZIP_SIZE } from '../../plugin.const';
-import {
-  MatCard,
-  MatCardActions,
-  MatCardContent,
-  MatCardHeader,
-  MatCardSubtitle,
-  MatCardTitle,
-} from '@angular/material/card';
 import { MatSlideToggle, MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatChip, MatChipSet } from '@angular/material/chips';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatError } from '@angular/material/form-field';
+import {
+  MatFormField,
+  MatLabel,
+  MatPrefix,
+  MatSuffix,
+} from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { T } from '../../../t.const';
@@ -36,7 +39,6 @@ import { IS_ELECTRON } from '../../../app.constants';
 import { PluginLog } from '../../../core/log';
 import { SnackService } from '../../../core/snack/snack.service';
 import { PluginBridgeService } from '../../plugin-bridge.service';
-import { CollapsibleComponent } from '../../../ui/collapsible/collapsible.component';
 import { DEFAULT_LANGUAGE, LanguageCode } from '../../../core/locale.constants';
 import { GlobalConfigService } from '../../../features/config/global-config.service';
 import { escapeHtml } from '../../../util/escape-html';
@@ -111,12 +113,6 @@ const getLanguageName = (
   styleUrls: ['./plugin-management.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    MatCard,
-    MatCardActions,
-    MatCardHeader,
-    MatCardTitle,
-    MatCardSubtitle,
-    MatCardContent,
     MatSlideToggle,
     MatIcon,
     MatButton,
@@ -127,7 +123,13 @@ const getLanguageName = (
     MatTooltip,
     TranslatePipe,
     PluginIconComponent,
-    CollapsibleComponent,
+    MatFormField,
+    MatLabel,
+    MatPrefix,
+    MatSuffix,
+    MatInput,
+    MatSelect,
+    MatOption,
   ],
 })
 export class PluginManagementComponent {
@@ -183,6 +185,71 @@ export class PluginManagementComponent {
       return { plugin, status };
     });
   });
+
+  readonly view = signal<'installed' | 'discover'>('installed');
+  readonly searchQuery = signal('');
+  readonly typeFilter = signal<'all' | 'integration' | 'plugin'>('all');
+  private readonly _searchTerms = computed(() =>
+    this.searchQuery().trim().toLocaleLowerCase().split(/\s+/),
+  );
+  private readonly _communityIntegrationIds = computed(
+    () =>
+      new Set(
+        this.communityPlugins()
+          .filter((entry) => entry.category === 'integration')
+          .map((entry) => entry.id),
+      ),
+  );
+  readonly pageIndex = signal(0);
+  readonly pageSize = 24;
+  private readonly _results = viewChild<ElementRef<HTMLElement>>('results');
+  readonly filteredCommunityRows = computed(() =>
+    this.communityPluginRows().filter(({ plugin }) =>
+      this._matchesSearch(
+        plugin.category ?? 'plugin',
+        plugin.name,
+        plugin.shortDescription,
+        plugin.author,
+        plugin.id ?? '',
+      ),
+    ),
+  );
+  readonly pageCount = computed(() =>
+    Math.max(1, Math.ceil(this.resultCount() / this.pageSize)),
+  );
+  readonly currentPage = computed(() => Math.min(this.pageIndex(), this.pageCount() - 1));
+  readonly visibleCommunityRows = computed(() => {
+    const start = this.currentPage() * this.pageSize;
+    return this.filteredCommunityRows().slice(start, start + this.pageSize);
+  });
+
+  setView(view: 'installed' | 'discover'): void {
+    this.view.set(view);
+    this.goToPage(0);
+  }
+
+  setSearch(query: string): void {
+    this.searchQuery.set(query);
+    this.goToPage(0);
+  }
+
+  setTypeFilter(type: 'all' | 'integration' | 'plugin'): void {
+    this.typeFilter.set(type);
+    this.goToPage(0);
+  }
+
+  goToPage(page: number): void {
+    this.pageIndex.set(page);
+    this._results()?.nativeElement.scrollTo({ top: 0 });
+  }
+
+  private _matchesSearch(category: string, ...values: string[]): boolean {
+    const text = values.join(' ').toLocaleLowerCase();
+    return (
+      (this.typeFilter() === 'all' || this.typeFilter() === category) &&
+      this._searchTerms().every((term) => text.includes(term))
+    );
+  }
 
   /** Listed entries with a newer release than the installed plugin, by plugin id. */
   readonly communityUpdates = computed(() => {
@@ -261,6 +328,52 @@ export class PluginManagementComponent {
       },
     ].filter((group) => group.plugins.length > 0);
   });
+
+  readonly filteredPluginGroups = computed(() => {
+    this._uiLang();
+    return this.pluginGroups()
+      .map((group) => ({
+        ...group,
+        plugins: group.plugins.filter((plugin) =>
+          this._matchesSearch(
+            this.isIssueProviderPlugin(plugin) ||
+              this._communityIntegrationIds().has(plugin.manifest.id)
+              ? 'integration'
+              : 'plugin',
+            plugin.manifest.name,
+            this.getPluginDescription(plugin),
+            this.getPluginAuthor(plugin) ?? '',
+            plugin.manifest.id,
+          ),
+        ),
+      }))
+      .filter((group) => group.plugins.length > 0);
+  });
+  readonly installedCount = computed(() =>
+    this.pluginGroups().reduce((count, group) => count + group.plugins.length, 0),
+  );
+  readonly visiblePluginGroups = computed(() => {
+    const start = this.currentPage() * this.pageSize;
+    let offset = 0;
+    return this.filteredPluginGroups()
+      .map((group) => {
+        const plugins = group.plugins.slice(
+          Math.max(0, start - offset),
+          Math.max(0, start + this.pageSize - offset),
+        );
+        offset += group.plugins.length;
+        return { ...group, plugins };
+      })
+      .filter((group) => group.plugins.length > 0);
+  });
+  readonly resultCount = computed(() =>
+    this.view() === 'discover'
+      ? this.filteredCommunityRows().length
+      : this.filteredPluginGroups().reduce(
+          (count, group) => count + group.plugins.length,
+          0,
+        ),
+  );
 
   // Upload state
   readonly isUploading = signal<boolean>(false);
@@ -412,6 +525,7 @@ export class PluginManagementComponent {
 
     try {
       const plugin = await this._pluginService.loadPluginFromZip(file);
+      this._showInstalledPlugin(plugin);
       // A plugin whose code fails at load time still resolves, with `error`
       // set and its card showing the failure; only a clean load gets a snack.
       if (!plugin.error) {
@@ -455,6 +569,7 @@ export class PluginManagementComponent {
     try {
       const file = await downloadVerifiedCommunityPlugin(id, release);
       const installed = await this._pluginService.loadPluginFromZip(file);
+      this._showInstalledPlugin(installed);
       if (!installed.error) {
         this._snackService.open({
           type: 'SUCCESS',
@@ -483,6 +598,12 @@ export class PluginManagementComponent {
     } finally {
       this.isUploading.set(false);
     }
+  }
+
+  private _showInstalledPlugin(plugin: PluginInstance): void {
+    this.setTypeFilter('all');
+    this.setSearch(plugin.manifest.name);
+    this.setView('installed');
   }
 
   async clearPluginCache(): Promise<void> {

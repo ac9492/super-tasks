@@ -13,6 +13,7 @@ import { ProjectCfgFormKey } from '../../project/project.model';
 import { T } from '../../../t.const';
 import { exists } from '../../../util/exists';
 import { adjustToLiveFormlyForm } from '../../../util/adjust-to-live-formly-form';
+import { prepareSettingsFields } from '../settings-form.util';
 import { Log } from '../../../core/log';
 import { isShallowEqual } from '../../../util/is-shallow-equal';
 
@@ -28,7 +29,14 @@ export class ConfigFormComponent {
   cfg = input.required<Record<string, unknown>>();
   formCfg = input.required<FormlyFieldConfig[]>();
   sectionKey = input<GlobalConfigFormSectionKey | ProjectCfgFormKey>();
-  fields = computed(() => adjustToLiveFormlyForm(this.formCfg()));
+  settingsLayout = input(false);
+  expandedField = input('');
+  fields = computed(() => {
+    const fields = adjustToLiveFormlyForm(this.formCfg());
+    return this.settingsLayout()
+      ? prepareSettingsFields(fields, String(this.sectionKey()), this.expandedField())
+      : fields;
+  });
   // formly (`immutable: true`) re-creates every field, dropping focus, unless
   // [model] is the object it last emitted. The store hands a saved section back
   // as a fresh but equal object, so keep the current model then (#8447).

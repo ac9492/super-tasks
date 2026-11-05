@@ -46,9 +46,20 @@ body.super-tasks {
     --task-list-row-gap: var(--s-half);
     --task-separator: none;
     --task-border-radius: var(--st-radius);
+    --task-border-color: color-mix(
+      in srgb,
+      var(--palette-surface-ink) calc(var(--border-alpha) * 100%),
+      var(--card-bg)
+    );
     border-radius: var(--st-radius);
-    border: var(--st-line-width) solid var(--separator);
     background: var(--card-bg);
+  }
+  // Keep all card edges, including those suppressed by flat-row/subtask styles.
+  task,
+  task:last-of-type,
+  .sub-tasks task:first-of-type,
+  .sub-tasks task:last-of-type {
+    border: var(--st-line-width) solid var(--task-border-color);
   }
   task .time-wrapper {
     font-variant-numeric: tabular-nums;

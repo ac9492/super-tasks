@@ -1,5 +1,7 @@
+import { SettingHelpComponent } from '../../ui/setting-help/setting-help.component';
 import { SuperTasksAppearanceService } from '../../core/theme/super-tasks-appearance.service';
 import {
+  afterNextRender,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -7,10 +9,10 @@ import {
   effect,
   ElementRef,
   inject,
+  Injector,
   OnInit,
-  viewChild,
 } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { GlobalConfigService } from '../../features/config/global-config.service';
 import { getChangedAppFeatures } from '../../features/config/get-changed-app-features.util';
 import { TaskWidgetSettingsService } from '../../features/config/task-widget-settings.service';
@@ -22,7 +24,6 @@ import {
 import {
   GLOBAL_GENERAL_FORM_CONFIG,
   GLOBAL_IMEX_FORM_CONFIG,
-  GLOBAL_PLUGINS_FORM_CONFIG,
   GLOBAL_PRODUCTIVITY_FORM_CONFIG,
   GLOBAL_TIME_TRACKING_FORM_CONFIG,
   GLOBAL_TASKS_FORM_CONFIG,
@@ -53,7 +54,6 @@ import { ConfigSoundFormComponent } from '../../features/config/config-sound-for
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { SyncProviderManager } from '../../op-log/sync-providers/provider-manager.service';
 import { SyncConfigService } from '../../imex/sync/sync-config.service';
-import { PluginManagementComponent } from '../../plugins/ui/plugin-management/plugin-management.component';
 import { PluginBridgeService } from '../../plugins/plugin-bridge.service';
 import { createPluginShortcutFormItems } from '../../features/config/form-cfgs/plugin-keyboard-shortcuts';
 import { PluginShortcutCfg } from '../../plugins/plugin-api.model';
@@ -63,13 +63,11 @@ import { DialogLogsComponent } from '../../ui/dialog-logs/dialog-logs.component'
 import { SnackService } from '../../core/snack/snack.service';
 import { ShareService } from '../../core/share/share.service';
 import { SyncWrapperService } from '../../imex/sync/sync-wrapper.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogClose } from '@angular/material/dialog';
 import { SyncProviderId } from '../../op-log/sync-providers/provider.const';
-import { MatTab, MatTabGroup, MatTabLabel } from '@angular/material/tabs';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatButton, MatIconButton } from '@angular/material/button';
-import { NgTemplateOutlet } from '@angular/common';
 import { LocalBackupService } from '../../imex/local-backup/local-backup.service';
 import { DialogBackupsListComponent } from '../../imex/local-backup/dialog-backups-list/dialog-backups-list.component';
 import { FormsModule } from '@angular/forms';
@@ -79,7 +77,6 @@ import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autoc
 import { MatOption } from '@angular/material/core';
 import {
   searchSettings,
-  SETTINGS_PLUGINS_TAB_INDEX,
   SETTINGS_SYNC_BACKUP_TAB_INDEX,
   SettingsSearchTarget,
 } from '../../features/config/settings-search.util';
@@ -91,9 +88,6 @@ import {
  */
 const OPEN_BY_DEFAULT_SECTION_KEY = 'appFeatures';
 
-/** Kept in sync with `animationDuration` on the settings `mat-tab-group`. */
-const TAB_ANIMATION_DURATION_MS = 200;
-
 @Component({
   selector: 'config-page',
   templateUrl: './config-page.component.html',
@@ -101,19 +95,15 @@ const TAB_ANIMATION_DURATION_MS = 200;
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ThemeSelectorComponent,
+    SettingHelpComponent,
     ConfigSectionComponent,
     ConfigSoundFormComponent,
     TranslatePipe,
-    PluginManagementComponent,
-    MatTabGroup,
-    MatTab,
-    MatTabLabel,
     MatIcon,
     MatTooltip,
     MatButton,
     MatIconButton,
-    RouterLink,
-    NgTemplateOutlet,
+    MatDialogClose,
     FormsModule,
     MatFormField,
     MatInput,
@@ -127,6 +117,7 @@ const TAB_ANIMATION_DURATION_MS = 200;
 export class ConfigPageComponent implements OnInit {
   readonly superTasksAppearance = inject(SuperTasksAppearanceService);
   private readonly _cd = inject(ChangeDetectorRef);
+  private readonly _injector = inject(Injector);
   private readonly _elRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly _route = inject(ActivatedRoute);
   private readonly _providerManager = inject(SyncProviderManager);
@@ -149,6 +140,9 @@ export class ConfigPageComponent implements OnInit {
 
   selectedTabIndex = 0;
   expandedSection: string | null = null;
+  expandedField = '';
+  colorEditorExpanded = false;
+  soundExpanded = false;
   private _isDefaultSectionCollapsed = false;
 
   searchQuery = '';
@@ -160,9 +154,7 @@ export class ConfigPageComponent implements OnInit {
   generalFormCfg: ConfigFormConfig;
   globalTasksFormCfg: ConfigFormConfig;
   timeTrackingFormCfg: ConfigFormConfig;
-  pluginsShortcutsFormCfg: ConfigFormConfig;
   globalImexFormCfg: ConfigFormConfig;
-  globalProductivityConfigFormCfg: ConfigFormConfig;
   globalCfg?: GlobalConfigState;
 
   // `providerId === null` ⇒ empty state (sync disabled or no provider chosen).
@@ -205,29 +197,24 @@ export class ConfigPageComponent implements OnInit {
   isUpdateCheckPossible: boolean = isUpdateCheckPossible();
 
   private readonly _destroyRef = inject(DestroyRef);
-  private readonly _tabGroup = viewChild(MatTabGroup);
+  private readonly _dialogData = inject<Record<string, string> | null>(MAT_DIALOG_DATA, {
+    optional: true,
+  });
+  readonly categories = [
+    { index: 0, label: T.PS.TABS.GENERAL },
+    { index: 1, label: T.PS.REDESIGN.TASKS },
+    { index: 2, label: T.PS.REDESIGN.TIME },
+    { index: 5, label: T.PS.TABS.SYNC_BACKUP },
+  ];
+  mobileCategoryVisible = false;
 
   constructor() {
     // Initialize tab-specific form configurations
-    // The pointer to plugins sits inside App Features, below its switches.
-    this.generalFormCfg = GLOBAL_GENERAL_FORM_CONFIG.map((section) =>
-      section.key === 'appFeatures'
-        ? {
-            ...section,
-            actions: [
-              ...(section.actions ?? []),
-              {
-                label: T.GCF.APP_FEATURES.EXTEND_WITH_PLUGINS,
-                icon: 'extension',
-                isRow: true,
-                onClick: () => this.goToPluginsTab(),
-              },
-            ],
-          }
-        : section,
-    );
-    this.timeTrackingFormCfg = GLOBAL_TIME_TRACKING_FORM_CONFIG.slice();
-    this.pluginsShortcutsFormCfg = GLOBAL_PLUGINS_FORM_CONFIG.slice();
+    this.generalFormCfg = GLOBAL_GENERAL_FORM_CONFIG.slice();
+    this.timeTrackingFormCfg = [
+      ...GLOBAL_TIME_TRACKING_FORM_CONFIG,
+      ...GLOBAL_PRODUCTIVITY_FORM_CONFIG,
+    ];
     // "Browse backups" lives on the Import/Export section so every platform
     // (incl. web, which has no automatic backups) can reach the recovery ring.
     this.globalImexFormCfg = GLOBAL_IMEX_FORM_CONFIG.map((section) =>
@@ -249,7 +236,6 @@ export class ConfigPageComponent implements OnInit {
           }
         : section,
     );
-    this.globalProductivityConfigFormCfg = GLOBAL_PRODUCTIVITY_FORM_CONFIG.slice();
     this.globalTasksFormCfg = GLOBAL_TASKS_FORM_CONFIG.slice();
 
     // NOTE: needs special handling cause of the async stuff
@@ -313,7 +299,7 @@ export class ConfigPageComponent implements OnInit {
       });
 
     // Check for tab query parameter and set selected tab
-    this._route.queryParams
+    (this._dialogData ? of(this._dialogData) : this._route.queryParams)
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe((params) => {
         if (params['tab'] !== undefined) {
@@ -323,14 +309,29 @@ export class ConfigPageComponent implements OnInit {
             tabIndex >= 0 &&
             tabIndex <= SETTINGS_SYNC_BACKUP_TAB_INDEX
           ) {
-            this.selectedTabIndex = tabIndex;
+            this.selectedTabIndex = tabIndex === 3 ? 2 : tabIndex;
             this._cd.detectChanges();
           }
         }
         if (params['section'] !== undefined) {
           this.expandedSection = params['section'];
+          if (
+            this.globalTasksFormCfg.some(
+              (section) => section.key === this.expandedSection,
+            )
+          ) {
+            this.selectedTabIndex = 1;
+          } else if (
+            this.timeTrackingFormCfg.some(
+              (section) => section.key === this.expandedSection,
+            )
+          ) {
+            this.selectedTabIndex = 2;
+          }
           this._cd.detectChanges();
         }
+        this.mobileCategoryVisible =
+          params['tab'] !== undefined || params['section'] !== undefined;
       });
   }
 
@@ -456,13 +457,13 @@ export class ConfigPageComponent implements OnInit {
     this.searchResults = searchSettings(
       [
         { labelKey: T.PS.TABS.GENERAL, sections: this.generalFormCfg },
-        { labelKey: T.PS.TABS.TASKS, sections: this.globalTasksFormCfg },
-        { labelKey: T.PS.TABS.TIME_TRACKING, sections: this.timeTrackingFormCfg },
+        { labelKey: T.PS.REDESIGN.TASKS, sections: this.globalTasksFormCfg },
+        { labelKey: T.PS.REDESIGN.TIME, sections: this.timeTrackingFormCfg },
         {
           labelKey: T.PS.TABS.PRODUCTIVITY,
-          sections: this.globalProductivityConfigFormCfg,
+          sections: [],
         },
-        { labelKey: T.PS.TABS.PLUGINS, sections: this.pluginsShortcutsFormCfg },
+        { labelKey: T.PS.TABS.PLUGINS, sections: [] },
         { labelKey: T.PS.TABS.SYNC_BACKUP, sections: this.globalImexFormCfg },
       ],
       this.searchQuery,
@@ -470,30 +471,38 @@ export class ConfigPageComponent implements OnInit {
     );
   }
 
-  /**
-   * The plugins action inside App Features. Moves focus to the Plugins tab
-   * header, since the button itself is detached with the outgoing tab body.
-   */
-  goToPluginsTab(): void {
-    this.selectedTabIndex = SETTINGS_PLUGINS_TAB_INDEX;
-    this._tabGroup()?.focusTab(SETTINGS_PLUGINS_TAB_INDEX);
-  }
-
   /** Jumps to a hit: right tab, section expanded, scrolled into view. */
   goToSearchResult(target: SettingsSearchTarget): void {
     this.onSearchChange('');
+    this.expandedField = '';
+    this._cd.detectChanges();
     this.selectedTabIndex = target.tabIndex;
     this.expandedSection = target.sectionKey ?? null;
+    this.mobileCategoryVisible = true;
+    this.expandedField = target.fieldKey ?? '';
+    this.colorEditorExpanded = target.scrollSelector === '.theme-select';
+    this.soundExpanded = target.scrollSelector === '.sound-section';
     this._cd.detectChanges();
-    // The tab body swaps in over `animationDuration`, so the element doesn't
-    // exist yet; wait it out before scrolling.
-    // shortcut: a fixed delay, not an animation-done hook. Switch to
-    // `MatTabGroup.animationDone` if the duration ever stops being a constant.
-    setTimeout(() => {
-      this._elRef.nativeElement
-        .querySelector(target.scrollSelector)
-        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, TAB_ANIMATION_DURATION_MS);
+    afterNextRender(
+      () => {
+        const section = this._elRef.nativeElement.querySelector<HTMLElement>(
+          target.scrollSelector,
+        );
+        const field = target.fieldKey
+          ? section?.querySelector<HTMLElement>(
+              '[data-setting-key="' + CSS.escape(target.fieldKey) + '"]',
+            )
+          : null;
+        const destination = field ?? section;
+        destination?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        destination
+          ?.querySelector<HTMLElement>(
+            'input, select, textarea, button, [role="combobox"], [role="switch"]',
+          )
+          ?.focus({ preventScroll: true });
+      },
+      { injector: this._injector },
+    );
   }
 
   /** Shared `[isExpanded]` check for the `config-section` repeated across every tab. */

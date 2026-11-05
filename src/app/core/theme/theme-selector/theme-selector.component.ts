@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { SettingHelpComponent } from '../../../ui/setting-help/setting-help.component';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  model,
+} from '@angular/core';
 import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -16,11 +23,19 @@ import {
 @Component({
   selector: 'theme-selector',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatButtonToggle, MatButtonToggleGroup, MatButton, MatIcon, TranslatePipe],
+  imports: [
+    SettingHelpComponent,
+    MatButtonToggle,
+    MatButtonToggleGroup,
+    MatButton,
+    MatIcon,
+    TranslatePipe,
+  ],
   templateUrl: './theme-selector.component.html',
   styleUrl: './theme-selector.component.scss',
 })
 export class ThemeSelectorComponent {
+  readonly colorsExpanded = model(false);
   readonly T = T;
   readonly globalThemeService = inject(GlobalThemeService);
   readonly paletteService = inject(PaletteThemeService);

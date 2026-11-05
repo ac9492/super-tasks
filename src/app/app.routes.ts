@@ -1,3 +1,4 @@
+import { settingsDialogGuard } from './features/config/settings-dialog.guard';
 import { Routes } from '@angular/router';
 
 import {
@@ -43,7 +44,16 @@ export const APP_ROUTES: Routes = [
     loadComponent: () =>
       import('./routes/pages.routes').then((m) => m.ConfigPageComponent),
     data: { page: 'config' },
-    canActivate: [FocusOverlayOpenGuard],
+    canActivate: [FocusOverlayOpenGuard, settingsDialogGuard],
+  },
+  {
+    path: 'plugins',
+    loadComponent: () =>
+      import('./plugins/ui/plugins-window.component').then(
+        (m) => m.PluginsWindowComponent,
+      ),
+    data: { plugins: true },
+    canActivate: [FocusOverlayOpenGuard, settingsDialogGuard],
   },
   {
     path: 'search',

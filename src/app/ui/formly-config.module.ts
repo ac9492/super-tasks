@@ -1,3 +1,4 @@
+import { FormlySettingWrapperComponent } from './formly-setting/formly-setting.wrapper';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MarkdownModule } from 'ngx-markdown';
@@ -151,7 +152,20 @@ import { FormlyLabelledGroupWrapperComponent } from './formly-labelled-group/for
           component: FormlyDatePickerComponent,
         },
       ],
+      extensions: [
+        {
+          name: 'settings-help',
+          extension: {
+            postPopulate: (field) => {
+              if (field.props?.['helpKey'] && !field.wrappers?.includes('setting')) {
+                field.wrappers = ['setting', ...(field.wrappers ?? [])];
+              }
+            },
+          },
+        },
+      ],
       wrappers: [
+        { name: 'setting', component: FormlySettingWrapperComponent },
         { name: 'labelled-group', component: FormlyLabelledGroupWrapperComponent },
       ],
       extras: {

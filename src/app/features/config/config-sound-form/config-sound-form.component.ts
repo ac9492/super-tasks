@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, output } from '@angular/core';
+import { SettingHelpComponent } from '../../../ui/setting-help/setting-help.component';
+import { ChangeDetectionStrategy, Component, Input, model, output } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GlobalConfigFormSectionKey, SoundConfig } from '../global-config.model';
 import { ProjectCfgFormKey } from '../../project/project.model';
@@ -27,6 +28,7 @@ const sectionKey = 'sound';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CollapsibleComponent,
+    SettingHelpComponent,
     FormsModule,
     ReactiveFormsModule,
     MatFormField,
@@ -41,6 +43,7 @@ const sectionKey = 'sound';
   ],
 })
 export class ConfigSoundFormComponent {
+  readonly expanded = model(false);
   // TODO: Skipped for migration because:
   //  Accessor inputs cannot be migrated as they are too complex.
   @Input() set cfg(cfg: SoundConfig) {

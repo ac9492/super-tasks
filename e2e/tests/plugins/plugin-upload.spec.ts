@@ -1,15 +1,13 @@
 import { test, expect } from '../../fixtures/test.fixture';
 import type { Page } from '@playwright/test';
 import * as path from 'path';
-import { cssSelectors } from '../../constants/selectors';
-import { waitForPluginManagementInit } from '../../helpers/plugin-test.helpers';
 
-const { SETTINGS_BTN } = cssSelectors;
+import { waitForPluginManagementInit } from '../../helpers/plugin-test.helpers';
 
 // Plugin-related selectors
 const UPLOAD_PLUGIN_BTN = 'plugin-management button[mat-raised-button]'; // The "Choose Plugin File" button
 const FILE_INPUT = 'input[type="file"][accept=".zip"]';
-const PLUGIN_CARD = 'plugin-management mat-card.ng-star-inserted';
+const PLUGIN_CARD = 'plugin-management .installed-plugin';
 
 // Test plugin details (cards are matched by name: the id sits in the collapsed details)
 const TEST_PLUGIN_NAME = 'Test Upload Plugin';
@@ -29,54 +27,9 @@ test.describe.serial('Plugin Upload', () => {
   test('upload and manage plugin lifecycle', async ({ page, workViewPage }) => {
     // Give the plugin pipeline more breathing room on slower machines/CI
     test.setTimeout(process.env.CI ? 90000 : 60000);
-    // Navigate to plugin management
-    await page.click(SETTINGS_BTN);
-    await page
-      .locator('.page-settings')
-      .first()
-      .waitFor({ state: 'visible', timeout: 10000 });
-
-    // Navigate to Plugins tab first
-    await page.evaluate(() => {
-      const pluginsTab = Array.from(
-        document.querySelectorAll('mat-tab-header .mat-mdc-tab'),
-      ).find((tab) => {
-        const icon = tab.querySelector('mat-icon');
-        return icon?.textContent?.trim() === 'extension';
-      });
-
-      if (pluginsTab) {
-        (pluginsTab as HTMLElement).click();
-      }
-    });
-
-    await page.waitForTimeout(500);
-
-    await page.evaluate(() => {
-      const configPage = document.querySelector('.page-settings');
-      if (!configPage) {
-        console.error('Not on config page');
-        return;
-      }
-
-      const pluginSection = document.querySelector('.plugin-section');
-      if (pluginSection) {
-        pluginSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-
-      const collapsible = document.querySelector('.plugin-section collapsible');
-      if (collapsible) {
-        const isExpanded = collapsible.classList.contains('isExpanded');
-        if (!isExpanded) {
-          const header = collapsible.querySelector('.collapsible-header');
-          if (header) {
-            (header as HTMLElement).click();
-          }
-        }
-      }
-    });
-
-    await expect(page.locator('plugin-management')).toBeVisible({ timeout: 10000 });
+    await page.goto('/#/plugins');
+    await expect(page.locator('plugin-management')).toBeVisible();
+    await page.locator('.install-card summary').click();
 
     // Upload plugin ZIP file
     const testPluginPath = path.resolve(__dirname, '../../../src/assets/test-plugin.zip');
@@ -101,7 +54,9 @@ test.describe.serial('Plugin Upload', () => {
     // Wait for uploaded plugin to appear in list
     await page.waitForFunction(
       (pluginId) => {
-        const cards = Array.from(document.querySelectorAll('plugin-management mat-card'));
+        const cards = Array.from(
+          document.querySelectorAll('plugin-management .installed-plugin'),
+        );
         return cards.some((card) => card.textContent?.includes(pluginId));
       },
       TEST_PLUGIN_NAME,
@@ -112,7 +67,9 @@ test.describe.serial('Plugin Upload', () => {
     await expect(page.locator(PLUGIN_CARD).first()).toBeVisible();
 
     const pluginExists = await page.evaluate((pluginName: string) => {
-      const cards = Array.from(document.querySelectorAll('plugin-management mat-card'));
+      const cards = Array.from(
+        document.querySelectorAll('plugin-management .installed-plugin'),
+      );
       return cards.some((card) => card.textContent?.includes(pluginName));
     }, TEST_PLUGIN_NAME);
 
@@ -120,7 +77,9 @@ test.describe.serial('Plugin Upload', () => {
 
     // Verify uploaded plugin is disabled by default
     const initialStatus = await page.evaluate((pluginId: string) => {
-      const cards = Array.from(document.querySelectorAll('plugin-management mat-card'));
+      const cards = Array.from(
+        document.querySelectorAll('plugin-management .installed-plugin'),
+      );
       const targetCard = cards.find((card) => card.textContent?.includes(pluginId));
       if (targetCard) {
         const toggleButton = targetCard.querySelector(
@@ -135,7 +94,9 @@ test.describe.serial('Plugin Upload', () => {
 
     // Enable uploaded plugin
     const enableResult = await page.evaluate((pluginName: string) => {
-      const items = Array.from(document.querySelectorAll('plugin-management mat-card'));
+      const items = Array.from(
+        document.querySelectorAll('plugin-management .installed-plugin'),
+      );
       const pluginCard = items.find((item) => item.textContent?.includes(pluginName));
       if (pluginCard) {
         const toggle = pluginCard.querySelector(
@@ -154,7 +115,9 @@ test.describe.serial('Plugin Upload', () => {
     // Wait for toggle state to change to enabled
     await page.waitForFunction(
       (pluginId) => {
-        const cards = Array.from(document.querySelectorAll('plugin-management mat-card'));
+        const cards = Array.from(
+          document.querySelectorAll('plugin-management .installed-plugin'),
+        );
         const targetCard = cards.find((card) => card.textContent?.includes(pluginId));
         if (targetCard) {
           const toggleButton = targetCard.querySelector(
@@ -170,7 +133,9 @@ test.describe.serial('Plugin Upload', () => {
 
     // Verify plugin is now enabled
     const enabledStatus = await page.evaluate((pluginId: string) => {
-      const cards = Array.from(document.querySelectorAll('plugin-management mat-card'));
+      const cards = Array.from(
+        document.querySelectorAll('plugin-management .installed-plugin'),
+      );
       const targetCard = cards.find((card) => card.textContent?.includes(pluginId));
       if (targetCard) {
         const toggleButton = targetCard.querySelector(
@@ -185,7 +150,9 @@ test.describe.serial('Plugin Upload', () => {
 
     // Disable uploaded plugin
     const disableResult = await page.evaluate((pluginId: string) => {
-      const items = Array.from(document.querySelectorAll('plugin-management mat-card'));
+      const items = Array.from(
+        document.querySelectorAll('plugin-management .installed-plugin'),
+      );
       const pluginCard = items.find((item) => item.textContent?.includes(pluginId));
       if (pluginCard) {
         const toggle = pluginCard.querySelector(
@@ -204,7 +171,9 @@ test.describe.serial('Plugin Upload', () => {
     // Wait for toggle state to change to disabled
     await page.waitForFunction(
       (pluginId) => {
-        const cards = Array.from(document.querySelectorAll('plugin-management mat-card'));
+        const cards = Array.from(
+          document.querySelectorAll('plugin-management .installed-plugin'),
+        );
         const targetCard = cards.find((card) => card.textContent?.includes(pluginId));
         if (targetCard) {
           const toggleButton = targetCard.querySelector(
@@ -220,7 +189,9 @@ test.describe.serial('Plugin Upload', () => {
 
     // Verify plugin is now disabled
     const disabledStatus = await page.evaluate((pluginId: string) => {
-      const cards = Array.from(document.querySelectorAll('plugin-management mat-card'));
+      const cards = Array.from(
+        document.querySelectorAll('plugin-management .installed-plugin'),
+      );
       const targetCard = cards.find((card) => card.textContent?.includes(pluginId));
       if (targetCard) {
         const toggleButton = targetCard.querySelector(
@@ -235,7 +206,9 @@ test.describe.serial('Plugin Upload', () => {
 
     // Re-enable uploaded plugin
     const reEnableResult = await page.evaluate((pluginId: string) => {
-      const items = Array.from(document.querySelectorAll('plugin-management mat-card'));
+      const items = Array.from(
+        document.querySelectorAll('plugin-management .installed-plugin'),
+      );
       const pluginCard = items.find((item) => item.textContent?.includes(pluginId));
       if (pluginCard) {
         const toggle = pluginCard.querySelector(
@@ -254,7 +227,9 @@ test.describe.serial('Plugin Upload', () => {
     // Wait for toggle state to change to enabled again
     await page.waitForFunction(
       (pluginId) => {
-        const cards = Array.from(document.querySelectorAll('plugin-management mat-card'));
+        const cards = Array.from(
+          document.querySelectorAll('plugin-management .installed-plugin'),
+        );
         const targetCard = cards.find((card) => card.textContent?.includes(pluginId));
         if (targetCard) {
           const toggleButton = targetCard.querySelector(
@@ -270,7 +245,9 @@ test.describe.serial('Plugin Upload', () => {
 
     // Verify plugin is enabled again
     const reEnabledStatus = await page.evaluate((pluginId: string) => {
-      const cards = Array.from(document.querySelectorAll('plugin-management mat-card'));
+      const cards = Array.from(
+        document.querySelectorAll('plugin-management .installed-plugin'),
+      );
       const targetCard = cards.find((card) => card.textContent?.includes(pluginId));
       if (targetCard) {
         const toggleButton = targetCard.querySelector(
@@ -285,7 +262,9 @@ test.describe.serial('Plugin Upload', () => {
 
     // Remove uploaded plugin
     await page.evaluate((pluginId: string) => {
-      const items = Array.from(document.querySelectorAll('plugin-management mat-card'));
+      const items = Array.from(
+        document.querySelectorAll('plugin-management .installed-plugin'),
+      );
       const pluginCard = items.find((item) => item.textContent?.includes(pluginId));
       if (pluginCard) {
         const removeBtn = pluginCard.querySelector('button[color="warn"]') as HTMLElement;
@@ -306,7 +285,9 @@ test.describe.serial('Plugin Upload', () => {
     // Wait for plugin to be removed from the list
     await page.waitForFunction(
       (pluginId) => {
-        const items = Array.from(document.querySelectorAll('plugin-management mat-card'));
+        const items = Array.from(
+          document.querySelectorAll('plugin-management .installed-plugin'),
+        );
         return !items.some((item) => item.textContent?.includes(pluginId));
       },
       TEST_PLUGIN_NAME,
@@ -315,7 +296,9 @@ test.describe.serial('Plugin Upload', () => {
 
     // Verify plugin is removed
     const removalResult = await page.evaluate((pluginId: string) => {
-      const items = Array.from(document.querySelectorAll('plugin-management mat-card'));
+      const items = Array.from(
+        document.querySelectorAll('plugin-management .installed-plugin'),
+      );
       const foundPlugin = items.some((item) => item.textContent?.includes(pluginId));
       return {
         removed: !foundPlugin,
@@ -336,7 +319,7 @@ test.describe.serial('Plugin Upload', () => {
       .locator(FILE_INPUT)
       .setInputFiles(path.resolve(__dirname, '../../../src/assets/test-plugin.zip'));
     await confirmInstall(page);
-    const uploadedCard = page.locator('plugin-management mat-card', {
+    const uploadedCard = page.locator('plugin-management .installed-plugin', {
       hasText: TEST_PLUGIN_NAME,
     });
     await expect(uploadedCard).toBeVisible({ timeout: 15000 });
@@ -345,6 +328,8 @@ test.describe.serial('Plugin Upload', () => {
       hasText: 'Remove all uploaded plugins',
     });
     const confirmDialog = page.locator('dialog-confirm');
+
+    await page.locator('.install-card summary').click();
 
     // Cancel keeps the uploaded plugin
     await clearCacheBtn.click();

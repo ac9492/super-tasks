@@ -946,7 +946,7 @@ If you create a useful plugin, consider:
 
 ### Get Listed in the App
 
-Settings → Plugins shows a **Community Plugins** list read from
+Plugins & integrations → Discover shows a **Community Plugins** list read from
 [community-plugins.json](../src/assets/community-plugins.json), which ships with
 the app. To be listed, open a PR that adds an entry:
 
@@ -967,7 +967,14 @@ the app. To be listed, open a PR that adds an entry:
 ```
 
 - `id` and `release` are optional. Without them the entry links to your page and
-  users install the ZIP by hand (Settings → Plugins → Choose Plugin File).
+  users install the ZIP by hand (Plugins & integrations → Install from a ZIP file).
+- `category` is optional: use `integration` for connections to another service,
+  or `plugin` (the default) for other functionality. This drives the discovery
+  type filter; it does not change the plugin manifest or certify compatibility.
+- Super Tasks listings exclude themes and replacements or restyling of the host
+  interface. A plugin's own functional view is distinct from changing the app's
+  interface. Review this when adding a listing; catalog metadata cannot enforce
+  the behavior of arbitrary uploaded code.
 - `id` must equal the `id` in your `manifest.json`. With it, the list shows
   **Installed** for users who have the plugin.
 - With `release`, the list shows an **Install** button. The app downloads
