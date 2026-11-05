@@ -42,6 +42,14 @@
 // ===============================
 
 :root {
+  --st-brand: #16845b;
+  --st-radius: 14px;
+  --st-blur: 18px;
+  --st-glass-alpha: 90%;
+  --st-tint-alpha: 7%;
+  --st-line-width: 1px;
+  --st-focus-width: 2px;
+
   // -----------------------------
   // Safe Areas (iOS notch, home indicator)
   // Uses env() for native iOS safe areas

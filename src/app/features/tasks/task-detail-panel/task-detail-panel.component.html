@@ -24,6 +24,22 @@
       ></task-context-menu>
     }
   </header>
+  <div class="st-planning-actions">
+    <button
+      type="button"
+      (click)="scheduleTask()"
+    >
+      <mat-icon aria-hidden="true">event</mat-icon
+      >{{ T.F.TASK.ADDITIONAL_INFO.DUE | translate }}
+    </button>
+    <button
+      type="button"
+      (click)="openDeadlineDialog()"
+    >
+      <mat-icon aria-hidden="true">flag</mat-icon
+      >{{ T.F.TASK.ADDITIONAL_INFO.DEADLINE | translate }}
+    </button>
+  </div>
 
   @if (isShowSubTasksPanel()) {
     <task-detail-item
@@ -127,6 +143,7 @@
       </ng-container>
     </task-detail-item>
   }
+  <p class="st-date-hint">{{ T.F.SUPER_TASKS.DATE_HINT | translate }}</p>
   <task-detail-item
     (collapseParent)="collapseParent()"
     (editActionTriggered)="scheduleTask()"

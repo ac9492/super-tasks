@@ -3,6 +3,19 @@
   [class.isGlobalBarVariant]="isGlobalBarVariant()"
   @blendInOut
 >
+  @if (!isSearchMode()) {
+    @let destination = currentProject() || (defaultProject$ | async);
+    @if (destination) {
+      <div
+        class="st-capture-context"
+        aria-live="polite"
+      >
+        <mat-icon aria-hidden="true">drive_file_move</mat-icon>
+        <span>{{ T.F.SUPER_TASKS.ADDING_TO | translate }}</span>
+        <strong>{{ destination.title }}</strong>
+      </div>
+    }
+  }
   <div class="input-section">
     <!-- Wrapper carries the vertical padding: cdkTextareaAutosize sizes the
          textarea to rows*line-height and ignores its own padding, so the

@@ -1,5 +1,7 @@
 # Super Tasks
 
+<img src="src/assets/super-tasks/logo.svg" alt="Super Tasks logo" width="88" />
+
 **A clearer everyday interface for tasks, planning, and time tracking.**
 
 Super Tasks is an independent, UX-focused fork of [Super Productivity](https://github.com/super-productivity/super-productivity). It builds on that project's local-first task management, time tracking, integrations, and sync foundation, with a focus on making daily work easier to understand and faster to manage.
@@ -25,9 +27,11 @@ The direction is practical: improve frequent interactions, keep the interface ca
 
 These additions sit on top of the inherited tasks, projects, tags, notes, planning, time-tracking, and integration features. Some changes may also exist in newer upstream versions.
 
+The first workspace refresh adds restrained glass panels, a green checkmark identity, clearer active navigation, a visible capture destination, and direct scheduling actions.
+
 ## Three UX priorities
 
-These are proposed areas for research and testing, not completed redesigns.
+These remain ongoing design priorities. The first implementation addresses scanning, capture context, scheduling shortcuts, and active navigation; further changes will follow user feedback.
 
 | Priority                               | Problem to address                                                                           | What improvement should achieve                                                                                                                                                 |
 | -------------------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

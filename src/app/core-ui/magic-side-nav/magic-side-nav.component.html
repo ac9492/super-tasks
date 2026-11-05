@@ -48,6 +48,20 @@
     swipeGesture
     [swipeEnabled]="swipeEnabled()"
   >
+    <a
+      (click)="isMobile() ? toggleMobileNav() : undefined"
+      class="st-brand"
+      routerLink="/tag/TODAY/tasks"
+      [attr.aria-label]="T.G.TODAY | translate"
+    >
+      <img
+        src="assets/super-tasks/logo.svg"
+        width="40"
+        height="40"
+        alt=""
+      />
+      <span class="st-brand-name">Super Tasks</span>
+    </a>
     @if (isMobile()) {
       <button
         class="mobile-menu-close"
