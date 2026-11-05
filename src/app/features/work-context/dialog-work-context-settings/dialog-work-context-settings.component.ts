@@ -67,6 +67,9 @@ export class DialogWorkContextSettingsComponent {
   // legacy tag with no color); if the user never touches it, we must
   // not persist that prefill back to the store.
   private _userTouchedTagColor = false;
+  // Edits apply live; only once one has been written is there anything for
+  // Cancel to undo (and to report as discarded).
+  private _hasAppliedChanges = false;
 
   constructor() {
     const entity = this._data.entity;
@@ -152,7 +155,9 @@ export class DialogWorkContextSettingsComponent {
     }
     this.entityData = next;
     if (this.form.valid && next.title?.trim()) {
-      this._applyChanges(next);
+      // The dialog itself shows the change: no "updated" snack per keystroke
+      this._applyChanges(next, true);
+      this._hasAppliedChanges = true;
     }
   }
 
@@ -165,12 +170,14 @@ export class DialogWorkContextSettingsComponent {
   }
 
   cancelEdit(): void {
-    this._applyChanges(this._originalEntityData, true);
-    this._snackService.open({
-      type: 'CUSTOM',
-      msg: T.F.PROJECT.S.DISCARDED,
-      ico: 'history',
-    });
+    if (this._hasAppliedChanges) {
+      this._applyChanges(this._originalEntityData, true);
+      this._snackService.open({
+        type: 'CUSTOM',
+        msg: T.F.PROJECT.S.DISCARDED,
+        ico: 'history',
+      });
+    }
     this._matDialogRef.close();
   }
 

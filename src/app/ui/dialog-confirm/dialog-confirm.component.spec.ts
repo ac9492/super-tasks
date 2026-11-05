@@ -261,4 +261,22 @@ describe('DialogConfirmComponent', () => {
       expect(mockDialogRef.close).toHaveBeenCalledWith(true);
     });
   });
+
+  describe('isDestructive option', () => {
+    const confirmBtnClasses = (): DOMTokenList =>
+      fixture.debugElement.query(By.css('button[e2e="confirmBtn"]')).nativeElement
+        .classList;
+
+    it('should use the primary colour by default', async () => {
+      await createComponent({ message: 'Test Message' });
+      expect(confirmBtnClasses()).toContain('mat-primary');
+      expect(confirmBtnClasses()).not.toContain('mat-warn');
+    });
+
+    it('should use the warn colour for a destructive confirm', async () => {
+      await createComponent({ message: 'Test Message', isDestructive: true });
+      expect(confirmBtnClasses()).toContain('mat-warn');
+      expect(confirmBtnClasses()).not.toContain('mat-primary');
+    });
+  });
 });

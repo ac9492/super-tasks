@@ -40,6 +40,13 @@ describe('DialogWorkContextSettingsComponent', () => {
     return TestBed.runInInjectionContext(() => new DialogWorkContextSettingsComponent());
   };
 
+  // Cancel restores the entity as it was when the dialog opened, once a live
+  // edit has been written
+  const cancelAfterEdit = (dialog: DialogWorkContextSettingsComponent): void => {
+    dialog.onModelChange({ ...dialog.entityData, title: 'Edited' });
+    dialog.cancelEdit();
+  };
+
   it('should write the default theme when cancelling on a project without one', () => {
     const entity = {
       ...DEFAULT_PROJECT,
@@ -47,7 +54,7 @@ describe('DialogWorkContextSettingsComponent', () => {
       theme: undefined,
     } as unknown as Project;
 
-    setup({ isProject: true, entity }).cancelEdit();
+    cancelAfterEdit(setup({ isProject: true, entity }));
 
     expect(projectService.update).toHaveBeenCalledWith(
       'p1',
@@ -71,7 +78,7 @@ describe('DialogWorkContextSettingsComponent', () => {
   it('should write an empty theme back as the default theme on cancel', () => {
     const entity = { ...DEFAULT_PROJECT, id: 'p1', theme: {} } as unknown as Project;
 
-    setup({ isProject: true, entity }).cancelEdit();
+    cancelAfterEdit(setup({ isProject: true, entity }));
 
     expect(projectService.update).toHaveBeenCalledWith(
       'p1',
@@ -90,7 +97,7 @@ describe('DialogWorkContextSettingsComponent', () => {
       theme: { primary: undefined },
     } as unknown as Tag;
 
-    setup({ isProject: false, entity }).cancelEdit();
+    cancelAfterEdit(setup({ isProject: false, entity }));
 
     expect(tagService.updateTag).toHaveBeenCalledWith(
       't1',
@@ -108,7 +115,7 @@ describe('DialogWorkContextSettingsComponent', () => {
     };
     const entity = { ...TODAY_TAG, theme: legacyTheme } as unknown as Tag;
 
-    setup({ isProject: false, entity }).cancelEdit();
+    cancelAfterEdit(setup({ isProject: false, entity }));
 
     const written = tagService.updateTag.calls.mostRecent().args[1].theme;
     expect(written).toEqual(legacyTheme);
@@ -132,5 +139,40 @@ describe('DialogWorkContextSettingsComponent', () => {
       't1',
       jasmine.objectContaining({ theme: DEFAULT_TAG.theme }),
     );
+  });
+
+  describe('noise', () => {
+    const entity = { ...DEFAULT_PROJECT, id: 'p1', title: 'Work' } as Project;
+
+    it('should not write or report anything when cancelling without changes', () => {
+      const dialog = setup({ isProject: true, entity });
+
+      dialog.cancelEdit();
+
+      expect(projectService.update).not.toHaveBeenCalled();
+      expect(TestBed.inject(SnackService).open).not.toHaveBeenCalled();
+      expect(TestBed.inject(MatDialogRef).close).toHaveBeenCalled();
+    });
+
+    it('should report discarded changes when cancelling after an edit', () => {
+      const dialog = setup({ isProject: true, entity });
+
+      cancelAfterEdit(dialog);
+
+      expect(projectService.update.calls.mostRecent().args[1].title).toBe('Work');
+      expect(TestBed.inject(SnackService).open).toHaveBeenCalledTimes(1);
+    });
+
+    it('should not show the "updated" snack for each live project edit', () => {
+      const dialog = setup({ isProject: true, entity });
+
+      dialog.onModelChange({ ...dialog.entityData, title: 'Work 2' });
+
+      expect(projectService.update).toHaveBeenCalledWith(
+        'p1',
+        jasmine.objectContaining({ title: 'Work 2' }),
+        true,
+      );
+    });
   });
 });

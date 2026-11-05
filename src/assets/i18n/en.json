@@ -972,7 +972,7 @@
         "EDIT": "Edit Project"
       },
       "D_DELETE": {
-        "MSG": "Are you sure you want to delete the project \"{{title}}\"?"
+        "MSG": "Delete the project \"{{title}}\" with all its tasks and notes? This cannot be undone. To keep them, complete the project instead."
       },
       "D_RENAME": {
         "PLACEHOLDER": "Enter project name"

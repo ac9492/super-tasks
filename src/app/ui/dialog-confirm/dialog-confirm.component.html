@@ -38,7 +38,7 @@
       [attr.cdkFocusInitial]="data.isFocusConfirm ? '' : null"
       (click)="close(true)"
       e2e="confirmBtn"
-      color="primary"
+      [color]="data.isDestructive ? 'warn' : 'primary'"
       type="button"
       mat-flat-button
       (keydown.ArrowLeft)="!data.hideCancelButton && focusCancelButton()"

@@ -121,6 +121,8 @@ export class WorkContextMenuComponent implements OnInit {
         data: {
           message: T.F.TAG.D_DELETE.CONFIRM_MSG,
           translateParams: { tagName: tag.title },
+          okTxt: T.G.DELETE,
+          isDestructive: true,
         },
       })
       .afterClosed()
@@ -146,6 +148,8 @@ export class WorkContextMenuComponent implements OnInit {
         data: {
           message: T.F.PROJECT.D_DELETE.MSG,
           translateParams: { title: project.title },
+          okTxt: T.G.DELETE,
+          isDestructive: true,
         },
       })
       .afterClosed()
