@@ -1,4 +1,5 @@
 import { expect, test } from '../../fixtures/test.fixture';
+import { openGlobalAddTaskBar } from '../../utils/element-helpers';
 
 /**
  * Issue #5146: on a phone the short-syntax autocomplete "gets stuck outside the
@@ -40,9 +41,7 @@ test.describe('Add-task-bar mention dropdown', () => {
 
     await page.evaluate(() => document.body.classList.add('isTouchPrimary'));
 
-    const addBtn = page.locator('.tour-addBtn');
-    await addBtn.waitFor({ state: 'visible', timeout: 20000 });
-    await addBtn.click();
+    await openGlobalAddTaskBar(page);
 
     const input = page.locator('add-task-bar.global .main-input').first();
     await input.waitFor({ state: 'visible' });

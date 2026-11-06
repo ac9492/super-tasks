@@ -279,7 +279,7 @@ describe('TaskDetailPanelComponent', () => {
     it('uses the responsive layout signal for mobile panel defaults', () => {
       expect(component.panelState.isExpandedAttachmentPanel()).toBeFalse();
       expect(component.isExpandedIssuePanel()).toBeFalse();
-      expect(component.isExpandedNotesPanel()).toBeFalse();
+      expect(component.isExpandedNotesPanel()).toBeTrue();
     });
   });
 
@@ -609,13 +609,9 @@ describe('TaskDetailPanelComponent stale-focus guard', () => {
   }));
 });
 
-// Opening the notes panel via a checklist's progress badge routes through
-// TaskDetailTargetPanel.Notes. It must not auto-focus the notes editor: doing
-// both briefly flashed the raw "- [ ] " source before focusItem() blurred it
-// back. (These specs run the markdown-formatting-off path, so "not focused"
-// means the preview stays up; on the default path it means the live editor
-// keeps its syntax hidden.)
-describe('TaskDetailPanelComponent notes target does not auto-edit', () => {
+// Description requests focus the editor directly; focusing its wrapper afterwards
+// would immediately blur it and return keyboard input to task shortcuts.
+describe('TaskDetailPanelComponent description target focuses the editor', () => {
   let component: TaskDetailPanelComponent;
   let fixture: ComponentFixture<TaskDetailPanelComponent>;
 
@@ -678,7 +674,7 @@ describe('TaskDetailPanelComponent notes target does not auto-edit', () => {
   // late to observe the call. That is an order/load-dependent flake that fails
   // roughly like "focusItem ... was never called" (it defeated an earlier
   // tick(50) -> tick(100) fix, because the timer was never in the fake clock).
-  it('focuses the notes section without entering edit mode', fakeAsync(() => {
+  it('focuses the description editor without blurring it through the wrapper', fakeAsync(() => {
     fixture = TestBed.createComponent(TaskDetailPanelComponent);
     component = fixture.componentInstance;
     fixture.componentRef.setInput('task', fakeTask('B'));
@@ -695,10 +691,10 @@ describe('TaskDetailPanelComponent notes target does not auto-edit', () => {
     // exact same virtual timestamp.
     tick(100);
 
-    // The notes section is focused...
-    expect(focusItemSpy).toHaveBeenCalledWith(noteItem);
-    // ...but the editor is NOT auto-opened (no raw-text flash).
-    expect(component.panelState.isFocusNotes()).toBe(false);
+    // The wrapper must never take focus away from the editor.
+    expect(focusItemSpy).not.toHaveBeenCalled();
+    // The deferred editor receives the focus request once it is mounted.
+    expect(component.panelState.isFocusNotes()).toBe(true);
   }));
 });
 

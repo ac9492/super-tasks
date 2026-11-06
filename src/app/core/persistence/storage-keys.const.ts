@@ -98,6 +98,9 @@ export enum LS {
   COLOR_PALETTE = 'SUP_COLOR_PALETTE',
 
   SELECTED_BOARD = 'SELECTED_BOARD',
+  // Per-project layout choice (list/calendar/...). Device-local presentation
+  // preference, never synced; the project id is appended: `${LS.PROJECT_LAYOUT}:${id}`.
+  PROJECT_LAYOUT = 'SUP_PROJECT_LAYOUT',
   DONE_TASKS_HIDDEN = 'DONE_TASKS_HIDDEN',
   EXAMPLE_TASKS_CREATED = 'SUP_EXAMPLE_TASKS_CREATED',
   LATER_TODAY_TASKS_HIDDEN = 'LATER_TODAY_TASKS_HIDDEN',

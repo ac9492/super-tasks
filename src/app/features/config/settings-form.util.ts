@@ -4,7 +4,7 @@ import { HelperClasses } from '../../app.constants';
 
 // Presentation metadata only. Grouping keeps each field's existing model key and save path.
 const PRIMARY_FIELDS: Record<string, readonly string[]> = {
-  localization: ['lng'],
+  localization: ['lng', 'dateTimeLocale', 'taskDateStyle', 'isShowWeekdayForNextWeek'],
   misc: ['defaultStartPage'],
   tasks: ['defaultProjectId', 'isConfirmBeforeDelete'],
   appFeatures: ['isPlannerEnabled', 'isBoardsEnabled', 'isProjectNotesEnabled'],
@@ -12,7 +12,6 @@ const PRIMARY_FIELDS: Record<string, readonly string[]> = {
   idle: ['isEnableIdleTimeTracking', 'minIdleTime'],
   reminder: ['disableReminders', 'defaultTaskRemindOption'],
   takeABreak: ['isTakeABreakEnabled', 'takeABreakMinWorkingTime'],
-  keyboard: [],
   taskWidget: ['isEnabled'],
 };
 
@@ -34,18 +33,21 @@ export const prepareSettingsFields = (
   const decorate = (items: FormlyFieldConfig[]): FormlyFieldConfig[] =>
     items.map((field) => {
       const props = field.props ?? field.templateOptions ?? {};
-      // Only a dedicated help entry earns a "?": a description is already shown
-      // with its control, and the keyboard section's own help covers every
-      // shortcut row.
+      // Use one help affordance per option, including legacy descriptions and
+      // shortcut instructions, instead of mixing tooltips with inline hints.
       const helpKey: string | undefined =
         field.key === undefined
           ? undefined
-          : (helpKeys[section + '_' + field.key] ?? helpKeys[String(field.key)]);
+          : (helpKeys[section + '_' + field.key] ??
+            helpKeys[String(field.key)] ??
+            props.description ??
+            (field.type === 'keyboard' ? T.PS.REDESIGN.KEYBOARD_HELP : undefined));
       return {
         ...field,
         props: {
           ...props,
           ...(helpKey ? { helpKey } : {}),
+          ...(helpKey ? { description: undefined } : {}),
           settingsExpanded:
             !!expandedField && containsKey(field.fieldGroup ?? [], expandedField),
         },

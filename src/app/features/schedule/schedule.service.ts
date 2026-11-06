@@ -27,6 +27,12 @@ import { TaskService } from '../tasks/task.service';
 import { startWith } from 'rxjs/operators';
 import { parseDbDateStr } from '../../util/parse-db-date-str';
 import { anchorContextNow } from './anchor-context-now';
+import {
+  filterPlannerDayMapByProject,
+  filterRepeatCfgsByProject,
+  filterTasksByProject,
+  ProjectScope,
+} from '../project/filter-by-project.util';
 
 @Injectable({
   providedIn: 'root',
@@ -152,23 +158,52 @@ export class ScheduleService {
     contextNow: number;
     realNow: number;
     currentTaskId: string | null;
+    /** Narrows the data to one project. Calendar-provider events are then left out unless `isIncludeCalendarEvents`. */
+    scope?: ProjectScope | null;
   }): ScheduleDay[] {
     this.scheduleRefreshTick();
-    const timelineTasks = this._timelineTasks();
-    const taskRepeatCfgs = this._taskRepeatCfgs();
-    const timelineCfg = this._timelineConfig();
-    const plannerDayMap = this._plannerDayMap();
-    const hiddenProviderIds = this._hiddenCalendarProviders.hiddenProviderIds();
-    const calendarEvents = hiddenProviderIds.length
-      ? this._calendarEvents()
-          .map((entry) => ({
-            ...entry,
-            items: entry.items.filter(
-              (item) => !hiddenProviderIds.includes(item.calProviderId),
+    const projectId = params.scope?.projectId;
+    const unscopedTimelineTasks = this._timelineTasks();
+    const timelineTasks =
+      unscopedTimelineTasks && projectId
+        ? {
+            planned: filterTasksByProject(unscopedTimelineTasks.planned, projectId),
+            unPlanned: filterTasksByProject(unscopedTimelineTasks.unPlanned, projectId),
+          }
+        : unscopedTimelineTasks;
+    const unscopedRepeatCfgs = this._taskRepeatCfgs();
+    const taskRepeatCfgs =
+      unscopedRepeatCfgs && projectId
+        ? {
+            withStartTime: filterRepeatCfgsByProject(
+              unscopedRepeatCfgs.withStartTime,
+              projectId,
             ),
-          }))
-          .filter((entry) => entry.items.length > 0)
-      : this._calendarEvents();
+            withoutStartTime: filterRepeatCfgsByProject(
+              unscopedRepeatCfgs.withoutStartTime,
+              projectId,
+            ),
+          }
+        : unscopedRepeatCfgs;
+    const timelineCfg = this._timelineConfig();
+    const unscopedDayMap = this._plannerDayMap();
+    const plannerDayMap = unscopedDayMap
+      ? filterPlannerDayMapByProject(unscopedDayMap, projectId)
+      : unscopedDayMap;
+    const hiddenProviderIds = this._hiddenCalendarProviders.hiddenProviderIds();
+    const calendarEvents =
+      params.scope && !params.scope.isIncludeCalendarEvents
+        ? []
+        : hiddenProviderIds.length
+          ? this._calendarEvents()
+              .map((entry) => ({
+                ...entry,
+                items: entry.items.filter(
+                  (item) => !hiddenProviderIds.includes(item.calProviderId),
+                ),
+              }))
+              .filter((entry) => entry.items.length > 0)
+          : this._calendarEvents();
 
     return this.buildScheduleDays({
       now: params.contextNow,

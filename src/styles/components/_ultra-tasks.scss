@@ -169,8 +169,8 @@ body.ultra-tasks {
     align-items: center;
     justify-content: center;
     gap: var(--s);
-    height: var(--ctl-md);
-    padding: 0 var(--s1-5);
+    min-height: var(--ctl-md);
+    padding: var(--s) var(--s1-5);
     border: var(--st-line-width) solid var(--palette-outline);
     border-radius: var(--r-md);
     background: transparent;
@@ -190,11 +190,15 @@ body.ultra-tasks {
     outline: var(--st-focus-width) solid var(--palette-focus-ring);
     outline-offset: var(--focus-ring-offset);
   }
-  .st-date-hint {
-    margin: 0 var(--s2) var(--s);
-    padding: 0 0 0 var(--s1-5);
-    border-inline-start: var(--st-focus-width) solid var(--palette-outline);
-    color: var(--text-color-less-intense);
+  .planning-date {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-quarter);
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .planning-date-label {
+    color: var(--text-color-muted);
     font: var(--type-meta);
   }
 }
@@ -214,4 +218,8 @@ body.ultra-tasks {
   .st-search-entry .nav-link:not(.active) {
     background: var(--card-bg);
   }
+}
+
+body.isElectron:not(.isFullScreen):is(.isMac, .isObsidianStyleHeader) {
+  --desktop-chrome-offset: var(--desktop-title-bar-height);
 }

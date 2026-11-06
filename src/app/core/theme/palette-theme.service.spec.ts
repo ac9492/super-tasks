@@ -99,7 +99,7 @@ describe('PaletteThemeService', () => {
     expect(style.getPropertyValue('--palette-outline')).toBe(
       `rgba(0, 0, 0, ${roles.alphas.outline})`,
     );
-    expect(style.getPropertyValue('--glass-panel-alpha')).toBe('84%');
+    expect(style.getPropertyValue('--glass-panel-alpha')).toBe('75%');
     expect(style.getPropertyValue('--glass-edge-line')).toBe(
       style.getPropertyValue('--palette-separator'),
     );

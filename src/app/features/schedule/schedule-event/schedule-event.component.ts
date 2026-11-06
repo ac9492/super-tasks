@@ -67,6 +67,7 @@ const FIVE_MINUTES_IN_MS = 5 * 60 * 1000;
     '[id]': 'elementId()',
     '[title]': 'hoverTitle()',
     '[class]': 'cssClass()',
+    '[class.is-all-day]': 'isAllDay()',
     '[style]': 'style()',
     '[style.--title-line-clamp]': '_titleLineClamp()',
     '[style.--project-color]': 'calEventColor() || projectColor()',
@@ -106,6 +107,7 @@ export class ScheduleEventComponent implements AfterViewInit, OnDestroy {
   readonly T: typeof T = T;
   readonly isDragPreview = input<boolean>(false);
   readonly isMonthView = input<boolean>(false);
+  readonly isAllDay = input<boolean>(false);
   readonly isResizeDisabled = input<boolean>(false);
   readonly event = input.required<ScheduleEvent>();
 
@@ -165,6 +167,7 @@ export class ScheduleEventComponent implements AfterViewInit, OnDestroy {
   );
 
   readonly hoverTitle = computed(() => {
+    if (this.isAllDay()) return this.title();
     const evt = this.se();
     const is12Hour = !this._dateTimeFormatService.is24HourFormat();
     const startClockStr = getClockStringFromHours(
@@ -250,12 +253,12 @@ export class ScheduleEventComponent implements AfterViewInit, OnDestroy {
   readonly style = computed(() => {
     const { overlap, style } = this.se();
     return (
-      (!this.isMonthView() && !this.isDragPreview() && overlap
+      (!this.isAllDay() && !this.isMonthView() && !this.isDragPreview() && overlap
         ? `margin-left: calc(${overlap.offset * (100 / overlap.count)}% + var(--margin-left)); ` +
           `width: calc(${100 / overlap.count}% - var(--margin-left) - var(--margin-right)); ` +
           // Content inside the event element can spill out when the width is limited enough
           'overflow: hidden !important; '
-        : '') + style
+        : '') + (this.isAllDay() ? '' : style)
     );
   });
 

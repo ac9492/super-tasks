@@ -194,7 +194,21 @@
     <span class="key-i">{{ kb.taskEditTags }}</span>
   </button>
 
-  @if (!task.parentId && ((moveToProjectList$ | async)?.length || 0) > 0) {
+  <button
+    (click)="editDescription()"
+    mat-menu-item
+    class="e2e-edit-description-btn"
+  >
+    <span class="menuItemLeft">
+      <mat-icon>notes</mat-icon>
+      {{
+        (task.notes ? T.F.TASK.D_DESCRIPTION.EDIT : T.F.TASK.D_DESCRIPTION.ADD)
+          | translate
+      }}
+    </span>
+  </button>
+
+  @if (!task.parentId && (hasMoveTargets$ | async)) {
     <button
       #projectMenuTrigger="matMenuTrigger"
       [matMenuTriggerFor]="projectMenu"
@@ -543,34 +557,58 @@
   }
 </mat-menu>
 
-<mat-menu #projectMenu="matMenu">
+<mat-menu
+  #projectMenu="matMenu"
+  class="mat-menu-scrollable mat-menu-wide"
+>
   <ng-template matMenuContent>
-    @if (moveToProjectList$ | async; as list) {
-      @for (project of list; track trackByProjectId($index, project)) {
+    @if (moveTargets$ | async; as targets) {
+      @for (target of targets; track target.project.id) {
         <button
-          (click)="moveTaskToProject(project.id)"
+          (click)="moveTaskToProject(target.project.id)"
+          [disabled]="target.isCurrent"
           mat-menu-item
           menuTouchFix
         >
           <select-option-row
-            [title]="project.title"
-            [icon]="project.icon"
+            [title]="target.project.title"
+            [icon]="target.project.icon"
             [defaultIcon]="DEFAULT_PROJECT_ICON"
-            [color]="$safeNavigationMigration(project.theme?.primary)"
-            [folderPath]="projectFolderMap().get(project.id)"
+            [color]="$safeNavigationMigration(target.project.theme?.primary)"
+            [folderPath]="projectFolderMap().get(target.project.id)"
           ></select-option-row>
         </button>
+        @for (section of target.sections; track section.id) {
+          <button
+            (click)="moveTaskToSection(target.project.id, section.id)"
+            [disabled]="section.id === target.currentSectionId"
+            class="move-to-section-item"
+            mat-menu-item
+            menuTouchFix
+          >
+            <span class="move-to-section-row">
+              <span aria-hidden="true">&ndash;</span>
+              <span class="move-to-section-title">{{ section.title }}</span>
+            </span>
+          </button>
+        }
       }
     }
   </ng-template>
 </mat-menu>
 
-<mat-menu #tagMenu="matMenu">
+<mat-menu
+  #tagMenu="matMenu"
+  class="mat-menu-scrollable mat-menu-wide"
+>
   <ng-template matMenuContent>
     <div (click)="$event.stopPropagation()">
       @for (tag of toggleTagList(); track tag.id) {
         <button
           (click)="toggleTag(tag.id)"
+          role="menuitemcheckbox"
+          [attr.aria-checked]="task.tagIds.includes(tag.id)"
+          [class.is-selected]="task.tagIds.includes(tag.id)"
           mat-menu-item
           menuTouchFix
         >
@@ -580,7 +618,7 @@
             defaultIcon="label"
             [color]="tag.color || tag.theme?.primary"
             [isSelected]="task.tagIds.includes(tag.id)"
-            [showCheckbox]="true"
+            [showCheckmark]="true"
             [folderPath]="tagFolderMap().get(tag.id)"
           ></select-option-row>
         </button>

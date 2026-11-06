@@ -12,11 +12,11 @@
 //                    once into a tiny fixed canvas behind the app.
 //
 // Surfaces: the shell frame (side nav, header, side-by-side right panel,
-// mobile bottom nav) is frosted glass; the content sheet behind the task list
-// is a nearly opaque tint; task cards, dialogs and menus stay opaque. Only
-// static strips and side panels blur. The phone drawer, which slides over the
-// task list, is solid; the full-width phone right panel gets a stronger tint
-// without blur.
+// mobile bottom nav) is the most see-through glass; the content sheet behind
+// the task list is the same frosted glass one step denser; task cards, dialogs
+// and menus stay opaque. Only static strips, side panels and the content sheet
+// blur. The phone drawer, which slides over the task list, is solid; the
+// full-width phone right panel gets a stronger tint without blur.
 //
 // Tokens come from palette roles: PaletteThemeService writes the normalised
 // tints, alphas (max(design value, contrast floor), the floor counting muted
@@ -26,8 +26,8 @@
 :root {
   --glass-panel-tint: var(--palette-background);
   --glass-canvas-tint: var(--palette-background);
-  --glass-panel-alpha: 84%;
-  --glass-canvas-alpha: 92%;
+  --glass-panel-alpha: 75%;
+  --glass-canvas-alpha: 84%;
   --glass-overlay-alpha: 95%;
   --glass-ink-muted: var(--palette-background-ink);
   --glass-focus-ring: var(--palette-accent);
@@ -121,9 +121,13 @@ body.ultra-tasks.st-glass {
     backdrop-filter: none !important;
   }
 
-  // The content sheet behind the task list: calm, nearly opaque, no blur.
+  // The content sheet behind the task list: frosted like the frame, one step
+  // denser (canvas alpha), so the window reads as one pane of glass with the
+  // focus area standing out. The blur is on the wrapper itself, never on the
+  // routed page inside it, so route animations do not animate a blur.
   .route-wrapper {
     background: var(--glass-canvas-bg);
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   }
 }
 // The full-width (phone) right panel replaces the column, so only the backdrop
@@ -134,12 +138,6 @@ body.ultra-tasks.st-glass {
     backdrop-filter: none !important;
   }
 }
-// Windows acrylic: an opaque content sheet keeps ClearType text antialiasing;
-// only the frame is translucent.
-body.ultra-tasks.st-glass-acrylic .route-wrapper {
-  background: var(--bg);
-}
-
 // No backdrop-filter: the drawn backdrop is already blurred, so a stronger
 // tint keeps the frame calm without it.
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {

@@ -115,12 +115,25 @@ const SEMANTIC_SEEDS = {
   upcoming: { h: 304, c: 0.2, win: [292, 316] },
 } as const;
 const HARMONIZE = { share: 0.2, maxDeg: 8, nearDeg: 45, farDeg: 100, minAccentC: 0.04 };
-/** Glass design opacities (panel = nav, header, side panel; canvas = content; overlay = drawers). */
-export const GLASS_DESIGN_ALPHA = { panel: 0.84, canvas: 0.92, overlay: 0.95 } as const;
+/**
+ * Glass design opacities (panel = nav, header, side panel; canvas = content; overlay = drawers).
+ * The frame is the most see-through layer; the content sheet is frosted at the
+ * frame's former strength, so the window reads as one pane of glass with the
+ * content one step denser than its surround.
+ */
+export const GLASS_DESIGN_ALPHA = { panel: 0.75, canvas: 0.84, overlay: 0.95 } as const;
 /** Safety cap for the accent fixed point. */
 const MAX_ACCENT_ROUNDS = 12;
 /** Muted text on glass stays this far (contrast ratio) from the ink; 2:1 plus margin. */
 const GLASS_MUTED_STEP = 2.05;
+/**
+ * How far the worst glass backdrop sits from the ink colour toward the
+ * background. 0 would be black behind black ink (white behind white), a
+ * backdrop no OS material, blurred image or palette gradient reaches; 0.35 is
+ * a dark-grey wallpaper under a light theme (and the mirror in dark), which
+ * keeps the guarantee honest while letting the frame be translucent.
+ */
+const GLASS_WORST_BACKDROP_LIFT = 0.35;
 /** 8-bit rounding must not re-trigger an envelope clamp (keeps normalising idempotent). */
 const ENVELOPE_TOLERANCE = 0.004;
 /** deltaE-OK above which the editor reports a colour as adjusted. */
@@ -140,7 +153,7 @@ export interface PaletteGlassRoles {
   floor: number;
   /** max(design alpha, floor) per glass surface. */
   alpha: { panel: number; canvas: number; overlay: number };
-  /** Panel/canvas tint over the worst backdrop (the ink colour itself). */
+  /** Panel/canvas tint over the worst backdrop (near the ink colour). */
   panelWorst: string;
   canvasWorst: string;
   /** Panel tint over the palette-gradient stops (typical backdrops). */
@@ -486,9 +499,10 @@ export const normalizePalette = (
 
 /**
  * Glass tints use the background role. Final alpha = max(design, floor); the
- * floor keeps body ink >= 4.5:1 over the worst backdrop (black behind black
- * ink, white behind white ink), so it holds for any image, OS material or
- * gradient, and leaves room for a muted tier (worst composite luminance
+ * floor keeps body ink >= 4.5:1 over the worst backdrop (a near-black backdrop
+ * behind black ink, near-white behind white ink; see
+ * GLASS_WORST_BACKDROP_LIFT), so it holds for any realistic image, OS material
+ * or gradient, and leaves room for a muted tier (worst composite luminance
  * >= 0.41 in light, <= 0.064 in dark). Muted text on glass gets its own role.
  */
 const glassRoles = (
@@ -506,9 +520,10 @@ const glassRoles = (
     mode === 'light'
       ? relativeLuminance(composite) + 0.05 >= 0.05 * GLASS_MUTED_STEP * TEXT_CONTRAST
       : relativeLuminance(composite) + 0.05 <= 1.05 / (GLASS_MUTED_STEP * TEXT_CONTRAST);
+  const worstBackdrop = mixColors(ink, background, GLASS_WORST_BACKDROP_LIFT);
   let floor = 1;
   for (let percent = 0; percent <= 100; percent++) {
-    const composite = mixColors(ink, background, percent / 100);
+    const composite = mixColors(worstBackdrop, background, percent / 100);
     if (contrastRatio(ink, composite) >= TEXT_CONTRAST && mutedRoom(composite)) {
       floor = percent / 100;
       break;
@@ -519,7 +534,7 @@ const glassRoles = (
     canvas: Math.max(GLASS_DESIGN_ALPHA.canvas, floor),
     overlay: Math.max(GLASS_DESIGN_ALPHA.overlay, floor),
   };
-  const panelWorst = mixColors(ink, background, alpha.panel);
+  const panelWorst = mixColors(worstBackdrop, background, alpha.panel);
   const [, bgC, bgH] = hexToOklch(background);
   const inkMuted = solveL(
     neutralAt(hexToOklch(panelWorst)[0], bgC, bgH),
@@ -543,7 +558,7 @@ const glassRoles = (
     floor,
     alpha,
     panelWorst,
-    canvasWorst: mixColors(ink, background, alpha.canvas),
+    canvasWorst: mixColors(worstBackdrop, background, alpha.canvas),
     panelTypical,
     inkMuted,
     focusRing,

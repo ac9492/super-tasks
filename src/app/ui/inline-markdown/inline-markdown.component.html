@@ -1,6 +1,7 @@
 <div
   #wrapperEl
   [class.isHideOverflow]="isHideOverflow()"
+  [class.is-scrollable]="isScrollable()"
   class="markdown-wrapper"
   spResolveClipboardImages
 >
@@ -18,6 +19,7 @@
           #liveEditorEl
           [model]="modelCopy() ?? ''"
           [placeholderTxt]="placeholderTxt() ?? ''"
+          [ariaLabel]="ariaLabel()"
           [autoFocus]="isLock() || isPendingLiveFocus()"
           [resolveImageSrc]="resolveImageSrc"
           [extraKeymap]="liveEditorKeymap"
@@ -41,6 +43,7 @@
       [@fadeIn]
       [ngModel]="modelCopy()"
       [placeholder]="placeholderTxt() ?? ''"
+      [attr.aria-label]="ariaLabel() || null"
       class="mat-body-2 markdown-unparsed"
       rows="1"
     ></textarea>

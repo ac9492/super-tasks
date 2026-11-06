@@ -56,6 +56,13 @@ export const APP_ROUTES: Routes = [
     canActivate: [FocusOverlayOpenGuard, settingsDialogGuard],
   },
   {
+    path: 'account',
+    loadComponent: () =>
+      import('./routes/pages.routes').then((m) => m.ConfigPageComponent),
+    data: { account: true },
+    canActivate: [FocusOverlayOpenGuard, settingsDialogGuard],
+  },
+  {
     path: 'plugins',
     loadComponent: () =>
       import('./plugins/ui/plugins-window.component').then(

@@ -12,7 +12,12 @@ export const settingsDialogGuard: CanActivateFn = async (route) => {
   const dialogs = inject(MatDialog);
   const translate = inject(TranslateService);
   const isPlugins = route.data['plugins'] || route.queryParams['tab'] === '4';
-  const id = isPlugins ? 'plugins-window' : 'settings-window';
+  const isAccount = !!route.data['account'];
+  const id = isPlugins
+    ? 'plugins-window'
+    : isAccount
+      ? 'account-window'
+      : 'settings-window';
   const { ConfigPageComponent } =
     await import('../../pages/config-page/config-page.component');
   const { PluginsWindowComponent } =
@@ -28,9 +33,15 @@ export const settingsDialogGuard: CanActivateFn = async (route) => {
       autoFocus: 'first-heading',
       restoreFocus: true,
       ariaLabel: translate.instant(
-        isPlugins ? T.PS.REDESIGN.PLUGINS : T.PS.GLOBAL_SETTINGS,
+        isPlugins
+          ? T.PS.REDESIGN.PLUGINS
+          : isAccount
+            ? T.PS.REFINEMENT.ACCOUNT
+            : T.PS.GLOBAL_SETTINGS,
       ),
-      data: route.queryParams,
+      data: isAccount
+        ? { ...route.queryParams, account: 'true', tab: '9' }
+        : route.queryParams,
     });
   };
   if (!router.navigated) {

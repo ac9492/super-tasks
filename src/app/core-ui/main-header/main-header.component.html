@@ -73,26 +73,6 @@
             [hasTrackableTasks]="hasTrackableTasks()"
           ></play-button>
         }
-
-        <!-- Not gated on isDataLoaded: the shell paints before op-log hydration
-             finishes, and the primary quick-capture entry point must not be
-             missing for that window (#9420). Absent below 600px, where the
-             bottom nav's FAB is its home instead. -->
-        @if (!hasBottomNav()) {
-          <button
-            emlDrop
-            (click)="layoutService.showAddTaskBar()"
-            [attr.aria-label]="T.MH.ADD_NEW_TASK | translate"
-            matTooltip="{{ T.MH.ADD_NEW_TASK | translate }} {{
-              kb.addNewTask ? '[' + kb.addNewTask + ']' : ''
-            }}"
-            [attr.aria-label]="T.MH.ADD_NEW_TASK | translate"
-            class="tour-addBtn"
-            mat-icon-button
-          >
-            <mat-icon>add</mat-icon>
-          </button>
-        }
       </div>
 
       @if (isDataLoaded()) {

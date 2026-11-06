@@ -105,7 +105,7 @@ test.describe('@supersync SuperSync Advanced', () => {
       // Based on i18n: T.F.TASK.CMP.TOGGLE_TAGS -> 'Toggle Tags' (en)
       const toggleTagsItem = clientB.page
         .locator('.mat-mdc-menu-item')
-        .filter({ hasText: 'Toggle Tags' });
+        .filter({ hasText: /^Tags/ });
       await toggleTagsItem.click();
 
       // Wait for tag list submenu

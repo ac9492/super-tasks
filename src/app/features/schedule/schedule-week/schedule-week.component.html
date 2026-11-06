@@ -60,6 +60,31 @@
     }
   </div>
   <ng-content select="[weekHeaderEnd]"></ng-content>
+  @if (hasFloatingEvents()) {
+    <div class="floating-events">
+      <div class="floating-events-label">{{ T.F.SCHEDULE.ANY_TIME | translate }}</div>
+      @for (day of daysToShow(); track day) {
+        <div
+          class="floating-day"
+          [attr.data-day]="day"
+        >
+          @for (ev of floatingEventsByDay()[day]; track ev.id) {
+            <schedule-event
+              [event]="ev"
+              [isAllDay]="true"
+              [isResizeDisabled]="true"
+              [cdkDragDisabled]="!canDragEvent(ev)"
+              [cdkDragData]="ev"
+              [cdkDragStartDelay]="dragDelayForTouch()"
+              (cdkDragMoved)="dragMoved($event)"
+              (cdkDragStarted)="dragStarted($event)"
+              (cdkDragReleased)="dragReleased($event)"
+            ></schedule-event>
+          }
+        </div>
+      }
+    </div>
+  }
 </header>
 
 <div
@@ -146,7 +171,7 @@
   }
 
   <!-- Events -->
-  @for (ev of safeEvents(); track trackEventKey(ev)) {
+  @for (ev of timedEvents(); track trackEventKey(ev)) {
     @if (canDragEvent(ev)) {
       <schedule-event
         class="draggable"

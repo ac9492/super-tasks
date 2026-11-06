@@ -10,7 +10,7 @@ test.describe('Schedule split segments', () => {
     workViewPage,
   }) => {
     await workViewPage.waitForTaskList();
-    await page.getByRole('menuitem', { name: 'Schedule' }).click();
+    await page.getByRole('menuitem', { name: 'Calendar' }).click();
 
     // A 30h estimate crosses midnight no matter which hour the click lands on,
     // so the split does not depend on the grid's scroll position or on the time

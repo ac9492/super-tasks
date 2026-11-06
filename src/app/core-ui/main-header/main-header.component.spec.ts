@@ -145,16 +145,8 @@ class HeaderLayoutHostComponent {
 })
 class OverflowingRowHostComponent {}
 
-// The Electron custom-title-bar reserve. `main-header` keeps the window
-// controls clear by padding its own right edge -- but the controls sit in the
-// top-right corner of the WINDOW, and with the right panel open that corner
-// belongs to the panel. Reserving there anyway cost the action row ~140px it
-// did not owe, which measured out at a nav 8px wide: every header action gone,
-// overflow trigger included.
-//
-// `:host-context` resolves against real ancestors, so the host is mounted
-// inside a `<right-panel>` the test toggles `isOpen` on, exactly as
-// RightPanelComponent's own host binding does.
+// Window controls have a dedicated strip above the workspace. The app header
+// needs no reserve, with either state of the right panel.
 @Component({
   standalone: true,
   styleUrls: ['./main-header.component.scss'],
@@ -320,7 +312,7 @@ describe('MainHeaderComponent layout', () => {
     }
   });
 
-  it('drops the window-controls reserve while the right panel is open', () => {
+  it('keeps window controls outside the app header with either panel state', () => {
     // Setup inside the `try`: these body classes gate real CSS, so leaking them
     // on a throw would silently apply a 140px reserve to every later fixture.
     const panel = document.createElement('right-panel');
@@ -332,8 +324,8 @@ describe('MainHeaderComponent layout', () => {
       fixture.detectChanges();
       const host = fixture.nativeElement as HTMLElement;
 
-      // Panel closed: the controls are above the header, so the reserve stands.
-      expect(parseFloat(getComputedStyle(host).paddingRight)).toBeGreaterThan(0);
+      // Window controls now have a dedicated strip above both panels.
+      expect(parseFloat(getComputedStyle(host).paddingRight)).toBe(0);
 
       panel.classList.add('isOpen');
       expect(parseFloat(getComputedStyle(host).paddingRight)).toBe(0);
@@ -667,7 +659,6 @@ describe('MainHeaderComponent action placement', () => {
 
     expect(host.querySelector('plugin-side-panel-btns')).toBeFalsy();
     expect(host.querySelector('desktop-panel-buttons')).toBeFalsy();
-    expect(host.querySelector('.tour-addBtn')).toBeFalsy();
   });
 
   it('keeps every action in the row above 600px', async () => {
@@ -680,7 +671,9 @@ describe('MainHeaderComponent action placement', () => {
 
     expect(host.querySelector('plugin-side-panel-btns')).toBeTruthy();
     expect(host.querySelector('desktop-panel-buttons')).toBeTruthy();
-    expect(host.querySelector('.tour-addBtn')).toBeTruthy();
+    // Quick capture is not a header action: the inline add rows, the shortcut
+    // and the bottom nav's FAB are its entry points.
+    expect(host.querySelector('.tour-addBtn')).toBeFalsy();
   });
 
   it('scrolls the actions and never the nav, at any width (#9480)', async () => {
@@ -716,18 +709,6 @@ describe('MainHeaderComponent action placement', () => {
     expect(parseFloat(cs.paddingInlineStart) + parseFloat(cs.marginInlineStart)).toBe(0);
     expect(parseFloat(cs.paddingInlineEnd)).toBe(0);
     expect(parseFloat(cs.marginInlineEnd)).toBe(0);
-  });
-
-  it('keeps the add-task button in the row however little room is left', async () => {
-    // Where there is no bottom-nav FAB the header button is the only
-    // quick-capture entry point on the page, so it stays in the row at every
-    // width above the breakpoint -- scrolled to, if it comes to that, never
-    // dropped.
-    const host = await mountAtWidth(220);
-
-    const addBtn = host.querySelector('.tour-addBtn');
-    expect(addBtn).toBeTruthy();
-    expect(host.querySelector('.action-nav-scroll')!.contains(addBtn)).toBe(true);
   });
 
   // The reveal rules: the row keeps whatever scroll it was left with, so the
@@ -815,21 +796,6 @@ describe('MainHeaderComponent action placement', () => {
     await settle();
 
     expect(scrollTo).not.toHaveBeenCalled();
-  });
-
-  it('shows the add-task button before initial data load finishes', () => {
-    // The shell paints before op-log hydration completes; the quick-capture
-    // entry point must already be there in that window, while the
-    // data-dependent header parts still wait for the data-loaded signal.
-    isAllDataLoaded = false;
-
-    configureTestBed();
-    fixture = TestBed.createComponent(MainHeaderComponent);
-    fixture.detectChanges();
-
-    expect(fixture.nativeElement.querySelector('.tour-addBtn')).toBeTruthy();
-    expect(fixture.nativeElement.querySelector('page-title')).toBeFalsy();
-    expect(fixture.nativeElement.querySelector('.counters-action-group')).toBeFalsy();
   });
 
   // --- Collapsed counters below 600px -------------------------------------

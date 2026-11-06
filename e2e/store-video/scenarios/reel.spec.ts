@@ -117,9 +117,7 @@ test.describe('@video reel', () => {
     // ── Beat 1 — Capture in seconds. ─────────────────────────────────────
     markScene(page, 'Capture in seconds.');
     const b1 = await showOverlay(page, 'Capture in seconds.');
-    const addTaskButton = page.locator('main-header button.tour-addBtn');
-    await expect(addTaskButton).toBeVisible();
-    await addTaskButton.click();
+    await page.keyboard.press('Shift+A');
     const globalInput = page.locator('add-task-bar.global .main-input').first();
     await expect(globalInput).toBeFocused({ timeout: 5_000 });
     await page.waitForTimeout(250);

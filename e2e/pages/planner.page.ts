@@ -15,7 +15,7 @@ export class PlannerPage extends BasePage {
     this.plannerView = page.locator('planner-view');
     this.taskList = page.locator('task-list');
     this.dayContainer = page.locator('.day-container');
-    this.addTaskBtn = page.locator('.tour-addBtn');
+    this.addTaskBtn = page.locator('.task-list-add-action').first();
     this.plannerScheduledTasks = page.locator('planner-scheduled-tasks');
     this.scheduledTask = page.locator('.scheduled-task');
     this.repeatProjection = page.locator('.repeat-projection');

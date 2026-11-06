@@ -253,7 +253,16 @@ export interface ElectronAPI {
 
   updateTaskWidgetSettings(cfg: TaskWidgetConfig): void;
 
-  updateTitleBarDarkMode(isDarkMode: boolean): void;
+  /**
+   * `overlayColor` (`rgba(r, g, b, a)`) tints the window-controls strip so it
+   * matches the glass header; omitted, the strip stays transparent.
+   */
+  updateTitleBarDarkMode(isDarkMode: boolean, overlayColor?: string): void;
+
+  /** The OS material this window supports (fixed for the window's lifetime). */
+  getNativeGlassMaterial(): NativeGlassMaterial | null;
+
+  setNativeGlass(state: NativeGlassState): void;
 
   /** The OS material this window supports (fixed for the window's lifetime). */
   getNativeGlassMaterial(): NativeGlassMaterial | null;

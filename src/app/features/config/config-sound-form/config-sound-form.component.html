@@ -1,14 +1,4 @@
-<div class="settings-section-heading">
-  <h3>{{ title | translate }}</h3>
-</div>
-<collapsible
-  [isExpanded]="expanded()"
-  (isExpandedChange)="expanded.set($event)"
-  [isIconBefore]="true"
-  [title]="T.PS.REDESIGN.MORE | translate"
-  [ariaLabel]="(T.PS.REDESIGN.MORE | translate) + ' – ' + (title | translate)"
-  [formGroup]="soundForm"
->
+<section [formGroup]="soundForm">
   <div class="form-wrapper">
     <div class="setting-row">
       <div class="setting-control">
@@ -52,8 +42,27 @@
             @for (sound of soundOpts; track sound) {
               <mat-option [value]="sound.value">{{ sound.label | translate }}</mat-option>
             }
-          </mat-select>
-        </mat-form-field>
+          </mat-select> </mat-form-field
+        ><button
+          mat-icon-button
+          type="button"
+          [disabled]="!soundForm.controls.doneSound.value"
+          (click)="togglePreview('doneSound')"
+          [aria-label]="
+            (previewing() === 'doneSound'
+              ? T.PS.REFINEMENT.STOP
+              : T.PS.REFINEMENT.PREVIEW
+            ) | translate
+          "
+          [matTooltip]="
+            (previewing() === 'doneSound'
+              ? T.PS.REFINEMENT.STOP
+              : T.PS.REFINEMENT.PREVIEW
+            ) | translate
+          "
+        >
+          <mat-icon>{{ previewing() === 'doneSound' ? 'stop' : 'play_arrow' }}</mat-icon>
+        </button>
       </div>
       <setting-help
         [label]="T.GCF.SOUND.DONE_SOUND | translate"
@@ -99,8 +108,29 @@
             @for (sound of soundOpts; track sound) {
               <mat-option [value]="sound.value">{{ sound.label | translate }}</mat-option>
             }
-          </mat-select>
-        </mat-form-field>
+          </mat-select> </mat-form-field
+        ><button
+          mat-icon-button
+          type="button"
+          [disabled]="!soundForm.controls.breakReminderSound.value"
+          (click)="togglePreview('breakReminderSound')"
+          [aria-label]="
+            (previewing() === 'breakReminderSound'
+              ? T.PS.REFINEMENT.STOP
+              : T.PS.REFINEMENT.PREVIEW
+            ) | translate
+          "
+          [matTooltip]="
+            (previewing() === 'breakReminderSound'
+              ? T.PS.REFINEMENT.STOP
+              : T.PS.REFINEMENT.PREVIEW
+            ) | translate
+          "
+        >
+          <mat-icon>{{
+            previewing() === 'breakReminderSound' ? 'stop' : 'play_arrow'
+          }}</mat-icon>
+        </button>
       </div>
       <setting-help
         [label]="T.GCF.SOUND.BREAK_REMINDER_SOUND | translate"
@@ -121,8 +151,29 @@
             @for (sound of soundOpts; track sound) {
               <mat-option [value]="sound.value">{{ sound.label | translate }}</mat-option>
             }
-          </mat-select>
-        </mat-form-field>
+          </mat-select> </mat-form-field
+        ><button
+          mat-icon-button
+          type="button"
+          [disabled]="!soundForm.controls.trackTimeSound.value"
+          (click)="togglePreview('trackTimeSound')"
+          [aria-label]="
+            (previewing() === 'trackTimeSound'
+              ? T.PS.REFINEMENT.STOP
+              : T.PS.REFINEMENT.PREVIEW
+            ) | translate
+          "
+          [matTooltip]="
+            (previewing() === 'trackTimeSound'
+              ? T.PS.REFINEMENT.STOP
+              : T.PS.REFINEMENT.PREVIEW
+            ) | translate
+          "
+        >
+          <mat-icon>{{
+            previewing() === 'trackTimeSound' ? 'stop' : 'play_arrow'
+          }}</mat-icon>
+        </button>
       </div>
       <setting-help
         [label]="T.GCF.SOUND.TRACK_TIME_SOUND | translate"
@@ -130,4 +181,4 @@
       />
     </div>
   </div>
-</collapsible>
+</section>

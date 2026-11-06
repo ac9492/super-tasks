@@ -1,3 +1,4 @@
+import { MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS } from '@angular/material/slide-toggle';
 import {
   APP_INITIALIZER,
   provideAppInitializer,
@@ -149,6 +150,7 @@ registerDefaultLocale();
 
 bootstrapApplication(AppComponent, {
   providers: [
+    { provide: MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS, useValue: { hideIcon: true } },
     // Await the browser's own regional locale (en-AU, en-CA, … — navigator-only
     // variants backing "System default") before first render, for the same
     // pure-pipe reason as above. Never rejects and self-limits to a short

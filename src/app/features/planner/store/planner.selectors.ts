@@ -36,6 +36,12 @@ import {
   selectTodayStr,
 } from '../../../root-store/app-state/app-state.selectors';
 import { isTodayWithOffset } from '../../../util/is-today.util';
+import {
+  filterDeadlineTasksByDayByProject,
+  filterRepeatCfgsByProject,
+  filterTasksByProject,
+  ProjectScope,
+} from '../../project/filter-by-project.util';
 import { getTaskRepeatCfgsForExactDayCached } from '../../task-repeat-cfg/store/get-task-repeat-cfgs-for-exact-day-cached.util';
 
 export const selectPlannerState = createFeatureSelector<fromPlanner.PlannerState>(
@@ -101,13 +107,19 @@ export const selectPlannerDays = (
   taskRepeatCfgs: TaskRepeatCfg[],
   todayListTaskIds: string[],
   calendarEvents: ScheduleCalendarMapEntry[],
-  allPlannedTasks: TaskWithDueTime[],
+  allPlannedTasksUnscoped: TaskWithDueTime[],
   todayStr: string,
+  scope?: ProjectScope,
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 ) => {
   // Use Set for O(1) lookup instead of O(n) .includes() in filter
-  const allPlannedIdSet = new Set(allPlannedTasks.map((t) => t.id));
+  const allPlannedIdSet = new Set(allPlannedTasksUnscoped.map((t) => t.id));
   const unplannedTaskIdsToday = todayListTaskIds.filter((id) => !allPlannedIdSet.has(id));
+  const projectId = scope?.projectId;
+  const allPlannedTasks = filterTasksByProject(allPlannedTasksUnscoped, projectId);
+  const scopedRepeatCfgs = filterRepeatCfgsByProject(taskRepeatCfgs, projectId);
+  const scopedCalendarEvents =
+    scope && !scope.isIncludeCalendarEvents ? [] : calendarEvents;
   const lastDayDate = dayDates.reduce((last, d) => (d > last ? d : last), '');
 
   return createSelector(
@@ -117,9 +129,9 @@ export const selectPlannerDays = (
     selectStartOfNextDayDiffMs,
     (activeTasks, plannerState, scheduleConfig, startOfNextDayDiffMs): PlannerDay[] => {
       // Pre-compute deadline tasks grouped by day (O(N) once, then O(1) per day)
-      const deadlineMap = groupDeadlineTasksByDay(
-        activeTasks.values(),
-        startOfNextDayDiffMs,
+      const deadlineMap = filterDeadlineTasksByDayByProject(
+        groupDeadlineTasksByDay(activeTasks.values(), startOfNextDayDiffMs),
+        projectId,
       );
       // Bucket once instead of re-scanning every planned task and calendar
       // event for each visible day; this reruns every time-tracking tick.
@@ -128,7 +140,7 @@ export const selectPlannerDays = (
         startOfNextDayDiffMs,
       );
       const calendarEventsByDay = groupCalendarEventsByDay(
-        calendarEvents,
+        scopedCalendarEvents,
         startOfNextDayDiffMs,
         lastDayDate,
       );
@@ -139,13 +151,14 @@ export const selectPlannerDays = (
           todayStr,
           activeTasks,
           plannerState,
-          taskRepeatCfgs,
+          scopedRepeatCfgs,
           plannedTasksByDay.get(dayDate) || [],
           calendarEventsByDay.get(dayDate) || [],
           unplannedTaskIdsToday,
           deadlineMap,
           scheduleConfig,
           startOfNextDayDiffMs,
+          projectId,
         ),
       );
     },
@@ -179,6 +192,7 @@ const getPlannerDay = (
   deadlineTasksByDay: Record<string, TaskCopy[]>,
   scheduleConfig?: ScheduleConfig,
   startOfNextDayDiffMs: number = 0,
+  projectId?: string,
 ): PlannerDay => {
   const isTodayI = dayDate === todayStr;
   const currentDayDate = dateStrToUtcDate(dayDate);
@@ -191,7 +205,8 @@ const getPlannerDay = (
     .map((id) => taskMap.get(id) as TaskCopy)
     .filter((t) => !!t)
     // Filter out tasks with dueDay in future if it is Today's column
-    .filter((t) => !isTodayI || !t.dueDay || t.dueDay <= todayStr);
+    .filter((t) => !isTodayI || !t.dueDay || t.dueDay <= todayStr)
+    .filter((t) => !projectId || t.projectId === projectId);
 
   const {
     repeatProjectionsForDay: allRepeatProjectionsForDay,

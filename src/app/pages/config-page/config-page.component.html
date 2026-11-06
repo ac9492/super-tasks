@@ -1,5 +1,5 @@
 <header class="settings-window-header">
-  <h1>{{ T.PS.GLOBAL_SETTINGS | translate }}</h1>
+  <h1>{{ (isAccount ? T.PS.REFINEMENT.ACCOUNT : T.PS.GLOBAL_SETTINGS) | translate }}</h1>
   <button
     mat-icon-button
     mat-dialog-close
@@ -10,7 +10,10 @@
 </header>
 <div class="page-settings">
   @if (globalCfg) {
-    <div class="settings-container">
+    <div
+      class="settings-container"
+      [class.account-view]="isAccount"
+    >
       <mat-form-field
         class="settings-search"
         subscriptSizing="dynamic"
@@ -64,6 +67,7 @@
       </mat-autocomplete>
 
       <div
+        #settingsLayout
         class="settings-layout"
         [class.category-visible]="mobileCategoryVisible"
       >
@@ -75,13 +79,17 @@
             <button
               type="button"
               [attr.aria-current]="selectedTabIndex === category.index ? 'page' : null"
-              (click)="selectedTabIndex = category.index; mobileCategoryVisible = true"
+              (click)="selectCategory(category.index)"
             >
-              {{ category.label | translate }}
+              <mat-icon aria-hidden="true">{{ category.icon }}</mat-icon
+              >{{ category.label | translate }}
             </button>
           }
         </nav>
-        <main class="settings-content">
+        <main
+          #settingsContent
+          class="settings-content"
+        >
           <button
             class="settings-back"
             mat-button
@@ -96,7 +104,7 @@
                 {{ 'PS.TABS.GENERAL' | translate }}
               </h2>
 
-              @for (section of generalFormCfg; track section.key; let index = $index) {
+              @for (section of generalSections; track section.key; let index = $index) {
                 <section class="config-section section-{{ section.key }}">
                   <config-section
                     [settingsLayout]="true"
@@ -107,15 +115,19 @@
                     [isExpanded]="isSectionExpanded(section)"
                     [section]="section"
                   ></config-section>
+                  @if (section.key === 'localization') {
+                    <div class="date-examples">
+                      <span
+                        >{{ T.PS.REFINEMENT.REGIONAL | translate }}:
+                        {{ dateExamples.regional }}</span
+                      >
+                      <span
+                        >{{ T.PS.REFINEMENT.TASK_DATE | translate }}:
+                        {{ dateExamples.task }}</span
+                      >
+                    </div>
+                  }
                 </section>
-                @if (index === 1) {
-                  <section class="config-section appearance-section">
-                    <theme-selector
-                      [(colorsExpanded)]="colorEditorExpanded"
-                    ></theme-selector>
-                    <glass-settings></glass-settings>
-                  </section>
-                }
               }
             </div>
           }
@@ -138,17 +150,6 @@
                   ></config-section>
                 </section>
               }
-
-              <!-- @todo: Create a single style for forming all the settings elements.
-                        Make all as "sections" or as "forms" consistently.
-            -->
-              <section class="config-section sound-section">
-                <config-sound-form
-                  [(expanded)]="soundExpanded"
-                  [cfg]="getGlobalCfgSection('sound')"
-                  (save)="saveGlobalCfg($event)"
-                ></config-sound-form>
-              </section>
             </div>
           }
 
@@ -176,8 +177,59 @@
           @if (selectedTabIndex === 5) {
             <div class="tab-content">
               <h2 class="section-title">
-                {{ 'PS.TABS.SYNC_BACKUP' | translate }}
+                {{ T.PS.REFINEMENT.DATA | translate }}
               </h2>
+
+              @for (section of globalImexFormCfg; track section.key) {
+                <section class="config-section imex-section section-{{ section.key }}">
+                  <config-section
+                    [settingsLayout]="true"
+                    [expandedField]="expandedField"
+                    (save)="saveGlobalCfg($event)"
+                    (isExpandedChange)="onSectionExpandedChange(section, $event)"
+                    [cfg]="getGlobalCfgSection(section.key)"
+                    [isExpanded]="isSectionExpanded(section)"
+                    [section]="section"
+                  ></config-section>
+                </section>
+              }
+            </div>
+          }
+
+          @if (selectedTabIndex === 6) {
+            <div class="tab-content appearance-section">
+              <h2 class="section-title">{{ T.PS.REFINEMENT.APPEARANCE | translate }}</h2>
+              <theme-selector [colorsExpanded]="true" /><glass-settings />
+            </div>
+          }
+          @if (selectedTabIndex === 7) {
+            <div class="tab-content">
+              <h2 class="section-title">{{ T.PS.REFINEMENT.KEYBOARD | translate }}</h2>
+              @for (section of keyboardSections; track section.key) {
+                <section class="config-section section-keyboard">
+                  <config-section
+                    [settingsLayout]="true"
+                    [expandedField]="expandedField"
+                    (save)="saveGlobalCfg($event)"
+                    [cfg]="getGlobalCfgSection(section.key)"
+                    [section]="section"
+                  />
+                </section>
+              }
+            </div>
+          }
+          @if (selectedTabIndex === 8) {
+            <div class="tab-content sound-section">
+              <h2 class="section-title">{{ T.PS.REFINEMENT.SOUND | translate }}</h2>
+              <config-sound-form
+                [expanded]="true"
+                [cfg]="getGlobalCfgSection('sound')"
+                (save)="saveGlobalCfg($event)"
+              />
+            </div>
+          }
+          @if (selectedTabIndex === 9) {
+            <div class="tab-content">
               <section class="config-section sync-summary">
                 @let status = syncStatus();
                 @if (!status.providerId) {
@@ -234,20 +286,6 @@
                   </div>
                 }
               </section>
-
-              @for (section of globalImexFormCfg; track section.key) {
-                <section class="config-section imex-section section-{{ section.key }}">
-                  <config-section
-                    [settingsLayout]="true"
-                    [expandedField]="expandedField"
-                    (save)="saveGlobalCfg($event)"
-                    (isExpandedChange)="onSectionExpandedChange(section, $event)"
-                    [cfg]="getGlobalCfgSection(section.key)"
-                    [isExpanded]="isSectionExpanded(section)"
-                    [section]="section"
-                  ></config-section>
-                </section>
-              }
             </div>
           }
         </main>

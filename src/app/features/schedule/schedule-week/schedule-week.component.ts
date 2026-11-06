@@ -36,6 +36,10 @@ import { truncate } from '../../../util/truncate';
 import { LS } from '../../../core/persistence/storage-keys.const';
 import { CalendarEventActionsService } from '../../calendar-integration/calendar-event-actions.service';
 import { TaskCopy } from '../../tasks/task.model';
+import {
+  floatingScheduleEventsByDay,
+  isFloatingScheduleEvent,
+} from './floating-schedule-events';
 
 const D_HOURS = 24;
 const DEFAULT_ROW_HEIGHT_PX = 9;
@@ -95,10 +99,13 @@ export class ScheduleWeekComponent implements OnInit, AfterViewInit, OnDestroy {
   isCtrlPressed = signal<boolean>(false);
   isTaskDragActive = input<boolean>(false);
   scheduleRowHeightPx = signal<number>(readStoredScheduleRowHeight());
-  scheduleRowHeightCss = computed(() => `${this.scheduleRowHeightPx()}px`);
+  private readonly _density = computed(() => (this.daysToShow().length > 1 ? 0.5 : 1));
+  scheduleRowHeightCss = computed(
+    () => `${this.scheduleRowHeightPx() * this._density()}px`,
+  );
   scheduleRowHeightMobileCss = computed(
     () =>
-      `${Math.max(4, Math.round(this.scheduleRowHeightPx() * MOBILE_ROW_HEIGHT_FACTOR))}px`,
+      `${Math.max(4, Math.round(this.scheduleRowHeightPx() * MOBILE_ROW_HEIGHT_FACTOR)) * this._density()}px`,
   );
 
   // Shift mode changes drag behavior: instead of scheduling at a time,
@@ -164,6 +171,18 @@ export class ScheduleWeekComponent implements OnInit, AfterViewInit, OnDestroy {
 
   safeEvents = computed(() => this.events() || []);
   safeBeyondBudget = computed(() => this.beyondBudget() || []);
+  timedEvents = computed(() =>
+    this.safeEvents().filter((event) => !isFloatingScheduleEvent(event)),
+  );
+  floatingEventsByDay = computed(() =>
+    floatingScheduleEventsByDay(
+      [...this.safeEvents(), ...this.safeBeyondBudget().flat()],
+      this.daysToShow(),
+    ),
+  );
+  hasFloatingEvents = computed(() =>
+    Object.values(this.floatingEventsByDay()).some((events) => events.length > 0),
+  );
   beyondBudgetStats = computed(() => {
     const beyondBudget = this.safeBeyondBudget();
     const visibleEvents = this.safeEvents();

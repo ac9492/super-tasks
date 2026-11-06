@@ -5,7 +5,7 @@ test.describe('Mobile WebKit smoke', () => {
     const mobileNav = page.locator('mobile-bottom-nav');
     await expect(mobileNav).toBeVisible();
 
-    await mobileNav.getByRole('button', { name: 'Planner', exact: true }).tap();
+    await mobileNav.getByRole('button', { name: 'Upcoming', exact: true }).tap();
     await expect(page).toHaveURL(/\/#\/planner/);
     await expect(page.locator('planner')).toBeVisible();
 

@@ -12,6 +12,7 @@ export interface ScheduleEvent {
   timeLeftInHours: number;
   dayOfMonth?: number;
   plannedForDay?: string;
+  displayDay?: string;
   sourceOccurrenceDate?: string;
   data?: SVE['data'];
   overlap?: { count: number; offset: number };

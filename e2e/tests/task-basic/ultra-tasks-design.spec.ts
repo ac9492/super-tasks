@@ -1,4 +1,5 @@
 import { expect, test } from '../../fixtures/test.fixture';
+import { openGlobalAddTaskBar } from '../../utils/element-helpers';
 
 test('Ultra Tasks workspace stays readable across themes and narrow screens', async ({
   page,
@@ -17,7 +18,7 @@ test('Ultra Tasks workspace stays readable across themes and narrow screens', as
   ]) {
     await workViewPage.addTask(name);
   }
-  await page.locator('.tour-addBtn').click();
+  await openGlobalAddTaskBar(page);
   await expect(page.locator('add-task-bar.global .st-capture-context')).toContainText(
     'Inbox',
   );
@@ -32,10 +33,8 @@ test('Ultra Tasks workspace stays readable across themes and narrow screens', as
   await expect(page.locator('.st-brand')).toBeVisible();
   await expect(page.locator('.st-brand img')).toHaveJSProperty('complete', true);
   for (const dark of [false, true]) {
-    await page.evaluate(
-      (value) => document.body.classList.toggle('isDarkTheme', value),
-      dark,
-    );
+    await page.emulateMedia({ colorScheme: dark ? 'dark' : 'light' });
+    await expect(page.locator('body')).toHaveClass(dark ? /isDarkTheme/ : /isLightTheme/);
     await page.screenshot({
       animations: 'disabled',
       path: `.tmp/e2e-test-results/ultra-tasks-${dark ? 'dark' : 'light'}.png`,
@@ -43,7 +42,10 @@ test('Ultra Tasks workspace stays readable across themes and narrow screens', as
     });
   }
   await taskPage.openTaskDetail(taskPage.getTaskByText('Review the design proposal'));
-  await expect(page.locator('.st-date-hint')).toContainText('Deadline');
+  await expect(page.locator('task-detail-panel .st-planning-actions button')).toHaveCount(
+    2,
+  );
+  await expect(page.locator('task-detail-panel')).toContainText('Description');
   await page.screenshot({
     path: '.tmp/e2e-test-results/ultra-tasks-details.png',
     fullPage: true,
@@ -51,12 +53,26 @@ test('Ultra Tasks workspace stays readable across themes and narrow screens', as
   await page.locator('.st-planning-actions button').first().click();
   await expect(page.locator('mat-dialog-container')).toBeVisible();
   await page.keyboard.press('Escape');
+  await expect(page.locator('mat-dialog-container')).toHaveCount(0);
   await page.locator('.st-brand').focus();
   await page.locator('.st-brand').press('Enter');
   await expect(page).toHaveURL(/tag\/TODAY\/tasks/);
   await page.goto('/#/project/INBOX_PROJECT/tasks');
   await workViewPage.waitForTaskList();
   await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.locator('work-view-page')).toHaveCount(1);
+  const upcomingLabel = page
+    .locator('.layout-bar .segment-label')
+    .filter({ hasText: 'Upcoming' });
+  await expect
+    .poll(() =>
+      upcomingLabel.evaluate(
+        (el) =>
+          el.getBoundingClientRect().height <=
+          parseFloat(getComputedStyle(el).lineHeight) + 1,
+      ),
+    )
+    .toBe(true);
   await page.screenshot({
     path: '.tmp/e2e-test-results/ultra-tasks-mobile.png',
     fullPage: true,

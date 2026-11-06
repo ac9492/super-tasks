@@ -50,6 +50,20 @@
     <mat-icon>event_busy</mat-icon>
   </button>
 }
+<button
+  (click)="parent.openDescriptionDialog($event)"
+  [title]="
+    (task().notes ? T.F.TASK.D_DESCRIPTION.EDIT : T.F.TASK.D_DESCRIPTION.ADD) | translate
+  "
+  [attr.aria-label]="
+    (task().notes ? T.F.TASK.D_DESCRIPTION.EDIT : T.F.TASK.D_DESCRIPTION.ADD) | translate
+  "
+  class="ico-btn edit-description-btn"
+  color=""
+  mat-icon-button
+>
+  <mat-icon>notes</mat-icon>
+</button>
 @if (
   !task().notes &&
   (!task().issueId ||

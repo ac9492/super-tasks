@@ -31,6 +31,7 @@ export const mapScheduleDaysToScheduleEvents = (
         timeLeftInHours,
         startHours: 0,
         plannedForDay,
+        displayDay: day.dayDate,
         isBeyondBudget: true,
       };
     });
@@ -68,6 +69,7 @@ export const mapScheduleDaysToScheduleEvents = (
           style: `grid-column: ${dayIndex + 2};  grid-row: ${startRow} / span ${rowSpan}`,
           data: entry.data,
           plannedForDay: entry.plannedForDay,
+          displayDay: day.dayDate,
           ...(entry.sourceOccurrenceDate
             ? { sourceOccurrenceDate: entry.sourceOccurrenceDate }
             : {}),

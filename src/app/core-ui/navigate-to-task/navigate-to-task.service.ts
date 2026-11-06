@@ -47,11 +47,17 @@ export class NavigateToTaskService {
    * "where is this?" — the only caller that earns the attention highlight on the
    * revealed row. Threaded through as a query param on the route-change branch
    * so the destination view can honour it too. (#5476)
+   * @param isForceRouteChange always take the route-change path, even when the
+   * task's context is the one on screen. The popup search opens over any page,
+   * and only the route-change path opens collapsed sections and done panels.
    */
   async navigate(
     taskId: string,
     isArchiveTask: boolean = false,
-    { isFromSearch = false }: { isFromSearch?: boolean } = {},
+    {
+      isFromSearch = false,
+      isForceRouteChange = false,
+    }: { isFromSearch?: boolean; isForceRouteChange?: boolean } = {},
   ): Promise<void> {
     try {
       const task = await this._taskService.getByIdFromEverywhere(taskId);
@@ -88,7 +94,7 @@ export class NavigateToTaskService {
       // still well before the navigation below.
       this._expandCollapsedParent(task, isArchiveTask);
 
-      if (this._router.url.startsWith(location)) {
+      if (!isForceRouteChange && this._router.url.startsWith(location)) {
         recordSearchNavDebug('navigateToTask:sameContext', {
           taskId,
           currentUrl: this._router.url,

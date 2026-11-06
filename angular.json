@@ -55,7 +55,7 @@
               "dayjs",
               "query-string"
             ],
-            "externalDependencies": ["marked-katex-extension"]
+            "externalDependencies": ["marked-katex-extension", "crypto"]
           },
           "configurations": {
             "development": {
@@ -215,7 +215,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "open": false,
-            "buildTarget": "sp2:build"
+            "buildTarget": "sp2:build",
+            "prebundle": {
+              "exclude": ["@hpke/core", "@hpke/common", "@serenity-kit/opaque"]
+            }
           },
           "configurations": {
             "production": {

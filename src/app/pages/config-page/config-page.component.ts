@@ -1,3 +1,4 @@
+import { DateTimeFormatService } from '../../core/date-time-format/date-time-format.service';
 import { GlassSettingsComponent } from '../../features/config/glass-settings/glass-settings.component';
 import {
   afterNextRender,
@@ -10,6 +11,7 @@ import {
   inject,
   Injector,
   OnInit,
+  viewChild,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GlobalConfigService } from '../../features/config/global-config.service';
@@ -76,7 +78,6 @@ import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autoc
 import { MatOption } from '@angular/material/core';
 import {
   searchSettings,
-  SETTINGS_SYNC_BACKUP_TAB_INDEX,
   SettingsSearchTarget,
 } from '../../features/config/settings-search.util';
 
@@ -117,6 +118,8 @@ export class ConfigPageComponent implements OnInit {
   private readonly _cd = inject(ChangeDetectorRef);
   private readonly _injector = inject(Injector);
   private readonly _elRef = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly _content = viewChild<ElementRef<HTMLElement>>('settingsContent');
+  private readonly _layout = viewChild<ElementRef<HTMLElement>>('settingsLayout');
   private readonly _route = inject(ActivatedRoute);
   private readonly _providerManager = inject(SyncProviderManager);
   private readonly _syncWrapperService = inject(SyncWrapperService);
@@ -199,11 +202,33 @@ export class ConfigPageComponent implements OnInit {
     optional: true,
   });
   readonly categories = [
-    { index: 0, label: T.PS.TABS.GENERAL },
-    { index: 1, label: T.PS.REDESIGN.TASKS },
-    { index: 2, label: T.PS.REDESIGN.TIME },
-    { index: 5, label: T.PS.TABS.SYNC_BACKUP },
+    { index: 0, label: T.PS.TABS.GENERAL, icon: 'tune' },
+    { index: 6, label: T.PS.REFINEMENT.APPEARANCE, icon: 'palette' },
+    { index: 1, label: T.PS.REDESIGN.TASKS, icon: 'task_alt' },
+    { index: 2, label: T.PS.REDESIGN.TIME, icon: 'timer' },
+    { index: 7, label: T.PS.REFINEMENT.KEYBOARD, icon: 'keyboard' },
+    { index: 8, label: T.PS.REFINEMENT.SOUND, icon: 'volume_up' },
+    { index: 5, label: T.PS.REFINEMENT.DATA, icon: 'import_export' },
   ];
+  readonly isAccount = this._dialogData?.['account'] === 'true';
+  private readonly _dateFormat = inject(DateTimeFormatService);
+  get dateExamples(): { regional: string; task: string } {
+    const sample = new Date(2026, 10, 18, 14, 30);
+    return {
+      regional:
+        this._dateFormat.formatDate(sample) +
+        ' · ' +
+        this._dateFormat.formatTime(sample.getTime()),
+      task: formatTaskDateLabel(sample, '2026-11-05', this._dateFormat.taskDateDisplay()),
+    };
+  }
+
+  get generalSections(): ConfigFormConfig {
+    return this.generalFormCfg.filter((section) => section.key !== 'keyboard');
+  }
+  get keyboardSections(): ConfigFormConfig {
+    return this.generalFormCfg.filter((section) => section.key === 'keyboard');
+  }
   mobileCategoryVisible = false;
 
   constructor() {
@@ -302,17 +327,16 @@ export class ConfigPageComponent implements OnInit {
       .subscribe((params) => {
         if (params['tab'] !== undefined) {
           const tabIndex = parseInt(params['tab'], 10);
-          if (
-            !isNaN(tabIndex) &&
-            tabIndex >= 0 &&
-            tabIndex <= SETTINGS_SYNC_BACKUP_TAB_INDEX
-          ) {
+          if (!isNaN(tabIndex) && tabIndex >= 0 && tabIndex <= 9) {
             this.selectedTabIndex = tabIndex === 3 ? 2 : tabIndex;
             this._cd.detectChanges();
           }
         }
         if (params['section'] !== undefined) {
           this.expandedSection = params['section'];
+          if (this.expandedSection === 'keyboard') this.selectedTabIndex = 7;
+          if (this.expandedSection === 'sound') this.selectedTabIndex = 8;
+          if (this.expandedSection === 'appearance') this.selectedTabIndex = 6;
           if (
             this.globalTasksFormCfg.some(
               (section) => section.key === this.expandedSection,
@@ -454,7 +478,7 @@ export class ConfigPageComponent implements OnInit {
     // Tab order must match the `mat-tab-group` — the index is what we navigate to.
     this.searchResults = searchSettings(
       [
-        { labelKey: T.PS.TABS.GENERAL, sections: this.generalFormCfg },
+        { labelKey: T.PS.TABS.GENERAL, sections: this.generalSections },
         { labelKey: T.PS.REDESIGN.TASKS, sections: this.globalTasksFormCfg },
         { labelKey: T.PS.REDESIGN.TIME, sections: this.timeTrackingFormCfg },
         {
@@ -462,11 +486,21 @@ export class ConfigPageComponent implements OnInit {
           sections: [],
         },
         { labelKey: T.PS.TABS.PLUGINS, sections: [] },
-        { labelKey: T.PS.TABS.SYNC_BACKUP, sections: this.globalImexFormCfg },
+        { labelKey: T.PS.REFINEMENT.DATA, sections: this.globalImexFormCfg },
+        { labelKey: T.PS.REFINEMENT.APPEARANCE, sections: [] },
+        { labelKey: T.PS.REFINEMENT.KEYBOARD, sections: this.keyboardSections },
+        { labelKey: T.PS.REFINEMENT.SOUND, sections: [] },
       ],
       this.searchQuery,
       (key) => this._translateService.instant(key),
     );
+  }
+
+  selectCategory(index: number): void {
+    this.selectedTabIndex = index;
+    this.mobileCategoryVisible = true;
+    this._content()?.nativeElement.scrollTo({ top: 0 });
+    this._layout()?.nativeElement.scrollTo({ top: 0 });
   }
 
   /** Jumps to a hit: right tab, section expanded, scrolled into view. */
@@ -563,3 +597,4 @@ export class ConfigPageComponent implements OnInit {
     }
   }
 }
+import { formatTaskDateLabel } from '../../core/date-time-format/task-date-display';

@@ -84,6 +84,62 @@ export class ThemeSelectorComponent {
         dark: { background: '#241c29', surface: '#362a3e', accent: '#cfb0df' },
       },
     },
+    {
+      label: T.PS.REFINEMENT.PRESET_NORD,
+      colors: {
+        light: { background: '#eceff4', surface: '#f8fafc', accent: '#5e81ac' },
+        dark: { background: '#2e3440', surface: '#3b4252', accent: '#88c0d0' },
+      },
+    },
+    {
+      label: T.PS.REFINEMENT.PRESET_SNOW,
+      colors: {
+        light: { background: '#e5e9f0', surface: '#ffffff', accent: '#4c6b91' },
+        dark: { background: '#242c38', surface: '#343f50', accent: '#a3be8c' },
+      },
+    },
+    {
+      label: T.PS.REFINEMENT.PRESET_DRACULA,
+      colors: {
+        light: { background: '#f4efff', surface: '#ffffff', accent: '#7751a8' },
+        dark: { background: '#282a36', surface: '#353746', accent: '#bd93f9' },
+      },
+    },
+    {
+      label: T.PS.REFINEMENT.PRESET_CATPPUCCIN,
+      colors: {
+        light: { background: '#eff1f5', surface: '#ffffff', accent: '#8839ef' },
+        dark: { background: '#1e1e2e', surface: '#313244', accent: '#cba6f7' },
+      },
+    },
+    {
+      label: T.PS.REFINEMENT.PRESET_EVERFOREST,
+      colors: {
+        light: { background: '#f3ead3', surface: '#fff9e8', accent: '#5c7860' },
+        dark: { background: '#272e28', surface: '#374438', accent: '#a7c080' },
+      },
+    },
+    {
+      label: T.PS.REFINEMENT.PRESET_ARC,
+      colors: {
+        light: { background: '#edf2f8', surface: '#ffffff', accent: '#407ab8' },
+        dark: { background: '#252a34', surface: '#343c49', accent: '#7eacd5' },
+      },
+    },
+    {
+      label: T.PS.REFINEMENT.PRESET_ZEN,
+      colors: {
+        light: { background: '#f1f0e9', surface: '#fffef7', accent: '#666b45' },
+        dark: { background: '#262922', surface: '#353c2d', accent: '#b8c795' },
+      },
+    },
+    {
+      label: T.PS.REFINEMENT.PRESET_VELVET,
+      colors: {
+        light: { background: '#f6ebef', surface: '#fff9fc', accent: '#94566b' },
+        dark: { background: '#2b2028', surface: '#40303c', accent: '#dca5b8' },
+      },
+    },
   ];
   // Normalised per mode only, not on every color edit.
   private readonly _presetSwatches = computed(() => {

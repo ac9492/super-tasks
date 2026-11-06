@@ -1,4 +1,5 @@
 import { expect, test } from '../../fixtures/test.fixture';
+import { openGlobalAddTaskBar } from '../../utils/element-helpers';
 
 test.describe('Work View', () => {
   test('should add task via key combo', async ({ page, workViewPage }) => {
@@ -62,14 +63,15 @@ test.describe('Work View', () => {
     await expect(finalTaskTitle).toContainText(/.*0 test task lolo/);
   });
 
-  test('should add multiple tasks from header button', async ({ page, workViewPage }) => {
+  test('should add multiple tasks from the global add bar', async ({
+    page,
+    workViewPage,
+  }) => {
     // Wait for work view to be ready
     await workViewPage.waitForTaskList();
 
-    // Click the add button in the header to open global add task input
-    const headerAddBtn = page.locator('.tour-addBtn');
-    await headerAddBtn.waitFor({ state: 'visible', timeout: 10000 });
-    await headerAddBtn.click();
+    // Open the global add task input with its shortcut
+    await openGlobalAddTaskBar(page);
 
     // Wait for global input to be visible
     await workViewPage.addTaskGlobalInput.waitFor({ state: 'visible', timeout: 10000 });

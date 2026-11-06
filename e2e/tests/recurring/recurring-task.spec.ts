@@ -1,5 +1,6 @@
 import { test, expect } from '../../fixtures/test.fixture';
 import { type Page } from '@playwright/test';
+import { openGlobalAddTaskBar } from '../../utils/element-helpers';
 
 const ONE_HOUR = 60 * 60 * 1000;
 const THIRTY_MINUTES = 30 * 60 * 1000;
@@ -92,7 +93,7 @@ const addTaskWithoutWaitingForTodayList = async (
     .isVisible()
     .catch(() => false);
   if (!isInputVisible) {
-    await page.locator('.tour-addBtn').click();
+    await openGlobalAddTaskBar(page);
   }
 
   const input = inputEl.first();

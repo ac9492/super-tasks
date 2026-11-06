@@ -80,7 +80,7 @@ test.describe('Offline i18n load failure (#7854)', () => {
       // fix these would read e.g. "MH.PLANNER". This proves the fix serves real
       // text offline rather than only suppressing the crash card.
       const sideNav = page.locator(cssSelectors.SIDENAV);
-      await expect(sideNav).toContainText('Planner', { timeout: 15000 });
+      await expect(sideNav).toContainText('Upcoming', { timeout: 15000 });
       await expect(sideNav).toContainText('Projects');
       await expect(sideNav).not.toContainText('MH.');
     } finally {

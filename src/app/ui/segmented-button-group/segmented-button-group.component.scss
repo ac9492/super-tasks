@@ -81,4 +81,8 @@
 
 :host([data-size='md']) .segment {
   padding: var(--s-half) var(--s);
+
+  @include mq(xs, max) {
+    padding-inline: var(--s-half);
+  }
 }

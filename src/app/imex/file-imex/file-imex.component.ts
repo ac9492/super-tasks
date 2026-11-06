@@ -1,3 +1,15 @@
+import { FormsModule } from '@angular/forms';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { SettingHelpComponent } from '../../ui/setting-help/setting-help.component';
+import { BackupPassphraseDialogComponent } from './backup-passphrase-dialog.component';
+import {
+  encryptBackupFile,
+  decryptBackupFile,
+  ENCRYPTED_BACKUP_FORMAT,
+} from './encrypted-backup.util';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -57,7 +69,19 @@ const TICKTICK_IMPORT_PLUGIN_ID = 'ticktick-import';
   templateUrl: './file-imex.component.html',
   styleUrls: ['./file-imex.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatIcon, MatButton, MatTooltip, TranslatePipe],
+  imports: [
+    MatIcon,
+    MatButton,
+    MatTooltip,
+    TranslatePipe,
+    FormsModule,
+    MatFormField,
+    MatLabel,
+    MatSelect,
+    MatOption,
+    MatSlideToggle,
+    SettingHelpComponent,
+  ],
 })
 export class FileImexComponent implements OnInit {
   private _snackService = inject(SnackService);
@@ -72,6 +96,14 @@ export class FileImexComponent implements OnInit {
 
   readonly fileInputRef = viewChild<ElementRef>('fileInput');
   T: typeof T = T;
+  importSource = 'ultra';
+  encryptExport = false;
+  async importSelected(): Promise<void> {
+    if (this.importSource === 'todoist') await this.openTodoistImport();
+    else if (this.importSource === 'ticktick') await this.openTickTickImport();
+    else if (this.importSource === 'url') this.openUrlImportDialog();
+    else this.fileInputRef()?.nativeElement.click();
+  }
 
   ngOnInit(): void {
     this._activatedRoute.queryParams.pipe(first()).subscribe((params) => {
@@ -193,6 +225,30 @@ export class FileImexComponent implements OnInit {
       return; // Exit if data is falsy
     }
 
+    if (
+      typeof oldData === 'object' &&
+      oldData !== null &&
+      'format' in oldData &&
+      oldData.format === ENCRYPTED_BACKUP_FORMAT
+    ) {
+      const passphrase = await firstValueFrom(
+        this._matDialog
+          .open<
+            BackupPassphraseDialogComponent,
+            boolean,
+            string
+          >(BackupPassphraseDialogComponent, { data: false })
+          .afterClosed(),
+      );
+      if (!passphrase) return;
+      try {
+        const plain = await decryptBackupFile(oldData, passphrase);
+        await this._processAndImportData(plain);
+      } catch {
+        this._snackService.open({ type: 'ERROR', msg: T.PS.REFINEMENT.DECRYPT_ERROR });
+      }
+      return;
+    }
     // V1 data check (as in original handleFileInput)
     // TODO: consider if this check is still relevant or can be removed/updated
     const v1Data = oldData as { config?: unknown; tasks?: unknown };
@@ -281,9 +337,23 @@ export class FileImexComponent implements OnInit {
   }
 
   async downloadBackup(): Promise<void> {
+    const passphrase = this.encryptExport
+      ? await firstValueFrom(
+          this._matDialog
+            .open<
+              BackupPassphraseDialogComponent,
+              boolean,
+              string
+            >(BackupPassphraseDialogComponent, { data: true })
+            .afterClosed(),
+        )
+      : undefined;
+    if (this.encryptExport && !passphrase) return;
     const data = await this._backupService.loadCompleteBackup(true);
+    const json = JSON.stringify(data);
+    const contents = passphrase ? await encryptBackupFile(json, passphrase) : json;
     const fileName = `${BACKUP_FILENAME_PREFIX}_${getBackupTimestamp()}.json`;
-    const result = await download(fileName, JSON.stringify(data));
+    const result = await download(fileName, contents);
     if ((IS_NATIVE_PLATFORM && !result.wasCanceled) || result.isSnap) {
       this._snackService.open({
         type: 'SUCCESS',

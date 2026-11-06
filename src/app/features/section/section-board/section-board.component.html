@@ -1,0 +1,71 @@
+<div
+  class="columns"
+  cdkDropListGroup
+>
+  @for (col of columns(); track trackColumn($index, col)) {
+    <section
+      class="column"
+      [class.is-no-section]="!col.id"
+      [attr.data-section-id]="col.id ?? 'none'"
+    >
+      <header>
+        <div class="title">
+          {{ col.id ? col.title : (T.F.PROJECT.LAYOUT.NO_SECTION | translate) }}
+        </div>
+        @let taskCountLabel =
+          T.F.BOARDS.V.TASK_COUNT | translate: { count: col.tasks.length };
+        <div
+          class="task-count"
+          [matTooltip]="taskCountLabel"
+        >
+          <mat-icon>checklist</mat-icon
+          ><span aria-hidden="true">{{ col.tasks.length }}</span>
+          <span class="cdk-visually-hidden">{{ taskCountLabel }}</span>
+        </div>
+        @if (col.id) {
+          <button
+            mat-icon-button
+            class="rename-section-btn"
+            (click)="renameSection(col)"
+            [attr.aria-label]="T.F.PROJECT.LAYOUT.RENAME_SECTION | translate"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+        }
+      </header>
+
+      <add-task-inline
+        [isNoDefaults]="true"
+        (afterTaskAdd)="onTaskAdded(col, $event)"
+      ></add-task-inline>
+
+      <div
+        class="task-items"
+        cdkDropList
+        [id]="dropListId(col)"
+        [cdkDropListData]="col"
+        (cdkDropListDropped)="drop($event)"
+      >
+        @for (task of col.tasks; track task.id) {
+          <planner-task
+            cdkDrag
+            [cdkDragData]="task"
+            [cdkDragStartDelay]="dragDelayForTouch()"
+            [task]="task"
+          ></planner-task>
+        }
+      </div>
+    </section>
+  }
+
+  <div class="add-section-column">
+    <button
+      mat-stroked-button
+      class="add-section-btn"
+      (click)="addSection()"
+    >
+      <mat-icon>add</mat-icon>
+      {{ T.MH.ADD_SECTION | translate }}
+    </button>
+  </div>
+</div>

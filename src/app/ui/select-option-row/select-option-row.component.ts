@@ -18,6 +18,7 @@ export class SelectOptionRowComponent {
   folderPath = input<string | null | undefined>(null);
   isSelected = input<boolean>(false);
   showCheckbox = input<boolean>(false);
+  showCheckmark = input<boolean>(false);
 
   effectiveIcon = computed(() => this.icon() || this.defaultIcon());
 

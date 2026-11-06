@@ -1,4 +1,5 @@
 import { computed, inject, Injectable } from '@angular/core';
+import { SearchDialogService } from '../../pages/search-page/search-dialog/search-dialog.service';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { IS_ELECTRON } from '../../app.constants';
 import { checkKeyCombo } from '../../util/check-key-combo';
@@ -59,6 +60,7 @@ export const isHelpKeyCombo = (
 export class ShortcutService {
   private _configService = inject(GlobalConfigService);
   private _router = inject(Router);
+  private _searchDialog = inject(SearchDialogService);
   private _layoutService = inject(LayoutService);
   private _matDialog = inject(MatDialog);
   private _taskService = inject(TaskService);
@@ -264,7 +266,7 @@ export class ShortcutService {
       checkKeyCombo(ev, keys.showSearchBar) &&
       this._configService.appFeatures().isSearchEnabled
     ) {
-      this._router.navigate(['/search']);
+      void this._searchDialog.open();
       ev.preventDefault();
     } else if (checkKeyCombo(ev, keys.focusSideNav)) {
       this._focusSideNav();

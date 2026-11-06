@@ -1,13 +1,15 @@
 @if (settingsLayout) {
-  <div class="settings-section-heading">
-    <h3>{{ section?.title | translate }}</h3>
-    @if (section?.help) {
-      <setting-help
-        [label]="section?.title | translate"
-        [text]="section?.help | translate"
-      />
-    }
-  </div>
+  @if (section?.customSection !== 'FILE_IMPORT_EXPORT') {
+    <div class="settings-section-heading">
+      <h3>{{ section?.title | translate }}</h3>
+      @if (section?.help) {
+        <setting-help
+          [label]="section?.title | translate"
+          [text]="section?.help | translate"
+        />
+      }
+    </div>
+  }
   <ng-container *ngTemplateOutlet="content" />
 } @else {
   <collapsible

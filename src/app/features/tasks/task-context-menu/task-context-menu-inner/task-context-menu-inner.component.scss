@@ -33,3 +33,18 @@
     }
   }
 }
+
+// A section sits under its project in the move menu: indented, led by a dash.
+.move-to-section-row {
+  display: flex;
+  align-items: center;
+  gap: var(--s);
+  padding-inline-start: var(--s3);
+  min-width: 0;
+}
+
+.move-to-section-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
