@@ -19,7 +19,6 @@ import { FormsModule, ReactiveFormsModule, UntypedFormGroup } from '@angular/for
 import { adjustToDialogFormlyForm } from '../../../util/adjust-to-dialog-formly-form';
 import { SIMPLE_COUNTER_FORM } from '../../config/form-cfgs/simple-counter-form.const';
 import { MatButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { EMPTY_SIMPLE_COUNTER } from '../simple-counter.const';
 import { SimpleCounterService } from '../simple-counter.service';
@@ -35,7 +34,6 @@ import { useDialogSize } from '../../../ui/dialog-size.util';
     MatDialogContent,
     MatDialogActions,
     MatButton,
-    MatIcon,
     TranslatePipe,
     ReactiveFormsModule,
     FormsModule,

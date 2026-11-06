@@ -19,7 +19,6 @@ import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
 import { MatButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 
 interface TaskAttachmentSelectType {
@@ -46,7 +45,6 @@ const HAS_URL_SCHEME_RE = /^[a-z][a-z0-9+.-]*:/i;
     MatOption,
     MatDialogActions,
     MatButton,
-    MatIcon,
     TranslatePipe,
   ],
 })

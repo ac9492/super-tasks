@@ -16,7 +16,6 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { T } from '../../../t.const';
 import {
@@ -77,7 +76,6 @@ type SyncFormModel = SyncConfig & {
     MatDialogContent,
     MatDialogActions,
     MatButton,
-    MatIcon,
     TranslatePipe,
     ReactiveFormsModule,
     FormlyModule,

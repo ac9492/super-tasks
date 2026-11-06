@@ -21,7 +21,6 @@ export interface FinishDayBeforeCloseDialogData {
 @Component({
   selector: 'dialog-finish-day-before-close',
   templateUrl: './dialog-finish-day-before-close.component.html',
-  styleUrls: ['./dialog-finish-day-before-close.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MatDialogContent,

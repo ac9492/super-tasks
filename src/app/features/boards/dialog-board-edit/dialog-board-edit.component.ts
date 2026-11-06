@@ -11,7 +11,6 @@ import { T } from '../../../t.const';
 import { BoardEditComponent } from '../board-edit/board-edit.component';
 import { BoardCfg } from '../boards.model';
 import { MatButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DialogConfirmComponent } from '../../../ui/dialog-confirm/dialog-confirm.component';
 import { useDialogSize } from '../../../ui/dialog-size.util';
@@ -25,7 +24,6 @@ import { useDialogSize } from '../../../ui/dialog-size.util';
     MatDialogActions,
     BoardEditComponent,
     MatButton,
-    MatIcon,
     TranslatePipe,
   ],
   templateUrl: './dialog-board-edit.component.html',
