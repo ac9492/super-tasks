@@ -26,7 +26,7 @@ import { useDialogSize } from '../../../ui/dialog-size.util';
 
 const KIND_ICON: Record<BackupListEntry['kind'], string> = {
   RECOVERY_POINT: 'history',
-  BACKUP_FILE: 'folder',
+  BACKUP_FILE: 'description',
   MOBILE_SLOT: 'smartphone',
 };
 

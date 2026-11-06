@@ -1,3 +1,4 @@
+import { resolveTagIcon } from '../../tag/resolve-tag-icon.util';
 import { shortSyntax } from '../short-syntax';
 import { msToString } from '../../../ui/duration/ms-to-string.pipe';
 import {
@@ -82,7 +83,7 @@ export const shortSyntaxToTags = async ({
     shortSyntaxTags.push({
       title: time,
       color: defaultColor,
-      icon: 'timer',
+      icon: r.taskChanges.timeSpentOnDay?.[getDbDateStr()] ? 'timer' : 'hourglass_empty',
     });
   }
   if (r.taskChanges.dueWithTime) {
@@ -127,7 +128,7 @@ export const shortSyntaxToTags = async ({
     shortSyntaxTags.push({
       title: displayedDateStr,
       color: defaultColor,
-      icon: 'event',
+      icon: r.taskChanges.hasPlannedTime === false ? 'calendar_month' : 'schedule',
     });
   }
   // if(due){
@@ -149,7 +150,7 @@ export const shortSyntaxToTags = async ({
         id: tag.id,
         title: tag.title,
         color: tag.color || tag.theme?.primary || DEFAULT_TAG_COLOR,
-        icon: tag.icon || 'label',
+        icon: resolveTagIcon(tag) || 'label',
       });
     });
   }

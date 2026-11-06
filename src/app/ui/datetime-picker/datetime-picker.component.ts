@@ -56,10 +56,10 @@ export type QuickAccessId = 'today' | 'tomorrow' | 'nextWeek' | 'nextMonth';
  * and falls back to English for the other, failing WCAG 2.5.3 (Label in Name).
  */
 const QUICK_ACCESS_ITEMS = [
-  { id: 'today', icon: 'wb_sunny', label: T.G.TODAY },
-  { id: 'tomorrow', icon: 'wb_twilight', label: T.G.TOMORROW },
-  { id: 'nextWeek', icon: 'next_week', label: T.G.NEXT_WEEK },
-  { id: 'nextMonth', icon: 'bedtime', label: T.G.NEXT_MONTH },
+  { id: 'today', icon: 'today', label: T.G.TODAY },
+  { id: 'tomorrow', icon: 'event_upcoming', label: T.G.TOMORROW },
+  { id: 'nextWeek', icon: 'date_range', label: T.G.NEXT_WEEK },
+  { id: 'nextMonth', icon: 'calendar_month', label: T.G.NEXT_MONTH },
 ] as const satisfies readonly { id: QuickAccessId; icon: string; label: string }[];
 
 @Component({

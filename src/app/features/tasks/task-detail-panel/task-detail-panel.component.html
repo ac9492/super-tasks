@@ -29,7 +29,7 @@
       type="button"
       (click)="scheduleTask()"
     >
-      <mat-icon aria-hidden="true">event</mat-icon
+      <mat-icon aria-hidden="true">calendar_month</mat-icon
       >{{ T.F.TASK.ADDITIONAL_INFO.DUE | translate }}
     </button>
     <button
@@ -51,7 +51,7 @@
       [type]="'panel'"
     >
       <ng-container panel-header>
-        <mat-icon class="panel-header-icon">list</mat-icon>
+        <mat-icon class="panel-header-icon">account_tree</mat-icon>
         @if (task().subTasks?.length) {
           <span>{{
             T.F.TASK.ADDITIONAL_INFO.SUB_TASKS
@@ -162,13 +162,18 @@
       <div class="schedule-value">
         @if (task().dueWithTime) {
           <div class="schedule-value__date">
+            @if (task().remindAt) {
+              <mat-icon [title]="T.F.TASK.ADDITIONAL_INFO.REMINDER | translate"
+                >alarm</mat-icon
+              >
+            }
             {{ task().dueWithTime | localeDate: 'short' : undefined : locale() }}
           </div>
         }
         @if (task().dueDay) {
           <div class="schedule-value__date">
             @if (isPlannedForTodayDay()) {
-              <mat-icon>wb_sunny</mat-icon>
+              <mat-icon>today</mat-icon>
               {{ T.G.TODAY_TAG_TITLE | translate }}
             } @else {
               {{ task().dueDay | localeDate: 'shortDate' : undefined : locale() }}
@@ -265,11 +270,11 @@
         <span>{{ T.F.TASK.ADDITIONAL_INFO.CHECKLIST | translate }}</span>
         <!-- -->
       } @else if (task().notes) {
-        <mat-icon>chat</mat-icon>
+        <mat-icon>description</mat-icon>
         <span>{{ T.F.TASK.ADDITIONAL_INFO.NOTES | translate }}</span>
       } @else {
         <!-- No content yet: hint that this section can hold a note or a checklist -->
-        <mat-icon>chat_bubble_outline</mat-icon>
+        <mat-icon>description</mat-icon>
         <span>{{ T.F.TASK.ADDITIONAL_INFO.NOTES_OR_CHECKLIST | translate }}</span>
       }
     </ng-container>
@@ -300,7 +305,7 @@
       [type]="'panel'"
     >
       <ng-container panel-header>
-        <mat-icon>attachment</mat-icon>
+        <mat-icon>attach_file</mat-icon>
         <span>{{
           T.F.TASK.ADDITIONAL_INFO.ATTACHMENTS | translate: { nr: totalAttachments() }
         }}</span>
@@ -349,7 +354,7 @@
       matTooltipPosition="above"
     >
       <ng-container input-title>
-        <mat-icon>attachment</mat-icon>
+        <mat-icon>attach_file</mat-icon>
         <span>{{ T.F.TASK.ADDITIONAL_INFO.ADD_ATTACHMENT | translate }}</span>
       </ng-container>
       <ng-container input-value></ng-container>

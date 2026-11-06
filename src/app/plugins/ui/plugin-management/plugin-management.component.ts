@@ -17,6 +17,7 @@ import { PluginConfigService } from '../../plugin-config.service';
 import { MAX_PLUGIN_ZIP_SIZE } from '../../plugin.const';
 import { MatSlideToggle, MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatIcon } from '@angular/material/icon';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { MatChip, MatChipSet } from '@angular/material/chips';
@@ -111,6 +112,7 @@ const getLanguageName = (
   imports: [
     MatSlideToggle,
     MatIcon,
+    MatProgressSpinner,
     MatButton,
     MatButtonToggle,
     MatButtonToggleGroup,

@@ -29,7 +29,7 @@ import { GlobalConfigService } from '../../../features/config/global-config.serv
         matTooltip="{{ T.MH.TOGGLE_SHOW_SCHEDULE_PANEL | translate }}"
         [attr.aria-label]="T.MH.TOGGLE_SHOW_SCHEDULE_PANEL | translate"
       >
-        <mat-icon>schedule</mat-icon>
+        <mat-icon>calendar_view_week</mat-icon>
       </button>
     }
 
@@ -45,7 +45,7 @@ import { GlobalConfigService } from '../../../features/config/global-config.serv
         }}"
         [attr.aria-label]="T.MH.TOGGLE_SHOW_ISSUE_PANEL | translate"
       >
-        <mat-icon>webhook</mat-icon>
+        <mat-icon>assignment</mat-icon>
       </button>
     }
 
@@ -61,7 +61,7 @@ import { GlobalConfigService } from '../../../features/config/global-config.serv
         }}"
         [attr.aria-label]="T.MH.TOGGLE_SHOW_NOTES | translate"
       >
-        <mat-icon>comment</mat-icon>
+        <mat-icon>description</mat-icon>
       </button>
     }
   `,

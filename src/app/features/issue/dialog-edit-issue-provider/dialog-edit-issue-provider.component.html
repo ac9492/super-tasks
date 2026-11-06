@@ -151,8 +151,13 @@
                 type="button"
                 disabled
               >
-                <mat-icon class="spin">sync</mat-icon>
-                {{ T.F.ISSUE.DIALOG.LOADING_OPTIONS | translate }}
+                <span class="loading-status">
+                  <mat-spinner
+                    diameter="18"
+                    aria-hidden="true"
+                  ></mat-spinner>
+                  <span>{{ T.F.ISSUE.DIALOG.LOADING_OPTIONS | translate }}</span>
+                </span>
               </button>
             }
             @case ('loaded') {
@@ -277,7 +282,8 @@
       <!-- -->
       @if (isConnectionWorks()) {
         <div class="success-info dialog-action-start">
-          <mat-icon>check</mat-icon>
+          <mat-icon aria-hidden="true">check_circle</mat-icon>
+          {{ T.F.ISSUE.DIALOG.CONNECTED | translate }}
         </div>
       } @else {
         <button
@@ -287,7 +293,7 @@
           type="button"
           [disabled]="form.invalid"
         >
-          <mat-icon>online_prediction</mat-icon>
+          <mat-icon>cable</mat-icon>
           {{ T.F.ISSUE.DIALOG.TEST_CONNECTION | translate }}
         </button>
       }

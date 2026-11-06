@@ -52,8 +52,8 @@ export interface ShareResult {
 export interface ShareTargetConfig {
   /** Display label for the target */
   label: string;
-  /** Material icon name */
-  icon: string;
+  /** Optional Material icon name; social targets use their visible platform label. */
+  icon?: string;
   /** Whether this target is available on the current platform */
   available: boolean;
   /** Optional color for the target button */

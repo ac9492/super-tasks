@@ -15,7 +15,7 @@
         [matTooltip]="T.F.WORKLOG.CMP.EXPORT_DATA | translate"
         mat-icon-button
       >
-        <mat-icon>call_made</mat-icon>
+        <mat-icon>download</mat-icon>
       </button>
     </div>
     <div class="years">
@@ -59,7 +59,7 @@
                     [attr.aria-label]="T.F.WORKLOG.CMP.EXPORT_DATA | translate"
                     mat-icon-button
                   >
-                    <mat-icon>call_made</mat-icon>
+                    <mat-icon>download</mat-icon>
                   </button>
                 </h3>
                 <div class="month-time-spent">
@@ -101,7 +101,7 @@
                             [attr.aria-label]="T.F.WORKLOG.CMP.EXPORT_DATA | translate"
                             mat-icon-button
                           >
-                            <mat-icon>call_made</mat-icon>
+                            <mat-icon>download</mat-icon>
                           </button>
                         </div>
                         <div class="week-table-wrapper">
@@ -179,10 +179,10 @@
                                   </td>
                                   <td>
                                     @if (!isDayExpanded(worklogForDay.value.dateStr)) {
-                                      <mat-icon>list </mat-icon>
+                                      <mat-icon>expand_more</mat-icon>
                                     }
                                     @if (isDayExpanded(worklogForDay.value.dateStr)) {
-                                      <mat-icon>close </mat-icon>
+                                      <mat-icon>expand_less</mat-icon>
                                     }
                                   </td>
                                 </tr>
@@ -255,7 +255,7 @@
         class="recently-deleted-btn"
         (click)="openRecentlyDeleted()"
       >
-        <mat-icon>delete_outline</mat-icon>
+        <mat-icon>delete</mat-icon>
         {{ T.F.TASK.D_RECENTLY_DELETED.LINK | translate }}
       </button>
     </div>

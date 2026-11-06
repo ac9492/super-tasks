@@ -27,6 +27,7 @@ import { MarkdownComponent } from 'ngx-markdown';
 import { MatIconButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
 import {
   MatMenu,
   MatMenuContent,

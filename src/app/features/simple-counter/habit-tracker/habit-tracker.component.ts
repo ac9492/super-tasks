@@ -1,3 +1,4 @@
+import { SimpleCounterIconPipe } from '../simple-counter-icon.pipe';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -38,6 +39,7 @@ interface HabitDay {
   selector: 'habit-tracker',
   standalone: true,
   imports: [
+    SimpleCounterIconPipe,
     CommonModule,
     TranslateModule,
     MatButtonModule,

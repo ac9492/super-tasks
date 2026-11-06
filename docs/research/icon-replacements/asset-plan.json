@@ -1,0 +1,168 @@
+{
+  "date": "2026-11-05",
+  "material": {
+    "source": "src/assets/fonts/material-symbols-outlined.woff2",
+    "source_sha256": "f7ebbdfac4f5f19c7d4dd7da5b836955fea1e8eda7fc8288d12c8a482a95ed7f",
+    "directory": "/tmp/icon-material-svg",
+    "extractor": "/tmp/extract-material-svg.py",
+    "manifest": "/tmp/icon-material-svg/manifest.json",
+    "count": 4167,
+    "geometry": "Exact bundled Material Symbols Outlined font-400 vector outlines; FILL=0. Font contains only FILL variable axis; wght400/GRAD0/opsz24 are recorded current UI defaults.",
+    "view_box": "0 0 24 24",
+    "fill": "currentColor",
+    "license": "Apache-2.0",
+    "license_path": "/tmp/icon-material-svg/LICENSE.material-symbols.txt"
+  },
+  "specific_candidates": [
+    {
+      "use": "Remove from Today",
+      "preferred": "event_busy",
+      "svg": "/tmp/icon-material-svg/event_busy.svg",
+      "alternative": "Composite calendar_today + remove badge",
+      "note": "Existing calendar-cross asset is precise for unschedule; if calendar-minus vocabulary approved, compose same-family paths."
+    },
+    {
+      "use": "Unpin note from Today",
+      "preferred": "calendar_today + remove badge",
+      "components": [
+        "/tmp/icon-material-svg/calendar_today.svg",
+        "/tmp/icon-material-svg/remove.svg"
+      ],
+      "note": "Composition should replace legacy crossed-out sun; keep label Unpin from Today to distinguish deletion."
+    },
+    {
+      "use": "Yesterday Tasks plugin",
+      "preferred": "calendar_today + arrow_back badge",
+      "components": [
+        "/tmp/icon-material-svg/calendar_today.svg",
+        "/tmp/icon-material-svg/arrow_back.svg"
+      ],
+      "note": "No existing yesterday/day-back glyph in bundled font. Keep full name because back arrow alone is generic navigation."
+    },
+    {
+      "use": "sync.md plugin identity",
+      "preferred": "description + sync badge",
+      "components": [
+        "/tmp/icon-material-svg/description.svg",
+        "/tmp/icon-material-svg/sync.svg"
+      ],
+      "note": "No exact document-sync glyph. Composition expresses document and synchronization rather than MD microtext."
+    },
+    {
+      "use": "Heading 1 / 2 / 3",
+      "preferred": ["format_h1", "format_h2", "format_h3"],
+      "svg": [
+        "/tmp/icon-material-svg/format_h1.svg",
+        "/tmp/icon-material-svg/format_h2.svg",
+        "/tmp/icon-material-svg/format_h3.svg"
+      ],
+      "note": "Exact existing H1/H2/H3 icon vectors; no custom font/text drawing necessary."
+    },
+    {
+      "use": "Standing Desk Timer",
+      "preferred": "man",
+      "svg": "/tmp/icon-material-svg/man.svg",
+      "note": "Stationary standing silhouette; retain Standing desk label, avoid walking-person meaning."
+    },
+    {
+      "use": "Stretching Counter",
+      "preferred": "accessibility_new",
+      "svg": "/tmp/icon-material-svg/accessibility_new.svg",
+      "alternative": "sports_gymnastics",
+      "note": "Outstretched arms fit a simple stretch better than dumbbell or seated meditation. Keep Stretching label; do not claim symbol alone identifies a precise exercise."
+    },
+    {
+      "use": "Google Calendar provider",
+      "preferred": "Simple Icons Google Calendar brand silhouette",
+      "svg": "/tmp/icon-provider-candidates/googlecalendar.svg",
+      "note": "Distinct brand identifier, intentional visual exception to generic outlined action glyphs."
+    },
+    {
+      "use": "Todoist importer",
+      "preferred": "Simple Icons Todoist brand silhouette",
+      "svg": "/tmp/icon-provider-candidates/todoist.svg",
+      "note": "Pair with Import from Todoist label; keeps provider identity separate from import action."
+    },
+    {
+      "use": "TickTick importer",
+      "preferred": "Simple Icons TickTick brand silhouette",
+      "svg": "/tmp/icon-provider-candidates/ticktick.svg",
+      "note": "Pair with Import from TickTick label; differs clearly from Todoist."
+    }
+  ],
+  "brand_sources": {
+    "checked": "2026-11-05",
+    "sources": [
+      {
+        "name": "googlecalendar",
+        "path": "/tmp/icon-provider-candidates/googlecalendar.svg",
+        "source": "https://github.com/simple-icons/simple-icons/blob/develop/icons/googlecalendar.svg",
+        "blob_sha": "6049d100d7b292a07021bad26ef20b0f53cef1c7",
+        "license": "CC0-1.0; trademarks remain their owners\u2019",
+        "modified": "Added presentation-only fill=currentColor; geometry unchanged."
+      },
+      {
+        "name": "todoist",
+        "path": "/tmp/icon-provider-candidates/todoist.svg",
+        "source": "https://github.com/simple-icons/simple-icons/blob/develop/icons/todoist.svg",
+        "blob_sha": "8b53ff6cea49f2a0b1ea75884153cc96968dcd6d",
+        "license": "CC0-1.0; trademarks remain their owners\u2019",
+        "modified": "Added presentation-only fill=currentColor; geometry unchanged."
+      },
+      {
+        "name": "ticktick",
+        "path": "/tmp/icon-provider-candidates/ticktick.svg",
+        "source": "https://github.com/simple-icons/simple-icons/blob/develop/icons/ticktick.svg",
+        "blob_sha": "70952adcbe3fbc5dbe350a288822c00edd72ba66",
+        "license": "CC0-1.0; trademarks remain their owners\u2019",
+        "modified": "Added presentation-only fill=currentColor; geometry unchanged."
+      }
+    ],
+    "license_source": "https://github.com/simple-icons/simple-icons/blob/develop/LICENSE.md",
+    "license_blob_sha": "70d4a7b6740c5d9b594ff2fc27d3ea7e89413185"
+  },
+  "brand_provenance_note": "Actual vector brand candidates fetched from third-party Simple Icons source, not vendor-hosted official downloads. Preserve path geometry; allow monochrome appearance as provider-logo exception. CC0 library license does not alter trademark ownership.",
+  "native_notes": [
+    "iOS SF sun.max is an Info.plist reference; no Apple SF Symbol vector artwork exists in this Linux repository. Show a clearly labeled native-equivalent preview or reference name, not a Material glyph presented as exact SF artwork.",
+    "Proposed iOS calendar is a native SF Symbol name; confirm support on minimum deployment target during implementation.",
+    "Android ic_shortcut_today*.xml contains actual sun vector paths; root may preview these current paths directly and use extracted today/calendar SVG as proposed vector design before converting into VectorDrawable.",
+    "App brand, third-party provider logos, and user-selected emoji are intentional identity domains; do not force them into generic UI stroke styles."
+  ],
+  "app_changes": "None",
+  "custom_candidates": {
+    "date": "2026-11-05",
+    "source_font_sha256": "f7ebbdfac4f5f19c7d4dd7da5b836955fea1e8eda7fc8288d12c8a482a95ed7f",
+    "candidates": [
+      {
+        "id": "calendar-minus",
+        "path": "/tmp/icon-custom-candidates/calendar-minus.svg",
+        "meaning": "Remove/unpin from Today; calendar date removed, task/note retained",
+        "base_symbol": "calendar_today",
+        "base_source": "/tmp/icon-material-svg/calendar_today.svg",
+        "geometry": "24x24; exact same-family base outline at 90%, custom 1.5px round-capped badge; transparency-safe SVG mask",
+        "license": "Base Google Material Symbols Apache-2.0; original Ultra Tasks badge composition",
+        "note": "Review candidate, not installed into application. Masks use white/black only as transparency operators, not UI colors."
+      },
+      {
+        "id": "calendar-back",
+        "path": "/tmp/icon-custom-candidates/calendar-back.svg",
+        "meaning": "Yesterday\u2019s Tasks plugin identity; labeled previous-day calendar",
+        "base_symbol": "calendar_today",
+        "base_source": "/tmp/icon-material-svg/calendar_today.svg",
+        "geometry": "24x24; exact same-family base outline at 90%, custom 1.5px round-capped badge; transparency-safe SVG mask",
+        "license": "Base Google Material Symbols Apache-2.0; original Ultra Tasks badge composition",
+        "note": "Review candidate, not installed into application. Masks use white/black only as transparency operators, not UI colors."
+      },
+      {
+        "id": "document-sync",
+        "path": "/tmp/icon-custom-candidates/document-sync.svg",
+        "meaning": "sync.md identity: document synchronized in both directions",
+        "base_symbol": "description",
+        "base_source": "/tmp/icon-material-svg/description.svg",
+        "geometry": "24x24; exact same-family base outline at 90%, custom 1.5px round-capped badge; transparency-safe SVG mask",
+        "license": "Base Google Material Symbols Apache-2.0; original Ultra Tasks badge composition",
+        "note": "Review candidate, not installed into application. Masks use white/black only as transparency operators, not UI colors."
+      }
+    ]
+  }
+}

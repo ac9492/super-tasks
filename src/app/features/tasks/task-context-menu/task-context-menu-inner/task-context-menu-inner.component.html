@@ -31,7 +31,7 @@
       (click)="quickAccessBtnClick(1)"
       [matTooltip]="T.F.TASK.D_SCHEDULE_TASK.QA_TODAY | translate"
     >
-      <mat-icon aria-hidden="true">wb_sunny</mat-icon>
+      <mat-icon aria-hidden="true">today</mat-icon>
       <span class="quick-access-label">{{ T.G.TODAY | translate }}</span>
     </button>
     <button
@@ -39,7 +39,7 @@
       (click)="quickAccessBtnClick(2)"
       [matTooltip]="T.F.TASK.D_SCHEDULE_TASK.QA_TOMORROW | translate"
     >
-      <mat-icon aria-hidden="true">wb_twilight</mat-icon>
+      <mat-icon aria-hidden="true">event_upcoming</mat-icon>
       <span class="quick-access-label">{{ tomorrowLabel }}</span>
     </button>
     <button
@@ -47,7 +47,7 @@
       (click)="quickAccessBtnClick(3)"
       [matTooltip]="T.F.TASK.D_SCHEDULE_TASK.QA_NEXT_WEEK | translate"
     >
-      <mat-icon aria-hidden="true">next_week</mat-icon>
+      <mat-icon aria-hidden="true">date_range</mat-icon>
       <span class="quick-access-label">{{ nextWeekLabel }}</span>
     </button>
     <button
@@ -60,7 +60,7 @@
       "
       (click)="scheduleTask()"
     >
-      <mat-icon aria-hidden="true">today</mat-icon>
+      <mat-icon aria-hidden="true">calendar_month</mat-icon>
       <span class="quick-access-label">{{
         T.F.TASK.D_SCHEDULE_TASK.QA_LABEL_PICK_DATE | translate
       }}</span>
@@ -203,7 +203,7 @@
       (menuOpened)="focusFirstSubmenuItem(projectMenu)"
     >
       <span class="menuItemLeft">
-        <mat-icon>forward</mat-icon>
+        <mat-icon>drive_file_move</mat-icon>
         {{
           (task.projectId
             ? T.F.TASK.CMP.MOVE_TO_OTHER_PROJECT
@@ -219,7 +219,7 @@
       (click)="convertToMainTask()"
       mat-menu-item
     >
-      <mat-icon>subdirectory_arrow_left</mat-icon>
+      <mat-icon>format_indent_decrease</mat-icon>
       {{ T.F.TASK.CMP.CONVERT_TO_PARENT_TASK | translate }}
     </button>
   }
@@ -328,7 +328,7 @@
       (click)="handOffPlainspaceTask(null)"
       mat-menu-item
     >
-      <mat-icon>group</mat-icon>
+      <mat-icon>person_remove</mat-icon>
       {{ T.PLAINSPACE.HANDOFF.RELEASE | translate }}
     </button>
   }
@@ -353,7 +353,7 @@
       mat-menu-item
     >
       <span class="menuItemLeft">
-        <mat-icon>checklist_rtl</mat-icon>
+        <mat-icon>select_check_box</mat-icon>
         {{ T.F.TASK.MULTI_SELECT.SELECT_ENTRY | translate }}
       </span>
     </button>
@@ -366,7 +366,7 @@
       mat-menu-item
     >
       <span class="menuItemLeft">
-        <mat-icon>file_copy</mat-icon>
+        <mat-icon>content_copy</mat-icon>
         {{ T.F.TASK.CMP.DUPLICATE | translate }}
       </span>
       <span class="key-i">{{ kb.taskDuplicate }}</span>
@@ -391,7 +391,7 @@
     mat-menu-item
   >
     <span class="menuItemLeft">
-      <mat-icon class="color-warn-i">delete_forever</mat-icon>
+      <mat-icon class="color-warn-i">delete</mat-icon>
       {{
         (task.repeatCfgId ? T.F.TASK.CMP.DELETE_REPEAT_INSTANCE : T.F.TASK.CMP.DELETE)
           | translate
@@ -408,7 +408,7 @@
     menuTouchFix
   >
     <span class="menuItemLeft">
-      <mat-icon>arrow_upward</mat-icon>
+      <mat-icon>vertical_align_top</mat-icon>
       {{ T.F.TASK.CMP.MOVE_TO_TOP | translate }}
     </span>
     <span class="key-i">{{ kb.moveTaskToTop }}</span>
@@ -419,7 +419,7 @@
     menuTouchFix
   >
     <span class="menuItemLeft">
-      <mat-icon>arrow_downward</mat-icon>
+      <mat-icon>vertical_align_bottom</mat-icon>
       {{ T.F.TASK.CMP.MOVE_TO_BOTTOM | translate }}
     </span>
     <span class="key-i">{{ kb.moveTaskToBottom }}</span>
@@ -576,7 +576,7 @@
         >
           <select-option-row
             [title]="tag.title"
-            [icon]="tag.icon"
+            [icon]="tag | tagIcon"
             defaultIcon="label"
             [color]="tag.color || tag.theme?.primary"
             [isSelected]="task.tagIds.includes(tag.id)"

@@ -13,6 +13,7 @@ import { SnackService } from '../../../core/snack/snack.service';
 import { T } from '../../../t.const';
 import { getDbDateStr } from '../../../util/get-db-date-str';
 import { getSimpleCounterStreakDuration } from '../get-simple-counter-streak-duration';
+import { getSimpleCounterIcon } from '../simple-counter-icon.pipe';
 import {
   tickSimpleCounterLocal,
   updateAllSimpleCounters,
@@ -58,12 +59,12 @@ export class SimpleCounterEffects {
             if ((sc.countOnDay?.[getDbDateStr()] ?? 0) >= (sc.streakMinValue || 0)) {
               const streakDuration = getSimpleCounterStreakDuration(sc);
               // eslint-disable-next-line max-len
-              const msg = `<strong>${sc.title}</strong> <br />${this._translateService.instant(T.F.SIMPLE_COUNTER.S.GOAL_REACHED_1)}<br /> ${this._translateService.instant(T.F.SIMPLE_COUNTER.S.GOAL_REACHED_2)} <strong>${streakDuration}🔥</strong>`;
+              const msg = `<strong>${sc.title}</strong> <br />${this._translateService.instant(T.F.SIMPLE_COUNTER.S.GOAL_REACHED_1)}<br /> ${this._translateService.instant(T.F.SIMPLE_COUNTER.S.GOAL_REACHED_2)} <strong>${streakDuration} ${this._translateService.instant(T.F.SIMPLE_COUNTER.D_EDIT.DAYS)}</strong>`;
 
               const DURATION = 4000;
               this._snackService.open({
                 type: 'SUCCESS',
-                ico: sc.icon || undefined,
+                ico: getSimpleCounterIcon(sc) || undefined,
                 // ico: 'celebration',
                 // ico: '🎉',
                 config: {

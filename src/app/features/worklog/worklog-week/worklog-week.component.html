@@ -28,9 +28,10 @@
                       [@expandFade]
                       class="icon-indicator-bar"
                     >
-                      <strong>∑ {{ day.value.timeSpent | msToClockString }}</strong>
+                      <mat-icon>timer</mat-icon>
+                      <strong>{{ day.value.timeSpent | msToClockString }}</strong>
                       &nbsp;
-                      <mat-icon>list</mat-icon>
+                      <mat-icon>checklist</mat-icon>
                       <strong>{{ day.value.logEntries.length }}</strong>
                       @if (day.value.workStart) {
                         <em
@@ -57,7 +58,9 @@
                           track sc
                         ) {
                           <div class="simple-counter-item">
-                            <mat-icon inline="true">{{ sc.icon }}</mat-icon>
+                            <mat-icon inline="true">{{
+                              sc | simpleCounterIcon
+                            }}</mat-icon>
                             @if (sc.type === 'StopWatch') {
                               <div class="count">
                                 {{
@@ -78,9 +81,7 @@
                 </div>
               </div>
               <div class="with-icon">
-                @if (visibility[i]) {
-                  <mat-icon [@fade]>timer </mat-icon>
-                }
+                <mat-icon>{{ visibility[i] ? 'expand_less' : 'expand_more' }}</mat-icon>
               </div>
             </div>
             @if (visibility[i]) {
@@ -127,7 +128,7 @@
         color=""
         mat-button
       >
-        <mat-icon>call_made</mat-icon>
+        <mat-icon>ios_share</mat-icon>
         {{ T.F.WORKLOG.WEEK.EXPORT | translate }}
       </button>
     </div>

@@ -57,6 +57,7 @@
       <button
         [matTooltip]="taskListLabel"
         [attr.aria-label]="taskListLabel"
+        [attr.aria-pressed]="isCurrentlyChecklist()"
         (mousedown)="$event.preventDefault()"
         (click)="toggleChecklistMode($event)"
         mat-icon-button
@@ -73,7 +74,7 @@
         (mousedown)="$event.preventDefault()"
         mat-icon-button
       >
-        <mat-icon>playlist_add_check</mat-icon>
+        <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #checklistMenu="matMenu">
         <button

@@ -111,7 +111,11 @@ const noteMenuAction = async (
   await waitForMenuSettled(client.page);
   await client.page
     .locator('.mat-mdc-menu-panel button')
-    .filter({ has: client.page.locator(`mat-icon:text-is("${icon}")`) })
+    .filter({
+      has: client.page.locator('mat-icon', {
+        hasText: icon === 'lock_open' ? /^(lock_open|code)$/ : /^delete_forever$/,
+      }),
+    })
     .click();
   await expect(client.page.locator('.mat-mdc-menu-panel')).toBeHidden();
 };

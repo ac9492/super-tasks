@@ -125,7 +125,7 @@
           (click)="updateDailySummaryTxt(undefined)"
           mat-icon-button
         >
-          <mat-icon>visibility_off</mat-icon>
+          <mat-icon>delete</mat-icon>
         </button>
       </inline-markdown>
     } @else {
@@ -136,7 +136,7 @@
         [matTooltip]="T.PDS.ADD_DAY_END_NOTE | translate"
         [attr.aria-label]="T.PDS.ADD_DAY_END_NOTE | translate"
       >
-        <mat-icon>note_alt</mat-icon>
+        <mat-icon>note_add</mat-icon>
       </button>
     }
     <!--      <inline-markdown-->
@@ -227,7 +227,7 @@
           color="primary"
           mat-flat-button
         >
-          <mat-icon>wb_sunny</mat-icon>
+          <mat-icon>check_circle</mat-icon>
           {{ T.PDS.SAVE_AND_GO_HOME | translate }}
         </button>
       }
@@ -237,7 +237,7 @@
           color="primary"
           mat-flat-button
         >
-          <mat-icon>wb_sunny</mat-icon>
+          <mat-icon>check_circle</mat-icon>
           {{ T.PDS.CLEAR_ALL_CONTINUE | translate }}
         </button>
       }

@@ -1,0 +1,1569 @@
+"icon","family","static_reference_count","scopes","usage_specific_recommendations","all_source_locations"
+"ic_launcher_foreground","android-drawable","4","native","App brand / small project color marker in home widget: Keep; project text must remain so color is not sole identity.","android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml:4
+android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml:5
+android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml:4
+android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml:5"
+"ic_shortcut_add_task","android-drawable","1","native","Launcher Add task quick action; plus: Keep; title identifies object.","android/app/src/main/res/xml/shortcuts.xml:18"
+"ic_shortcut_add_task_foreground","android-drawable","1","native","Launcher Add task quick action; plus: Keep; title identifies object.","android/app/src/main/res/drawable-anydpi-v26/ic_shortcut_add_task.xml:4"
+"ic_shortcut_inbox","android-drawable","1","native","Launcher Inbox quick action; tray: Keep, match web Inbox.","android/app/src/main/res/xml/shortcuts.xml:40"
+"ic_shortcut_inbox_foreground","android-drawable","1","native","Launcher Inbox quick action; tray: Keep, match web Inbox.","android/app/src/main/res/drawable-anydpi-v26/ic_shortcut_inbox.xml:4"
+"ic_shortcut_today","android-drawable","1","native","Launcher Today quick action; sun path in standard/adaptive variants: Redraw as calendar with current-day marker, matching today. Update both variants; changing the web font does not update native paths.","android/app/src/main/res/xml/shortcuts.xml:29"
+"ic_shortcut_today_foreground","android-drawable","1","native","Launcher Today quick action; sun path in standard/adaptive variants: Redraw as calendar with current-day marker, matching today. Update both variants; changing the web font does not update native paths.","android/app/src/main/res/drawable-anydpi-v26/ic_shortcut_today.xml:4"
+"ic_stat_sp","android-drawable","9","native","Tracking, remote tracking, reminders and focus notifications: Keep app identity; task/action/state must remain in notification text.","android/app/src/main/java/com/superproductivity/superproductivity/service/FocusModeForegroundService.kt:328
+android/app/src/main/java/com/superproductivity/superproductivity/service/FocusModeNotificationHelper.kt:60
+android/app/src/main/java/com/superproductivity/superproductivity/service/FocusModeNotificationHelper.kt:206
+android/app/src/main/java/com/superproductivity/superproductivity/service/ReminderNotificationHelper.kt:257
+android/app/src/main/java/com/superproductivity/superproductivity/service/ReminderNotificationHelper.kt:281
+android/app/src/main/java/com/superproductivity/superproductivity/service/RemoteTrackingNotificationHelper.kt:82
+android/app/src/main/java/com/superproductivity/superproductivity/service/TrackingForegroundService.kt:267
+android/app/src/main/java/com/superproductivity/superproductivity/service/TrackingNotificationHelper.kt:75
+android/app/src/main/res/layout/widget_task_list.xml:25"
+"ic_widget_check_done","android-drawable","1","native","Home screen widget incomplete/complete task: Keep open-circle / checked-circle pair; consider matching the main task rounded checkbox during a coordinated P2 consistency pass.","android/app/src/main/java/com/superproductivity/superproductivity/widget/TaskListWidgetService.kt:58"
+"ic_widget_check_outline","android-drawable","2","native","Home screen widget incomplete/complete task: Keep open-circle / checked-circle pair; consider matching the main task rounded checkbox during a coordinated P2 consistency pass.","android/app/src/main/java/com/superproductivity/superproductivity/widget/TaskListWidgetService.kt:58
+android/app/src/main/res/layout/widget_task_row.xml:39"
+"widget_project_dot","android-drawable","1","native","App brand / small project color marker in home widget: Keep; project text must remain so color is not sole identity.","android/app/src/main/res/layout/widget_task_row.xml:17"
+"done-toggle.component","custom-svg","1","app","Main task rounded checkbox (open/check, X for Won’t do, play for tracked task); Doc Mode also uses a rounded rectangle and check: Keep main completion checkbox and expose state/action names. Doc Mode already shares the rounded-checkbox vocabulary; consider matching Android widget circles during a coordinated P2 pass. Tracking triangle should not obscure that activating this control completes the task.","src/app/ui/done-toggle/done-toggle.component.html:1"
+"focus-clock-face.component","custom-svg","2","app","Circular progress visualization / analog clock: Keep as information graphics, not extra action icons; provide equivalent remaining/elapsed time text.","src/app/features/focus-mode/focus-clock-face/focus-clock-face.component.html:3
+src/app/features/focus-mode/focus-clock-face/focus-clock-face.component.html:29"
+"focus-mode-preparation-rocket.component","custom-svg","1","app","Focus preparation rocket illustration: Keep as illustration if desired; do not reuse as an unlabeled start/timer action.","src/app/features/focus-mode/focus-mode-countdown/rocket/focus-mode-preparation-rocket.component.html:7"
+"habit-tracker.component","custom-svg","1","app","Habit logged/completed check: Keep; do not rely on color alone.","src/app/features/simple-counter/habit-tracker/habit-tracker.component.html:102"
+"icons","custom-svg","1","bundled-plugin-source","Doc Mode offline SVG path dictionary: Keep map as implementation mechanism; individual symbol decisions are listed in the Doc Mode table. Definition is not necessarily a rendered use.","packages/plugin-dev/doc-mode/src/ui/icons.ts:37"
+"magic-side-nav.component","custom-svg","2","app","Sidebar close X and compact/expanded chevrons: Keep; same geometry/vocabulary as close and chevrons.","src/app/core-ui/magic-side-nav/magic-side-nav.component.html:74
+src/app/core-ui/magic-side-nav/magic-side-nav.component.html:100"
+"play-button.component","custom-svg","1","app","Header tracking play/pause state: Keep conventional play/pause shapes with scope-specific names.","src/app/core-ui/main-header/play-button/play-button.component.ts:46"
+"progress-circle.component","custom-svg","1","app","Circular progress visualization / analog clock: Keep as information graphics, not extra action icons; provide equivalent remaining/elapsed time text.","src/app/ui/progress-circle/progress-circle.component.html:1"
+"task-ref-node","custom-svg","1","bundled-plugin-source","Main task rounded checkbox (open/check, X for Won’t do, play for tracked task); Doc Mode also uses a rounded rectangle and check: Keep main completion checkbox and expose state/action names. Doc Mode already shares the rounded-checkbox vocabulary; consider matching Android widget circles during a coordinated P2 pass. Tracking triangle should not obscure that activating this control completes the task.","packages/plugin-dev/doc-mode/src/ui/task-ref-node.ts:41"
+"assets/icons/icon-128x128.png","image","3","app","Browser notification app identity: Keep Ultra Tasks brand raster","src/app/core/notify/notify.service.ts:101
+src/app/core/notify/notify.service.ts:117
+src/app/plugins/plugin-bridge.service.ts:667"
+"add","inline-svg","2","bundled-plugin-source","Add project/tag, quick add task, inline creation, mobile FAB: Keep with contextual action name
+Create a task from a calendar event: Change → add_task, keep explicit label
+Subtasks panel, add subtask menu, add subtask input: Change subtask panel → account_tree to communicate hierarchy; keep playlist_add and plus with “Add subtask” text. Flat list is otherwise reused for worklog and sections.
+Tags, add/remove field, edit/save, search, overflow, custom settings, expand, section, unfinished archived subtask: Keep contextual conventions. Label removals as “Clear estimate,” “Remove tag,” etc.; distinguish collapse from delete. segment should retain “Section” text.
+Pomodoro cycle count, adjust session duration, mode configuration, overflow, notes expander, exit overlay: Keep familiar controls. Label repeated reset buttons by what resets (“Reset cycles” versus session timer).
+Allocate remaining idle duration, warning explanation, add/remove split allocation: Keep, with current explicit accessible labels; this is a coherent timer action family.
+Download worklog file; add export column: Keep, optionally normalize legacy file_download to download only during style consolidation.
+Edit recorded focus-session duration, remove entry, add tagged task/session metadata, save: Keep familiar edits; tooltip must say delete session entry rather than task.
+Add first / additional note: Keep
+Claim shared task: Change to person_add; retain Claim text
+Add repeatable config entry: Keep.
+Add manually entered time / time-entry helper: Keep.
+“Get listed” external contribution link: Change to open_in_new, keep text.
+Add block / drag block / open referenced task: Keep; label open action “Open task details” if it opens inside app.
+Brain Dump idea capture / add / success: Keep for that optional source plugin; it is not in the current bundled artifact list.","packages/plugin-dev/doc-mode/src/ui/editor.ts:1401
+packages/plugin-dev/doc-mode/src/ui/icons.ts:8"
+"arrow_downward","inline-svg","1","bundled-plugin-source","Ascending/descending sort indicator: Keep the direction pair, add explicit “Ascending” / “Descending” text
+Reorder submenu; move to top/bottom: Keep reorder; change top/bottom → vertical_align_top / vertical_align_bottom to distinguish endpoint jump from one-step movement, consistent with add-task placement.
+Move Doc Mode block up/down: Keep.","packages/plugin-dev/doc-mode/src/ui/icons.ts:12"
+"arrow_upward","inline-svg","1","bundled-plugin-source","Ascending/descending sort indicator: Keep the direction pair, add explicit “Ascending” / “Descending” text
+Reorder submenu; move to top/bottom: Keep reorder; change top/bottom → vertical_align_top / vertical_align_bottom to distinguish endpoint jump from one-step movement, consistent with add-task placement.
+Issue task moved from backlog / another list: Change to drive_file_move plus destination text.
+Move Doc Mode block up/down: Keep.","packages/plugin-dev/doc-mode/src/ui/icons.ts:11"
+"check_circle_outline","inline-svg","1","bundled-plugin-source","Insert/convert to task block: Change to add_task for insert, the task rounded-checkbox symbol for existing task type.","packages/plugin-dev/doc-mode/src/ui/icons.ts:29"
+"code","inline-svg","1","bundled-plugin-source","Quote / inline code: Keep
+Privacy data export: Change to download, retain the explicit “Export…” label and mention JSON in supporting text if useful.
+Quote / code block / divider: Keep.","packages/plugin-dev/doc-mode/src/ui/icons.ts:25"
+"content_copy","inline-svg","1","bundled-plugin-source","Copy or native-share task list as Markdown: Keep
+Attachment copy/edit/remove: Keep copy/edit; prefer delete for “Remove attachment,” reserving permanent-delete for actually erasing stored data. Add visible tooltip and accessible name to all four attachment controls (currently absent).
+Linked-issue identity, custom project/tag identity, captured source links and capture-token controls: Keep identity and familiar action icons. Pair provider logo with action text for open/update; preserve user customizations. Capture refresh reloads authorized grants; keep refresh for that action.
+Share/copy diagnostic logs: Keep
+Share dialog/system share/copy text/server instance/email: Keep
+Agent capture settings disclosure, privacy explanation, copy URL/code/token, refresh connections: Keep
+Duplicate provider config: Keep.
+Duplicate/delete block: Keep.","packages/plugin-dev/doc-mode/src/ui/icons.ts:13"
+"delete","inline-svg","1","bundled-plugin-source","Delete folder, move contents out: Keep with “Delete folder” text
+Delete plugin calendar event: Keep
+Edit recorded focus-session duration, remove entry, add tagged task/session metadata, save: Keep familiar edits; tooltip must say delete session entry rather than task.
+Habit month navigation, add habit, reveal disabled habits, re-enable habit, edit/delete: Keep navigation/disclosure/edit/delete; change add → add; change re-enable → toggle_on because visibility implies show/hide rather than enable habit.
+Counter elapsed-time entry, edit settings, save, remove counter: Keep with explicit labels and deletion scope.
+Work-view task-section overflow, edit, delete: Keep
+Archive compression preview: subtasks deleted, notes cleared, issue links removed: Keep delete / link_off; standardize note to description
+Delete one / all stored clipboard images: Keep with explicit scope and confirmation.
+Remove one / all uploaded plugins: Keep, with explicit names/scope and confirmation.
+Duplicate/delete block: Keep.","packages/plugin-dev/doc-mode/src/ui/icons.ts:15"
+"drag_indicator","inline-svg","2","bundled-plugin-source","Add block / drag block / open referenced task: Keep; label open action “Open task details” if it opens inside app.","packages/plugin-dev/doc-mode/src/ui/editor.ts:1405
+packages/plugin-dev/doc-mode/src/ui/icons.ts:9"
+"format_list_bulleted","inline-svg","1","bundled-plugin-source","Insert bullet, numbered or task list: Keep
+Bulleted/numbered list: Keep.","packages/plugin-dev/doc-mode/src/ui/icons.ts:20"
+"format_list_numbered","inline-svg","1","bundled-plugin-source","Insert bullet, numbered or task list: Keep
+Bulleted/numbered list: Keep.","packages/plugin-dev/doc-mode/src/ui/icons.ts:22"
+"format_quote","inline-svg","1","bundled-plugin-source","Quote / inline code: Keep
+Quote / code block / divider: Keep.","packages/plugin-dev/doc-mode/src/ui/icons.ts:24"
+"horizontal_rule","inline-svg","1","bundled-plugin-source","Quote / code block / divider: Keep.","packages/plugin-dev/doc-mode/src/ui/icons.ts:26"
+"open_in_new","inline-svg","2","bundled-plugin-source","Open calendar event in its source calendar: Keep
+Preview image versus open non-image attachment: Change image preview → zoom_in; keep external-open. Magnifier alone is shared with global search.
+Rate app / open store: Keep
+Plainspace connection caveat and external sign-in: Keep
+Claim-pool recurring task and external task link: Keep
+Open authorization page: Keep.
+Add block / drag block / open referenced task: Keep; label open action “Open task details” if it opens inside app.","packages/plugin-dev/doc-mode/src/ui/editor.ts:1409
+packages/plugin-dev/doc-mode/src/ui/icons.ts:27"
+"segment","inline-svg","1","bundled-plugin-source","Tags, add/remove field, edit/save, search, overflow, custom settings, expand, section, unfinished archived subtask: Keep contextual conventions. Label removals as “Clear estimate,” “Remove tag,” etc.; distinguish collapse from delete. segment should retain “Section” text.
+Paragraph block: Keep with “Text”/“Paragraph” label.","packages/plugin-dev/doc-mode/src/ui/icons.ts:16"
+"short_text","inline-svg","1","bundled-plugin-source","Heading 1 / 2 / 3: Prefer explicit H1/H2/H3 glyphs/custom SVGs.","packages/plugin-dev/doc-mode/src/ui/icons.ts:19"
+"text_fields","inline-svg","1","bundled-plugin-source","Heading 1 / 2 / 3: Prefer explicit H1/H2/H3 glyphs/custom SVGs.","packages/plugin-dev/doc-mode/src/ui/icons.ts:18"
+"title","inline-svg","1","bundled-plugin-source","Heading 1 / 2 / 3: Prefer explicit H1/H2/H3 glyphs/custom SVGs.","packages/plugin-dev/doc-mode/src/ui/icons.ts:17"
+"account_tree","material","1","app","Subtask count on planner task: Keep","src/app/features/planner/planner-task/planner-task.component.html:74"
+"add","material","49","unbundled-plugin-source, app","Add project/tag, quick add task, inline creation, mobile FAB: Keep with contextual action name
+Create a task from a calendar event: Change → add_task, keep explicit label
+Subtasks panel, add subtask menu, add subtask input: Change subtask panel → account_tree to communicate hierarchy; keep playlist_add and plus with “Add subtask” text. Flat list is otherwise reused for worklog and sections.
+Tags, add/remove field, edit/save, search, overflow, custom settings, expand, section, unfinished archived subtask: Keep contextual conventions. Label removals as “Clear estimate,” “Remove tag,” etc.; distinguish collapse from delete. segment should retain “Section” text.
+Pomodoro cycle count, adjust session duration, mode configuration, overflow, notes expander, exit overlay: Keep familiar controls. Label repeated reset buttons by what resets (“Reset cycles” versus session timer).
+Allocate remaining idle duration, warning explanation, add/remove split allocation: Keep, with current explicit accessible labels; this is a coherent timer action family.
+Download worklog file; add export column: Keep, optionally normalize legacy file_download to download only during style consolidation.
+Edit recorded focus-session duration, remove entry, add tagged task/session metadata, save: Keep familiar edits; tooltip must say delete session entry rather than task.
+Add first / additional note: Keep
+Claim shared task: Change to person_add; retain Claim text
+Add repeatable config entry: Keep.
+Add manually entered time / time-entry helper: Keep.
+“Get listed” external contribution link: Change to open_in_new, keep text.
+Add block / drag block / open referenced task: Keep; label open action “Open task details” if it opens inside app.
+Brain Dump idea capture / add / success: Keep for that optional source plugin; it is not in the current bundled artifact list.","packages/plugin-dev/brain-dump/plugin.js:306
+src/app/core-ui/folder-context-menu/folder-context-menu.component.html:26
+src/app/core-ui/folder-context-menu/folder-context-menu.component.html:36
+src/app/core-ui/magic-side-nav/magic-nav-config.service.ts:195
+src/app/core-ui/magic-side-nav/magic-nav-config.service.ts:226
+src/app/core-ui/main-header/main-header.component.html:92
+src/app/core-ui/mobile-bottom-nav/mobile-bottom-nav.component.html:62
+src/app/core/theme/theme-selector/theme-selector.component.html:111
+src/app/features/config/repeat-section-type/repeat-section-type.component.html:69
+src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.html:135
+src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.html:454
+src/app/features/idle/dialog-idle/dialog-idle.component.html:194
+src/app/features/issue-panel/issue-preview-item/issue-preview-item.component.html:6
+src/app/features/issue/shared/dialog-track-time/dialog-track-time.component.html:61
+src/app/features/metric/dialog-focus-session-edit/dialog-focus-session-edit.component.html:96
+src/app/features/metric/dialog-focus-session-edit/dialog-focus-session-edit.component.html:104
+src/app/features/note/notes/notes.component.html:8
+src/app/features/note/notes/notes.component.html:18
+src/app/features/plainspace/claim-pool/claim-pool.component.html:30
+src/app/features/planner/add-task-inline/add-task-inline.component.html:9
+src/app/features/planner/add-task-inline/add-task-inline.component.html:23
+src/app/features/planner/planner-calendar-event/planner-calendar-event.component.html:52
+src/app/features/project/store/project.effects.ts:130
+src/app/features/schedule/create-task-placeholder/create-task-placeholder.component.html:16
+src/app/features/schedule/schedule-event/schedule-event.component.html:130
+src/app/features/tag/tag-toggle-menu-list/tag-toggle-menu-list.component.html:35
+src/app/features/tasks/add-subtask-input/add-subtask-input.component.html:31
+src/app/features/tasks/dialog-time-estimate/dialog-time-estimate.component.html:38
+src/app/features/tasks/select-task/select-task.component.html:15
+src/app/features/tasks/store/task-ui.effects.ts:116
+src/app/features/tasks/store/task-ui.effects.ts:274
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:594
+src/app/features/tasks/task-detail-panel/task-detail-panel.component.html:93
+src/app/features/tasks/task-detail-panel/task-detail-panel.component.html:331
+src/app/features/tasks/task-detail-panel/task-detail-panel.component.html:409
+src/app/features/tasks/task/task.component.html:398
+src/app/features/tasks/task/task.component.html:433
+src/app/features/tasks/task/task.component.html:450
+src/app/features/tracking-reminder/dialog-tracking-reminder/dialog-tracking-reminder.component.html:49
+src/app/features/worklog/worklog-export/worklog-export.component.html:28
+src/app/pages/contrast-test/contrast-test.component.html:194
+src/app/pages/contrast-test/contrast-test.component.html:200
+src/app/pages/contrast-test/contrast-test.component.html:206
+src/app/pages/contrast-test/contrast-test.component.html:212
+src/app/pages/contrast-test/contrast-test.component.html:220
+src/app/pages/contrast-test/contrast-test.component.html:226
+src/app/pages/contrast-test/contrast-test.component.html:232
+src/app/pages/contrast-test/contrast-test.component.html:238
+src/app/plugins/ui/plugin-management/plugin-management.component.html:396"
+"add_circle","material","2","app","New-board tab: Change → add, add accessible name “Add board”","src/app/features/boards/boards.component.html:39
+src/app/features/issue-panel/issue-panel.component.html:74"
+"add_reaction","material","1","app","Open emoji picker for configurable icon: Keep.","src/app/features/config/icon-input/icon-input.component.html:31"
+"add_task","material","4","bundled-plugin-source, app","Create-task help tour: Keep with tour label
+Switch current focus task, finish it/select next, select task when empty: Keep switch/finish; change empty selection CTA → checklist with “Choose task”; add_task suggests creating a new task although chooser includes existing tasks.
+API Test Plugin demonstration snacks/dialog/header actions: Keep as demonstration cases; do not treat them as canonical application semantics.","packages/plugin-dev/api-test-plugin/index.html:760
+src/app/app.component.ts:556
+src/app/core-ui/magic-side-nav/magic-nav-config.service.ts:323
+src/app/features/focus-mode/focus-mode-task-row/focus-mode-task-row.component.ts:88"
+"adjust","material","1","app","Summary custom counter identity, duration, count, streak: Preserve custom identity; keep timer; adjust → numbers; 🔥 → event_available or plain “Consecutive days” text","src/app/pages/daily-summary/simple-counter-summary-item/simple-counter-summary-item.component.html:10"
+"alarm","material","14","app","Task with reminder in board/planner/schedule: Keep for actual reminder only
+Schedule dialog submit with a selected time; create-task placeholder: Change → schedule unless reminder is enabled
+Detail-panel date field: date-only, timed without reminder, recurring, then all other cases (including unscheduled task): Change mapping. Generic unscheduled/date-only field → calendar_month; actual Today → today; timed date → schedule; show reminder and repeat separately only when configured. Current fallback implies alarm where none exists.
+Add-task deadline chip changes from flag when a time is supplied: Change → flag regardless of deadline time; add time as text. The deadline concept should not switch to a reminder symbol.
+Reminder badge, reminder dialog heading, clear/dismiss reminder, snooze: Keep. Alarm/notification family should describe reminders only; label due-date section with calendar while retaining its reminder status.
+Recurrence header/preview, paused recurrence, configured reminder, start date picker, save/cancel, skip occurrence: Keep repeat/pause/alarm/save/cancel/skip; normalize arbitrary start date picker → calendar_month.
+Reminder selector prefix: Keep","src/app/features/boards/board-panel/board-panel.component.html:61
+src/app/features/planner/dialog-schedule-task/dialog-schedule-task.component.html:109
+src/app/features/planner/planner-day/planner-day.component.html:108
+src/app/features/planner/planner-day/planner-day.component.html:134
+src/app/features/reminder/reminder.module.ts:198
+src/app/features/reminder/store/reminder-countdown.effects.ts:146
+src/app/features/schedule/create-task-placeholder/create-task-placeholder.component.html:6
+src/app/features/schedule/schedule-event/schedule-event.component.html:16
+src/app/features/task-repeat-cfg/dialog-edit-task-repeat-cfg/dialog-edit-task-repeat-cfg.component.html:63
+src/app/features/tasks/add-task-bar/add-task-bar-actions/add-task-bar-actions.component.html:69
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:27
+src/app/features/tasks/store/task-reminder.effects.ts:65
+src/app/features/tasks/task/task.component.html:165
+src/app/ui/datetime-picker/datetime-picker.component.html:75"
+"alarm_off","material","7","app","Unschedule task: Use event_busy consistently
+Reminder badge, reminder dialog heading, clear/dismiss reminder, snooze: Keep. Alarm/notification family should describe reminders only; label due-date section with calendar while retaining its reminder status.
+Clear deadline reminder versus unschedule task in reminder dialog: Keep separate as implemented. These actually perform different actions; retain accurate labels instead of replacing both with close.","src/app/features/planner/dialog-schedule-task/dialog-schedule-task.component.html:91
+src/app/features/reminder/exact-alarm-hint/exact-alarm-hint.component.ts:23
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:177
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:194
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:292
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:369
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:383"
+"archive","material","5","app","Archived Projects destination and archived-task search badge: Keep","src/app/core-ui/magic-side-nav/nav-section-icons.const.ts:12
+src/app/features/tasks/add-task-bar/add-task-bar.component.html:252
+src/app/features/tasks/dialog-view-archived-task/dialog-view-archived-task.component.html:5
+src/app/pages/daily-summary/daily-summary.component.ts:490
+src/app/pages/search-page/search-page.component.html:100"
+"arrow_back","material","6","app","Back to planning, start next focus session, skip current break, reset Pomodoro cycles: Keep back/skip/reset; change next-session → play_arrow with “Start next session” label for stronger action clarity. Current forward arrow only says advance.
+Feedback, community, support, feedback navigation: Keep
+Reorder entries earlier/later in repeatable config list: Change to arrow_upward / arrow_downward if the list remains vertical; label “Move up/down”.","src/app/features/config/repeat-section-type/repeat-section-type.component.html:37
+src/app/features/dialog-please-rate/dialog-please-rate.component.html:93
+src/app/features/focus-mode/focus-mode-break/focus-mode-break.component.html:68
+src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.html:252
+src/app/features/focus-mode/focus-mode-session-done/focus-mode-session-done.component.html:29
+src/app/pages/config-page/config-page.component.html:92"
+"arrow_downward","material","3","bundled-plugin-source, app","Ascending/descending sort indicator: Keep the direction pair, add explicit “Ascending” / “Descending” text
+Reorder submenu; move to top/bottom: Keep reorder; change top/bottom → vertical_align_top / vertical_align_bottom to distinguish endpoint jump from one-step movement, consistent with add-task placement.
+Move Doc Mode block up/down: Keep.","packages/plugin-dev/doc-mode/src/ui/editor.ts:1844
+src/app/features/task-view-customizer/task-view-customizer-panel/task-view-customizer-panel.component.html:72
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:422"
+"arrow_forward","material","8","app","Convert subtask to main task; parent task field; follow parent: Change conversion → format_indent_decrease; keep parent hierarchy arrow plus Parent label. Generic follow arrow is acceptable as an action with parent title.
+Back to planning, start next focus session, skip current break, reset Pomodoro cycles: Keep back/skip/reset; change next-session → play_arrow with “Start next session” label for stronger action clarity. Current forward arrow only says advance.
+Open all recurring tasks: Keep
+Feedback, community, support, feedback navigation: Keep
+Reorder entries earlier/later in repeatable config list: Change to arrow_upward / arrow_downward if the list remains vertical; label “Move up/down”.
+Before → after encryption state: Keep; mirror for RTL.
+Go to integration setup: Keep with “Set up…” text; optional settings if representing setup rather than navigation.","src/app/features/config/repeat-section-type/repeat-section-type.component.html:46
+src/app/features/dialog-please-rate/dialog-please-rate.component.html:26
+src/app/features/focus-mode/focus-mode-break/focus-mode-break.component.html:124
+src/app/features/focus-mode/focus-mode-session-done/focus-mode-session-done.component.html:38
+src/app/features/issue-panel/issue-provider-tab/issue-provider-tab.component.html:13
+src/app/features/work-view/work-view.component.html:467
+src/app/imex/sync/dialog-import-encryption-warning/dialog-import-encryption-warning.component.html:26
+src/app/plugins/ui/plugin-management/plugin-management.component.html:262"
+"arrow_upward","material","8","bundled-plugin-source, app","Ascending/descending sort indicator: Keep the direction pair, add explicit “Ascending” / “Descending” text
+Reorder submenu; move to top/bottom: Keep reorder; change top/bottom → vertical_align_top / vertical_align_bottom to distinguish endpoint jump from one-step movement, consistent with add-task placement.
+Issue task moved from backlog / another list: Change to drive_file_move plus destination text.
+Move Doc Mode block up/down: Keep.","packages/plugin-dev/doc-mode/src/ui/editor.ts:1837
+src/app/features/issue/issue.service.ts:921
+src/app/features/issue/issue.service.ts:949
+src/app/features/task-view-customizer/task-view-customizer-panel/task-view-customizer-panel.component.html:72
+src/app/features/tasks/add-task-bar/add-task-bar-issue-search.service.ts:153
+src/app/features/tasks/add-task-bar/add-task-bar-issue-search.service.ts:192
+src/app/features/tasks/add-task-bar/add-task-bar.component.ts:788
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:411"
+"assignment","material","1","app","Project represented in drag preview: Change → list_alt","src/app/core-ui/magic-side-nav/nav-list/nav-list-tree.component.html:145"
+"attach_file","material","1","app","Task attachment badge and attachment panel/archived task: Normalize → attach_file (paperclip) for attachments throughout; alternate horizontal paperclip adds no meaning.","src/app/features/tasks/task/task.component.html:138"
+"attachment","material","3","app","Task attachment badge and attachment panel/archived task: Normalize → attach_file (paperclip) for attachments throughout; alternate horizontal paperclip adds no meaning.","src/app/features/tasks/dialog-view-archived-task/dialog-view-archived-task.component.html:67
+src/app/features/tasks/task-detail-panel/task-detail-panel.component.html:301
+src/app/features/tasks/task-detail-panel/task-detail-panel.component.html:350"
+"autorenew","material","1","app","Plugin loading: Replace with progress spinner.","src/app/plugins/ui/plugin-management/plugin-management.component.html:138"
+"backup","material","1","app","Restore point trigger: sync import / backup import / repair / fallback: Keep with full trigger labels.","src/app/imex/sync/dialog-restore-point/dialog-restore-point.component.ts:118"
+"bedtime","material","1","app","Date-picker Next month shortcut: Change → calendar_month, retain Next month label","src/app/ui/datetime-picker/datetime-picker.component.ts:61"
+"block","material","3","app","Won’t-do command versus won’t-do status in summary table: Keep command block; change summary status → block for a single vocabulary. X otherwise means close/cancel.
+OAuth connection unsupported in web: Keep with reason text.","src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.html:110
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:382
+src/app/pages/contrast-test/contrast-test.component.html:184"
+"bookmark","material","3","app","Image / local file / web link attachment generated by short syntax: Keep image/file; change web-link bookmark → link. A pasted URL has not necessarily been bookmarked.
+Drop/paste attachment file, link, image: Keep file/image; change bookmark to link
+Clear remembered issue search / remember current query: Keep save-query metaphor; use labeled native buttons for click targets. A bookmark being saved is appropriate here, unlike pasted URL attachment type.","src/app/core/drop-paste-input/drop-paste.model.ts:12
+src/app/features/issue-panel/issue-provider-tab/issue-provider-tab.component.html:68
+src/app/features/tasks/short-syntax.ts:1572"
+"bookmark_add","material","1","app","Clear remembered issue search / remember current query: Keep save-query metaphor; use labeled native buttons for click targets. A bookmark being saved is appropriate here, unlike pasted URL attachment type.","src/app/features/issue-panel/issue-provider-tab/issue-provider-tab.component.html:79"
+"bottom_panel_open","material","1","app","Open mobile panels menu: Keep with “Panels” accessible name","src/app/core-ui/mobile-bottom-nav/mobile-bottom-nav.component.html:122"
+"bug_report","material","1","app","Report a problem: Keep","src/app/core-ui/magic-side-nav/magic-nav-config.service.ts:282"
+"build","material","1","app","Restore point trigger: sync import / backup import / repair / fallback: Keep with full trigger labels.","src/app/imex/sync/dialog-restore-point/dialog-restore-point.component.ts:120"
+"cake","material","1","app","Recurrence quick settings: daily, Mon–Fri, weekly, monthly, yearly, custom: Change daily → calendar_today or event_repeat; Mon–Fri → date_range with weekdays label; yearly cake → event_repeat with “Yearly” label. Keep weekly/monthly/custom. Cake wrongly implies birthday; work wrongly assumes those weekdays are workdays. Labels carry cadence precision.","src/app/features/task-repeat-cfg/dialog-edit-task-repeat-cfg/build-repeat-quick-setting-options.ts:22"
+"calendar_month","material","10","app","Schedule month view: Keep
+Recurrence quick settings: daily, Mon–Fri, weekly, monthly, yearly, custom: Change daily → calendar_today or event_repeat; Mon–Fri → date_range with weekdays label; yearly cake → event_repeat with “Yearly” label. Keep weekly/monthly/custom. Cake wrongly implies birthday; work wrongly assumes those weekdays are workdays. Labels carry cadence precision.","src/app/features/issue-panel/issue-provider-setup-overview/issue-provider-setup-overview.component.html:8
+src/app/features/issue-panel/issue-provider-setup-overview/issue-provider-setup-overview.component.html:16
+src/app/features/issue-panel/issue-provider-setup-overview/issue-provider-setup-overview.component.html:24
+src/app/features/issue-panel/issue-provider-setup-overview/issue-provider-setup-overview.component.html:36
+src/app/features/issue-panel/issue-provider-setup-overview/issue-provider-setup-overview.component.html:50
+src/app/features/schedule/schedule/schedule.component.html:34
+src/app/features/task-repeat-cfg/dialog-edit-task-repeat-cfg/build-repeat-quick-setting-options.ts:18
+src/app/features/task-repeat-cfg/dialog-edit-task-repeat-cfg/build-repeat-quick-setting-options.ts:19
+src/app/features/task-repeat-cfg/dialog-edit-task-repeat-cfg/build-repeat-quick-setting-options.ts:20
+src/app/features/task-repeat-cfg/dialog-edit-task-repeat-cfg/build-repeat-quick-setting-options.ts:21"
+"calendar_today","material","1","app","Recurrence header/preview, paused recurrence, configured reminder, start date picker, save/cancel, skip occurrence: Keep repeat/pause/alarm/save/cancel/skip; normalize arbitrary start date picker → calendar_month.","src/app/features/task-repeat-cfg/dialog-edit-task-repeat-cfg/dialog-edit-task-repeat-cfg.component.html:79"
+"calendar_view_day","material","1","app","Schedule day view: Keep","src/app/features/schedule/schedule/schedule.component.html:12"
+"calendar_view_week","material","1","app","Recurrence quick settings: daily, Mon–Fri, weekly, monthly, yearly, custom: Change daily → calendar_today or event_repeat; Mon–Fri → date_range with weekdays label; yearly cake → event_repeat with “Yearly” label. Keep weekly/monthly/custom. Cake wrongly implies birthday; work wrongly assumes those weekdays are workdays. Labels carry cadence precision.","src/app/features/task-repeat-cfg/dialog-edit-task-repeat-cfg/build-repeat-quick-setting-options.ts:17"
+"call_made","material","5","app","Export task list or worklog: Change → ios_share (export/share) where it opens export dialog; keep downstream download/copy choices distinct. Northeast arrow is insufficient.
+Export all, month, week history: Change to download for downloadable export","src/app/features/history/history.component.html:17
+src/app/features/history/history.component.html:62
+src/app/features/history/history.component.html:106
+src/app/features/tasks/task-summary-tables/task-summary-tables.component.html:61
+src/app/features/worklog/worklog-week/worklog-week.component.html:130"
+"call_split","material","1","app","Idle time classified as break/task/split allocations; dynamic confirm repeats these (or add/check): Keep break cup and split branching with labels; change task target → checklist, confirmation for recorded time → more_time or check with full verb label.","src/app/features/idle/dialog-idle/dialog-idle.component.html:31"
+"cancel","material","2","app","Remove tag chip from task: Change → close
+Remove one selected tag chip: Keep","src/app/features/tag/tag-edit/tag-edit.component.html:12
+src/app/ui/chip-list-input/chip-list-input.component.html:11"
+"celebration","material","1","app","Completed focus session / counter-goal success message: Prefer check_circle for a calm, confirmed outcome, with explicit completion text. Low priority; do not change notification behavior as part of an icon edit.","src/app/features/focus-mode/store/focus-mode.effects.ts:563"
+"center_focus_strong","material","6","app","Focus and break state in header focus button: Keep focus; keep coffee only for break state with state-specific label
+Summary focus sessions/duration: Keep
+Start focus session; recorded focus-session summary: Keep consistent focus symbol, always label where first introduced. A target-like pictogram is more meaningful for focus than for generic task identity.
+Worklog collapsed task count, expanded duration cue, recurring-task marker, focus count/time, habit totals, total duration: Keep repeat/focus and custom identities; use checklist for task count, timer for elapsed totals; collapse/expand should use a stable disclosure chevron rather than swapping list/timer.
+Onboarding feature teasers: Follow canonical navigation choices; keep focus/plugin/finish-day identity
+Enable Focus mode: Keep.","src/app/core-ui/main-header/focus-button/focus-button.component.html:19
+src/app/features/config/form-cfgs/app-features-form.const.ts:61
+src/app/features/onboarding/quick-tour-card/quick-tour-card.component.ts:28
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:111
+src/app/features/worklog/worklog-week/worklog-week.component.html:48
+src/app/pages/daily-summary/daily-summary.component.html:89"
+"chat","material","7","app","Notes present/empty; task-row detail opener when notes exist; focus-mode note expander; archived task notes: Change → description throughout, use a subtle presence badge or fill state for populated notes. Speech bubbles promise conversation/comments in a personal task tool.
+Labeled social-share targets: Prefer brand SVGs if licensed/available, otherwise remove these redundant icons and keep platform names","src/app/core/share/dialog-share/dialog-share.component.ts:50
+src/app/core/share/share.service.ts:419
+src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.html:340
+src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.html:382
+src/app/features/tasks/add-task-bar/add-task-bar.component.html:157
+src/app/features/tasks/dialog-view-archived-task/dialog-view-archived-task.component.html:52
+src/app/features/tasks/task-detail-panel/task-detail-panel.component.html:266"
+"chat_bubble_outline","material","2","app","Notes present/empty; task-row detail opener when notes exist; focus-mode note expander; archived task notes: Change → description throughout, use a subtle presence badge or fill state for populated notes. Speech bubbles promise conversation/comments in a personal task tool.
+Feedback, community, support, feedback navigation: Keep","src/app/features/dialog-please-rate/dialog-please-rate.component.html:24
+src/app/features/tasks/task-detail-panel/task-detail-panel.component.html:270"
+"check","material","37","bundled-plugin-source, unbundled-plugin-source, app","Summary completed tasks: Keep
+Selected menu option, selected mobile-slot destination: Keep
+Complete/reopen task; complete multiple reminder tasks: Keep, normalize done/check within task actions where practical. Differentiate completing focus session from task completion through explicit labels.
+Habit/counter identity and logged/completed marker in header/buttons/grid: Keep identity, expose state/action independently. The same custom icon starts/stops stopwatch and logs count, so add explicit Start/Stop/Log names and pressed state; do not rely solely on accent color.
+Selected color swatch: Keep
+Connected / options loaded / connection test succeeded: Keep; normalize static success displays to check_circle where space permits.
+Community plugin already installed: Prefer check_circle with “Installed” text.
+Voice reminder save and success: Keep.
+Brain Dump idea capture / add / success: Keep for that optional source plugin; it is not in the current bundled artifact list.
+API Test Plugin demonstration snacks/dialog/header actions: Keep as demonstration cases; do not treat them as canonical application semantics.","packages/plugin-dev/api-test-plugin/plugin.js:206
+packages/plugin-dev/api-test-plugin/plugin.js:287
+packages/plugin-dev/brain-dump/plugin.js:453
+packages/plugin-dev/brain-dump/plugin.js:475
+packages/plugin-dev/voice-reminder/plugin.js:295
+src/app/core-ui/mobile-bottom-nav/mobile-bottom-nav.component.html:217
+src/app/core/theme/theme-selector/theme-selector.component.html:60
+src/app/features/idle/dialog-idle/dialog-idle.component.ts:292
+src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.html:289
+src/app/features/simple-counter/habit-tracker/habit-tracker.component.html:122
+src/app/features/simple-counter/simple-counter-button/simple-counter-button.component.html:25
+src/app/features/simple-counter/simple-counter-button/simple-counter-button.component.html:51
+src/app/features/simple-counter/simple-counter-button/simple-counter-button.component.html:85
+src/app/features/task-view-customizer/task-view-customizer-panel/menu-item/menu-item.component.html:12
+src/app/features/task-view-customizer/task-view-customizer-panel/task-view-customizer-panel.component.html:80
+src/app/features/task-view-customizer/task-view-customizer-panel/task-view-customizer-panel.component.html:113
+src/app/features/task-view-customizer/task-view-customizer-panel/task-view-customizer-panel.component.html:130
+src/app/features/task-view-customizer/task-view-customizer-panel/task-view-customizer-panel.component.html:143
+src/app/features/task-view-customizer/task-view-customizer-panel/task-view-customizer-panel.component.html:158
+src/app/features/task-view-customizer/task-view-customizer-panel/task-view-customizer-panel.component.html:175
+src/app/features/task-view-customizer/task-view-customizer-panel/task-view-customizer-panel.component.html:190
+src/app/features/task-view-customizer/task-view-customizer-panel/task-view-customizer-panel.component.html:207
+src/app/features/task-view-customizer/task-view-customizer-panel/task-view-customizer-panel.component.html:222
+src/app/features/task-view-customizer/task-view-customizer-panel/task-view-customizer-panel.component.html:237
+src/app/features/task-view-customizer/task-view-customizer-panel/task-view-customizer-panel.component.html:255
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:74
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:266
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:90
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:484
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:522
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:540
+src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html:117
+src/app/features/tasks/task-summary-table/task-summary-table.component.html:132
+src/app/pages/daily-summary/daily-summary.component.html:38
+src/app/plugins/ui/plugin-management/plugin-management.component.html:347
+src/app/ui/input-color-picker/input-color-picker.component.html:37
+src/app/ui/input-color-picker/input-color-picker.component.html:49"
+"check_box","material","4","app","Show/hide individual calendar providers: Keep
+Markdown checklist and completed checklist state in task row/details: Keep, pair with completed/total count; check_box is valid for a completed checklist but should not look like a second clickable task-completion checkbox.
+Rendered/live Markdown checklist state; select-option checkbox: Keep pair","src/app/features/schedule/schedule/schedule.component.html:60
+src/app/features/tasks/dialog-view-archived-task/dialog-view-archived-task.component.html:22
+src/app/features/tasks/task/task.component.html:335
+src/app/ui/select-option-row/select-option-row.component.html:9"
+"check_box_outline_blank","material","3","app","Show/hide individual calendar providers: Keep
+Tags, add/remove field, edit/save, search, overflow, custom settings, expand, section, unfinished archived subtask: Keep contextual conventions. Label removals as “Clear estimate,” “Remove tag,” etc.; distinguish collapse from delete. segment should retain “Section” text.
+Rendered/live Markdown checklist state; select-option checkbox: Keep pair","src/app/features/schedule/schedule/schedule.component.html:58
+src/app/features/tasks/dialog-view-archived-task/dialog-view-archived-task.component.html:22
+src/app/ui/select-option-row/select-option-row.component.html:9"
+"check_circle","material","11","bundled-plugin-source, app","Complete a project: Keep
+Touch multiselection state: Keep pair
+Archive compression error, no data, irreversible-loss notice: Keep
+Shared snack success/error/warning/dismiss: Keep
+Selected backup / restore point: Keep as selection state with accessible selection text.
+Connected / options loaded / connection test succeeded: Keep; normalize static success displays to check_circle where space permits.
+API Test Plugin demonstration snacks/dialog/header actions: Keep as demonstration cases; do not treat them as canonical application semantics.","packages/plugin-dev/api-test-plugin/index.html:477
+src/app/core-ui/work-context-menu/work-context-menu.component.html:127
+src/app/core-ui/work-context-menu/work-context-menu.component.ts:332
+src/app/core/snack/snack-custom/snack-custom.component.html:10
+src/app/features/archive/dialog-archive-compression/dialog-archive-compression.component.html:16
+src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.html:128
+src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.html:169
+src/app/features/planner/planner-task/planner-task.component.html:13
+src/app/imex/local-backup/dialog-backups-list/dialog-backups-list.component.html:68
+src/app/imex/sync/dialog-restore-point/dialog-restore-point.component.html:42
+src/app/op-log/persistence/dialog-legacy-migration/dialog-legacy-migration.component.html:18"
+"checklist","material","4","app","Markdown checklist and completed checklist state in task row/details: Keep, pair with completed/total count; check_box is valid for a completed checklist but should not look like a second clickable task-completion checkbox.
+Insert bullet, numbered or task list: Keep
+Toggle inline note checklist mode: Keep","src/app/features/tasks/task-detail-panel/task-detail-panel.component.html:262
+src/app/features/tasks/task/task.component.html:335
+src/app/ui/dialog-fullscreen-markdown/dialog-fullscreen-markdown.component.html:127
+src/app/ui/inline-markdown/inline-markdown.component.html:62"
+"checklist_rtl","material","1","app","Enter multi-select mode: Change → select_check_box or checklist with “Select tasks.” Current reversed checklist is an arbitrary layout variant, not a selection concept.","src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:356"
+"chevron_left","material","3","app","Previous/next calendar period, day-panel paging: Keep with period-specific accessible names
+Habit month navigation, add habit, reveal disabled habits, re-enable habit, edit/delete: Keep navigation/disclosure/edit/delete; change add → add; change re-enable → toggle_on because visibility implies show/hide rather than enable habit.","src/app/features/schedule/schedule-day-panel/schedule-day-panel.component.html:49
+src/app/features/schedule/schedule/schedule.component.html:98
+src/app/features/simple-counter/habit-tracker/habit-tracker.component.html:9"
+"chevron_right","material","7","app","Previous/next calendar period, day-panel paging: Keep with period-specific accessible names
+Subtask-parent breadcrumb in search results: Keep; optionally unify subtask icon with account_tree
+Habit month navigation, add habit, reveal disabled habits, re-enable habit, edit/delete: Keep navigation/disclosure/edit/delete; change add → add; change re-enable → toggle_on because visibility implies show/hide rather than enable habit.
+Inline onboarding instructional icons: Change Today to today; match canonical add-subtask choice; keep remainder
+Enter a settings action row: Keep.","src/app/features/config/config-section/config-section.component.html:90
+src/app/features/onboarding/onboarding-hint-steps.const.ts:74
+src/app/features/right-panel/right-panel.component.html:31
+src/app/features/schedule/schedule-day-panel/schedule-day-panel.component.html:58
+src/app/features/schedule/schedule/schedule.component.html:132
+src/app/features/simple-counter/habit-tracker/habit-tracker.component.html:18
+src/app/pages/search-page/search-page.component.html:46"
+"clear","material","6","app","Clear search text: Change → close for consistent X ligature
+Tags, add/remove field, edit/save, search, overflow, custom settings, expand, section, unfinished archived subtask: Keep contextual conventions. Label removals as “Clear estimate,” “Remove tag,” etc.; distinguish collapse from delete. segment should retain “Section” text.","src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:504
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:519
+src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html:250
+src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html:263
+src/app/pages/config-page/config-page.component.html:36
+src/app/pages/search-page/search-page.component.html:22"
+"close","material","23","bundled-plugin-source, app","Show/hide mobile counters tray: Keep
+Dismiss project-complete/archived-project screens: Keep
+Open details, close details, updated linked issue: Keep panel/close pair. Change issue-updated status → sync plus status dot/“Issue updated” text, or retain update with label if visual verification shows it reads clearly; do not use status as sole affordance for opening details.
+Won’t-do command versus won’t-do status in summary table: Keep command block; change summary status → block for a single vocabulary. X otherwise means close/cancel.
+Tags, add/remove field, edit/save, search, overflow, custom settings, expand, section, unfinished archived subtask: Keep contextual conventions. Label removals as “Clear estimate,” “Remove tag,” etc.; distinguish collapse from delete. segment should retain “Section” text.
+Recurrence header/preview, paused recurrence, configured reminder, start date picker, save/cancel, skip occurrence: Keep repeat/pause/alarm/save/cancel/skip; normalize arbitrary start date picker → calendar_month.
+Pomodoro cycle count, adjust session duration, mode configuration, overflow, notes expander, exit overlay: Keep familiar controls. Label repeated reset buttons by what resets (“Reset cycles” versus session timer).
+Allocate remaining idle duration, warning explanation, add/remove split allocation: Keep, with current explicit accessible labels; this is a coherent timer action family.
+Clear selected time: Keep glyph; change control to labeled button
+Discard / save note: Remove redundant close; keep save
+Toggle help: Keep pair; update accessible name/state
+Show/hide day's detailed history: Change to expand_more / expand_less
+Shared snack success/error/warning/dismiss: Keep
+Search plugins / clear search / no matches: Keep with labels.
+Close plugin window: Keep; ensure accessible name.
+API Test Plugin demonstration snacks/dialog/header actions: Keep as demonstration cases; do not treat them as canonical application semantics.","packages/plugin-dev/api-test-plugin/index.html:887
+src/app/core-ui/main-header/main-header.component.html:206
+src/app/core/snack/snack-custom/snack-custom.component.html:58
+src/app/features/focus-mode/focus-mode-overlay/focus-mode-overlay.component.html:21
+src/app/features/history/history.component.html:187
+src/app/features/idle/dialog-idle/dialog-idle.component.html:183
+src/app/features/project/dialog-project-complete/dialog-project-complete.component.html:32
+src/app/features/task-repeat-cfg/dialog-edit-task-repeat-cfg/dialog-edit-task-repeat-cfg.component.html:206
+src/app/features/tasks/add-task-bar/add-task-bar-actions/add-task-bar-actions.component.html:56
+src/app/features/tasks/add-task-bar/add-task-bar-actions/add-task-bar-actions.component.html:81
+src/app/features/tasks/add-task-bar/add-task-bar-actions/add-task-bar-actions.component.html:134
+src/app/features/tasks/add-task-bar/add-task-bar-actions/add-task-bar-actions.component.html:162
+src/app/features/tasks/add-task-bar/add-task-bar-actions/add-task-bar-actions.component.html:191
+src/app/features/tasks/task-detail-panel/task-detail-panel.component.html:219
+src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html:15
+src/app/features/tasks/task-summary-table/task-summary-table.component.html:126
+src/app/pages/archived-projects-page/archived-projects-page.component.html:20
+src/app/pages/config-page/config-page.component.html:8
+src/app/plugins/ui/plugin-management/plugin-management.component.html:44
+src/app/plugins/ui/plugins-window.component.ts:35
+src/app/ui/datetime-picker/datetime-picker.component.html:57
+src/app/ui/dialog-fullscreen-markdown/dialog-fullscreen-markdown.component.html:286
+src/app/ui/help-section/help-section.component.html:9"
+"cloud_download","material","4","app","Import from URL: Keep.
+Restore point trigger: sync import / backup import / repair / fallback: Keep with full trigger labels.
+Use server copy / upload local copy in sync-import conflict: Keep; always keep explicit labels about replacement consequences.
+Load options from provider: Keep with “Load…” label.","src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.html:210
+src/app/imex/file-imex/file-imex.component.html:46
+src/app/imex/sync/dialog-restore-point/dialog-restore-point.component.ts:116
+src/app/op-log/sync/dialog-sync-import-conflict/dialog-sync-import-conflict.component.html:71"
+"cloud_off","material","4","app","Onboarding line describing optional sync: Change to sync
+Startup productivity tip / offline remote services notice: Keep
+Sync safety banner / Jira unavailable snack: Use sync_problem for sync paused for safety; keep cloud_off for verified offline/unreachable connection.","src/app/core/startup/startup.service.ts:415
+src/app/features/issue/providers/jira/jira-api.service.ts:594
+src/app/features/onboarding/quick-tour-card/quick-tour-card.component.html:47
+src/app/imex/sync/sync-safety-banner.service.ts:73"
+"cloud_sync","material","2","app","Set up sync / identify configured sync provider: Keep; actual cloud synchronization, with provider name and state text.","src/app/pages/config-page/config-page.component.html:213
+src/app/pages/config-page/config-page.component.html:220"
+"cloud_upload","material","4","app","Plainspace space-picker remote data notice: Keep
+Use server copy / upload local copy in sync-import conflict: Keep; always keep explicit labels about replacement consequences.
+Retry/upload local data with entered password: Keep with full action label.
+Upload OpenProject attachment: Keep.","src/app/features/issue/issue-content/issue-content-custom/open-project-attachments/open-project-attachments.component.html:16
+src/app/features/plainspace/space-picker-dialog/plainspace-space-picker-dialog.component.html:23
+src/app/imex/sync/dialog-enter-encryption-password/dialog-enter-encryption-password.component.html:56
+src/app/op-log/sync/dialog-sync-import-conflict/dialog-sync-import-conflict.component.html:80"
+"code","material","3","bundled-plugin-source, app","Quote / inline code: Keep
+Privacy data export: Change to download, retain the explicit “Export…” label and mention JSON in supporting text if useful.
+Quote / code block / divider: Keep.","packages/plugin-dev/doc-mode/src/ui/editor.ts:901
+src/app/imex/file-imex/file-imex.component.html:18
+src/app/ui/dialog-fullscreen-markdown/dialog-fullscreen-markdown.component.html:156"
+"colorize","material","1","app","Open custom color picker: Change → palette","src/app/ui/input-color-picker/input-color-picker.component.html:51"
+"comment","material","8","app","Project/Today notes panel; note search result and missing-note-context fallback: Change → description consistently
+Note-added success snack: Change to description
+Enable Project notes: Change to description, coordinated with Notes.","src/app/core-ui/main-header/desktop-panel-buttons/desktop-panel-buttons.component.ts:58
+src/app/core-ui/mobile-bottom-nav/mobile-bottom-nav.component.html:112
+src/app/core-ui/mobile-bottom-nav/mobile-bottom-nav.component.html:186
+src/app/features/config/form-cfgs/app-features-form.const.ts:88
+src/app/features/note/dialog-add-note/dialog-add-note.component.ts:73
+src/app/pages/search-page/search-page.component.html:79
+src/app/pages/search-page/search-page.component.ts:293
+src/app/pages/search-page/search-page.component.ts:321"
+"compress","material","1","app","Compress task archive: Keep with text.","src/app/imex/file-imex/file-imex.component.html:56"
+"computer","material","1","app","Desktop sync device: Keep.","src/app/imex/sync/dialog-sync-devices/dialog-sync-devices.component.ts:39"
+"content_copy","material","11","bundled-plugin-source, app","Copy or native-share task list as Markdown: Keep
+Attachment copy/edit/remove: Keep copy/edit; prefer delete for “Remove attachment,” reserving permanent-delete for actually erasing stored data. Add visible tooltip and accessible name to all four attachment controls (currently absent).
+Linked-issue identity, custom project/tag identity, captured source links and capture-token controls: Keep identity and familiar action icons. Pair provider logo with action text for open/update; preserve user customizations. Capture refresh reloads authorized grants; keep refresh for that action.
+Share/copy diagnostic logs: Keep
+Share dialog/system share/copy text/server instance/email: Keep
+Agent capture settings disclosure, privacy explanation, copy URL/code/token, refresh connections: Keep
+Duplicate provider config: Keep.
+Duplicate/delete block: Keep.","packages/plugin-dev/doc-mode/src/ui/editor.ts:1854
+src/app/core-ui/work-context-menu/work-context-menu.component.html:43
+src/app/core/share/dialog-share/dialog-share.component.html:50
+src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.html:273
+src/app/features/tasks/agent-capture/agent-capture-settings/agent-capture-settings.component.html:64
+src/app/features/tasks/agent-capture/agent-capture-settings/agent-capture-settings.component.html:103
+src/app/features/tasks/agent-capture/agent-capture-settings/agent-capture-settings.component.html:261
+src/app/features/tasks/agent-capture/agent-capture-settings/agent-capture-settings.component.html:295
+src/app/features/tasks/task-attachment/task-attachment-list/task-attachment-list.component.html:70
+src/app/pages/config-page/config-page.component.html:288
+src/app/ui/dialog-logs/dialog-logs.component.html:40"
+"content_paste","material","2","app","Copy worklog text to clipboard: Change → content_copy. Current icon means the opposite operation.","src/app/features/tasks/markdown-paste.service.ts:84
+src/app/features/worklog/worklog-export/worklog-export.component.html:195"
+"counter_1","material","1","app","Low/medium/high task priority presets: Keep existing shape hierarchy, retain spoken and menu labels; do not rely on color. Numeric alternative needs an explicit legend that 3 is highest. No urgent redesign evidence beyond unfamiliarity of the medium up-arrow.","src/app/features/tasks/task-priority.const.ts:28"
+"counter_2","material","1","app","Low/medium/high task priority presets: Keep existing shape hierarchy, retain spoken and menu labels; do not rely on color. Numeric alternative needs an explicit legend that 3 is highest. No urgent redesign evidence beyond unfamiliarity of the medium up-arrow.","src/app/features/tasks/task-priority.const.ts:28"
+"counter_3","material","1","app","Low/medium/high task priority presets: Keep existing shape hierarchy, retain spoken and menu labels; do not rely on color. Numeric alternative needs an explicit legend that 3 is highest. No urgent redesign evidence beyond unfamiliarity of the medium up-arrow.","src/app/features/tasks/task-priority.const.ts:28"
+"create_new_folder","material","3","app","Create a folder/subfolder for projects or tags: Keep","src/app/core-ui/folder-context-menu/folder-context-menu.component.html:13
+src/app/core-ui/magic-side-nav/magic-nav-config.service.ts:189
+src/app/core-ui/magic-side-nav/magic-nav-config.service.ts:220"
+"delete","material","14","bundled-plugin-source, app","Delete folder, move contents out: Keep with “Delete folder” text
+Delete plugin calendar event: Keep
+Edit recorded focus-session duration, remove entry, add tagged task/session metadata, save: Keep familiar edits; tooltip must say delete session entry rather than task.
+Habit month navigation, add habit, reveal disabled habits, re-enable habit, edit/delete: Keep navigation/disclosure/edit/delete; change add → add; change re-enable → toggle_on because visibility implies show/hide rather than enable habit.
+Counter elapsed-time entry, edit settings, save, remove counter: Keep with explicit labels and deletion scope.
+Work-view task-section overflow, edit, delete: Keep
+Archive compression preview: subtasks deleted, notes cleared, issue links removed: Keep delete / link_off; standardize note to description
+Delete one / all stored clipboard images: Keep with explicit scope and confirmation.
+Remove one / all uploaded plugins: Keep, with explicit names/scope and confirmation.
+Duplicate/delete block: Keep.","packages/plugin-dev/doc-mode/src/ui/editor.ts:1868
+src/app/core-ui/folder-context-menu/folder-context-menu.component.html:45
+src/app/features/archive/dialog-archive-compression/dialog-archive-compression.component.html:25
+src/app/features/config/clipboard-images-cfg/dialog-clipboard-images-manager/dialog-clipboard-images-manager.component.html:81
+src/app/features/issue-panel/issue-panel.component.html:59
+src/app/features/metric/dialog-focus-session-edit/dialog-focus-session-edit.component.html:73
+src/app/features/planner/planner-calendar-event/planner-calendar-event.component.html:67
+src/app/features/schedule/schedule-event/schedule-event.component.html:146
+src/app/features/simple-counter/dialog-simple-counter-edit-settings/dialog-simple-counter-edit-settings.component.html:24
+src/app/features/simple-counter/habit-tracker/habit-tracker.component.html:191
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:209
+src/app/features/work-view/work-view.component.html:248
+src/app/pages/contrast-test/contrast-test.component.html:178
+src/app/plugins/ui/plugin-management/plugin-management.component.html:302"
+"delete_forever","material","17","app","Delete project/tag/board: Keep only if deletion is permanent; otherwise delete
+Normal task delete in context menu and bulk menu: Change → delete. Ordinary local deletions are retained in Recently Deleted; reserve permanent-delete glyph for “Empty Recently Deleted.”
+Restore deleted task / empty Recently Deleted: Keep. This is the correct distinction between recovery and permanent removal.
+Attachment copy/edit/remove: Keep copy/edit; prefer delete for “Remove attachment,” reserving permanent-delete for actually erasing stored data. Add visible tooltip and accessible name to all four attachment controls (currently absent).
+Remove recurrence configuration: Prefer delete with “Remove recurrence” label; confirm whether removing config also removes instances before final wording. Permanent-trash icon alone gives no explanation of scope.
+Delete project/global note: Keep if confirmed permanent, with “Delete note” and confirmation/undo as applicable
+Empty Recently Deleted: Keep
+Remove repeatable config entry: Prefer delete; reserve delete_forever for irreversible user-data deletion.
+Delete provider configuration: Prefer delete unless genuinely permanent without undo.","src/app/core-ui/work-context-menu/work-context-menu.component.html:102
+src/app/core-ui/work-context-menu/work-context-menu.component.html:142
+src/app/features/boards/board-edit/board-edit.component.html:15
+src/app/features/boards/boards.component.html:78
+src/app/features/boards/dialog-board-edit/dialog-board-edit.component.html:26
+src/app/features/config/repeat-section-type/repeat-section-type.component.html:55
+src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.html:282
+src/app/features/note/note/note.component.html:107
+src/app/features/project/store/project.effects.ts:163
+src/app/features/task-repeat-cfg/dialog-edit-task-repeat-cfg/dialog-edit-task-repeat-cfg.component.html:180
+src/app/features/tasks/dialog-time-estimate/dialog-time-estimate.component.html:69
+src/app/features/tasks/recently-deleted/dialog-recently-deleted/dialog-recently-deleted.component.html:64
+src/app/features/tasks/task-attachment/task-attachment-list/task-attachment-list.component.html:86
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:394
+src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html:226
+src/app/plugins/issue-provider/plugin-issue-provider-adapter.service.ts:594
+src/app/plugins/issue-provider/plugin-issue-provider-adapter.service.ts:604"
+"delete_outline","material","2","app","Search result is deleted: Change → delete for consistent delete family
+Recently Deleted entry point: Keep, standardize delete if eliminating aliases","src/app/features/history/history.component.html:260
+src/app/pages/search-page/search-page.component.html:83"
+"delete_sweep","material","3","app","Check all / uncheck all / clear completed checklist items: Keep, retain action text
+Delete one / all stored clipboard images: Keep with explicit scope and confirmation.
+Remove one / all uploaded plugins: Keep, with explicit names/scope and confirmation.","src/app/features/config/clipboard-images-cfg/dialog-clipboard-images-manager/dialog-clipboard-images-manager.component.html:97
+src/app/plugins/ui/plugin-management/plugin-management.component.html:436
+src/app/ui/inline-markdown/inline-markdown.component.html:93"
+"description","material","1","bundled-plugin-source","Open Doc Mode panel: Keep with “Doc Mode” label.","packages/plugin-dev/doc-mode/src/background.ts:103"
+"desktop_windows","material","1","app","Plugin requires desktop app: Standardize to computer, matching sync device.","src/app/plugins/ui/plugin-management/plugin-management.component.html:194"
+"devices","material","3","app","Another device's tracking status / stop that remote timer: Keep; text identifies the device and accessible action name includes it. Do not animate a live timer from relayed state.","src/app/features/tracking-presence/remote-tracking-pill/remote-tracking-pill.component.ts:33
+src/app/features/tracking-presence/tracking-presence.service.ts:539
+src/app/features/tracking-presence/tracking-presence.service.ts:571"
+"devices_other","material","2","app","Unknown platform / empty devices list: Keep with “Unknown device” or “No devices” text.","src/app/imex/sync/dialog-sync-devices/dialog-sync-devices.component.html:38
+src/app/imex/sync/dialog-sync-devices/dialog-sync-devices.component.ts:46"
+"directions","material","1","app","Keyboard-navigation tour: Change → keyboard","src/app/core-ui/magic-side-nav/magic-nav-config.service.ts:330"
+"directions_walk","material","1","app","Default Standing Desk Timer counter: Change → accessibility_new, with “Standing desk” title. Walking person implies steps/walking rather than standing.","src/app/features/simple-counter/simple-counter.const.ts:28"
+"done","material","1","app","Switch current focus task, finish it/select next, select task when empty: Keep switch/finish; change empty selection CTA → checklist with “Choose task”; add_task suggests creating a new task although chooser includes existing tasks.","src/app/features/focus-mode/focus-mode-task-row/focus-mode-task-row.component.ts:72"
+"done_all","material","9","app","Complete/reopen task; complete multiple reminder tasks: Keep, normalize done/check within task actions where practical. Differentiate completing focus session from task completion through explicit labels.
+Complete current focus session, distinct from completing task: Change → stop_circle with visible “End session” label. Double check is easily confused with completing all tasks; session and task completion need separate text. Use the same choice in the header.
+Check all / uncheck all / clear completed checklist items: Keep, retain action text
+Move completed tasks to archive: Change to archive
+Finish-day button: Keep with “Finish day” label
+Onboarding feature teasers: Follow canonical navigation choices; keep focus/plugin/finish-day identity
+Enable Finish day: Keep with “Finish day” label.","src/app/features/config/form-cfgs/app-features-form.const.ts:70
+src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.html:286
+src/app/features/idle/dialog-idle/dialog-idle.component.ts:290
+src/app/features/onboarding/quick-tour-card/quick-tour-card.component.ts:30
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:149
+src/app/features/work-view/finish-day-btn/finish-day-btn.component.html:18
+src/app/features/work-view/work-view.component.html:430
+src/app/features/work-view/work-view.component.ts:643
+src/app/ui/inline-markdown/inline-markdown.component.html:79"
+"donut_large","material","1","app","Metrics for Today/project: Change → bar_chart","src/app/core-ui/work-context-menu/work-context-menu.component.html:24"
+"download","material","6","bundled-plugin-source, app","Download plugin ZIP / install plugin: Keep for ZIP downloads; use download consistently for in-app install too, with explicit “Install” label.
+API Test Plugin demonstration snacks/dialog/header actions: Keep as demonstration cases; do not treat them as canonical application semantics.","packages/plugin-dev/api-test-plugin/index.html:865
+packages/plugin-dev/api-test-plugin/index.html:870
+src/app/features/issue/issue-content/issue-content.component.html:82
+src/app/plugins/ui/plugin-management/plugin-management.component.html:287
+src/app/plugins/ui/plugin-management/plugin-management.component.html:358
+src/app/plugins/ui/plugin-management/plugin-management.component.html:373"
+"drive_file_move","material","1","app","Add-task bar's “Adding to [project]” destination indicator: Change to destination project icon or list_alt fallback; this indicates where a new task will go, not moving an existing file.","src/app/features/tasks/add-task-bar/add-task-bar.component.html:13"
+"edit","material","10","app","Rename project/tag/folder; edit board: Keep
+Attachment copy/edit/remove: Keep copy/edit; prefer delete for “Remove attachment,” reserving permanent-delete for actually erasing stored data. Add visible tooltip and accessible name to all four attachment controls (currently absent).
+Tags, add/remove field, edit/save, search, overflow, custom settings, expand, section, unfinished archived subtask: Keep contextual conventions. Label removals as “Clear estimate,” “Remove tag,” etc.; distinguish collapse from delete. segment should retain “Section” text.
+Habit month navigation, add habit, reveal disabled habits, re-enable habit, edit/delete: Keep navigation/disclosure/edit/delete; change add → add; change re-enable → toggle_on because visibility implies show/hide rather than enable habit.
+Work-view task-section overflow, edit, delete: Keep","src/app/core-ui/folder-context-menu/folder-context-menu.component.html:5
+src/app/core-ui/work-context-menu/work-context-menu.component.html:6
+src/app/features/boards/board-panel/board-panel.component.html:17
+src/app/features/boards/board/board.component.html:31
+src/app/features/boards/boards.component.html:64
+src/app/features/simple-counter/habit-tracker/habit-tracker.component.html:184
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:138
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:390
+src/app/features/tasks/task-attachment/task-attachment-list/task-attachment-list.component.html:78
+src/app/features/work-view/work-view.component.html:241"
+"edit_calendar","material","2","app","Planner sidebar, header title, mobile slot: Keep
+Inline onboarding instructional icons: Change Today to today; match canonical add-subtask choice; keep remainder
+Enable Planner: Keep; use the same symbol as Planner navigation.","src/app/core-ui/magic-side-nav/nav-section-icons.const.ts:4
+src/app/features/config/form-cfgs/app-features-form.const.ts:16"
+"emergency","material","1","app","System Urgent tag: Change → priority_high","src/app/features/tag/tag.const.ts:59"
+"emoji_events","material","2","app","Completed-project trophy; archived completed badge: Change archived badge → check_circle; retain trophy as optional decorative celebration","src/app/features/project/dialog-project-complete/dialog-project-complete.component.html:38
+src/app/pages/archived-projects-page/archived-projects-page.component.html:49"
+"enhanced_encryption","material","3","app","Encryption setup intro / migration banner: Prefer lock for the category; retain text explaining enabling encryption.","src/app/imex/sync/dialog-enable-encryption/dialog-enable-encryption.component.html:32
+src/app/imex/sync/super-sync-encryption-migration-banner.service.ts:46
+src/styles/components/_info-panel.scss:29"
+"error","material","16","bundled-plugin-source, app","Shared error card: Keep
+Archive compression error, no data, irreversible-loss notice: Keep
+Shared snack success/error/warning/dismiss: Keep
+Destructive/conflicting choices; failures; guidance: Keep standardized shapes and accompanying text, avoid color-only distinctions.
+Plugin fails to load/run: Standardize to error, selected through the same font style.
+API Test Plugin demonstration snacks/dialog/header actions: Keep as demonstration cases; do not treat them as canonical application semantics.","packages/plugin-dev/api-test-plugin/index.html:486
+packages/plugin-dev/api-test-plugin/plugin.js:206
+src/app/core/snack/snack-custom/snack-custom.component.html:13
+src/app/features/archive/dialog-archive-compression/dialog-archive-compression.component.html:11
+src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.html:184
+src/app/imex/local-backup/dialog-backups-list/dialog-backups-list.component.html:11
+src/app/imex/local-backup/dialog-backups-list/dialog-backups-list.component.html:29
+src/app/imex/sync/dialog-enable-encryption/dialog-enable-encryption.component.html:85
+src/app/imex/sync/dialog-enable-encryption/dialog-enable-encryption.component.html:188
+src/app/imex/sync/dialog-restore-point/dialog-restore-point.component.html:11
+src/app/imex/sync/dialog-sync-devices/dialog-sync-devices.component.html:10
+src/app/op-log/persistence/dialog-legacy-migration/dialog-legacy-migration.component.html:8
+src/app/plugins/ui/plugin-config-dialog/plugin-config-dialog.component.ts:47
+src/app/plugins/ui/plugin-index/plugin-index.component.html:38
+src/app/plugins/ui/plugin-management/plugin-management.component.html:187
+src/app/ui/error-card/error-card.component.html:4"
+"error_outline","material","1","app","Plugin fails to load/run: Standardize to error, selected through the same font style.","src/app/plugins/ui/plugin-index/plugin-index.component.html:55"
+"event","material","8","app","Calendar events in planner/schedule, calendar block default: Keep event fallback; preserve provider identity
+Add-task date and timed-date chips; detail planning action; short-syntax date chip: Normalize date-only → calendar_month; keep schedule for time of day. All date pickers should read alike.
+Calendar import notification: Keep event fallback; use provider logo only for identity.","src/app/features/calendar-integration/store/calendar-integration.effects.ts:342
+src/app/features/planner/planner-calendar-event/planner-calendar-event.component.html:6
+src/app/features/schedule/map-schedule-data/create-view-entries-for-block.ts:42
+src/app/features/schedule/schedule-event/schedule-event.component.html:45
+src/app/features/tasks/add-task-bar/add-task-bar-actions/add-task-bar-actions.component.html:43
+src/app/features/tasks/add-task-bar/short-syntax-to-tags.ts:130
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:238
+src/app/features/tasks/task-detail-panel/task-detail-panel.component.html:32"
+"event_available","material","1","app","Remove deadline / Set deadline buttons: Change → flag + text for both, or custom flag-minus/flag-plus only if a distinct pictogram is needed. Calendar cross/check reads like canceled/confirmed scheduling rather than deadline.","src/app/features/tasks/dialog-deadline/dialog-deadline.component.html:51"
+"event_busy","material","9","app","Unplan all Today tasks: Keep, label “Unschedule all…”
+Unschedule task: Use event_busy consistently
+Unschedule task/selection; remove scheduled instance: Keep for removing a date/scheduled occurrence, with explicit action label. Do not reuse it to remove a deadline or dismiss a reminder.
+Remove deadline / Set deadline buttons: Change → flag + text for both, or custom flag-minus/flag-plus only if a distinct pictogram is needed. Calendar cross/check reads like canceled/confirmed scheduling rather than deadline.
+Clear deadline reminder versus unschedule task in reminder dialog: Keep separate as implemented. These actually perform different actions; retain accurate labels instead of replacing both with close.
+Recurrence header/preview, paused recurrence, configured reminder, start date picker, save/cancel, skip occurrence: Keep repeat/pause/alarm/save/cancel/skip; normalize arbitrary start date picker → calendar_month.","src/app/core-ui/work-context-menu/work-context-menu.component.html:34
+src/app/features/planner/dialog-schedule-task/dialog-schedule-task.component.html:93
+src/app/features/task-repeat-cfg/dialog-edit-task-repeat-cfg/dialog-edit-task-repeat-cfg.component.html:192
+src/app/features/tasks/dialog-deadline/dialog-deadline.component.html:38
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:177
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:292
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:369
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:75
+src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html:71"
+"event_note","material","1","app","Calendar visibility/filter menu: Change → filter_alt, label “Calendars”","src/app/features/schedule/schedule/schedule.component.html:45"
+"exit_to_app","material","1","app","Quit without finish-day review: Keep with Quit label; distinguish app exit from review completion.","src/app/features/finish-day-before-close/dialog-finish-day-before-close/dialog-finish-day-before-close.component.html:20"
+"expand_more","material","9","app","Expand/collapse Projects and Tags groups: Keep; rotate to show expanded state consistently
+Tags, add/remove field, edit/save, search, overflow, custom settings, expand, section, unfinished archived subtask: Keep contextual conventions. Label removals as “Clear estimate,” “Remove tag,” etc.; distinguish collapse from delete. segment should retain “Section” text.
+Pomodoro cycle count, adjust session duration, mode configuration, overflow, notes expander, exit overlay: Keep familiar controls. Label repeated reset buttons by what resets (“Reset cycles” versus session timer).
+Habit month navigation, add habit, reveal disabled habits, re-enable habit, edit/delete: Keep navigation/disclosure/edit/delete; change add → add; change re-enable → toggle_on because visibility implies show/hide rather than enable habit.
+Collapsible/form section disclosure: Keep
+Collapse/expand history month: Keep
+Agent capture settings disclosure, privacy explanation, copy URL/code/token, refresh connections: Keep","src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.html:342
+src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.html:384
+src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.html:421
+src/app/features/tasks/agent-capture/agent-capture-settings/agent-capture-settings.component.html:3
+src/app/features/tasks/agent-capture/agent-capture-settings/agent-capture-settings.component.html:202
+src/app/features/tasks/task-list/task-list.component.html:20
+src/app/ui/collapsible/collapsible.component.html:11
+src/app/ui/collapsible/collapsible.component.html:31
+src/app/ui/formly-collapsible/formly-collapsible.component.html:10"
+"explore","material","1","app","Quick tour: Keep with “Quick tour” label","src/app/core-ui/magic-side-nav/magic-nav-config.service.ts:316"
+"extension","material","14","app","Plugins destination and fallback for unknown plugin icons: Keep
+Plugin task actions submenu and contributed entries: Keep extension as a category; require label on every contributed entry, fallback generic action icon. Provider/plugin identity cannot explain action on its own.
+Onboarding feature teasers: Follow canonical navigation choices; keep focus/plugin/finish-day identity
+Unknown/nonbranded issue provider setup: Keep as fallback; prefer the provider's uploaded SVG when available.
+Plugin identity fallback: Keep; never show it in place of a known task/calendar action.","src/app/core-ui/magic-side-nav/magic-nav-config.service.ts:340
+src/app/core-ui/magic-side-nav/magic-nav-config.service.ts:486
+src/app/core-ui/main-header/page-title/page-title.component.ts:419
+src/app/core-ui/mobile-bottom-nav/mobile-bottom-nav-slot.ts:84
+src/app/features/issue-panel/issue-panel.component.html:34
+src/app/features/issue-panel/issue-provider-setup-overview/issue-provider-setup-overview.component.html:113
+src/app/features/issue-panel/issue-provider-setup-overview/issue-provider-setup-overview.component.html:127
+src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.html:8
+src/app/features/onboarding/quick-tour-card/quick-tour-card.component.ts:31
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:344
+src/app/plugins/plugin-runner.ts:111
+src/app/plugins/plugin-runner.ts:120
+src/app/plugins/plugin.service.ts:375
+src/app/plugins/ui/plugin-management/plugin-management.component.html:121"
+"extension_off","material","1","app","Required integration plugin is missing: Keep; an unavailable extension is the actual condition.","src/app/features/issue-panel/issue-panel.component.html:46"
+"favorite","material","4","app","Donate route/page: Change → volunteer_activism with “Donate” label
+Show Donate page: Change to volunteer_activism if adopting the Donate navigation proposal (P2); retain the Donate label.","src/app/core-ui/magic-side-nav/nav-section-icons.const.ts:10
+src/app/features/config/form-cfgs/app-features-form.const.ts:118
+src/app/pages/contrast-test/contrast-test.component.html:166
+src/app/pages/donate-page/donate-page.component.html:17"
+"feedback","material","1","app","Send feedback: Keep","src/app/core-ui/magic-side-nav/magic-nav-config.service.ts:289"
+"file_copy","material","3","app","Duplicate project/board: Change → content_copy
+Duplicate task: Change → content_copy to match other duplicate/copy controls; retain Duplicate text.","src/app/core-ui/work-context-menu/work-context-menu.component.html:135
+src/app/features/boards/boards.component.html:71
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:369"
+"file_download","material","3","app","Download worklog file; add export column: Keep, optionally normalize legacy file_download to download only during style consolidation.
+Update available/downloaded snack (platform-specific caller context): Keep as download identity; do not mechanically alias all update states
+Import from local file, opens file picker: Change to upload; keep “Import from file” label.
+Conflict resolution: use remote / use local: Standardize to cloud_download / cloud_upload, matching the newer import-conflict dialog.","src/app/features/worklog/worklog-export/worklog-export.component.html:206
+src/app/imex/file-imex/file-imex.component.html:28
+src/app/imex/sync/dialog-sync-conflict/dialog-sync-conflict.component.html:164"
+"file_upload","material","2","app","Export data, handler downloadBackup(): Change to download.
+Conflict resolution: use remote / use local: Standardize to cloud_download / cloud_upload, matching the newer import-conflict dialog.
+GitLab worklog submitted remotely: Change to cloud_upload.","src/app/imex/file-imex/file-imex.component.html:7
+src/app/imex/sync/dialog-sync-conflict/dialog-sync-conflict.component.html:172"
+"filter_alt","material","1","app","Filter-by submenu: Keep","src/app/features/task-view-customizer/task-view-customizer-panel/task-view-customizer-panel.component.html:39"
+"filter_list","material","1","app","Open task-view customizer: Change → tune","src/app/core-ui/main-header/page-title/page-title.component.ts:115"
+"fitness_center","material","1","app","Default Stretching Counter: Change → self_improvement with title; dumbbell implies strength training. A dedicated stretch silhouette is preferable only if a readily available consistent glyph exists.","src/app/features/simple-counter/simple-counter.const.ts:46"
+"flag","material","16","app","Task deadline, planner deadline row/header, schedule month/week deadline count: Keep consistently for deadline
+Task deadline field, task-row deadline, bulk deadline action, deadline reminder section: Keep consistently, with date/time visible. This distinguishes “due by” from the scheduled work date.","src/app/features/planner/planner-day-overdue/planner-day-overdue.component.html:43
+src/app/features/planner/planner-day/planner-day.component.html:177
+src/app/features/planner/planner-deadline-task/planner-deadline-task.component.html:2
+src/app/features/reminder/reminder.module.ts:198
+src/app/features/schedule/schedule-month/schedule-month.component.html:26
+src/app/features/schedule/schedule-week/schedule-week.component.html:45
+src/app/features/tasks/add-task-bar/add-task-bar-actions/add-task-bar-actions.component.html:69
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:9
+src/app/features/tasks/store/task-reminder.effects.ts:184
+src/app/features/tasks/store/task-reminder.effects.ts:205
+src/app/features/tasks/store/task-ui.effects.ts:325
+src/app/features/tasks/task-detail-panel/task-detail-panel.component.html:39
+src/app/features/tasks/task-detail-panel/task-detail-panel.component.html:199
+src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html:92
+src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html:103
+src/app/features/tasks/task/task.component.html:294"
+"folder","material","3","app","Folder identity and expanded state: Keep
+Recovery point / desktop backup file / mobile backup slot kind: Keep history and smartphone; consider description for a single backup file rather than folder.","src/app/core-ui/magic-side-nav/nav-item/nav-item.component.html:76
+src/app/core-ui/magic-side-nav/nav-list/nav-list-tree.component.html:145
+src/app/imex/local-backup/dialog-backups-list/dialog-backups-list.component.ts:28"
+"folder_open","material","3","app","Folder identity and expanded state: Keep
+Pick local background file / load Unsplash image: Keep
+Choose desktop image storage folder: Keep.","src/app/core-ui/magic-side-nav/nav-item/nav-item.component.html:76
+src/app/features/config/clipboard-images-cfg/clipboard-images-cfg.component.html:42
+src/app/ui/formly-image-input/formly-image-input.component.html:26"
+"format_bold","material","1","app","Markdown text formatting: Keep","src/app/ui/dialog-fullscreen-markdown/dialog-fullscreen-markdown.component.html:62"
+"format_italic","material","1","app","Markdown text formatting: Keep","src/app/ui/dialog-fullscreen-markdown/dialog-fullscreen-markdown.component.html:75"
+"format_list_bulleted","material","2","bundled-plugin-source, app","Insert bullet, numbered or task list: Keep
+Bulleted/numbered list: Keep.","packages/plugin-dev/doc-mode/src/ui/editor.ts:883
+src/app/ui/dialog-fullscreen-markdown/dialog-fullscreen-markdown.component.html:104"
+"format_list_numbered","material","2","bundled-plugin-source, app","Insert bullet, numbered or task list: Keep
+Bulleted/numbered list: Keep.","packages/plugin-dev/doc-mode/src/ui/editor.ts:889
+src/app/ui/dialog-fullscreen-markdown/dialog-fullscreen-markdown.component.html:117"
+"format_quote","material","2","bundled-plugin-source, app","Quote / inline code: Keep
+Quote / code block / divider: Keep.","packages/plugin-dev/doc-mode/src/ui/editor.ts:895
+src/app/ui/dialog-fullscreen-markdown/dialog-fullscreen-markdown.component.html:143"
+"forum","material","2","app","Reddit community: Keep
+Feedback, community, support, feedback navigation: Keep","src/app/core-ui/magic-side-nav/magic-nav-config.service.ts:309
+src/app/features/dialog-please-rate/dialog-please-rate.component.html:61"
+"forward","material","3","app","Move/add to another project: Change → drive_file_move to convey movement into a container, with destination label.
+Move note to another project / add to project: Change to drive_file_move","src/app/features/note/note/note.component.html:75
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:206
+src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html:211"
+"free_breakfast","material","4","app","Focus and break state in header focus button: Keep focus; keep coffee only for break state with state-specific label
+Summary break count/duration: Keep with “Breaks” label
+Idle time classified as break/task/split allocations; dynamic confirm repeats these (or add/check): Keep break cup and split branching with labels; change task target → checklist, confirmation for recorded time → more_time or check with full verb label.
+Default Coffee Counter: Keep cup, optionally use coffee when normalizing set.","src/app/core-ui/main-header/focus-button/focus-button.component.html:17
+src/app/features/idle/dialog-idle/dialog-idle.component.html:23
+src/app/features/idle/dialog-idle/dialog-idle.component.html:111
+src/app/pages/daily-summary/daily-summary.component.html:63"
+"fullscreen","material","1","app","Expand note editor: Keep","src/app/ui/inline-markdown/inline-markdown.component.html:104"
+"functions","material","1","app","Parent-task total time spent across subtasks: Change → timer, keep a “Total time” tooltip/accessibility label. Sigma requires mathematical interpretation for a basic duration.","src/app/features/tasks/task/task.component.html:102"
+"grid_view","material","2","app","Boards route/title/mobile slot: Change → view_kanban
+Onboarding feature teasers: Follow canonical navigation choices; keep focus/plugin/finish-day identity
+Enable Boards: Change to view_kanban, coordinated with the Boards navigation proposal (P2).","src/app/core-ui/magic-side-nav/nav-section-icons.const.ts:6
+src/app/features/config/form-cfgs/app-features-form.const.ts:34"
+"group","material","1","app","Assign Plainspace task / release assignment: Keep assignment; change release → person_remove with “Unassign” label. Group implies team or membership, not releasing ownership.","src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:331"
+"group_add","material","1","app","Share project on Plainspace: Keep with “Share project…” text","src/app/core-ui/work-context-menu/work-context-menu.component.html:64"
+"group_work","material","1","app","Group-by submenu: Change → view_agenda","src/app/features/task-view-customizer/task-view-customizer-panel/task-view-customizer-panel.component.html:25"
+"heart_check","material","2","app","Habits route/title: Change → event_repeat, with “Habits” label
+Onboarding feature teasers: Follow canonical navigation choices; keep focus/plugin/finish-day identity
+Enable Habits: Change to event_repeat if adopting the Habits navigation proposal (P2); retain text “Habits”.","src/app/core-ui/magic-side-nav/nav-section-icons.const.ts:7
+src/app/features/config/form-cfgs/app-features-form.const.ts:43"
+"help_center","material","2","app","Help menu and online help: Change → help_outline","src/app/core-ui/magic-side-nav/magic-nav-config.service.ts:269
+src/app/core-ui/magic-side-nav/magic-nav-config.service.ts:275"
+"help_outline","material","3","app","Missing work-context fallback in search: Change → label_off for missing tag or folder_off for missing project, plus “Unavailable context”
+Toggle help: Keep pair; update accessible name/state
+Setting help tooltip: Keep","src/app/ui/help-section/help-section.component.html:18
+src/app/ui/help-section/help-section.component.html:22
+src/app/ui/setting-help/setting-help.component.ts:22"
+"history","material","9","app","Context history: Keep
+Reflection history; impact rating: Keep, retain scale labels. Impact uses its own descriptive label and therefore does not read as task starring.
+Browse recovery points; empty backups state; recovery-available banner: Keep.
+Recovery point / desktop backup file / mobile backup slot kind: Keep history and smartphone; consider description for a single backup file rather than folder.
+Restore point trigger: sync import / backup import / repair / fallback: Keep with full trigger labels.","src/app/core-ui/work-context-menu/work-context-menu.component.html:15
+src/app/features/metric/reflection-note/reflection-note.component.html:17
+src/app/features/work-context/dialog-work-context-settings/dialog-work-context-settings.component.ts:172
+src/app/imex/local-backup/dialog-backups-list/dialog-backups-list.component.html:16
+src/app/imex/local-backup/dialog-backups-list/dialog-backups-list.component.ts:27
+src/app/imex/local-backup/recovery-point-banner.service.ts:33
+src/app/imex/sync/dialog-restore-point/dialog-restore-point.component.html:16
+src/app/imex/sync/dialog-restore-point/dialog-restore-point.component.ts:122
+src/app/pages/config-page/config-page.component.ts:228"
+"home","material","1","app","Internal contrast-test page: Keep as design specimens, exclude from navigation redesign.","src/app/pages/contrast-test/contrast-test.component.html:160"
+"horizontal_rule","material","1","bundled-plugin-source","Quote / code block / divider: Keep.","packages/plugin-dev/doc-mode/src/ui/editor.ts:907"
+"hourglass_bottom","material","1","app","Focus timer mode options: Flowtime, Pomodoro, Countdown: Change Flowtime → all_inclusive (open ended session); keep timer/hourglass with persistent mode names. Sparkles suggest AI/magic and do not explain Flowtime.","src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.ts:294"
+"hourglass_empty","material","9","app","Estimate / time remaining / spent-versus-estimated field; add-task estimate; archived task estimate: Keep for estimated/remaining duration. Split the detail field label if necessary to distinguish tracked time from estimate.
+Share chart / activity heatmap, busy state: Keep share; use progress indicator for busy instead of estimate icon, and announce preparing state. Add explicit accessible name to icon-only share controls even when tooltip exists.
+Estimated time remaining: Keep, alongside existing label","src/app/features/metric/activity-heatmap/activity-heatmap.component.html:13
+src/app/features/metric/lazy-chart/lazy-chart.component.html:32
+src/app/features/tasks/add-task-bar/add-task-bar-actions/add-task-bar-actions.component.html:148
+src/app/features/tasks/dialog-view-archived-task/dialog-view-archived-task.component.html:38
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:175
+src/app/features/tasks/task-detail-panel/task-detail-panel.component.html:131
+src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html:157
+src/app/features/tasks/task/task.component.html:111
+src/app/features/work-view/work-view.component.html:35"
+"image","material","7","app","Image / local file / web link attachment generated by short syntax: Keep image/file; change web-link bookmark → link. A pasted URL has not necessarily been bookmarked.
+Insert link/image/table; show shortcut help: Keep
+Pick local background file / load Unsplash image: Keep
+Drop/paste attachment file, link, image: Keep file/image; change bookmark to link
+Manage clipboard images / image row: Keep.","src/app/core/drop-paste-input/drop-paste.model.ts:13
+src/app/features/config/clipboard-images-cfg/clipboard-images-cfg.component.html:11
+src/app/features/config/clipboard-images-cfg/dialog-clipboard-images-manager/dialog-clipboard-images-manager.component.html:62
+src/app/features/tasks/short-syntax.ts:1566
+src/app/features/tasks/task-attachment/task-attachment-list/task-attachment-list.component.html:33
+src/app/ui/dialog-fullscreen-markdown/dialog-fullscreen-markdown.component.html:192
+src/app/ui/formly-image-input/formly-image-input.component.html:38"
+"image_not_supported","material","1","app","No stored clipboard images: Prefer image or photo_library with “No images yet”; reserve image_not_supported for unsupported/broken image.","src/app/features/config/clipboard-images-cfg/dialog-clipboard-images-manager/dialog-clipboard-images-manager.component.html:12"
+"inbox","material","6","app","Inbox project, sidebar and configurable mobile destination: Keep
+Add-task destination toggle (backlog versus Today): Keep icons, show/announce destination and toggle state clearly.
+Inline onboarding instructional icons: Change Today to today; match canonical add-subtask choice; keep remainder","src/app/core-ui/magic-side-nav/magic-nav-config.service.ts:402
+src/app/core-ui/magic-side-nav/magic-nav-config.service.ts:406
+src/app/core-ui/mobile-bottom-nav/mobile-bottom-nav-slot.ts:50
+src/app/features/onboarding/onboarding-hint-steps.const.ts:70
+src/app/features/project/project.const.ts:29
+src/app/features/tasks/add-task-bar/add-task-bar.component.html:112"
+"info","material","24","bundled-plugin-source, app","Schedule overlap/outside-work-hours advisory and Shift-key hint: Keep
+Open archived-task details: Change → description, label “View task details”
+Allocate remaining idle duration, warning explanation, add/remove split allocation: Keep, with current explicit accessible labels; this is a coherent timer action family.
+View task details in summary table: Keep info here: viewTaskDetails() opens the read-only archived-task information dialog. Preserve this distinction from the task-row side-panel opener.
+Destructive/conflicting choices; failures; guidance: Keep standardized shapes and accompanying text, avoid color-only distinctions.
+Issue already exists / restored task snack: Keep for already-exists; consider unarchive for restored task.
+API Test Plugin demonstration snacks/dialog/header actions: Keep as demonstration cases; do not treat them as canonical application semantics.","packages/plugin-dev/api-test-plugin/index.html:495
+packages/plugin-dev/api-test-plugin/plugin.js:206
+src/app/features/idle/dialog-idle/dialog-idle.component.html:80
+src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.html:114
+src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.html:199
+src/app/features/issue/issue.service.ts:848
+src/app/features/issue/issue.service.ts:887
+src/app/features/issue/issue.service.ts:909
+src/app/features/issue/issue.service.ts:930
+src/app/features/planner/dialog-schedule-task/dialog-schedule-task.component.html:59
+src/app/features/planner/dialog-schedule-task/dialog-schedule-task.component.ts:474
+src/app/features/schedule/schedule-week/schedule-week.component.html:204
+src/app/features/tasks/add-task-bar/add-task-bar-issue-search.service.ts:184
+src/app/features/tasks/task-bulk-action.service.ts:843
+src/app/features/tasks/task-bulk-action.service.ts:852
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.ts:812
+src/app/features/tasks/task-summary-table/task-summary-table.component.html:41
+src/app/imex/sync/dialog-change-encryption-password/dialog-change-encryption-password.component.html:103
+src/app/imex/sync/dialog-enable-encryption/dialog-enable-encryption.component.html:12
+src/app/imex/sync/dialog-enable-encryption/dialog-enable-encryption.component.html:204
+src/app/imex/sync/dialog-import-encryption-warning/dialog-import-encryption-warning.component.html:69
+src/app/imex/sync/super-sync-encryption-setup.service.ts:67
+src/app/pages/search-page/search-page.component.html:108
+src/styles/components/_info-panel.scss:20"
+"integration_instructions","material","1","app","Insert fenced code block: Change → code_blocks","src/app/ui/dialog-fullscreen-markdown/dialog-fullscreen-markdown.component.html:166"
+"ios_share","material","1","app","Copy or native-share task list as Markdown: Keep","src/app/core-ui/work-context-menu/work-context-menu.component.html:43"
+"key","material","1","app","Explanation that a password is required: Keep.","src/app/imex/sync/dialog-import-encryption-warning/dialog-import-encryption-warning.component.html:58"
+"keyboard","material","2","app","Insert link/image/table; show shortcut help: Keep
+Onboarding search and short-syntax tips: Keep","src/app/features/onboarding/quick-tour-card/quick-tour-card.component.html:65
+src/app/ui/dialog-fullscreen-markdown/dialog-fullscreen-markdown.component.html:215"
+"keyboard_arrow_down","material","1","app","Low/medium/high task priority presets: Keep existing shape hierarchy, retain spoken and menu labels; do not rely on color. Numeric alternative needs an explicit legend that 3 is highest. No urgent redesign evidence beyond unfamiliarity of the medium up-arrow.","src/app/features/tasks/task-priority.const.ts:24"
+"keyboard_arrow_up","material","1","app","Low/medium/high task priority presets: Keep existing shape hierarchy, retain spoken and menu labels; do not rely on color. Numeric alternative needs an explicit legend that 3 is highest. No urgent redesign evidence beyond unfamiliarity of the medium up-arrow.","src/app/features/tasks/task-priority.const.ts:25"
+"keyboard_double_arrow_up","material","1","app","Low/medium/high task priority presets: Keep existing shape hierarchy, retain spoken and menu labels; do not rely on color. Numeric alternative needs an explicit legend that 3 is highest. No urgent redesign evidence beyond unfamiliarity of the medium up-arrow.","src/app/features/tasks/task-priority.const.ts:26"
+"label","material","11","app","Default tag in navigation/selectors: Keep
+Tags, add/remove field, edit/save, search, overflow, custom settings, expand, section, unfinished archived subtask: Keep contextual conventions. Label removals as “Clear estimate,” “Remove tag,” etc.; distinguish collapse from delete. segment should retain “Section” text.","src/app/features/tag/tag-toggle-menu-list/tag-toggle-menu-list.component.html:22
+src/app/features/tasks/add-task-bar/add-task-bar-actions/add-task-bar-actions.component.html:110
+src/app/features/tasks/add-task-bar/add-task-bar-actions/add-task-bar-actions.component.html:229
+src/app/features/tasks/add-task-bar/short-syntax-to-tags.ts:152
+src/app/features/tasks/add-task-bar/short-syntax-to-tags.ts:164
+src/app/features/tasks/mention-config.service.ts:47
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:191
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:580
+src/app/features/tasks/task-detail-panel/task-detail-panel.component.html:365
+src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html:183
+src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html:296"
+"language","material","1","app","Share dialog/system share/copy text/server instance/email: Keep","src/app/core/share/dialog-share/dialog-share.component.html:40"
+"laptop_windows","material","1","app","Declared drop/paste command and note icon enum values: Unresolved/dead declarations: no production references found to these enum members; if activated use terminal / description","src/app/core/drop-paste-input/drop-paste.model.ts:14"
+"library_books","material","3","app","Task search result/project missing fallback: Change → checklist for a task result or list_alt for a missing-project fallback; retain context text. Books imply documentation/library.
+Draggable work-view split handle (reveals secondary/backlog area): Change to drag_handle when primary interaction is drag; add explicit expand/collapse button if retained","src/app/features/tasks/add-task-bar/add-task-bar.component.html:256
+src/app/features/tasks/select-task/select-task.component.html:38
+src/app/features/work-view/split/split.component.html:17"
+"lightbulb","material","2","unbundled-plugin-source, app","Startup productivity tip / offline remote services notice: Keep
+Brain Dump idea capture / add / success: Keep for that optional source plugin; it is not in the current bundled artifact list.","packages/plugin-dev/brain-dump/plugin.js:489
+src/app/core/startup/startup.service.ts:151"
+"link","material","14","app","Copy project invite URL: Change → content_copy, or custom link-with-copy
+Linked-issue identity, custom project/tag identity, captured source links and capture-token controls: Keep identity and familiar action icons. Pair provider logo with action text for open/update; preserve user customizations. Capture refresh reloads authorized grants; keep refresh for that action.
+Insert link/image/table; show shortcut help: Keep
+Labeled social-share targets: Prefer brand SVGs if licensed/available, otherwise remove these redundant icons and keep platform names
+Agent-capture saved link attachment: Keep","src/app/app.component.ts:552
+src/app/core-ui/work-context-menu/work-context-menu.component.html:74
+src/app/core/share/dialog-share/dialog-share.component.ts:46
+src/app/core/share/dialog-share/dialog-share.component.ts:47
+src/app/core/share/dialog-share/dialog-share.component.ts:48
+src/app/core/share/dialog-share/dialog-share.component.ts:49
+src/app/core/share/dialog-share/dialog-share.component.ts:53
+src/app/core/share/share.service.ts:395
+src/app/core/share/share.service.ts:401
+src/app/core/share/share.service.ts:407
+src/app/core/share/share.service.ts:413
+src/app/core/share/share.service.ts:436
+src/app/features/tasks/agent-capture/super-sync-capture-source.ts:264
+src/app/ui/dialog-fullscreen-markdown/dialog-fullscreen-markdown.component.html:182"
+"link_off","material","4","app","Archive compression preview: subtasks deleted, notes cleared, issue links removed: Keep delete / link_off; standardize note to description
+Plainspace rejected connection / old server notices: Keep link_off; change update to system_update_alt (P2)
+Linked issue disconnected/deleted upstream; OAuth disconnect action: Keep; retain label/tooltip naming the state or action.","src/app/features/archive/dialog-archive-compression/dialog-archive-compression.component.html:49
+src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.html:124
+src/app/features/issue/issue-sync-state/issue-sync-state.component.html:3
+src/app/features/plainspace/reconnect-notice/plainspace-reconnect-notice.component.html:3"
+"list","material","10","app","Add a task-list section: Change → playlist_add
+Project result in search: Change → project icon or list_alt fallback
+Subtasks panel, add subtask menu, add subtask input: Change subtask panel → account_tree to communicate hierarchy; keep playlist_add and plus with “Add subtask” text. Flat list is otherwise reused for worklog and sections.
+Worklog collapsed task count, expanded duration cue, recurring-task marker, focus count/time, habit totals, total duration: Keep repeat/focus and custom identities; use checklist for task count, timer for elapsed totals; collapse/expand should use a stable disclosure chevron rather than swapping list/timer.
+Show/hide day's detailed history: Change to expand_more / expand_less","src/app/app.component.html:148
+src/app/core-ui/work-context-menu/work-context-menu.component.html:84
+src/app/features/history/history.component.html:184
+src/app/features/tasks/dialog-view-archived-task/dialog-view-archived-task.component.html:14
+src/app/features/tasks/task-detail-panel/task-detail-panel.component.html:54
+src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html:337
+src/app/features/worklog/worklog-week/worklog-week.component.html:33
+src/app/pages/search-page/search-page.component.html:59
+src/app/pages/search-page/search-page.component.ts:321
+src/app/pages/search-page/search-page.component.ts:403"
+"list_alt","material","1","app","Default project icon throughout nav, header, selects and chips: Keep, use consistently","src/app/features/project/project.const.ts:8"
+"lock","material","8","app","Enable / disable Markdown parsing (the menu calls toggleLock()): Change to visibility / code, for “Show formatted note” / “Show plain text” respectively
+Encryption enabled/disabled; enable/disable encryption: Keep.","src/app/features/note/note/note.component.html:90
+src/app/imex/sync/dialog-enable-encryption/dialog-enable-encryption.component.html:130
+src/app/imex/sync/dialog-enable-encryption/dialog-enable-encryption.component.html:232
+src/app/imex/sync/dialog-enter-encryption-password/dialog-enter-encryption-password.component.html:2
+src/app/imex/sync/dialog-import-encryption-warning/dialog-import-encryption-warning.component.html:18
+src/app/imex/sync/dialog-import-encryption-warning/dialog-import-encryption-warning.component.html:37
+src/app/imex/sync/dialog-import-encryption-warning/dialog-import-encryption-warning.component.html:89
+src/app/pages/config-page/config-page.component.html:230"
+"lock_open","material","6","app","Enable / disable Markdown parsing (the menu calls toggleLock()): Change to visibility / code, for “Show formatted note” / “Show plain text” respectively
+Encryption enabled/disabled; enable/disable encryption: Keep.","src/app/features/note/note/note.component.html:93
+src/app/imex/sync/dialog-change-encryption-password/dialog-change-encryption-password.component.html:80
+src/app/imex/sync/dialog-change-encryption-password/dialog-change-encryption-password.component.html:153
+src/app/imex/sync/dialog-import-encryption-warning/dialog-import-encryption-warning.component.html:21
+src/app/imex/sync/dialog-import-encryption-warning/dialog-import-encryption-warning.component.html:40
+src/app/imex/sync/dialog-import-encryption-warning/dialog-import-encryption-warning.component.html:91"
+"lock_reset","material","1","app","Change encryption password: Keep with label.","src/app/imex/sync/dialog-change-encryption-password/dialog-change-encryption-password.component.html:133"
+"login","material","1","app","Authenticate/connect provider: Keep with “Connect [provider]” label.","src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.html:139"
+"menu","material","1","app","Open mobile navigation: Keep","src/app/core-ui/mobile-bottom-nav/mobile-bottom-nav.component.html:132"
+"more_horiz","material","1","app","Tags, add/remove field, edit/save, search, overflow, custom settings, expand, section, unfinished archived subtask: Keep contextual conventions. Label removals as “Clear estimate,” “Remove tag,” etc.; distinguish collapse from delete. segment should retain “Section” text.","src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html:31"
+"more_time","material","1","app","Allocate remaining idle duration, warning explanation, add/remove split allocation: Keep, with current explicit accessible labels; this is a coherent timer action family.","src/app/features/idle/dialog-idle/dialog-idle.component.html:159"
+"more_vert","material","11","app","Project/tag/folder context menus and header context menu: Keep
+Tags, add/remove field, edit/save, search, overflow, custom settings, expand, section, unfinished archived subtask: Keep contextual conventions. Label removals as “Clear estimate,” “Remove tag,” etc.; distinguish collapse from delete. segment should retain “Section” text.
+Pomodoro cycle count, adjust session duration, mode configuration, overflow, notes expander, exit overlay: Keep familiar controls. Label repeated reset buttons by what resets (“Reset cycles” versus session timer).
+Split-button alternatives / swipe action hint: Keep
+Note actions menu: Keep
+Work-view task-section overflow, edit, delete: Keep
+Per-entry menu in repeatable config list: Keep; add a translated accessible name such as “More options for [item]”.","src/app/core-ui/magic-side-nav/nav-item/nav-item.component.html:51
+src/app/core-ui/magic-side-nav/nav-item/nav-item.component.html:96
+src/app/core-ui/magic-side-nav/nav-item/nav-item.component.html:167
+src/app/core-ui/main-header/page-title/page-title.component.ts:96
+src/app/features/config/repeat-section-type/repeat-section-type.component.html:22
+src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.html:298
+src/app/features/note/note/note.component.html:63
+src/app/features/tasks/task-detail-panel/task-detail-panel.component.html:19
+src/app/features/work-view/work-view.component.html:234
+src/app/ui/split-button/split-button.component.html:26
+src/app/ui/swipe-block/swipe-block.component.html:10"
+"move_down","material","2","app","Move to backlog / move to regular list: Keep with explicit list names. These move between named lists, not schedule Today, so do not change to Today icon.","src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:238
+src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html:133"
+"move_to_inbox","material","2","app","Open Todoist import: Change to upload_file or the Todoist logo with “Import from Todoist”.
+Open TickTick import: Change to upload_file or TickTick logo with “Import from TickTick”.","src/app/imex/file-imex/file-imex.component.html:66
+src/app/imex/file-imex/file-imex.component.html:76"
+"move_up","material","2","app","Move to backlog / move to regular list: Keep with explicit list names. These move between named lists, not schedule Today, so do not change to Today icon.","src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:256
+src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html:143"
+"new_releases","material","1","app","Newly composed tag chip: Change → new_label, or label with visible “New” text. Starburst looks like announcement/alert.","src/app/features/tasks/add-task-bar/add-task-bar-actions/add-task-bar-actions.component.html:118"
+"next_week","material","2","app","Next week quick action: Change → date_range, retain next-week label/date. Current pictogram resembles a briefcase with arrow.
+Date-picker Next week shortcut: Change → date_range, retain Next week label","src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:50
+src/app/ui/datetime-picker/datetime-picker.component.ts:60"
+"note","material","1","app","Startup reflection-note banner: Standardize to description
+Archive compression preview: subtasks deleted, notes cleared, issue links removed: Keep delete / link_off; standardize note to description
+Declared drop/paste command and note icon enum values: Unresolved/dead declarations: no production references found to these enum members; if activated use terminal / description","src/app/features/archive/dialog-archive-compression/dialog-archive-compression.component.html:37"
+"note_alt","material","1","app","Add day-end routine note block: Change → note_add","src/app/pages/daily-summary/daily-summary.component.html:137"
+"notes","material","1","app","Plain-text/source-only editor view: Change → code","src/app/ui/dialog-fullscreen-markdown/dialog-fullscreen-markdown.component.html:264"
+"notifications","material","1","app","Reminder badge, reminder dialog heading, clear/dismiss reminder, snooze: Keep. Alarm/notification family should describe reminders only; label due-date section with calendar while retaining its reminder status.","src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:3"
+"online_prediction","material","1","app","Test provider connection: Change to cable with “Test connection”.","src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.html:299"
+"open_in_new","material","13","app","Open calendar event in its source calendar: Keep
+Preview image versus open non-image attachment: Change image preview → zoom_in; keep external-open. Magnifier alone is shared with global search.
+Rate app / open store: Keep
+Plainspace connection caveat and external sign-in: Keep
+Claim-pool recurring task and external task link: Keep
+Open authorization page: Keep.
+Add block / drag block / open referenced task: Keep; label open action “Open task details” if it opens inside app.","src/app/features/dialog-please-rate/dialog-please-rate.component.html:17
+src/app/features/dialog-please-rate/dialog-please-rate.component.html:66
+src/app/features/dialog-please-rate/dialog-please-rate.component.html:81
+src/app/features/issue-panel/issue-preview-item/issue-preview-item.component.html:17
+src/app/features/issue-panel/issue-preview-item/issue-preview-item.component.html:26
+src/app/features/plainspace/claim-pool/claim-pool.component.html:21
+src/app/features/plainspace/connect-dialog/plainspace-connect-dialog.component.html:132
+src/app/features/planner/planner-calendar-event/planner-calendar-event.component.html:35
+src/app/features/schedule/schedule-event/schedule-event.component.html:112
+src/app/features/tasks/dialog-view-archived-task/dialog-view-archived-task.component.html:92
+src/app/features/tasks/task-attachment/task-attachment-list/task-attachment-list.component.html:61
+src/app/imex/sync/dialog-get-and-enter-auth-code/dialog-get-and-enter-auth-code.component.html:32
+src/app/imex/sync/dialog-get-and-enter-auth-code/dialog-get-and-enter-auth-code.component.html:53"
+"pause","material","6","app","Start/pause tracking in header: Keep
+Recurrence header/preview, paused recurrence, configured reminder, start date picker, save/cancel, skip occurrence: Keep repeat/pause/alarm/save/cancel/skip; normalize arbitrary start date picker → calendar_month.
+Start/resume/pause tracked task, focus session, or break: Keep. Accessible names must include scope: “Pause focus session” vs “Pause task timer” vs “Pause break.” Current focus/break primary controls already provide explicit labels.","src/app/core-ui/main-header/play-button/play-button.component.ts:84
+src/app/features/focus-mode/focus-mode-break/focus-mode-break.component.html:90
+src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.html:274
+src/app/features/task-repeat-cfg/repeat-cfg-preview/repeat-cfg-preview.component.html:21
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:147
+src/app/features/tasks/task/task-hover-controls/task-hover-controls.component.html:12"
+"person_add","material","1","app","Assign Plainspace task / release assignment: Keep assignment; change release → person_remove with “Unassign” label. Group implies team or membership, not releasing ownership.","src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:323"
+"photo","material","1","app","Rendered Markdown preview: Change → visibility","src/app/ui/dialog-fullscreen-markdown/dialog-fullscreen-markdown.component.html:275"
+"play_arrow","material","11","bundled-plugin-source, app","Start/pause tracking in header: Keep
+Start/resume/pause tracked task, focus session, or break: Keep. Accessible names must include scope: “Pause focus session” vs “Pause task timer” vs “Pause break.” Current focus/break primary controls already provide explicit labels.
+Inline onboarding instructional icons: Change Today to today; match canonical add-subtask choice; keep remainder
+Enable Time tracking: Change to timer.
+API Test Plugin demonstration snacks/dialog/header actions: Keep as demonstration cases; do not treat them as canonical application semantics.","packages/plugin-dev/api-test-plugin/plugin.js:255
+src/app/core-ui/main-header/play-button/play-button.component.ts:82
+src/app/features/config/form-cfgs/app-features-form.const.ts:52
+src/app/features/focus-mode/focus-mode-break/focus-mode-break.component.html:80
+src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.html:196
+src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.html:264
+src/app/features/onboarding/onboarding-hint-steps.const.ts:71
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:101
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:158
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:129
+src/app/features/tasks/task/task-hover-controls/task-hover-controls.component.html:24"
+"playlist_add","material","8","app","Subtasks panel, add subtask menu, add subtask input: Change subtask panel → account_tree to communicate hierarchy; keep playlist_add and plus with “Add subtask” text. Flat list is otherwise reused for worklog and sections.
+Habit month navigation, add habit, reveal disabled habits, re-enable habit, edit/delete: Keep navigation/disclosure/edit/delete; change add → add; change re-enable → toggle_on because visibility implies show/hide rather than enable habit.
+Add more tasks when Today empty: Change to add_task, or keep canonical Add-task icon chosen elsewhere
+Inline onboarding instructional icons: Change Today to today; match canonical add-subtask choice; keep remainder","src/app/features/onboarding/onboarding-hint-steps.const.ts:72
+src/app/features/simple-counter/habit-tracker/habit-tracker.component.html:139
+src/app/features/tasks/add-task-bar/add-task-bar-issue-search.service.ts:137
+src/app/features/tasks/add-task-bar/add-task-bar.component.html:188
+src/app/features/tasks/add-task-bar/add-task-bar.component.html:196
+src/app/features/tasks/add-task-bar/add-task-bar.component.ts:755
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:160
+src/app/features/work-view/work-view.component.html:138"
+"playlist_add_check","material","1","app","Open checklist batch-action menu: Change → more_vert, label Checklist actions","src/app/ui/inline-markdown/inline-markdown.component.html:72"
+"priority_high","material","4","app","System Important tag: Change → star
+Time conflict warning and priority-menu launcher: Keep for priority menu; change time conflict → warning with specific conflict text. An exclamation currently has two task meanings.","src/app/features/tag/tag.const.ts:74
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:273
+src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html:171
+src/app/features/tasks/task/task.component.html:265"
+"privacy_tip","material","1","app","Linked-issue identity, custom project/tag identity, captured source links and capture-token controls: Keep identity and familiar action icons. Pair provider logo with action text for open/update; preserve user customizations. Capture refresh reloads authorized grants; keep refresh for that action.
+Agent capture settings disclosure, privacy explanation, copy URL/code/token, refresh connections: Keep","src/app/features/tasks/agent-capture/agent-capture-settings/agent-capture-settings.component.html:29"
+"public","material","1","app","Browser sync device: Change to web.","src/app/imex/sync/dialog-sync-devices/dialog-sync-devices.component.ts:42"
+"radio_button_unchecked","material","2","app","Touch multiselection state: Keep pair","src/app/core/theme/theme-selector/theme-selector.component.html:105
+src/app/features/planner/planner-task/planner-task.component.html:13"
+"refresh","material","8","bundled-plugin-source, app","Reset sort/group/filter preferences: Change → restart_alt
+Linked-issue identity, custom project/tag identity, captured source links and capture-token controls: Keep identity and familiar action icons. Pair provider logo with action text for open/update; preserve user customizations. Capture refresh reloads authorized grants; keep refresh for that action.
+Agent capture settings disclosure, privacy explanation, copy URL/code/token, refresh connections: Keep
+Retry after decryption error: Keep with “Retry” label.
+Reload/retry provider options: Keep.
+API Test Plugin demonstration snacks/dialog/header actions: Keep as demonstration cases; do not treat them as canonical application semantics.","packages/plugin-dev/api-test-plugin/index.html:749
+packages/plugin-dev/api-test-plugin/index.html:754
+src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.html:165
+src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.html:180
+src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.html:195
+src/app/features/task-view-customizer/task-view-customizer-panel/task-view-customizer-panel.component.html:55
+src/app/features/tasks/agent-capture/agent-capture-settings/agent-capture-settings.component.html:129
+src/app/imex/sync/dialog-handle-decrypt-error/dialog-handle-decrypt-error.component.html:37"
+"remove","material","2","app","Pomodoro cycle count, adjust session duration, mode configuration, overflow, notes expander, exit overlay: Keep familiar controls. Label repeated reset buttons by what resets (“Reset cycles” versus session timer).","src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.html:96
+src/app/features/tasks/task/task.component.html:400"
+"remove_done","material","1","app","Check all / uncheck all / clear completed checklist items: Keep, retain action text","src/app/ui/inline-markdown/inline-markdown.component.html:86"
+"repeat","material","17","app","Recurring Tasks section title: Keep
+Edit recurrence; recurrence projection; repeated-task chip/list: Keep
+Detail-panel date field: date-only, timed without reminder, recurring, then all other cases (including unscheduled task): Change mapping. Generic unscheduled/date-only field → calendar_month; actual Today → today; timed date → schedule; show reminder and repeat separately only when configured. Current fallback implies alarm where none exists.
+Recurrence header/preview, paused recurrence, configured reminder, start date picker, save/cancel, skip occurrence: Keep repeat/pause/alarm/save/cancel/skip; normalize arbitrary start date picker → calendar_month.
+Pomodoro cycle count, adjust session duration, mode configuration, overflow, notes expander, exit overlay: Keep familiar controls. Label repeated reset buttons by what resets (“Reset cycles” versus session timer).
+Worklog collapsed task count, expanded duration cue, recurring-task marker, focus count/time, habit totals, total duration: Keep repeat/focus and custom identities; use checklist for task count, timer for elapsed totals; collapse/expand should use a stable disclosure chevron rather than swapping list/timer.
+Claim-pool recurring task and external task link: Keep
+Plainspace recurring-claim content: Keep.","src/app/core-ui/magic-side-nav/nav-section-icons.const.ts:9
+src/app/features/focus-mode/focus-mode-break/focus-mode-break.component.html:43
+src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.html:122
+src/app/features/issue/issue-content/issue-content-custom/issue-content-custom.component.html:34
+src/app/features/plainspace/claim-pool/claim-pool.component.html:6
+src/app/features/planner/dialog-schedule-task/dialog-schedule-task.component.html:30
+src/app/features/planner/planner-repeat-projection/planner-repeat-projection.component.html:5
+src/app/features/schedule/schedule-event/schedule-event.component.html:5
+src/app/features/tag/tag-list/tag-list.component.ts:165
+src/app/features/task-repeat-cfg/dialog-edit-task-repeat-cfg/dialog-edit-task-repeat-cfg.component.html:6
+src/app/features/task-repeat-cfg/repeat-cfg-preview/repeat-cfg-preview.component.html:11
+src/app/features/tasks/add-task-bar/add-task-bar-actions/add-task-bar-actions.component.html:176
+src/app/features/tasks/dialog-view-archived-task/dialog-view-archived-task.component.html:100
+src/app/features/tasks/task-detail-panel/task-detail-panel.component.html:180
+src/app/features/tasks/task-summary-table/task-summary-table.component.html:24
+src/app/features/worklog/worklog-task-row/worklog-task-row.component.html:13
+src/app/pages/scheduled-list-page/scheduled-list-page.component.html:47"
+"replay","material","4","app","Reopen completed project; archived completed project action: Change → restore","src/app/core-ui/work-context-menu/work-context-menu.component.html:112
+src/app/features/project/project.service.ts:276
+src/app/features/project/project.service.ts:282
+src/app/pages/archived-projects-page/archived-projects-page.component.html:66"
+"restart_alt","material","3","app","Back to planning, start next focus session, skip current break, reset Pomodoro cycles: Keep back/skip/reset; change next-session → play_arrow with “Start next session” label for stronger action clarity. Current forward arrow only says advance.","src/app/features/focus-mode/focus-mode-break/focus-mode-break.component.html:111
+src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.html:310
+src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.html:359"
+"restaurant","material","1","app","Lunch break calendar block: Keep","src/app/features/schedule/schedule-event/schedule-event.component.html:38"
+"restore","material","1","app","Round time spent in task summary tables: Change → more_time with “Round time” text; no stock icon precisely means rounding. History/restore arrow incorrectly suggests undo.","src/app/features/tasks/task-summary-tables/task-summary-tables.component.html:53"
+"restore_from_trash","material","2","app","Restore a deleted search item: Keep
+Restore deleted task / empty Recently Deleted: Keep. This is the correct distinction between recovery and permanent removal.
+Restore deleted task: Keep","src/app/features/tasks/recently-deleted/dialog-recently-deleted/dialog-recently-deleted.component.html:41
+src/app/pages/search-page/search-page.component.html:96"
+"right_panel_open","material","1","app","Open details, close details, updated linked issue: Keep panel/close pair. Change issue-updated status → sync plus status dot/“Issue updated” text, or retain update with label if visual verification shows it reads clearly; do not use status as sole affordance for opening details.","src/app/features/tasks/task/task-hover-controls/task-hover-controls.component.html:70"
+"rocket","material","2","unbundled-plugin-source","SolidJS boilerplate demo header/nav: Exclude from default-product recommendations; developer example only.","packages/plugin-dev/boilerplate-solid-js/src/plugin.ts:16
+packages/plugin-dev/boilerplate-solid-js/src/plugin.ts:26"
+"save","material","19","bundled-plugin-source, app","Save board or saved sort preference: Keep with “Save” text
+Tags, add/remove field, edit/save, search, overflow, custom settings, expand, section, unfinished archived subtask: Keep contextual conventions. Label removals as “Clear estimate,” “Remove tag,” etc.; distinguish collapse from delete. segment should retain “Section” text.
+Recurrence header/preview, paused recurrence, configured reminder, start date picker, save/cancel, skip occurrence: Keep repeat/pause/alarm/save/cancel/skip; normalize arbitrary start date picker → calendar_month.
+Edit recorded focus-session duration, remove entry, add tagged task/session metadata, save: Keep familiar edits; tooltip must say delete session entry rather than task.
+Counter elapsed-time entry, edit settings, save, remove counter: Keep with explicit labels and deletion scope.
+Discard / save note: Remove redundant close; keep save
+Estimated storage saved by compression: Change to storage
+Save sync configuration/auth code: Keep, or omit if text already obvious.
+Save provider config / tracked time: Keep.
+Voice reminder save and success: Keep.","packages/plugin-dev/voice-reminder/plugin.js:221
+src/app/features/archive/dialog-archive-compression/dialog-archive-compression.component.html:60
+src/app/features/boards/board-edit/board-edit.component.html:27
+src/app/features/boards/dialog-board-edit/dialog-board-edit.component.html:37
+src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.html:311
+src/app/features/issue/shared/dialog-track-time/dialog-track-time.component.html:153
+src/app/features/metric/dialog-focus-session-edit/dialog-focus-session-edit.component.html:124
+src/app/features/simple-counter/dialog-simple-counter-edit-settings/dialog-simple-counter-edit-settings.component.html:42
+src/app/features/simple-counter/dialog-simple-counter-edit/dialog-simple-counter-edit.component.html:115
+src/app/features/task-repeat-cfg/dialog-edit-task-repeat-cfg/dialog-edit-task-repeat-cfg.component.html:219
+src/app/features/task-view-customizer/task-view-customizer-panel/task-view-customizer-panel.component.html:95
+src/app/features/tasks/dialog-add-time-estimate-for-other-day/dialog-add-time-estimate-for-other-day.component.html:63
+src/app/features/tasks/dialog-select-date-time/dialog-select-date-time.component.html:56
+src/app/features/tasks/dialog-time-estimate/dialog-time-estimate.component.html:91
+src/app/features/tasks/task-attachment/dialog-edit-attachment/dialog-edit-task-attachment.component.html:69
+src/app/imex/sync/dialog-get-and-enter-auth-code/dialog-get-and-enter-auth-code.component.html:86
+src/app/imex/sync/dialog-sync-cfg/dialog-sync-cfg.component.html:31
+src/app/plugins/ui/plugin-config-dialog/plugin-config-dialog.component.ts:76
+src/app/ui/dialog-fullscreen-markdown/dialog-fullscreen-markdown.component.html:296"
+"schedule","material","18","app","Schedule route and day-panel entry; desktop/mobile: Change → calendar_view_week
+Reschedule a calendar event: Change → edit_calendar
+Scheduled task without reminder, within schedule grid: Keep
+Summary work start/end times: Keep
+Detail-panel date field: date-only, timed without reminder, recurring, then all other cases (including unscheduled task): Change mapping. Generic unscheduled/date-only field → calendar_month; actual Today → today; timed date → schedule; show reminder and repeat separately only when configured. Current fallback implies alarm where none exists.
+Task row timed/date-only due badge, except sun for current day: Keep schedule; use calendar_month for other date-only days; today for current day. Retain formatted date/time text.
+Add-task date and timed-date chips; detail planning action; short-syntax date chip: Normalize date-only → calendar_month; keep schedule for time of day. All date pickers should read alike.
+Time input prefix: Keep
+History work-time range column: Keep
+Onboarding feature teasers: Follow canonical navigation choices; keep focus/plugin/finish-day identity
+Enable Schedule: Change to calendar_view_week, coordinated with Schedule navigation.","src/app/core-ui/magic-side-nav/nav-section-icons.const.ts:5
+src/app/core-ui/main-header/desktop-panel-buttons/desktop-panel-buttons.component.ts:30
+src/app/core-ui/mobile-bottom-nav/mobile-bottom-nav.component.html:90
+src/app/core-ui/mobile-bottom-nav/mobile-bottom-nav.component.html:162
+src/app/features/config/form-cfgs/app-features-form.const.ts:25
+src/app/features/history/history.component.html:121
+src/app/features/planner/planner-calendar-event/planner-calendar-event.component.html:44
+src/app/features/schedule/schedule-event/schedule-event.component.html:22
+src/app/features/schedule/schedule-event/schedule-event.component.html:121
+src/app/features/tasks/add-task-bar/add-task-bar-actions/add-task-bar-actions.component.html:43
+src/app/features/tasks/mention-config.service.ts:32
+src/app/features/tasks/store/task-reminder.effects.ts:65
+src/app/features/tasks/store/task-reminder.effects.ts:89
+src/app/features/tasks/store/task-reminder.effects.ts:157
+src/app/features/tasks/store/task-reminder.effects.ts:222
+src/app/features/tasks/task/task.component.html:204
+src/app/pages/daily-summary/daily-summary.component.html:17
+src/app/ui/datetime-picker/datetime-picker.component.html:41"
+"search","material","9","app","Search navigation/header/mobile option: Keep
+Preview image versus open non-image attachment: Change image preview → zoom_in; keep external-open. Magnifier alone is shared with global search.
+Tags, add/remove field, edit/save, search, overflow, custom settings, expand, section, unfinished archived subtask: Keep contextual conventions. Label removals as “Clear estimate,” “Remove tag,” etc.; distinguish collapse from delete. segment should retain “Section” text.
+Onboarding search and short-syntax tips: Keep
+Enable Search: Keep.
+Search plugins / clear search / no matches: Keep with labels.","src/app/core-ui/magic-side-nav/nav-section-icons.const.ts:8
+src/app/features/config/form-cfgs/app-features-form.const.ts:106
+src/app/features/issue-panel/issue-provider-tab/issue-provider-tab.component.html:52
+src/app/features/onboarding/quick-tour-card/quick-tour-card.component.html:53
+src/app/features/tasks/add-task-bar/add-task-bar.component.html:137
+src/app/features/tasks/task-attachment/task-attachment-list/task-attachment-list.component.html:58
+src/app/pages/config-page/config-page.component.html:19
+src/app/pages/search-page/search-page.component.html:124
+src/app/plugins/ui/plugin-management/plugin-management.component.html:27"
+"search_off","material","2","app","No search results: Keep
+Search plugins / clear search / no matches: Keep with labels.","src/app/pages/search-page/search-page.component.html:119
+src/app/plugins/ui/plugin-management/plugin-management.component.html:89"
+"segment","material","4","bundled-plugin-source, app","Tags, add/remove field, edit/save, search, overflow, custom settings, expand, section, unfinished archived subtask: Keep contextual conventions. Label removals as “Clear estimate,” “Remove tag,” etc.; distinguish collapse from delete. segment should retain “Section” text.
+Paragraph block: Keep with “Text”/“Paragraph” label.","packages/plugin-dev/doc-mode/src/ui/editor.ts:860
+packages/plugin-dev/doc-mode/src/ui/editor.ts:1802
+src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html:197
+src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html:345"
+"send","material","4","app","Create task from add-task bar; create-and-select task in focus chooser: Change → add / add_task, respectively. Paper plane suggests send/share to another person.
+Labeled social-share targets: Prefer brand SVGs if licensed/available, otherwise remove these redundant icons and keep platform names","src/app/core/share/dialog-share/dialog-share.component.ts:51
+src/app/core/share/share.service.ts:425
+src/app/features/focus-mode/focus-mode-task-selector/focus-mode-task-selector.component.html:24
+src/app/features/tasks/add-task-bar/add-task-bar.component.html:95"
+"settings","material","9","app","Global and context settings: Keep
+Pomodoro cycle count, adjust session duration, mode configuration, overflow, notes expander, exit overlay: Keep familiar controls. Label repeated reset buttons by what resets (“Reset cycles” versus session timer).
+Configure selected plugin: Keep.","src/app/app.component.html:130
+src/app/core-ui/magic-side-nav/nav-section-icons.const.ts:11
+src/app/core-ui/work-context-menu/work-context-menu.component.html:93
+src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.html:207
+src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.html:219
+src/app/features/issue-panel/issue-provider-tab/issue-provider-tab.component.html:8
+src/app/pages/contrast-test/contrast-test.component.html:172
+src/app/plugins/ui/plugin-management/plugin-management.component.html:156
+src/app/plugins/ui/plugin-management/plugin-management.component.html:168"
+"settings_backup_restore","material","2","app","Restore task from archive in worklog: Change → unarchive; circular restore arrow is generic and named like settings backup. Archive-box reversal directly communicates recovery from archive.","src/app/features/worklog/worklog-task-row/worklog-task-row.component.html:53
+src/app/pages/config-page/config-page.component.ts:250"
+"share","material","7","bundled-plugin-source, app","Share chart / activity heatmap, busy state: Keep share; use progress indicator for busy instead of estimate icon, and announce preparing state. Add explicit accessible name to icon-only share controls even when tooltip exists.
+Share/copy diagnostic logs: Keep
+Share dialog/system share/copy text/server instance/email: Keep
+API Test Plugin demonstration snacks/dialog/header actions: Keep as demonstration cases; do not treat them as canonical application semantics.","packages/plugin-dev/api-test-plugin/index.html:876
+packages/plugin-dev/api-test-plugin/index.html:881
+src/app/core/share/dialog-share/dialog-share.component.html:13
+src/app/core/share/share-button/share-button.component.ts:22
+src/app/features/metric/activity-heatmap/activity-heatmap.component.html:15
+src/app/features/metric/lazy-chart/lazy-chart.component.html:34
+src/app/ui/dialog-logs/dialog-logs.component.html:29"
+"short_text","material","2","bundled-plugin-source","Heading 1 / 2 / 3: Prefer explicit H1/H2/H3 glyphs/custom SVGs.","packages/plugin-dev/doc-mode/src/ui/editor.ts:877
+packages/plugin-dev/doc-mode/src/ui/editor.ts:1819"
+"skip_next","material","1","app","Back to planning, start next focus session, skip current break, reset Pomodoro cycles: Keep back/skip/reset; change next-session → play_arrow with “Start next session” label for stronger action clarity. Current forward arrow only says advance.","src/app/features/focus-mode/focus-mode-break/focus-mode-break.component.html:100"
+"snooze","material","7","app","Reminder badge, reminder dialog heading, clear/dismiss reminder, snooze: Keep. Alarm/notification family should describe reminders only; label due-date section with calendar while retaining its reminder status.","src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:59
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:114
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:122
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:306
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:336
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:343
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:350"
+"sort","material","1","app","Sort-by submenu: Keep","src/app/features/task-view-customizer/task-view-customizer-panel/task-view-customizer-panel.component.html:11"
+"star","material","3","app","Reflection history; impact rating: Keep, retain scale labels. Impact uses its own descriptive label and therefore does not read as task starring.
+Impact-rating radio group: Keep
+Rate app / open store: Keep","src/app/features/dialog-please-rate/dialog-please-rate.component.html:15
+src/app/features/dialog-please-rate/rate-prompt.service.ts:179
+src/app/features/metric/impact-stars/impact-stars.component.ts:48"
+"stop","material","1","app","Another device's tracking status / stop that remote timer: Keep; text identifies the device and accessible action name includes it. Do not animate a live timer from relayed state.","src/app/features/tracking-presence/remote-tracking-pill/remote-tracking-pill.component.ts:60"
+"strikethrough_s","material","1","app","Markdown text formatting: Keep","src/app/ui/dialog-fullscreen-markdown/dialog-fullscreen-markdown.component.html:88"
+"subdirectory_arrow_left","material","1","app","Convert subtask to main task; parent task field; follow parent: Change conversion → format_indent_decrease; keep parent hierarchy arrow plus Parent label. Generic follow arrow is acceptable as an action with parent title.","src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:222"
+"subdirectory_arrow_right","material","2","app","Subtask-parent breadcrumb in search results: Keep; optionally unify subtask icon with account_tree
+Convert subtask to main task; parent task field; follow parent: Change conversion → format_indent_decrease; keep parent hierarchy arrow plus Parent label. Generic follow arrow is acceptable as an action with parent title.","src/app/features/tasks/task-detail-panel/task-detail-panel.component.html:111
+src/app/pages/search-page/search-page.component.html:44"
+"swap_horiz","material","1","app","Switch current focus task, finish it/select next, select task when empty: Keep switch/finish; change empty selection CTA → checklist with “Choose task”; add_task suggests creating a new task although chooser includes existing tasks.","src/app/features/focus-mode/focus-mode-task-row/focus-mode-task-row.component.ts:51"
+"swap_vert","material","1","app","Reorder submenu; move to top/bottom: Keep reorder; change top/bottom → vertical_align_top / vertical_align_bottom to distinguish endpoint jump from one-step movement, consistent with add-task placement.","src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:287"
+"swipe_left","material","2","app","Onboarding swipe gesture instruction: Keep","src/app/features/onboarding/onboarding-hint-steps.const.ts:121
+src/app/features/onboarding/onboarding-hint-steps.const.ts:193"
+"sync","material","5","app","Show sync button: Keep.
+Sync-progress snack / retry sync after password: Keep.
+Loading provider options: Prefer progress spinner with “Loading options” text; keep sync only for actual synchronization.","src/app/features/config/form-cfgs/app-features-form.const.ts:97
+src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.html:154
+src/app/imex/sync/dialog-enter-encryption-password/dialog-enter-encryption-password.component.html:68
+src/app/imex/sync/sync.effects.ts:157
+src/app/pages/config-page/config-page.component.html:242"
+"sync_problem","material","2","app","Issue synchronization problem: Keep.","src/app/features/issue/issue-sync-state/issue-sync-state.component.html:8
+src/app/op-log/sync/conflict-resolution-notifier.service.ts:87"
+"table_chart","material","1","app","Insert link/image/table; show shortcut help: Keep","src/app/ui/dialog-fullscreen-markdown/dialog-fullscreen-markdown.component.html:202"
+"task_alt","material","4","app","Number of all tasks in board column or planner day/overdue header: Change → checklist
+Recurrence behavior option after completion: Keep for completion-driven cadence, retain option text.","src/app/features/boards/board-panel/board-panel.component.html:9
+src/app/features/planner/planner-day-overdue/planner-day-overdue.component.html:7
+src/app/features/planner/planner-day/planner-day.component.html:34
+src/app/features/task-repeat-cfg/dialog-edit-task-repeat-cfg/dialog-edit-task-repeat-cfg.component.ts:732"
+"terminal","material","1","bundled-plugin-source","Open Parallel Code plugin: Keep with Parallel Code label.","packages/plugin-dev/parallel-code/plugin.js:17"
+"text_fields","material","2","bundled-plugin-source","Heading 1 / 2 / 3: Prefer explicit H1/H2/H3 glyphs/custom SVGs.","packages/plugin-dev/doc-mode/src/ui/editor.ts:871
+packages/plugin-dev/doc-mode/src/ui/editor.ts:1813"
+"thumb_up","material","1","bundled-plugin-source","API Test Plugin demonstration snacks/dialog/header actions: Keep as demonstration cases; do not treat them as canonical application semantics.","packages/plugin-dev/api-test-plugin/index.html:521"
+"timelapse","material","1","app","Time worked today: Standardize to timer (optional P2)","src/app/features/work-view/work-view.component.html:52"
+"timer","material","14","bundled-plugin-source, app","Show/hide mobile counters tray: Keep
+Summary tracked time against estimate: Keep with explicit values/labels
+Summary custom counter identity, duration, count, streak: Preserve custom identity; keep timer; adjust → numbers; 🔥 → event_available or plain “Consecutive days” text
+Time-spent input; short-syntax time estimate chip: Keep for elapsed time inputs; change pure estimate chip → hourglass_empty. Avoid giving estimates and tracked time interchangeable symbols.
+Focus timer mode options: Flowtime, Pomodoro, Countdown: Change Flowtime → all_inclusive (open ended session); keep timer/hourglass with persistent mode names. Sparkles suggest AI/magic and do not explain Flowtime.
+Worklog collapsed task count, expanded duration cue, recurring-task marker, focus count/time, habit totals, total duration: Keep repeat/focus and custom identities; use checklist for task count, timer for elapsed totals; collapse/expand should use a stable disclosure chevron rather than swapping list/timer.
+Edit recorded focus-session duration, remove entry, add tagged task/session metadata, save: Keep familiar edits; tooltip must say delete session entry rather than task.
+Counter elapsed-time entry, edit settings, save, remove counter: Keep with explicit labels and deletion scope.
+Continuous time worked without break: Keep
+Add manually entered time / time-entry helper: Keep.
+Auto-tracking snackbar: Keep.","packages/plugin-dev/app-auto-track/src/background.ts:113
+src/app/core-ui/main-header/main-header.component.html:206
+src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.ts:288
+src/app/features/issue/shared/dialog-track-time/dialog-track-time.component.html:68
+src/app/features/metric/dialog-focus-session-edit/dialog-focus-session-edit.component.html:64
+src/app/features/simple-counter/dialog-simple-counter-edit/dialog-simple-counter-edit.component.html:70
+src/app/features/tasks/add-task-bar/short-syntax-to-tags.ts:85
+src/app/features/tasks/dialog-time-estimate/dialog-time-estimate.component.html:60
+src/app/features/tasks/store/task-ui.effects.ts:298
+src/app/features/tracking-reminder/tracking-reminder.service.ts:160
+src/app/features/work-view/work-view.component.html:71
+src/app/features/worklog/worklog-week/worklog-week.component.html:82
+src/app/pages/daily-summary/daily-summary.component.html:51
+src/app/pages/daily-summary/simple-counter-summary-item/simple-counter-summary-item.component.html:7"
+"timer_off","material","2","app","Remove from Today (calls parent.unschedule()), task hover control: Change → event_busy with “Remove from Today” accessible name. Current icon implies disabling time tracking.
+Reset break timer: Change to restart_alt","src/app/features/tasks/task/task-hover-controls/task-hover-controls.component.html:49
+src/app/features/work-view/work-view.component.html:82"
+"title","material","2","bundled-plugin-source","Heading 1 / 2 / 3: Prefer explicit H1/H2/H3 glyphs/custom SVGs.","packages/plugin-dev/doc-mode/src/ui/editor.ts:865
+packages/plugin-dev/doc-mode/src/ui/editor.ts:1807"
+"today","material","15","app","Any-date task chip in board; date-only create-task placeholder; schedule submit without time: Change generic date uses → calendar_month
+Pick an arbitrary date; schedule selected tasks; postpone reminder until tomorrow: Change these non-Today uses → calendar_month for arbitrary dates and event_upcoming for tomorrow. Reserve today for actual Today.
+Detail-panel date field: date-only, timed without reminder, recurring, then all other cases (including unscheduled task): Change mapping. Generic unscheduled/date-only field → calendar_month; actual Today → today; timed date → schedule; show reminder and repeat separately only when configured. Current fallback implies alarm where none exists.
+Task row timed/date-only due badge, except sun for current day: Keep schedule; use calendar_month for other date-only days; today for current day. Retain formatted date/time text.
+Add-task destination toggle (backlog versus Today): Keep icons, show/announce destination and toggle state clearly.
+Recurrence quick settings: daily, Mon–Fri, weekly, monthly, yearly, custom: Change daily → calendar_today or event_repeat; Mon–Fri → date_range with weekdays label; yearly cake → event_repeat with “Yearly” label. Keep weekly/monthly/custom. Cake wrongly implies birthday; work wrongly assumes those weekdays are workdays. Labels carry cadence precision.","src/app/core-ui/magic-side-nav/magic-nav-config.service.ts:389
+src/app/core-ui/magic-side-nav/magic-nav-config.service.ts:393
+src/app/features/boards/board-panel/board-panel.component.html:78
+src/app/features/planner/dialog-schedule-task/dialog-schedule-task.component.html:111
+src/app/features/planner/store/planner.effects.ts:35
+src/app/features/schedule/create-task-placeholder/create-task-placeholder.component.html:9
+src/app/features/tag/store/tag.effects.ts:78
+src/app/features/task-repeat-cfg/dialog-edit-task-repeat-cfg/build-repeat-quick-setting-options.ts:15
+src/app/features/tasks/add-task-bar/add-task-bar.component.html:112
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:130
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:358
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:63
+src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html:60
+src/app/features/tasks/task/task.component.html:243
+src/app/features/tasks/task/task.component.ts:748"
+"track_changes","material","4","app","Existing-task selector; assign idle/untracked time to task: Change → checklist for task identity; use more_time for recording elapsed time. Target icon resembles focus/goal and says little about selecting a task.
+Idle time classified as break/task/split allocations; dynamic confirm repeats these (or add/check): Keep break cup and split branching with labels; change task target → checklist, confirmation for recorded time → more_time or check with full verb label.","src/app/features/idle/dialog-idle/dialog-idle.component.html:27
+src/app/features/idle/dialog-idle/dialog-idle.component.html:118
+src/app/features/tasks/select-task/select-task.component.html:12
+src/app/features/tracking-reminder/dialog-tracking-reminder/dialog-tracking-reminder.component.html:46"
+"tune","material","4","app","Tags, add/remove field, edit/save, search, overflow, custom settings, expand, section, unfinished archived subtask: Keep contextual conventions. Label removals as “Clear estimate,” “Remove tag,” etc.; distinguish collapse from delete. segment should retain “Section” text.
+Recurrence quick settings: daily, Mon–Fri, weekly, monthly, yearly, custom: Change daily → calendar_today or event_repeat; Mon–Fri → date_range with weekdays label; yearly cake → event_repeat with “Yearly” label. Keep weekly/monthly/custom. Cake wrongly implies birthday; work wrongly assumes those weekdays are workdays. Labels carry cadence precision.
+Counter elapsed-time entry, edit settings, save, remove counter: Keep with explicit labels and deletion scope.","src/app/features/simple-counter/dialog-simple-counter-edit/dialog-simple-counter-edit.component.html:96
+src/app/features/task-repeat-cfg/dialog-edit-task-repeat-cfg/build-repeat-quick-setting-options.ts:23
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:495
+src/app/pages/config-page/config-page.component.html:250"
+"unarchive","material","5","app","Restore archived incomplete project: Keep","src/app/core-ui/work-context-menu/work-context-menu.component.html:112
+src/app/features/project/project.service.ts:218
+src/app/features/project/project.service.ts:224
+src/app/features/tasks/add-task-bar/add-task-bar.component.ts:782
+src/app/pages/archived-projects-page/archived-projects-page.component.html:75"
+"undo","material","3","app","Complete/reopen task; complete multiple reminder tasks: Keep, normalize done/check within task actions where practical. Differentiate completing focus session from task completion through explicit labels.","src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:88
+src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html:120
+src/app/features/tasks/task-summary-table/task-summary-table.component.html:119"
+"update","material","5","app","Open details, close details, updated linked issue: Keep panel/close pair. Change issue-updated status → sync plus status dot/“Issue updated” text, or retain update with label if visual verification shows it reads clearly; do not use status as sole affordance for opening details.
+Plainspace rejected connection / old server notices: Keep link_off; change update to system_update_alt (P2)
+Linked issue changed upstream, replacing provider icon: Prefer keep provider logo and show a small sync/update badge plus “Updated upstream” text.
+Install a newer plugin version: Change to system_update_alt with “Update” label.","src/app/features/issue/issue-header/issue-header.component.html:2
+src/app/features/plainspace/reconnect-notice/plainspace-reconnect-notice.component.html:17
+src/app/features/tasks/task/task-hover-controls/task-hover-controls.component.html:75
+src/app/plugins/ui/plugin-management/plugin-management.component.html:274
+src/app/plugins/ui/plugin-management/plugin-management.component.html:373"
+"upload","material","1","app","Choose local plugin ZIP: Keep with “Choose plugin file”.","src/app/plugins/ui/plugin-management/plugin-management.component.html:423"
+"vertical_align_bottom","material","1","app","Add-task current insertion position; button label offers opposite action: Keep glyphs but align displayed icon with offered action, or expose current position text/pressed state. Currently icon expresses current setting while label describes switching it, which can feel contradictory.","src/app/features/tasks/add-task-bar/add-task-bar.component.html:175"
+"vertical_align_top","material","1","app","Add-task current insertion position; button label offers opposite action: Keep glyphs but align displayed icon with offered action, or expose current position text/pressed state. Currently icon expresses current setting while label describes switching it, which can feel contradictory.","src/app/features/tasks/add-task-bar/add-task-bar.component.html:175"
+"vertical_split","material","1","app","Source and rendered preview side by side: Keep","src/app/ui/dialog-fullscreen-markdown/dialog-fullscreen-markdown.component.html:270"
+"view_week","material","1","app","Schedule week view: Change → calendar_view_week","src/app/features/schedule/schedule/schedule.component.html:23"
+"visibility","material","6","app","Project visibility controls and hidden badges: Keep
+Habit month navigation, add habit, reveal disabled habits, re-enable habit, edit/delete: Keep navigation/disclosure/edit/delete; change add → add; change re-enable → toggle_on because visibility implies show/hide rather than enable habit.
+Show/hide password toggle: Keep pair; label the next action “Show password” / “Hide password” rather than only “Toggle password visibility”.
+Explanation that unencrypted imported data will be visible: Prefer lock_open.","src/app/core-ui/magic-side-nav/magic-nav-config.service.ts:183
+src/app/core-ui/magic-side-nav/nav-list/nav-list-tree.component.html:190
+src/app/features/simple-counter/habit-tracker/habit-tracker.component.html:177
+src/app/imex/sync/dialog-enable-encryption/dialog-enable-encryption.component.html:60
+src/app/imex/sync/dialog-enable-encryption/dialog-enable-encryption.component.html:164
+src/app/imex/sync/dialog-import-encryption-warning/dialog-import-encryption-warning.component.html:63"
+"visibility_off","material","8","app","Project visibility controls and hidden badges: Keep
+Disable Time tracking feature from the header play button context menu: Change → timer_off, keep explicit “Disable time tracking” text
+Hide calendar event: Keep
+Remove daily summary note text block: Change → delete
+Show/hide password toggle: Keep pair; label the next action “Show password” / “Hide password” rather than only “Toggle password visibility”.","src/app/core-ui/magic-side-nav/nav-item/nav-item.component.html:182
+src/app/core-ui/magic-side-nav/nav-list/nav-list-tree.component.html:192
+src/app/core-ui/main-header/play-button/play-button.component.ts:101
+src/app/features/planner/planner-calendar-event/planner-calendar-event.component.html:59
+src/app/features/schedule/schedule-event/schedule-event.component.html:137
+src/app/imex/sync/dialog-enable-encryption/dialog-enable-encryption.component.html:60
+src/app/imex/sync/dialog-enable-encryption/dialog-enable-encryption.component.html:164
+src/app/pages/daily-summary/daily-summary.component.html:127"
+"volunteer_activism","material","2","app","Contribute link: Change → code if label is “Contribute code”; otherwise retain icon and specific text
+Feedback, community, support, feedback navigation: Keep","src/app/core-ui/magic-side-nav/magic-nav-config.service.ts:300
+src/app/features/dialog-please-rate/dialog-please-rate.component.html:76"
+"vpn_key","material","1","app","Authorization-code input: Standardize to key.","src/app/imex/sync/dialog-get-and-enter-auth-code/dialog-get-and-enter-auth-code.component.html:10"
+"warning","material","22","app","Archive compression error, no data, irreversible-loss notice: Keep
+Plainspace connection caveat and external sign-in: Keep
+Shared snack success/error/warning/dismiss: Keep
+Destructive/conflicting choices; failures; guidance: Keep standardized shapes and accompanying text, avoid color-only distinctions.","src/app/core/snack/snack-custom/snack-custom.component.html:16
+src/app/features/archive/dialog-archive-compression/dialog-archive-compression.component.html:71
+src/app/features/archive/dialog-archive-compression/dialog-archive-compression.component.ts:86
+src/app/features/issue-panel/issue-panel-calendar-agenda/issue-panel-calendar-agenda.component.html:3
+src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.scss:43
+src/app/features/plainspace/connect-dialog/plainspace-connect-dialog.component.html:107
+src/app/features/tasks/store/short-syntax.effects.ts:216
+src/app/imex/local-backup/dialog-backups-list/dialog-backups-list.component.html:23
+src/app/imex/local-backup/dialog-backups-list/dialog-backups-list.component.ts:125
+src/app/imex/sync/dialog-change-encryption-password/dialog-change-encryption-password.component.html:12
+src/app/imex/sync/dialog-change-encryption-password/dialog-change-encryption-password.component.html:89
+src/app/imex/sync/dialog-enable-encryption/dialog-enable-encryption.component.html:140
+src/app/imex/sync/dialog-import-encryption-warning/dialog-import-encryption-warning.component.html:7
+src/app/imex/sync/dialog-restore-point/dialog-restore-point.component.html:22
+src/app/imex/sync/dialog-restore-point/dialog-restore-point.component.ts:89
+src/app/imex/sync/dialog-sync-devices/dialog-sync-devices.component.ts:111
+src/app/op-log/sync/dialog-server-migration-confirm/dialog-server-migration-confirm.component.html:2
+src/app/op-log/sync/dialog-server-migration-confirm/dialog-server-migration-confirm.component.html:22
+src/app/op-log/sync/dialog-sync-import-conflict/dialog-sync-import-conflict.component.html:2
+src/app/op-log/sync/dialog-sync-import-conflict/dialog-sync-import-conflict.component.html:27
+src/app/plugins/plugin-runner.ts:86
+src/styles/components/formly-rows.scss:29"
+"wb_sunny","material","23","app","Today default, navigation/header context, mobile bottom bar, date markers and jump-to-Today controls: Change → today everywhere Today is meant
+Today markers in planner/schedule headers and jump to Today: Change → today
+FLOW/auto-placed task block in schedule: Change → auto_awesome_motion with “Automatically placed” text, or remove if redundant
+Finish day / clear and continue summary actions: Change → check_circle
+Move remaining Today tasks to tomorrow in summary: Change → event_upcoming, retain explicit “Move…” label
+Add task to Today; Today date badge; task-menu quick action; bulk action; reminder action: Change → today everywhere. Sun communicates weather/daylight; calendar day communicates the task date at any hour.
+Date-picker Today shortcut: Change → today
+Replaces the current day's numeral inside the calendar grid: Remove icon; restore day number and current-day outline
+Pin project note to Today: Change to today
+Add all overdue tasks to My Day: Change to today
+Inline onboarding instructional icons: Change Today to today; match canonical add-subtask choice; keep remainder","src/app/core-ui/mobile-bottom-nav/mobile-bottom-nav.component.html:13
+src/app/features/note/note/note.component.html:45
+src/app/features/onboarding/onboarding-hint-steps.const.ts:69
+src/app/features/planner/planner-day/planner-day.component.html:4
+src/app/features/schedule/schedule-event/schedule-event.component.html:31
+src/app/features/schedule/schedule-week/schedule-week.component.html:11
+src/app/features/schedule/schedule/schedule.component.html:109
+src/app/features/tag/tag.const.ts:25
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:85
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:168
+src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html:329
+src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:34
+src/app/features/tasks/task-detail-panel/task-detail-panel.component.html:171
+src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html:82
+src/app/features/tasks/task/task-hover-controls/task-hover-controls.component.html:38
+src/app/features/tasks/task/task.component.html:202
+src/app/features/tasks/task/task.component.html:241
+src/app/features/work-view/work-view.component.html:324
+src/app/pages/daily-summary/daily-summary.component.html:228
+src/app/pages/daily-summary/daily-summary.component.html:238
+src/app/pages/daily-summary/plan-tasks-tomorrow/plan-tasks-tomorrow.component.html:39
+src/app/ui/datetime-picker/datetime-picker.component.scss:139
+src/app/ui/datetime-picker/datetime-picker.component.ts:58"
+"wb_twilight","material","2","app","Tomorrow quick action: Change → event_upcoming, retain explicit “Tomorrow” and actual date. Twilight means dusk, not the next day.
+Date-picker Tomorrow shortcut: Change → event_upcoming, retain Tomorrow label","src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html:42
+src/app/ui/datetime-picker/datetime-picker.component.ts:59"
+"webhook","material","4","app","External issue/task provider panel: Change → assignment
+Enable Issues panel: Change to assignment, coordinated with the issues panel.","src/app/core-ui/main-header/desktop-panel-buttons/desktop-panel-buttons.component.ts:44
+src/app/core-ui/mobile-bottom-nav/mobile-bottom-nav.component.html:101
+src/app/core-ui/mobile-bottom-nav/mobile-bottom-nav.component.html:174
+src/app/features/config/form-cfgs/app-features-form.const.ts:79"
+"wifi_off","material","1","app","Header sync states: Keep state family; replace wifi_off with cloud_off only if wording becomes “Sync offline”","src/app/core-ui/main-header/main-header.component.html:139"
+"work","material","1","app","Recurrence quick settings: daily, Mon–Fri, weekly, monthly, yearly, custom: Change daily → calendar_today or event_repeat; Mon–Fri → date_range with weekdays label; yearly cake → event_repeat with “Yearly” label. Keep weekly/monthly/custom. Cake wrongly implies birthday; work wrongly assumes those weekdays are workdays. Labels carry cadence precision.","src/app/features/task-repeat-cfg/dialog-edit-task-repeat-cfg/build-repeat-quick-setting-options.ts:16"
+"plus.circle","sf-symbol","1","native","Add task / Inbox home-screen quick actions: Keep; native equivalents of plus and inbox.","ios/App/App/Info.plist:78"
+"sun.max","sf-symbol","1","native","Today home-screen quick action: Change → native calendar with Today label; platform symbol availability must be checked against supported iOS versions at implementation.","ios/App/App/Info.plist:91"
+"tray","sf-symbol","1","native","Add task / Inbox home-screen quick actions: Keep; native equivalents of plus and inbox.","ios/App/App/Info.plist:104"
+"azure_devops","svg","2","unbundled-plugin-source, app","Registered brand icons available to plugins / migrated providers: Keep as registered identity assets; do not infer that every registered icon has an active built-in screen.","packages/plugin-dev/azure-devops-issue-provider/src/manifest.json:48
+src/app/core/theme/built-in-svg-icons.const.ts:17"
+"caldav","svg","3","app","Built-in provider identity in setup, issue header, tracked-time dialogs: Keep recognizable provider marks with provider name. Calendar remains generic event source.","src/app/core/theme/built-in-svg-icons.const.ts:7
+src/app/features/issue-panel/issue-provider-setup-overview/issue-provider-setup-overview.component.html:83
+src/app/features/issue/issue.const.ts:62"
+"calendar","svg","6","bundled-plugin-source, app, bundled-plugin","Built-in provider identity in setup, issue header, tracked-time dialogs: Keep recognizable provider marks with provider name. Calendar remains generic event source.","packages/plugin-dev/caldav-calendar-provider/src/manifest.json:14
+packages/plugin-dev/google-calendar-provider/src/manifest.json:14
+src/app/core/theme/built-in-svg-icons.const.ts:8
+src/app/features/issue/issue.const.ts:63
+src/assets/bundled-plugins/caldav-calendar-provider/manifest.json:14
+src/assets/bundled-plugins/google-calendar-provider/manifest.json:14"
+"clickup","svg","3","bundled-plugin-source, app, bundled-plugin","Registered brand icons available to plugins / migrated providers: Keep as registered identity assets; do not infer that every registered icon has an active built-in screen.","packages/plugin-dev/clickup-issue-provider/src/manifest.json:47
+src/app/core/theme/built-in-svg-icons.const.ts:14
+src/assets/bundled-plugins/clickup-issue-provider/manifest.json:47"
+"gitea","svg","2","unbundled-plugin-source, app","Registered brand icons available to plugins / migrated providers: Keep as registered identity assets; do not infer that every registered icon has an active built-in screen.","packages/plugin-dev/gitea-issue-provider/src/manifest.json:48
+src/app/core/theme/built-in-svg-icons.const.ts:11"
+"github","svg","3","bundled-plugin-source, app, bundled-plugin","Registered brand icons available to plugins / migrated providers: Keep as registered identity assets; do not infer that every registered icon has an active built-in screen.","packages/plugin-dev/github-issue-provider/src/manifest.json:47
+src/app/core/theme/built-in-svg-icons.const.ts:4
+src/assets/bundled-plugins/github-issue-provider/manifest.json:47"
+"gitlab","svg","7","app","Built-in provider identity in setup, issue header, tracked-time dialogs: Keep recognizable provider marks with provider name. Calendar remains generic event source.","src/app/core/theme/built-in-svg-icons.const.ts:5
+src/app/features/issue-panel/issue-provider-setup-overview/issue-provider-setup-overview.component.html:75
+src/app/features/issue/issue.const.ts:61
+src/app/features/issue/providers/gitlab/dialog-gitlab-submit-worklog-for-day/dialog-gitlab-submit-worklog-for-day.component.html:3
+src/app/features/issue/providers/gitlab/dialog-gitlab-submit-worklog-for-day/dialog-gitlab-submit-worklog-for-day.component.html:4
+src/app/features/issue/providers/gitlab/dialog-gitlab-submit-worklog-for-day/dialog-gitlab-submit-worklog-for-day.component.html:134
+src/app/features/issue/providers/gitlab/dialog-gitlab-submit-worklog-for-day/dialog-gitlab-submit-worklog-for-day.component.html:135"
+"jira","svg","6","app","Built-in provider identity in setup, issue header, tracked-time dialogs: Keep recognizable provider marks with provider name. Calendar remains generic event source.","src/app/core/theme/built-in-svg-icons.const.ts:6
+src/app/features/issue-panel/issue-provider-setup-overview/issue-provider-setup-overview.component.html:65
+src/app/features/issue/issue.const.ts:60
+src/app/features/issue/providers/jira/jira-api.service.ts:617
+src/app/features/issue/providers/jira/jira-view-components/dialog-jira-transition/dialog-jira-transition.component.html:3
+src/app/features/issue/providers/jira/jira-view-components/dialog-jira-transition/dialog-jira-transition.component.html:4"
+"linear","svg","2","unbundled-plugin-source, app","Registered brand icons available to plugins / migrated providers: Keep as registered identity assets; do not infer that every registered icon has an active built-in screen.","packages/plugin-dev/linear-issue-provider/src/manifest.json:19
+src/app/core/theme/built-in-svg-icons.const.ts:13"
+"nextcloud_deck","svg","2","unbundled-plugin-source, app","Registered brand icons available to plugins / migrated providers: Keep as registered identity assets; do not infer that every registered icon has an active built-in screen.","packages/plugin-dev/nextcloud-deck-issue-provider/src/manifest.json:48
+src/app/core/theme/built-in-svg-icons.const.ts:18"
+"open_project","svg","5","app","Built-in provider identity in setup, issue header, tracked-time dialogs: Keep recognizable provider marks with provider name. Calendar remains generic event source.","src/app/core/theme/built-in-svg-icons.const.ts:9
+src/app/features/issue-panel/issue-provider-setup-overview/issue-provider-setup-overview.component.html:91
+src/app/features/issue/issue.const.ts:64
+src/app/features/issue/providers/open-project/open-project-view-components/dialog-openproject-transition/dialog-open-project-transition.component.html:3
+src/app/features/issue/providers/open-project/open-project-view-components/dialog-openproject-transition/dialog-open-project-transition.component.html:4"
+"packages/plugin-dev/azure-devops-issue-provider/icon.svg","svg","1","unbundled-plugin-source","Optional provider plugin identities: Keep provider marks with names; do not replace brand identity with generic task actions. Verify the asset when enabling/bundling each provider.","packages/plugin-dev/azure-devops-issue-provider/src/manifest.json:10"
+"packages/plugin-dev/boilerplate-solid-js/src/assets/icon.svg","svg","1","unbundled-plugin-source","Developer example identity: Keep as example, exclude from default product navigation recommendations.","packages/plugin-dev/boilerplate-solid-js/src/manifest.json:19"
+"packages/plugin-dev/brain-dump/icon.svg","svg","1","unbundled-plugin-source","Optional idea-capture plugin identity: Keep; lightbulb matches ideas; retain Brain Dump name.","packages/plugin-dev/brain-dump/manifest.json:20"
+"packages/plugin-dev/gitea-issue-provider/icon.svg","svg","1","unbundled-plugin-source","Optional provider plugin identities: Keep provider marks with names; do not replace brand identity with generic task actions. Verify the asset when enabling/bundling each provider.","packages/plugin-dev/gitea-issue-provider/src/manifest.json:10"
+"packages/plugin-dev/linear-issue-provider/icon.svg","svg","1","unbundled-plugin-source","Optional provider plugin identities: Keep provider marks with names; do not replace brand identity with generic task actions. Verify the asset when enabling/bundling each provider.","packages/plugin-dev/linear-issue-provider/src/manifest.json:10"
+"packages/plugin-dev/nextcloud-deck-issue-provider/icon.svg","svg","1","unbundled-plugin-source","Optional provider plugin identities: Keep provider marks with names; do not replace brand identity with generic task actions. Verify the asset when enabling/bundling each provider.","packages/plugin-dev/nextcloud-deck-issue-provider/src/manifest.json:10"
+"packages/plugin-dev/redmine-issue-provider/icon.svg","svg","1","unbundled-plugin-source","Optional provider plugin identities: Keep provider marks with names; do not replace brand identity with generic task actions. Verify the asset when enabling/bundling each provider.","packages/plugin-dev/redmine-issue-provider/src/manifest.json:10"
+"packages/plugin-dev/trello-issue-provider/icon.svg","svg","1","unbundled-plugin-source","Optional provider plugin identities: Keep provider marks with names; do not replace brand identity with generic task actions. Verify the asset when enabling/bundling each provider.","packages/plugin-dev/trello-issue-provider/src/manifest.json:10"
+"plainspace","svg","5","app","Shared-project connection shortcut in header: Keep provider mark with explicit accessible name
+Plainspace connect dialog identity: Keep provider brand
+Built-in provider identity in setup, issue header, tracked-time dialogs: Keep recognizable provider marks with provider name. Calendar remains generic event source.","src/app/core-ui/main-header/page-title/page-title.component.ts:86
+src/app/core/theme/built-in-svg-icons.const.ts:19
+src/app/features/issue-panel/issue-provider-setup-overview/issue-provider-setup-overview.component.html:101
+src/app/features/issue/issue.const.ts:65
+src/app/features/plainspace/connect-dialog/plainspace-connect-dialog.component.html:5"
+"redmine","svg","2","unbundled-plugin-source, app","Registered brand icons available to plugins / migrated providers: Keep as registered identity assets; do not infer that every registered icon has an active built-in screen.","packages/plugin-dev/redmine-issue-provider/src/manifest.json:48
+src/app/core/theme/built-in-svg-icons.const.ts:12"
+"remove_today","svg","2","app","Unpin note from Today: Redraw as calendar minus, matching today","src/app/core/theme/built-in-svg-icons.const.ts:10
+src/app/features/note/note/note.component.html:48"
+"sp","svg","1","app","Registered app-brand checkmark: Keep Ultra Tasks brand; internal registry name is not visible copy and need not be renamed for this audit. Registration alone is not proof of current display.","src/app/core/theme/built-in-svg-icons.const.ts:3"
+"src/assets/bundled-plugins/ai-productivity-prompts/icon.svg","svg","2","bundled-plugin-source, bundled-plugin","Plugin card/nav/dialog identity: Keep with name; robot is acceptable AI identity, not proof that any suggestion is automatic.","packages/plugin-dev/ai-productivity-prompts/src/manifest.json:19
+src/assets/bundled-plugins/ai-productivity-prompts/manifest.json:19"
+"src/assets/bundled-plugins/app-auto-track/icon.svg","svg","2","bundled-plugin-source, bundled-plugin","Plugin identity: Keep.","packages/plugin-dev/app-auto-track/src/manifest.json:25
+src/assets/bundled-plugins/app-auto-track/manifest.json:25"
+"src/assets/bundled-plugins/automations/icon.svg","svg","2","bundled-plugin-source, bundled-plugin","Plugin identity: Keep.","packages/plugin-dev/automations/src/manifest.json:19
+src/assets/bundled-plugins/automations/manifest.json:19"
+"src/assets/bundled-plugins/caldav-calendar-provider/icon.svg","svg","2","bundled-plugin-source, bundled-plugin","Plugin identity: Keep with “CalDAV” label.","packages/plugin-dev/caldav-calendar-provider/src/manifest.json:8
+src/assets/bundled-plugins/caldav-calendar-provider/manifest.json:8"
+"src/assets/bundled-plugins/clickup-issue-provider/icon.svg","svg","2","bundled-plugin-source, bundled-plugin","Plugin/provider identity: Keep.","packages/plugin-dev/clickup-issue-provider/src/manifest.json:10
+src/assets/bundled-plugins/clickup-issue-provider/manifest.json:10"
+"src/assets/bundled-plugins/doc-mode/icon.svg","svg","2","bundled-plugin-source, bundled-plugin","Plugin identity: Keep, align to description vocabulary.","packages/plugin-dev/doc-mode/src/manifest.json:24
+src/assets/bundled-plugins/doc-mode/manifest.json:24"
+"src/assets/bundled-plugins/github-issue-provider/icon.svg","svg","2","bundled-plugin-source, bundled-plugin","Plugin/provider identity: Keep.","packages/plugin-dev/github-issue-provider/src/manifest.json:10
+src/assets/bundled-plugins/github-issue-provider/manifest.json:10"
+"src/assets/bundled-plugins/google-calendar-provider/icon.svg","svg","2","bundled-plugin-source, bundled-plugin","Plugin/provider identity: Prefer Google Calendar's recognizable calendar mark; keep generic calendar only if retaining full provider name everywhere.","packages/plugin-dev/google-calendar-provider/src/manifest.json:8
+src/assets/bundled-plugins/google-calendar-provider/manifest.json:8"
+"src/assets/bundled-plugins/parallel-code/icon.svg","svg","2","bundled-plugin-source, bundled-plugin","Plugin identity and header action: Keep terminal, if that action opens Parallel Code.","packages/plugin-dev/parallel-code/manifest.json:13
+src/assets/bundled-plugins/parallel-code/manifest.json:13"
+"src/assets/bundled-plugins/procrastination-buster/icon.svg","svg","2","bundled-plugin-source, bundled-plugin","Plugin identity: Change to psychology (guided reflection), retain name; use play_arrow only on an actual start action.","packages/plugin-dev/procrastination-buster/src/manifest.json:19
+src/assets/bundled-plugins/procrastination-buster/manifest.json:19"
+"src/assets/bundled-plugins/sync-md/icon.svg","svg","2","bundled-plugin-source, bundled-plugin","Plugin identity: Prefer document + sync arrows custom SVG; retain “sync.md” name.","packages/plugin-dev/sync-md/src/manifest.json:37
+src/assets/bundled-plugins/sync-md/manifest.json:37"
+"src/assets/bundled-plugins/ticktick-import/icon.svg","svg","2","bundled-plugin-source, bundled-plugin","Plugin identity: Prefer TickTick mark with “Import” label, or common upload_file if no brand mark.","packages/plugin-dev/ticktick-import/src/manifest.json:26
+src/assets/bundled-plugins/ticktick-import/manifest.json:26"
+"src/assets/bundled-plugins/todoist-import/icon.svg","svg","2","bundled-plugin-source, bundled-plugin","Plugin identity: Prefer Todoist mark with “Import” label, or common upload_file if no brand mark.","packages/plugin-dev/todoist-import/src/manifest.json:28
+src/assets/bundled-plugins/todoist-import/manifest.json:28"
+"src/assets/bundled-plugins/voice-reminder/icon.svg","svg","2","bundled-plugin-source, bundled-plugin","Plugin identity: Keep; consider notifications_active + speaker only if a combined mark stays legible.","packages/plugin-dev/voice-reminder/manifest.json:13
+src/assets/bundled-plugins/voice-reminder/manifest.json:13"
+"src/assets/bundled-plugins/yesterday-tasks-plugin/icon.svg","svg","2","bundled-plugin-source, bundled-plugin","Plugin identity: Change to custom calendar with back arrow; always keep “Yesterday's Tasks”.","packages/plugin-dev/yesterday-tasks-plugin/manifest.json:17
+src/assets/bundled-plugins/yesterday-tasks-plugin/manifest.json:17"
+"sync_done","svg","1","app","Header sync states: Keep state family; replace wifi_off with cloud_off only if wording becomes “Sync offline”","src/app/core/theme/built-in-svg-icons.const.ts:22"
+"sync_error","svg","1","app","Header sync states: Keep state family; replace wifi_off with cloud_off only if wording becomes “Sync offline”","src/app/core/theme/built-in-svg-icons.const.ts:23"
+"sync_off","svg","1","app","Header sync states: Keep state family; replace wifi_off with cloud_off only if wording becomes “Sync offline”","src/app/core/theme/built-in-svg-icons.const.ts:24"
+"sync_ring","svg","1","app","Header sync states: Keep state family; replace wifi_off with cloud_off only if wording becomes “Sync offline”","src/app/core/theme/built-in-svg-icons.const.ts:21"
+"trello","svg","2","unbundled-plugin-source, app","Registered brand icons available to plugins / migrated providers: Keep as registered identity assets; do not infer that every registered icon has an active built-in screen.","packages/plugin-dev/trello-issue-provider/src/manifest.json:48
+src/app/core/theme/built-in-svg-icons.const.ts:16"

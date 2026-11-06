@@ -17,7 +17,7 @@
         @if (sc.icon && sc.icon.startsWith(':')) {
           <mat-icon [svgIcon]="sc.icon"></mat-icon>
         } @else if (sc.icon) {
-          <mat-icon>{{ sc.icon }}</mat-icon>
+          <mat-icon>{{ sc | simpleCounterIcon }}</mat-icon>
         } @else {
           <div class="habit-initial">{{ sc.title.charAt(0).toUpperCase() }}</div>
         }
@@ -43,7 +43,7 @@
         @if (sc.icon && sc.icon.startsWith(':')) {
           <mat-icon [svgIcon]="sc.icon"></mat-icon>
         } @else if (sc.icon) {
-          <mat-icon>{{ sc.icon }}</mat-icon>
+          <mat-icon>{{ sc | simpleCounterIcon }}</mat-icon>
         } @else {
           <div class="habit-initial">{{ sc.title.charAt(0).toUpperCase() }}</div>
         }
@@ -77,7 +77,7 @@
         @if (sc.icon && sc.icon.startsWith(':')) {
           <mat-icon [svgIcon]="sc.icon"></mat-icon>
         } @else if (sc.icon) {
-          <mat-icon>{{ sc.icon }}</mat-icon>
+          <mat-icon>{{ sc | simpleCounterIcon }}</mat-icon>
         } @else {
           <div class="habit-initial">{{ sc.title.charAt(0).toUpperCase() }}</div>
         }

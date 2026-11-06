@@ -210,6 +210,26 @@ One field look for both appearances:
 - **Widths:** S 440px (the default: a dialog without a size is at least this wide) for confirm, prompt, estimate, schedule, deadline and reminder; M 560px for entity forms (project, tag, habit, repeat, sync, import, board); L 720px for reference content (keyboard help, logs, conflict details); `window` 1040px for the Settings and Plugins windows. A dialog that always has the same size declares it itself, `private readonly _size = useDialogSize('m')`, so every call site opens it at that size; a single call site spreads `dialogSize('m')` into `MatDialog.open()`. Both live in `src/app/ui/dialog-size.util.ts`. The pane's max-width (`--mat-dialog-container-max-width`, 94vw below 600px) keeps every size on screen.
 - Don't set `width`, `min-width`, `max-width` or `width: max-content` on a dialog (config, component or content); pick a size.
 
+## UI icon vocabulary
+
+Use the existing Material Symbols Outlined family at weight 400 and `FILL=0` for
+built-in UI actions. Keep native platform symbols and provider/brand marks where
+they identify their actual source. Preserve user-selected icons and emoji.
+
+Today uses `today`; generic dates use `calendar_month`; time-of-day uses
+`schedule`; tracked duration uses `timer`; estimates use `hourglass_empty`.
+Keep `alarm` for actual reminders, `flag` for deadlines, `repeat` for recurrence,
+and `event_busy` for removing a planned date. Notes use `description`, not chat
+bubbles. Use `delete` for recoverable deletion and `delete_forever` only for
+permanent deletion. Imports/uploads, downloads/exports and clipboard copies
+must follow the actual action direction.
+
+Every icon-only action needs a translated accessible name on its button. Keep
+visible labels when the icon alone cannot distinguish the meaning, such as
+Tomorrow, next week, energy levels, and timer controls with different scopes.
+Match repeated navigation icons through `NAV_SECTION_ICON`; use pure display
+resolvers for known legacy built-in defaults instead of rewriting saved icons.
+
 ## Dialog action buttons
 
 One treatment per role so dialogs feel consistent. Classify by **function, not label** ("Close" that dismisses a read-only view is secondary; "Close" that commits is primary).
@@ -224,7 +244,7 @@ One treatment per role so dialogs feel consistent. Classify by **function, not l
 Rules:
 
 - **Order:** `[start-edge actions] … [Cancel] [Primary]`. Cancel sits directly before the primary action, at the end edge; the primary action is the last button in the DOM (the e2e `DIALOG_SUBMIT` selector). A secondary destructive or alternative action (Delete, Remove, Unschedule, Duplicate, Test connection) goes first, at the start edge, as `mat-stroked-button` (`color="warn"` when it destroys) with `class="dialog-action-start"` on the last button of that group. Dialogs align their actions with `align="end"`.
-- **Icons:** drop generic `check`/`close`/`save` icons on OK/Cancel/Save/Submit — they add nothing. Keep icons that tell side-by-side actions apart (`alarm`/`today`/`event_busy` in scheduling, `content_copy`, `online_prediction`). A destructive action's label already says what it does.
+- **Icons:** drop generic `check`/`close`/`save` icons on OK/Cancel/Save/Submit — they add nothing. Keep icons that carry meaning or tell side-by-side actions apart (`alarm`/`today`/`event_busy` in scheduling, `flag`, `content_copy`, `online_prediction`, `cloud_upload`, `delete_forever`). A destructive action's label already says what it does.
 - **No raised buttons** in dialogs: a primary action is `mat-flat-button`.
 - **No `color` on cancel/close** — leftover `color="primary"` on a Cancel just tints it; remove it.
 - **Reactive appearance** — when a button's appearance must change at runtime, bind it on a single element (`[matButton]="cond ? 'filled' : 'outlined'"`) instead of swapping two buttons in an `@if`/`@else`. The attribute form is fixed at construction, and the swap re-creates the node, dropping focus and any click that lands mid-flip. See `finish-day-btn.component.html`.

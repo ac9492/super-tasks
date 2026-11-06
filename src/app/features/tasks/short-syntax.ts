@@ -1587,7 +1587,7 @@ const createUrlAttachment = (url: string): TaskAttachment => {
     icon = 'insert_drive_file';
   } else {
     type = 'LINK';
-    icon = 'bookmark';
+    icon = 'link';
   }
 
   return {

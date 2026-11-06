@@ -1,0 +1,15 @@
+{
+  "source_sha256": "f7ebbdfac4f5f19c7d4dd7da5b836955fea1e8eda7fc8288d12c8a482a95ed7f",
+  "units_per_em": 960,
+  "requested_axes": {
+    "FILL": 0,
+    "wght": 400,
+    "GRAD": 0,
+    "opsz": 24
+  },
+  "font_variable_axes": {
+    "FILL": 0
+  },
+  "fixed_geometry": "weight 400 outlined font artifact; GRAD=0 / opsz=24 UI default",
+  "count": 4167
+}

@@ -53,48 +53,15 @@ $rocket-pulse-values: 0, 1, 2, 3, 4, 5;
   }
 }
 
-.rocket-svg {
+.rocket-icon {
   width: 100%;
-  height: 100%;
+  height: auto;
+  font-size: calc(var(--s5) * 2);
   color: var(--c-primary);
 }
 
-.rocket-body {
-  fill: currentColor;
-}
-
-.rocket-nozzle {
-  fill: var(--palette-primary-700);
-}
-
-.rocket-fin {
-  fill: currentColor;
-  opacity: 0.85;
-}
-
-.rocket-flame {
-  fill: url('#rocket-flame-gradient');
-  transform-origin: 30px 108px;
-  animation: flame-flicker 0.28s infinite alternate;
-  transition: opacity 0.2s ease;
-}
-
-@keyframes flame-flicker {
-  from {
-    transform: scaleY(1);
-  }
-  to {
-    transform: scaleY(0.65);
-  }
-}
-
-@keyframes flame-launch {
-  from {
-    transform: scaleY(1.15);
-  }
-  to {
-    transform: scaleY(1.4);
-  }
+.inline .rocket-icon {
+  font-size: var(--s5);
 }
 
 @keyframes rocket-launch {

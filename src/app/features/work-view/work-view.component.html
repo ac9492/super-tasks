@@ -59,7 +59,7 @@
                   <mat-icon
                     [matTooltip]="T.WW.WORKING_TODAY | translate"
                     matTooltipPosition="above"
-                    >timelapse</mat-icon
+                    >timer</mat-icon
                   >
                 </span>
               </div>
@@ -88,7 +88,7 @@
                     color="lighter"
                     mat-mini-fab
                   >
-                    <mat-icon>timer_off</mat-icon>
+                    <mat-icon>restart_alt</mat-icon>
                   </button>
                 </div>
               </div>
@@ -149,7 +149,7 @@
                     color=""
                     mat-stroked-button
                   >
-                    <mat-icon>playlist_add</mat-icon>
+                    <mat-icon>add_task</mat-icon>
                     {{ T.WW.ADD_MORE | translate }}
                   </button>
                 </div>
@@ -335,7 +335,7 @@
                     color="primary"
                     (click)="addAllOverdueToMyDay()"
                   >
-                    <mat-icon>wb_sunny</mat-icon>
+                    <mat-icon>today</mat-icon>
                     {{ T.F.TASK.CMP.ADD_TO_MY_DAY | translate }}
                   </button>
                   <!--                <button-->
@@ -441,7 +441,7 @@
                       mat-stroked-button
                       (click)="moveDoneToArchive()"
                     >
-                      <mat-icon>done_all</mat-icon>
+                      <mat-icon>archive</mat-icon>
                       {{ T.WW.MOVE_DONE_TO_ARCHIVE | translate }}
                     </button>
                   }

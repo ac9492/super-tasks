@@ -862,19 +862,19 @@ const insertItems = (): MenuItem[] => {
     },
     {
       label: 'Heading 1',
-      icon: 'title',
+      icon: 'format_h1',
       hint: '#',
       action: () => ed.chain().focus().setHeading({ level: 1 }).run(),
     },
     {
       label: 'Heading 2',
-      icon: 'text_fields',
+      icon: 'format_h2',
       hint: '##',
       action: () => ed.chain().focus().setHeading({ level: 2 }).run(),
     },
     {
       label: 'Heading 3',
-      icon: 'short_text',
+      icon: 'format_h3',
       hint: '###',
       action: () => ed.chain().focus().setHeading({ level: 3 }).run(),
     },
@@ -910,7 +910,7 @@ const insertItems = (): MenuItem[] => {
     },
     {
       label: 'New task',
-      icon: 'check_circle_outline',
+      icon: 'add_task',
       action: async () => {
         if (slashActionInFlight) return;
         const ctxAtStart = currentCtx;
@@ -1804,19 +1804,19 @@ const openBlockMenu = (anchorRect: DOMRect): void => {
       },
       {
         label: 'Turn into H1',
-        icon: 'title',
+        icon: 'format_h1',
         action: () =>
           ed.chain().focus().setNodeSelection(nodePos).setHeading({ level: 1 }).run(),
       },
       {
         label: 'Turn into H2',
-        icon: 'text_fields',
+        icon: 'format_h2',
         action: () =>
           ed.chain().focus().setNodeSelection(nodePos).setHeading({ level: 2 }).run(),
       },
       {
         label: 'Turn into H3',
-        icon: 'short_text',
+        icon: 'format_h3',
         action: () =>
           ed.chain().focus().setNodeSelection(nodePos).setHeading({ level: 3 }).run(),
       },
@@ -1825,7 +1825,7 @@ const openBlockMenu = (anchorRect: DOMRect): void => {
     if (nodeName === 'paragraph' || nodeName === 'heading') {
       items.push({
         label: 'Turn into task',
-        icon: 'check_circle_outline',
+        icon: 'add_task',
         action: () => void turnBlockIntoTask(nodePos),
       });
     }

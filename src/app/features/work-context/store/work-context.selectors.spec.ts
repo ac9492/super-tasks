@@ -55,7 +55,7 @@ describe('workContext selectors', () => {
           // breakTime: {},
           color: null,
           // created: 1620997370531,
-          icon: 'wb_sunny',
+          icon: TODAY_TAG.icon,
           id: 'TODAY',
           // modified: 1620997370531,
           routerLink: 'tag/TODAY',

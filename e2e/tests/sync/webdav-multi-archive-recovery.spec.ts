@@ -27,7 +27,9 @@ const archiveTasks = async (page: Page, titles: string[]): Promise<void> => {
   await page.locator('.e2e-finish-day').click();
   await page.locator('daily-summary').waitFor();
   await page
-    .locator('daily-summary button[mat-flat-button]:has(mat-icon:has-text("wb_sunny"))')
+    .locator(
+      'daily-summary button[mat-flat-button]:has(mat-icon:text-matches("^(wb_sunny|check_circle)$"))',
+    )
     .click();
   await expect(page).toHaveURL(/#\/tag\/TODAY\/tasks/);
   await expect(page.locator('task')).toHaveCount(0);

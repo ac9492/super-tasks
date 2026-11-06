@@ -9,8 +9,8 @@ export interface DropPasteInput {
 
 export enum DropPasteIcons {
   FILE = 'insert_drive_file',
-  LINK = 'bookmark',
+  LINK = 'link',
   IMG = 'image',
-  COMMAND = 'laptop_windows',
-  NOTE = 'note',
+  COMMAND = 'terminal',
+  NOTE = 'description',
 }

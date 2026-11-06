@@ -1,3 +1,4 @@
+import { SimpleCounterIconPipe } from '../../simple-counter/simple-counter-icon.pipe';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -56,6 +57,7 @@ export type IdleDialogMode = 'BREAK' | 'TASK' | 'SPLIT';
   styleUrls: ['./dialog-idle.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    SimpleCounterIconPipe,
     FormsModule,
     MatDialogTitle,
     MatDialogContent,

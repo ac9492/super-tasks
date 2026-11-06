@@ -56,6 +56,7 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { IS_ANDROID_WEB_VIEW } from '../../../util/is-android-web-view';
 import { IssueLog } from '../../../core/log';
 import { PluginIssueProviderRegistryService } from '../../../plugins/issue-provider/plugin-issue-provider-registry.service';
@@ -101,6 +102,7 @@ type OptionsLoadState = 'idle' | 'loading' | 'loaded' | 'empty' | 'failed';
     MatDialogActions,
     MatButton,
     MatIcon,
+    MatProgressSpinner,
     MatDialogTitle,
     ChipListInputComponent,
   ],

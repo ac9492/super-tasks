@@ -8,9 +8,14 @@
           (click)="shareHeatmap()"
           [disabled]="isSharing()"
           [matTooltip]="T.F.METRIC.CMP.SHARE_HEATMAP | translate"
+          [attr.aria-label]="T.F.METRIC.CMP.SHARE_HEATMAP | translate"
+          [attr.aria-busy]="isSharing()"
         >
           @if (isSharing()) {
-            <mat-icon>hourglass_empty</mat-icon>
+            <mat-spinner
+              [diameter]="24"
+              [attr.aria-label]="T.G.PROCESSING | translate"
+            ></mat-spinner>
           } @else {
             <mat-icon>share</mat-icon>
           }

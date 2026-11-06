@@ -76,7 +76,7 @@
               "
               (click)="openScheduleDialog()"
             >
-              <mat-icon>calendar_today</mat-icon>
+              <mat-icon>calendar_month</mat-icon>
             </button>
           </span>
         </mat-form-field>
@@ -175,15 +175,17 @@
       <!-- Actions that drop something, apart from Cancel and Save -->
       <button
         (click)="remove()"
-        [attr.aria-label]="T.G.REMOVE | translate"
+        [attr.aria-label]="T.F.TASK_REPEAT.F.REMOVE_RECURRENCE | translate"
         class="icon-on-small"
         [class.dialog-action-start]="!canRemoveInstance()"
         color="warn"
         mat-stroked-button
         type="button"
       >
-        <mat-icon>delete_forever</mat-icon>
-        <span class="hide-on-small">{{ T.G.REMOVE | translate }}</span>
+        <mat-icon>delete</mat-icon>
+        <span class="hide-on-small">{{
+          T.F.TASK_REPEAT.F.REMOVE_RECURRENCE | translate
+        }}</span>
       </button>
       @if (canRemoveInstance()) {
         <button

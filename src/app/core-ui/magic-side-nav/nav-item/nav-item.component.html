@@ -28,7 +28,7 @@
       [style.color]="workContextIconColor() ?? null"
       [class.nav-icon-emoji]="isWorkContextEmojiIcon()"
       [class.drag-handle]="defaultIcon() !== 'today' && defaultIcon() !== 'inbox'"
-      >{{ workContext()!.icon || defaultIcon() }}
+      >{{ workContextIcon() }}
     </mat-icon>
 
     <span

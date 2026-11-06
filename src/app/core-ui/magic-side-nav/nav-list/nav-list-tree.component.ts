@@ -31,6 +31,7 @@ import {
 } from '../../../features/menu-tree/store/menu-tree.model';
 import { MenuTreeService } from '../../../features/menu-tree/menu-tree.service';
 import { WorkContextType } from '../../../features/work-context/work-context.model';
+import { resolveTagIcon } from '../../../features/tag/resolve-tag-icon.util';
 import { DEFAULT_PROJECT_ICON } from '../../../features/project/project.const';
 import { Project } from '../../../features/project/project.model';
 import { isSingleEmoji } from '../../../util/extract-first-emoji';
@@ -267,7 +268,7 @@ export class NavListTreeComponent {
 
   private _toTagNavItem(node: MenuTreeViewTagNode): NavItem {
     const tag = node.tag;
-    const icon = tag.icon || 'label';
+    const icon = resolveTagIcon(tag) || 'label';
     return {
       type: 'workContext',
       id: `tag-${tag.id}`,

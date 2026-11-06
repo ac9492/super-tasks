@@ -1923,7 +1923,7 @@ describe('shortSyntax', () => {
       expect(r?.attachments.length).toBe(1);
       expect(r?.attachments[0].path).toBe('https://example.com');
       expect(r?.attachments[0].type).toBe('LINK');
-      expect(r?.attachments[0].icon).toBe('bookmark');
+      expect(r?.attachments[0].icon).toBe('link');
       expect(r?.taskChanges.title).toBe('Task');
     });
 
@@ -2280,7 +2280,7 @@ describe('shortSyntax', () => {
             type: 'LINK' as const,
             path: 'https://example.com',
             title: 'example',
-            icon: 'bookmark',
+            icon: 'link',
           },
         ],
       };
@@ -2299,7 +2299,7 @@ describe('shortSyntax', () => {
             type: 'LINK' as const,
             path: 'https://example.com',
             title: 'example',
-            icon: 'bookmark',
+            icon: 'link',
           },
         ],
       };
@@ -2320,7 +2320,7 @@ describe('shortSyntax', () => {
             type: 'LINK' as const,
             path: 'https://example.com',
             title: 'example',
-            icon: 'bookmark',
+            icon: 'link',
           },
         ],
       };

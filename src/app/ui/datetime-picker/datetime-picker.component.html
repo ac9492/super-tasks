@@ -59,10 +59,9 @@
              still filled when it gets focus, so onTimeFocus fills in nothing. -->
         <button
           type="button"
-          class="time-clear-btn"
           matSuffix
           mat-icon-button
-          [attr.aria-label]="T.G.CLEAR | translate"
+          [attr.aria-label]="T.DATETIME_SCHEDULE.CLEAR_TIME | translate"
           (click)="onTimeClear($event); timeInput.focus()"
         >
           <mat-icon>close</mat-icon>

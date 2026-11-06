@@ -70,7 +70,7 @@ export class SyncSafetyBannerService {
     this._bannerService.open({
       id: BannerId.SyncSafetyReminder,
       msg: T.APP.B_SYNC_SAFETY.MSG,
-      ico: 'cloud_off',
+      ico: 'sync_problem',
       action: {
         label: T.APP.B_SYNC_SAFETY.SETUP,
         fn: () => {

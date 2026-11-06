@@ -472,7 +472,7 @@ const archiveTasks = async (
   // features hide; the route itself stays reachable.
   await client.page.goto('/#/tag/TODAY/daily-summary');
   const saveAndGoHomeBtn = client.page.locator(
-    'daily-summary button[mat-flat-button]:has(mat-icon:has-text("wb_sunny"))',
+    'daily-summary button[mat-flat-button]:has(mat-icon:text-matches("^(wb_sunny|check_circle)$"))',
   );
   await Promise.all([
     client.page.waitForURL(/tag\/TODAY(?!\/daily-summary)/),

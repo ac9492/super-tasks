@@ -20,7 +20,7 @@
           (click)="clearSearch()"
           [attr.aria-label]="T.G.CLEAR | translate"
         >
-          <mat-icon>clear</mat-icon>
+          <mat-icon>close</mat-icon>
         </button>
       }
     </mat-form-field>
@@ -49,7 +49,7 @@
               (click)="navigateToItem(item)"
             >
               @if (item.parentId && item.parentTitle) {
-                <mat-icon class="subtask-icon">subdirectory_arrow_right</mat-icon>
+                <mat-icon class="subtask-icon">account_tree</mat-icon>
                 <span class="subtask-breadcrumb">{{ item.parentTitle }}</span>
                 <mat-icon class="subtask-icon">chevron_right</mat-icon>
               }
@@ -64,7 +64,11 @@
               </span>
               <span class="task-icons">
                 @if (item.isProject) {
-                  <mat-icon class="issue-icon">list</mat-icon>
+                  <tag
+                    [tag]="item.ctx"
+                    [isHideTitle]="true"
+                    class="context-tag"
+                  ></tag>
                 } @else if (item.isTag) {
                   <tag
                     [tag]="item.ctx"
@@ -84,11 +88,11 @@
                   ></mat-icon>
                 }
                 @if (item.isNote) {
-                  <mat-icon class="issue-icon">comment</mat-icon>
+                  <mat-icon class="issue-icon">description</mat-icon>
                 }
                 @if (item.deletedEntry) {
                   <span class="deleted-label">
-                    <mat-icon class="archive-icon">delete_outline</mat-icon>
+                    <mat-icon class="archive-icon">delete</mat-icon>
                     {{ T.F.SEARCH_BAR.DELETED | translate }}
                   </span>
                 }
@@ -119,7 +123,7 @@
                 mat-icon-button
                 class="view-details-btn"
               >
-                <mat-icon>info</mat-icon>
+                <mat-icon>description</mat-icon>
               </button>
             }
           </li>

@@ -8,11 +8,14 @@
       >
         <tag [tag]="modelItem"></tag>
 
-        <mat-icon
+        <button
+          type="button"
           [matTooltip]="T.G.REMOVE | translate"
+          [attr.aria-label]="(T.G.REMOVE | translate) + ' ' + modelItem.title"
           matChipRemove
-          >cancel
-        </mat-icon>
+        >
+          <mat-icon>cancel</mat-icon>
+        </button>
       </mat-chip-row>
     }
     <input

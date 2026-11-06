@@ -72,7 +72,8 @@
     "PREVIOUS_MONTH": "Previous month",
     "PREVIOUS_YEAR": "Previous year",
     "SWITCH_TO_MULTI_YEAR_VIEW": "Choose year",
-    "SWITCH_TO_YEAR_VIEW": "Choose month"
+    "SWITCH_TO_YEAR_VIEW": "Choose month",
+    "CLEAR_TIME": "Clear time"
   },
   "DIALOG_LOGS": {
     "COPY": "Copy",
@@ -139,7 +140,12 @@
           "IMG": "Image (shown as thumbnail)",
           "LINK": "Link (opens in web browser)"
         }
-      }
+      },
+      "PREVIEW_IMAGE": "Preview image",
+      "OPEN_ATTACHMENT": "Open attachment",
+      "COPY_ATTACHMENT": "Copy attachment",
+      "EDIT_ATTACHMENT": "Edit attachment",
+      "REMOVE_ATTACHMENT": "Remove attachment"
     },
     "BOARDS": {
       "DEFAULT": {
@@ -406,7 +412,9 @@
       "START_FOCUS_SESSION": "Start focus session",
       "START_NEXT_FOCUS_SESSION": "Start next focus session",
       "SWITCH_TASK": "Switch task",
-      "WORKED_FOR": "You worked for"
+      "WORKED_FOR": "You worked for",
+      "END_SESSION": "End session",
+      "CREATE_AND_SELECT_TASK": "Create and select task"
     },
     "GITEA": {
       "FORM": {
@@ -553,7 +561,8 @@
         "REMOTE_ISSUE_DELETED": "Remote issue was deleted. Delete linked task \"{{taskTitle}}\"?",
         "REMOTE_ISSUE_DELETED_WITH_TIME": "Remote issue was deleted but task \"{{taskTitle}}\" has tracked time. Delete anyway?",
         "TWO_WAY_SYNC_PUSH_FAILED": "Two-way sync push failed: {{errorMsg}}",
-        "POST_TIME_SUCCESS": "{{providerName}}: Successfully created time entry for {{issueTitle}}"
+        "POST_TIME_SUCCESS": "{{providerName}}: Successfully created time entry for {{issueTitle}}",
+        "UPDATED_UPSTREAM": "Updated upstream"
       },
       "SETUP_OVERVIEW": {
         "ADD_INTEGRATION": "Connect a calendar or issue provider",
@@ -610,7 +619,9 @@
         "SUBMIT_TIME_FOR": "Submit time to {{providerName}} for",
         "TIME_SPENT": "Time Spent",
         "TITLE": "{{providerName}}: Submit Worklog"
-      }
+      },
+      "PIN_SEARCH": "Remember search query",
+      "UNPIN_SEARCH": "Clear pinned search query"
     },
     "ISSUE_PANEL": {
       "CALENDAR_AGENDA": {
@@ -789,7 +800,10 @@
         "ENERGY_LEVEL": "How's your energy?",
         "ENERGY_LEVEL_HINT": "😫 Exhausted – 😐 OK – 😊 Good",
         "IMPACT_OF_WORK": "How do you rate the impact of your work today?",
-        "IMPACT_OF_WORK_HINT": "1: No meaningful progress – 4: Significant impact"
+        "IMPACT_OF_WORK_HINT": "1: No meaningful progress – 4: Significant impact",
+        "ENERGY_LOW": "Low energy",
+        "ENERGY_MEDIUM": "Medium energy",
+        "ENERGY_HIGH": "High energy"
       },
       "FOCUS_SESSION_DIALOG": {
         "ADD_BTN": "Add",
@@ -853,11 +867,14 @@
         },
         "VIEW_PARSED": "View as parsed (non-editable) Markdown",
         "VIEW_SPLIT": "View parsed and unparsed Markdown in split view",
-        "VIEW_TEXT_ONLY": "View as unparsed text"
+        "VIEW_TEXT_ONLY": "View as unparsed text",
+        "VIEW_MODE": "Markdown view"
       },
       "NOTE_CMP": {
-        "DISABLE_PARSE": "Disable Markdown parsing for preview",
-        "ENABLE_PARSE": "Enable Markdown parsing"
+        "DISABLE_PARSE": "Show plain text",
+        "ENABLE_PARSE": "Show formatted note",
+        "PIN_TO_TODAY": "Pin note to Today",
+        "UNPIN_FROM_TODAY": "Unpin note from Today"
       },
       "NOTES_CMP": {
         "ADD_BTN": "Add note",
@@ -960,7 +977,8 @@
         "REMOVED_PLAN_DATE": "Removed plan date for task \"{{taskTitle}}\"",
         "TASK_ALREADY_PLANNED": "Task is already planned for {{date}}",
         "TASK_PLANNED_FOR": "Task planned for <strong>{{date}}</strong>{{extra}}"
-      }
+      },
+      "TOTAL_TASKS": "Tasks"
     },
     "POMODORO": {
       "BREAK_IS_DONE": "Break is over!"
@@ -1138,14 +1156,16 @@
       "SHIFT_KEY_INFO": "Hold Shift to toggle day planning mode",
       "START": "Work Start",
       "TOGGLE_DAY_PLANNING_HINT": "Ctrl+1 to toggle day planning",
-      "TOGGLE_TIME_SCHEDULING_HINT": "Ctrl+1 to toggle time scheduling"
+      "TOGGLE_TIME_SCHEDULING_HINT": "Ctrl+1 to toggle time scheduling",
+      "AUTOMATICALLY_PLACED": "Automatically placed"
     },
     "SEARCH_BAR": {
       "DELETED": "Deleted",
       "INCLUDE_COMPLETED": "Include completed and archived tasks",
       "INFO": "Start typing to search for tasks, notes, projects or tags",
       "NO_RESULTS": "No tasks, notes, projects or tags found matching your search",
-      "PLACEHOLDER": "Search for tasks, notes, projects or tags"
+      "PLACEHOLDER": "Search for tasks, notes, projects or tags",
+      "UNAVAILABLE_CONTEXT": "Unavailable context"
     },
     "SIMPLE_COUNTER": {
       "D_CONFIRM_REMOVE": {
@@ -1156,7 +1176,9 @@
         "CURRENT_STREAK": "Current Streak",
         "DAILY_GOAL": "Daily Goal",
         "DAYS": "Days",
-        "L_COUNTER": "Count"
+        "L_COUNTER": "Count",
+        "GOAL_MET": "Goal met",
+        "GOAL_NOT_MET": "Goal not met"
       },
       "FORM": {
         "ADD_NEW": "Add simple counter / habit",
@@ -1190,7 +1212,8 @@
       "S": {
         "GOAL_REACHED_1": "You reached your goal for today!",
         "GOAL_REACHED_2": "Current streak duration: "
-      }
+      },
+      "CONSECUTIVE_DAYS": "consecutive days"
     },
     "SYNC": {
       "A": {
@@ -1889,7 +1912,9 @@
         "TRACK_TIME": "Start tracking time",
         "TRACK_TIME_STOP": "Pause tracking time",
         "UNSCHEDULE_TASK": "Unschedule task",
-        "UPDATE_ISSUE_DATA": "Update issue data"
+        "UPDATE_ISSUE_DATA": "Update issue data",
+        "ISSUE_UPDATED": "Issue updated",
+        "TOTAL_TIME": "Total time"
       },
       "D_CONFIRM_DELETE": {
         "MSG": "Are you sure you want to delete the task \"{{title}}\"?",
@@ -2298,7 +2323,8 @@
         "WEDNESDAY": "Wednesday",
         "WEEK_OF_MONTH": "Monthly pattern",
         "WEEKDAY": "Weekday",
-        "WEEKDAY_REQUIRED": "Select at least one weekday"
+        "WEEKDAY_REQUIRED": "Select at least one weekday",
+        "REMOVE_RECURRENCE": "Remove recurrence"
       },
       "SNACK_REPEAT_DIALOG_FAIL": "Could not open repeat config dialog. You can configure it from the task menu."
     },
@@ -2599,7 +2625,10 @@
     "TOMORROW": "Tomorrow",
     "UNDO": "Undo",
     "WITHOUT_PROJECT": "Without project",
-    "YESTERDAY": "Yesterday"
+    "YESTERDAY": "Yesterday",
+    "OPEN_EMOJI_PICKER": "Open system emoji picker",
+    "MOVE_UP": "Move up",
+    "MOVE_DOWN": "Move down"
   },
   "GCF": {
     "APP_FEATURES": {
@@ -3189,7 +3218,7 @@
       "ERROR": "Sync problem — click to retry",
       "IN_SYNC": "In sync — click to sync now",
       "IN_SYNC_CONFIRMED": "In sync, server checked just now — click to sync now",
-      "OFFLINE": "You're offline — sync resumes when you reconnect",
+      "OFFLINE": "Sync offline — resumes when you reconnect",
       "SYNCING": "Syncing…"
     },
     "TAGS": "Tags",
@@ -3310,7 +3339,8 @@
     "TIME_SPENT_AND_ESTIMATE_LABEL": "Time Spent / Estimated",
     "TIME_SPENT_ESTIMATE_TITLE": "Time Spent: Total time spent today. Archived tasks not included. – Time Estimated: Time estimated for tasks worked on today minus the time already spent on them on other days.",
     "TIME_SPENT_TODAY_BY_TAG": "Time Spent today by Tag",
-    "WEEK": "Week"
+    "WEEK": "Week",
+    "REMOVE_DAILY_SUMMARY_NOTE": "Remove daily summary note"
   },
   "PLAINSPACE": {
     "CLAIM": "Claim",
@@ -3753,7 +3783,8 @@
     "TODAY_REMAINING": "Today remaining:",
     "WITHOUT_BREAK": "Without break:",
     "WORKING_TODAY": "Working today:",
-    "WORKING_TODAY_ARCHIVED": "Time worked today on archived tasks"
+    "WORKING_TODAY_ARCHIVED": "Time worked today on archived tasks",
+    "RESIZE_TASK_PANELS": "Resize task panels"
   },
   "NATIVE_SYNC": {
     "TITLE": "Native encrypted sync and sharing",
@@ -3848,5 +3879,15 @@
     "ERROR_NATIVE": "Secure native session storage or background sync is unavailable. Reopen the app and sign in again. Local changes are retained.",
     "ERROR_SERVER_UPDATE": "Update your Ultra Tasks server to use browser passkey approval from this app. TOTP and MFA recovery codes remain available.",
     "SIGN_OUT": "Sign out of this device"
+  },
+  "UI": {
+    "COLOR_PICKER": {
+      "SELECT_COLOR": "Choose color",
+      "CUSTOM_COLOR": "Choose custom color"
+    },
+    "HELP_SECTION": {
+      "SHOW_HELP": "Show help for section",
+      "HIDE_HELP": "Hide help for section"
+    }
   }
 }

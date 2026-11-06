@@ -365,7 +365,7 @@ describe('PluginManagementComponent', () => {
         'a[href$="#get-listed-in-the-app"]',
       );
       expect(normalize(addYoursLink?.textContent)).toBe(
-        'add Eklentinizi burada listeleyin',
+        'open_in_new Eklentinizi burada listeleyin',
       );
     });
 

@@ -278,13 +278,14 @@
 
       @if (isShowCompleteSessionButton()) {
         <button
-          mat-icon-button
+          mat-button
           class="complete-session-btn"
-          [matTooltip]="T.F.FOCUS_MODE.COMPLETE_FOCUS_SESSION | translate"
-          [attr.aria-label]="T.F.FOCUS_MODE.COMPLETE_FOCUS_SESSION | translate"
+          [matTooltip]="T.F.FOCUS_MODE.END_SESSION | translate"
+          [attr.aria-label]="T.F.FOCUS_MODE.END_SESSION | translate"
           (click)="completeFocusSession()"
         >
-          <mat-icon>done_all</mat-icon>
+          <mat-icon>stop_circle</mat-icon>
+          {{ T.F.FOCUS_MODE.END_SESSION | translate }}
         </button>
       }
 
@@ -338,7 +339,7 @@
             (click)="isFocusNotes.set(!isFocusNotes())"
           >
             @if (!isFocusNotes()) {
-              <mat-icon>chat</mat-icon>
+              <mat-icon>description</mat-icon>
             } @else {
               <mat-icon>expand_more</mat-icon>
             }
@@ -380,7 +381,7 @@
         (click)="isFocusNotes.set(!isFocusNotes())"
       >
         @if (!isFocusNotes()) {
-          <mat-icon>chat</mat-icon>
+          <mat-icon>description</mat-icon>
         } @else {
           <mat-icon>expand_more</mat-icon>
         }
