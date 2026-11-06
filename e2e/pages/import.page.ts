@@ -117,6 +117,23 @@ export class ImportPage extends BasePage {
 
     await this.page.waitForLoadState('networkidle');
     await this.page.waitForTimeout(500);
+
+    // Settings is a dialog: its backdrop covers the app header (sync button,
+    // ...) until it is closed, and nothing after an import needs it open.
+    await this.closeSettingsWindowIfOpen();
+  }
+
+  /**
+   * Close the Settings window when it is still open after navigating to the
+   * import controls, so the workspace underneath takes clicks again.
+   */
+  private async closeSettingsWindowIfOpen(): Promise<void> {
+    const header = this.page.locator('.settings-window-header');
+    if (!(await header.isVisible().catch(() => false))) {
+      return;
+    }
+    await header.getByRole('button', { name: 'Close' }).click();
+    await header.waitFor({ state: 'hidden', timeout: 10000 });
   }
 
   /**
