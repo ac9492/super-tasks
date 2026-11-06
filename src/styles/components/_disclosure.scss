@@ -1,0 +1,37 @@
+@use '../mixins/material-icon' as *;
+
+// Native <details> disclosures: the same row as the `collapsible` widgets
+// (docs/styling-guide.md § Disclosures): 40px, a 20px chevron leading the
+// label (14/500) on the content's own left edge, turning when open. A summary
+// that draws its own icon keeps it.
+details > summary:not(:has(> mat-icon, > .mat-icon)) {
+  display: flex;
+  align-items: center;
+  gap: var(--s);
+  min-height: var(--ctl-md);
+  border-radius: var(--r-md);
+  font: var(--type-body-strong);
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  &::before {
+    @include materialIcon('expand_more');
+    font-size: var(--icon-md);
+    width: var(--icon-md);
+    transition: var(--transition-standard);
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+}
+
+details[open] > summary:not(:has(> mat-icon, > .mat-icon))::before {
+  transform: rotate(180deg);
+}

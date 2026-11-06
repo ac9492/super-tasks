@@ -79,7 +79,7 @@
   }
 
   <collapsible
-    [isInline]="true"
+    [isIconBefore]="true"
     [title]="T.F.WORKLOG.EXPORT.OPTIONS | translate"
     class="options-collapsible"
   >
@@ -196,7 +196,6 @@
       {{ T.F.WORKLOG.EXPORT.COPY_TO_CLIPBOARD | translate }}
     </button>
   }
-
   <a
     [simpleDownloadData]="'\uFEFF' + txt"
     [simpleDownload]="fileName"
@@ -206,7 +205,6 @@
     <mat-icon>download</mat-icon>
     {{ T.F.WORKLOG.EXPORT.SAVE_TO_FILE | translate }}
   </a>
-
   @if (isShowClose()) {
     <button
       (click)="onCloseClick()"

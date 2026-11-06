@@ -85,6 +85,22 @@ describe('InputDurationSliderComponent', () => {
     sub.unsubscribe();
   });
 
+  describe('accessible name', () => {
+    const valueInput = (): HTMLInputElement =>
+      fixture.nativeElement.querySelector('input.value') as HTMLInputElement;
+
+    it('has no aria-label by default', () => {
+      expect(valueInput().hasAttribute('aria-label')).toBe(false);
+    });
+
+    it('names the value input from the ariaLabel input', () => {
+      fixture.componentRef.setInput('ariaLabel', 'Focus time');
+      fixture.detectChanges();
+
+      expect(valueInput().getAttribute('aria-label')).toBe('Focus time');
+    });
+  });
+
   describe('Enter handling (blurOnEnter)', () => {
     // Guards the #7586 regression: blurring on Enter cancels a host form's
     // implicit submit, so it must stay opt-in or the time-estimate dialogs

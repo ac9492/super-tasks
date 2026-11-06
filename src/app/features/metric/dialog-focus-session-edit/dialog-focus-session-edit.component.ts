@@ -30,6 +30,7 @@ import { MatList, MatListItem } from '@angular/material/list';
 import { DateTimeFormatService } from 'src/app/core/date-time-format/date-time-format.service';
 import { getDbDateStr } from '../../../util/get-db-date-str';
 import { dateStrToUtcDate } from '../../../util/date-str-to-utc-date';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 const CHART_DAYS = 28;
 const CHART_COLOR = '#4bc0c0';
@@ -63,6 +64,7 @@ interface FocusSessionListItem {
   ],
 })
 export class DialogFocusSessionEditComponent {
+  private readonly _dialogSize = useDialogSize('m');
   private readonly _dialogRef = inject(MatDialogRef<DialogFocusSessionEditComponent>);
   private readonly _metricService = inject(MetricService);
   private readonly _dateService = inject(DateService);

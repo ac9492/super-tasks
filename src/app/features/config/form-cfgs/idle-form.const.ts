@@ -6,6 +6,7 @@ import {
   IDLE_PING_INTERVAL_MS,
 } from '../../../../../electron/shared-with-frontend/idle.const';
 import { msToString } from '../../../ui/duration/ms-to-string.pipe';
+import { SETTINGS_INTRO_PROP } from '../settings-form.util';
 
 export const IDLE_FORM_CFG: ConfigFormSection<IdleConfig> = {
   title: T.GCF.IDLE.TITLE,
@@ -20,6 +21,8 @@ export const IDLE_FORM_CFG: ConfigFormSection<IdleConfig> = {
         tag: 'p',
         class: 'sub-section-heading',
         text: T.G.EXTENSION_INFO,
+        // Explains why the web build shows no idle options: keep it in view
+        [SETTINGS_INTRO_PROP]: true,
       },
     },
     {

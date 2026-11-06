@@ -5,6 +5,7 @@ import {
   inject,
   OnInit,
   viewChild,
+  viewChildren,
 } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { T } from '../../t.const';
@@ -32,7 +33,6 @@ import { MatInput } from '@angular/material/input';
 import { IssueIconPipe } from '../../features/issue/issue-icon/issue-icon.pipe';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { TagComponent } from '../../features/tag/tag/tag.component';
-import { MatList, MatListItem } from '@angular/material/list';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogViewArchivedTaskComponent } from '../../features/tasks/dialog-view-archived-task/dialog-view-archived-task.component';
@@ -65,8 +65,6 @@ const MIN_DELETED_RESULTS = 5;
     IssueIconPipe,
     TranslatePipe,
     TagComponent,
-    MatList,
-    MatListItem,
     MatFormField,
     MatLabel,
     MatCheckbox,
@@ -86,6 +84,7 @@ export class SearchPageComponent implements OnInit {
   private _translateService = inject(TranslateService);
 
   readonly inputEl = viewChild.required<ElementRef>('inputEl');
+  readonly resultBtns = viewChildren<ElementRef<HTMLButtonElement>>('resultBtn');
 
   T: typeof T = T;
   searchForm: UntypedFormControl = new UntypedFormControl('');
@@ -495,6 +494,24 @@ export class SearchPageComponent implements OnInit {
     await this._recentlyDeletedService.restore(item.deletedEntry);
     this._reloadDeleted$.next();
     await this._navigateToTaskService.navigate(item.id, false, { isFromSearch: true });
+  }
+
+  /** ArrowDown/ArrowUp move between the search field and the results. */
+  onKeydown(ev: KeyboardEvent): void {
+    if (ev.key !== 'ArrowDown' && ev.key !== 'ArrowUp') {
+      return;
+    }
+    const input = this.inputEl().nativeElement as HTMLElement;
+    const targets = [input, ...this.resultBtns().map((btn) => btn.nativeElement)];
+    const index = targets.indexOf(ev.target as HTMLElement);
+    if (index === -1 || targets.length < 2) {
+      return;
+    }
+    const next = ev.key === 'ArrowDown' ? index + 1 : index - 1;
+    if (next >= 0 && next < targets.length) {
+      ev.preventDefault();
+      targets[next].focus();
+    }
   }
 
   clearSearch(): void {

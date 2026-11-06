@@ -1,12 +1,9 @@
 <button
   (click)="isShowHelp = !isShowHelp"
-  [attr.aria-label]="
-    (isShowHelp ? T.UI.HELP_SECTION.HIDE_HELP : T.UI.HELP_SECTION.SHOW_HELP) | translate
-  "
+  [attr.aria-label]="T.MH.HELP | translate"
   [attr.aria-expanded]="isShowHelp"
-  class="help-btn mat-elevation-z2"
-  color=""
-  mat-mini-fab
+  class="help-btn"
+  mat-icon-button
   type="button"
 >
   <mat-icon>{{ isShowHelp ? 'close' : 'help_outline' }}</mat-icon>
@@ -15,14 +12,8 @@
 @if (isShowHelp) {
   <div
     [@expandFade]
-    class="help-text border-color-primary"
+    class="help-text"
   >
-    <div class="help-icon-wrapper color-primary">
-      <mat-icon>help_outline</mat-icon>
-    </div>
     <ng-content></ng-content>
-    <div class="help-icon-wrapper color-primary">
-      <mat-icon>help_outline</mat-icon>
-    </div>
   </div>
 }

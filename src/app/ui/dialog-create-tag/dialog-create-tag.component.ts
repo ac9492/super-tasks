@@ -9,6 +9,7 @@ import {
   MAT_DIALOG_DATA,
   MatDialogActions,
   MatDialogContent,
+  MatDialogTitle,
   MatDialogRef,
 } from '@angular/material/dialog';
 import { T } from '../../t.const';
@@ -24,6 +25,7 @@ import { MatOption } from '@angular/material/core';
 import { MaterialIconsLoaderService } from '../material-icons-loader.service';
 import { InputColorPickerComponent } from '../input-color-picker/input-color-picker.component';
 import { Log } from '../../core/log';
+import { useDialogSize } from '../dialog-size.util';
 
 export interface CreateTagData {
   title?: string;
@@ -37,6 +39,7 @@ export interface CreateTagData {
   styleUrls: ['./dialog-create-tag.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    MatDialogTitle,
     MatDialogContent,
     MatFormField,
     MatLabel,
@@ -53,6 +56,7 @@ export interface CreateTagData {
   ],
 })
 export class DialogCreateTagComponent {
+  private readonly _dialogSize = useDialogSize('m');
   private _matDialogRef = inject<MatDialogRef<DialogCreateTagComponent>>(MatDialogRef);
   private _iconLoader = inject(MaterialIconsLoaderService);
   data = inject(MAT_DIALOG_DATA);

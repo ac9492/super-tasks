@@ -171,14 +171,15 @@
   height: 48px;
   transform: translateY(-50%);
   background: var(--bg-lightest);
-  //border: 1px solid var(--separator-color);
-  border-radius: 3px 8px 8px 3px;
+  // Rounded on its free (outer) side, flat against the panel edge.
+  border-radius: var(--r-sm) 0 0 var(--r-sm);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: grab; // Indicate it can be dragged
   z-index: var(--z-right-panel-edge-handle);
-  box-shadow: var(--whiteframe-shadow-2dp);
+  // A hairline, not a resting shadow: the handle is part of the panel's edge.
+  box-shadow: 0 0 0 var(--st-line-width) var(--palette-separator);
   transition: var(--transition-standard);
   color: var(--text-color);
   border: none;

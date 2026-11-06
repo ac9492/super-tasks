@@ -11,7 +11,9 @@
   --header-nav-button-gap: var(--s-half);
   --header-action-group-gap: var(--s);
   --header-button-size: 40px;
-  --header-title-padding-inline-start: var(--s);
+  // The title starts on the page's one left edge (the wrapper's start padding
+  // is --page-gutter), so the title adds none of its own.
+  --header-title-padding-inline-start: 0px;
   --header-title-padding-inline-end: var(--s2);
   --header-title-action-gap: var(--s-quarter);
   // How far the title's buttons are pulled back toward the title, so they sit
@@ -62,7 +64,6 @@
 
   @include mq(xs) {
     --header-action-group-gap: var(--s2);
-    --header-title-padding-inline-start: 0px;
     --header-title-padding-inline-end: var(--s);
     --header-title-text-min: 6ch;
   }
@@ -123,10 +124,10 @@
     cursor: grabbing;
   }
 
-  // `.page-title` is a div with a routerLink, so neither `button` nor `a`
-  // below reaches it -- it needs naming here or the one control that fills the
-  // left of the header is inside the drag region and cannot be clicked. It was
-  // named here, as `.current-work-context-title`, until that class was renamed.
+  // `.page-title` is an `a` now, but stays named here: the one control that
+  // fills the left of the header must never fall inside the drag region, where
+  // it cannot be clicked. It was named here, as `.current-work-context-title`,
+  // until that class was renamed.
   .page-title,
   ::ng-deep .current-task-title,
   button,
@@ -143,8 +144,13 @@
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
-  padding: var(--s-half) var(--s);
-  min-height: var(--bar-height-large);
+  // Exactly the 56px band the brand row has, at every width. The title starts
+  // on the page gutter (where the list, the summary and the section headers
+  // start); the actions keep 8px from the window edge, near the panels they
+  // toggle.
+  height: var(--bar-height-large);
+  padding-block: 0;
+  padding-inline: var(--page-gutter) var(--s);
 
   // The row's own width, which is what decides whether identity fits — not the
   // window's. The right panel narrows this box without narrowing the viewport,
@@ -153,11 +159,6 @@
   // box, so its width comes from its parent and never from its contents.
   container-type: inline-size;
   container-name: main-header;
-
-  @include mq(xs) {
-    min-height: var(--bar-height);
-    padding: var(--s-half) var(--s2);
-  }
 }
 
 // Below a row that cannot seat both, identity yields entirely.

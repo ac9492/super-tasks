@@ -211,7 +211,7 @@ export class ShareFormatter {
 
     // Hashtags
     if (options.includeHashtags) {
-      parts.push('\n#productivity #timetracking #SuperProductivity');
+      parts.push('\n#productivity #timetracking #UltraTasks');
     }
 
     let text = parts.join('\n');

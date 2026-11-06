@@ -156,6 +156,7 @@ export class BoardsComponent {
         data: {
           cancelTxt: T.G.CANCEL,
           okTxt: T.G.DELETE,
+          isDestructive: true,
           message: T.F.BOARDS.V.CONFIRM_DELETE,
         },
       })

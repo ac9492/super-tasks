@@ -51,8 +51,8 @@
 
   .additional-btn {
     flex-shrink: 0;
-    width: 40px !important;
-    min-width: 40px !important;
+    width: var(--ctl-md) !important;
+    min-width: var(--ctl-md) !important;
   }
 
   &.isHidden {
@@ -74,10 +74,11 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  line-height: 1;
   text-align: center;
-  font-size: var(--font-size-xs);
-  right: 16px;
+  // Meta type, tabular: counts change in place.
+  font: var(--type-meta);
+  font-variant-numeric: tabular-nums;
+  right: var(--s1-5);
   display: flex;
   align-items: center;
   color: var(--text-color-muted);
@@ -90,6 +91,12 @@
     opacity var(--transition-duration-s, 0.15s) var(--ani-standard-timing)
       var(--transition-duration-xs, 0.09s),
     visibility 0s linear var(--transition-duration-xs, 0.09s);
+}
+
+// The count is a sibling of the row button, so it does not inherit the active
+// row's ink; without this it keeps the muted background ink on the accent fill.
+.nav-link.active ~ .task-count {
+  color: var(--sidenav-active-text);
 }
 
 // On touch the row's menu opens on long-press (`isTouchLongPress` on its
@@ -111,18 +118,19 @@
   }
 }
 
-// Active state visuals - ensure they override Angular Material styles
-//button[mat-menu-item].nav-link[routerlinkactive="active"],
-button[mat-menu-item].nav-link.active {
-  color: var(--sidenav-active-text) !important;
-  background: var(--sidenav-item-active-bg) !important;
+// Active state visuals - ensure they override Angular Material styles.
+// Work-context rows (buttons) and route rows (anchors) share this one look: the
+// tonal "selected" role, restated for the whole row in _ultra-tasks.scss.
+.nav-link[mat-menu-item].active {
+  color: var(--palette-selected-ink) !important;
+  background: var(--palette-selected) !important;
 
   .nav-label {
-    color: var(--sidenav-active-text) !important;
+    color: var(--palette-selected-ink) !important;
   }
 
   .nav-icon {
-    color: var(--sidenav-active-text) !important;
+    color: var(--palette-selected-ink) !important;
   }
 }
 
@@ -140,6 +148,24 @@ button[mat-menu-item].nav-link.active {
       background-color: var(--sidenav-hover-bg);
       color: var(--sidenav-text);
     }
+  }
+}
+
+// Section headers (Projects, Tags; the class comes from nav-list-tree): group
+// labels, one step below the rows they head: a 32px row in the label type,
+// muted, with the chevron in the same icon slot as every row. Their tools are
+// the 32px buttons of nav-list-tree.
+:host.nav-group-header {
+  // !important: the nav's global row rule (multi-btn-wrapper.scss) is.
+  .nav-link {
+    height: var(--ctl-sm) !important;
+    min-height: var(--ctl-sm) !important;
+  }
+
+  .nav-link .nav-label {
+    font: var(--type-label);
+    letter-spacing: var(--track-label);
+    color: var(--sidenav-text-secondary);
   }
 }
 
@@ -199,23 +225,27 @@ button[mat-menu-item].nav-link.active {
 }
 
 // Standard navigation row styles (simplified to be the only style)
+//
+// Geometry (one grid for the whole nav): a 40px row (48 on touch), 8px inner
+// padding on an 8px inset, so the 24px icon slot sits at x=16 and is centred at
+// x=28 in the expanded panel and in the rail alike; the label starts at x=52.
 .nav-link {
   display: flex;
   align-items: center;
-  gap: var(--s2);
-  padding: var(--s) var(--s2);
+  gap: var(--s1-5);
+  // The row height (40, 48 on touch) is set for every nav row in
+  // multi-btn-wrapper.scss.
+  padding: 0 var(--s);
   color: var(--sidenav-text);
   text-decoration: none;
-  border-radius: 6px;
+  border-radius: var(--r-md);
   transition: var(--transition-standard);
   cursor: pointer;
   background: transparent;
   border: none;
   width: 100%;
   text-align: left;
-  font-size: var(--font-size-md);
-  font-family: inherit;
-  font-weight: 400;
+  font: var(--type-body);
   letter-spacing: normal;
 
   // Override Angular Material mat-menu-item defaults so buttons/anchors match our palette
@@ -265,35 +295,38 @@ button[mat-menu-item].nav-link.active {
   }
 
   &.active {
-    background: var(--sidenav-item-active-bg);
-    color: var(--sidenav-active-text);
+    background: var(--palette-selected);
+    color: var(--palette-selected-ink);
+    font-weight: var(--font-weight-semibold);
 
     .nav-icon {
-      color: var(--sidenav-active-text);
+      color: var(--palette-selected-ink);
     }
 
     .nav-label {
-      color: var(--sidenav-active-text);
+      color: var(--palette-selected-ink);
+      font-weight: var(--font-weight-semibold);
     }
 
     // Prevent Material focus styles from reducing contrast on active items
     &:focus,
     &:focus-visible {
-      background: var(--sidenav-item-active-bg);
-      color: var(--sidenav-active-text) !important;
+      background: var(--palette-selected);
+      color: var(--palette-selected-ink) !important;
 
       .nav-label,
       .nav-icon,
       .mat-mdc-menu-item-text {
-        color: var(--sidenav-active-text) !important;
+        color: var(--palette-selected-ink) !important;
       }
     }
   }
 
+  // The glyph equals its font size; the 24px box is the icon slot.
   .nav-icon {
-    width: 24px;
-    height: 24px;
-    font-size: var(--font-size-xl);
+    width: var(--icon-slot);
+    height: var(--icon-slot);
+    font-size: var(--icon-md);
   }
 
   .nav-label {
@@ -306,19 +339,19 @@ button[mat-menu-item].nav-link.active {
 // Navigation icon and chevron
 .nav-icon {
   flex-shrink: 0;
-  width: 24px;
-  height: 24px;
+  width: var(--icon-slot);
+  height: var(--icon-slot);
   display: flex;
   align-items: center;
   justify-content: center;
   // Don't set default color here - let it inherit or use theme colors
-  font-size: var(--font-size-xl);
+  font-size: var(--icon-md);
   line-height: 1;
 
   // Emoji-specific styling
   &.nav-icon-emoji {
     font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
-    font-size: var(--font-size-lg);
+    font-size: var(--icon-sm);
     font-feature-settings: normal;
     font-variation-settings: normal;
     text-transform: none;
@@ -373,9 +406,16 @@ button[mat-menu-item].nav-link.active {
       overflow: hidden;
     }
 
+    // The count is hidden in the rail, so its reserved room must not widen the
+    // row: with it, rows that carry a count were wider than the rail and their
+    // icons drifted 4px off the icon column.
+    &.has-tasks {
+      padding-right: var(--s);
+    }
+
     &.active {
-      color: var(--sidenav-active-text) !important;
-      background: var(--sidenav-item-active-bg) !important;
+      color: var(--palette-selected-ink) !important;
+      background: var(--palette-selected) !important;
 
       &::after {
         position: absolute;
@@ -383,11 +423,11 @@ button[mat-menu-item].nav-link.active {
       }
 
       .nav-icon {
-        color: var(--sidenav-active-text) !important;
+        color: var(--palette-selected-ink) !important;
       }
 
       .nav-label {
-        color: var(--sidenav-active-text) !important;
+        color: var(--palette-selected-ink) !important;
       }
     }
   }

@@ -51,7 +51,7 @@ describe('FileImexComponent', () => {
     const localDraftServiceSpy = jasmine.createSpyObj('LocalDraftService', [
       'deleteAllDrafts',
     ]);
-    const matDialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
+    const matDialogSpy = jasmine.createSpyObj('MatDialog', ['open', 'getDialogById']);
     const importEncryptionHandlerSpy = jasmine.createSpyObj(
       'ImportEncryptionHandlerService',
       ['checkEncryptionStateChange', 'handleImportEncryptionIfNeeded'],
@@ -315,9 +315,7 @@ describe('FileImexComponent', () => {
 
       component.openUrlImportDialog();
 
-      expect(mockMatDialog.open).toHaveBeenCalledWith(DialogImportFromUrlComponent, {
-        width: '500px',
-      });
+      expect(mockMatDialog.open).toHaveBeenCalledWith(DialogImportFromUrlComponent);
       expect(component.importFromUrlHandler).toHaveBeenCalledWith(
         'https://example.com/backup.json',
       );
@@ -435,6 +433,33 @@ describe('FileImexComponent', () => {
       await component.privacyAppDataDownload();
 
       expect(mockBackupService.loadCompleteBackup).toHaveBeenCalled();
+    });
+  });
+
+  describe('openTodoistImport', () => {
+    // The importer is a page; Settings is a dialog that closes only on popstate
+    it('should close the settings dialog before navigating to the importer', async () => {
+      const settingsDialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
+      mockMatDialog.getDialogById.and.callFake((id: string) =>
+        id === 'settings-window' ? settingsDialogRef : undefined,
+      );
+      const pluginService = TestBed.inject(
+        PluginService,
+      ) as jasmine.SpyObj<PluginService>;
+      pluginService.activatePlugin.and.returnValue(Promise.resolve({} as any));
+      mockRouter.navigate.and.callFake(() => {
+        expect(settingsDialogRef.close).toHaveBeenCalled();
+        return Promise.resolve(true);
+      });
+
+      await component.openTodoistImport();
+
+      expect(settingsDialogRef.close).toHaveBeenCalledTimes(1);
+      expect(mockRouter.navigate).toHaveBeenCalledWith([
+        '/plugins',
+        jasmine.any(String),
+        'index',
+      ]);
     });
   });
 });

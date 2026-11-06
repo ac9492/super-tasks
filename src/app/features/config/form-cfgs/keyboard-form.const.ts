@@ -65,9 +65,15 @@ export const KEYBOARD_SETTINGS_FORM_CFG: ConfigFormSection<KeyboardConfig> = {
     kbField('goToScheduledView', T.GCF.KEYBOARD.GO_TO_SCHEDULED_VIEW),
     kbField('goToPlanner', T.GCF.KEYBOARD.GO_TO_PLANNER),
     kbField('goToSettings', T.GCF.KEYBOARD.GO_TO_SETTINGS),
-    kbField('zoomIn', T.GCF.KEYBOARD.ZOOM_IN),
-    kbField('zoomOut', T.GCF.KEYBOARD.ZOOM_OUT),
-    kbField('zoomDefault', T.GCF.KEYBOARD.ZOOM_DEFAULT),
+    // Zoom is handled only by the desktop app; in a browser these keys are
+    // the browser's own zoom.
+    ...(IS_ELECTRON
+      ? [
+          kbField('zoomIn', T.GCF.KEYBOARD.ZOOM_IN),
+          kbField('zoomOut', T.GCF.KEYBOARD.ZOOM_OUT),
+          kbField('zoomDefault', T.GCF.KEYBOARD.ZOOM_DEFAULT),
+        ]
+      : []),
     kbField('triggerSync', T.GCF.KEYBOARD.TRIGGER_SYNC),
 
     // TASKS

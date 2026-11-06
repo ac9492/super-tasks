@@ -3,6 +3,7 @@ import { PluginLog } from '../core/log';
 import { GlobalConfigService } from '../features/config/global-config.service';
 import { DEFAULT_LANGUAGE } from '../core/locale.constants';
 import { environment } from '../../environments/environment';
+import { withProductName } from '../core/http/translate-http-loader-with-fallback.class';
 
 interface PluginTranslations {
   [language: string]: Record<string, unknown>;
@@ -55,7 +56,17 @@ export class PluginI18nService {
           continue;
         }
 
-        translations[lang] = JSON.parse(content);
+        const parsed = JSON.parse(content) as Record<string, unknown>;
+        // Bundled plugins ship upstream locale files, like the app itself. Apply
+        // the same product-name rewrite to every language but English, whose
+        // plugin files this fork maintains directly.
+        translations[lang] =
+          lang === DEFAULT_LANGUAGE
+            ? parsed
+            : (withProductName(parsed as Parameters<typeof withProductName>[0]) as Record<
+                string,
+                unknown
+              >);
         PluginLog.log(
           `[PluginI18n] Loaded ${lang} translations for ${pluginId} from cache`,
         );

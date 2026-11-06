@@ -20,6 +20,7 @@ import { TaskSharedActions } from '../../../root-store/meta/task-shared.actions'
 import { DateService } from '../../../core/date/date.service';
 import { DialogScheduleTaskComponent } from '../dialog-schedule-task/dialog-schedule-task.component';
 import { dateStrToUtcDate } from '../../../util/date-str-to-utc-date';
+import { MatTooltip } from '@angular/material/tooltip';
 import { MatIcon } from '@angular/material/icon';
 import { PlannerTaskComponent } from '../planner-task/planner-task.component';
 import { PlannerRepeatProjectionComponent } from '../planner-repeat-projection/planner-repeat-projection.component';
@@ -60,6 +61,7 @@ import { safeFormatDate } from '../../../util/safe-format-date';
     TranslatePipe,
     ShortDate2Pipe,
     ProgressBarComponent,
+    MatTooltip,
   ],
 })
 export class PlannerDayComponent {

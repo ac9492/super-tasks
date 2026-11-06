@@ -43,6 +43,7 @@
          setting: browsers ignore `lang`, navigator.language and the ICU default
          for native time inputs, so this cannot be forced from the page (#8565). -->
       <input
+        #timeInput
         type="time"
         spTimeStep
         (focus)="onTimeFocus()"
@@ -54,12 +55,15 @@
         (keydown)="onTimeKeyDown($event)"
       />
       @if (selectedTime()) {
+        <!-- Focus goes back to the time field, as the button disappears. It is
+             still filled when it gets focus, so onTimeFocus fills in nothing. -->
         <button
           type="button"
-          mat-icon-button
+          class="time-clear-btn"
           matSuffix
-          [attr.aria-label]="T.DATETIME_SCHEDULE.CLEAR_TIME | translate"
-          (click)="onTimeClear($event)"
+          mat-icon-button
+          [attr.aria-label]="T.G.CLEAR | translate"
+          (click)="onTimeClear($event); timeInput.focus()"
         >
           <mat-icon>close</mat-icon>
         </button>

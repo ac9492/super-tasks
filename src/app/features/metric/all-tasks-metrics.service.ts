@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { combineLatest, from, Observable } from 'rxjs';
+import { asapScheduler, combineLatest, from, Observable } from 'rxjs';
 import { SimpleMetrics } from './metric.model';
-import { filter, map, switchMap, take, withLatestFrom } from 'rxjs/operators';
+import { filter, map, observeOn, switchMap, take } from 'rxjs/operators';
 import { mapSimpleMetrics } from './metric.util';
 import { TaskService } from '../tasks/task.service';
 import { WorklogService } from '../worklog/worklog.service';
@@ -29,9 +29,13 @@ export class AllTasksMetricsService {
   private _simpleMetricsObs$: Observable<SimpleMetrics | undefined> =
     this._workContextService.activeWorkContext$.pipe(
       filter((ctx) => ctx?.type === WorkContextType.TAG && ctx.id === TODAY_TAG.id),
-      // Ensure worklog is loaded before computing metrics
-      withLatestFrom(this._worklogService.worklog$),
-      filter(([, worklog]) => !!worklog),
+      // Wait for the worklog instead of sampling it: on a first visit it is
+      // still loading when the context emits, and a sampled emission without a
+      // worklog was dropped for good, leaving the table unrendered. Reading it
+      // after every subscriber has seen the switch means the worklog service
+      // has already dropped the previous context's worklog, so worklog$ below
+      // waits for the one loaded for TODAY instead of replaying a stale one.
+      observeOn(asapScheduler),
       switchMap(() =>
         combineLatest([
           this._getAllBreakNr$(),

@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { filter, take } from 'rxjs/operators';
 import { T } from '../../t.const';
+import { dialogSize } from '../../ui/dialog-size.util';
 
 /** Keep the current workspace mounted underneath settings, including shortcut entry. */
 export const settingsDialogGuard: CanActivateFn = async (route) => {
@@ -20,11 +21,9 @@ export const settingsDialogGuard: CanActivateFn = async (route) => {
     if (dialogs.getDialogById(id)) return;
     dialogs.open<unknown>(isPlugins ? PluginsWindowComponent : ConfigPageComponent, {
       id,
-      width: '1040px',
-      maxWidth: '96vw',
+      ...dialogSize('window', 'settings-window'),
       height: '86dvh',
       maxHeight: '96dvh',
-      panelClass: 'settings-window',
       backdropClass: 'settings-backdrop',
       autoFocus: 'first-heading',
       restoreFocus: true,

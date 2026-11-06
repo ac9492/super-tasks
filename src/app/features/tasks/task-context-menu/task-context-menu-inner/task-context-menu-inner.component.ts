@@ -313,11 +313,27 @@ export class TaskContextMenuInnerComponent implements AfterViewInit, OnDestroy {
             10,
           ) || 0;
         this.contextMenuPosition.y = Math.max(rawY, safeAreaTop) + 'px';
+      } else if (ev instanceof KeyboardEvent) {
+        // Q / ContextMenu key / Shift+F10 have no pointer to open at: anchor
+        // below the task the shortcut was pressed on, like the bulk menu,
+        // instead of the default or a stale pointer position.
+        const anchor =
+          (this._elementRef.nativeElement as HTMLElement).closest('task, planner-task') ??
+          (ev.target instanceof HTMLElement ? ev.target : null);
+        if (anchor) {
+          const rect = anchor.getBoundingClientRect();
+          this.contextMenuPosition.x = rect.left + Math.min(rect.width / 2, 200) + 'px';
+          this.contextMenuPosition.y = rect.bottom + 'px';
+        }
       }
     }
 
     this._isOpenedFromKeyboard = isOpenedFromKeyBoard;
     this.contextMenuTrigger()?.openMenu();
+    if (isOpenedFromKeyBoard) {
+      // Start on the first item with a visible keyboard focus ring
+      this.contextMenu()?.focusFirstItem('keyboard');
+    }
     this._taskFocusService.isTaskContextMenuOpen.set(true);
     this._taskFocusService.closeActiveTaskContextMenu.set(this._closeContextMenu);
 

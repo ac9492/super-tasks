@@ -54,14 +54,13 @@
 
 <mat-dialog-actions align="end">
   <button
-    mat-button
+    mat-stroked-button
     type="button"
     color="warn"
-    class="empty-btn"
+    class="empty-btn dialog-action-start"
     [disabled]="!rows()?.length"
     (click)="emptyTrash()"
   >
-    <mat-icon>delete_forever</mat-icon>
     {{ T.F.TASK.D_RECENTLY_DELETED.EMPTY | translate }}
   </button>
   <button

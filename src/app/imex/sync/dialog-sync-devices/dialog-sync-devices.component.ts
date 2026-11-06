@@ -28,6 +28,7 @@ import {
   SyncDeviceListEntry,
 } from '../super-sync-devices.service';
 import { T } from '../../../t.const';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 interface DeviceRow extends SyncDeviceListEntry {
   icon: string;
@@ -65,6 +66,7 @@ const UNKNOWN_PLATFORM = {
   ],
 })
 export class DialogSyncDevicesComponent implements OnInit {
+  private readonly _dialogSize = useDialogSize('m');
   private _devicesService = inject(SuperSyncDevicesService);
   private _matDialog = inject(MatDialog);
   // Result type `boolean`: `true` = a sign-out rotated the stored token

@@ -1,12 +1,17 @@
 <header>
   <div class="title">{{ panelCfg().title | translate }}</div>
   @if (tasks().length) {
-    <div class="tasks-total-estimate">
+    @let taskCountLabel = T.F.BOARDS.V.TASK_COUNT | translate: { count: tasks().length };
+    <div
+      class="tasks-total-estimate"
+      [matTooltip]="taskCountLabel"
+    >
       @if (totalEstimate()) {
         <!-- placeholder hidden: the pipe renders '-' for any sub-minute total -->
         <span>{{ totalEstimate() | msToString: false : true }}</span>
       }
-      <mat-icon>checklist</mat-icon>{{ tasks().length }}
+      <mat-icon>checklist</mat-icon><span aria-hidden="true">{{ tasks().length }}</span>
+      <span class="cdk-visually-hidden">{{ taskCountLabel }}</span>
     </div>
   }
   <button
@@ -48,7 +53,8 @@
       [cdkDragDisabled]="isMoving() || multiSelect.isTouchSelectionMode()"
       [tagsToHide]="panelCfg().includedTagIds || []"
     >
-      @if (task.remindAt) {
+      <!-- Same icons as the task row: alarm with a reminder, else sun for today. -->
+      @if (task.dueWithTime || task.remindAt) {
         <button
           task-card-trailing
           (click)="scheduleTask(task, $event)"
@@ -58,7 +64,13 @@
           color=""
           mat-icon-button
         >
-          <mat-icon>alarm</mat-icon>
+          @if (task.remindAt) {
+            <mat-icon>alarm</mat-icon>
+          } @else if (isScheduledToday(task)) {
+            <mat-icon>wb_sunny</mat-icon>
+          } @else {
+            <mat-icon>schedule</mat-icon>
+          }
           <div
             class="time-badge"
             [innerHTML]="task.dueWithTime | shortPlannedAt"

@@ -24,7 +24,7 @@ const enableAutoStartOnPlay = async (page: Page): Promise<void> => {
   const focusModeSection = page
     .locator('config-section')
     .filter({
-      has: page.locator('.collapsible-title', { hasText: /^Focus Mode$/ }),
+      has: page.locator('.collapsible-title', { hasText: /^Focus mode$/ }),
     })
     .first();
   await focusModeSection.scrollIntoViewIfNeeded();

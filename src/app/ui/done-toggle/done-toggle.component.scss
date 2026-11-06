@@ -104,7 +104,11 @@ $cross-len: 15;
       opacity: 0.5;
     }
 
+    // The drawn end state is static, so the check also shows when animations
+    // are disabled (`body.isDisableAnimations`); the keyframes start from the
+    // hidden offset when they run.
     .done-check {
+      stroke-dashoffset: 0;
       opacity: 0.5;
       animation: draw-check var(--transition-duration-s) ease-out forwards;
     }

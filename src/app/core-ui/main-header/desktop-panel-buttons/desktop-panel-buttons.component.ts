@@ -24,10 +24,10 @@ import { GlobalConfigService } from '../../../features/config/global-config.serv
         class="panel-btn e2e-toggle-schedule-day-panel"
         [class.isActive]="isShowScheduleDayPanel()"
         [attr.aria-pressed]="isShowScheduleDayPanel()"
-        [attr.aria-label]="T.MH.SCHEDULE | translate"
         (click)="layoutService.toggleScheduleDayPanel()"
         mat-icon-button
-        matTooltip="{{ T.MH.SCHEDULE | translate }}"
+        matTooltip="{{ T.MH.TOGGLE_SHOW_SCHEDULE_PANEL | translate }}"
+        [attr.aria-label]="T.MH.TOGGLE_SHOW_SCHEDULE_PANEL | translate"
       >
         <mat-icon>calendar_view_week</mat-icon>
       </button>
@@ -38,12 +38,12 @@ import { GlobalConfigService } from '../../../features/config/global-config.serv
         class="panel-btn e2e-toggle-issue-provider-panel"
         [class.isActive]="isShowIssuePanel()"
         [attr.aria-pressed]="isShowIssuePanel()"
-        [attr.aria-label]="T.MH.TOGGLE_SHOW_ISSUE_PANEL | translate"
         (click)="layoutService.toggleAddTaskPanel()"
         mat-icon-button
         matTooltip="{{ T.MH.TOGGLE_SHOW_ISSUE_PANEL | translate }} {{
           kb()?.toggleIssuePanel ? '[' + kb()?.toggleIssuePanel + ']' : ''
         }}"
+        [attr.aria-label]="T.MH.TOGGLE_SHOW_ISSUE_PANEL | translate"
       >
         <mat-icon>assignment</mat-icon>
       </button>
@@ -54,12 +54,12 @@ import { GlobalConfigService } from '../../../features/config/global-config.serv
         class="panel-btn e2e-toggle-notes-btn"
         [class.isActive]="isShowNotes()"
         [attr.aria-pressed]="isShowNotes()"
-        [attr.aria-label]="T.MH.TOGGLE_SHOW_NOTES | translate"
         (click)="layoutService.toggleNotes()"
         mat-icon-button
         matTooltip="{{ T.MH.TOGGLE_SHOW_NOTES | translate }} {{
           kb()?.openProjectNotes ? '[' + kb()?.openProjectNotes + ']' : ''
         }}"
+        [attr.aria-label]="T.MH.TOGGLE_SHOW_NOTES | translate"
       >
         <mat-icon>description</mat-icon>
       </button>
@@ -73,25 +73,24 @@ import { GlobalConfigService } from '../../../features/config/global-config.serv
 
       .panel-btn {
         position: relative;
-        transition: all 0.2s ease;
+        transition:
+          background-color var(--transition-duration-s) var(--ani-standard-timing),
+          color var(--transition-duration-s) var(--ani-standard-timing);
         overflow: visible !important;
 
         .mat-icon {
-          transition: transform 0.2s ease;
           display: block;
         }
 
+        /* A pressed toggle is the one "selected" role: the tonal fill, its
+           paired ink and a filled glyph (never the accent). */
         &.isActive {
           box-shadow: none;
-          color: var(--brand);
-          background-color: var(--state-selected);
-
-          &::after {
-            border-radius: 4px;
-          }
+          color: var(--palette-selected-ink);
+          background-color: var(--palette-selected);
 
           .mat-icon {
-            transform: none;
+            font-variation-settings: 'FILL' 1;
           }
         }
 

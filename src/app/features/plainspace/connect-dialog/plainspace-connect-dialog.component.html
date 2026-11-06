@@ -170,13 +170,14 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  @if (step() !== 'retry') {
+  <!-- the replace step places Back itself: its destructive action leads -->
+  @if (step() !== 'retry' && step() !== 'replace') {
     <button
       mat-button
       [disabled]="isBusy()"
-      (click)="step() === 'replace' ? changeEmail() : cancel()"
+      (click)="cancel()"
     >
-      {{ (step() === 'replace' ? T.PLAINSPACE.CONNECT.BACK : T.G.CANCEL) | translate }}
+      {{ T.G.CANCEL | translate }}
     </button>
   }
   @switch (step()) {
@@ -220,11 +221,19 @@
       @if (existingToken()) {
         <button
           mat-stroked-button
+          class="dialog-action-start"
           color="warn"
           [disabled]="isBusy()"
           (click)="replaceKey()"
         >
           {{ T.PLAINSPACE.CONNECT.REPLACE | translate }}
+        </button>
+        <button
+          mat-button
+          [disabled]="isBusy()"
+          (click)="changeEmail()"
+        >
+          {{ T.PLAINSPACE.CONNECT.BACK | translate }}
         </button>
         <button
           mat-flat-button
@@ -240,6 +249,13 @@
           }}
         </button>
       } @else {
+        <button
+          mat-button
+          [disabled]="isBusy()"
+          (click)="changeEmail()"
+        >
+          {{ T.PLAINSPACE.CONNECT.BACK | translate }}
+        </button>
         <button
           mat-flat-button
           color="warn"

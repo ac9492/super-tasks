@@ -86,6 +86,8 @@ any code changing.
   replacement recommendations, source locations and a searchable visual review
 - [Icon replacement approval report](research/icon-replacements.md) — concrete
   before/after artwork, visual-identity findings, review choices and an SVG pack
+- [Main interface UI/UX simplification audit](research/2026-11-05-main-interface-ui-ux-audit.md)
+  — recommendations against Claude's November 5 shell/task-surface checkpoint
 - [Snap Wayland GPU root cause and shipped fix](research/snap-wayland-gpu-fix-research.md)
   — kept past its research life because `electron-builder.yaml`,
   `tools/afterPack.js` and `build/linux/snap-wrapper.sh` cite it for the reason

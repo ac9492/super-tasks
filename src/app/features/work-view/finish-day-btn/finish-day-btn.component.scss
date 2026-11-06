@@ -1,6 +1,8 @@
+// A page-level action: it starts on the task column's left edge, like the page
+// title, the summary line and the cards.
 .finish-day-button-wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   margin-top: var(--s2);
   margin-bottom: var(--s2);
 }

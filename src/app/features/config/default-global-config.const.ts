@@ -163,8 +163,6 @@ export const DEFAULT_GLOBAL_CONFIG: GlobalConfigState = {
     goToScheduledView: 'Shift+S',
     goToPlanner: 'Shift+L',
     goToTimeline: 'Shift+T',
-    // goToDailyAgenda: null,
-    // goToFocusMode: 'Shift+F',
     goToSettings: null,
     zoomIn: 'Ctrl++',
     zoomOut: 'Ctrl+-',

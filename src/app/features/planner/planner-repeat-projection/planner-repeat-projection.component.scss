@@ -5,13 +5,18 @@
   display: block;
 }
 
-:host > div {
+:host > button {
+  width: 100%;
   flex: 1;
   display: flex;
+  // Button reset: the card keeps the look of its sibling task cards.
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: start;
   align-items: center;
   flex-direction: row;
-  padding-top: var(--s-quarter);
-  padding-bottom: var(--s-quarter);
+  padding: var(--s-quarter) 0;
   border: var(--task-border);
   border-radius: var(--task-border-radius);
   opacity: 0.9;
@@ -22,6 +27,11 @@
 
   &:hover {
     border-color: var(--c-primary);
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
   }
 
   mat-icon {
@@ -37,11 +47,13 @@
 }
 
 .wrap {
+  display: block;
   flex-grow: 1;
   min-width: 0;
 }
 
 .title {
+  display: block;
   font-size: var(--planner-font-size-mobile);
   overflow: hidden;
   overflow-wrap: anywhere;

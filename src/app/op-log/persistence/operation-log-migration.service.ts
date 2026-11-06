@@ -260,7 +260,6 @@ export class OperationLogMigrationService {
   private _showMigrationDialog(): MatDialogRef<DialogLegacyMigrationComponent> {
     return this.matDialog.open(DialogLegacyMigrationComponent, {
       disableClose: true, // Prevent closing via escape or backdrop click
-      width: '400px',
     });
   }
 

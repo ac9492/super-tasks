@@ -24,7 +24,6 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatFormField, MatLabel, MatPrefix } from '@angular/material/form-field';
-import { MatIcon } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 import {
   MatTimepicker,
@@ -53,7 +52,6 @@ export interface DialogSelectDateTimeData {
     MatDialogContent,
     MatDialogTitle,
     MatFormField,
-    MatIcon,
     MatInput,
     MatLabel,
     MatDatepicker,

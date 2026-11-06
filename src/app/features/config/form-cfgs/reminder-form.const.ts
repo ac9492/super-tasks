@@ -1,6 +1,11 @@
-import { ConfigFormSection, ReminderConfig } from '../global-config.model';
+import {
+  ConfigFormSection,
+  LimitedFormlyFieldConfig,
+  ReminderConfig,
+} from '../global-config.model';
 import { TASK_REMINDER_OPTIONS_WITHOUT_LONG_LEAD } from '../../planner/dialog-schedule-task/task-reminder-options.const';
 import { T } from '../../../t.const';
+import { IS_ELECTRON } from '../../../app.constants';
 import { IS_ANDROID_WEB_VIEW } from '../../../util/is-android-web-view';
 import { IS_NATIVE_PLATFORM } from '../../../util/is-native-platform';
 
@@ -42,13 +47,18 @@ export const REMINDER_FORM_CFG: ConfigFormSection<ReminderConfig> = {
         label: T.GCF.REMINDER.DISABLE_REMINDERS,
       },
     },
-    {
-      key: 'isFocusWindow',
-      type: 'checkbox',
-      templateOptions: {
-        label: T.GCF.REMINDER.IS_FOCUS_WINDOW,
-      },
-    },
+    // Only the desktop app can bring its window to the front
+    ...(IS_ELECTRON
+      ? ([
+          {
+            key: 'isFocusWindow',
+            type: 'checkbox',
+            templateOptions: {
+              label: T.GCF.REMINDER.IS_FOCUS_WINDOW,
+            },
+          },
+        ] as LimitedFormlyFieldConfig<ReminderConfig>[])
+      : []),
     ...(IS_ANDROID_WEB_VIEW
       ? [
           {

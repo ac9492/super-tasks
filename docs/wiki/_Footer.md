@@ -1,2 +1,3 @@
 <!-- pyml disable md041 -->
-If you have further questions, please refer to the [discussions page](https://github.com/super-productivity/super-productivity/discussions).
+
+If you have further questions, please [ask a question](https://github.com/ac9492/ultra-tasks/issues/new?template=question.yml) in the Ultra Tasks issue tracker.

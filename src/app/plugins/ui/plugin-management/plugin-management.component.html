@@ -1,26 +1,21 @@
 <div class="plugin-browser-toolbar">
-  <nav
+  <!-- A view switch is a segmented control. -->
+  <mat-button-toggle-group
     class="plugin-views"
+    hideSingleSelectionIndicator
+    [value]="view()"
+    (change)="setView($event.value)"
     [attr.aria-label]="T.PLUGINS.BROWSER.VIEWS | translate"
   >
-    <button
-      [matButton]="view() === 'installed' ? 'filled' : 'text'"
-      [attr.aria-pressed]="view() === 'installed'"
-      (click)="setView('installed')"
-    >
+    <mat-button-toggle value="installed">
       {{ T.PLUGINS.BROWSER.INSTALLED | translate }} ({{ installedCount() }})
-    </button>
-    <button
-      [matButton]="view() === 'discover' ? 'filled' : 'text'"
-      [attr.aria-pressed]="view() === 'discover'"
-      (click)="setView('discover')"
-    >
+    </mat-button-toggle>
+    <mat-button-toggle value="discover">
       {{ T.PLUGINS.BROWSER.DISCOVER | translate }}
-    </button>
-  </nav>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
   <div class="plugin-search-controls">
     <mat-form-field
-      appearance="outline"
       subscriptSizing="dynamic"
       class="plugin-search"
     >
@@ -46,12 +41,13 @@
       }
     </mat-form-field>
     <mat-form-field
-      appearance="outline"
       subscriptSizing="dynamic"
       class="plugin-type"
     >
-      <mat-label>{{ T.PLUGINS.BROWSER.TYPE | translate }}</mat-label>
+      <!-- No visible label: in the toolbar every control is as tall as the search
+           field, so the filter is named for assistive tech only. -->
       <mat-select
+        [aria-label]="T.PLUGINS.BROWSER.TYPE | translate"
         [value]="typeFilter()"
         (selectionChange)="setTypeFilter($event.value)"
       >
@@ -177,7 +173,7 @@
                 [checked]="plugin.isEnabled"
                 [disabled]="!canEnablePlugin(plugin) || isPluginLoading(plugin)"
                 (change)="onPluginToggle(plugin, $event)"
-                [attr.aria-label]="
+                [aria-label]="
                   T.PLUGINS.TOGGLE_PLUGIN
                     | translate: { pluginName: plugin.manifest.name }
                 "
@@ -393,7 +389,7 @@
 
         <div class="catalog-contribute">
           <a
-            href="https://github.com/super-productivity/super-productivity/blob/master/docs/plugin-development.md#get-listed-in-the-app"
+            href="https://github.com/ac9492/ultra-tasks/blob/main/docs/plugin-development.md#get-listed-in-the-app"
             target="_blank"
             mat-button
             color="primary"

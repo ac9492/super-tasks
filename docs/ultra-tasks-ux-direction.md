@@ -65,6 +65,6 @@ No new application behavior, task schema, or sync format is introduced by this d
 
 The next iteration puts the existing Search entry first under the brand, in DOM and keyboard order, without changing the search page, shortcuts, or search feature visibility setting. This extends the navigation prior art above: expose a frequent destination instead of introducing a second search implementation.
 
-Glass appearance is restrained to a few shell panels, with high-opacity task surfaces and no per-task blur. Users can choose solid surfaces in General → Appearance. The preference is device-local; reduced-transparency and forced-color preferences take precedence. The existing wallpaper setting remains the source of background images.
+Glass appearance is restrained to a few shell panels, with high-opacity task surfaces and no per-task blur. Users can choose solid surfaces in General → Appearance. The preference is device-local; reduced-transparency and forced-color preferences take precedence. Where the desktop app can, the system blurs the desktop behind the glass (macOS, Windows 11); elsewhere the app-wide light/dark background image, stored small and always shown blurred, or a gradient from the palette fills that role.
 
-The task-note logo now has a larger check and one folded corner for a recognizable silhouette.
+The logo is a white hand-drawn check on a deep-teal (`#075b5e`) rounded square, which the default accent color also uses.

@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{ T.DIALOG_LOGS.TITLE | translate }}</h1>
+<h2 mat-dialog-title>{{ T.DIALOG_LOGS.TITLE | translate }}</h2>
 
 <mat-dialog-content>
   <p class="hint">{{ T.DIALOG_LOGS.HINT | translate }}</p>
@@ -19,7 +19,6 @@
     >
       {{ T.G.CLOSE | translate }}
     </button>
-
     @if (isNative) {
       <button
         (click)="shareFile()"
@@ -30,7 +29,6 @@
         {{ T.DIALOG_LOGS.SHARE_FILE | translate }}
       </button>
     }
-
     <button
       (click)="copy()"
       color="primary"

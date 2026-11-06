@@ -24,6 +24,7 @@ describe('get-task-delete-confirm', () => {
       okTxt: T.F.TASK.D_CONFIRM_DELETE.OK,
       message: T.F.TASK.D_CONFIRM_DELETE.MSG,
       isFocusConfirm: true,
+      isDestructive: true,
       translateParams: { title: 'Local' },
     });
   });

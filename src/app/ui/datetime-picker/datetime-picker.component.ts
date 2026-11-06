@@ -15,6 +15,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatCalendar, MatCalendarView } from '@angular/material/datepicker';
+import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import {
   MatFormField,
@@ -25,7 +26,6 @@ import {
 import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
-import { MatIconButton } from '@angular/material/button';
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { T } from '../../t.const';
 import { DateService } from '../../core/date/date.service';
@@ -73,6 +73,7 @@ const QUICK_ACCESS_ITEMS = [
     MatLabel,
     MatPrefix,
     MatSuffix,
+    MatIconButton,
     MatInput,
     MatSelect,
     MatOption,

@@ -4,13 +4,14 @@ import {
   MatDialogActions,
   MatDialogContent,
   MatDialogRef,
+  MatDialogTitle,
 } from '@angular/material/dialog';
 import { T } from '../../t.const';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'dialog-prompt',
@@ -18,6 +19,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrls: ['./dialog-prompt.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    MatDialogTitle,
     MatDialogContent,
     MatFormField,
     MatLabel,
@@ -30,10 +32,23 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class DialogPromptComponent {
   private _matDialogRef = inject<MatDialogRef<DialogPromptComponent>>(MatDialogRef);
+  private _translateService = inject(TranslateService);
   data = inject(MAT_DIALOG_DATA);
 
   T: typeof T = T;
   txtVal: string = this.data.txtValue || '';
+
+  // A plain message names the dialog ("Add section"); rich text (links, lists)
+  // stays in the body. Without a message the field's own label is the title.
+  readonly message: string = this.data.message
+    ? this._translateService.instant(this.data.message)
+    : '';
+  readonly isMessageHtml: boolean = /[<>]/.test(this.message);
+  readonly title: string =
+    this.data.title ||
+    (this.message && !this.isMessageHtml
+      ? this.message
+      : this._translateService.instant(this.data.placeholder || T.G.CONFIRM));
 
   close(isSave: boolean): void {
     if (isSave) {

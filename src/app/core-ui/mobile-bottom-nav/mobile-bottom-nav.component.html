@@ -7,6 +7,7 @@
     class="nav-button"
     [routerLink]="todayRoute"
     routerLinkActive="active"
+    ariaCurrentWhenActive="page"
     [routerLinkActiveOptions]="{ exact: false }"
     [attr.aria-label]="T.G.TODAY_TAG_TITLE | translate"
   >
@@ -23,6 +24,7 @@
       class="nav-button e2e-bottom-nav-slot"
       [class.tour-planner]="slot.id === 'planner'"
       [class.active]="isSlotActive()"
+      [attr.aria-current]="isSlotActive() ? 'page' : null"
       [attr.aria-label]="slot.kind === 'route' ? (slot.labelKey | translate) : slot.label"
       [attr.aria-description]="T.BN.SLOT_CHANGE_HINT | translate"
       (pointerdown)="onSlotPointerDown()"
@@ -127,7 +129,7 @@
     mat-button
     class="nav-button tour-navMenuBtn"
     (click)="toggleMobileNav()"
-    [attr.aria-label]="T.MH.PROJECT_MENU | translate"
+    [attr.aria-label]="T.MH.OPEN_NAVIGATION | translate"
   >
     <mat-icon>menu</mat-icon>
   </button>

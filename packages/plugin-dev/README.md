@@ -202,7 +202,8 @@ Optional files:
 ## Publishing Your Plugin
 
 Build and zip the plugin here (see above) and share the zip, e.g. as a GitHub
-release asset; users install it via Settings → Plugins → Upload Plugin.
+release asset; users install it via Plugins & integrations in the side nav →
+Install from a ZIP file.
 
 Building in a separate repository needs its own build setup: the examples here
 use relative paths to the shared build script, tsconfig, `issue-provider-kit` and
@@ -215,8 +216,8 @@ package lags behind the source (it lacks the issue-provider types).
 
 1. Build and zip your plugin (see above)
 2. Open Super Productivity
-3. Go to Settings → Plugins
-4. Click "Upload Plugin"
+3. Open Plugins & integrations in the side nav
+4. Expand "Install from a ZIP file" and click "Choose Plugin File"
 5. Select your `plugin.zip` file
 
 ### 2. As a Bundled Plugin (repository development)

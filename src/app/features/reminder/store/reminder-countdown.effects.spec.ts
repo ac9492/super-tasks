@@ -1,4 +1,10 @@
-import { TestBed } from '@angular/core/testing';
+import {
+  discardPeriodicTasks,
+  fakeAsync,
+  flushMicrotasks,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { TranslateService, TranslateStore } from '@ngx-translate/core';
 import { EMPTY, of } from 'rxjs';
@@ -12,7 +18,13 @@ import { TaskService } from '../../tasks/task.service';
 import { ProjectService } from '../../project/project.service';
 import { LOCAL_ACTIONS } from '../../../util/local-actions.token';
 import { TaskWithReminder, DEFAULT_TASK } from '../../tasks/task.model';
-import { selectTaskById } from '../../tasks/store/task.selectors';
+import {
+  selectAllTasksWithReminder,
+  selectCurrentTaskId,
+  selectTaskById,
+} from '../../tasks/store/task.selectors';
+import { selectReminderConfig } from '../../config/store/global-config.reducer';
+import { BannerId } from '../../../core/banner/banner.model';
 
 describe('ReminderCountdownEffects._showBanner', () => {
   let effects: ReminderCountdownEffects;
@@ -113,4 +125,101 @@ describe('ReminderCountdownEffects._showBanner', () => {
     const secondOpen = bannerServiceSpy.open.calls.mostRecent().args[0];
     expect(secondOpen.translateParams?.start).toBe(`T(${laterStart})`);
   });
+});
+
+describe('ReminderCountdownEffects.reminderCountdownBanner$', () => {
+  const TWO_MIN_MS = 2 * 60 * 1000;
+  const TEN_MIN_MS = 10 * 60 * 1000;
+  let bannerServiceSpy: jasmine.SpyObj<BannerService>;
+
+  const setup = (task: TaskWithReminder): ReminderCountdownEffects => {
+    bannerServiceSpy = jasmine.createSpyObj('BannerService', ['open', 'dismiss']);
+    TestBed.configureTestingModule({
+      providers: [
+        ReminderCountdownEffects,
+        provideMockStore({
+          selectors: [
+            {
+              selector: selectReminderConfig,
+              value: { isCountdownBannerEnabled: true, countdownDuration: TEN_MIN_MS },
+            },
+            { selector: selectAllTasksWithReminder, value: [task] },
+            { selector: selectCurrentTaskId, value: null },
+            { selector: selectTaskById, value: task },
+          ],
+        }),
+        {
+          provide: LocaleDatePipe,
+          useValue: { transform: (value: number) => `T(${value})` },
+        },
+        { provide: BannerService, useValue: bannerServiceSpy },
+        {
+          provide: DataInitStateService,
+          useValue: { isAllDataLoadedInitially$: of(true) },
+        },
+        {
+          provide: TaskService,
+          useValue: jasmine.createSpyObj('TaskService', ['setCurrentId']),
+        },
+        {
+          provide: ProjectService,
+          useValue: jasmine.createSpyObj('ProjectService', ['moveTaskToTodayList']),
+        },
+        { provide: Router, useValue: { navigate: () => Promise.resolve(true) } },
+        { provide: TranslateService, useValue: { instant: (k: string) => k } },
+        { provide: TranslateStore, useValue: new TranslateStore() },
+        { provide: LOCAL_ACTIONS, useValue: of() },
+      ],
+    });
+    return TestBed.inject(ReminderCountdownEffects);
+  };
+
+  afterEach(() => {
+    TestBed.inject(MockStore).resetSelectors();
+  });
+
+  it('should dismiss the banner once the reminder time has passed, with no store change', fakeAsync(() => {
+    const remindAt = Date.now() + TWO_MIN_MS;
+    const effects = setup({
+      ...DEFAULT_TASK,
+      id: 't1',
+      title: 'Reminder test',
+      remindAt,
+      dueWithTime: remindAt,
+    } as TaskWithReminder);
+
+    const sub = effects.reminderCountdownBanner$.subscribe();
+    flushMicrotasks();
+    expect(bannerServiceSpy.open).toHaveBeenCalledTimes(1);
+    expect(bannerServiceSpy.dismiss).not.toHaveBeenCalled();
+
+    tick(TWO_MIN_MS + 10);
+    flushMicrotasks();
+
+    expect(bannerServiceSpy.dismiss).toHaveBeenCalledWith(BannerId.ReminderCountdown);
+    sub.unsubscribe();
+    discardPeriodicTasks();
+  }));
+
+  it('should show the banner when a reminder enters the countdown window, with no store change', fakeAsync(() => {
+    const remindAt = Date.now() + TEN_MIN_MS + TWO_MIN_MS;
+    const effects = setup({
+      ...DEFAULT_TASK,
+      id: 't1',
+      title: 'Later reminder',
+      remindAt,
+      dueWithTime: remindAt,
+    } as TaskWithReminder);
+
+    const sub = effects.reminderCountdownBanner$.subscribe();
+    flushMicrotasks();
+    expect(bannerServiceSpy.open).not.toHaveBeenCalled();
+
+    tick(TWO_MIN_MS + 10);
+    flushMicrotasks();
+
+    expect(bannerServiceSpy.open).toHaveBeenCalledTimes(1);
+    sub.unsubscribe();
+    discardPeriodicTasks();
+  }));
 });

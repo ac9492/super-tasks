@@ -22,7 +22,7 @@
               </div>
               <div class="center-box">
                 <div class="title">
-                  <h3 class="mat-h3">{{ day.value.dayStr }} {{ day.key }}.</h3>
+                  <h3>{{ day.value.dayStr }} {{ day.key }}.</h3>
                   @if (!visibility[i]) {
                     <div
                       [@expandFade]
@@ -134,5 +134,5 @@
     </div>
   </div>
 } @else if (week === null) {
-  <div class="no-data">{{ T.F.WORKLOG.WEEK.NO_DATA | translate }}</div>
+  <div class="empty-state">{{ T.F.WORKLOG.WEEK.NO_DATA | translate }}</div>
 }

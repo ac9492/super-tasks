@@ -11,6 +11,7 @@ import {
   MAT_DIALOG_DATA,
   MatDialogActions,
   MatDialogContent,
+  MatDialogTitle,
   MatDialogRef,
 } from '@angular/material/dialog';
 import { Task, TaskReminderOption, TaskReminderOptionId } from '../task.model';
@@ -49,6 +50,7 @@ type QuickDeadline = 'today' | 'tomorrow' | 'nextWeek' | 'nextMonth';
     MatButton,
     MatDialogActions,
     MatDialogContent,
+    MatDialogTitle,
     DateTimePickerComponent,
     ExactAlarmHintComponent,
   ],

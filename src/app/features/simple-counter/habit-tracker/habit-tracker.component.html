@@ -5,6 +5,7 @@
         mat-icon-button
         (click)="prevWeek()"
         [matTooltip]="T.F.SIMPLE_COUNTER.HABIT_TRACKER.PREV_WEEK | translate"
+        [attr.aria-label]="T.F.SIMPLE_COUNTER.HABIT_TRACKER.PREV_WEEK | translate"
       >
         <mat-icon>chevron_left</mat-icon>
       </button>
@@ -13,6 +14,7 @@
         mat-icon-button
         (click)="nextWeek()"
         [matTooltip]="T.F.SIMPLE_COUNTER.HABIT_TRACKER.NEXT_WEEK | translate"
+        [attr.aria-label]="T.F.SIMPLE_COUNTER.HABIT_TRACKER.NEXT_WEEK | translate"
         [disabled]="dayOffset() >= 0"
       >
         <mat-icon>chevron_right</mat-icon>
@@ -60,8 +62,12 @@
         cdkDrag
         [cdkDragStartDelay]="dragDelayForTouch()"
       >
-        <div
+        <!-- Buttons, so the keyboard reaches them: Enter edits the habit,
+             Enter on a day toggles or edits it, Shift+F10 opens its dialog. -->
+        <button
+          type="button"
           class="habit-title"
+          [attr.aria-label]="counter.title"
           (click)="openEditSettings(counter)"
           (contextmenu)="openEditSettings(counter); $event.preventDefault()"
         >
@@ -76,7 +82,7 @@
             <div class="habit-initial">{{ counter.title.charAt(0).toUpperCase() }}</div>
           }
           <span class="habit-name">{{ counter.title }}</span>
-        </div>
+        </button>
         @for (day of days(); track day.str) {
           <div
             class="day-cell"
@@ -90,9 +96,21 @@
             (touchstart)="onPressStart(counter, day.str, day.dow)"
             (touchend)="onPressEnd()"
           >
-            <div
+            @let displayValue = getDisplayValue(counter, day.str);
+            <button
+              type="button"
               class="check-circle"
               [class.is-done]="getVal(counter, day.str) >= (counter.streakMinValue || 1)"
+              [disabled]="!isDayEnabled(counter, day.dow)"
+              [attr.aria-label]="
+                counter.title +
+                ', ' +
+                (day.date | localeDate: 'EEEE, MMM d' : undefined : locale()) +
+                (displayValue && !isSimpleCompletion(counter) ? ': ' + displayValue : '')
+              "
+              [attr.aria-pressed]="
+                isSimpleCompletion(counter) ? getVal(counter, day.str) > 0 : null
+              "
             >
               @if (
                 getProgress(counter, day.str) > 0 &&
@@ -120,10 +138,10 @@
               }
               @if (isSimpleCompletion(counter) && getVal(counter, day.str) > 0) {
                 <mat-icon>check</mat-icon>
-              } @else if (getDisplayValue(counter, day.str)) {
-                <span class="value-text">{{ getDisplayValue(counter, day.str) }}</span>
+              } @else if (displayValue) {
+                <span class="value-text">{{ displayValue }}</span>
               }
-            </div>
+            </button>
           </div>
         }
       </div>
@@ -137,9 +155,7 @@
       class="add-habit-btn"
     >
       <mat-icon>add</mat-icon>
-      <span class="mdc-button__label">{{
-        T.F.SIMPLE_COUNTER.HABIT_TRACKER.ADD_HABIT | translate
-      }}</span>
+      {{ T.F.SIMPLE_COUNTER.HABIT_TRACKER.ADD_HABIT | translate }}
     </button>
   </div>
 

@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{ T.F.SYNC.D_INITIAL_CFG.TITLE | translate }}</h1>
+<h2 mat-dialog-title>{{ T.F.SYNC.D_INITIAL_CFG.TITLE | translate }}</h2>
 
 <mat-dialog-content>
   @if (_tmpUpdatedCfg) {
@@ -28,7 +28,6 @@
       color="primary"
       mat-flat-button
     >
-      <mat-icon>save</mat-icon>
       {{
         (this.isWasEnabled() ? T.G.SAVE : T.F.SYNC.D_INITIAL_CFG.SAVE_AND_ENABLE)
           | translate

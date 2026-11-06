@@ -1,4 +1,8 @@
-// Shared structural styles for the collapsible widgets.
+// Shared structural styles for the collapsible widgets: the one disclosure of
+// the design language (docs/styling-guide.md § Disclosures). A 40px row with a
+// 20px chevron leading the label (14/500), on the content's own left edge; the
+// chevron turns when open. Native <details> follows the same rule in
+// styles/components/_disclosure.scss.
 // Used by: collapsible, formly-collapsible
 // Consumers are expected to bind the `isExpanded` host class; the `isInline`
 // variant lives in collapsible.component.scss since only that component has it.
@@ -14,6 +18,10 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: var(--s);
+    min-height: var(--ctl-md);
+    border-radius: var(--r-md);
+    font: var(--type-body-strong);
   }
 
   .collapsible-title {
@@ -21,7 +29,10 @@
   }
 
   .collapsible-expand-icon {
-    margin-right: var(--s);
+    margin: 0;
+    font-size: var(--icon-md);
+    width: var(--icon-md);
+    height: var(--icon-md);
     // --transition-standard already embeds `all`; do not prefix a property
     transition: var(--transition-standard);
 

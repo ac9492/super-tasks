@@ -16,15 +16,6 @@ import { map } from 'rxjs/operators';
       ></habit-tracker>
     </div>
   `,
-  styles: [
-    `
-      .page-wrapper {
-        padding: 16px;
-        width: 100%;
-        margin: 0 auto;
-      }
-    `,
-  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HabitPageComponent {

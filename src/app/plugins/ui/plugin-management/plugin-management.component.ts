@@ -19,15 +19,11 @@ import { MatSlideToggle, MatSlideToggleChange } from '@angular/material/slide-to
 import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { MatChip, MatChipSet } from '@angular/material/chips';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatError } from '@angular/material/form-field';
-import {
-  MatFormField,
-  MatLabel,
-  MatPrefix,
-  MatSuffix,
-} from '@angular/material/form-field';
+import { MatFormField, MatPrefix, MatSuffix } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
@@ -118,6 +114,8 @@ const getLanguageName = (
     MatIcon,
     MatProgressSpinner,
     MatButton,
+    MatButtonToggle,
+    MatButtonToggleGroup,
     MatIconButton,
     MatChip,
     MatChipSet,
@@ -126,7 +124,6 @@ const getLanguageName = (
     TranslatePipe,
     PluginIconComponent,
     MatFormField,
-    MatLabel,
     MatPrefix,
     MatSuffix,
     MatInput,
@@ -817,6 +814,10 @@ export class PluginManagementComponent {
    * panel only renders there, then reveals it (guarded so we never toggle it shut).
    */
   goToIssuePanel(): Promise<void> {
+    // Close the plugins window explicitly: it closes itself on NavigationEnd,
+    // but from a work view /active/tasks redirects back to the current URL and
+    // no navigation ends, so it would stay on top of the panel.
+    this._dialog.getDialogById('plugins-window')?.close();
     return this._router.navigate(['/active/tasks']).then(() => {
       if (!this._layoutService.isShowIssuePanel()) {
         this._layoutService.toggleAddTaskPanel();
@@ -848,8 +849,6 @@ export class PluginManagementComponent {
           manifest: plugin.manifest,
           schema,
         },
-        width: '600px',
-        maxHeight: '80vh',
       });
 
       const result = await dialogRef.afterClosed().toPromise();

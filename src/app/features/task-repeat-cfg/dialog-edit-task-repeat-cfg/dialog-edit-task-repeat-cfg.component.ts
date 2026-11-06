@@ -94,6 +94,7 @@ import {
   fromFallBehindChoice,
   toFallBehindChoice,
 } from './fall-behind-choice';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 type StoredRepeatCfg = Omit<TaskRepeatCfgCopy, 'id'> | TaskRepeatCfg;
 // The dialog's model may carry the dialog-only "After I complete it…" preset
@@ -198,6 +199,7 @@ interface RuleSummary {
   ],
 })
 export class DialogEditTaskRepeatCfgComponent {
+  private readonly _dialogSize = useDialogSize('m');
   private _globalConfigService = inject(GlobalConfigService);
   private _tagService = inject(TagService);
   private _dateService = inject(DateService);

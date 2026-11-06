@@ -1,29 +1,17 @@
-h1 mat-icon {
+h2 mat-icon {
   transform: rotate(45deg);
 }
 
-h1,
+h2,
 mat-dialog-actions {
   :host-context([dir='rtl']) & {
     direction: rtl;
   }
 }
 
-.show-on-small {
-  display: none;
-}
-
 @media (max-width: 600px) {
-  mat-dialog-actions {
-    flex-wrap: nowrap;
-  }
-
   .hide-on-small {
     display: none;
-  }
-
-  .show-on-small {
-    display: inline;
   }
 
   :host ::ng-deep .icon-on-small {
@@ -36,13 +24,6 @@ mat-dialog-actions {
   }
 }
 
-// One width for every preset and with Options open, so nothing reflows.
-.form-wrapper {
-  width: 620px;
-  min-width: 280px;
-  max-width: 100%;
-}
-
 // The field or line above already ends in a 16px gap; a top margin here would
 // double it whenever nothing collapses it (e.g. after the start/end row).
 :host collapsible {
@@ -52,12 +33,6 @@ mat-dialog-actions {
 // Space between the Options header and its first field, as below "Repeat on".
 .options-body {
   padding-top: var(--s);
-}
-
-:host ::ng-deep .collapsible-title {
-  flex-grow: 0 !important;
-  font-weight: bold;
-  font-size: 17px;
 }
 
 // Flush with the fields above and below; the last field or chip row inside
@@ -144,10 +119,6 @@ mat-dialog-actions {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-}
-
-.spacer {
-  flex: 1 1 auto;
 }
 
 // The result of the rule and dates, as quiet caption lines below them.

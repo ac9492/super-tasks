@@ -1,6 +1,4 @@
-@use '../../../../../styles/_globals.scss' as *;
-
-h1,
+h2,
 mat-dialog-actions {
   :host-context([dir='rtl']) & {
     direction: rtl;
@@ -16,8 +14,4 @@ mat-dialog-actions {
 .form-wrapper {
   display: flex;
   flex-direction: column;
-
-  @include mq(xs) {
-    min-width: 500px;
-  }
 }

@@ -3,7 +3,7 @@
 :host {
   //border: 1px solid var(--c-light-20);
   @include extraBorder();
-  border-radius: 8px;
+  border-radius: var(--r-md);
   min-height: 200px;
   min-width: 280px;
   flex-grow: 1;
@@ -64,9 +64,8 @@ header {
   // Same label treatment as the task-list section headings (collapsible
   // .task-section): a column header must not read like the cards below it.
   .title {
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-semibold);
-    letter-spacing: var(--letter-spacing-wide);
+    font: var(--type-label);
+    letter-spacing: var(--track-label);
     color: var(--text-color-muted);
     // `auto` (not a fixed gap): the meta next to it is omitted when the panel is
     // empty, so the title has to be what pushes the edit button to the far edge.
@@ -80,14 +79,14 @@ header {
     display: flex;
     align-items: center;
     gap: var(--s-quarter);
-    font-size: var(--font-size-sm);
+    font: var(--type-meta);
     color: var(--text-color-muted);
 
     mat-icon {
-      font-size: 14px;
-      line-height: 14px;
-      height: 14px;
-      width: 14px;
+      font-size: var(--icon-sm);
+      line-height: var(--icon-sm);
+      height: var(--icon-sm);
+      width: var(--icon-sm);
     }
   }
 }
@@ -95,15 +94,14 @@ header {
 .task-items {
   overflow: auto;
   padding: 0 var(--s);
-  border-radius: 8px;
+  border-radius: var(--r-md);
   min-height: 100px;
   flex-grow: 1;
   //border-color: var(--extra-border-color);
 }
 
 .empty {
-  text-align: center;
-  font-style: italic;
+  color: var(--text-color-muted);
   line-height: var(--planner-item-height);
 }
 
@@ -113,11 +111,11 @@ header {
   margin-top: auto;
   margin-bottom: auto;
   height: 100% !important;
-  border-radius: var(--card-border-radius);
+  border-radius: var(--r-md);
 
   ::ng-deep {
     .mat-mdc-button-persistent-ripple {
-      border-radius: var(--card-border-radius);
+      border-radius: var(--r-md);
     }
   }
 

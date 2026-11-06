@@ -1,11 +1,4 @@
-.content {
-  max-width: 300px;
-}
-
-:host mat-dialog-content.isNoMsg {
-  padding: 0;
-}
-
 :host mat-form-field {
+  width: 100%;
   margin-bottom: 0;
 }

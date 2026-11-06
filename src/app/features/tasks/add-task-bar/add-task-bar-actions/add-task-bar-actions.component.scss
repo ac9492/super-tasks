@@ -82,16 +82,15 @@
 
 .action-bar {
   position: relative;
-  padding-top: 0;
+  // The bar's own hairline above the action row; 4px above and below the 32px
+  // (40 on touch) compact buttons.
+  padding: var(--s-half) var(--s);
   display: flex;
   flex-wrap: nowrap;
-  border-top: 1px solid var(--divider-color);
+  border-top: var(--st-line-width) solid var(--separator);
   overflow-x: auto;
   overflow-y: hidden;
-
-  @include mq(xs) {
-    gap: var(--s-quarter);
-  }
+  gap: var(--s-half);
 
   @include mq(xxs, max) {
     // Reserve enough scrollable room for the final action to clear the edge cue.
@@ -105,7 +104,6 @@
     display: flex !important;
     align-items: center;
     overflow: hidden;
-    font-size: 13px;
     min-width: 70px !important;
     flex-shrink: 0;
     // prevent dark theme being lighter than background
@@ -126,10 +124,6 @@
       .mat-mdc-button-touch-target {
         display: none; // Remove touch target that can affect layout
       }
-    }
-
-    @include mq(xs, max) {
-      font-size: 12px;
     }
 
     // Material button label wrapper
@@ -154,6 +148,10 @@
     mat-icon {
       flex-shrink: 0; // Prevent icon from shrinking
       margin-right: var(--s-half);
+      // 16px next to the 14px label (the row's compact buttons).
+      font-size: var(--icon-sm);
+      width: var(--icon-sm);
+      height: var(--icon-sm);
 
       &.repeat-icon {
         transform: rotate(45deg);

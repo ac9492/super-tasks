@@ -25,6 +25,7 @@ import { CollapsibleComponent } from '../../../ui/collapsible/collapsible.compon
 import { DialogConfirmComponent } from '../../../ui/dialog-confirm/dialog-confirm.component';
 import { DateTimeFormatService } from '../../../core/date-time-format/date-time-format.service';
 import { SyncLocalStateService } from '../../../op-log/sync/sync-local-state.service';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 @Component({
   selector: 'dialog-sync-conflict',
@@ -45,6 +46,7 @@ import { SyncLocalStateService } from '../../../op-log/sync/sync-local-state.ser
   ],
 })
 export class DialogSyncConflictComponent {
+  private readonly _dialogSize = useDialogSize('l');
   private _matDialogRef = inject<MatDialogRef<DialogSyncConflictComponent>>(MatDialogRef);
   private _matDialog = inject(MatDialog);
   private _translateService = inject(TranslateService);

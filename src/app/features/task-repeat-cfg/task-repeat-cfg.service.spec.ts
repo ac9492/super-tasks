@@ -304,6 +304,7 @@ describe('TaskRepeatCfgService', () => {
         data: jasmine.objectContaining({
           message: jasmine.any(String),
           okTxt: jasmine.any(String),
+          isDestructive: true,
         }),
       });
 

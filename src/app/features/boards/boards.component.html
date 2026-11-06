@@ -35,7 +35,10 @@
 
   <mat-tab [aria-label]="T.F.BOARDS.V.ADD_NEW_BOARD | translate">
     <ng-template mat-tab-label>
-      <div class="tab-header-item">
+      <div
+        class="tab-header-item"
+        [title]="T.F.BOARDS.V.ADD_NEW_BOARD | translate"
+      >
         <mat-icon>add</mat-icon>
       </div>
     </ng-template>

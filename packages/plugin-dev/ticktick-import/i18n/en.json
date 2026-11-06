@@ -8,7 +8,7 @@
   },
   "FILE": {
     "LABEL": "TickTick backup file (.csv)",
-    "INTRO": "Brings your open TickTick tasks, sub-tasks, checklists, tags and due dates into Super Productivity. The import only adds data — nothing in Super Productivity is changed or removed.",
+    "INTRO": "Brings your open TickTick tasks, sub-tasks, checklists, tags and due dates into Ultra Tasks. The import only adds data — nothing in Ultra Tasks is changed or removed.",
     "HELP": "Create the backup in the TickTick web app under Settings → Backup → Generate backup. The file is read on this device only; nothing is uploaded.",
     "REQUIRED": "Please choose your TickTick backup file first.",
     "LOADING": "Reading your TickTick backup…",

@@ -10,16 +10,26 @@
   overflow: hidden;
 }
 
+// Header of the Settings and Plugins windows: 64px, the title role, a 40px
+// close button and a hairline below.
 .settings-window-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--s2);
-  padding: var(--s2) var(--s3);
-  border-bottom: 1px solid var(--divider-color);
+  min-height: var(--s8);
+  padding: 0 var(--s2) 0 var(--dialog-gutter);
+  border-bottom: 1px solid var(--separator);
   h1 {
     margin: 0;
-    font-size: var(--font-size-2xl);
+    font: var(--type-title);
+    letter-spacing: var(--track-title);
+  }
+  // The dialog focuses its title on open (autoFocus: 'first-heading') so
+  // screen readers start there. The title is not interactive (tabindex -1),
+  // so it gets no focus box.
+  h1[tabindex='-1']:focus {
+    outline: none;
   }
 }
 
@@ -38,9 +48,9 @@
   align-items: center;
   justify-content: center;
   width: 32px;
-  min-height: 40px;
+  min-height: var(--ctl-md);
   border: 0;
-  border-radius: var(--card-border-radius);
+  border-radius: var(--r-md);
   background: transparent;
   color: var(--text-color-muted);
   cursor: pointer;
@@ -51,9 +61,9 @@
     outline: var(--focus-ring-width) solid var(--focus-ring-color);
   }
   mat-icon {
-    font-size: 20px;
-    height: 20px;
-    width: 20px;
+    font-size: var(--icon-md);
+    height: var(--icon-md);
+    width: var(--icon-md);
   }
 }
 
@@ -64,7 +74,7 @@
 }
 .settings-search-panel .search-result__path {
   color: var(--text-color-muted);
-  font-size: var(--font-size-sm);
+  font: var(--type-meta);
 }
 
 @media (max-width: 600px) {

@@ -125,10 +125,7 @@ export class FormlyImageInputComponent extends FieldType<FormlyFieldConfig> {
       return;
     }
 
-    const dialogRef = this._dialog.open(DialogUnsplashPickerComponent, {
-      width: '900px',
-      maxWidth: '95vw',
-    });
+    const dialogRef = this._dialog.open(DialogUnsplashPickerComponent);
 
     dialogRef.afterClosed().subscribe((result: string | { url: string } | null) => {
       if (result) {

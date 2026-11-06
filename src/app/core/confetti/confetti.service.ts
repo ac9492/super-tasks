@@ -40,9 +40,12 @@ export class ConfettiService {
 
   private _isDisabled(): boolean {
     const misc = this._configService.misc();
+    // Every confetti caller is a celebration (daily summary, completed project,
+    // focus session, habit goal), so the celebration opt-out covers them all.
     // Honor the OS "reduce motion" setting for every confetti caller (not just
     // the in-app animations toggle) — intentional, app-wide a11y behavior.
     return (
+      !!misc?.isDisableCelebration ||
       !!misc?.isDisableAnimations ||
       !!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches
     );

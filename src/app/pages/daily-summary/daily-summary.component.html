@@ -1,5 +1,5 @@
 <div class="page-wrapper">
-  <h1 class="done-headline">
+  <h2 class="done-headline">
     <!-- `isDisableCelebration` gates the confetti only (see ngAfterViewInit). The
     headline is static text, not an attention-grabbing loop, so it stays for
     today's summary regardless of that opt-out. -->
@@ -8,7 +8,7 @@
     } @else {
       <span>{{ T.PDS.SUMMARY_FOR | translate: { dayStr: dayStr } }}</span>
     }
-  </h1>
+  </h2>
   <div
     class="daily-summary-summary"
     [class.is-loading-archive]="!isArchiveLoaded()"
@@ -120,8 +120,8 @@
         [placeholderTxt]="T.PDS.END_OF_DAYS_RITUALS_PLACEHOLDER | translate"
       >
         <button
-          [matTooltip]="T.PDS.REMOVE_DAILY_SUMMARY_NOTE | translate"
-          [attr.aria-label]="T.PDS.REMOVE_DAILY_SUMMARY_NOTE | translate"
+          [matTooltip]="T.PDS.REMOVE_DAY_END_NOTE | translate"
+          [attr.aria-label]="T.PDS.REMOVE_DAY_END_NOTE | translate"
           (click)="updateDailySummaryTxt(undefined)"
           mat-icon-button
         >
@@ -131,9 +131,10 @@
     } @else {
       <button
         mat-icon-button
-        style="opacity: 0.4"
+        class="add-day-end-note-btn"
         (click)="updateDailySummaryTxt('', true)"
-        matTooltip="Click to add a custom text block to describe your day end routine."
+        [matTooltip]="T.PDS.ADD_DAY_END_NOTE | translate"
+        [attr.aria-label]="T.PDS.ADD_DAY_END_NOTE | translate"
       >
         <mat-icon>note_add</mat-icon>
       </button>
@@ -179,8 +180,8 @@
           } @else {
             <p>{{ T.PDS.NO_TASKS | translate }}</p>
           }
-          <section style="margin-top: 48px">
-            <h3 style="font-weight: bold; margin-bottom: 4px">
+          <section class="week-section">
+            <h3 class="week-section-title">
               {{ T.PDS.WEEK | translate }}
             </h3>
             @if (isForToday) {

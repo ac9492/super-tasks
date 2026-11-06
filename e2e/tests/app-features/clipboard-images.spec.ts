@@ -71,7 +71,7 @@ test.describe('Clipboard Images Settings', () => {
     await expect(dialog).toBeVisible({ timeout: 5000 });
 
     // Verify dialog title
-    const dialogTitle = dialog.locator('h1, h2').filter({ hasText: /clipboard.*image/i });
+    const dialogTitle = dialog.locator('h2').filter({ hasText: /clipboard.*image/i });
     await expect(dialogTitle).toBeVisible();
 
     // Verify close button exists (looking for button with "Close" text)

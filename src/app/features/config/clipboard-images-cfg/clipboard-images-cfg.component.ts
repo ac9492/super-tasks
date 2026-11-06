@@ -86,10 +86,7 @@ export class ClipboardImagesCfgComponent implements OnInit {
   }
 
   openImageManager(): void {
-    this._matDialog.open(DialogClipboardImagesManagerComponent, {
-      width: '600px',
-      maxHeight: '80vh',
-    });
+    this._matDialog.open(DialogClipboardImagesManagerComponent);
   }
 
   getImagePath(): string {

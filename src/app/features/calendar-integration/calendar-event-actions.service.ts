@@ -105,6 +105,7 @@ export class CalendarEventActionsService {
       data: {
         cancelTxt: T.G.CANCEL,
         okTxt: T.G.DELETE,
+        isDestructive: true,
         message: T.F.CALENDARS.CONTEXT_MENU.DELETE_EVENT,
       },
     });

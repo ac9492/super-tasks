@@ -2,6 +2,9 @@
 
 :host {
   display: block;
+  // Field rows are one control height; Material reads these for the panels.
+  --mat-expansion-header-collapsed-state-height: var(--ctl-md);
+  --mat-expansion-header-expanded-state-height: var(--ctl-md);
 
   &:focus {
     outline: none;
@@ -37,9 +40,11 @@
   }
 }
 
-// SHARED — flat rounded cards matching the task list; no resting shadow, and no
-// shape/elevation jump between collapsed and expanded (the chevron + revealed
-// content already signal the open state).
+// SHARED — flat field rows, not boxes: the panel is one surface, so a row has no
+// border, fill or shadow of its own (and no shape/elevation jump between
+// collapsed and expanded: the chevron + revealed content already signal the
+// open state). Rows are inset 8 with 8 of inner padding, so every icon starts at
+// x=16, on the same column as the title and the planning buttons.
 .input-item,
 .mat-expansion-panel,
 :host::ng-deep .mat-expansion-panel:not([class*='mat-elevation-z']) {
@@ -48,31 +53,31 @@
 
 .input-item,
 .mat-expansion-panel {
-  border: 1px solid var(--divider-color);
-  // Tighter vertical rhythm to match the main task list (#9266), but the
-  // horizontal inset stays at --s: the panel header keeps it, so halving all
-  // four sides would leave these rows overhanging it by 4px per side.
-  margin: var(--s-half) var(--s);
-  border-radius: var(--card-border-radius);
-  background: var(--task-detail-bg);
-  font-size: 14px;
+  border: 0;
+  margin: 0 var(--s);
+  border-radius: var(--r-md);
+  background: transparent;
+  font: var(--type-body);
 
-  // Marks the row the user is on for the panel's arrow-key navigation.
-  // Mouse intent, not `.isNoTouchOnly`: that class only excludes pure touch
-  // devices, so on an iPad or a touchscreen laptop (both `hybrid` for detect-it)
-  // a tap — which focuses the host via `focusEl()` — left the border stuck.
-  // See docs/styling-guide.md.
+  // Marks the row the user is on for the panel's arrow-key navigation: the
+  // focus ring, inset on a full-bleed row. Mouse intent, not `.isNoTouchOnly`:
+  // that class only excludes pure touch devices, so on an iPad or a touchscreen
+  // laptop (both `hybrid` for detect-it) a tap — which focuses the host via
+  // `focusEl()` — left the ring stuck. See docs/styling-guide.md.
   :host-context(.isMousePrimary):focus &,
   :host:focus-visible & {
-    border-color: var(--palette-primary-400) !important;
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: calc(-1 * var(--focus-ring-width));
   }
 }
 
 .mat-expansion-panel::ng-deep .mat-expansion-panel-header {
-  font-size: 14px;
+  font: var(--type-body);
+  padding: 0 var(--s);
+  border-radius: var(--r-md);
 
   &-title mat-icon:first-of-type {
-    margin-right: var(--s);
+    margin-right: var(--s1-5);
   }
 }
 
@@ -127,11 +132,13 @@
 }
 
 .panel-content-wrapper {
-  margin: 0 var(--s) var(--s);
+  margin: 0 var(--s2) var(--s);
   display: block;
   color: var(--text-color-less-intense);
 }
 
+// Notes and the checklist are the panel's one field-like surface: a hairline
+// box at --r-md, inset 16, with the focus ring (no lift) while editing.
 .panel-content-wrapper::ng-deep inline-markdown {
   &.isFocused {
     border-color: transparent;
@@ -139,23 +146,21 @@
 
   .markdown-wrapper {
     min-height: 60px;
-    border-radius: var(--card-border-radius);
+    border-radius: var(--r-md);
     overflow: visible !important;
     transition: var(--transition-standard);
   }
 
   &.isFocused .markdown-wrapper {
-    box-shadow: var(--whiteframe-shadow-3dp) !important;
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: calc(-1 * var(--focus-ring-width));
   }
 
   .markdown-unparsed,
   .markdown-parsed {
     background: var(--bg-lightest);
     color: inherit;
-
-    @include lightTheme() {
-      @include extraBorder();
-    }
+    border: var(--st-line-width) solid var(--input-border-color);
   }
 }
 
@@ -176,13 +181,13 @@
   position: relative;
   display: flex;
   align-items: center;
-  height: 48px;
+  height: var(--ctl-md);
   cursor: pointer;
   color: var(--text-color);
 
   &.full-size {
     height: auto;
-    min-height: 48px;
+    min-height: var(--ctl-md);
     align-items: flex-start;
     cursor: default;
   }
@@ -201,18 +206,23 @@
 .input-item__title {
   display: flex;
   align-items: center;
-  margin: 0 var(--s3);
+  margin: 0 var(--s);
   @include truncateText();
   min-width: 90px;
   flex: 1;
 
+  // A 20px glyph in the 24px icon slot, 12px before the label.
   ::ng-deep mat-icon:first-of-type {
-    margin-right: var(--s);
+    flex: none;
+    width: var(--icon-slot);
+    height: var(--icon-md);
+    font-size: var(--icon-md);
+    margin-right: var(--s1-5);
   }
 
   .full-size & {
     min-width: 40px;
-    min-height: 48px;
+    min-height: var(--ctl-md);
     flex-grow: 0;
     margin-right: 0;
   }
@@ -222,7 +232,7 @@
   text-align: right;
   display: flex;
   align-items: center;
-  margin-right: var(--s3);
+  margin-right: var(--s);
   color: var(--task-detail-value-color);
 
   &,
@@ -241,7 +251,7 @@
     min-width: 40px;
     flex: 1;
     padding: var(--s-half) 0;
-    min-height: 48px;
+    min-height: var(--ctl-md);
 
     > * {
       display: block;

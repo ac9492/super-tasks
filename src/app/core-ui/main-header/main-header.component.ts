@@ -194,8 +194,9 @@ export class MainHeaderComponent implements OnDestroy {
   // Precedence mirrors `syncIcon` (disabled → offline → error → syncing →
   // in-sync); keep the two in sync.
   syncTooltip = computed(() => {
+    // Not set up yet: the button opens the sync setup.
     if (!this.syncIsEnabledAndReady()) {
-      return T.MH.TRIGGER_SYNC;
+      return T.PS.SYNC.SET_UP_SYNC;
     }
     if (!this.isOnline()) {
       return T.MH.SYNC_STATE.OFFLINE;

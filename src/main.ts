@@ -58,7 +58,7 @@ import { PRIORITY_ICON_PRESET_SELECT_FORMLY_CONFIG } from './app/features/config
 import { AGENT_CAPTURE_SETTINGS_FORMLY_CONFIG } from './app/features/tasks/agent-capture/agent-capture-settings/agent-capture-settings.component';
 import { markedOptionsFactory } from './app/ui/marked-options-factory';
 import { MaterialCssVarsModule } from 'angular-material-css-vars';
-import { DEFAULT_TODAY_TAG_COLOR } from './app/features/work-context/work-context.const';
+import { DEFAULT_PALETTE } from './app/core/theme/palette.util';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { ReminderModule } from './app/features/reminder/reminder.module';
@@ -105,6 +105,7 @@ import { LocalRestApiSimpleCounterRoutesService } from './app/features/simple-co
 import { PluginOAuthRedirectHandler } from './app/plugins/oauth/plugin-oauth-redirect.handler';
 import { OAuthCallbackHandlerService } from './app/imex/sync/oauth-callback-handler.service';
 import { GlobalConfigService } from './app/features/config/global-config.service';
+import { isAnimationDisabled } from './app/util/prefers-reduced-motion';
 import { LocaleDatePipe } from './app/ui/pipes/locale-date.pipe';
 import { DateTimeFormatService } from './app/core/date-time-format/date-time-format.service';
 import { CustomDateAdapter } from './app/core/date-time-format/custom-date-adapter';
@@ -178,7 +179,7 @@ bootstrapApplication(AppComponent, {
         sanitize: { provide: SANITIZE, useValue: SecurityContext.HTML },
       }),
       MaterialCssVarsModule.forRoot({
-        primary: DEFAULT_TODAY_TAG_COLOR,
+        primary: DEFAULT_PALETTE.light.accent,
       }),
       MatSidenavModule,
       MatBottomSheetModule,
@@ -316,7 +317,7 @@ bootstrapApplication(AppComponent, {
       deps: [GlobalConfigService],
       useFactory: (globalConfigService: GlobalConfigService) => ({
         get animationsDisabled(): boolean {
-          return globalConfigService.misc()?.isDisableAnimations ?? false;
+          return isAnimationDisabled(globalConfigService.misc());
         },
       }),
     },

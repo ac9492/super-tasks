@@ -41,13 +41,18 @@ export const MISC_SETTINGS_FORM_CFG: ConfigFormSection<MiscConfig> = {
             },
           },
         ]) as LimitedFormlyFieldConfig<MiscConfig>[]),
-    {
-      key: 'isMinimizeToTray',
-      type: 'checkbox',
-      templateOptions: {
-        label: T.GCF.MISC.IS_MINIMIZE_TO_TRAY,
-      },
-    },
+    // Tray options only exist in the desktop app
+    ...(IS_ELECTRON
+      ? ([
+          {
+            key: 'isMinimizeToTray',
+            type: 'checkbox',
+            templateOptions: {
+              label: T.GCF.MISC.IS_MINIMIZE_TO_TRAY,
+            },
+          },
+        ] as LimitedFormlyFieldConfig<MiscConfig>[])
+      : []),
     ...((IS_ELECTRON
       ? [
           {
@@ -127,13 +132,17 @@ export const MISC_SETTINGS_FORM_CFG: ConfigFormSection<MiscConfig> = {
         label: T.GCF.MISC.IS_SHOW_TIP_LONGER,
       },
     },
-    {
-      key: 'isTrayShowCurrentCountdown',
-      type: 'checkbox',
-      templateOptions: {
-        label: T.GCF.MISC.IS_TRAY_SHOW_CURRENT_COUNTDOWN,
-      },
-    },
+    ...(IS_ELECTRON
+      ? ([
+          {
+            key: 'isTrayShowCurrentCountdown',
+            type: 'checkbox',
+            templateOptions: {
+              label: T.GCF.MISC.IS_TRAY_SHOW_CURRENT_COUNTDOWN,
+            },
+          },
+        ] as LimitedFormlyFieldConfig<MiscConfig>[])
+      : []),
     ...((IS_ELECTRON && !IS_GNOME_WAYLAND
       ? [
           {

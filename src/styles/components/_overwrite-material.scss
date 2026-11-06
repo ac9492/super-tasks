@@ -1,12 +1,143 @@
 @use '../mixins/_media-queries';
 
+// Angular Material on the app scale (docs/styling-guide.md § Angular
+// Material). Material is mapped here, once, through its public --mat-* tokens,
+// so no component restyles Material locally. The M2 theme declares its tokens
+// on `html`, which `:root` outranks; tokens Material declares on a component
+// element (chips, tabs, slide toggles, form fields) are set on that element
+// further down.
 :root {
-  //--mat-fab-small-container-elevation-shadow: var(--whiteframe-shadow-4dp);
+  // TYPOGRAPHY: the M2 ramp gives 16px fields and dialog text, 20/32 dialog
+  // titles and 0.4-1.25px tracking. Map it onto the six type roles, tracking 0.
+  --mat-dialog-subhead-size: var(--font-size-xl);
+  --mat-dialog-subhead-line-height: 24px;
+  --mat-dialog-subhead-weight: var(--font-weight-semibold);
+  --mat-dialog-subhead-tracking: var(--track-title);
+  --mat-dialog-supporting-text-size: var(--font-size-md);
+  --mat-dialog-supporting-text-line-height: 20px;
+  --mat-dialog-supporting-text-tracking: 0;
+  --mat-form-field-container-text-size: var(--font-size-md);
+  --mat-form-field-container-text-line-height: 20px;
+  --mat-form-field-container-text-tracking: 0;
+  --mat-form-field-filled-label-text-size: var(--font-size-md);
+  --mat-form-field-filled-label-text-tracking: 0;
+  --mat-form-field-outlined-label-text-size: var(--font-size-md);
+  --mat-form-field-outlined-label-text-populated-size: var(--font-size-sm);
+  --mat-form-field-outlined-label-text-tracking: 0;
+  --mat-form-field-subscript-text-size: var(--font-size-sm);
+  --mat-form-field-subscript-text-line-height: 16px;
+  --mat-form-field-subscript-text-tracking: 0;
+  --mat-select-trigger-text-size: var(--font-size-md);
+  --mat-select-trigger-text-line-height: 20px;
+  --mat-select-trigger-text-tracking: 0;
+  --mat-option-label-text-size: var(--font-size-md);
+  --mat-option-label-text-line-height: 20px;
+  --mat-option-label-text-tracking: 0;
+  --mat-menu-item-label-text-size: var(--font-size-md);
+  --mat-menu-item-label-text-line-height: 20px;
+  --mat-menu-item-label-text-tracking: 0;
+  --mat-checkbox-label-text-tracking: 0;
+  --mat-radio-label-text-tracking: 0;
+  --mat-button-toggle-label-text-size: var(--font-size-md);
+  --mat-button-toggle-label-text-line-height: 20px;
+  --mat-button-toggle-label-text-tracking: 0;
+  --mat-expansion-container-text-tracking: 0;
+  --mat-card-title-text-tracking: 0;
+  --mat-card-subtitle-text-tracking: 0;
+  --mat-list-list-item-label-text-tracking: 0;
+  --mat-list-list-item-supporting-text-tracking: 0;
+  --mat-table-header-headline-tracking: 0;
+  --mat-table-row-item-label-text-tracking: 0;
+  --mat-slider-label-label-text-tracking: 0;
+  --mat-tooltip-supporting-text-size: var(--font-size-sm);
+  --mat-tooltip-supporting-text-line-height: 16px;
+  --mat-tooltip-supporting-text-tracking: 0;
+  --mat-snack-bar-supporting-text-size: var(--font-size-md);
+  --mat-snack-bar-supporting-text-line-height: 20px;
+  --mat-datepicker-calendar-header-text-size: var(--font-size-sm);
+  --mat-datepicker-calendar-body-label-text-size: var(--font-size-sm);
+  // MDC floats a filled field's label with a fixed scale(0.75), which only
+  // lands on the 12px meta size from a 16px label (see FORMS).
+  --field-label-float-scale: calc(12 / 14);
+
+  // SHAPE: radius by role.
+  --mat-dialog-container-shape: var(--r-lg);
+  --mat-menu-container-shape: var(--r-lg);
+  --mat-snack-bar-container-shape: var(--r-lg);
+  --mat-datepicker-calendar-container-shape: var(--r-lg);
+  --mat-datepicker-calendar-container-touch-shape: var(--r-lg);
+  --mat-autocomplete-container-shape: var(--r-md);
+  --mat-tooltip-container-shape: var(--r-sm);
+  --mat-button-text-container-shape: var(--r-md);
+  --mat-button-filled-container-shape: var(--r-md);
+  --mat-button-outlined-container-shape: var(--r-md);
+  --mat-button-protected-container-shape: var(--r-md);
+  --mat-button-tonal-container-shape: var(--r-md);
+  --mat-button-toggle-shape: var(--r-md);
+  --mat-expansion-container-shape: var(--r-md);
+  --mat-card-elevated-container-shape: var(--r-md);
+  --mat-card-filled-container-shape: var(--r-md);
+  --mat-card-outlined-container-shape: var(--r-md);
+
+  // ELEVATION: floating surfaces only, each with its hairline (--elev-*).
+  --mat-dialog-container-elevation-shadow: var(--elev-2);
+  --mat-menu-container-elevation-shadow: var(--elev-1);
+  --mat-select-container-elevation-shadow: var(--elev-1);
+  --mat-autocomplete-container-elevation-shadow: var(--elev-1);
+  --mat-datepicker-calendar-container-elevation-shadow: var(--elev-1);
+  --mat-datepicker-calendar-container-touch-elevation-shadow: var(--elev-2);
+  // Raised buttons read as filled ones: no resting shadow.
+  --mat-button-protected-container-elevation-shadow: none;
+  --mat-button-protected-hover-container-elevation-shadow: none;
+  --mat-button-protected-focus-container-elevation-shadow: none;
+  --mat-button-protected-pressed-container-elevation-shadow: none;
+
+  // CONTROL HEIGHTS: buttons and segmented controls are 40 (compact: see
+  // BUTTONS).
+  --mat-button-text-container-height: var(--ctl-md);
+  --mat-button-filled-container-height: var(--ctl-md);
+  --mat-button-outlined-container-height: var(--ctl-md);
+  --mat-button-protected-container-height: var(--ctl-md);
+  --mat-button-tonal-container-height: var(--ctl-md);
+  --mat-button-toggle-height: var(--ctl-md);
+
+  // MENUS: 12px insets, 20px icons, separator-coloured dividers with 4px air.
+  --mat-menu-item-icon-size: var(--icon-md);
+  --mat-menu-item-spacing: var(--s1-5);
+  --mat-menu-item-leading-spacing: var(--s1-5);
+  --mat-menu-item-trailing-spacing: var(--s1-5);
+  --mat-menu-item-with-icon-leading-spacing: var(--s1-5);
+  --mat-menu-item-with-icon-trailing-spacing: var(--s1-5);
+  --mat-menu-divider-color: var(--palette-separator);
+  --mat-menu-divider-top-spacing: var(--s-half);
+  --mat-menu-divider-bottom-spacing: var(--s-half);
+
+  // DIALOGS: one gutter for title, content and actions (24, 16 on phones).
+  --mat-dialog-headline-padding: var(--dialog-gutter) var(--dialog-gutter) var(--s1-5);
+  --mat-dialog-content-padding: var(--dialog-gutter) var(--dialog-gutter) var(--s2);
+  --mat-dialog-with-actions-content-padding: var(--dialog-gutter) var(--dialog-gutter)
+    var(--s2);
+  --mat-dialog-actions-padding: var(--s) var(--dialog-gutter) var(--dialog-gutter);
   --mat-dialog-container-small-max-width: 94vw;
   --mat-dialog-container-max-width: 85vw;
-  --mat-menu-item-label-text-size: 14px;
+  // A dialog is never narrower than S, nor wider than the viewport minus its
+  // gutters.
+  --mat-dialog-container-min-width: min(var(--dialog-w-s), calc(100vw - 2 * var(--s2)));
+  --dialog-w-window: 1040px; // Settings and Plugins windows
 
   --calendar-hover-bg: color-mix(in srgb, var(--c-primary) 35%, transparent);
+}
+
+// iOS zooms into a focused text field below 16px: text entry stays 16/24 on
+// touch (e2e/tests/task-detail/ios-focus-zoom-9556.spec.ts).
+@media (pointer: coarse) {
+  :root {
+    --mat-form-field-container-text-size: var(--font-size-lg);
+    --mat-form-field-container-text-line-height: 24px;
+    --mat-form-field-filled-label-text-size: var(--font-size-lg);
+    --mat-form-field-outlined-label-text-size: var(--font-size-lg);
+    --field-label-float-scale: 0.75;
+  }
 }
 
 :where(body, body.isDarkTheme) {
@@ -32,27 +163,64 @@ body.isDarkTheme {
   --calendar-hover-bg: color-mix(in srgb, var(--c-primary) 20%, transparent);
 }
 
+// Material's M2 typography classes (.mat-h1, .mat-headline-5, .mat-caption …)
+// still sit on a few report and settings headings. Map them onto the type
+// roles at the specificity of Material's `.mat-typography .mat-h1` rule, after
+// it; a component rule on the same element still wins.
+.mat-typography {
+  :is(.mat-h1, .mat-headline-5, .mat-h2, .mat-headline-6) {
+    font: var(--type-title);
+    letter-spacing: var(--track-title);
+  }
+
+  :is(.mat-h3, .mat-subtitle-1, .mat-h4) {
+    font: var(--type-heading);
+    letter-spacing: 0;
+  }
+
+  :is(.mat-body-strong, .mat-subtitle-2) {
+    font: var(--type-body-strong);
+    letter-spacing: 0;
+  }
+
+  :is(.mat-body, .mat-body-1, .mat-body-2) {
+    font: var(--type-body);
+    letter-spacing: 0;
+  }
+
+  :is(.mat-caption, .mat-small) {
+    font: var(--type-meta);
+    letter-spacing: 0;
+  }
+}
+
 // Apply tab colors explicitly to tab components
 .mat-mdc-tab-group,
 .mat-mdc-tab-nav-bar {
-  // Active tab label color
-  .mdc-tab--active .mdc-tab__text-label {
-    color: var(--mat-tab-header-active-label-text-color);
+  // Label colours are ink (active) and the muted tier (inactive), never the
+  // accent: Material's primary theme would turn the active label accent-coloured,
+  // which fails contrast on a neon accent. Set on the tab itself, where
+  // Material's own `.mat-mdc-tab.mdc-tab--active .mdc-tab__text-label` rule
+  // reads them.
+  .mat-mdc-tab {
+    --mat-tab-active-label-text-color: var(--text-color-most-intense);
+    --mat-tab-active-hover-label-text-color: var(--text-color-most-intense);
+    --mat-tab-active-focus-label-text-color: var(--text-color-most-intense);
+    --mat-tab-inactive-label-text-color: var(--text-color-muted);
+    --mat-tab-inactive-hover-label-text-color: var(--text-color-most-intense);
+    --mat-tab-inactive-focus-label-text-color: var(--text-color-most-intense);
   }
 
   // Active tab indicator (underline)
   .mdc-tab-indicator--active .mdc-tab-indicator__content--underline {
     border-color: var(--mdc-tab-indicator-active-indicator-color);
   }
-
-  // Inactive tab labels
-  .mdc-tab:not(.mdc-tab--active) .mdc-tab__text-label {
-    color: var(--mat-tab-header-inactive-label-text-color);
-  }
 }
 
+// Chips declare their tokens on the chip element itself, hence `*`.
 * {
-  --mat-chip-container-shape-radius: 4px !important;
+  --mat-chip-container-shape-radius: var(--r-full) !important;
+  --mat-chip-label-text-tracking: 0 !important;
   --mat-chip-elevated-container-color: transparent !important;
   //--mat-chip-outline-color: var(--mat-chip-outline-color, var(--mat-sys-outline)) !important;
   --mat-chip-outline-color: var(--chip-outline-color) !important;
@@ -115,10 +283,83 @@ body.isNativeMobile .mat-mdc-menu-panel {
 // ----------
 .mat-mdc-dialog-title.mat-mdc-dialog-title,
 .mdc-dialog__title.mdc-dialog__title {
-  margin-bottom: 0;
-  margin-top: 8px;
+  margin: 0;
   display: flex;
   align-items: center;
+  gap: var(--s);
+
+  // MDC's 40px baseline strut: the title box is the headline padding plus one
+  // 24px line.
+  &::before {
+    display: none;
+  }
+
+  // A leading icon names the object type (repeat, sync); it is a control-size
+  // icon, never larger than the title line.
+  > mat-icon:first-child,
+  > .dialog-header-icon {
+    flex: none;
+    margin: 0;
+    font-size: var(--icon-md);
+    width: var(--icon-md);
+    height: var(--icon-md);
+  }
+}
+
+// A title followed by a <form> that wraps the content keeps the same
+// title-to-content gap as when they are siblings (Material zeroes the content's
+// top padding only for an adjacent sibling).
+.mat-mdc-dialog-title + form > .mat-mdc-dialog-content:first-child {
+  padding-top: 0;
+}
+
+// A dialog with a help button (help-section) keeps its title clear of it.
+.mat-mdc-dialog-surface:has(help-section) .mat-mdc-dialog-title {
+  padding-inline-end: calc(var(--dialog-gutter) + var(--ctl-md));
+}
+
+// Buttons in an action row are spaced by the row's gap (also when they wrap,
+// see wrap-buttons.scss), not by Material's sibling margin.
+.mat-mdc-dialog-actions {
+  gap: var(--s);
+}
+
+.mat-mdc-dialog-surface
+  .mat-mdc-dialog-actions
+  .mat-mdc-button-base.mat-mdc-button-base
+  + .mat-mdc-button-base {
+  margin-inline: 0;
+}
+
+// A secondary or destructive action (Delete, Remove, Unschedule) sits at the
+// start edge, apart from Cancel and the primary action, which stay together at
+// the end. Keep the primary action last in the DOM (e2e DIALOG_SUBMIT).
+.mat-mdc-dialog-actions .dialog-action-start {
+  margin-inline-end: auto;
+}
+
+// Dialog widths: dialogSize() / useDialogSize() in src/app/ui/dialog-size.util.ts
+// set the class; the pane's max-width keeps every size inside the viewport. A
+// dialog without a size class is S (440px) wide.
+.cdk-overlay-pane.mat-mdc-dialog-panel {
+  width: var(--dialog-w-s);
+
+  &.dialog-s {
+    width: var(--dialog-w-s);
+  }
+
+  &.dialog-m {
+    width: var(--dialog-w-m);
+  }
+
+  &.dialog-l {
+    width: var(--dialog-w-l);
+  }
+
+  &.dialog-window {
+    width: var(--dialog-w-window);
+    max-width: 96vw;
+  }
 }
 
 .cdk-overlay-pane.mat-mdc-dialog-panel {
@@ -153,24 +394,6 @@ body .mat-mdc-dialog-surface {
   // Enable flex layout for proper content scrolling
   display: flex;
   flex-direction: column;
-}
-
-.mat-mdc-dialog-panel {
-  @include media-queries.mq(xs) {
-    //--mat-dialog-container-min-width: 350px;
-  }
-}
-
-.mat-mdc-dialog-title {
-  vertical-align: middle;
-
-  > * {
-    vertical-align: middle;
-  }
-
-  > mat-icon:first-child {
-    margin-right: 8px;
-  }
 }
 
 .big {
@@ -217,12 +440,25 @@ body.isNativeMobile .project-complete-fullscreen-dialog {
 
 // FORMS
 // --------
+// One field look for both appearances: an --r-md box with a 1px
+// --input-border-color edge (the palette's --palette-outline, 3:1 against its
+// surface), a stronger edge on hover and a 2px ink edge on focus. Material's
+// grey hover/focus wash is off. The notched outline of appearance="outline"
+// draws the same box (its resting colour, --palette-outline, is mapped in
+// _palette-theme.scss).
 .mat-mdc-form-field {
   margin-bottom: var(--s2);
 
   // Feed semantic input tokens to official Material CSS variables
   --mat-form-field-filled-container-color: var(--input-bg);
   --mat-form-field-filled-container-shape: var(--input-border-radius);
+  --mat-form-field-hover-state-layer-opacity: 0;
+  --mat-form-field-focus-state-layer-opacity: 0;
+  --mat-form-field-outlined-container-shape: var(--input-border-radius);
+  --mat-form-field-outlined-hover-outline-color: var(--input-border-color-hover);
+  --mat-form-field-outlined-focus-outline-color: var(--input-border-color-focus);
+  --mat-form-field-outlined-outline-width: var(--st-line-width);
+  --mat-form-field-outlined-focus-outline-width: var(--st-focus-width);
 
   // Hide the active indicators (underline ripple) by setting their color to transparent,
   // but leave the error indicators intact so the red invalid line shows up.
@@ -232,27 +468,24 @@ body.isNativeMobile .project-complete-fullscreen-dialog {
 
   // Targets default filled text boxes to transform them into flat, token-driven containers
   .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-    border: 1px solid var(--input-border-color) !important;
+    border: var(--st-line-width) solid var(--input-border-color) !important;
     // Material hardcodes the filled field's bottom corner radii to 0 (the
     // container-shape token above only rounds the top two corners), so a full
-    // border would render rounded-top/square-bottom. Round all four corners to
-    // read as a card, matching the task-detail panel this style is copied from.
+    // border would render rounded-top/square-bottom. Round all four corners.
     border-radius: var(--input-border-radius) !important;
     transition:
-      background var(--transition-duration-s) ease-out,
       border-color var(--transition-duration-s) ease-out,
       box-shadow var(--transition-duration-s) ease-out !important;
 
     &:hover {
-      background: var(--input-bg-hover) !important;
+      border-color: var(--input-border-color-hover) !important;
     }
   }
 
   // Active / Focus state
   &.mat-focused .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-    background: var(--input-bg-hover) !important;
     border-color: var(--input-border-color-focus) !important;
-    box-shadow: 0 0 0 1px var(--input-border-color-focus) !important;
+    box-shadow: 0 0 0 var(--st-line-width) var(--input-border-color-focus) !important;
   }
 
   // Specialized focus treatment for toggle fields:
@@ -271,6 +504,33 @@ body.isNativeMobile .project-complete-fullscreen-dialog {
   // Error / Invalid state
   &.mat-form-field-invalid .mdc-text-field--filled:not(.mdc-text-field--disabled) {
     border-color: var(--input-border-color-invalid) !important;
+  }
+
+  // MDC floats a filled label with a fixed scale(0.75): from a 14px label
+  // that is 10.5px. Scale it to the 12px meta size instead.
+  .mdc-text-field--filled .mdc-floating-label--float-above {
+    transform: translateY(-106%) scale(var(--field-label-float-scale));
+  }
+
+  // Label-less fields (search, filters, toolbar selects) are as tall as a
+  // button. A filled field's 1px border sits outside its infix.
+  .mdc-text-field--no-label {
+    --field-box-height: var(--ctl-md);
+    --mat-form-field-container-height: var(--field-box-height);
+    --mat-form-field-container-vertical-padding: calc(
+      (var(--field-box-height) - var(--mat-form-field-container-text-line-height)) / 2
+    );
+  }
+
+  .mdc-text-field--filled.mdc-text-field--no-label {
+    --field-box-height: calc(var(--ctl-md) - 2 * var(--st-line-width));
+  }
+
+  // A select's trigger is as tall as its 24px arrow, taller than a text line.
+  .mdc-text-field--no-label:has(.mat-mdc-select) {
+    --mat-form-field-container-vertical-padding: calc(
+      (var(--field-box-height) - 24px) / 2
+    );
   }
 }
 
@@ -300,15 +560,60 @@ mat-option.isDone {
   --mat-button-tonal-label-text-tracking: var(--letter-spacing-normal);
 }
 
-// Unfilled labels use neutral ink; accent stays in the outline.
-.mat-mdc-button,
-.mat-mdc-outlined-button {
+// Compact buttons (32px, 40px on touch through --ctl-sm): opt in with
+// `class="mat-button-compact"` on a button or on the row that holds them, for
+// dense rows such as the add-task bar actions. Default buttons are 40.
+.mat-button-compact {
+  --mat-button-text-container-height: var(--ctl-sm);
+  --mat-button-filled-container-height: var(--ctl-sm);
+  --mat-button-outlined-container-height: var(--ctl-sm);
+  --mat-button-protected-container-height: var(--ctl-sm);
+  --mat-button-tonal-container-height: var(--ctl-sm);
+}
+
+// Unfilled labels use neutral ink; accent stays in the outline. Specificity
+// above the theme's `.isDarkTheme .mat-mdc-button.mat-primary`, which would
+// make the label accent-coloured (4.06:1 on a blue accent in a dark palette).
+body .mat-mdc-button.mat-mdc-button,
+body .mat-mdc-outlined-button.mat-mdc-outlined-button {
   &[color='primary'],
-  &[color='accent'],
-  &[color='warn'] {
+  &[color='accent'] {
     --mat-button-text-label-text-color: var(--text-color);
     --mat-button-outlined-label-text-color: var(--text-color);
     --mat-button-outlined-outline-color: var(--brand);
+  }
+}
+
+// Destructive (warn) buttons stay red so they never read as primary
+// (docs/styling-guide.md § Dialog action buttons). --c-warn/--c-warn-contrast
+// are mode-aware and readable on every palette surface. The doubled class
+// outranks the theme's `.isDarkTheme .mat-mdc-*.mat-warn` variant rules.
+.mat-mdc-button,
+.mat-mdc-outlined-button {
+  &.mat-warn.mat-warn {
+    --mat-button-text-label-text-color: var(--c-warn);
+    --mat-button-outlined-label-text-color: var(--c-warn);
+    --mat-button-outlined-outline-color: var(--c-warn);
+  }
+}
+
+.mat-mdc-unelevated-button,
+.mat-mdc-raised-button {
+  &.mat-warn.mat-warn {
+    --mat-button-filled-container-color: var(--c-warn);
+    --mat-button-filled-label-text-color: var(--c-warn-contrast);
+    --mat-button-protected-container-color: var(--c-warn);
+    --mat-button-protected-label-text-color: var(--c-warn-contrast);
+  }
+}
+
+.mat-mdc-fab,
+.mat-mdc-mini-fab {
+  &.mat-warn.mat-warn {
+    --mat-fab-container-color: var(--c-warn);
+    --mat-fab-foreground-color: var(--c-warn-contrast);
+    --mat-fab-small-container-color: var(--c-warn);
+    --mat-fab-small-foreground-color: var(--c-warn-contrast);
   }
 }
 
@@ -379,9 +684,11 @@ mat-icon,
   visibility: hidden;
 }
 
+// `inherit`, not `visible`: an icon must stay hidden inside a container that is
+// hidden with `visibility` (hover-revealed nav and attachment controls).
 body.isMaterialSymbolsLoaded .mat-icon,
 body.isMaterialSymbolsLoaded mat-icon {
-  visibility: visible;
+  visibility: inherit;
 }
 
 .mat-icon.mat-icon {
@@ -514,8 +821,50 @@ body .mat-mdc-button-base .mat-icon {
   max-width: none;
 }
 
-.mat-mdc-menu-content {
-  padding: 0 !important;
+// Menu panels keep a 4px inner padding so their --r-md rows sit
+// concentrically inside the --r-lg panel. Item rules are scoped to panels:
+// side-nav links also carry .mat-mdc-menu-item.
+.mat-mdc-menu-panel {
+  .mat-mdc-menu-content {
+    padding: var(--s-half);
+  }
+
+  .mat-mdc-menu-item {
+    min-height: var(--ctl-md);
+    border-radius: var(--r-md);
+
+    // Material sizes the icon box from --mat-menu-item-icon-size but not the
+    // glyph; the glyph must equal its box or it decentres.
+    .mat-icon {
+      font-size: var(--mat-menu-item-icon-size);
+    }
+  }
+
+  @media (pointer: coarse) {
+    .mat-mdc-menu-item {
+      min-height: var(--ctl-lg);
+    }
+  }
+}
+
+// Select and autocomplete panels: --r-md with the same 4px inset and 40px
+// options. Doubled scope to outrank Material's `.mat-mdc-select-panel-above`
+// corner rule.
+.cdk-overlay-container
+  .cdk-overlay-pane
+  div:is(.mat-mdc-select-panel, .mat-mdc-autocomplete-panel) {
+  padding: var(--s-half);
+  border-radius: var(--r-md);
+}
+
+.mat-mdc-select-panel .mat-mdc-option,
+.mat-mdc-autocomplete-panel .mat-mdc-option {
+  min-height: var(--ctl-md);
+  border-radius: var(--r-sm);
+
+  @media (pointer: coarse) {
+    min-height: var(--ctl-lg);
+  }
 }
 
 task.cdk-drag-preview .box {
@@ -538,6 +887,11 @@ body.isVerticalActionBar .cdk-overlay-pane.mat-mdc-tooltip-panel {
 }
 
 // SNACK
+// A floating surface like menus: Material hardcodes its shadow.
+.mat-mdc-snack-bar-container .mat-mdc-snackbar-surface {
+  box-shadow: var(--elev-1);
+}
+
 // Move snack bar above mobile bottom nav for all touch devices
 @include media-queries.mq(xs, max) {
   // Apply to all touch devices, not just when mobile bottom nav is shown
@@ -605,6 +959,12 @@ body.isVerticalActionBar .cdk-overlay-pane.mat-mdc-tooltip-panel {
 
 // SLIDE TOGGLE
 // ------------
+// The M2 theme declares the toggle's label typography on the toggle element
+// itself (`html .mat-mdc-slide-toggle`), so the :root mapping cannot reach it.
+body .mat-mdc-slide-toggle {
+  --mat-slide-toggle-label-text-tracking: 0;
+}
+
 .mat-mdc-slide-toggle {
   // Inherit all unchecked state ripple configurations (both colors and opacities)
   // for the checked state to ensure they match exactly in color and strength.

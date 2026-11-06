@@ -1,4 +1,7 @@
 <form (submit)="$event.preventDefault(); track()">
+  <h2 mat-dialog-title>
+    {{ T.F.TIME_TRACKING.D_TRACKING_REMINDER.NOTIFICATION_TITLE | translate }}
+  </h2>
   <div
     class="dialog-content"
     mat-dialog-content
@@ -25,7 +28,7 @@
   </div>
 
   <div
-    align="center"
+    align="end"
     mat-dialog-actions
   >
     <button
@@ -35,19 +38,12 @@
     >
       {{ T.G.CANCEL | translate }}
     </button>
-
     <button
       [disabled]="!(selectedTask || newTaskTitle)"
       color="primary"
       mat-flat-button
       type="submit"
     >
-      @if (!isCreate) {
-        <mat-icon>more_time</mat-icon>
-      }
-      @if (isCreate) {
-        <mat-icon>add</mat-icon>
-      }
       {{ T.F.TIME_TRACKING.D_TRACKING_REMINDER.TASK | translate }}
     </button>
   </div>

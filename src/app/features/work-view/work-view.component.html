@@ -17,13 +17,16 @@
               @fade
               class="status-bar"
             >
+              <!-- The labels are only visually hidden on narrow screens, where
+                   the tooltips name the icons instead. -->
               <div
                 class="item"
-                matTooltip="{{ T.WW.TODAY_REMAINING | translate }} ~{{
-                  todayRemainingInProject() | msToString
-                }}"
-                [matTooltipDisabled]="
-                  !(workContextService.isActiveWorkContextProject$ | async)
+                [matTooltip]="
+                  (workContextService.isActiveWorkContextProject$ | async)
+                    ? (T.WW.TODAY_REMAINING | translate) +
+                      ' ~' +
+                      (todayRemainingInProject() | msToString)
+                    : (T.WW.ESTIMATE_REMAINING | translate)
                 "
                 matTooltipPosition="above"
               >
@@ -37,10 +40,14 @@
               </div>
               <div class="item">
                 <span class="label">{{ T.WW.WORKING_TODAY | translate }}</span>
+                <!-- Not on .item: the archived time below has its own tooltip. -->
                 <span class="no-wrap">
-                  <strong class="time-val">{{
-                    (workingToday() | msToString: false : true) || '0m'
-                  }}</strong>
+                  <strong
+                    class="time-val"
+                    [matTooltip]="T.WW.WORKING_TODAY | translate"
+                    matTooltipPosition="above"
+                    >{{ (workingToday() | msToString: false : true) || '0m' }}</strong
+                  >
                   @if (
                     workContextService.workingTodayArchived$ | async;
                     as workingTodayArchived
@@ -49,41 +56,42 @@
                       >(+{{ workingTodayArchived | msToString }})</span
                     >
                   }
-                  <mat-icon>timer</mat-icon>
+                  <mat-icon
+                    [matTooltip]="T.WW.WORKING_TODAY | translate"
+                    matTooltipPosition="above"
+                    >timer</mat-icon
+                  >
                 </span>
               </div>
-              @if (isShowTimeWorkedWithoutBreak) {
-                <div class="item hide-xs">
-                  <span class="label">{{ T.WW.WITHOUT_BREAK | translate }} </span>
-                  <span
-                    class="no-wrap"
-                    matTooltip="{{ T.F.TIME_TRACKING.D_IDLE.BREAK | translate }}: {{
-                      breakTimeToday() | msToString
-                    }}"
-                    [matTooltipDisabled]="!breakTimeToday()"
-                    matTooltipPosition="above"
-                  >
-                    <strong class="time-val">{{
-                      (takeABreakService.timeWorkingWithoutABreak$
-                        | async
-                        | msToString: false : true) || '0m'
-                    }}</strong
-                    ><mat-icon>timer</mat-icon>
-                  </span>
-                  <div
+              <div class="item hide-xs">
+                <span class="label">{{ T.WW.WITHOUT_BREAK | translate }} </span>
+                <span
+                  class="no-wrap"
+                  matTooltip="{{ T.F.TIME_TRACKING.D_IDLE.BREAK | translate }}: {{
+                    breakTimeToday() | msToString
+                  }}"
+                  [matTooltipDisabled]="!breakTimeToday()"
+                  matTooltipPosition="above"
+                >
+                  <strong class="time-val">{{
+                    (takeABreakService.timeWorkingWithoutABreak$
+                      | async
+                      | msToString: false : true) || '0m'
+                  }}</strong
+                  ><mat-icon>timer</mat-icon>
+                </span>
+                <div class="take-a-break-reset-btn">
+                  <button
+                    (click)="resetBreakTimer()"
                     [matTooltip]="T.WW.RESET_BREAK_TIMER | translate"
-                    class="take-a-break-reset-btn"
+                    [attr.aria-label]="T.WW.RESET_BREAK_TIMER | translate"
+                    color="lighter"
+                    mat-mini-fab
                   >
-                    <button
-                      (click)="resetBreakTimer()"
-                      color="lighter"
-                      mat-mini-fab
-                    >
-                      <mat-icon>restart_alt</mat-icon>
-                    </button>
-                  </div>
+                    <mat-icon>restart_alt</mat-icon>
+                  </button>
                 </div>
-              }
+              </div>
             </div>
           }
         </header>
@@ -105,6 +113,7 @@
               class="add-more-or-finish"
             >
               <div class="no-tasks-illu-wrapper">
+                <!-- Below the picture, not over its sun, so it stays readable. -->
                 <div class="inline-block-container">
                   <img
                     class="show-light-only"
@@ -122,13 +131,18 @@
                     hasDoneTasks() || (workContextService.doneTodayArchived$ | async)
                   ) {
                     {{ T.WW.NO_PLANNED_TASK_ALL_DONE | translate }}
+                  } @else if (isProjectContext()) {
+                    <!-- "Planned" is day-planning wording; a project just has none. -->
+                    {{ T.WW.NO_TASKS_IN_PROJECT | translate }}
                   } @else {
                     {{ T.WW.NO_PLANNED_TASKS | translate }}
                   }
                 </h2>
               </div>
 
-              @if (!overdueTasks().length) {
+              <!-- Only where the list below has no inline "Add task" row, so the
+                   empty state offers one way to add. -->
+              @if (!overdueTasks().length && customizedUndoneTasks()?.groups) {
                 <div class="btn-wrapper">
                   <button
                     (click)="layoutService.showAddTaskBar()"

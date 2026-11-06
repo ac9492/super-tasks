@@ -35,7 +35,7 @@ test.describe('Fullscreen note editor toolbar on a phone', () => {
     await page.locator('.mat-mdc-menu-item', { hasText: 'Project Notes' }).first().tap();
 
     const noteText = `${testPrefix}-toolbar-note`;
-    await page.locator('#add-note-btn, button:has-text("Add new Note")').first().tap();
+    await page.locator('#add-note-btn, button:has-text("Add note")').first().tap();
     await fillMarkdownEditor(page.locator('dialog-fullscreen-markdown'), noteText);
     await page.locator('#T-save-note').tap();
     await expect(page.locator('dialog-fullscreen-markdown')).toBeHidden();

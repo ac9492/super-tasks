@@ -6,21 +6,26 @@
   padding: calc(var(--s) / 2) var(--s);
 }
 
-// Task-list section headings share one treatment, including user-made sections.
+// Task-list section headings share one treatment, including user-made sections:
+// a 32px type-only row (no rule under it: cards or separators, never both) with
+// the chevron in the same 24px leading slot as the cards' done toggles (centre
+// at the card's 1px border + 28) and the title on the 56px text column.
 :host(.task-section) .collapsible-header {
-  min-height: var(--bar-height);
-  padding: 0 var(--s);
-  gap: var(--s-half);
+  min-height: var(--ctl-sm);
+  padding: 0 var(--s) 0 calc(var(--s2) + var(--st-line-width));
+  gap: calc(var(--s2) - var(--st-line-width));
+  // The 16px above comes from the section's own margin in the list.
+  margin: 0 0 var(--s-half);
+  border-radius: var(--r-md);
   text-align: start;
-  border-bottom: 1px solid transparent;
 
   .collapsible-expand-icon {
     margin-right: 0;
     color: var(--text-color-muted);
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-    line-height: 18px;
+    font-size: var(--icon-md);
+    width: var(--icon-slot);
+    height: var(--icon-md);
+    line-height: var(--icon-md);
   }
 }
 
@@ -28,15 +33,9 @@
 // text, so a heading never reads as just another task row. No uppercase: section
 // titles can be long and user-authored, where caps only add width and noise.
 :host(.task-section) .collapsible-title {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: var(--letter-spacing-wide);
+  font: var(--type-label);
+  letter-spacing: var(--track-label);
   color: var(--text-color-muted);
-}
-
-:host(.task-section.isExpanded) .collapsible-header {
-  border-bottom-color: var(--divider-color);
-  margin-bottom: var(--s);
 }
 
 .collapsible-header {

@@ -31,8 +31,16 @@
     }
 
     @if (day.itemsTotal > 5) {
-      <mat-icon inline="true">checklist</mat-icon>
-      <span>{{ day.itemsTotal }}</span>
+      @let itemsTotalLabel =
+        T.F.PLANNER.ITEMS_TOTAL | translate: { count: day.itemsTotal };
+      <span
+        class="items-total"
+        [matTooltip]="itemsTotalLabel"
+      >
+        <mat-icon inline="true">checklist</mat-icon>
+        <span aria-hidden="true">{{ day.itemsTotal }}</span>
+        <span class="cdk-visually-hidden">{{ itemsTotalLabel }}</span>
+      </span>
     }
   </div>
 
@@ -106,6 +114,9 @@
   @if (day.scheduledIItems.length > 0) {
     <div class="section-title">
       <mat-icon>schedule</mat-icon>
+      <span class="cdk-visually-hidden">{{
+        T.F.PLANNER.SCHEDULED_ITEMS | translate
+      }}</span>
     </div>
   }
 
@@ -175,6 +186,7 @@
   <div class="deadlines">
     <div class="section-title">
       <mat-icon>flag</mat-icon>
+      <span class="cdk-visually-hidden">{{ T.F.PLANNER.DEADLINES | translate }}</span>
     </div>
 
     <div class="deadline-items">

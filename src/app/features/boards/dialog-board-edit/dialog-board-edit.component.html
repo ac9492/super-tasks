@@ -12,21 +12,21 @@
 
 <mat-dialog-actions align="end">
   <button
+    (click)="removeBoard()"
+    class="dialog-action-start"
+    mat-stroked-button
+    color="warn"
+    type="button"
+  >
+    {{ T.G.DELETE | translate }}
+  </button>
+  <button
     (click)="close()"
     mat-button
+    type="button"
   >
     {{ T.G.CANCEL | translate }}
   </button>
-
-  <button
-    (click)="removeBoard()"
-    mat-button
-    color="warn"
-  >
-    <mat-icon>delete_forever</mat-icon>
-    {{ T.G.DELETE | translate }}
-  </button>
-
   <button
     [disabled]="!boarEditCmp()?.form.valid"
     (click)="save()"
@@ -34,7 +34,6 @@
     mat-flat-button
     type="submit"
   >
-    <mat-icon>save</mat-icon>
     {{ T.G.SAVE | translate }}
   </button>
 </mat-dialog-actions>

@@ -53,10 +53,10 @@
 
     @if (isShowChecklistToggle() && isMarkdownFormattingEnabled()) {
       <!--  -->
+      @let taskListLabel = T.F.NOTE.D_FULLSCREEN.TOOLBAR.TASK_LIST | translate;
       <button
-        [matTooltip]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.TASK_LIST | translate"
-        [attr.aria-label]="T.F.NOTE.D_FULLSCREEN.TOOLBAR.TASK_LIST | translate"
-        [attr.aria-pressed]="isCurrentlyChecklist()"
+        [matTooltip]="taskListLabel"
+        [attr.aria-label]="taskListLabel"
         (mousedown)="$event.preventDefault()"
         (click)="toggleChecklistMode($event)"
         mat-icon-button
@@ -65,9 +65,10 @@
       </button>
     }
     @if (isCurrentlyChecklist()) {
+      @let checklistActionsLabel = T.F.TASK.ADDITIONAL_INFO.CHECKLIST_ACTIONS | translate;
       <button
-        [matTooltip]="T.F.TASK.ADDITIONAL_INFO.CHECKLIST_ACTIONS | translate"
-        [attr.aria-label]="T.F.TASK.ADDITIONAL_INFO.CHECKLIST_ACTIONS | translate"
+        [matTooltip]="checklistActionsLabel"
+        [attr.aria-label]="checklistActionsLabel"
         [matMenuTriggerFor]="checklistMenu"
         (mousedown)="$event.preventDefault()"
         mat-icon-button
@@ -98,9 +99,10 @@
         </button>
       </mat-menu>
     }
+    @let fullscreenLabel = T.F.TASK.ADDITIONAL_INFO.OPEN_IN_FULLSCREEN | translate;
     <button
-      [matTooltip]="T.F.TASK.ADDITIONAL_INFO.OPEN_IN_FULLSCREEN | translate"
-      [attr.aria-label]="T.F.TASK.ADDITIONAL_INFO.OPEN_IN_FULLSCREEN | translate"
+      [matTooltip]="fullscreenLabel"
+      [attr.aria-label]="fullscreenLabel"
       (mousedown)="$event.preventDefault()"
       (click)="openFullScreen()"
       mat-icon-button

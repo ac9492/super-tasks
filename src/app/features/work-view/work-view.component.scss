@@ -1,5 +1,18 @@
 @use '../../../styles/_globals.scss' as *;
 
+// Same rules as `.cdk-visually-hidden`: out of sight, still read out.
+@mixin visuallyHidden() {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 :host {
   overflow: hidden !important;
 }
@@ -29,22 +42,22 @@ h2 {
 }
 
 .work-view-header {
-  // Share the task column's responsive width and horizontal gutters.
+  // Shares the task column's width and gutters (it is a `.task-list-wrapper`)
+  // and starts on the same left edge: 8 below the header band, 16 above the
+  // list.
   padding-top: var(--s);
-  padding-bottom: var(--s);
+  padding-bottom: var(--s2);
   position: relative;
-  min-height: var(--bar-height-small);
+  min-height: 0;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  @include mq(xs) {
-    padding-top: var(--s2);
-    padding-bottom: var(--s2);
-  }
 
+  // Out of sight, not out of the accessibility tree: the bare numbers and
+  // icons need their names (the items' tooltips show them on hover).
   @include smallMainContainer() {
     .label {
-      display: none;
+      @include visuallyHidden();
     }
 
     p {
@@ -54,7 +67,7 @@ h2 {
 
   @include mq(xs, max) {
     .label {
-      display: none;
+      @include visuallyHidden();
     }
     p {
       margin: 0;
@@ -65,18 +78,19 @@ h2 {
 .status-bar {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: var(--s) var(--s3);
-  padding: var(--s-half) 0;
-  font-size: var(--font-size-sm);
+  padding: 0;
+  // Labels are meta and muted, values body-strong (below).
+  font: var(--type-meta);
   user-select: none;
 
   .item {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: var(--s-half);
     position: relative;
   }
@@ -101,18 +115,19 @@ h2 {
   }
 
   .time-val {
-    font-size: var(--font-size-md);
-    font-weight: var(--font-weight-medium);
+    font: var(--type-body-strong);
   }
 
   .no-wrap > mat-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
+    font-size: var(--icon-sm);
+    width: var(--icon-sm);
+    height: var(--icon-sm);
     color: var(--text-color-muted);
   }
 }
 
+// Hidden by size and opacity, not by visibility, so Tab still reaches the
+// button and its focus reveals it.
 .take-a-break-reset-btn {
   display: none;
   position: absolute;
@@ -122,32 +137,33 @@ h2 {
   transform: translateY(-50%) scale(0);
   transition: var(--transition-standard);
   opacity: 0;
-  visibility: hidden;
   @include mq(xs) {
     display: block;
   }
 }
 
-.item:hover .take-a-break-reset-btn {
+.item:hover .take-a-break-reset-btn,
+.take-a-break-reset-btn:focus-within {
   opacity: 1;
   transform: translateY(-50%) scale(1);
-  visibility: visible;
 }
 
 .hide-controls-icon {
   transform: rotate(90deg);
 }
 
+// Finish Day and "Move done to archive" are page-level actions: they start on
+// the column's left edge like the title and the summary line.
 finish-day-btn,
 .finish-day-button-wrapper {
-  text-align: center;
+  text-align: start;
   margin: var(--s2) 0 var(--s);
   padding-top: var(--s);
   display: block;
   white-space: nowrap;
 
   button {
-    margin: 0 var(--s);
+    margin: 0;
   }
 }
 
@@ -199,8 +215,9 @@ finish-day-btn,
   }
 }
 
+// Empty state: page-level, so it starts on the column's left edge too.
 .add-more-or-finish {
-  text-align: center;
+  text-align: start;
   padding-bottom: var(--s);
 
   .btn-wrapper {
@@ -219,32 +236,26 @@ finish-day-btn,
   }
 }
 
+// The picture and its line are one composition (the line sits under the sun):
+// the block starts on the column's left edge and centres its content inside its
+// own width.
 .no-tasks-illu-wrapper {
   position: relative;
   margin-bottom: var(--s4);
+  width: min(500px, 100%);
 
   img {
-    width: 500px;
+    width: 100%;
     display: block;
-    margin: auto;
-    border-radius: 8px;
-    max-width: 100%;
+    margin: 0;
+    border-radius: var(--r-md);
   }
 
   .no-tasks-label {
-    font-size: 17px;
-    @include center;
+    font: var(--type-heading);
+    margin: var(--s2) 0 0;
     text-align: center;
-    font-weight: 400;
     color: var(--text-color);
-
-    @include darkTheme() {
-      color: var(--text-color-most-intense);
-      font-weight: 500;
-      text-shadow:
-        0 0 2px black,
-        0 0 5px black;
-    }
   }
 }
 
@@ -264,7 +275,7 @@ finish-day-btn,
 .overdue-btn-wrapper {
   display: flex;
   gap: var(--s2);
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   padding-bottom: var(--s);
   padding-top: var(--s);

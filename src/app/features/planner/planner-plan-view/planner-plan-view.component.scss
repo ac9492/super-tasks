@@ -19,8 +19,9 @@
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
   box-sizing: border-box;
-  padding: var(--s3);
-  padding-top: 0;
+  // The same gutter as every page: the first day column starts under the
+  // header title.
+  padding: 0 var(--page-gutter) var(--s3);
   gap: var(--s2);
 
   @include mq(xs) {
@@ -31,7 +32,7 @@
     display: block;
     width: 100%;
     max-width: 100%;
-    padding: var(--s-half) var(--s2) var(--s2);
+    padding: var(--s-half) var(--page-gutter) var(--s2);
   }
 }
 

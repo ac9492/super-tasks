@@ -8,8 +8,8 @@ body:
     id: environment-version
     attributes:
       label: Version Used
-      description: Version number and package type (e.g., exe, snap, deb, installer).
-      placeholder: "e.g. 'v7.12.0 snap' or 'v2.2.1 firefox'"
+      description: Version number and package type (e.g. Windows Setup, Windows Portable, macOS DMG/ZIP, or a development build).
+      placeholder: "e.g. '0.1.0 Windows Setup.exe' or '0.1.0 Firefox'"
     validations:
       required: true
 

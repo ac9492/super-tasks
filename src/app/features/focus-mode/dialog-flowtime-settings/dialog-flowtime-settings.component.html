@@ -8,20 +8,19 @@
       (modelChange)="model.set($event)"
     ></formly-form>
   </form>
-  <div class="dialog-actions">
-    <span class="spacer"></span>
-    <button
-      mat-button
-      (click)="close()"
-    >
-      {{ T.G.CANCEL | translate }}
-    </button>
-    <button
-      mat-flat-button
-      color="primary"
-      (click)="save()"
-    >
-      {{ T.G.SAVE | translate }}
-    </button>
-  </div>
 </mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button
+    mat-button
+    (click)="close()"
+  >
+    {{ T.G.CANCEL | translate }}
+  </button>
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="save()"
+  >
+    {{ T.G.SAVE | translate }}
+  </button>
+</mat-dialog-actions>

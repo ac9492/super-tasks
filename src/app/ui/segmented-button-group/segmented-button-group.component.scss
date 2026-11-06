@@ -1,5 +1,7 @@
 @use '../../../styles/_globals.scss' as *;
 
+// A segmented choice (focus-mode type): 40px+ segments with a hairline and
+// --r-md corners; the chosen one is the tonal "selected" role, as everywhere.
 :host {
   display: block;
   width: 100%;
@@ -8,15 +10,8 @@
 .segmented-button-group {
   display: flex;
   min-width: 0;
-  gap: var(--s3);
+  gap: var(--s);
   padding: 0;
-  border-radius: var(--s4);
-  //background: var(--bg-lightest);
-  //box-shadow: 0 18px 45px var(--c-dark-20);
-
-  @include mq(xs, max) {
-    gap: var(--s);
-  }
 }
 
 .segment {
@@ -27,78 +22,51 @@
   gap: var(--s);
   flex: 1 1 0;
   min-width: 0;
-  border-radius: 16px;
-  padding: var(--s);
-  border: 1px solid var(--options-border-color);
-  background: var(--bg-lighter);
+  min-height: var(--ctl-md);
+  border-radius: var(--r-md);
+  padding: var(--s-half) var(--s2);
+  border: 1px solid var(--separator);
   background: transparent;
   cursor: pointer;
   color: var(--text-color);
   text-align: left;
   box-shadow: none;
-  border-width: 3px;
   transition:
-    transform var(--transition-duration-m) var(--ani-enter-timing),
-    box-shadow var(--transition-duration-m) var(--ani-enter-timing),
-    border-color var(--transition-duration-m) var(--ani-enter-timing),
-    background var(--transition-duration-m) var(--ani-enter-timing),
-    color var(--transition-duration-m) var(--ani-enter-timing);
+    background-color var(--transition-duration-s) var(--ani-enter-timing),
+    border-color var(--transition-duration-s) var(--ani-enter-timing);
 
   @include mousePrimaryDevice {
     &:not(.is-active):hover {
-      border-color: var(--options-border-color);
-      transform: translateY(-1px);
-      box-shadow: var(--whiteframe-shadow-8dp);
+      background: var(--state-hover);
     }
   }
 
   &.is-active {
-    border-color: var(--c-primary);
-    border-width: 3px;
-    box-shadow: var(--whiteframe-shadow-8dp);
-    transform: scale(1.1);
+    border-color: var(--palette-selected);
+    background: var(--palette-selected);
+    color: var(--palette-selected-ink);
   }
 
   @include mq(xs, max) {
     flex-direction: column;
     gap: var(--s-half);
     padding: var(--s-half);
-
-    &.is-active {
-      transform: none;
-    }
   }
 }
 
 .segment-icon {
-  font-size: 22px;
-  height: 22px;
-  width: 22px;
-  color: var(--text-color-more-intense);
-  transition: color var(--transition-duration-m) var(--ani-enter-timing);
+  font-size: var(--icon-md);
+  height: var(--icon-md);
+  width: var(--icon-md);
+  color: inherit;
 }
 
 .segment-label {
   min-width: 0;
-  font-weight: 600;
-  font-size: 15px;
+  font: var(--type-body-strong);
   white-space: normal;
   overflow-wrap: anywhere;
   text-align: center;
-
-  @include mq(xs, max) {
-    font-size: var(--font-size-md);
-  }
-}
-
-.segment-hint {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text-color-muted);
-  letter-spacing: 0.015em;
-  transition:
-    color var(--transition-duration-m) var(--ani-enter-timing),
-    opacity var(--transition-duration-m) var(--ani-enter-timing);
 }
 
 .segment.is-disabled {
@@ -107,8 +75,8 @@
 }
 
 .segment:focus-visible {
-  outline: 2px solid var(--c-primary);
-  outline-offset: 2px;
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
 }
 
 :host([data-size='md']) .segment {

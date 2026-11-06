@@ -27,9 +27,8 @@ import { T } from '../../../t.const';
   imports: [SelectTaskComponent, MatIcon, MatMiniFabButton, TranslatePipe],
 })
 export class FocusModeTaskSelectorComponent implements AfterViewInit {
-  private readonly _taskService = inject(TaskService);
-
   readonly T = T;
+  private readonly _taskService = inject(TaskService);
 
   readonly taskSelected = output<string>();
   readonly closed = output<void>();

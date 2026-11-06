@@ -112,6 +112,35 @@ describe('searchSettings', () => {
     }
   });
 
+  it('should find the Glass appearance setting', () => {
+    const [hit] = searchSettings(TABS, 'glass', translate);
+    expect(hit.scrollSelector).toBe('.st-glass-setting');
+    expect(hit.tabIndex).toBe(0);
+  });
+
+  it('should land the background image search on the Glass switch', () => {
+    const hit = searchSettings(TABS, 'bg_image', translate).find(
+      (result) => result.labelKey === 'F.ULTRA_TASKS.BG_IMAGE',
+    );
+    expect(hit?.scrollSelector).toBe('.st-glass-setting');
+  });
+
+  it('should find every Sound option under the Tasks & planning tab', () => {
+    for (const query of [
+      'volume',
+      'done_sound',
+      'pitch',
+      'break_reminder',
+      'track_time',
+    ]) {
+      const hits = searchSettings(TABS, query, translate);
+      expect(hits.length).withContext(query).toBe(1);
+      expect(hits[0].scrollSelector).withContext(query).toBe('.sound-section');
+      expect(hits[0].tabIndex).withContext(query).toBe(1);
+      expect(hits[0].tabLabelKey).withContext(query).toBe('PS.REDESIGN.TASKS');
+    }
+  });
+
   it('should return an empty array when nothing matches', () => {
     expect(searchSettings(TABS, 'zzz', translate)).toEqual([]);
   });

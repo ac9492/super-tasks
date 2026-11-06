@@ -10,11 +10,21 @@
     >
       <span class="expand-tasks-label">
         @if (isHideDone()) {
+          @let nrDone = doneTasksLength();
           {{
-            T.F.TASK.CMP.SHOW_HIDDEN_DONE_SUB_TASKS | translate: { nr: doneTasksLength() }
+            (nrDone === 1
+              ? T.F.TASK.CMP.SHOW_HIDDEN_DONE_SUB_TASKS_ONE
+              : T.F.TASK.CMP.SHOW_HIDDEN_DONE_SUB_TASKS
+            ) | translate: { nr: nrDone }
           }}
         } @else {
-          {{ T.F.TASK.CMP.SHOW_HIDDEN_SUB_TASKS | translate: { nr: allTasksLength() } }}
+          @let nrAll = allTasksLength();
+          {{
+            (nrAll === 1
+              ? T.F.TASK.CMP.SHOW_HIDDEN_SUB_TASKS_ONE
+              : T.F.TASK.CMP.SHOW_HIDDEN_SUB_TASKS
+            ) | translate: { nr: nrAll }
+          }}
         }
       </span>
       <mat-icon>expand_more</mat-icon>

@@ -6,7 +6,7 @@
 
 Ultra Tasks is an independent, UX-focused fork of [Super Productivity](https://github.com/super-productivity/super-productivity). It builds on that project's local-first task management, time tracking, integrations, and sync foundation, with a focus on making daily work easier to understand and faster to manage.
 
-**Status: early development.** The fork already includes desktop improvements, but the public release process and cross-client sync validation are still being prepared. It is not an official Super Productivity release.
+**Status: early development.** Ultra Tasks 0.1.0 is the first public desktop release, for Windows and macOS. Cross-client sync validation is still in progress. It is not an official Super Productivity release.
 
 Maintained and published by **Adrian Chase**. The planned project website is [ultratasks.app](https://ultratasks.app); downloads and support are available through this GitHub repository while the website is being set up.
 
@@ -29,9 +29,9 @@ The direction is practical: improve frequent interactions, keep the interface ca
 
 These additions sit on top of the inherited tasks, projects, tags, notes, planning, time-tracking, and integration features. Some changes may also exist in newer upstream versions.
 
-The first workspace refresh adds restrained glass panels, a folded-corner green checkmark identity, search at the top of navigation, clearer active navigation, a visible capture destination, and direct scheduling actions.
+The first workspace refresh adds restrained glass panels, a white checkmark on a deep-teal tile as the app identity, search at the top of navigation, clearer active navigation, a visible capture destination, and direct scheduling actions.
 
-**Glass appearance** can be disabled under Settings → General → Appearance. Its preference stays on the device, outside synced task data, and accessibility preferences can force solid panels.
+**Glass appearance** frosts the navigation and header over a slight, blurred view of the desktop (macOS and Windows 11 desktop app) or of your background image or palette gradient (web, mobile, Linux). It can be turned off under Settings → General → Appearance; the switch stays on the device, outside synced task data, and accessibility preferences can force solid panels.
 
 ## Three UX priorities
 
@@ -55,9 +55,9 @@ Keep a backup before trying development builds. The separate Ultra Tasks data fo
 
 ## Downloads and release status
 
-There is no public packaged Ultra Tasks release yet. Public packages, when available, will be listed under [Ultra Tasks Releases](https://github.com/ac9492/ultra-tasks/releases); upstream app-store links install Super Productivity.
+Download Ultra Tasks 0.1.0 from the [latest Ultra Tasks release](https://github.com/ac9492/ultra-tasks/releases/latest): a Setup installer or Portable app for Windows, and DMG or ZIP downloads for macOS on Apple Silicon (`arm64`) or Intel (`x64`), plus a universal DMG. `SHA256SUMS.txt` lists a checksum for every download. Upstream app-store links install Super Productivity.
 
-Windows installer/portable builds and macOS Apple Silicon/Intel builds have been produced during development. Current Windows builds are unsigned. Current Mac builds are ad-hoc signed and are not Apple-notarized. Public signing, installation verification, and automatic-update distribution remain release work in progress.
+Windows builds are unsigned, so SmartScreen may ask for confirmation. Mac builds are ad-hoc signed and are not Apple-notarized; macOS may require approval under System Settings → Privacy & Security. There are no Linux, mobile, or app-store builds, and the app does not update itself: the optional update check only tells you when a newer release is available.
 
 ## Build from source
 

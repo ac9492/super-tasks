@@ -215,11 +215,13 @@
         </div>
       }
       @if (task().deadlineWithTime || task().deadlineDay) {
+        @let removeDeadlineLabel = T.F.TASK.CMP.REMOVE_DEADLINE | translate;
         <button
           mat-icon-button
           class="quick-chip"
           (click)="removeDeadline($event)"
-          [matTooltip]="T.F.TASK.CMP.REMOVE_DEADLINE | translate"
+          [matTooltip]="removeDeadlineLabel"
+          [attr.aria-label]="removeDeadlineLabel"
         >
           <mat-icon>close</mat-icon>
         </button>

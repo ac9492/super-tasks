@@ -1,7 +1,7 @@
 <form (submit)="$event.preventDefault(); save()">
-  <h1 mat-dialog-title>
+  <h2 mat-dialog-title>
     {{ T.F.METRIC.FOCUS_SESSION_DIALOG.TITLE | translate }} - {{ formatSelectedDate() }}
-  </h1>
+  </h2>
 
   <mat-dialog-content>
     @if (chartData()) {
@@ -121,7 +121,6 @@
       color="primary"
       type="submit"
     >
-      <mat-icon>save</mat-icon>
       {{ T.G.SAVE | translate }}
     </button>
   </mat-dialog-actions>

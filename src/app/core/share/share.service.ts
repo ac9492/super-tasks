@@ -294,7 +294,6 @@ export class ShareService {
         await import('./dialog-share/dialog-share.component');
 
       const dialogRef = this._matDialog.open(DialogShareComponent, {
-        width: '500px',
         data: {
           payload,
           showNative: await SharePlatformUtil.isSystemShareAvailable(),

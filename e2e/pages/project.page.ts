@@ -665,8 +665,8 @@ export class ProjectPage extends BasePage {
     // Handle confirmation dialog
     const confirmDialog = this.page.locator('dialog-confirm');
     await confirmDialog.waitFor({ state: 'visible', timeout: 3000 });
-    // Click "Ok" button to confirm deletion
-    const confirmBtn = confirmDialog.locator('button').filter({ hasText: /ok/i });
+    // Click the confirm ("Delete") button
+    const confirmBtn = confirmDialog.locator('button[e2e="confirmBtn"]');
     await confirmBtn.click();
     await confirmDialog.waitFor({ state: 'hidden', timeout: 3000 });
 

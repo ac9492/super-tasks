@@ -170,7 +170,7 @@ test.describe('@migration #9770 legacy data missing newer model slices', () => {
       // Real copy, not a raw translation key — the dialog resolves its strings
       // before the app's normal language setup has run.
       await expect(dialog.locator('.error-message')).not.toContainText('MIGRATE.');
-      await expect(dialog.locator('h1')).toHaveText('Migration Failed');
+      await expect(dialog.locator('h2')).toHaveText('Migration Failed');
 
       // Offered unconditionally: the way out keeps the legacy database, so
       // there is no copy at risk and nothing to gate on.

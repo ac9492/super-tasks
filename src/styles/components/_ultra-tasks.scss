@@ -1,4 +1,4 @@
-// Fork presentation only; glass is confined to shell surfaces.
+// Fork presentation only. Glass rules live in _glass.scss.
 body.ultra-tasks {
   .app-container {
     background: radial-gradient(
@@ -11,21 +11,31 @@ body.ultra-tasks {
   .nav-sidenav {
     border-inline-end: var(--st-line-width) solid var(--separator);
   }
+  // Brand row: the same 56px band as the page header, inset like the nav rows
+  // (8), with the logo centred on the nav's icon axis (x=28): a 28px mark in the
+  // 24px icon slot, so it sits on the same column as every row's icon.
   .st-brand {
     display: flex;
     align-items: center;
-    gap: var(--s);
-    padding: var(--s) var(--s-half);
-    margin-bottom: var(--s);
+    gap: var(--s1-5);
+    height: var(--bar-height-large);
+    margin: 0 var(--s) var(--s);
+    padding: 0 var(--s);
     color: var(--text-color);
     text-decoration: none;
-    font-weight: bold;
-    font-size: var(--font-size-lg);
-    border-radius: var(--st-radius);
+    font: var(--type-heading);
+    border-radius: var(--r-md);
+  }
+  .st-brand img {
+    flex: none;
+    width: 28px;
+    height: 28px;
+    margin-inline: calc(-1 * var(--s-quarter));
   }
   .nav-sidenav .nav-list {
-    --pt: var(--s);
-    min-height: calc(100% - var(--s6) - var(--s2));
+    // The brand row above owns the top inset.
+    --pt: 0px;
+    min-height: calc(100% - var(--bar-height-large) - var(--s));
   }
   .st-brand-name {
     white-space: nowrap;
@@ -33,165 +43,175 @@ body.ultra-tasks {
   .compactMode .st-brand-name {
     display: none;
   }
+  // In the rail the mode toggle is centred at the top: keep the logo below it.
+  .compactMode .st-brand {
+    justify-content: center;
+    margin-top: var(--s6);
+    padding: 0;
+  }
   .st-brand:focus-visible {
-    outline: var(--st-focus-width) solid var(--st-brand);
+    outline: var(--st-focus-width) solid var(--palette-focus-ring);
     outline-offset: var(--s-half);
   }
-  nav-item .nav-link.active {
-    border-inline-start: var(--st-focus-width) solid var(--st-brand);
-    background: color-mix(in srgb, var(--st-brand) var(--st-tint-alpha), var(--bg));
-    font-weight: bold;
+
+  // Selected is one tonal role everywhere (active nav row, active bottom-nav
+  // item, the task open in the panel, a chosen segment): the --palette-selected
+  // fill, its paired ink and a filled icon. Filled accent is reserved for the
+  // single primary action of a surface. The nav row's own colour rules (Material
+  // menu-item, `--sidenav-text`) are overridden here, scoped to the row.
+  nav-item .nav-link.active,
+  nav-item .nav-link.active:is(:hover, :focus, :focus-visible) {
+    --text-color: var(--palette-selected-ink);
+    --text-color-less-intense: var(--palette-selected-ink);
+    --text-color-most-intense: var(--palette-selected-ink);
+    --text-color-muted: var(--palette-selected-ink-muted);
+    --ink: var(--palette-selected-ink);
+    --ink-strong: var(--palette-selected-ink);
+    --ink-muted: var(--palette-selected-ink-muted);
+    background: var(--palette-selected) !important;
+    color: var(--palette-selected-ink) !important;
+    font-weight: var(--font-weight-semibold);
+
+    .nav-label,
+    .nav-icon,
+    .mat-mdc-menu-item-text {
+      color: var(--palette-selected-ink) !important;
+    }
+    .nav-icon {
+      font-variation-settings: 'FILL' 1;
+    }
+  }
+  nav-item .nav-link.active ~ .task-count {
+    color: var(--palette-selected-ink) !important;
   }
   task {
     --task-list-row-gap: var(--s-half);
     --task-separator: none;
-    --task-border-radius: var(--st-radius);
-    --task-border-color: color-mix(
-      in srgb,
-      var(--palette-surface-ink) calc(var(--border-alpha) * 100%),
-      var(--card-bg)
-    );
-    border-radius: var(--st-radius);
+    --task-border-radius: var(--r-md);
+  }
+  // Recurring-task rows (Recurring tasks page) are the same card.
+  task,
+  .repeat-task-cfg {
+    --task-border-color: var(--palette-border);
+    border-radius: var(--r-md);
     background: var(--card-bg);
   }
-  // Keep all card edges, including those suppressed by flat-row/subtask styles.
+  .repeat-task-cfg {
+    margin-bottom: var(--s-half);
+  }
+  // Keep all card edges, including those suppressed by flat-row styles.
   task,
   task:last-of-type,
+  .repeat-task-cfg {
+    border: var(--st-line-width) solid var(--task-border-color);
+  }
+  // Cards or separators, never both and never nested: subtasks are rows inside
+  // the parent card, with no border, radius or fill of their own, divided from
+  // each other by a hairline. They also get cheaper to paint.
+  .sub-tasks task,
   .sub-tasks task:first-of-type,
   .sub-tasks task:last-of-type {
-    border: var(--st-line-width) solid var(--task-border-color);
+    border: 0;
+    border-top: var(--st-line-width) solid var(--task-border-color);
+    border-radius: 0;
+    background: transparent;
+    margin: 0;
+  }
+  .sub-tasks task:first-of-type {
+    border-top: 0;
+  }
+  // Tracking (the current task) is an accent edge, no extra paint; the tint
+  // belongs to "selected". Subtasks show it through their play indicator.
+  task.isCurrent {
+    --task-border-color: var(--palette-accent-text);
+  }
+  .sub-tasks task.isCurrent {
+    --task-border-color: var(--palette-border);
   }
   task .time-wrapper {
     font-variant-numeric: tabular-nums;
   }
+  // "Adding to ..." line of the capture bar: meta type, no rule (the action
+  // row's own hairline separates the two).
   .st-capture-context {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: var(--s-half);
-    padding: var(--s-half) var(--s);
+    padding: var(--s) var(--s2) 0;
     color: var(--text-color-less-intense);
-    font-size: var(--font-size-sm);
-    border-bottom: var(--st-line-width) solid var(--separator);
+    font: var(--type-meta);
   }
   .st-capture-context strong {
     color: var(--text-color);
+    font-weight: var(--font-weight-semibold);
   }
   .st-capture-context mat-icon {
-    font-size: var(--font-size-lg);
-    width: var(--s2);
-    height: var(--s2);
+    font-size: var(--icon-sm);
+    width: var(--icon-sm);
+    height: var(--icon-sm);
   }
+  // Detail panel title: flat, a heading in the same 56px band as the page
+  // header, one hairline under it (no box, no second rule).
   task-detail-panel .task-title-wrapper {
-    border-radius: var(--st-radius);
-    background: var(--card-bg);
-    border-bottom: var(--st-line-width) solid var(--separator) !important;
+    border-bottom: var(--st-line-width) solid var(--separator);
   }
+  // Two outlined actions, not a pair of bordered boxes: the same 40px control
+  // the rest of the app uses.
   .st-planning-actions {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--s);
-    margin: var(--s);
+    margin: var(--s2) var(--s2) var(--s);
   }
   .st-planning-actions button {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--s-half);
-    padding: var(--s);
-    border: var(--st-line-width) solid var(--separator);
-    border-radius: var(--st-radius);
-    background: var(--card-bg);
+    gap: var(--s);
+    height: var(--ctl-md);
+    padding: 0 var(--s1-5);
+    border: var(--st-line-width) solid var(--palette-outline);
+    border-radius: var(--r-md);
+    background: transparent;
     color: var(--text-color);
-    font: inherit;
+    font: var(--type-body);
     cursor: pointer;
   }
+  .st-planning-actions button mat-icon {
+    font-size: var(--icon-md);
+    width: var(--icon-md);
+    height: var(--icon-md);
+  }
   .st-planning-actions button:hover {
-    background: var(--bg-lighter);
+    background: var(--state-hover);
   }
   .st-planning-actions button:focus-visible {
-    outline: var(--st-focus-width) solid var(--st-brand);
+    outline: var(--st-focus-width) solid var(--palette-focus-ring);
+    outline-offset: var(--focus-ring-offset);
   }
   .st-date-hint {
-    margin: var(--s);
-    padding: var(--s);
-    border-inline-start: var(--st-focus-width) solid var(--st-brand);
+    margin: 0 var(--s2) var(--s);
+    padding: 0 0 0 var(--s1-5);
+    border-inline-start: var(--st-focus-width) solid var(--palette-outline);
     color: var(--text-color-less-intense);
-    font-size: var(--font-size-sm);
-    line-height: 1.6;
-  }
-}
-@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
-  body.ultra-tasks .nav-sidenav,
-  body.ultra-tasks main-header .wrapper {
-    background: var(--bg) !important;
-    backdrop-filter: none !important;
-  }
-}
-
-body.ultra-tasks:has(.bg-image) .app-container {
-  background: transparent;
-}
-
-// One blur per shell panel, never one per task in a long list.
-// Explicit priority overrides the inherited wallpaper milkglass rules so the
-// local opt-out and accessibility preferences remain authoritative.
-body.ultra-tasks:not(:has(.st-solid)) {
-  .nav-sidenav,
-  main-header .wrapper,
-  .right-panel {
-    background: color-mix(
-      in srgb,
-      var(--bg) var(--st-glass-alpha),
-      transparent
-    ) !important;
-    backdrop-filter: blur(var(--st-blur)) !important;
-  }
-  task {
-    background: color-mix(in srgb, var(--card-bg) var(--st-card-alpha), transparent);
-  }
-}
-body.ultra-tasks:has(.st-solid) {
-  .nav-sidenav,
-  main-header .wrapper,
-  .right-panel {
-    background: var(--bg) !important;
-    backdrop-filter: none !important;
+    font: var(--type-meta);
   }
 }
 body.ultra-tasks {
+  // Search is a field-like entry, not a pill: the same box as the inputs, 40
+  // tall, inset 8 like every nav row.
   .st-search-entry {
     margin-bottom: var(--s);
   }
   .st-search-entry .nav-link {
-    border: var(--st-line-width) solid var(--separator);
-    border-radius: var(--st-radius);
+    border: var(--st-line-width) solid var(--palette-outline);
+    border-radius: var(--r-md);
+    // The border takes 1px of the row's 8px inset: the icon stays on the
+    // column of the rows below.
+    padding-inline: calc(var(--s) - var(--st-line-width));
+  }
+  .st-search-entry .nav-link:not(.active) {
     background: var(--card-bg);
-  }
-  .st-glass-setting {
-    display: flex;
-    align-items: center;
-    gap: var(--s);
-    padding: var(--s2);
-    color: var(--text-color);
-    cursor: pointer;
-  }
-  .st-glass-setting small {
-    display: block;
-    margin-top: var(--s-half);
-    color: var(--text-color-less-intense);
-  }
-}
-@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
-  body.ultra-tasks:not(:has(.st-solid)) {
-    .nav-sidenav,
-    main-header .wrapper,
-    .right-panel {
-      background: var(--bg) !important;
-      backdrop-filter: none !important;
-    }
-    task {
-      background: var(--card-bg);
-    }
   }
 }

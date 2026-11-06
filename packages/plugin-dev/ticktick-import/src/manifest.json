@@ -4,7 +4,7 @@
   "name": "TickTick Import",
   "version": "1.0.0",
   "minSupVersion": "18.0.0",
-  "description": "One-time import of your open TickTick tasks, sub-tasks, checklists, tags and due dates from a TickTick backup file. Additive — your existing Super Productivity data is never touched.",
+  "description": "One-time import of your open TickTick tasks, sub-tasks, checklists, tags and due dates from a TickTick backup file. Additive — your existing Ultra Tasks data is never touched.",
   "author": "SuperProductivity",
   "homepage": "https://github.com/super-productivity/super-productivity",
   "hooks": [],

@@ -13,12 +13,8 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { T } from '../../../t.const';
 import { GlobalThemeService } from '../global-theme.service';
 import { PaletteThemeService } from '../palette-theme.service';
-import {
-  contrastingInk,
-  DEFAULT_PALETTE,
-  PaletteColors,
-  PalettePair,
-} from '../palette.util';
+import { normalizePalette } from '../palette-normalize.util';
+import { DEFAULT_PALETTE, PaletteColors, PalettePair } from '../palette.util';
 
 @Component({
   selector: 'theme-selector',
@@ -42,12 +38,24 @@ export class ThemeSelectorComponent {
   readonly mode = computed(() =>
     this.globalThemeService.isDarkTheme() ? 'dark' : 'light',
   );
+  /** Raw chosen colors: the inputs show what the user picked. */
   readonly colors = computed(() => this.paletteService.palettes()[this.mode()]);
+  /** Normalised roles: the preview shows what the app paints. */
+  readonly roles = computed(() => this.paletteService.roles(this.mode() === 'dark'));
   readonly previewInk = computed(() => ({
-    background: contrastingInk(this.colors().background),
-    surface: contrastingInk(this.colors().surface),
-    accent: contrastingInk(this.colors().accent),
+    background: this.roles().backgroundInk,
+    surface: this.roles().surfaceInk,
+    accent: this.roles().accentInk,
   }));
+  /** One hint line when normalisation changed a chosen color. */
+  readonly adjustedHint = computed(() => {
+    const roles = this.roles();
+    if (!Object.values(roles.adjusted).some(Boolean)) return null;
+    if (!roles.isOtherModeColor) return T.GCF.MISC.PALETTE.ADJUSTED;
+    return roles.mode === 'dark'
+      ? T.GCF.MISC.PALETTE.ADJUSTED_DARK
+      : T.GCF.MISC.PALETTE.ADJUSTED_LIGHT;
+  });
   readonly colorFields: { key: keyof PaletteColors; label: string }[] = [
     { key: 'background', label: T.GCF.MISC.PALETTE.BACKGROUND },
     { key: 'surface', label: T.GCF.MISC.PALETTE.SURFACE },
@@ -77,18 +85,22 @@ export class ThemeSelectorComponent {
       },
     },
   ];
-  readonly presets = computed(() =>
-    this._presets.map((preset) => {
-      const colors = preset.colors[this.mode()];
-      return {
-        ...preset,
-        swatches: [colors.background, colors.surface, colors.accent],
-        selected:
-          JSON.stringify(preset.colors) ===
-          JSON.stringify(this.paletteService.palettes()),
-      };
-    }),
-  );
+  // Normalised per mode only, not on every color edit.
+  private readonly _presetSwatches = computed(() => {
+    const mode = this.mode();
+    return this._presets.map((preset) => {
+      const roles = normalizePalette(preset.colors[mode], mode);
+      return [roles.background, roles.surface, roles.accent];
+    });
+  });
+  readonly presets = computed(() => {
+    const current = JSON.stringify(this.paletteService.palettes());
+    return this._presets.map((preset, index) => ({
+      ...preset,
+      swatches: this._presetSwatches()[index],
+      selected: JSON.stringify(preset.colors) === current,
+    }));
+  });
 
   updateColor(key: keyof PaletteColors, event: Event): void {
     this.paletteService.updateColor(
