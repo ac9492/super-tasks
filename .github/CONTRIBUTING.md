@@ -2,6 +2,10 @@
 
 Ultra Tasks is independently maintained and published by Adrian Chase ([@ac9492](https://github.com/ac9492)). Please bring fork-specific questions, bug reports, and ideas to the [Ultra Tasks issue tracker](https://github.com/ac9492/ultra-tasks/issues). For private vulnerability reports, follow the [security policy](../SECURITY.md).
 
+## Licensing contributions
+
+Ultra Tasks' combined distribution is **AGPL-3.0-only**, preserving upstream MIT rights. Contributors retain copyright but are asked to affirmatively accept the non-exclusive, sublicensable and relicensable inbound grant in our [Contributor License Agreement](../CONTRIBUTOR_LICENSE_AGREEMENT.md) using the dedicated PR checkbox (or equivalent explicit PR comment). Read [LICENSING.md](../LICENSING.md), disclose third-party intellectual property and retain notices. The project should not merge original contributions without recorded assent.
+
 ## Things that would help
 
 ### Feedback
