@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
 import androidx.work.testing.TestListenableWorkerBuilder
+import com.superproductivity.superproductivity.crypto.NativeSnapshotVerifier
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
@@ -87,7 +88,10 @@ class NativeAccountInstrumentedTest {
                 val source = if (request.path!!.contains(project.getJSONObject("trusted").getString("id"))) project else personal
                 val snapshot = JSONObject(source.getJSONObject("snapshot").toString())
                 if (source === project) snapshot.getJSONArray("heads").getJSONObject(0).getJSONObject("record").getJSONObject("header").put("counter", 99)
-                return MockResponse().setBody(snapshot.toString())
+                // Match the real JS server's well-formed JSON strings. Android
+                // JSONObject.toString() leaves lone surrogates unescaped; UTF-8
+                // encoding would replace them and invalidate the signed header.
+                return MockResponse().setBody(NativeSnapshotVerifier.canonical(snapshot))
             }
         }
         TestListenableWorkerBuilder<NativeAccountReminderWorker>(context).build().doWork()
