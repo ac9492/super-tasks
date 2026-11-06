@@ -5,10 +5,11 @@
         [matTooltip]="sc.title"
         class="simple-counter-item"
       >
-        @if (sc.icon && sc.icon.startsWith(':')) {
-          <mat-icon [svgIcon]="sc.icon"></mat-icon>
-        } @else if (sc.icon) {
-          <mat-icon>{{ sc.icon }}</mat-icon>
+        @let icon = sc | simpleCounterIcon;
+        @if (icon && icon.startsWith(':')) {
+          <mat-icon [svgIcon]="icon"></mat-icon>
+        } @else if (icon) {
+          <mat-icon>{{ icon }}</mat-icon>
         } @else {
           <span class="habit-initial">{{ sc.title.charAt(0).toUpperCase() }}</span>
         }

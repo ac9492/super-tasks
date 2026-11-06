@@ -41,7 +41,7 @@ test('should not crash when a repeat config has an invalid startTime in the stor
   // Set a valid startTime so the config has startTime + remindAt in the store
   const scheduleDialog = await openRecurScheduleDialog(page);
 
-  const startTimeField = scheduleDialog.getByLabel('Time');
+  const startTimeField = scheduleDialog.getByLabel('Time', { exact: true });
   await expect(startTimeField).toBeVisible({ timeout: 5000 });
   await startTimeField.fill('10:30');
   await startTimeField.blur();

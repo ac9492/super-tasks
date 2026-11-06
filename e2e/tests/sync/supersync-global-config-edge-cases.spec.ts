@@ -8,6 +8,7 @@ import {
 } from '../../utils/supersync-helpers';
 import {
   navigateToMiscSettings,
+  closeSettings,
   toggleSetting,
   isSettingChecked,
   ensureSettingState,
@@ -79,6 +80,7 @@ test.describe('@supersync Global Config Sync Edge Cases', () => {
       // Client A toggles "Disable all animations" ON
       await navigateToMiscSettings(clientA.page);
       await ensureSettingState(clientA.page, 'Disable all animations', true);
+      await closeSettings(clientA.page);
       await clientA.sync.syncAndWait();
       console.log('[3Client] Client A set animations=ON, synced');
 
@@ -89,6 +91,7 @@ test.describe('@supersync Global Config Sync Edge Cases', () => {
       // Client B toggles "Disable all animations" OFF (earlier timestamp)
       await navigateToMiscSettings(clientB.page, true);
       await ensureSettingState(clientB.page, 'Disable all animations', false);
+      await closeSettings(clientB.page);
       await clientB.sync.syncAndWait();
       console.log('[3Client] Client B set animations=OFF, synced');
 
@@ -98,6 +101,7 @@ test.describe('@supersync Global Config Sync Edge Cases', () => {
       // Client C toggles "Disable celebration" ON (later timestamp)
       await navigateToMiscSettings(clientC.page, true);
       await ensureSettingState(clientC.page, 'Disable celebration', true);
+      await closeSettings(clientC.page);
       await clientC.sync.syncAndWait();
       console.log('[3Client] Client C set celebration=ON, synced');
 
@@ -197,7 +201,8 @@ test.describe('@supersync Global Config Sync Edge Cases', () => {
       expect(afterToggles).toBe(initialState);
       console.log(`[RapidToggle] After toggles: ${afterToggles}`);
 
-      // Sync
+      // Sync (the settings window's backdrop would swallow the sync click)
+      await closeSettings(clientA.page);
       await clientA.sync.syncAndWait();
       await clientB.sync.syncAndWait();
       await clientA.sync.syncAndWait();

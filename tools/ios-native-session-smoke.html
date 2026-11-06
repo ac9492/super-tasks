@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    <title>Native session test</title>
+  </head>
+  <body style="background: white; color: black; font: 28px monospace; padding: 40px 12px">
+    <p id="result">Native session test running</p>
+    <script>
+      // Test-only asset installed into a fresh simulator by native-sync-ios.yml.
+      // No network requests, real credentials, or distributed app assets.
+      const command = (method, input = {}) =>
+        window.Capacitor.nativePromise('NativeAccount', 'command', { method, input });
+      const assert = (condition) => {
+        if (!condition) throw new Error('Unexpected session state');
+      };
+      const absent = async (identity) => {
+        let rejected = false;
+        try {
+          await command('current', identity);
+        } catch {
+          rejected = true;
+        }
+        assert(rejected);
+      };
+      const run = async () => {
+        const identity = { serverId: 'ios-test-server', accountId: 'ios-test-account' };
+        const baseUrl = 'https://example.invalid';
+        await command('clear');
+        await command('configure', {
+          ...identity,
+          baseUrl,
+          tokens: {
+            accessToken: 'test-access',
+            refreshToken: 'test-refresh',
+            expiresIn: 600,
+          },
+        });
+        assert((await command('current', identity)).refreshToken === 'test-refresh');
+        await command('bootstrap', {
+          ...identity,
+          baseUrl,
+          refreshToken: 'obsolete-cache',
+        });
+        assert((await command('current', identity)).refreshToken === 'test-refresh');
+        assert((await command('detach', identity)).refreshToken === 'test-refresh');
+        await absent(identity);
+        await command('bootstrap', {
+          ...identity,
+          baseUrl,
+          refreshToken: 'offline-cache',
+        });
+        assert((await command('detach', identity)).refreshToken === 'offline-cache');
+        await absent(identity);
+        document.getElementById('result').textContent = 'ULTRA NATIVE KEYCHAIN PASS';
+      };
+      const start = async () => {
+        for (let attempt = 0; attempt < 40; attempt++) {
+          if (window.Capacitor?.nativePromise) break;
+          await new Promise((resolve) => setTimeout(resolve, 250));
+        }
+        try {
+          await run();
+        } catch {
+          document.getElementById('result').textContent = 'ULTRA NATIVE KEYCHAIN FAILED';
+        }
+      };
+      void start();
+    </script>
+  </body>
+</html>

@@ -24,4 +24,7 @@ export enum SimpleStoreKey {
   // Main-owned, never-synced assistant (MCP) access switch and granted scopes.
   // The credential itself is never stored, only a verifier in a 0600 file.
   ASSISTANT_ACCESS = 'assistantAccess',
+  // Main-owned, never-synced mirror of the device-local Glass appearance
+  // choice, so the next window starts with the right OS material (no flash).
+  NATIVE_GLASS = 'nativeGlass',
 }

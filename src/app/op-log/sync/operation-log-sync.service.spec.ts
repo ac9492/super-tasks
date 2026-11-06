@@ -436,6 +436,31 @@ describe('OperationLogSyncService', () => {
 
   // NOTE: Tests for handleRejectedOps have been moved to rejected-ops-handler.service.spec.ts
 
+  it('prepares the native projection inside the remote window without keeping old ops', async () => {
+    const snapshotState = { task: { ids: [] } };
+    const nativeBaseline = { id: 'native-sync-active', data: { namespace: 'account' } };
+    const prepare = jasmine.createSpy('prepare').and.callFake(async () => {
+      expect(writeFlushServiceSpy.flushPendingWrites).toHaveBeenCalled();
+      expect(hydrationStateServiceSpy.startApplyingRemoteOps).toHaveBeenCalled();
+      expect(hydrationStateServiceSpy.endApplyingRemoteOps).not.toHaveBeenCalled();
+      return { snapshotState, nativeBaseline };
+    });
+    const hydration = TestBed.inject(
+      SyncHydrationService,
+    ) as jasmine.SpyObj<SyncHydrationService>;
+
+    await service.applyNativeSnapshot(prepare);
+
+    expect(prepare).toHaveBeenCalledTimes(1);
+    expect(hydration.hydrateFromRemoteSync).toHaveBeenCalledWith(
+      snapshotState,
+      undefined,
+      jasmine.objectContaining({ nativeBaseline, keepPendingOps: undefined }),
+    );
+    expect(hydrationStateServiceSpy.endApplyingRemoteOps).toHaveBeenCalledTimes(1);
+    expect(operationApplierSpy.applyOperations).not.toHaveBeenCalled();
+  });
+
   describe('localWinOpsCreated propagation', () => {
     let uploadServiceSpy: jasmine.SpyObj<OperationLogUploadService>;
     let downloadServiceSpy: jasmine.SpyObj<OperationLogDownloadService>;

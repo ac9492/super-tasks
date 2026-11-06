@@ -1,5 +1,6 @@
 import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { MatIcon } from '@angular/material/icon';
 
 export type RocketState = `pulse-${number}` | 'launch';
 
@@ -8,7 +9,7 @@ export type RocketState = `pulse-${number}` | 'launch';
   standalone: true,
   templateUrl: './focus-mode-preparation-rocket.component.html',
   styleUrls: ['./focus-mode-preparation-rocket.component.scss'],
-  imports: [NgClass],
+  imports: [NgClass, MatIcon],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FocusModePreparationRocketComponent {

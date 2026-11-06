@@ -50,12 +50,13 @@ import { sanitizeSvgIconContent } from '../../../util/sanitize-svg-icon.util';
         display: flex;
         align-items: center;
         justify-content: center;
+        /* Inherit monochrome paint while honoring SVGs that explicitly use fill="none". */
+        fill: currentColor;
       }
 
       .plugin-svg-icon ::ng-deep svg {
         width: 100%;
         height: 100%;
-        fill: currentColor;
       }
     `,
   ],

@@ -10,11 +10,12 @@ import { ShareDialogOptions, ShareResult, ShareTarget } from '../share.model';
 import { ShareFormatter } from '../share-formatter';
 import { T } from '../../../t.const';
 import { TranslatePipe } from '@ngx-translate/core';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 interface ShareTargetButton {
   target: ShareTarget;
   label: string;
-  icon: string;
+  icon?: string;
   color?: string;
 }
 
@@ -34,6 +35,7 @@ interface ShareTargetButton {
   ],
 })
 export class DialogShareComponent {
+  private readonly _dialogSize = useDialogSize('m');
   private _dialogRef = inject(MatDialogRef<DialogShareComponent>);
   private _shareService = inject(ShareService);
 
@@ -43,14 +45,14 @@ export class DialogShareComponent {
   mastodonInstance = this.data.mastodonInstance || 'mastodon.social';
 
   readonly shareTargets: ShareTargetButton[] = [
-    { target: 'twitter', label: 'Twitter / X', icon: 'link' },
-    { target: 'linkedin', label: 'LinkedIn', icon: 'link' },
-    { target: 'reddit', label: 'Reddit', icon: 'link' },
-    { target: 'facebook', label: 'Facebook', icon: 'link' },
-    { target: 'whatsapp', label: 'WhatsApp', icon: 'chat' },
-    { target: 'telegram', label: 'Telegram', icon: 'send' },
+    { target: 'twitter', label: 'Twitter / X' },
+    { target: 'linkedin', label: 'LinkedIn' },
+    { target: 'reddit', label: 'Reddit' },
+    { target: 'facebook', label: 'Facebook' },
+    { target: 'whatsapp', label: 'WhatsApp' },
+    { target: 'telegram', label: 'Telegram' },
     { target: 'email', label: 'Email', icon: 'email' },
-    { target: 'mastodon', label: 'Mastodon', icon: 'link' },
+    { target: 'mastodon', label: 'Mastodon' },
   ];
 
   async shareToTarget(target: ShareTarget): Promise<void> {

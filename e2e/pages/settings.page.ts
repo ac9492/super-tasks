@@ -27,41 +27,64 @@ export class SettingsPage extends BasePage {
   }
 
   /**
-   * Expand a collapsible section by scrolling to it and clicking header
+   * Make every field of a settings section reachable. The settings window lays
+   * its sections out open: a section's primary fields are always shown and the
+   * rest sit behind that section's own "More options" toggle (a
+   * `formly-collapsible`, absent for sections without secondary fields).
+   * Scrolls to the section and opens that toggle when there is one.
    */
   async expandSection(sectionSelector: string): Promise<void> {
     const section = this.page.locator(sectionSelector);
+    await section.waitFor({ state: 'visible', timeout: 10000 });
     await section.scrollIntoViewIfNeeded();
+    // The fields render a tick after the section heading. Not every field type
+    // goes through the setting wrapper (the App features switches do not), so
+    // any formly field counts.
+    await section
+      .locator('[data-setting-key], formly-field')
+      .first()
+      .waitFor({ state: 'attached', timeout: 10000 });
 
-    // Ultra Tasks' settings window renders sections expanded without a wrapper.
-    if (await section.locator('.settings-section-heading').count()) {
-      await section.locator('.settings-section-heading').waitFor({ state: 'visible' });
-      const more = section.getByRole('button', { name: 'More options', exact: true });
-      if ((await more.count()) && (await more.getAttribute('aria-expanded')) !== 'true') {
-        await more.click();
-        await section
-          .locator('formly-collapsible > .collapsible-panel')
-          .waitFor({ state: 'visible' });
-      }
-      await waitForAngularStability(this.page);
-      return;
-    }
-
-    const collapsible = section.locator('collapsible');
-    const isExpanded = await collapsible.evaluate((el) =>
-      el.classList.contains('isExpanded'),
-    );
-
-    if (!isExpanded) {
-      const header = collapsible.locator('.collapsible-header');
+    const header = section.locator('formly-collapsible > .collapsible-header').first();
+    if (
+      (await header.isVisible()) &&
+      (await header.getAttribute('aria-expanded')) !== 'true'
+    ) {
       await header.click();
       // Wait for expansion - panel only exists when expanded (@if in template)
-      await collapsible
-        .locator('.collapsible-panel')
+      await section
+        .locator('formly-collapsible > .collapsible-panel')
+        .first()
         .waitFor({ state: 'visible', timeout: 5000 });
     }
 
     await waitForAngularStability(this.page);
+  }
+
+  /**
+   * Open the settings window on the tab that holds a section and make all of
+   * its fields reachable. `sectionKey` is the form-config key, which is also
+   * the `.section-<key>` class. The `section` query parameter picks the tab and,
+   * on a phone (where the window starts on the category list), reveals the
+   * content pane. Settings open as a dialog over the workspace, so the URL
+   * stays on the current route.
+   */
+  async openSettingsSection(sectionKey: string): Promise<void> {
+    await this.page.goto(`/#/config?section=${sectionKey}`);
+    await this.pageSettings.waitFor({ state: 'visible', timeout: 10000 });
+    await this.expandSection(`.section-${sectionKey}`);
+  }
+
+  /**
+   * Close the settings window with its header close button and wait until it
+   * is gone, so the workspace underneath takes clicks and shortcuts again.
+   */
+  async closeSettings(): Promise<void> {
+    await this.page
+      .locator('.settings-window-header')
+      .getByRole('button', { name: 'Close' })
+      .click();
+    await this.pageSettings.waitFor({ state: 'hidden', timeout: 10000 });
   }
 
   /**

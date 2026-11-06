@@ -313,7 +313,7 @@ describe('TaskDetailPanelComponent', () => {
   });
 
   describe('showScheduleIcon (merged schedule + recurrence item)', () => {
-    it("returns 'today' when a due day is set", () => {
+    it("returns 'calendar_month' for a non-Today due day", () => {
       componentRef.setInput('task', {
         ...MOCK_TASK,
         dueDay: '2026-05-26',
@@ -321,7 +321,7 @@ describe('TaskDetailPanelComponent', () => {
         repeatCfgId: undefined,
       });
       fixture.detectChanges();
-      expect(component.showScheduleIcon()).toBe('today');
+      expect(component.showScheduleIcon()).toBe('calendar_month');
     });
 
     it("returns 'schedule' for a timed due date without a reminder", () => {
@@ -336,7 +336,7 @@ describe('TaskDetailPanelComponent', () => {
       expect(component.showScheduleIcon()).toBe('schedule');
     });
 
-    it("returns 'repeat' for a recurring task with no due date", () => {
+    it("returns 'calendar_month' for an undated recurring task", () => {
       componentRef.setInput('task', {
         ...MOCK_TASK,
         dueDay: undefined,
@@ -344,17 +344,17 @@ describe('TaskDetailPanelComponent', () => {
         repeatCfgId: 'cfg-1',
       });
       fixture.detectChanges();
-      expect(component.showScheduleIcon()).toBe('repeat');
+      expect(component.showScheduleIcon()).toBe('calendar_month');
     });
 
-    it('prefers the due-day icon over the repeat icon when a recurring task also has a due day', () => {
+    it('uses the date icon when a recurring task has a non-Today due day', () => {
       componentRef.setInput('task', {
         ...MOCK_TASK,
         dueDay: '2026-05-26',
         repeatCfgId: 'cfg-1',
       });
       fixture.detectChanges();
-      expect(component.showScheduleIcon()).toBe('today');
+      expect(component.showScheduleIcon()).toBe('calendar_month');
     });
   });
 

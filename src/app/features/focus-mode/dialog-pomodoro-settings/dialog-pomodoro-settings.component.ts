@@ -1,6 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatDialogRef, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
+import {
+  MatDialogActions,
+  MatDialogRef,
+  MatDialogTitle,
+  MatDialogContent,
+} from '@angular/material/dialog';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { GlobalConfigService } from '../../config/global-config.service';
 import { T } from '../../../t.const';
@@ -10,6 +15,7 @@ import { MatButton } from '@angular/material/button';
 import { Store } from '@ngrx/store';
 import { resetCycles } from '../store/focus-mode.actions';
 import { selectCurrentCycle } from '../store/focus-mode.selectors';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 const POMODORO_DURATION_FIELDS: FormlyFieldConfig[] = [
   {
@@ -56,6 +62,7 @@ const POMODORO_DURATION_FIELDS: FormlyFieldConfig[] = [
     FormlyModule,
     MatDialogTitle,
     MatDialogContent,
+    MatDialogActions,
     TranslatePipe,
     MatButton,
   ],
@@ -70,47 +77,35 @@ const POMODORO_DURATION_FIELDS: FormlyFieldConfig[] = [
           (modelChange)="model = $event"
         ></formly-form>
       </form>
-      <div class="dialog-actions">
-        <button
-          mat-button
-          [disabled]="isResetDisabled()"
-          (click)="resetSessionCounter()"
-        >
-          {{ T.F.FOCUS_MODE.RESET_CYCLES | translate }}
-        </button>
-        <span class="spacer"></span>
-        <button
-          mat-button
-          (click)="close()"
-        >
-          {{ T.G.CANCEL | translate }}
-        </button>
-        <button
-          mat-button
-          color="primary"
-          (click)="save()"
-        >
-          {{ T.G.SAVE | translate }}
-        </button>
-      </div>
     </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button
+        mat-stroked-button
+        class="dialog-action-start"
+        [disabled]="isResetDisabled()"
+        (click)="resetSessionCounter()"
+      >
+        {{ T.F.FOCUS_MODE.RESET_CYCLES | translate }}
+      </button>
+      <button
+        mat-button
+        (click)="close()"
+      >
+        {{ T.G.CANCEL | translate }}
+      </button>
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="save()"
+      >
+        {{ T.G.SAVE | translate }}
+      </button>
+    </mat-dialog-actions>
   `,
-  styles: [
-    `
-      .dialog-actions {
-        display: flex;
-        gap: 8px;
-        margin-top: 16px;
-      }
-
-      .spacer {
-        flex: 1;
-      }
-    `,
-  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DialogPomodoroSettingsComponent {
+  private readonly _dialogSize = useDialogSize('m');
   private readonly _dialogRef = inject(MatDialogRef<DialogPomodoroSettingsComponent>);
   private readonly _globalConfigService = inject(GlobalConfigService);
   private readonly _store = inject(Store);

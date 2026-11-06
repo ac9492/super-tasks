@@ -5,6 +5,9 @@
   <button
     #buttonEl
     (dblclick)="toggle()"
+    (keydown.enter)="$event.preventDefault(); toggle()"
+    (keydown.space)="$event.preventDefault(); toggle()"
+    [attr.aria-label]="T.WW.RESIZE_TASK_PANELS | translate"
     (mousedown)="onMouseDown()"
     (touchstart)="onTouchStart()"
     [class.isAnimate]="isAnimateBtn()"
@@ -14,6 +17,6 @@
     @if (counter) {
       <span class="counter">{{ counter }}</span>
     }
-    <mat-icon>library_books</mat-icon>
+    <mat-icon>drag_handle</mat-icon>
   </button>
 </div>

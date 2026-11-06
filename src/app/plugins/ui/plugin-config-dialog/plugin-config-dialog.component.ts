@@ -17,6 +17,7 @@ import { PluginUserPersistenceService } from '../../plugin-user-persistence.serv
 import { TranslateService } from '@ngx-translate/core';
 import { T } from '../../../t.const';
 import { PluginLog } from '../../../core/log';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatError } from '@angular/material/form-field';
 
@@ -33,9 +34,9 @@ interface PluginConfigData {
 @Component({
   selector: 'plugin-config-dialog',
   template: `
-    <div mat-dialog-title>
+    <h2 mat-dialog-title>
       {{ manifest.name }} {{ _translateService.instant(T.PLUGINS.CONFIGURATION) }}
-    </div>
+    </h2>
 
     <mat-dialog-content>
       @if (loading()) {
@@ -62,18 +63,19 @@ interface PluginConfigData {
     <mat-dialog-actions align="end">
       <button
         mat-button
+        type="button"
         (click)="onCancel()"
         [disabled]="loading()"
       >
         {{ _translateService.instant(T.G.CANCEL) }}
       </button>
       <button
-        mat-button
+        mat-flat-button
         color="primary"
+        type="button"
         (click)="onSave()"
         [disabled]="!form.valid || loading()"
       >
-        <mat-icon>save</mat-icon>
         {{ _translateService.instant(T.G.SAVE) }}
       </button>
     </mat-dialog-actions>
@@ -81,36 +83,22 @@ interface PluginConfigData {
   styles: [
     `
       mat-dialog-content {
-        min-width: 400px;
-        max-width: 600px;
         max-height: 600px;
         overflow-y: auto;
-      }
-
-      mat-dialog-actions {
-        gap: 8px;
-      }
-
-      mat-icon {
-        margin-right: 8px;
       }
 
       .loading-container {
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 40px;
+        padding: var(--s5);
       }
 
       mat-error {
         display: flex;
         align-items: center;
-        gap: 8px;
-        padding: 16px;
-      }
-
-      form {
-        padding: 16px 0;
+        gap: var(--s);
+        padding: var(--s2);
       }
     `,
   ],
@@ -132,6 +120,7 @@ export class PluginConfigDialogComponent {
   private readonly _pluginUserPersistenceService = inject(PluginUserPersistenceService);
   private readonly _formlyJsonschema = inject(FormlyJsonschema);
   readonly _translateService = inject(TranslateService);
+  private readonly _size = useDialogSize('m');
 
   readonly T = T;
   readonly manifest: PluginManifest;

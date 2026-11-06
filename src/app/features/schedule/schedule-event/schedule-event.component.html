@@ -31,7 +31,11 @@
       <mat-icon
         class="ico"
         inline="true"
-        >wb_sunny
+        role="img"
+        aria-hidden="false"
+        [attr.aria-label]="T.F.SCHEDULE.AUTOMATICALLY_PLACED | translate"
+        [matTooltip]="T.F.SCHEDULE.AUTOMATICALLY_PLACED | translate"
+        >calendar_clock
       </mat-icon>
     }
     @case ('LUNCH_BREAK') {
@@ -118,7 +122,7 @@
         mat-menu-item
         (click)="rescheduleCalendarEvent()"
       >
-        <mat-icon>schedule</mat-icon>
+        <mat-icon>edit_calendar</mat-icon>
         {{ T.F.CALENDARS.CONTEXT_MENU.RESCHEDULE | translate }}
       </button>
     }
@@ -127,7 +131,7 @@
         mat-menu-item
         (click)="createCalendarEventAsTask()"
       >
-        <mat-icon>add</mat-icon>
+        <mat-icon>add_task</mat-icon>
         {{ T.F.CALENDARS.CONTEXT_MENU.CREATE_TASK | translate }}
       </button>
       <button

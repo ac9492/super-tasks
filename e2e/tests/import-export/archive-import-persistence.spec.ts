@@ -24,9 +24,10 @@ import * as fs from 'fs';
  */
 const captureDownload = async (page: Page): Promise<Download> => {
   const downloadPromise = page.waitForEvent('download');
-  const exportBtn = page.locator(
-    'file-imex button:has(mat-icon:has-text("file_upload"))',
-  );
+  // "Export data" is the first download-icon button (privacy export is the second)
+  const exportBtn = page
+    .locator('file-imex button:has(mat-icon:text-is("download"))')
+    .first();
   await exportBtn.click();
   return downloadPromise;
 };

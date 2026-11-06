@@ -80,15 +80,21 @@
 
   // The title is the one thing on the row that should read first; project,
   // tags and estimate are muted secondary text (see .parent-title, .time).
+  // Weight and line height only, not the `font` shorthand: it would also reset
+  // the size, which task-title raises to 16px on touch iOS so that focusing the
+  // title does not zoom the page (#9556); this selector outranks that rule.
   .task-title {
     font-weight: var(--font-weight-medium);
+    line-height: 20px;
   }
 
   // note: we use .tags-container, since we don't want margins for an empty list
   ::ng-deep .tags-container {
     // to match task title padding
     margin-left: var(--s);
-    margin-bottom: var(--s-half);
+    // The meta line sits 4px under the title, which is what makes a two-line
+    // row exactly 56px tall.
+    margin-top: var(--s-half);
   }
 
   // A single long tag is a flex item, so cap it at the title area and allow its
@@ -367,10 +373,12 @@ done-toggle {
   }
 }
 
+// Centred in the gutter left of the subtask cards (`.sub-tasks` margin-left:
+// --s3, --s5 from xs up), clear of both the parent and the subtask borders.
 .toggle-sub-tasks-btn.toggle-sub-tasks-btn {
   position: absolute !important;
   transform: translateY(-50%);
-  left: -20px;
+  left: calc(-1 * var(--s3));
   top: 50%;
   z-index: var(--z-toggle-sub-task-btn) !important;
   min-width: 0;
@@ -382,6 +390,13 @@ done-toggle {
   transition-property: opacity, transform, background, box-shadow;
   box-shadow: none;
   background: var(--bg-lighter) !important;
+  // The mini FAB's own foreground is the accent ink, which vanishes on this
+  // card-colored background; the icon and the done/total badge inherit this.
+  color: var(--text-color);
+
+  @include mq(xs) {
+    left: calc(-1 * var(--s4));
+  }
 
   @media (hover: hover) {
     :host:hover & {
@@ -391,9 +406,9 @@ done-toggle {
 
   mat-icon {
     transition: var(--transition-standard);
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
+    font-size: var(--icon-sm);
+    width: var(--icon-sm);
+    height: var(--icon-sm);
 
     &.isHideDoneTasks {
       transform: rotate(-45deg);
@@ -422,7 +437,7 @@ done-toggle {
   margin-bottom: -2px;
 
   .title {
-    font-size: var(--font-size-sm);
+    font: var(--type-meta);
     color: var(--text-color-muted);
     @include truncateText();
   }
@@ -462,6 +477,14 @@ done-toggle {
   }
 }
 
+// The date controls carry a coloured text badge: at the 0.7 resting opacity of
+// the other icon buttons its semantic colour fell to 3.8-4.4:1, so they stay at
+// full strength.
+.first-line .schedule-btn,
+.first-line .deadline-btn {
+  opacity: 1;
+}
+
 // Time conflict indicator: a danger "!" shown next to the schedule control,
 // replacing the former task-box border. It's a bare <mat-icon> dropped into the
 // stretch-aligned controls row, so it needs explicit centering and sizing.
@@ -491,13 +514,14 @@ done-toggle {
 .time-badge {
   @include center;
   margin-top: 10px;
-  font-size: 12px;
+  // Meta size in the app font (buttons inherit it from the base reset).
+  font-size: var(--font-size-sm);
   z-index: 10;
   line-height: 1;
   text-align: center;
   padding: 1px var(--s-quarter) 0;
   @include extraBorder();
-  border-radius: var(--card-border-radius);
+  border-radius: var(--r-full);
   white-space: nowrap;
   background: var(--card-bg);
 
@@ -509,8 +533,9 @@ done-toggle {
     background: var(--bg-lighter);
   }
 
+  // "PM" is a proportional exception: it tracks the badge's own size.
   ::ng-deep span {
-    font-size: 10px;
+    font-size: 0.85em;
   }
 }
 
@@ -526,13 +551,13 @@ done-toggle {
 .progress-badge {
   @include center;
   margin-top: 10px;
-  font-size: 10px;
+  font-size: var(--font-size-sm);
   z-index: 10;
   line-height: 1;
   text-align: center;
   padding: 1px var(--s-quarter) 0;
   @include extraBorder();
-  border-radius: var(--card-border-radius);
+  border-radius: var(--r-full);
   white-space: nowrap;
   background: var(--card-bg);
 

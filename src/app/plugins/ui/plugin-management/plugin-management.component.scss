@@ -5,8 +5,8 @@
   min-height: 0;
 }
 .plugin-browser-toolbar {
-  padding: var(--s2) var(--s3) var(--s);
-  border-bottom: 1px solid var(--divider-color);
+  padding: var(--s2) var(--dialog-gutter) var(--s);
+  border-bottom: 1px solid var(--separator);
 }
 .plugin-views,
 .plugin-search-controls,
@@ -19,6 +19,8 @@
 }
 .plugin-views {
   margin-bottom: var(--s2);
+  // a segmented control is as wide as its labels, not the toolbar
+  width: fit-content;
 }
 .plugin-search {
   flex: 1;
@@ -27,6 +29,12 @@
 .plugin-type {
   width: 170px;
 }
+// The toolbar's search and filter are label-less 40px fields; their wrappers
+// keep the 16px field gap out of the row.
+.plugin-search,
+.plugin-type {
+  margin-bottom: 0;
+}
 .result-count,
 .intro,
 .compatibility-note,
@@ -34,7 +42,7 @@
 .plugin-meta,
 .plugin-author {
   color: var(--text-color-muted);
-  font-size: var(--font-size-sm);
+  font: var(--type-meta);
 }
 .result-count {
   margin: var(--s) 0 0;
@@ -43,16 +51,17 @@
   flex: 1;
   min-height: 0;
   overflow: auto;
-  padding: var(--s2) var(--s3) var(--s3);
+  padding: var(--s2) var(--dialog-gutter) var(--s3);
   scrollbar-gutter: stable;
 }
 .group-title {
   margin: var(--s3) 0 var(--s);
-  font-size: var(--font-size-lg);
+  font: var(--type-heading);
+  letter-spacing: 0;
 }
 .installed-plugin {
   padding: var(--s2) 0;
-  border-bottom: 1px solid var(--divider-color);
+  border-bottom: 1px solid var(--separator);
 }
 .plugin-header {
   display: flex;
@@ -64,7 +73,8 @@
   min-width: 0;
   h3 {
     margin: 0 0 var(--s-half);
-    font-size: var(--font-size-lg);
+    font: var(--type-body-strong);
+    letter-spacing: 0;
   }
 }
 .plugin-meta,
@@ -93,16 +103,12 @@ td {
 .plugin-body {
   margin-left: calc(40px + var(--s2));
 }
-summary {
-  cursor: pointer;
-  padding: var(--s) 0;
-}
 .plugin-info-section,
 .manual-install-content {
   margin-top: var(--s2);
 }
 .label {
-  font-weight: var(--font-weight-semibold);
+  font: var(--type-body-strong);
 }
 table {
   width: 100%;
@@ -117,7 +123,8 @@ table {
   padding-left: var(--s3);
 }
 .community-plugins-card h2 {
-  font-size: var(--font-size-lg);
+  font: var(--type-heading);
+  letter-spacing: 0;
   margin-top: 0;
 }
 .community-plugins-list {
@@ -128,8 +135,8 @@ table {
 }
 .community-plugin-item {
   padding: var(--s2);
-  border: 1px solid var(--divider-color);
-  border-radius: var(--card-border-radius);
+  border: 1px solid var(--separator);
+  border-radius: var(--r-md);
   display: flex;
   flex-direction: column;
   gap: var(--s);
@@ -138,8 +145,16 @@ table {
   p {
     margin: 0;
   }
+  // card titles are plain text until hovered, not underlined links
   h3 {
-    font-size: var(--font-size-lg);
+    font: var(--type-body-strong);
+    letter-spacing: 0;
+  }
+  h3 a {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
   }
   .community-plugin-action {
     margin-top: auto;
@@ -163,14 +178,7 @@ mat-error {
   justify-content: space-between;
   gap: var(--s);
   padding: var(--s) var(--s3);
-  border-top: 1px solid var(--divider-color);
-}
-.empty-state {
-  text-align: center;
-  padding: var(--s4) var(--s2);
-  h2 {
-    font-size: var(--font-size-lg);
-  }
+  border-top: 1px solid var(--separator);
 }
 @media (max-width: 600px) {
   .plugin-browser-toolbar,
@@ -197,4 +205,10 @@ mat-error {
   .plugin-body {
     margin-left: 0;
   }
+}
+
+.loading-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s);
 }

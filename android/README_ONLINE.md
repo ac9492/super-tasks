@@ -1,6 +1,6 @@
 # Online-Only Mode (Compatibility Mode) Configuration
 
-**Online-Only Mode (Compatibility Mode)** allows the Super Productivity Android app to connect to the production server, a local development server, or a self-hosted server. This mode requires an internet connection and is compatible with various server setups.
+**Online-Only Mode (Compatibility Mode)** allows the Ultra Tasks Android app to load the web app from the upstream production server, a local development server, or a self-hosted server. This mode requires an internet connection and is compatible with various server setups.
 
 **Note**: While Online-Only Mode offers connectivity to production, local development, or self-hosted servers, it is highly recommended to use the latest **Connectivity-Free Mode** for a more stable and reliable experience. Connectivity-Free Mode allows you to use the app without an internet connection, ensuring uninterrupted productivity, enhanced privacy, and reduced latency.
 
@@ -10,7 +10,7 @@ If you require online features or need to connect to specific servers, proceed w
 
 ## Setting Launch Mode to Online
 
-To enable Online-Only Mode, set the `LAUNCH_MODE` to `1` or `0` in the `app_config.properties` file.
+To enable Online-Only Mode, set the `LAUNCH_MODE` to `1` or `0` in `android/app/app_config.properties`.
 
 - **1**: Force Online-Only Mode (Compatibility Mode)
 - **0**: Default behavior (read from SharedPreferences)
@@ -30,9 +30,8 @@ To enable Online-Only Mode, set the `LAUNCH_MODE` to `1` or `0` in the `app_conf
    - **2**: Force Connectivity-Free Mode (for offline configuration)
 
 2. **Use Production URL**
-
    - **Condition**: Applicable when `LAUNCH_MODE` is set to `1`, or set to `0` and the user has upgraded from a previous version.
-   - **Default**: `https://app.super-productivity.com`
+   - **Default**: `https://app.super-productivity.com` (the upstream Super Productivity web app; Ultra Tasks does not host a web app)
    - **Configuration**: Ensure `ONLINE_SERVICE_IS_LOCAL` is set to `false`.
 
    ```properties
@@ -40,7 +39,6 @@ To enable Online-Only Mode, set the `LAUNCH_MODE` to `1` or `0` in the `app_conf
    ```
 
 3. **Use Local Development Server**
-
    - **Condition**: Applicable when `LAUNCH_MODE` is set to `1`, or set to `0` and the user has upgraded from a previous version.
    - **Configuration**: Set `ONLINE_SERVICE_IS_LOCAL` to `true` and start the local server.
 
@@ -57,7 +55,6 @@ To enable Online-Only Mode, set the `LAUNCH_MODE` to `1` or `0` in the `app_conf
    - **Access URL**: `http://10.0.2.2:4200` (accessible from the Android Studio emulator and emulator's Chrome browser).
 
 4. **Use a Self-Hosted Server**
-
    - **Condition**: Applicable when `LAUNCH_MODE` is set to `1`, or set to `0` and the user has upgraded from a previous version.
    - **Configuration**: Set `ONLINE_SERVICE_IS_LOCAL` to `false` and update `ONLINE_SERVICE_HOST` and `ONLINE_SERVICE_PROTOCOL`.
 
@@ -69,12 +66,11 @@ To enable Online-Only Mode, set the `LAUNCH_MODE` to `1` or `0` in the `app_conf
 
 ## How to Modify the URL
 
-You can edit the URL that the web view loads by modifying the `app_config.properties` file located in the project's root directory. This allows you to easily switch between a production server, a local development server, or a self-hosted server.
+You can edit the URL that the web view loads by modifying `android/app/app_config.properties`. This allows you to easily switch between a production server, a local development server, or a self-hosted server.
 
 ### Relevant Settings
 
 - **`LAUNCH_MODE`**:
-
   - `0`: Default behavior (read from SharedPreferences)
   - `1`: Force Online-Only Mode
   - `2`: Force Connectivity-Free Mode

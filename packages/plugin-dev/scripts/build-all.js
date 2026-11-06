@@ -1,12 +1,24 @@
 #!/usr/bin/env node
 
+// Builds every bundled plugin into src/assets/bundled-plugins (`plugins:build`,
+// used by the E2E/CI frontend build). The plugin list is derived from the
+// plugin-dev directories the same way packages/build-packages.js derives it for
+// production builds, so both ship the same plugins. A hand-kept list drifted:
+// it missed seven plugins that production builds include.
+
 const { exec } = require('child_process');
 const { promisify } = require('util');
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 const { ensurePluginDeps } = require('./install-deps');
 
 const execAsync = promisify(exec);
+
+const PLUGIN_DEV_DIR = path.join(__dirname, '..');
+const ASSETS_DIR = path.join(__dirname, '../../../src/assets/bundled-plugins');
+// Same exclusions as packages/build-packages.js: the boilerplate is a template
+// and the issue-provider kit is bundled into the issue-provider plugins.
+const NOT_BUNDLED = new Set(['boilerplate-solid-js', 'issue-provider-kit']);
 
 // Colors for console output
 const colors = {
@@ -23,492 +35,138 @@ function log(message, color = '') {
   console.log(`${color}${message}${colors.reset}`);
 }
 
-// Recursive copy function that handles both files and directories
-function copyRecursive(src, dest) {
-  const stat = fs.statSync(src);
-  if (stat.isDirectory()) {
-    if (!fs.existsSync(dest)) {
-      fs.mkdirSync(dest, { recursive: true });
+async function pathExists(p) {
+  try {
+    await fs.access(p);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function readManifest(pluginPath) {
+  // manifest.json may live at the root or inside src/
+  for (const manifestPath of [
+    path.join(pluginPath, 'manifest.json'),
+    path.join(pluginPath, 'src', 'manifest.json'),
+  ]) {
+    try {
+      return JSON.parse(await fs.readFile(manifestPath, 'utf8'));
+    } catch {
+      // Try next candidate
     }
-    const entries = fs.readdirSync(src);
-    for (const entry of entries) {
-      copyRecursive(path.join(src, entry), path.join(dest, entry));
+  }
+  return null;
+}
+
+async function getPlugins() {
+  const entries = await fs.readdir(PLUGIN_DEV_DIR, { withFileTypes: true });
+  const plugins = [];
+
+  for (const entry of entries) {
+    if (!entry.isDirectory() || NOT_BUNDLED.has(entry.name)) {
+      continue;
     }
+    const pluginPath = path.join(PLUGIN_DEV_DIR, entry.name);
+    let packageJson;
+    try {
+      packageJson = JSON.parse(
+        await fs.readFile(path.join(pluginPath, 'package.json'), 'utf8'),
+      );
+    } catch {
+      // Not a package (node_modules, scripts)
+      continue;
+    }
+
+    const buildScript = packageJson.scripts && packageJson.scripts.build;
+    // A placeholder build script means a simple plugin copied as-is
+    const hasRealBuildScript =
+      !!buildScript && !buildScript.includes("echo 'No build needed");
+
+    const files = ['manifest.json', 'plugin.js', 'icon.svg'];
+    const requiredFiles = [...files];
+    const manifest = await readManifest(pluginPath);
+    if (!manifest || manifest.iFrame !== false) {
+      // No manifest.json found — assume index.html is needed
+      files.push('index.html');
+      requiredFiles.push('index.html');
+    }
+    if (manifest && manifest.jsonSchemaCfg) {
+      files.push(manifest.jsonSchemaCfg);
+      requiredFiles.push(manifest.jsonSchemaCfg);
+    }
+    if (manifest && manifest.i18n && manifest.i18n.languages) {
+      for (const lang of manifest.i18n.languages) {
+        requiredFiles.push(`i18n/${lang}.json`);
+      }
+    }
+
+    plugins.push({
+      name: entry.name,
+      path: pluginPath,
+      isBuilt: hasRealBuildScript,
+      files,
+      requiredFiles,
+    });
+  }
+
+  return plugins.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+async function copyToAssets(plugin) {
+  const targetDir = path.join(ASSETS_DIR, plugin.name);
+  await fs.rm(targetDir, { recursive: true, force: true });
+  await fs.mkdir(targetDir, { recursive: true });
+
+  // Prefer dist if it exists, otherwise fall back to the plugin root (simple plugins)
+  const distPath = path.join(plugin.path, 'dist');
+  if (await pathExists(distPath)) {
+    // Copy the full dist to preserve all chunks/assets
+    await fs.cp(distPath, targetDir, { recursive: true });
   } else {
-    fs.copyFileSync(src, dest);
+    for (const file of plugin.files) {
+      const src = path.join(plugin.path, file);
+      if (!(await pathExists(src))) {
+        throw new Error(`Missing expected file: ${file}`);
+      }
+      await fs.copyFile(src, path.join(targetDir, file));
+    }
+    const i18nSrc = path.join(plugin.path, 'i18n');
+    if (await pathExists(i18nSrc)) {
+      await fs.cp(i18nSrc, path.join(targetDir, 'i18n'), { recursive: true });
+    }
   }
-}
 
-function assertFilesExist(basePath, files, pluginName) {
-  const missing = files.filter((file) => !fs.existsSync(path.join(basePath, file)));
+  const missing = [];
+  for (const file of plugin.requiredFiles) {
+    if (!(await pathExists(path.join(targetDir, file)))) {
+      missing.push(file);
+    }
+  }
   if (missing.length) {
-    throw new Error(
-      `${pluginName} build is missing required asset(s): ${missing.join(', ')}`,
-    );
+    throw new Error(`Missing required asset(s): ${missing.join(', ')}`);
   }
 }
-
-// Plugin configurations
-const plugins = [
-  {
-    name: 'procrastination-buster',
-    path: 'procrastination-buster',
-    copyToAssets: true,
-    buildCommand: async (pluginPath) => {
-      await execAsync(`cd ${pluginPath} && npm run build`);
-      assertFilesExist(
-        path.join(pluginPath, 'dist'),
-        ['i18n/en.json', 'i18n/de.json'],
-        'procrastination-buster',
-      );
-      // Copy to assets directory
-      const targetDir = path.join(
-        __dirname,
-        '../../../src/assets/bundled-plugins/procrastination-buster',
-      );
-      if (!fs.existsSync(targetDir)) {
-        fs.mkdirSync(targetDir, { recursive: true });
-      }
-      const distPath = path.join(pluginPath, 'dist');
-      if (fs.existsSync(distPath)) {
-        const files = fs.readdirSync(distPath);
-        for (const file of files) {
-          const src = path.join(distPath, file);
-          const dest = path.join(targetDir, file);
-          copyRecursive(src, dest);
-        }
-      }
-      assertFilesExist(
-        targetDir,
-        ['i18n/en.json', 'i18n/de.json'],
-        'procrastination-buster',
-      );
-      return 'Built and copied to assets';
-    },
-  },
-  // Migrated built-in plugins
-  {
-    name: 'api-test-plugin',
-    path: 'api-test-plugin',
-    copyToAssets: true,
-    buildCommand: async (pluginPath) => {
-      // Copy to assets directory
-      const targetDir = path.join(
-        __dirname,
-        '../../../src/assets/bundled-plugins/api-test-plugin',
-      );
-      if (!fs.existsSync(targetDir)) {
-        fs.mkdirSync(targetDir, { recursive: true });
-      }
-      const files = [
-        'manifest.json',
-        'plugin.js',
-        'index.html',
-        'config-schema.json',
-        'icon.svg',
-      ];
-      for (const file of files) {
-        const src = path.join(pluginPath, file);
-        const dest = path.join(targetDir, file);
-        if (fs.existsSync(src)) {
-          fs.copyFileSync(src, dest);
-        }
-      }
-      return 'Copied to assets';
-    },
-  },
-  {
-    name: 'sync-md',
-    path: 'sync-md',
-    copyToAssets: true,
-    buildCommand: async (pluginPath) => {
-      try {
-        // Try normal build first
-        await execAsync(`cd ${pluginPath} && npm run build`);
-      } catch (buildError) {
-        // If normal build fails, try emergency build
-        console.log('  Normal build failed, trying emergency build...');
-        await execAsync(`cd ${pluginPath} && node scripts/emergency-build.js`);
-      }
-
-      // Copy to assets directory
-      const targetDir = path.join(
-        __dirname,
-        '../../../src/assets/bundled-plugins/sync-md',
-      );
-      if (!fs.existsSync(targetDir)) {
-        fs.mkdirSync(targetDir, { recursive: true });
-      }
-      const distPath = path.join(pluginPath, 'dist');
-      if (fs.existsSync(distPath)) {
-        const files = fs.readdirSync(distPath);
-        for (const file of files) {
-          const src = path.join(distPath, file);
-          const dest = path.join(targetDir, file);
-          copyRecursive(src, dest);
-        }
-      }
-      return 'Built and copied to assets';
-    },
-  },
-  {
-    name: 'yesterday-tasks-plugin',
-    path: 'yesterday-tasks-plugin',
-    copyToAssets: true,
-    buildCommand: async (pluginPath) => {
-      // Copy to assets directory
-      const targetDir = path.join(
-        __dirname,
-        '../../../src/assets/bundled-plugins/yesterday-tasks-plugin',
-      );
-      if (!fs.existsSync(targetDir)) {
-        fs.mkdirSync(targetDir, { recursive: true });
-      }
-      const files = ['manifest.json', 'plugin.js', 'index.html', 'icon.svg'];
-      for (const file of files) {
-        const src = path.join(pluginPath, file);
-        const dest = path.join(targetDir, file);
-        if (fs.existsSync(src)) {
-          fs.copyFileSync(src, dest);
-        }
-      }
-      const i18nSrc = path.join(pluginPath, 'i18n');
-      if (fs.existsSync(i18nSrc)) {
-        copyRecursive(i18nSrc, path.join(targetDir, 'i18n'));
-      }
-      return 'Copied to assets';
-    },
-  },
-  {
-    name: 'ai-productivity-prompts',
-    path: 'ai-productivity-prompts',
-    copyToAssets: true,
-    buildCommand: async (pluginPath) => {
-      await execAsync(`cd ${pluginPath} && npm run build`);
-      // Copy to assets directory
-      const targetDir = path.join(
-        __dirname,
-        '../../../src/assets/bundled-plugins/ai-productivity-prompts',
-      );
-      if (!fs.existsSync(targetDir)) {
-        fs.mkdirSync(targetDir, { recursive: true });
-      }
-      const distPath = path.join(pluginPath, 'dist');
-      if (fs.existsSync(distPath)) {
-        const files = fs.readdirSync(distPath);
-        for (const file of files) {
-          const src = path.join(distPath, file);
-          const dest = path.join(targetDir, file);
-          copyRecursive(src, dest);
-        }
-      }
-      return 'Built and copied to assets';
-    },
-  },
-  {
-    name: 'automations',
-    path: 'automations',
-    copyToAssets: true,
-    buildCommand: async (pluginPath) => {
-      await execAsync(`cd ${pluginPath} && npm run build`);
-      // Copy to assets directory
-      const targetDir = path.join(
-        __dirname,
-        '../../../src/assets/bundled-plugins/automations',
-      );
-      if (!fs.existsSync(targetDir)) {
-        fs.mkdirSync(targetDir, { recursive: true });
-      }
-      const distPath = path.join(pluginPath, 'dist');
-      if (fs.existsSync(distPath)) {
-        const files = fs.readdirSync(distPath);
-        for (const file of files) {
-          const src = path.join(distPath, file);
-          const dest = path.join(targetDir, file);
-          copyRecursive(src, dest);
-        }
-      }
-      return 'Built and copied to assets';
-    },
-  },
-  {
-    name: 'github-issue-provider',
-    path: 'github-issue-provider',
-    copyToAssets: true,
-    buildCommand: async (pluginPath) => {
-      await execAsync(`cd ${pluginPath} && npm run build`);
-      const targetDir = path.join(
-        __dirname,
-        '../../../src/assets/bundled-plugins/github-issue-provider',
-      );
-      if (!fs.existsSync(targetDir)) {
-        fs.mkdirSync(targetDir, { recursive: true });
-      }
-      const distPath = path.join(pluginPath, 'dist');
-      if (fs.existsSync(distPath)) {
-        const files = fs.readdirSync(distPath);
-        for (const file of files) {
-          const src = path.join(distPath, file);
-          const dest = path.join(targetDir, file);
-          copyRecursive(src, dest);
-        }
-      }
-      return 'Built and copied to assets';
-    },
-  },
-  {
-    name: 'voice-reminder',
-    path: 'voice-reminder',
-    copyToAssets: true,
-    buildCommand: async (pluginPath) => {
-      const targetDir = path.join(
-        __dirname,
-        '../../../src/assets/bundled-plugins/voice-reminder',
-      );
-      if (!fs.existsSync(targetDir)) {
-        fs.mkdirSync(targetDir, { recursive: true });
-      }
-      const files = ['manifest.json', 'plugin.js', 'icon.svg'];
-      for (const file of files) {
-        const src = path.join(pluginPath, file);
-        const dest = path.join(targetDir, file);
-        if (fs.existsSync(src)) {
-          fs.copyFileSync(src, dest);
-        }
-      }
-      // Copy i18n directory
-      const i18nSrc = path.join(pluginPath, 'i18n');
-      if (fs.existsSync(i18nSrc)) {
-        copyRecursive(i18nSrc, path.join(targetDir, 'i18n'));
-      }
-      return 'Copied to assets';
-    },
-  },
-  {
-    name: 'parallel-code',
-    path: 'parallel-code',
-    copyToAssets: true,
-    buildCommand: async (pluginPath) => {
-      const targetDir = path.join(
-        __dirname,
-        '../../../src/assets/bundled-plugins/parallel-code',
-      );
-      if (!fs.existsSync(targetDir)) {
-        fs.mkdirSync(targetDir, { recursive: true });
-      }
-      const files = ['manifest.json', 'plugin.js', 'icon.svg'];
-      for (const file of files) {
-        fs.copyFileSync(path.join(pluginPath, file), path.join(targetDir, file));
-      }
-      copyRecursive(path.join(pluginPath, 'i18n'), path.join(targetDir, 'i18n'));
-      return 'Copied to assets';
-    },
-  },
-  {
-    name: 'clickup-issue-provider',
-    path: 'clickup-issue-provider',
-    copyToAssets: true,
-    buildCommand: async (pluginPath) => {
-      await execAsync(`cd ${pluginPath} && npm run build`);
-      const targetDir = path.join(
-        __dirname,
-        '../../../src/assets/bundled-plugins/clickup-issue-provider',
-      );
-      if (!fs.existsSync(targetDir)) {
-        fs.mkdirSync(targetDir, { recursive: true });
-      }
-      const distPath = path.join(pluginPath, 'dist');
-      if (fs.existsSync(distPath)) {
-        const files = fs.readdirSync(distPath);
-        for (const file of files) {
-          const src = path.join(distPath, file);
-          const dest = path.join(targetDir, file);
-          copyRecursive(src, dest);
-        }
-      }
-      return 'Built and copied to assets';
-    },
-  },
-  {
-    name: 'google-calendar-provider',
-    path: 'google-calendar-provider',
-    copyToAssets: true,
-    buildCommand: async (pluginPath) => {
-      await execAsync(`cd ${pluginPath} && npm run build`);
-      const targetDir = path.join(
-        __dirname,
-        '../../../src/assets/bundled-plugins/google-calendar-provider',
-      );
-      if (!fs.existsSync(targetDir)) {
-        fs.mkdirSync(targetDir, { recursive: true });
-      }
-      const distPath = path.join(pluginPath, 'dist');
-      if (fs.existsSync(distPath)) {
-        const files = fs.readdirSync(distPath);
-        for (const file of files) {
-          const src = path.join(distPath, file);
-          const dest = path.join(targetDir, file);
-          copyRecursive(src, dest);
-        }
-      }
-      return 'Built and copied to assets';
-    },
-  },
-  {
-    name: 'caldav-calendar-provider',
-    path: 'caldav-calendar-provider',
-    copyToAssets: true,
-    buildCommand: async (pluginPath) => {
-      await execAsync(`cd ${pluginPath} && npm run build`);
-      const targetDir = path.join(
-        __dirname,
-        '../../../src/assets/bundled-plugins/caldav-calendar-provider',
-      );
-      if (!fs.existsSync(targetDir)) {
-        fs.mkdirSync(targetDir, { recursive: true });
-      }
-      const distPath = path.join(pluginPath, 'dist');
-      if (fs.existsSync(distPath)) {
-        const files = fs.readdirSync(distPath);
-        for (const file of files) {
-          const src = path.join(distPath, file);
-          const dest = path.join(targetDir, file);
-          copyRecursive(src, dest);
-        }
-      }
-      return 'Built and copied to assets';
-    },
-  },
-  {
-    name: 'doc-mode',
-    path: 'doc-mode',
-    copyToAssets: true,
-    buildCommand: async (pluginPath) => {
-      await execAsync(`cd ${pluginPath} && npm run build`);
-      const targetDir = path.join(
-        __dirname,
-        '../../../src/assets/bundled-plugins/doc-mode',
-      );
-      if (!fs.existsSync(targetDir)) {
-        fs.mkdirSync(targetDir, { recursive: true });
-      }
-      // editor.js is inlined into index.html; only ship the runtime files.
-      const distFiles = ['manifest.json', 'plugin.js', 'index.html', 'icon.svg'];
-      for (const file of distFiles) {
-        const src = path.join(pluginPath, 'dist', file);
-        const dest = path.join(targetDir, file);
-        if (fs.existsSync(src)) copyRecursive(src, dest);
-      }
-      return 'Built and copied to assets';
-    },
-  },
-  {
-    name: 'app-auto-track',
-    path: 'app-auto-track',
-    copyToAssets: true,
-    buildCommand: async (pluginPath) => {
-      await execAsync(`cd ${pluginPath} && npm run build`);
-      const targetDir = path.join(
-        __dirname,
-        '../../../src/assets/bundled-plugins/app-auto-track',
-      );
-      if (!fs.existsSync(targetDir)) {
-        fs.mkdirSync(targetDir, { recursive: true });
-      }
-      const distFiles = [
-        'manifest.json',
-        'plugin.js',
-        'config-schema.json',
-        'icon.svg',
-        'i18n',
-      ];
-      for (const file of distFiles) {
-        const src = path.join(pluginPath, 'dist', file);
-        const dest = path.join(targetDir, file);
-        if (fs.existsSync(src)) copyRecursive(src, dest);
-      }
-      return 'Built and copied to assets';
-    },
-  },
-  {
-    name: 'todoist-import',
-    path: 'todoist-import',
-    copyToAssets: true,
-    buildCommand: async (pluginPath) => {
-      await execAsync(`cd ${pluginPath} && npm run build`);
-      const targetDir = path.join(
-        __dirname,
-        '../../../src/assets/bundled-plugins/todoist-import',
-      );
-      if (!fs.existsSync(targetDir)) {
-        fs.mkdirSync(targetDir, { recursive: true });
-      }
-      const distPath = path.join(pluginPath, 'dist');
-      if (fs.existsSync(distPath)) {
-        const files = fs.readdirSync(distPath);
-        for (const file of files) {
-          copyRecursive(path.join(distPath, file), path.join(targetDir, file));
-        }
-      }
-      assertFilesExist(
-        targetDir,
-        ['manifest.json', 'plugin.js', 'index.html', 'icon.svg', 'i18n/en.json'],
-        'todoist-import',
-      );
-      return 'Built and copied to assets';
-    },
-  },
-  {
-    name: 'ticktick-import',
-    path: 'ticktick-import',
-    copyToAssets: true,
-    buildCommand: async (pluginPath) => {
-      await execAsync(`cd ${pluginPath} && npm run build`);
-      const targetDir = path.join(
-        __dirname,
-        '../../../src/assets/bundled-plugins/ticktick-import',
-      );
-      if (!fs.existsSync(targetDir)) {
-        fs.mkdirSync(targetDir, { recursive: true });
-      }
-      const distPath = path.join(pluginPath, 'dist');
-      if (fs.existsSync(distPath)) {
-        const files = fs.readdirSync(distPath);
-        for (const file of files) {
-          copyRecursive(path.join(distPath, file), path.join(targetDir, file));
-        }
-      }
-      assertFilesExist(
-        targetDir,
-        ['manifest.json', 'plugin.js', 'index.html', 'icon.svg', 'i18n/en.json'],
-        'ticktick-import',
-      );
-      return 'Built and copied to assets';
-    },
-  },
-];
 
 async function buildPlugin(plugin) {
   const startTime = Date.now();
   log(`\n📦 Building ${plugin.name}...`, colors.cyan);
 
   try {
-    // Check if plugin directory exists
-    if (!fs.existsSync(plugin.path)) {
-      throw new Error(`Plugin directory not found: ${plugin.path}`);
+    if (plugin.isBuilt) {
+      log(`  Building...`, colors.yellow);
+      await execAsync('npm run build', { cwd: plugin.path });
     }
-
-    // Run build command
-    log(`  Building...`, colors.yellow);
-    const result = await plugin.buildCommand(plugin.path);
+    await copyToAssets(plugin);
 
     const duration = ((Date.now() - startTime) / 1000).toFixed(1);
+    const result = plugin.isBuilt ? 'Built and copied to assets' : 'Copied to assets';
     log(`✅ ${plugin.name} - ${result} (${duration}s)`, colors.green);
 
     return { plugin: plugin.name, success: true, duration };
   } catch (error) {
     const duration = ((Date.now() - startTime) / 1000).toFixed(1);
-    log(`❌ ${plugin.name} - Build failed (${duration}s)`, colors.red);
+    log(`❌ ${plugin.name} - Build failed (${duration}s): ${error.message}`, colors.red);
     if (error.stdout) {
       log(`  stdout: ${error.stdout}`, colors.red);
     }
@@ -527,41 +185,28 @@ async function buildAll() {
   // One install for the whole plugin-dev workspace; plugins build in parallel.
   ensurePluginDeps({ log, silent: process.argv.includes('--silent') });
 
-  // Build plugins in parallel
+  const plugins = await getPlugins();
   const results = await Promise.all(plugins.map(buildPlugin));
 
   // Summary
   const totalDuration = ((Date.now() - startTime) / 1000).toFixed(1);
   const successful = results.filter((r) => r.success).length;
-  const failed = results.filter((r) => !r.success).length;
+  const failed = results.filter((r) => !r.success);
 
   log('\n📊 Build Summary:', colors.bright);
   log(`  Total plugins: ${plugins.length}`);
   log(`  Successful: ${successful}`, colors.green);
-  if (failed > 0) {
-    log(`  Failed: ${failed}`, colors.red);
+  if (failed.length > 0) {
+    // console.error, not log(): a failure must show even with --silent
+    console.error(
+      `${colors.red}  Failed: ${failed.length}\n${failed
+        .map((r) => `    - ${r.plugin}: ${r.error}`)
+        .join('\n')}${colors.reset}`,
+    );
   }
   log(`  Total time: ${totalDuration}s`);
 
-  // List outputs
-  log('\n📁 Build outputs:', colors.bright);
-
-  // Check for other plugin outputs
-  for (const plugin of plugins) {
-    const distPath = path.join(plugin.path, 'dist');
-    if (fs.existsSync(distPath)) {
-      const pluginZip = path.join(distPath, 'plugin.zip');
-      if (fs.existsSync(pluginZip)) {
-        const stats = fs.statSync(pluginZip);
-        const size = (stats.size / 1024).toFixed(1);
-        log(`  • ${plugin.path}/dist/plugin.zip (${size} KB)`);
-      } else {
-        log(`  • ${plugin.path}/dist/`);
-      }
-    }
-  }
-
-  if (failed > 0) {
+  if (failed.length > 0) {
     process.exit(1);
   }
 }
@@ -575,4 +220,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { buildAll };
+module.exports = { buildAll, getPlugins };

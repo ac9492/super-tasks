@@ -21,5 +21,6 @@
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--s-half);
+  // 8px between chips (each chip carries its own 4px icon-to-label gap).
+  gap: var(--s);
 }

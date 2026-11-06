@@ -1,15 +1,14 @@
 <form
   (submit)="$event.preventDefault(); submit()"
-  class="mat-body"
   name="time-estimate-form"
 >
-  <h1 mat-dialog-title>
+  <h2 mat-dialog-title>
     <mat-icon
       class="dialog-header-icon"
       [svgIcon]="data.issueIcon"
     ></mat-icon>
     <span>{{ data.t.title | translate }}</span>
-  </h1>
+  </h2>
 
   <mat-dialog-content>
     <p>
@@ -150,7 +149,6 @@
         mat-flat-button
         type="submit"
       >
-        <mat-icon>save</mat-icon>
         {{ data.t.submit | translate }}
       </button>
     </div>

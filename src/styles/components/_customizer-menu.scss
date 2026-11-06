@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  gap: 16px;
+  gap: var(--s2);
 
   > span:first-child {
     flex: 1;
@@ -22,20 +22,17 @@
 
 .customizer-menu {
   .mat-mdc-menu-item {
+    // The active choice is the tonal "selected" row, like the side nav's.
     &.active {
-      background-color: rgba(0, 0, 0, 0.08);
-      font-weight: 500;
+      background-color: var(--palette-selected);
+      color: var(--palette-selected-ink);
+      font: var(--type-body-strong);
     }
   }
 
   .current-value {
-    padding-left: 16px;
-    font-size: 0.875em;
-    opacity: 0.7;
-    font-style: italic;
-  }
-
-  mat-icon:first-child:not(.check-icon) {
-    margin-right: 8px;
+    padding-left: var(--s2);
+    font: var(--type-meta);
+    color: var(--text-color-muted);
   }
 }

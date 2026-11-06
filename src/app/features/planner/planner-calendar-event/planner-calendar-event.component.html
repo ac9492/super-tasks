@@ -1,6 +1,8 @@
-<div
+<button
+  type="button"
   class="event-content"
-  (click)="openMenu($event)"
+  [matMenuTriggerFor]="contextMenu"
+  (click)="$event.stopPropagation()"
 >
   <span class="icon">
     <mat-icon>{{ calendarEvent().icon || 'event' }}</mat-icon>
@@ -8,24 +10,19 @@
       <span class="color-dot"></span>
     }
   </span>
-  <div class="title">
+  <span class="title">
     {{ calendarEvent().title }}
-  </div>
-  <div class="planner-time-remaining-shared">
+  </span>
+  <span class="planner-time-remaining-shared">
     {{ calendarEvent().duration | msToString }}
-  </div>
+  </span>
   @if (showStartTime()) {
-    <div
+    <span
       class="start-time"
       [innerHTML]="calendarEvent().start | shortPlannedAt"
-    ></div>
+    ></span>
   }
-</div>
-
-<div
-  [matMenuTriggerFor]="contextMenu"
-  class="menu-trigger"
-></div>
+</button>
 <mat-menu #contextMenu="matMenu">
   @if (hasEventUrl()) {
     <button
@@ -41,7 +38,7 @@
       mat-menu-item
       (click)="reschedule()"
     >
-      <mat-icon>schedule</mat-icon>
+      <mat-icon>edit_calendar</mat-icon>
       {{ T.F.CALENDARS.CONTEXT_MENU.RESCHEDULE | translate }}
     </button>
   }
@@ -49,7 +46,7 @@
     mat-menu-item
     (click)="createAsTask()"
   >
-    <mat-icon>add</mat-icon>
+    <mat-icon>add_task</mat-icon>
     {{ T.F.CALENDARS.CONTEXT_MENU.CREATE_TASK | translate }}
   </button>
   <button

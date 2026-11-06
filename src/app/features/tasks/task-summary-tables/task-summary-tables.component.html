@@ -2,7 +2,6 @@
   @if (project.id !== (workContextService.activeWorkContextId$ | async)) {
     <collapsible
       class="project-section task-section"
-      [style.border-left-color]="project.color"
       [title]="project.title"
       [isIconBefore]="true"
       [isExpanded]="!collapsedProjectIds().includes(project.id)"
@@ -44,13 +43,13 @@
     [day]="dayStr()"
     [flatTasks]="project.tasks"
   ></task-summary-table>
-  <div style="text-align: center; margin-top: 8px; margin-bottom: 16px">
+  <div class="project-actions">
     <button
       [matMenuTriggerFor]="roundTimeActions"
       [title]="T.PDS.ROUND_TIME_SPENT_TITLE | translate"
       mat-button
     >
-      <mat-icon>restore</mat-icon>
+      <mat-icon>more_time</mat-icon>
       {{ T.PDS.ROUND_TIME_SPENT | translate }}
     </button>
     @if (isForToday()) {
@@ -58,7 +57,7 @@
         (click)="showExportModal(project.id)"
         mat-button
       >
-        <mat-icon>call_made</mat-icon>
+        <mat-icon>ios_share</mat-icon>
         {{ T.PDS.EXPORT_TASK_LIST | translate }}
       </button>
     }

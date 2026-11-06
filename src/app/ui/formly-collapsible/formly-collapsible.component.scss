@@ -3,9 +3,12 @@
 @include collapsible-shared;
 
 .collapsible-header {
-  padding-bottom: var(--s);
-
   &:focus {
     outline: none;
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
   }
 }

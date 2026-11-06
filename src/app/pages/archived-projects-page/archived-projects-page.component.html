@@ -1,9 +1,6 @@
 <div class="page-wrapper">
   <div class="search-header">
-    <mat-form-field
-      appearance="outline"
-      class="search-field"
-    >
+    <mat-form-field class="search-field">
       <mat-label>{{ T.F.PROJECT.ARCHIVED_PROJECTS.SEARCH | translate }}</mat-label>
       <input
         matInput
@@ -46,7 +43,7 @@
               <span class="project-title">{{ project.title }}</span>
               @if (project.isDone) {
                 <span class="completed-badge">
-                  <mat-icon aria-hidden="true">emoji_events</mat-icon>
+                  <mat-icon aria-hidden="true">check_circle</mat-icon>
                   @if (project.doneOn) {
                     {{
                       T.F.PROJECT.COMPLETE.COMPLETED_ON
@@ -63,7 +60,7 @@
                 [attr.aria-label]="T.F.PROJECT.COMPLETE.REOPEN | translate"
                 (click)="reopen(project)"
               >
-                <mat-icon>replay</mat-icon>
+                <mat-icon>restore</mat-icon>
               </button>
             } @else {
               <button

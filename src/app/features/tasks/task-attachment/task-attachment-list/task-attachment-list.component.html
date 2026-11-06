@@ -46,6 +46,18 @@
         <div class="controls border-color-primary">
           <a
             class="view-btn"
+            [matTooltip]="
+              (attachment.type === 'IMG' && !isError[i]
+                ? T.F.ATTACHMENT.PREVIEW_IMAGE
+                : T.F.ATTACHMENT.OPEN_ATTACHMENT
+              ) | translate
+            "
+            [attr.aria-label]="
+              (attachment.type === 'IMG' && !isError[i]
+                ? T.F.ATTACHMENT.PREVIEW_IMAGE
+                : T.F.ATTACHMENT.OPEN_ATTACHMENT
+              ) | translate
+            "
             mat-flat-button
             [class.isImage]="attachment.type === 'IMG' && !isError[i]"
             [href]="attachment.resolvedPath"
@@ -54,10 +66,9 @@
             target="_blank"
             taskAttachmentLink
           >
-            @if (attachment.type === 'IMG') {
-              <mat-icon>search</mat-icon>
-            }
-            @if (attachment.type !== 'IMG') {
+            @if (attachment.type === 'IMG' && !isError[i]) {
+              <mat-icon>zoom_in</mat-icon>
+            } @else {
               <mat-icon>open_in_new</mat-icon>
             }
           </a>
@@ -65,6 +76,8 @@
             <button
               (click)="copy(attachment)"
               class="copy-btn"
+              [matTooltip]="T.F.ATTACHMENT.COPY_ATTACHMENT | translate"
+              [attr.aria-label]="T.F.ATTACHMENT.COPY_ATTACHMENT | translate"
               mat-flat-button
             >
               <mat-icon>content_copy</mat-icon>
@@ -73,6 +86,8 @@
           <button
             (click)="openEditDialog(attachment)"
             class="edit-btn"
+            [matTooltip]="T.F.ATTACHMENT.EDIT_ATTACHMENT | translate"
+            [attr.aria-label]="T.F.ATTACHMENT.EDIT_ATTACHMENT | translate"
             mat-flat-button
           >
             <mat-icon>edit</mat-icon>
@@ -81,9 +96,11 @@
             <button
               (click)="remove(attachment.id)"
               class="trash-btn"
+              [matTooltip]="T.F.ATTACHMENT.REMOVE_ATTACHMENT | translate"
+              [attr.aria-label]="T.F.ATTACHMENT.REMOVE_ATTACHMENT | translate"
               mat-flat-button
             >
-              <mat-icon color="warn">delete_forever</mat-icon>
+              <mat-icon color="warn">delete</mat-icon>
             </button>
           }
         </div>

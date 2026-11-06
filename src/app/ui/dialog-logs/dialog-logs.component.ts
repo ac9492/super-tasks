@@ -15,6 +15,7 @@ import { download } from '../../util/download';
 import { IS_NATIVE_PLATFORM } from '../../util/is-native-platform';
 import { SnackService } from '../../core/snack/snack.service';
 import { ShareService } from '../../core/share/share.service';
+import { useDialogSize } from '../dialog-size.util';
 
 interface DialogLogsData {
   logs: string;
@@ -35,6 +36,7 @@ interface DialogLogsData {
   ],
 })
 export class DialogLogsComponent {
+  private readonly _dialogSize = useDialogSize('l');
   private readonly _dialogRef = inject<MatDialogRef<DialogLogsComponent>>(MatDialogRef);
   private readonly _snackService = inject(SnackService);
   private readonly _shareService = inject(ShareService);

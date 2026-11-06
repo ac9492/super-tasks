@@ -2,6 +2,14 @@ import { ConfigFormSection, LocalizationConfig } from '../global-config.model';
 import { LanguageCode, DateTimeLocales } from '../../../core/locale.constants';
 import { T } from '../../../t.const';
 
+// The "System default" options store null, which mat-select shows as no
+// selection at all — an empty field. Show their label as the placeholder
+// instead, with the label floating so the placeholder is visible.
+const SYSTEM_DEFAULT_SHOWN = {
+  placeholder: T.GCF.LANG.TIME_LOCALE_AUTO,
+  floatLabel: 'always',
+} as const;
+
 export const LANGUAGE_SELECTION_FORM_FORM: ConfigFormSection<LocalizationConfig> = {
   title: T.GCF.LANG.TITLE,
   key: 'localization',
@@ -11,10 +19,10 @@ export const LANGUAGE_SELECTION_FORM_FORM: ConfigFormSection<LocalizationConfig>
       type: 'select',
       templateOptions: {
         label: T.GCF.LANG.LABEL,
+        ...SYSTEM_DEFAULT_SHOWN,
         options: [
           // TODO sort by popular
-          // TODO add translation
-          { label: 'System default', value: null },
+          { label: T.GCF.LANG.TIME_LOCALE_AUTO, value: null },
           { label: T.GCF.LANG.AR, value: LanguageCode.ar },
           { label: T.GCF.LANG.CS, value: LanguageCode.cs },
           { label: T.GCF.LANG.DE, value: LanguageCode.de },
@@ -51,9 +59,9 @@ export const LANGUAGE_SELECTION_FORM_FORM: ConfigFormSection<LocalizationConfig>
       type: 'select',
       templateOptions: {
         label: T.GCF.MISC.FIRST_DAY_OF_WEEK,
+        ...SYSTEM_DEFAULT_SHOWN,
         options: [
-          // TODO add translation
-          { label: 'System default', value: null },
+          { label: T.GCF.LANG.TIME_LOCALE_AUTO, value: null },
           { label: T.F.TASK_REPEAT.F.SUNDAY, value: 0 },
           { label: T.F.TASK_REPEAT.F.MONDAY, value: 1 },
           { label: T.F.TASK_REPEAT.F.TUESDAY, value: 2 },
@@ -70,6 +78,7 @@ export const LANGUAGE_SELECTION_FORM_FORM: ConfigFormSection<LocalizationConfig>
       templateOptions: {
         label: T.GCF.LANG.TIME_LOCALE,
         description: T.GCF.LANG.TIME_LOCALE_DESCRIPTION,
+        ...SYSTEM_DEFAULT_SHOWN,
         options: [
           // TODO sort by popular
           { label: T.GCF.LANG.TIME_LOCALE_AUTO, value: null },

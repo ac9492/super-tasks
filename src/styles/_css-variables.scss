@@ -8,13 +8,17 @@
 //   --ink-muted
 //   --ink-on-channel       → RGB triplet (e.g. "0,0,0") for `rgba()` overlays
 //   --separator, --divider → border / hairline tones
-//   --scrim, --bg-overlay  → modal / wallpaper overlay tones
+//   --scrim, --bg-overlay  → modal / image overlay tones
 //   --brand, --focus-ring  → accent / focus surfaces (alias to Material palette)
 //   --state-{hover,focus,
 //   pressed,selected}-alpha,
 //   --state-disabled-alpha → interaction-state opacity scalars
 //   --c-* / --palette-*    → legacy + Material palette ladders (don't introduce
 //                             new --c-* names; prefer the families above)
+//   Scale (docs/styling-guide.md § Scale): --s* spacing, --r-* radius,
+//   --elev-* elevation, --type-* / --track-* type roles, --icon-* sizes,
+//   --ctl-* control heights, --page-gutter. Legacy radius/shadow/bar-height
+//   names alias these.
 //
 // Selector contract for theme authors:
 //   Primitives MUST be overridden under `body` (light) or `body.isDarkTheme`
@@ -43,15 +47,14 @@
 
 :root {
   --st-brand: var(--palette-accent);
-  --st-radius: 14px;
-  --st-blur: 18px;
-  --st-glass-alpha: 86%;
-  --st-card-alpha: 94%;
+  // Legacy name for the card/nav-row corner; see the radius scale below.
+  --st-radius: var(--r-md);
   --st-tint-alpha: 7%;
   --st-line-width: 1px;
   --st-focus-width: 2px;
 
-  // Device-local palette defaults, replaced synchronously at startup.
+  // Device-local palette defaults, replaced synchronously at startup:
+  // one declaration per role (the service writes every one on the root).
   --palette-background: #f8f8f7;
   --palette-surface: #ffffff;
   --palette-accent: #075b5e;
@@ -64,6 +67,31 @@
   --palette-selected-ink: #000000;
   --palette-hover: #ebf2f2;
   --palette-hover-ink: #000000;
+  // Normaliser roles the scale reads: the elevation hairline, the field edge
+  // and the tooltip pair. These defaults only cover the first paint and follow
+  // the mode through the inks above (docs/theming-contract.md).
+  --palette-separator: rgba(var(--palette-background-ink-channel), 0.1);
+  --palette-outline: rgba(var(--palette-surface-ink-channel), 0.42);
+  --palette-tooltip-bg: var(--palette-surface-ink);
+  --palette-tooltip-ink: var(--palette-surface);
+  // The remaining roles, first-paint values of the default light palette.
+  --palette-surface-raised: #ffffff;
+  --palette-ink-muted: #6c6c6c;
+  --palette-selected-ink-muted: #616161;
+  --palette-accent-text: #075b5e;
+  --palette-focus-ring: #075b5e;
+  --palette-border: rgba(var(--palette-surface-ink-channel), 0.123);
+  --palette-disabled: rgba(var(--palette-surface-ink-channel), 0.053);
+  --palette-disabled-ink: rgba(var(--palette-surface-ink-channel), 0.376);
+  --palette-scrollbar: rgba(var(--palette-background-ink-channel), 0.224);
+  --palette-danger: #c0161b;
+  --palette-danger-ink: #ffffff;
+  --palette-warning: #8d5300;
+  --palette-warning-ink: #ffffff;
+  --palette-success: #00703e;
+  --palette-success-ink: #ffffff;
+  --palette-upcoming: #823cc3;
+  --palette-upcoming-ink: #ffffff;
   // -----------------------------
   // Safe Areas (iOS notch, home indicator)
   // Uses env() for native iOS safe areas
@@ -122,7 +150,8 @@
     ui-monospace, 'SF Mono', 'JetBrains Mono', 'Fira Code', Menlo, Consolas,
     'Liberation Mono', 'Courier New', monospace;
 
-  // Type scale
+  // Size primitives. Components set text through the six type roles below;
+  // xs/2xl/3xl only survive in legacy rules and the global heading ramp.
   --font-size-xs: 11px;
   --font-size-sm: 12px;
   --font-size-md: 14px; // base
@@ -148,6 +177,41 @@
   --letter-spacing-normal: 0;
   --letter-spacing-wide: 0.02em;
 
+  // Type roles: `font` shorthands with whole-pixel line heights on the 4px
+  // grid. `font` does not set tracking, so title and label pair with
+  // --track-title / --track-label; the others track at 0.
+  //   title        page, dialog and settings-window titles
+  //   heading      panel/section headings, detail task title, empty-state line
+  //   body         default UI text: nav, fields, menus, rows
+  //   body-strong  task titles, button labels, values
+  //   label        section and group labels (chrome around content)
+  //   meta         tags, counts, hints, summary labels, badges
+  --type-title: var(--font-weight-semibold) var(--font-size-xl) / 24px
+    var(--font-primary-stack);
+  --type-heading: var(--font-weight-semibold) var(--font-size-lg) / 24px
+    var(--font-primary-stack);
+  --type-body: 400 var(--font-size-md) / 20px var(--font-primary-stack);
+  --type-body-strong: var(--font-weight-medium) var(--font-size-md) / 20px
+    var(--font-primary-stack);
+  --type-label: var(--font-weight-semibold) var(--font-size-sm) / 16px
+    var(--font-primary-stack);
+  --type-meta: 400 var(--font-size-sm) / 16px var(--font-primary-stack);
+  --track-title: var(--letter-spacing-tight);
+  --track-label: var(--letter-spacing-wide);
+
+  // Icon sizes. The glyph box equals the font size; leading icons centre in
+  // a 24px slot.
+  --icon-sm: 16px; // inline with 12-14px text: meta, chips, compact buttons
+  --icon-md: 20px; // every control: buttons, menus, nav, header, field rows
+  --icon-lg: 24px; // touch-first surfaces: bottom nav, FAB, empty state
+  --icon-slot: 24px;
+
+  // Control heights. Compact lifts to 40 on touch (media query below).
+  --ctl-sm: 32px; // compact: add-bar chips, in-row buttons, section headers
+  --ctl-md: 40px; // default: buttons, icon buttons, nav rows, fields, menu items
+  --ctl-lg: 48px; // touch surfaces: bottom nav, drawer rows, sheet rows
+
+  --s1-5: 12px; // 1.5 * 8px: icon-to-label gap in rows, menu item insets
   --s2: 16px; // 2 * 8px
   --s3: 24px; // 3 * 8px
   --s4: 32px; // 4 * 8px
@@ -182,11 +246,20 @@
   --side-nav-width-switch-mobile: 500px;
   --side-nav-width-switch-l: 1500px;
   --side-nav-width-mobile: calc(100vw - var(--s9));
-  --side-nav-width: 200px;
+  --side-nav-width: 260px; // the default panel width (defaultWidth in magic-nav-config)
   --side-nav-width-l: 400px;
-  --bar-height-large: 56px;
-  --bar-height: 48px;
-  --bar-height-small: 40px;
+  --bar-height-large: 56px; // header band and brand row
+  --bar-height: var(--ctl-lg);
+  --bar-height-small: var(--ctl-md);
+  // Page content starts at the gutter (the one left edge): 8, 16 from 600px,
+  // 24 from 960px (media queries below).
+  --page-gutter: var(--s);
+  // Dialogs: one gutter for title, content and actions (24, 16 below 600px)
+  // and three widths, set through dialogSize() (src/app/ui/dialog-size.util.ts).
+  --dialog-gutter: var(--s2);
+  --dialog-w-s: 440px; // confirm, prompt, estimate, schedule, deadline, reminder
+  --dialog-w-m: 560px; // entity forms: project, tag, habit, repeat, sync, import
+  --dialog-w-l: 720px; // reference: keyboard help, logs, conflict details
   --mat-mini-fab-size: 48px;
   --mac-title-bar-padding: 20px;
   --vertical-action-bar-width: 48px;
@@ -195,15 +268,49 @@
   // unset while the overlay is hidden, e.g. in fullscreen.
   --wco-height: 24px;
 
-  // Radius scale — use tokens below; legacy aliases kept for existing rules.
-  --radius-xs: 4px;
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-pill: 9999px;
-  --card-border-radius: var(--radius-md);
   --window-controls-width: 140px; // Fallback for non-WCO contexts; main-header uses env() directly
+
+  // Radius by role, not by height. A nested shape is never rounder than its
+  // parent: inset p inside radius R uses R - p (menu 14 with 4px inset -> 10).
+  --r-sm: 6px; // inline: tooltip, kbd, checkbox, inline edit, hover-control group
+  --r-md: 10px; // controls and list items: buttons, fields, nav rows, cards, menu items
+  --r-lg: 14px; // floating surfaces: dialogs, menus, snackbars, add-task bar, sheets
+  --r-full: 9999px; // icon buttons, FAB, chips, badges, counts, toggles
+  // Legacy names, kept as aliases until every consumer reads --r-*.
+  --radius-xs: var(--r-sm);
+  --radius-sm: var(--r-sm);
+  --radius-md: var(--r-md);
+  --radius-lg: var(--r-lg);
+  --radius-xl: var(--r-lg);
+  --radius-pill: var(--r-full);
+  --card-border-radius: var(--r-md);
+
+  // Elevation. Resting UI has no shadow. Each level carries a hairline ring
+  // (--palette-separator) so the edge stays visible where shadows vanish:
+  // dark palettes, glass, a busy background image.
+  //   elev-1  menus, popovers, select panels, date pickers, snackbars
+  //   elev-2  dialogs, add-task bar, sheets, drag previews
+  --elev-1:
+    0 0 0 var(--st-line-width) var(--palette-separator), 0 1px 2px rgba(0, 0, 0, 0.06),
+    0 4px 12px rgba(0, 0, 0, 0.08);
+  --elev-2:
+    0 0 0 var(--st-line-width) var(--palette-separator), 0 2px 6px rgba(0, 0, 0, 0.08),
+    0 12px 32px rgba(0, 0, 0, 0.14);
+  // Legacy names: levels 1-2 / 1-4dp are popovers, levels 3-5 / 6-24dp modals.
+  --md-sys-level1: var(--elev-1);
+  --md-sys-level1-5: var(--elev-1);
+  --md-sys-level2: var(--elev-1);
+  --md-sys-level3: var(--elev-2);
+  --md-sys-level4: var(--elev-2);
+  --md-sys-level5: var(--elev-2);
+  --whiteframe-shadow-1dp: var(--elev-1);
+  --whiteframe-shadow-2dp: var(--elev-1);
+  --whiteframe-shadow-3dp: var(--elev-1);
+  --whiteframe-shadow-4dp: var(--elev-1);
+  --whiteframe-shadow-6dp: var(--elev-2);
+  --whiteframe-shadow-8dp: var(--elev-2);
+  --whiteframe-shadow-12dp: var(--elev-2);
+  --whiteframe-shadow-24dp: var(--elev-2);
 
   // Z-index layers
   --z-focus-mode-overlay: 101;
@@ -227,7 +334,6 @@
   // Below cdk-overlay (1000): menus and dialogs cover the hint, not vice versa.
   --z-onboarding-hint: 998;
   --z-dragged-nav-item: 1002;
-  --z-bg-overlay: 1;
 
   // ===============================
   // COLORS - Theme Independent
@@ -236,11 +342,16 @@
   // -----------------------------
   // Semantic Colors
   // -----------------------------
-  --color-success: #4caf50;
-  --color-warning: #ff9800;
-  --color-danger: #f44336;
-  --success-green: #4fa758;
-  --sun-yellow: #fff400;
+  // The normaliser's semantic roles, solved for 4.5:1 text on every layer and
+  // independent of the accent (docs/theming-contract.md). The older names are
+  // aliases, declared here once; plugins receive them by name.
+  --color-success: var(--palette-success);
+  --color-warning: var(--palette-warning);
+  --color-danger: var(--palette-danger);
+  --success-green: var(--palette-success);
+  --scheduled-date-today: var(--palette-success);
+  --scheduled-date-tomorrow: var(--palette-warning);
+  --scheduled-date-upcoming: var(--palette-upcoming);
 
   // -----------------------------
   // Dark Theme Elevation Colors
@@ -284,7 +395,8 @@
   // Legacy palette references
   --c-primary: var(--palette-primary-500);
   --c-accent: var(--palette-accent-500);
-  --c-warn: var(--palette-warn-500);
+  --c-warn: var(--palette-danger);
+  --c-warn-contrast: var(--palette-danger-ink);
   --c-contrast: var(--palette-primary-contrast-500);
 
   // ===============================
@@ -332,10 +444,10 @@
   // -----------------------------
   // Task Component
   // -----------------------------
-  --task-first-line-min-height: 40px;
+  --task-first-line-min-height: var(--ctl-md);
   // Width of a row's leading control slot (done-toggle, select ring, the repeat
   // icon on recurring-config rows) — shared so those rows' titles line up.
-  --task-icon-size: 40px;
+  --task-icon-size: var(--ctl-md);
   --task-icon-default-opacity: 0.7;
   --task-inner-padding-top-bottom: 4px;
   --task-is-done-dim-opacity: 0.3;
@@ -377,6 +489,25 @@
   // Fallback for any root-level consumer; body aliases this to the public
   // `--focus-ring` primitive below.
   --focus-ring-color: var(--focus-ring, var(--palette-primary-500));
+}
+
+// Scale steps that follow the viewport or the input device.
+@media (min-width: 600px) {
+  :root {
+    --page-gutter: var(--s2);
+    --dialog-gutter: var(--s3);
+  }
+}
+@media (min-width: 960px) {
+  :root {
+    --page-gutter: var(--s3);
+  }
+}
+// Touch hit areas stay at least 40px: compact controls grow to the default.
+@media (pointer: coarse) {
+  :root {
+    --ctl-sm: var(--ctl-md);
+  }
 }
 
 // ===============================
@@ -442,7 +573,8 @@ body {
   // Input fields
   --input-bg: rgba(var(--ink-on-channel), 0.04);
   --input-bg-hover: rgba(var(--ink-on-channel), 0.07);
-  --input-border-color: rgba(var(--ink-on-channel), 0.08);
+  // Field edge: the palette's 3:1 outline role.
+  --input-border-color: var(--palette-outline);
 }
 
 body.isDarkTheme {
@@ -469,7 +601,6 @@ body.isDarkTheme {
   // Input fields
   --input-bg: rgba(var(--ink-on-channel), 0.06);
   --input-bg-hover: rgba(var(--ink-on-channel), 0.1);
-  --input-border-color: transparent;
 }
 
 // -----------------------------
@@ -494,10 +625,8 @@ body.isDarkTheme {
   // Navigation & panel (Cat A)
   --sidenav-bg: transparent;
   --sidenav-bg-mobile: var(--bg);
-  // Keep active labels contrast-safe on every project colour. Brand remains
-  // visible in the non-text selection tint instead of carrying text contrast.
-  --sidenav-item-active-bg: color-mix(in srgb, var(--brand) 18%, transparent);
-  --sidenav-active-text: var(--ink-strong);
+  // The active row is the tonal selected role (--sidenav-item-active-bg and
+  // --sidenav-active-text are mapped to it in _palette-theme.scss).
   --sidenav-text: var(--text-color-less-intense);
   --sidenav-text-hover: var(--text-color-most-intense);
   --sidenav-text-secondary: var(--text-color-muted);
@@ -508,7 +637,9 @@ body.isDarkTheme {
   --button-warn-label: var(--ink-strong);
 
   --right-panel-bg: transparent;
-  --bottom-nav-height: 44px;
+  --bottom-nav-height: var(
+    --s7
+  ); // 56px: icon pills are 48px (--ctl-lg) with 4px above and below
   --bottom-nav-extra-offset: 0px;
   --bottom-nav-bg: var(--sidenav-bg-mobile);
   --bottom-nav-shadow: var(--whiteframe-shadow-2dp);
@@ -534,7 +665,9 @@ body.isDarkTheme {
   // separators, sharp corners. The "classic" theme restores the boxed look by
   // setting these same tokens, so keep every switch here token-driven.
   --task-c-bg: transparent;
-  --task-c-current-bg: var(--surface-3);
+  // A tracked task is marked by an accent edge, not a tint; the token stays as
+  // the selected tint for plugins that style a "current" row.
+  --task-c-current-bg: var(--task-c-selected-bg);
   --task-c-drag-drop-bg: var(--surface-3);
   --task-border-color: var(--divider-color);
   --task-border: none;
@@ -601,6 +734,7 @@ body.isDarkTheme {
   --state-selected: rgba(var(--ink-on-channel), var(--state-selected-alpha));
 
   // Input fields semantic aliases
+  --input-border-color-hover: color-mix(in srgb, var(--text-color) 60%, transparent);
   --input-border-color-focus: var(--focus-ring-color);
   --input-border-color-invalid: var(--palette-warn-500);
   --input-border-radius: var(--card-border-radius);
@@ -615,10 +749,6 @@ body.isDarkTheme {
 
 /* stylelint-disable-next-line no-duplicate-selectors -- layered token file: Cat B follows Layer 1 primitives on the same selector */
 body {
-  // Saturated schedule text colors on light surfaces.
-  --scheduled-date-today: #007a29;
-  --scheduled-date-tomorrow: #b45b00;
-  --scheduled-date-upcoming: #8000d0;
   // Background colors (Cat B)
   --bg-drag-col: rgb(242, 242, 242);
   --bg-slightly-lighter: var(--bg);
@@ -647,7 +777,6 @@ body {
   --standard-note-bg-hovered: var(--standard-note-bg);
 
   // Task colors (Cat B)
-  --task-c-current-bg: color-mix(in srgb, var(--c-accent) 10%, var(--surface-2));
   --task-c-selected-bg: var(--state-selected);
   // Multi-selection reads as a tinted surface — the focus ring is the only
   // outlined state, so the two never look alike.
@@ -695,16 +824,10 @@ body {
 
   // Grid colors (Cat B)
   --grid-color: #dadce0;
-
-  // Special colors overrides for light theme
-  --sun-yellow: #ffc107;
 }
 
 /* stylelint-disable-next-line no-duplicate-selectors -- layered token file: Cat B follows Layer 1 primitives on the same selector */
 body.isDarkTheme {
-  --scheduled-date-today: #00d45a;
-  --scheduled-date-tomorrow: #ffaa00;
-  --scheduled-date-upcoming: #d580ff;
   // Background colors (Cat B)
   --bg-slightly-lighter: var(--dark4);
   --bg-super-light: #616161;
@@ -731,7 +854,6 @@ body.isDarkTheme {
   --standard-note-bg-hovered: var(--dark24);
 
   // Task colors (Cat B)
-  --task-c-current-bg: color-mix(in srgb, var(--c-accent) 18%, var(--surface-3));
   --task-c-selected-bg: var(--state-selected);
   --task-c-multi-selected-bg: color-mix(in srgb, var(--c-primary) 28%, var(--surface-3));
   --sub-task-c-bg: var(--task-c-bg);
@@ -783,67 +905,4 @@ body.isDarkTheme {
   // Grid colors (Cat B — light gray hex would be opaque on dark surfaces;
   // dark uses low-opacity white instead).
   --grid-color: var(--c-light-10);
-
-  // Sidenav active item (Cat B — dark intentionally softer than the
-  // 0.10 alias resolves to; preserved at 0.075 to match pre-refactor visuals).
-  --sidenav-item-active-bg: rgba(255, 255, 255, 0.075);
-}
-
-// -----------------------------
-// State-token demo migration (this PR — scope per plan §3):
-//   * src/app/imex/sync/dialog-restore-point — `:hover` overlay + `.selected`
-//     lift now consume `--state-hover` / `--state-selected`.
-// Bulk migration of remaining ~34 ad-hoc rgba state-overlay callsites is a
-// follow-up PR (see plan §3 bulk-sweep regex).
-// -----------------------------
-
-/* stylelint-disable */
-:root {
-  /* stylelint-enable */
-
-  // ===============================
-  // SHADOWS & ELEVATION
-  // ===============================
-
-  --whiteframe-shadow-1dp: var(--md-sys-level1);
-  --whiteframe-shadow-2dp: var(--md-sys-level1-5);
-  --whiteframe-shadow-3dp: var(--md-sys-level2);
-  --whiteframe-shadow-4dp: var(--md-sys-level2);
-  --whiteframe-shadow-6dp: var(--md-sys-level3);
-  --whiteframe-shadow-8dp: var(--md-sys-level3);
-  --whiteframe-shadow-12dp: var(--md-sys-level4);
-  --whiteframe-shadow-24dp: var(--md-sys-level5);
-
-  // material design m3 shadows
-  //--md-sys-level0: none;
-  //--md-sys-level1: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
-  //--md-sys-level1-5: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.24);
-  //--md-sys-level2: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.3);
-  //--md-sys-level3: 0 11px 7px 0 rgba(0, 0, 0, 0.19), 0 13px 25px 0 rgba(0, 0, 0, 0.3);
-  //--md-sys-level4: 0 14px 12px 0 rgba(0, 0, 0, 0.17), 0 20px 40px 0 rgba(0, 0, 0, 0.3);
-  //--md-sys-level5: 0 17px 17px 0 rgba(0, 0, 0, 0.15), 0 27px 55px 0 rgba(0, 0, 0, 0.3);
-
-  // apple
-  //--md-sys-level1:   0 1px 2px rgba(0,0,0,0.12);
-  //--md-sys-level1-5: 0 2px 4px rgba(0,0,0,0.12);
-  //--md-sys-level2:   0 4px 8px rgba(0,0,0,0.14);
-  //--md-sys-level3:   0 8px 16px rgba(0,0,0,0.16);
-  //--md-sys-level4:   0 12px 24px rgba(0,0,0,0.18);
-  //--md-sys-level5:   0 20px 40px rgba(0,0,0,0.20);
-
-  /* Ant-like tokens */
-  --md-sys-level1: 0 2px 8px rgba(0, 0, 0, 0.12), 0 1px 3px -2px rgba(0, 0, 0, 0.16);
-  --md-sys-level1-5: 0 3px 10px rgba(0, 0, 0, 0.12), 0 3px 6px -3px rgba(0, 0, 0, 0.16);
-  --md-sys-level2: 0 4px 12px rgba(0, 0, 0, 0.14), 0 6px 16px -4px rgba(0, 0, 0, 0.12);
-  --md-sys-level3: 0 8px 24px rgba(0, 0, 0, 0.14), 0 12px 28px -6px rgba(0, 0, 0, 0.12);
-  --md-sys-level4: 0 12px 32px rgba(0, 0, 0, 0.16), 0 20px 40px -8px rgba(0, 0, 0, 0.12);
-  --md-sys-level5: 0 20px 48px rgba(0, 0, 0, 0.18), 0 32px 64px -10px rgba(0, 0, 0, 0.14);
-
-  /* Fluent-like tokens: soft ambient + directional key */
-  //--md-sys-level1:   0 1px 2px rgba(0,0,0,0.10), 0 2px 1px rgba(0,0,0,0.08);
-  //--md-sys-level1-5: 0 2px 4px rgba(0,0,0,0.10), 0 3px 2px rgba(0,0,0,0.10);
-  //--md-sys-level2:   0 4px 8px rgba(0,0,0,0.12), 0 6px 4px rgba(0,0,0,0.12);
-  //--md-sys-level3:   0 8px 16px rgba(0,0,0,0.14), 0 10px 6px rgba(0,0,0,0.12);
-  //--md-sys-level4:   0 12px 24px rgba(0,0,0,0.16), 0 16px 8px rgba(0,0,0,0.12);
-  //--md-sys-level5:   0 20px 40px rgba(0,0,0,0.18), 0 28px 12px rgba(0,0,0,0.14);
 }

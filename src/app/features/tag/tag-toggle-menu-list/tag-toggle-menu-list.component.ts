@@ -16,6 +16,7 @@ import {
 } from '@angular/material/menu';
 import { TaskCopy } from '../../tasks/task.model';
 import { TagService } from '../tag.service';
+import { resolveTagIcon } from '../resolve-tag-icon.util';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogPromptComponent } from '../../../ui/dialog-prompt/dialog-prompt.component';
 import { T } from '../../../t.const';
@@ -53,7 +54,12 @@ export class TagToggleMenuListComponent {
   addNewTag = output<string>();
 
   tagFolderMap = computed(() => this._menuTreeService.tagFolderMap());
-  toggleTagList = this._tagService.tagsNoMyDayAndNoListInTreeOrder;
+  toggleTagList = computed(() =>
+    this._tagService.tagsNoMyDayAndNoListInTreeOrder().map((tag) => ({
+      ...tag,
+      displayIcon: resolveTagIcon(tag),
+    })),
+  );
   menuEl = viewChild('menuEl', {
     // read: MatMenu,
   });

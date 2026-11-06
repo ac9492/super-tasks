@@ -38,8 +38,12 @@
     margin-bottom: calc(var(--margin-bottom) + 4px);
   }
 
+  // 15 minutes or less: a compact single line that fits the event's own rows,
+  // rather than the 20px minimum running into the next event.
   &.very-short-event {
+    --margin-bottom: var(--s-quarter);
     align-items: center;
+    min-height: calc(var(--s) + var(--s-half));
   }
 
   &.split-start {
@@ -164,14 +168,14 @@
   }
 
   &.ScheduledRepeatProjection .ico {
-    color: var(--c-primary);
+    color: var(--palette-accent-text);
   }
 
   &.ScheduledTask {
     border-radius: 0;
 
     .ico {
-      color: var(--c-primary);
+      color: var(--palette-accent-text);
       font-size: 24px;
       height: 24px;
       min-width: 24px;
@@ -213,11 +217,11 @@
       border-color: var(--c-accent);
 
       &.CalendarEvent {
-        color: var(--c-accent);
+        color: var(--palette-accent-text);
       }
 
       .ico {
-        color: var(--c-accent);
+        color: var(--palette-accent-text);
       }
 
       > * {
@@ -352,9 +356,14 @@
     padding: var(--title-padding-y);
   }
 
+  // The single line may exceed a 10-minute event by a pixel; letting it
+  // overflow keeps descenders readable (`.title-text` still truncates).
   :host.very-short-event & {
-    max-height: 100%;
-    padding: 1px 6px var(--s-quarter);
+    max-height: none;
+    overflow: visible;
+    padding: 0 6px;
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-tight);
   }
 
   // Keep padding off the clamped element. Padding on a line-clamped box can
@@ -507,6 +516,11 @@
   opacity: 0.7;
 }
 
+// The grip would cross the single title line of a very short event.
+:host.very-short-event:not(:hover, .is-resizing) .resize-grip {
+  opacity: 0;
+}
+
 :host.is-beyond-budget .resize-grip {
   display: none;
 }
@@ -518,7 +532,7 @@
   border-color: var(--c-accent);
 
   .ico {
-    color: var(--c-accent);
+    color: var(--palette-accent-text);
   }
 
   .resize-handle {

@@ -2,14 +2,14 @@
   (submit)="$event.preventDefault(); save()"
   class="dialog-help-wrapper"
 >
-  <h1 mat-dialog-title>
+  <h2 mat-dialog-title>
     <mat-icon>repeat</mat-icon>
     {{
       isEdit()
         ? (T.F.TASK_REPEAT.D_EDIT.EDIT | translate)
         : (T.F.TASK_REPEAT.D_EDIT.ADD | translate)
     }}
-  </h1>
+  </h2>
 
   <mat-dialog-content>
     <div class="form-wrapper">
@@ -76,7 +76,7 @@
               "
               (click)="openScheduleDialog()"
             >
-              <mat-icon>calendar_today</mat-icon>
+              <mat-icon>calendar_month</mat-icon>
             </button>
           </span>
         </mat-form-field>
@@ -113,7 +113,10 @@
         }
       </div>
 
-      <collapsible [title]="T.F.TASK_REPEAT.D_EDIT.ADVANCED_CFG | translate">
+      <collapsible
+        [isIconBefore]="true"
+        [title]="T.F.TASK_REPEAT.D_EDIT.ADVANCED_CFG | translate"
+      >
         <div class="options-body">
           <!-- How the series behaves -->
           <formly-form
@@ -155,6 +158,7 @@
 
       @if (repeatCfgId(); as cfgId) {
         <collapsible
+          [isIconBefore]="true"
           [title]="T.F.TASK_REPEAT.D_EDIT.HEATMAP_LABEL | translate"
           (isExpandedChange)="isHeatmapExpanded = $event"
         >
@@ -168,24 +172,26 @@
 
   <mat-dialog-actions align="end">
     @if (isEdit()) {
-      <!-- Actions that drop something, apart from the dialog's own buttons -->
+      <!-- Actions that drop something, apart from Cancel and Save -->
       <button
         (click)="remove()"
-        [attr.aria-label]="T.G.REMOVE | translate"
+        [attr.aria-label]="T.F.TASK_REPEAT.F.REMOVE_RECURRENCE | translate"
         class="icon-on-small"
+        [class.dialog-action-start]="!canRemoveInstance()"
         color="warn"
         mat-stroked-button
         type="button"
       >
-        <mat-icon>delete_forever</mat-icon>
-        <span class="hide-on-small">{{ T.G.REMOVE | translate }}</span>
+        <mat-icon>delete</mat-icon>
+        <span class="hide-on-small">{{
+          T.F.TASK_REPEAT.F.REMOVE_RECURRENCE | translate
+        }}</span>
       </button>
       @if (canRemoveInstance()) {
         <button
           (click)="deleteInstance()"
           [attr.aria-label]="skipInstanceButtonText()"
-          class="icon-on-small"
-          color="primary"
+          class="icon-on-small dialog-action-start"
           mat-stroked-button
           type="button"
         >
@@ -193,31 +199,22 @@
           <span class="hide-on-small">{{ skipInstanceButtonText() }}</span>
         </button>
       }
-      <span class="spacer"></span>
     }
-
     <button
       (click)="close()"
-      [attr.aria-label]="T.G.CANCEL | translate"
-      class="icon-on-small"
       mat-button
       type="button"
     >
-      <mat-icon class="show-on-small">close</mat-icon>
-      <span class="hide-on-small">{{ T.G.CANCEL | translate }}</span>
+      {{ T.G.CANCEL | translate }}
     </button>
-
     <button
       [disabled]="!areFormsValid() || isLoading() || isWeekdaySelectionInvalid()"
-      [attr.aria-label]="T.G.SAVE | translate"
       [attr.aria-describedby]="isWeekdaySelectionInvalid() ? 'weekday-error' : null"
-      class="icon-on-small"
       color="primary"
       mat-flat-button
       type="submit"
     >
-      <mat-icon>save</mat-icon>
-      <span class="hide-on-small">{{ T.G.SAVE | translate }}</span>
+      {{ T.G.SAVE | translate }}
     </button>
   </mat-dialog-actions>
 </form>

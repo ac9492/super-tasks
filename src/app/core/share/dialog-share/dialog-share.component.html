@@ -22,7 +22,9 @@
         class="share-target-button"
         (click)="shareToTarget(shareTarget.target)"
       >
-        <mat-icon>{{ shareTarget.icon }}</mat-icon>
+        @if (shareTarget.icon) {
+          <mat-icon>{{ shareTarget.icon }}</mat-icon>
+        }
         <span>{{ shareTarget.label }}</span>
       </button>
     }
@@ -30,7 +32,7 @@
 
   <!-- Mastodon Instance Input -->
   <div class="mastodon-instance">
-    <mat-form-field appearance="outline">
+    <mat-form-field>
       <mat-label>Mastodon Instance</mat-label>
       <input
         matInput

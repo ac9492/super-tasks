@@ -403,7 +403,6 @@ export class WorkViewComponent implements OnInit, OnDestroy {
     () => this.isOnTodayList() && this.overdueTasks().length > 0,
   );
 
-  isShowTimeWorkedWithoutBreak: boolean = true;
   splitInputPos: number = 100;
   T: typeof T = T;
 
@@ -601,7 +600,7 @@ export class WorkViewComponent implements OnInit, OnDestroy {
     if (!contextId || !this.isProjectContext()) return;
     this._matDialog
       .open(DialogPromptComponent, {
-        data: { placeholder: T.WW.ADD_SECTION_TITLE },
+        data: { message: T.MH.ADD_SECTION, placeholder: T.WW.ADD_SECTION_TITLE },
       })
       .afterClosed()
       .pipe(takeUntilDestroyed(this._destroyRef))

@@ -1,5 +1,11 @@
 # Multi-user collaboration: close the Plainspace seam
 
+Ultra Tasks fork note, November 5, 2026: the maintainer has requested native
+encrypted collaboration. The
+[native implementation plan](2026-11-05-native-encrypted-collaboration.md)
+replaces the Plainspace-only direction for future fork work. The proposal below
+remains historical upstream context; existing integration behavior is unchanged.
+
 Oct 21, 2026 · status: direction agreed; ready to implement · rev. 4: KISS
 pass. The protocol reuses the generic two-way-sync engine as it is; no
 conditional writes, no idempotency column, no capability negotiation, no

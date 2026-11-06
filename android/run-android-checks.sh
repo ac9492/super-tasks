@@ -92,7 +92,12 @@ fi
 # FullscreenActivity is the real MAIN/LAUNCHER. On a fresh install LaunchDecider
 # resolves to MODE_OFFLINE, so it forwards straight into CapacitorMainActivity —
 # the path #9785 died on.
-adb shell am start -n "$PACKAGE/.FullscreenActivity" > /dev/null 2>&1 || true
+# applicationId is fork-specific; the activity still uses the Java namespace.
+if ! adb shell am start -n "$PACKAGE/com.superproductivity.superproductivity.FullscreenActivity"; then
+  echo "::error::could not launch the minified r8Test APK"
+  capture_diagnostics
+  exit 1
+fi
 
 # The crash arm matches "Process: <our package>", not a bare FATAL EXCEPTION:
 # AndroidRuntime prints that line directly under the exception and nothing else

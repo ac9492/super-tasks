@@ -22,7 +22,7 @@ export const TODAY_TAG: Tag = {
   color: null,
   created: Date.now(),
   ...WORK_CONTEXT_DEFAULT_COMMON,
-  icon: 'wb_sunny',
+  icon: 'today',
   title: 'Today',
   id: 'TODAY',
   theme: {
@@ -56,7 +56,7 @@ export const URGENT_TAG: Tag = {
   color: null,
   created: Date.now(),
   ...WORK_CONTEXT_DEFAULT_COMMON,
-  icon: 'emergency',
+  icon: 'priority_high',
   title: 'urgent',
   id: 'EM_URGENT',
   theme: {
@@ -71,7 +71,7 @@ export const IMPORTANT_TAG: Tag = {
   color: null,
   created: Date.now(),
   ...WORK_CONTEXT_DEFAULT_COMMON,
-  icon: 'priority_high',
+  icon: 'star',
   title: 'important',
   id: 'EM_IMPORTANT',
   theme: {

@@ -289,9 +289,7 @@ test.describe('Live markdown editor (#9910)', () => {
     await page.keyboard.type('- [x] two');
 
     // Still focused, nothing committed yet.
-    const actionsBtn = notes
-      .locator('button')
-      .filter({ has: page.locator('mat-icon', { hasText: 'playlist_add_check' }) });
+    const actionsBtn = notes.getByRole('button', { name: 'Checklist actions' });
     await expect(actionsBtn).toBeVisible();
 
     await actionsBtn.click();

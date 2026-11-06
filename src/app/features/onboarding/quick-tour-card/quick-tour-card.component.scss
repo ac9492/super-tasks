@@ -60,6 +60,16 @@
 }
 
 .close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+
   padding: var(--s-half);
   font-size: var(--font-size-md);
   line-height: 1;
@@ -99,7 +109,7 @@
 
     mat-icon {
       flex-shrink: 0;
-      color: var(--palette-primary-500);
+      color: var(--palette-accent-text);
     }
 
     ::ng-deep b {
@@ -132,7 +142,7 @@
   padding: var(--s) var(--s-half) var(--s) 0;
   font: inherit;
   font-weight: var(--font-weight-semibold);
-  color: var(--palette-primary-500);
+  color: var(--palette-accent-text);
   background: none;
   border: none;
   border-radius: var(--s-half);

@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { IssueProviderTabComponent } from './issue-provider-tab.component';
@@ -34,7 +35,11 @@ describe('IssueProviderTabComponent', () => {
     store.select.and.returnValue(of([]));
 
     await TestBed.configureTestingModule({
-      imports: [IssueProviderTabComponent, NoopAnimationsModule],
+      imports: [
+        IssueProviderTabComponent,
+        NoopAnimationsModule,
+        TranslateModule.forRoot(),
+      ],
       providers: [
         DropListService,
         { provide: IssueService, useValue: issueService },

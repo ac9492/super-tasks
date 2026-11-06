@@ -33,10 +33,13 @@
     </mat-tab>
   }
 
-  <mat-tab>
+  <mat-tab [aria-label]="T.F.BOARDS.V.ADD_NEW_BOARD | translate">
     <ng-template mat-tab-label>
-      <div class="tab-header-item">
-        <mat-icon>add_circle</mat-icon>
+      <div
+        class="tab-header-item"
+        [title]="T.F.BOARDS.V.ADD_NEW_BOARD | translate"
+      >
+        <mat-icon>add</mat-icon>
       </div>
     </ng-template>
 
@@ -68,7 +71,7 @@
       mat-menu-item
       (click)="duplicateBoard(board)"
     >
-      <mat-icon>file_copy</mat-icon>
+      <mat-icon>content_copy</mat-icon>
       {{ T.G.DUPLICATE | translate }}
     </button>
     <button

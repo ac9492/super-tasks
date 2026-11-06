@@ -4,7 +4,7 @@
     <span>{{ totalEstimate() | roundDuration | msToString }}</span>
 
     @if ((overdueTasks() || []).length > 5) {
-      <mat-icon inline="true">task_alt</mat-icon>
+      <mat-icon inline="true">checklist</mat-icon>
       <span>{{ (overdueTasks() || []).length }}</span>
     }
   </div>

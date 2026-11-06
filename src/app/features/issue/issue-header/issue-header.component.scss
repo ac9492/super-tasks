@@ -1,4 +1,28 @@
 :host {
   display: flex;
   align-items: center;
+  gap: var(--s);
+}
+
+.provider-icon {
+  display: inline-flex;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.update-badge {
+  position: absolute;
+  right: calc(-1 * var(--s-half));
+  bottom: calc(-1 * var(--s-half));
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+  color: var(--c-primary);
+  background: var(--card-bg);
+  border-radius: 50%;
+}
+
+.updated-status {
+  color: var(--text-color-muted);
+  font-size: var(--font-size-sm);
 }

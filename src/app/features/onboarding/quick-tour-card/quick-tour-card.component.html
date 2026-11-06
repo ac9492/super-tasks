@@ -28,7 +28,7 @@
         [attr.aria-label]="T.ONBOARDING.HINTS.SKIP_ARIA | translate"
         (click)="quickTourService.end()"
       >
-        <span aria-hidden="true">✕</span>
+        <mat-icon aria-hidden="true">close</mat-icon>
       </button>
     </header>
 
@@ -44,7 +44,7 @@
 
     @if (isSyncLineShown()) {
       <p class="aside">
-        <mat-icon aria-hidden="true">cloud_off</mat-icon>
+        <mat-icon aria-hidden="true">sync</mat-icon>
         <span>{{ T.ONBOARDING.WANT_MORE.SYNC | translate }}</span>
       </p>
     }

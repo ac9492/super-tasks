@@ -10,6 +10,9 @@ import { FieldType } from '@ngx-formly/material';
 import { MaterialIconsLoaderService } from '../../../ui/material-icons-loader.service';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
+import { T } from '../../../t.const';
 import { MatInput, MatSuffix } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
@@ -29,6 +32,8 @@ import { Log } from '../../../core/log';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MatIcon,
+    MatIconButton,
+    TranslatePipe,
     MatInput,
     FormsModule,
     MatAutocompleteTrigger,
@@ -40,6 +45,8 @@ import { Log } from '../../../core/log';
   ],
 })
 export class IconInputComponent extends FieldType<FormlyFieldConfig> implements OnInit {
+  readonly T = T;
+
   filteredIcons = signal<string[]>([]);
   isEmoji = signal(false);
   private readonly _destroyRef = inject(DestroyRef);

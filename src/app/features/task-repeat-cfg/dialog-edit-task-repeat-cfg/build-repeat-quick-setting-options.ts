@@ -12,14 +12,14 @@ const ORDINAL_KEYS = [
 // One icon per cadence, so the presets can be told apart at a glance. The
 // monthly variants share one; their labels tell them apart.
 export const REPEAT_QUICK_SETTING_ICON: Record<RepeatQuickSetting, string> = {
-  DAILY: 'today',
-  MONDAY_TO_FRIDAY: 'work',
+  DAILY: 'calendar_today',
+  MONDAY_TO_FRIDAY: 'date_range',
   WEEKLY_CURRENT_WEEKDAY: 'calendar_view_week',
   MONTHLY_CURRENT_DATE: 'calendar_month',
   MONTHLY_FIRST_DAY: 'calendar_month',
   MONTHLY_LAST_DAY: 'calendar_month',
   MONTHLY_NTH_WEEKDAY: 'calendar_month',
-  YEARLY_CURRENT_DATE: 'cake',
+  YEARLY_CURRENT_DATE: 'event_repeat',
   CUSTOM: 'tune',
 };
 

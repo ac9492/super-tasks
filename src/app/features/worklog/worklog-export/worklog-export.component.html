@@ -79,7 +79,7 @@
   }
 
   <collapsible
-    [isInline]="true"
+    [isIconBefore]="true"
     [title]="T.F.WORKLOG.EXPORT.OPTIONS | translate"
     class="options-collapsible"
   >
@@ -192,21 +192,19 @@
       color="primary"
       mat-button
     >
-      <mat-icon>content_paste</mat-icon>
+      <mat-icon>content_copy</mat-icon>
       {{ T.F.WORKLOG.EXPORT.COPY_TO_CLIPBOARD | translate }}
     </button>
   }
-
   <a
     [simpleDownloadData]="'\uFEFF' + txt"
     [simpleDownload]="fileName"
     color="primary"
     mat-button
   >
-    <mat-icon>file_download</mat-icon>
+    <mat-icon>download</mat-icon>
     {{ T.F.WORKLOG.EXPORT.SAVE_TO_FILE | translate }}
   </a>
-
   @if (isShowClose()) {
     <button
       (click)="onCloseClick()"

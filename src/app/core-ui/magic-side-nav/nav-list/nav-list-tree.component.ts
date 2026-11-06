@@ -31,11 +31,11 @@ import {
 } from '../../../features/menu-tree/store/menu-tree.model';
 import { MenuTreeService } from '../../../features/menu-tree/menu-tree.service';
 import { WorkContextType } from '../../../features/work-context/work-context.model';
+import { resolveTagIcon } from '../../../features/tag/resolve-tag-icon.util';
 import { DEFAULT_PROJECT_ICON } from '../../../features/project/project.const';
 import { Project } from '../../../features/project/project.model';
 import { isSingleEmoji } from '../../../util/extract-first-emoji';
 import { expandCollapseAni } from '../../../ui/tree-dnd/tree.animations';
-import { Log } from '../../../core/log';
 import { NAV_SECTION_ICON } from '../nav-section-icons.const';
 
 const TREE_INDENT = 16;
@@ -110,10 +110,10 @@ export class NavListTreeComponent {
   // Off for the first render, so the lists and folders that are already open
   // appear without animating in on app start.
   readonly isAnimationEnabled = signal(false);
-  // One nesting step, used for each folder level and for the top-level rows,
-  // which sit under the section header the way folder contents sit under
-  // their folder (#10472). The compact rail centers every icon in one column,
-  // so it indents no row at all.
+  // One nesting step per folder level. The top-level rows are not indented
+  // (baseIndent 0): their icons sit on the same column as the destinations
+  // above, under the section header. The compact rail centers every icon in
+  // one column, so it indents no row at all.
   readonly treeIndent = computed(() => (this.showLabels() ? TREE_INDENT : 0));
 
   constructor() {
@@ -156,26 +156,6 @@ export class NavListTreeComponent {
     this._navConfigService.toggleProjectVisibility(projectId);
     // Close menu to prevent stale positioning after DOM update (#5955)
     this.visibilityMenuTrigger()?.closeMenu();
-  }
-
-  onFolderMoreButton(event: MouseEvent, node: TreeNode<MenuTreeViewNode>): void {
-    event.preventDefault();
-    event.stopPropagation();
-    this._openFolderContextMenu(event, node);
-  }
-
-  onFolderContextMenu(event: MouseEvent, node: TreeNode<MenuTreeViewNode>): void {
-    event.preventDefault();
-    event.stopPropagation();
-    this._openFolderContextMenu(event, node);
-  }
-
-  private _openFolderContextMenu(
-    event: MouseEvent,
-    node: TreeNode<MenuTreeViewNode>,
-  ): void {
-    // TODO: Implement folder context menu
-    Log.log('Folder context menu for:', { id: node.id, kind: node.data?.k });
   }
 
   private _toggleFolder(treeNodeId: string): void {
@@ -288,7 +268,7 @@ export class NavListTreeComponent {
 
   private _toTagNavItem(node: MenuTreeViewTagNode): NavItem {
     const tag = node.tag;
-    const icon = tag.icon || 'label';
+    const icon = resolveTagIcon(tag) || 'label';
     return {
       type: 'workContext',
       id: `tag-${tag.id}`,

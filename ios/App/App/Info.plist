@@ -89,7 +89,7 @@
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>Today</string>
 			<key>UIApplicationShortcutItemIconSymbolName</key>
-			<string>sun.max</string>
+			<string>calendar</string>
 			<key>UIApplicationShortcutItemUserInfo</key>
 			<dict>
 				<key>url</key>

@@ -3,10 +3,10 @@
   (click)="isForDayMode.set(!isForDayMode())"
 >
   @if (!isForDayMode()) {
-    <mat-icon>alarm</mat-icon>
+    <mat-icon>schedule</mat-icon>
     <span [innerHTML]="due() | shortTimeHtml"></span>
   } @else {
-    <mat-icon>today</mat-icon>
+    <mat-icon>calendar_month</mat-icon>
     <span>{{ date() | localeDate: 'shortDate' : undefined : locale() }} </span>
   }
 </div>

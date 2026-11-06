@@ -10,7 +10,7 @@
         class="st-capture-context"
         aria-live="polite"
       >
-        <mat-icon aria-hidden="true">drive_file_move</mat-icon>
+        <mat-icon aria-hidden="true">list_alt</mat-icon>
         <span>{{ T.F.ULTRA_TASKS.ADDING_TO | translate }}</span>
         <strong>{{ destination.title }}</strong>
       </div>
@@ -53,7 +53,8 @@
         <textarea
           #inputEl
           class="main-input"
-          [(ngModel)]="stateService.inputTxt"
+          [ngModel]="stateService.inputTxt()"
+          (ngModelChange)="onInputModelChange($event)"
           [tabindex]="tabindex()"
           [mention]="tagMentions$ | async"
           [mentionConfig]="mentionCfg$ | async"
@@ -92,7 +93,7 @@
           [matTooltip]="T.F.TASK.ADD_TASK_BAR.TOOLTIP_ADD_TASK | translate"
           matTooltipPosition="above"
         >
-          <mat-icon>send</mat-icon>
+          <mat-icon>add</mat-icon>
         </button>
       </div>
 
@@ -152,11 +153,7 @@
           [matTooltip]="T.F.TASK.ADD_TASK_BAR.TOOLTIP_NOTE | translate"
           matTooltipPosition="above"
         >
-          <!-- Filled bubble once a note has text, outline while empty — mirrors
-               the detail panel's has-notes / empty-notes icon states. -->
-          <mat-icon>{{
-            stateService.noteTxt() ? 'chat' : 'chat_bubble_outline'
-          }}</mat-icon>
+          <mat-icon>description</mat-icon>
         </button>
       }
 
@@ -240,6 +237,7 @@
   "
   (optionSelected)="onTaskSuggestionSelected($event.option.value)"
   [autoActiveFirstOption]="true"
+  [displayWith]="displayInputValue"
 >
   @for (
     item of suggestions$ | async;
@@ -253,7 +251,7 @@
       } @else if (item.taskId) {
         <!--        <mat-icon>task</mat-icon>-->
       } @else if (!item.ctx) {
-        <mat-icon>library_books</mat-icon>
+        <mat-icon>checklist</mat-icon>
       }
       <span [innerHTML]="item?.titleHighlighted || item?.title"></span>
       @if (item.ctx) {

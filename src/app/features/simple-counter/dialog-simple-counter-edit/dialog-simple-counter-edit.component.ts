@@ -28,7 +28,7 @@ import { MatInputModule } from '@angular/material/input';
 import { InputDurationDirective } from '../../../ui/duration/input-duration.directive';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton } from '@angular/material/button';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ChartConfiguration } from 'chart.js';
 import { LineChartData } from '../../metric/metric.model';
 import { getSimpleCounterStreakDuration } from '../get-simple-counter-streak-duration';
@@ -70,6 +70,7 @@ export class DialogSimpleCounterEditComponent {
   private readonly _counterService = inject(SimpleCounterService);
   private readonly _dateService = inject(DateService);
   private readonly _dateTimeFormatService = inject(DateTimeFormatService);
+  private readonly _translateService = inject(TranslateService);
 
   readonly dialogData = inject<{
     simpleCounter: SimpleCounterCopy;
@@ -217,7 +218,6 @@ export class DialogSimpleCounterEditComponent {
       .open(DialogSimpleCounterEditSettingsComponent, {
         data: { simpleCounter: this.localCounter() },
         restoreFocus: true,
-        width: '600px',
       })
       .afterClosed()
       .subscribe((settings?: Partial<SimpleCounterCopy>) => {
@@ -306,7 +306,12 @@ export class DialogSimpleCounterEditComponent {
 
     const value = counter.countOnDay?.[dateStr] || 0;
     const streakMet = value >= (counter.streakMinValue || 0);
-    return `${baseLabel}${streakMet ? '🔥' : '❌'}`;
+    const goalLabel = this._translateService.instant(
+      streakMet
+        ? T.F.SIMPLE_COUNTER.D_EDIT.GOAL_MET
+        : T.F.SIMPLE_COUNTER.D_EDIT.GOAL_NOT_MET,
+    );
+    return `${baseLabel}: ${goalLabel}`;
   }
 
   private _getSettingsChanges(

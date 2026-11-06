@@ -35,6 +35,16 @@ describe('PluginIconComponent', () => {
     expect(el.querySelector('path')?.getAttribute('d')).toBe('M1 2');
   });
 
+  it('preserves explicitly unfilled stroke-only artwork', () => {
+    const el: HTMLElement = renderIcon(
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 2h20v20H2z"></path></svg>',
+    ).nativeElement;
+
+    const svg = el.querySelector('svg')!;
+    expect(getComputedStyle(svg).fill).toBe('none');
+    expect(svg.getAttribute('stroke')).toBe('currentColor');
+  });
+
   it('falls back to the mat-icon when the content is not an SVG', () => {
     const el: HTMLElement = renderIcon('<div>nope</div>').nativeElement;
 

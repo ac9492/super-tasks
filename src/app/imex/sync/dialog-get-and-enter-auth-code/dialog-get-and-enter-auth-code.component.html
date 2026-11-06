@@ -1,13 +1,13 @@
-<h1 mat-dialog-title>
+<h2 mat-dialog-title>
   {{ T.F.SYNC.D_AUTH_CODE.TITLE | translate: { provider: data.providerName } }}
-</h1>
+</h2>
 
 <mat-dialog-content>
   @if (!isNativePlatform) {
     <div class="auth-code-flex">
       <mat-form-field [style.order]="codeRequested() ? -1 : 1">
         <mat-label>{{ T.F.SYNC.D_AUTH_CODE.L_AUTH_CODE | translate }}</mat-label>
-        <mat-icon matPrefix>vpn_key</mat-icon>
+        <mat-icon matPrefix>key</mat-icon>
         <input
           #authCodeInput
           matInput
@@ -83,7 +83,6 @@
         color="primary"
         mat-flat-button
       >
-        <mat-icon>save</mat-icon>
         {{ T.G.SAVE | translate }}
       </button>
     }

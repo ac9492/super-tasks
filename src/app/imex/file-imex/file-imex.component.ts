@@ -168,9 +168,7 @@ export class FileImexComponent implements OnInit {
 
   openUrlImportDialog(): void {
     this._matDialog
-      .open(DialogImportFromUrlComponent, {
-        width: '500px', // Or any other appropriate width
-      })
+      .open(DialogImportFromUrlComponent)
       .afterClosed()
       .subscribe(async (url: string | undefined) => {
         if (url) {
@@ -311,10 +309,7 @@ export class FileImexComponent implements OnInit {
   }
 
   openArchiveCompression(): void {
-    this._matDialog.open(DialogArchiveCompressionComponent, {
-      width: '500px',
-      maxWidth: '90vw',
-    });
+    this._matDialog.open(DialogArchiveCompressionComponent);
   }
 
   openTodoistImport(): Promise<void> {
@@ -342,6 +337,10 @@ export class FileImexComponent implements OnInit {
       if (!instance) {
         throw new Error('Plugin activation returned no instance');
       }
+      // The importer is a page, not a dialog: close Settings (opened as a
+      // dialog by settingsDialogGuard) or it stays on top of the importer.
+      // MatDialog only closes on popstate, not on this navigation.
+      this._matDialog.getDialogById('settings-window')?.close();
       await this._router.navigate(['/plugins', pluginId, 'index']);
     } catch (e) {
       Log.err('Failed to open importer', { pluginId }, e);

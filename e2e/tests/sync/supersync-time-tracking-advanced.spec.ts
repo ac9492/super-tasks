@@ -227,7 +227,7 @@ test.describe('@supersync Time Tracking Advanced Sync', () => {
 
       // Click save to archive
       const saveBtn = clientB.page.locator(
-        'daily-summary button[mat-flat-button]:has(mat-icon:has-text("wb_sunny"))',
+        'daily-summary button[mat-flat-button]:has(mat-icon:text-matches("^(wb_sunny|check_circle)$"))',
       );
       await saveBtn.waitFor({ state: 'visible', timeout: 10000 });
       await saveBtn.click();

@@ -14,16 +14,18 @@
   z-index: 2;
   //background: inherit;
 
+  // The semantic roles: they stay readable on the snackbar surface whatever the
+  // user's accent.
   .success & {
-    color: var(--success-green);
+    color: var(--color-success);
   }
 
   .error & {
-    color: var(--c-warn);
+    color: var(--color-danger);
   }
 
   .warning & {
-    color: var(--c-accent);
+    color: var(--color-warning);
   }
 }
 
@@ -35,7 +37,7 @@
 
 .action {
   margin: 0;
-  margin-left: calc(1.5 * var(--s));
+  margin-left: var(--s1-5);
 }
 
 .close {

@@ -1,13 +1,16 @@
 import {
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
   inject,
+  Injector,
   input,
   OnInit,
   TemplateRef,
   viewChild,
 } from '@angular/core';
+import { InputModalityDetector } from '@angular/cdk/a11y';
 import {
   MatMenu,
   MatMenuContent,
@@ -16,6 +19,7 @@ import {
 } from '@angular/material/menu';
 import { MatIconButton } from '@angular/material/button';
 import { NgTemplateOutlet } from '@angular/common';
+import { take } from 'rxjs/operators';
 import { isTouchActive } from '../../util/input-intent';
 import { UI_LONG_PRESS_DURATION, UI_LONG_PRESS_MOVE_TOLERANCE_PX } from '../ui.const';
 import { performHapticFeedback } from '../../util/haptic-feedback';
@@ -41,9 +45,13 @@ export class ContextMenuComponent implements OnInit {
   readonly contextMenuTriggerEl = viewChild.required('contextMenuTriggerEl', {
     read: MatMenuTrigger,
   });
+  private readonly _menu = viewChild.required(MatMenu);
+  private readonly _injector = inject(Injector);
+  private readonly _inputModality = inject(InputModalityDetector);
   contextMenuPosition: { x: string; y: string } = { x: '0px', y: '0px' };
   private _longPressTimeout: number | undefined;
   private _isDestroyed = false;
+  private _leftClickEl: HTMLElement | null = null;
 
   constructor() {
     inject(DestroyRef).onDestroy(() => {
@@ -85,6 +93,11 @@ export class ContextMenuComponent implements OnInit {
         leftClickEl instanceof HTMLElement
           ? leftClickEl
           : (leftClickEl as any)._elementRef.nativeElement;
+      // A menu button: `aria-expanded` also keeps a hover-revealed button on
+      // screen while its menu is open, so focus can return to it.
+      htmlLeftClickEl.setAttribute('aria-haspopup', 'menu');
+      htmlLeftClickEl.setAttribute('aria-expanded', 'false');
+      this._leftClickEl = htmlLeftClickEl;
       htmlLeftClickEl.addEventListener('click', (ev) => {
         this.openContextMenu(ev);
       });
@@ -203,7 +216,96 @@ export class ContextMenuComponent implements OnInit {
       x: this.contextMenuPosition.x,
       y: this.contextMenuPosition.y,
     };
-    contextMenuTriggerEl.openMenu();
+    if (!contextMenuTriggerEl.menuOpen) {
+      const focusOrigin = this._getFocusOrigin(event);
+      const isFromLeftClickEl =
+        !!this._leftClickEl && event.currentTarget === this._leftClickEl;
+      contextMenuTriggerEl.openMenu();
+      this._initMenuKeyboard(focusOrigin, isFromLeftClickEl);
+    }
     return true;
+  }
+
+  /**
+   * The menu's items live in another component's template (the one passed as
+   * `contextMenu`), which MatMenu's own item query cannot see. So it neither
+   * moves focus into the panel nor handles the arrow keys, and closing it
+   * returns focus to the hidden trigger div, i.e. to <body>. Do those here.
+   */
+  private _initMenuKeyboard(
+    focusOrigin: HTMLElement | null,
+    isFromLeftClickEl: boolean,
+  ): void {
+    const isOpenedByKeyboard = this._inputModality.mostRecentModality === 'keyboard';
+    const menu = this._menu();
+    if (isFromLeftClickEl) {
+      this._leftClickEl?.setAttribute('aria-expanded', 'true');
+    }
+    menu.closed.pipe(take(1)).subscribe((reason) => {
+      const active = document.activeElement;
+      const panel = document.getElementById(menu.panelId);
+      const isFocusInMenuOrLost =
+        !active || active === document.body || !!panel?.contains(active);
+      // Before aria-expanded drops: that may hide a hover-revealed button.
+      if (
+        focusOrigin?.isConnected &&
+        isFocusInMenuOrLost &&
+        (isOpenedByKeyboard || reason === 'keydown' || reason === 'tab')
+      ) {
+        focusOrigin.focus();
+      }
+      this._leftClickEl?.setAttribute('aria-expanded', 'false');
+    });
+    afterNextRender(
+      () => {
+        const panel = document.getElementById(menu.panelId);
+        if (!panel) {
+          return;
+        }
+        panel.addEventListener('keydown', (ev) => this._onPanelKeydown(ev, panel));
+        if (!panel.contains(document.activeElement)) {
+          (this._getMenuItems(panel)[0] ?? panel).focus();
+        }
+      },
+      { injector: this._injector },
+    );
+  }
+
+  private _onPanelKeydown(ev: KeyboardEvent, panel: HTMLElement): void {
+    const items = this._getMenuItems(panel);
+    if (!items.length) {
+      return;
+    }
+    const index = items.indexOf(document.activeElement as HTMLElement);
+    let next: number | null = null;
+    if (ev.key === 'ArrowDown') {
+      next = (index + 1) % items.length;
+    } else if (ev.key === 'ArrowUp') {
+      next = index <= 0 ? items.length - 1 : index - 1;
+    } else if (ev.key === 'Home') {
+      next = 0;
+    } else if (ev.key === 'End') {
+      next = items.length - 1;
+    }
+    if (next !== null) {
+      ev.preventDefault();
+      items[next].focus();
+    }
+  }
+
+  private _getMenuItems(panel: HTMLElement): HTMLElement[] {
+    return Array.from(
+      panel.querySelectorAll<HTMLElement>('.mat-mdc-menu-item:not([disabled])'),
+    ).filter((item) => item.closest('.mat-mdc-menu-panel') === panel);
+  }
+
+  /** The control the menu was opened from, to return focus to on close. */
+  private _getFocusOrigin(event: TouchEvent | MouseEvent): HTMLElement | null {
+    const target = event.currentTarget;
+    if (target instanceof HTMLElement && target.tabIndex >= 0) {
+      return target;
+    }
+    const active = document.activeElement;
+    return active instanceof HTMLElement && active !== document.body ? active : null;
   }
 }

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
 import { TaskAttachmentService } from '../task-attachment.service';
 import { SnackService } from '../../../../core/snack/snack.service';
@@ -28,7 +29,11 @@ describe('TaskAttachmentListComponent', () => {
     ]);
 
     await TestBed.configureTestingModule({
-      imports: [TaskAttachmentListComponent, NoopAnimationsModule],
+      imports: [
+        TaskAttachmentListComponent,
+        NoopAnimationsModule,
+        TranslateModule.forRoot(),
+      ],
       providers: [
         { provide: SnackService, useValue: snackServiceSpy },
         { provide: TaskAttachmentService, useValue: attachmentServiceSpy },

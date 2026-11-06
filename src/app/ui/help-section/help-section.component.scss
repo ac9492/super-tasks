@@ -1,33 +1,22 @@
 :host {
   display: block;
 
+  // The help text is a card: hairline, --r-md, no accent rules or icons.
   .help-text {
-    margin-bottom: var(--s5);
-    border-width: 2px;
-    border-left: 0;
-    border-right: 0;
-    border-style: solid;
-    padding: 0 var(--s2);
+    margin-bottom: var(--s2);
+    border: 1px solid var(--separator);
+    border-radius: var(--r-md);
+    padding: var(--s) var(--s2);
   }
 
+  // Help lives in the dialog's title row: a plain 40px icon button at the end
+  // edge, centred on the 24px title line (the dialog surface is the positioned
+  // ancestor). The title reserves the room, see .mat-mdc-dialog-title in
+  // _overwrite-material.scss.
   .help-btn {
     position: absolute;
-    top: -8px;
-    right: -8px;
+    top: calc(var(--dialog-gutter) - var(--s));
+    inset-inline-end: calc(var(--dialog-gutter) - var(--s));
     z-index: 1;
-  }
-
-  :host-context([dir='rtl']) {
-    .help-btn {
-      position: absolute;
-      right: unset;
-      left: -8px;
-    }
-  }
-
-  .help-icon-wrapper {
-    margin-top: var(--s);
-    margin-bottom: var(--s);
-    text-align: center;
   }
 }

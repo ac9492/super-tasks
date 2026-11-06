@@ -1,10 +1,10 @@
-<h1 mat-dialog-title>
+<h2 mat-dialog-title>
   @if (initialSetup) {
     {{ textKeys.SETUP_ENCRYPTION_TITLE | translate }}
   } @else {
     {{ textKeys.ENABLE_ENCRYPTION_TITLE | translate }}
   }
-</h1>
+</h2>
 
 @if (!canProceed()) {
   <mat-dialog-content>
@@ -29,7 +29,7 @@
   <!-- Simplified dialog for initial SuperSync setup -->
   <mat-dialog-content>
     <div class="callout callout--info">
-      <mat-icon aria-hidden="true">enhanced_encryption</mat-icon>
+      <mat-icon aria-hidden="true">lock</mat-icon>
       <div>
         <p [innerHTML]="textKeys.ENCRYPTION_SETUP_INTRO | translate"></p>
         <p>{{ textKeys.SETUP_ENCRYPTION_PASSWORD_WARNING | translate }}</p>
@@ -37,7 +37,7 @@
     </div>
 
     <div class="password-fields">
-      <mat-form-field appearance="outline">
+      <mat-form-field>
         <mat-label>{{ T.F.SYNC.FORM.L_ENCRYPTION_PASSWORD | translate }}</mat-label>
         <input
           class="e2e-setup-encrypt-password"
@@ -65,7 +65,7 @@
 
       <password-strength [password]="password" />
 
-      <mat-form-field appearance="outline">
+      <mat-form-field>
         <mat-label>{{ textKeys.L_CONFIRM_PASSWORD | translate }}</mat-label>
         <input
           class="e2e-setup-encrypt-confirm-password"
@@ -142,7 +142,7 @@
     </div>
 
     <div class="password-fields">
-      <mat-form-field appearance="outline">
+      <mat-form-field>
         <mat-label>{{ T.F.SYNC.FORM.L_ENCRYPTION_PASSWORD | translate }}</mat-label>
         <input
           matInput
@@ -169,7 +169,7 @@
 
       <password-strength [password]="password" />
 
-      <mat-form-field appearance="outline">
+      <mat-form-field>
         <mat-label>{{ textKeys.L_CONFIRM_PASSWORD | translate }}</mat-label>
         <input
           matInput

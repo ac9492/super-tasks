@@ -81,7 +81,7 @@ export const SHEPHERD_STEPS = (
       ),
     },
     {
-      title: 'Close the Add Task Bar',
+      title: 'Close the add task bar',
       text: 'Press the <kbd>Escape</kbd> key to close the Add Task Bar.',
       attachTo: {
         element: 'add-task-bar',
@@ -109,10 +109,10 @@ export const SHEPHERD_STEPS = (
     },
     {
       title: 'Short syntax settings',
-      text: '<p>You can enable or disable the individual short syntax options under <strong>Settings / Tasks / Short Syntax</strong>.</p><p>This how-to stays available from the Help menu whenever you want to try it again.</p>',
+      text: '<p>You can enable or disable the individual short syntax options under <strong>Settings → Tasks &amp; planning → Short syntax</strong>.</p><p>This how-to stays available from the Help menu whenever you want to try it again.</p>',
       buttons: [
         {
-          text: 'End Tour',
+          text: 'End tour',
           classes: PRIMARY_CLASSES,
           action: () => {
             shepherdService.complete();
@@ -122,13 +122,13 @@ export const SHEPHERD_STEPS = (
     },
     {
       id: TourId.KeyboardNav,
-      title: 'Keyboard Navigation',
+      title: 'Keyboard navigation',
       // eslint-disable-next-line max-len
-      text: `<p>The most efficient way to use Ultra Tasks is to make use of the keyboard shortcuts. Don't worry there just a handful of important ones :)</p><p>You can configure most of them under <strong>Settings/Keyboard Shortcuts</strong>, but let's start more practical.</p>`,
+      text: `<p>The most efficient way to use Ultra Tasks is to make use of the keyboard shortcuts. Don't worry, there are just a handful of important ones :)</p><p>You can configure most of them under <strong>Settings → General → Keyboard shortcuts</strong>, but let's start more practical.</p>`,
       buttons: [NEXT_BTN],
     },
     {
-      title: 'Keyboard Navigation',
+      title: 'Keyboard navigation',
       text: `Let's add a couple of tasks. Press ${KEY_COMBO('addNewTask')}.`,
       when: nextOnObs(
         layoutService.isShowAddTaskBar$.pipe(filter((v) => v)),
@@ -159,7 +159,7 @@ export const SHEPHERD_STEPS = (
       ),
     },
     {
-      title: 'Close the Add Task Bar!',
+      title: 'Close the add task bar!',
       text: 'Press the <kbd>Escape</kbd> key to leave the add task bar.',
       attachTo: {
         element: 'add-task-bar',
@@ -181,7 +181,7 @@ export const SHEPHERD_STEPS = (
       buttons: [NEXT_BTN],
     },
     {
-      title: 'Focussing Tasks',
+      title: 'Focusing tasks',
       text: `If you lost focus you can always use the ${KEY_COMBO(
         'goToWorkView',
       )} key to go to the main list view and focus the first task.`,
@@ -217,7 +217,7 @@ export const SHEPHERD_STEPS = (
       highlightClass: '',
     },
     {
-      title: 'Edit Task Title',
+      title: 'Edit task title',
       text: `You can edit the task by pressing the <kbd>Enter</kbd>.`,
       when: {
         show: () => taskService.focusFirstTaskIfVisible(),
@@ -230,7 +230,7 @@ export const SHEPHERD_STEPS = (
       highlightClass: '',
     },
     {
-      title: 'Open, close and navigate the Task Details',
+      title: 'Open, close and navigate the task details',
       // eslint-disable-next-line max-len
       text: `<p>You can open the task details panel for a task by pressing <kbd>→</kbd> while it is focused.</p><p>You can close it again by pressing <kbd>←</kbd>.</p><p>You can also navigate and activate its items by using the arrow keys <kbd>→</kbd> <kbd>↑</kbd> and <kbd>↓</kbd>.</p><p>You can leave most contexts that open up this way by pressing <kbd>Escape</kbd>.</p>`,
       when: {
@@ -244,15 +244,15 @@ export const SHEPHERD_STEPS = (
       highlightClass: '',
     },
     {
-      title: 'More Task Shortcuts',
+      title: 'More task shortcuts',
       when: {
         show: () => taskService.focusFirstTaskIfVisible(),
       },
       // eslint-disable-next-line max-len
-      text: `<p>There are more task related shortcuts that can be used when a task is focused. Best you check them all out under <strong>Settings/Keyboard Shortcuts/Tasks</strong>. The most useful are probably:</p>
+      text: `<p>There are more task related shortcuts that can be used when a task is focused. Best you check them all out under <strong>Settings → General → Keyboard shortcuts → Tasks</strong>. The most useful are probably:</p>
           <ul>
           <li>${KEY_COMBO('taskSchedule')}: Schedule task</li>
-          <li>${KEY_COMBO('taskDelete')}: Delete Task</li>
+          <li>${KEY_COMBO('taskDelete')}: Delete task</li>
           <li>${KEY_COMBO('taskToggleDone')}: Toggle done</li>
           <li>${KEY_COMBO('taskAddSubTask')}: Add new sub task</li>
           <li>${KEY_COMBO('taskAddAttachment')}: Attach a file or link to the task</li>
@@ -272,7 +272,7 @@ export const SHEPHERD_STEPS = (
       text: '<p>This concludes the keyboard navigation tour. Remember that you can always start it again via the Help button in the menu.</p><p>Best way to get familiar with the app, is to play around with it. Have fun! 😄</p>',
       buttons: [
         {
-          text: 'End Tour',
+          text: 'End tour',
           classes: PRIMARY_CLASSES,
           action: () => {
             shepherdService.complete();

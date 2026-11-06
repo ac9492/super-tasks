@@ -1,4 +1,4 @@
-<div class="action-bar">
+<div class="action-bar mat-button-compact">
   <!-- Slot for controls the parent wants to scroll together with these actions
        (e.g. the add-to-top/bottom and search toggles on the create-mode bar). -->
   <ng-content></ng-content>
@@ -40,7 +40,7 @@
       (click)="openScheduleDialog()"
       [class.has-value]="state().date"
     >
-      <mat-icon>{{ state().time ? 'schedule' : 'event' }}</mat-icon>
+      <mat-icon>{{ state().time ? 'schedule' : 'calendar_month' }}</mat-icon>
       <span>{{ dateDisplay() || (T.F.TASK.ADD_TASK_BAR.DUE_BUTTON | translate) }}</span>
     </button>
 
@@ -66,7 +66,7 @@
       (click)="openDeadlineDialog()"
       [class.has-value]="true"
     >
-      <mat-icon>{{ state().deadlineTime ? 'alarm' : 'flag' }}</mat-icon>
+      <mat-icon>flag</mat-icon>
       <span>{{ deadlineDateDisplay() }}</span>
     </button>
 
@@ -108,14 +108,14 @@
           @for (tag of selectedTags(); track tag.id) {
             <div class="tag-item">
               <mat-icon [style.color]="tag.color || tag.theme?.primary">
-                {{ tag.icon || 'label' }}
+                {{ (tag | tagIcon) || 'label' }}
               </mat-icon>
               <span class="tag-title">{{ tag.title }}</span>
             </div>
           }
           @for (newTag of state().newTagTitles; track newTag) {
             <div class="tag-item new-tag">
-              <mat-icon>new_releases</mat-icon>
+              <mat-icon>new_label</mat-icon>
               <span class="tag-title">{{ newTag }}</span>
             </div>
           }
@@ -225,7 +225,7 @@
       >
         <select-option-row
           [title]="tag.title"
-          [icon]="tag.icon"
+          [icon]="tag | tagIcon"
           defaultIcon="label"
           [color]="tag.color || tag.theme?.primary"
           [isSelected]="hasSelectedTag(tag.id)"

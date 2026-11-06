@@ -26,6 +26,7 @@
       (ngModelChange)="onInputChange($event)"
       (keydown.enter)="onEnterKey($event, durationInput)"
       [id]="uid"
+      [attr.aria-label]="ariaLabel() || null"
       [ngModel]="_model()"
       [placeholder]="T.G.EXAMPLE_VAL | translate"
       class="value"

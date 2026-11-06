@@ -74,13 +74,14 @@ Main service for sharing content.
 #### Methods
 
 - `share(payload: SharePayload, target?: ShareTarget): Promise<ShareResult>`
-
   - Main share method that automatically detects platform and uses best method
   - If target is specified, shares directly to that target
   - Otherwise, tries native share first, then shows dialog
 
 - `getShareTargets(): ShareTargetConfig[]`
-  - Returns list of available share targets with their configurations
+  - Returns list of available share targets with their configurations. Social targets
+    use visible platform labels; the optional `icon` is present only for actions with
+    a distinct glyph, such as email.
 
 ### ShareFormatter
 
@@ -89,11 +90,9 @@ Utility class for formatting content into shareable payloads.
 #### Methods
 
 - `formatWorkSummary(data: WorkSummaryData, options?: ShareFormatterOptions): SharePayload`
-
   - Formats work statistics as shareable text with time spent, tasks completed, etc.
 
 - `formatPromotion(customText?: string, options?: ShareFormatterOptions): SharePayload`
-
   - Creates a promotional share payload for the app
 
 - `optimizeForTwitter(payload: SharePayload): SharePayload`

@@ -42,15 +42,13 @@
       </ng-template>
       <ng-template matTabContent>
         @if (entry.missingPluginName) {
-          <div style="padding: 16px; opacity: 0.7; text-align: center">
-            <mat-icon style="vertical-align: middle; margin-right: 4px"
-              >extension_off</mat-icon
-            >
+          <div class="missing-plugin">
+            <mat-icon>extension_off</mat-icon>
             {{
               T.F.ISSUE.S.PLUGIN_NOT_INSTALLED
                 | translate: { pluginName: entry.missingPluginName }
             }}
-            <div style="margin-top: 16px">
+            <div class="missing-plugin-actions">
               <button
                 mat-stroked-button
                 color="warn"
@@ -68,9 +66,13 @@
     </mat-tab>
   }
 
-  <mat-tab>
+  <mat-tab [aria-label]="T.F.ISSUE.SETUP_OVERVIEW.ADD_INTEGRATION | translate">
     <ng-template mat-tab-label>
-      <div class="tab-header-item">
+      <div
+        class="tab-header-item"
+        [matTooltip]="T.F.ISSUE.SETUP_OVERVIEW.ADD_INTEGRATION | translate"
+        matTooltipPosition="above"
+      >
         <mat-icon>add_circle</mat-icon>
       </div>
     </ng-template>

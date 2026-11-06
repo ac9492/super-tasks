@@ -526,7 +526,7 @@ describe('SearchPageComponent', () => {
     initAndFlush();
     typeAndFlush('Lost');
     expect(latestResults.length).toBe(1);
-    expect(latestResults[0].ctx.icon).toBe('help_outline');
+    expect(latestResults[0].ctx.icon).toBe('folder_off');
   }));
 
   it('should not crash when task.tagIds is undefined', fakeAsync(() => {

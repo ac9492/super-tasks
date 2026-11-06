@@ -294,7 +294,6 @@ export class ShareService {
         await import('./dialog-share/dialog-share.component');
 
       const dialogRef = this._matDialog.open(DialogShareComponent, {
-        width: '500px',
         data: {
           payload,
           showNative: await SharePlatformUtil.isSystemShareAvailable(),
@@ -392,37 +391,31 @@ export class ShareService {
     return [
       {
         label: 'Twitter',
-        icon: 'link',
         available: true,
         color: '#1DA1F2',
       },
       {
         label: 'LinkedIn',
-        icon: 'link',
         available: true,
         color: '#0A66C2',
       },
       {
         label: 'Reddit',
-        icon: 'link',
         available: true,
         color: '#FF4500',
       },
       {
         label: 'Facebook',
-        icon: 'link',
         available: true,
         color: '#1877F2',
       },
       {
         label: 'WhatsApp',
-        icon: 'chat',
         available: true,
         color: '#25D366',
       },
       {
         label: 'Telegram',
-        icon: 'send',
         available: true,
         color: '#0088CC',
       },
@@ -433,7 +426,6 @@ export class ShareService {
       },
       {
         label: 'Mastodon',
-        icon: 'link',
         available: true,
         color: '#6364FF',
       },

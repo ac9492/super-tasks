@@ -1,7 +1,7 @@
-<h1 mat-dialog-title>
+<h2 mat-dialog-title>
   <mat-icon aria-hidden="true">warning</mat-icon>
   {{ T.F.SYNC.D_SERVER_MIGRATION_CONFIRM.TITLE | translate }}
-</h1>
+</h2>
 
 <mat-dialog-content>
   <p [innerHTML]="T.F.SYNC.D_SERVER_MIGRATION_CONFIRM.MESSAGE | translate"></p>
@@ -17,9 +17,8 @@
   <button
     (click)="close(true)"
     color="warn"
-    mat-stroked-button
+    mat-flat-button
   >
-    <mat-icon aria-hidden="true">warning</mat-icon>
     {{ T.F.SYNC.D_SERVER_MIGRATION_CONFIRM.CONFIRM | translate }}
   </button>
 </mat-dialog-actions>

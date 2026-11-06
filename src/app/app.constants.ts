@@ -117,7 +117,13 @@ export enum BodyClass {
   isObsidianStyleHeader = 'isObsidianStyleHeader',
   isVerticalActionBar = 'isVerticalActionBar',
   isDataImportInProgress = 'isDataImportInProgress',
-  hasBgImage = 'hasBgImage',
+  // Glass appearance (UltraTasksAppearanceService.backdrop); styled in
+  // src/styles/components/_glass.scss.
+  stSolid = 'st-solid',
+  stGlass = 'st-glass',
+  stGlassNative = 'st-glass-native',
+  stGlassAcrylic = 'st-glass-acrylic',
+  stGlassBitmap = 'st-glass-bitmap',
   hasMobileBottomNav = 'hasMobileBottomNav',
 
   isAndroidKeyboardShown = 'isAndroidKeyboardShown',

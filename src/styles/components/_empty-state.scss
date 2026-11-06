@@ -1,0 +1,41 @@
+// One empty-state layout (docs/styling-guide.md § Empty states): inside the
+// page column, on its start edge. An optional 24px muted icon, one line of
+// muted body text (a heading line may lead it) and at most one action.
+//
+//   <div class="empty-state">
+//     <mat-icon>inbox</mat-icon>
+//     <p>Nothing here yet</p>
+//     <button mat-button>Add one</button>
+//   </div>
+//
+// `<p class="empty-state">text</p>` is the text-only form.
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s);
+  margin: var(--s2) 0;
+  padding: 0;
+  color: var(--text-color-muted);
+  font: var(--type-body);
+  font-style: normal;
+  text-align: start;
+
+  > mat-icon {
+    font-size: var(--icon-lg);
+    width: var(--icon-lg);
+    height: var(--icon-lg);
+  }
+
+  > :is(p, h2, h3) {
+    margin: 0;
+    font: var(--type-body);
+    color: inherit;
+  }
+
+  > h2,
+  > h3 {
+    font: var(--type-body-strong);
+    color: var(--text-color);
+  }
+}

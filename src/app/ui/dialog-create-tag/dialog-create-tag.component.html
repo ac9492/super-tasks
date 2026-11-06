@@ -1,8 +1,6 @@
-<mat-dialog-content>
-  <div class="content">
-    <h2>{{ T.F.TAG.D_CREATE.CREATE | translate }}</h2>
-  </div>
+<h2 mat-dialog-title>{{ T.F.TAG.D_CREATE.CREATE | translate }}</h2>
 
+<mat-dialog-content>
   <form
     #formEl="ngForm"
     (ngSubmit)="formEl.valid && close(true)"
@@ -56,7 +54,6 @@
   <div class="wrap-buttons">
     <button
       (click)="close(false)"
-      class="submit-button"
       mat-button
       type="button"
     >
@@ -65,7 +62,6 @@
 
     <button
       (click)="close(true)"
-      class="submit-button"
       color="primary"
       mat-flat-button
       [disabled]="!title.trim()"

@@ -1,7 +1,8 @@
+// The surrounding .appearance-section already insets this block like the
+// other settings sections, so headings and help buttons share their edges.
 .theme-selector-container {
   display: grid;
   gap: var(--s3);
-  padding: var(--s2);
   container-type: inline-size;
 }
 h3,
@@ -9,11 +10,18 @@ h4,
 p {
   margin: 0;
 }
-h3 {
-  font-size: var(--font-size-lg);
+// Scoped under the container to outrank the global heading scale (its
+// `:not()` chain), so "Appearance" matches the other section headings.
+.theme-selector-container h3 {
+  display: flex;
+  align-items: center;
+  min-height: var(--ctl-md);
+  font: var(--type-heading);
+  letter-spacing: 0;
 }
 h4 {
-  font-size: var(--font-size-md);
+  font: var(--type-body-strong);
+  letter-spacing: 0;
 }
 .dark-mode-select,
 .theme-select {
@@ -85,6 +93,27 @@ h4 {
   font-family: var(--font-mono-stack);
   font-size: var(--font-size-sm);
 }
+// The color the app paints when normalisation changed the chosen one.
+.adjusted-color {
+  grid-column: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-half);
+  font-size: var(--font-size-sm);
+  color: var(--text-color-muted);
+}
+.adjusted-swatch {
+  flex: none;
+  width: var(--s2);
+  height: var(--s2);
+  // 3:1 edge: the adjusted color often matches the panel behind it.
+  border: 1px solid var(--input-border-color);
+  border-radius: var(--radius-xs);
+}
+.palette-hint {
+  font-size: var(--font-size-sm);
+  color: var(--text-color-muted);
+}
 .editing-mode {
   font-size: var(--font-size-sm);
 }
@@ -138,8 +167,36 @@ h4 {
   > * {
     margin-top: var(--s2);
   }
+  // Same look as the settings' "More options" disclosures: chevron, no marker.
   > summary {
+    display: flex;
+    align-items: center;
+    gap: var(--s);
     margin-top: 0;
+    min-height: var(--ctl-md);
+    border-radius: var(--r-md);
+    font: var(--type-body-strong);
+    list-style: none;
     cursor: pointer;
+    user-select: none;
+    &::-webkit-details-marker {
+      display: none;
+    }
+    &:focus-visible {
+      outline: var(--focus-ring-width) solid var(--focus-ring-color);
+      outline-offset: var(--focus-ring-offset);
+    }
   }
+  .summary-icon {
+    font-size: var(--icon-md);
+    width: var(--icon-md);
+    height: var(--icon-md);
+    transition: var(--transition-standard);
+  }
+  &[open] .summary-icon {
+    transform: rotate(180deg);
+  }
+}
+.palette-heading {
+  align-items: center;
 }

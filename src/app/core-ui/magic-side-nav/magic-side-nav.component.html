@@ -40,7 +40,7 @@
     [class.animate]="animateWidth()"
     [class.resizing]="isResizing()"
     [style.width.px]="sidenavWidth()"
-    [attr.aria-label]="T.MH.PROJECT_MENU | translate"
+    [attr.aria-label]="T.MH.MAIN_NAVIGATION | translate"
     [cdkTrapFocus]="isMobile()"
     [cdkTrapFocusAutoCapture]="isMobile()"
     (keydown)="onNavKeyDown($event)"
@@ -52,7 +52,7 @@
       (click)="isMobile() ? toggleMobileNav() : undefined"
       class="st-brand"
       routerLink="/tag/TODAY/tasks"
-      [attr.aria-label]="T.G.TODAY | translate"
+      aria-label="Ultra Tasks"
     >
       <img
         src="assets/ultra-tasks/logo.svg"
@@ -93,7 +93,8 @@
         [class.visible]="!isMobile()"
         (click)="toggleSideNavMode()"
         [attr.aria-label]="
-          isFullMode() ? 'Switch to compact mode' : 'Switch to full mode'
+          (isFullMode() ? T.MH.SWITCH_TO_COMPACT_MODE : T.MH.SWITCH_TO_FULL_MODE)
+            | translate
         "
         [attr.aria-expanded]="isFullMode()"
       >
@@ -133,7 +134,7 @@
                   [item]="item"
                   [showLabels]="showText()"
                   [isExpanded]="isGroupExpanded(item)"
-                  [activeWorkContextId]="activeWorkContextId()"
+                  [activeWorkContextId]="currentWorkContextId()"
                   (itemClick)="onItemClick($event)"
                 ></nav-list-tree>
               </li>
@@ -157,7 +158,7 @@
                       [workContext]="item.workContext"
                       [type]="item.workContextType"
                       [defaultIcon]="item.defaultIcon"
-                      [activeWorkContextId]="activeWorkContextId() || ''"
+                      [activeWorkContextId]="currentWorkContextId() || ''"
                       [variant]="'nav'"
                       [showLabels]="showText()"
                       [attr.data-project-id]="
@@ -246,7 +247,7 @@
     class="resize-handle position-left"
     [class.compactMode-handle]="!isFullMode()"
     (mousedown)="onResizeStart($event)"
-    [attr.aria-label]="'Resize sidenav'"
+    [attr.aria-label]="T.MH.RESIZE_SIDE_NAV | translate"
     role="separator"
   ></div>
 }

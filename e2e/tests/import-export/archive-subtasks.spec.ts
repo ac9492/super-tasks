@@ -32,10 +32,11 @@ const SAVE_AND_GO_HOME_BTN = 'button[mat-flat-button][color="primary"]:last-of-t
 const captureDownload = async (page: Page): Promise<Download> => {
   const downloadPromise = page.waitForEvent('download');
 
-  // Click the export button (file_upload icon in file-imex)
-  const exportBtn = page.locator(
-    'file-imex button:has(mat-icon:has-text("file_upload"))',
-  );
+  // Click the export button (download icon in file-imex)
+  // "Export data" is the first download-icon button (privacy export is the second)
+  const exportBtn = page
+    .locator('file-imex button:has(mat-icon:text-is("download"))')
+    .first();
   await exportBtn.click();
 
   return downloadPromise;

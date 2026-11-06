@@ -1,6 +1,6 @@
-<h1 mat-dialog-title>
+<h2 mat-dialog-title>
   {{ T.F.SYNC.FORM.IMPORT_ENCRYPTION_WARNING.TITLE | translate }}
-</h1>
+</h2>
 
 <mat-dialog-content>
   <div class="callout callout--warning">
@@ -60,7 +60,7 @@
     </p>
   } @else if (isDisablingEncryption) {
     <p class="note note-warn">
-      <mat-icon aria-hidden="true">visibility</mat-icon>
+      <mat-icon aria-hidden="true">lock_open</mat-icon>
       {{ T.F.SYNC.FORM.IMPORT_ENCRYPTION_WARNING.NOTE_DISABLING | translate }}
     </p>
   }

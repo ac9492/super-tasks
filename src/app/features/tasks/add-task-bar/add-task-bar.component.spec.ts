@@ -336,6 +336,27 @@ describe('AddTaskBarComponent', () => {
     });
   });
 
+  describe('input model from the suggestion autocomplete', () => {
+    it('takes typed text into the state', () => {
+      component.onInputModelChange('Buy milk');
+
+      expect(component.stateService.inputTxt()).toBe('Buy milk');
+    });
+
+    it('ignores a picked suggestion, which is not text', () => {
+      component.stateService.updateInputTxt('Existing');
+
+      component.onInputModelChange({ taskId: 'task-1', title: 'Existing task' });
+
+      expect(component.stateService.inputTxt()).toBe('Existing');
+    });
+
+    it('shows typed text as is and a picked suggestion as nothing', () => {
+      expect(component.displayInputValue('Buy milk')).toBe('Buy milk');
+      expect(component.displayInputValue({ taskId: 'task-1' })).toBe('');
+    });
+  });
+
   describe('highlightSegments', () => {
     it('splits the input by the ranges parsed from that exact text', () => {
       component.stateService.updateInputTxt('Buy milk #shop');
@@ -664,6 +685,28 @@ describe('AddTaskBarComponent', () => {
       const secondCall = mockTaskService.add.calls.mostRecent();
       const secondTaskData = secondCall.args[2] as Partial<TaskCopy>;
       expect(secondTaskData.tagIds).toEqual(['tag-1']);
+    });
+
+    // Text expanders, dictation and fast typing scripts send the last keys and
+    // Enter before the async parse of the final text has landed; the state
+    // then still holds the parse of a shorter prefix.
+    it('should save the full title when Enter comes before the last parse', async () => {
+      mockTaskService.add.and.returnValue('task-1');
+      fixture.detectChanges();
+      TestBed.tick();
+      await fixture.whenStable();
+      component.stateService.updateInputTxt('Inline added tas');
+      TestBed.tick();
+      for (let i = 0; i < 100 && component.stateService.state().cleanText === null; i++) {
+        await new Promise((resolve) => setTimeout(resolve, 20));
+      }
+      expect(component.stateService.state().cleanText).toBe('Inline added tas');
+
+      // Last key and Enter in the same burst: no change detection in between
+      component.stateService.updateInputTxt('Inline added task');
+      await component.addTask();
+
+      expect(mockTaskService.add.calls.mostRecent().args[0]).toBe('Inline added task');
     });
 
     it('should pass a syntax-parsed priority to the new task and reset it after', async () => {
@@ -1570,13 +1613,28 @@ describe('AddTaskBarComponent', () => {
 
     it('should emit done when clicking outside and no dialog is open', () => {
       const doneSpy = spyOn(component.done, 'emit');
+      const outside = document.body.appendChild(document.createElement('div'));
       const event = {
-        target: document.createElement('div'),
+        target: outside,
       } as unknown as MouseEvent;
 
       component.onDocumentClick(event);
 
       expect(doneSpy).toHaveBeenCalled();
+      outside.remove();
+    });
+
+    // A dialog button (e.g. the new-tag confirm) removes its dialog during the
+    // click; the detached target is no longer inside the overlay container
+    it('should not emit done for a click whose target was removed by the click', () => {
+      const doneSpy = spyOn(component.done, 'emit');
+      const event = {
+        target: document.createElement('button'),
+      } as unknown as MouseEvent;
+
+      component.onDocumentClick(event);
+
+      expect(doneSpy).not.toHaveBeenCalled();
     });
 
     it('should not emit done when schedule dialog is open', () => {
@@ -1628,8 +1686,12 @@ describe('AddTaskBarComponent', () => {
       expect(mockTaskService.add).not.toHaveBeenCalled();
     });
 
-    it('should add a task when Enter is pressed and NOT in IME composition', () => {
+    it('should add a task when Enter is pressed and NOT in IME composition', async () => {
       dispatchEnterKeydown({ isComposing: false });
+      // The submit first parses the exact text when its parse has not landed yet
+      for (let i = 0; i < 100 && !mockTaskService.add.calls.any(); i++) {
+        await new Promise((resolve) => setTimeout(resolve, 20));
+      }
       expect(mockTaskService.add).toHaveBeenCalled();
     });
   });

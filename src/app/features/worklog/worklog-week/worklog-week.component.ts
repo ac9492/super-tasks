@@ -1,3 +1,4 @@
+import { SimpleCounterIconPipe } from '../../simple-counter/simple-counter-icon.pipe';
 import {
   afterRenderEffect,
   ChangeDetectionStrategy,
@@ -42,6 +43,7 @@ export const sortWorklogDays = (
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [expandAnimation, expandFadeAnimation, fadeAnimation],
   imports: [
+    SimpleCounterIconPipe,
     MatRipple,
     MatIcon,
     MatButton,

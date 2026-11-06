@@ -70,7 +70,7 @@ export class DialogAddNoteComponent extends DialogFullscreenMarkdownComponent {
       this._snackService.open({
         type: 'SUCCESS',
         msg: this.T.F.NOTE.S.NOTE_ADDED,
-        ico: 'comment',
+        ico: 'description',
       });
       this._clearSessionStorage();
     }

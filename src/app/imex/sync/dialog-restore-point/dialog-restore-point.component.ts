@@ -22,6 +22,7 @@ import { RestorePoint } from '../../../op-log/sync-providers/provider.interface'
 import { T } from '../../../t.const';
 import { DialogConfirmComponent } from '../../../ui/dialog-confirm/dialog-confirm.component';
 import { firstValueFrom } from 'rxjs';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 @Component({
   selector: 'dialog-restore-point',
@@ -40,6 +41,7 @@ import { firstValueFrom } from 'rxjs';
   ],
 })
 export class DialogRestorePointComponent implements OnInit {
+  private readonly _dialogSize = useDialogSize('m');
   private _dialogRef = inject(MatDialogRef<DialogRestorePointComponent>);
   private _matDialog = inject(MatDialog);
   private _restoreService = inject(SuperSyncRestoreService);

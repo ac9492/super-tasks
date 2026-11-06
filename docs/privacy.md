@@ -2,7 +2,7 @@
 
 Ultra Tasks is maintained and published by Adrian Chase. The core app works offline and stores tasks, notes, time tracking, and settings on your device. Ultra Tasks does not include analytics, advertising, or telemetry.
 
-Sync and integrations are optional. When you enable them, the app contacts the services you configure and transfers the information needed for those features. Those services have their own privacy policies. SuperSync remains an upstream service; Ultra Tasks does not operate it. Choosing a background image through Unsplash also contacts that provider.
+Sync and integrations are optional. When you enable them, the app contacts the services you configure and transfers the information needed for those features. Those services have their own privacy policies. SuperSync remains an upstream service; Ultra Tasks does not operate it. Ultra Tasks has no image search: a background image is chosen from a file on your device and saved, reduced in size, with your settings. A background image that an earlier version or another app saved as a web address is loaded from that address.
 
 The optional desktop update check contacts GitHub to check Ultra Tasks releases. You can disable it in settings. Ordinary website requests may expose connection information, such as your IP address, to the service receiving them.
 

@@ -13,7 +13,6 @@
     <div class="settings-container">
       <mat-form-field
         class="settings-search"
-        appearance="outline"
         subscriptSizing="dynamic"
       >
         <mat-icon matPrefix>search</mat-icon>
@@ -93,7 +92,7 @@
           </button>
           @if (selectedTabIndex === 0) {
             <div class="tab-content">
-              <h2 class="mat-h2 section-title">
+              <h2 class="section-title">
                 {{ 'PS.TABS.GENERAL' | translate }}
               </h2>
 
@@ -114,25 +113,7 @@
                     <theme-selector
                       [(colorsExpanded)]="colorEditorExpanded"
                     ></theme-selector>
-                    <div class="setting-row">
-                      <label class="st-glass-setting setting-control">
-                        <input
-                          #glassToggle
-                          type="checkbox"
-                          [checked]="ultraTasksAppearance.glassEnabled()"
-                          (change)="ultraTasksAppearance.setGlass(glassToggle.checked)"
-                        />
-                        <span
-                          ><strong>{{ T.F.ULTRA_TASKS.GLASS | translate }}</strong
-                          ><small>{{
-                            T.F.ULTRA_TASKS.GLASS_HINT | translate
-                          }}</small></span
-                        > </label
-                      ><setting-help
-                        [label]="T.F.ULTRA_TASKS.GLASS | translate"
-                        [text]="T.F.ULTRA_TASKS.GLASS_HINT | translate"
-                      />
-                    </div>
+                    <glass-settings></glass-settings>
                   </section>
                 }
               }
@@ -141,7 +122,7 @@
 
           @if (selectedTabIndex === 1) {
             <div class="tab-content">
-              <h2 class="mat-h2 section-title">
+              <h2 class="section-title">
                 {{ T.PS.REDESIGN.TASKS | translate }}
               </h2>
               @for (section of globalTasksFormCfg; track section.key) {
@@ -173,7 +154,7 @@
 
           @if (selectedTabIndex === 2) {
             <div class="tab-content">
-              <h2 class="mat-h2 section-title">
+              <h2 class="section-title">
                 {{ T.PS.REDESIGN.TIME | translate }}
               </h2>
               @for (section of timeTrackingFormCfg; track section.key) {
@@ -194,7 +175,7 @@
 
           @if (selectedTabIndex === 5) {
             <div class="tab-content">
-              <h2 class="mat-h2 section-title">
+              <h2 class="section-title">
                 {{ 'PS.TABS.SYNC_BACKUP' | translate }}
               </h2>
               <section class="config-section sync-summary">
@@ -291,7 +272,7 @@
   <a
     href="https://github.com/ac9492/ultra-tasks/releases/latest"
     target="_blank"
-    >Changelog</a
+    >{{ T.PS.CHANGELOG | translate }}</a
   >
   @if (isUpdateCheckPossible) {
     –
@@ -305,7 +286,7 @@
   <a
     (click)="showLogs(); $event?.preventDefault()"
     href="#"
-    >Logs</a
+    >{{ T.DIALOG_LOGS.TITLE | translate }}</a
   >
   –
   <a

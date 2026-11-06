@@ -1,5 +1,6 @@
 @if (isTaskDataLoadedIfNeeded) {
   <form (submit)="$event.preventDefault(); confirm()">
+    <h2 mat-dialog-title>{{ T.F.TIME_TRACKING.D_IDLE.TITLE | translate }}</h2>
     <div
       class="dialog-content"
       mat-dialog-content
@@ -24,7 +25,7 @@
           {{ T.F.TIME_TRACKING.D_IDLE.MODE_BREAK | translate }}
         </mat-button-toggle>
         <mat-button-toggle value="TASK">
-          <mat-icon>track_changes</mat-icon>
+          <mat-icon>checklist</mat-icon>
           {{ T.F.TIME_TRACKING.D_IDLE.MODE_TASK | translate }}
         </mat-button-toggle>
         <mat-button-toggle value="SPLIT">
@@ -115,7 +116,7 @@
                   [aria-label]="T.F.TIME_TRACKING.D_IDLE.TASK | translate"
                   [matTooltip]="T.F.TIME_TRACKING.D_IDLE.TASK | translate"
                 >
-                  <mat-icon>track_changes</mat-icon>
+                  <mat-icon>checklist</mat-icon>
                 </mat-button-toggle>
               </mat-button-toggle-group>
 
@@ -231,7 +232,7 @@
     </div>
 
     <div
-      class="dialog-actions"
+      align="end"
       mat-dialog-actions
     >
       <button
@@ -247,7 +248,6 @@
         mat-flat-button
         type="submit"
       >
-        <mat-icon>{{ confirmIcon }}</mat-icon>
         {{ confirmLabelKey | translate }}
       </button>
     </div>
@@ -272,7 +272,7 @@
       [matTooltip]="simpleCounterLabel"
       [color]="simpleCounterBtn.isTrackTo ? 'primary' : ''"
     >
-      <mat-icon>{{ simpleCounterBtn.icon }}</mat-icon>
+      <mat-icon>{{ simpleCounterBtn | simpleCounterIcon }}</mat-icon>
     </button>
   </ng-template>
 }

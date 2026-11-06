@@ -29,6 +29,7 @@ describe('PluginManagementComponent', () => {
   let component: PluginManagementComponent;
   let routerNavigateSpy: jasmine.Spy;
   let layoutToggleSpy: jasmine.Spy;
+  let pluginsWindowRef: { close: jasmine.Spy };
   let loadPluginFromZipSpy: jasmine.Spy;
   let snackOpenSpy: jasmine.Spy;
   let isShowIssuePanel: ReturnType<typeof signal<boolean>>;
@@ -40,6 +41,7 @@ describe('PluginManagementComponent', () => {
       .createSpy('navigate')
       .and.returnValue(Promise.resolve(true));
     layoutToggleSpy = jasmine.createSpy('toggleAddTaskPanel');
+    pluginsWindowRef = { close: jasmine.createSpy('close') };
     isShowIssuePanel = signal(false);
     TestBed.configureTestingModule({
       imports: [PluginManagementComponent, TranslateModule.forRoot()],
@@ -70,7 +72,11 @@ describe('PluginManagementComponent', () => {
         {
           // Confirms by default (e.g. the install warning); tests override via stubConfirmDialog.
           provide: MatDialog,
-          useValue: { open: () => ({ afterClosed: () => of(true) }) },
+          useValue: {
+            open: () => ({ afterClosed: () => of(true) }),
+            getDialogById: (id: string) =>
+              id === 'plugins-window' ? pluginsWindowRef : undefined,
+          },
         },
         {
           provide: Router,
@@ -359,7 +365,7 @@ describe('PluginManagementComponent', () => {
         'a[href$="#get-listed-in-the-app"]',
       );
       expect(normalize(addYoursLink?.textContent)).toBe(
-        'add Eklentinizi burada listeleyin',
+        'open_in_new Eklentinizi burada listeleyin',
       );
     });
 
@@ -466,6 +472,14 @@ describe('PluginManagementComponent', () => {
 
     expect(routerNavigateSpy).toHaveBeenCalledWith(['/active/tasks']);
     expect(layoutToggleSpy).toHaveBeenCalledTimes(1);
+  });
+
+  // From a work view /active/tasks redirects back to the current URL, so no
+  // NavigationEnd fires and the window would not close itself.
+  it('closes the plugins window when going to the issue panel', async () => {
+    await component.goToIssuePanel();
+
+    expect(pluginsWindowRef.close).toHaveBeenCalledTimes(1);
   });
 
   it('does not re-toggle the panel when it is already open', async () => {

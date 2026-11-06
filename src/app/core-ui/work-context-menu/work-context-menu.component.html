@@ -21,7 +21,7 @@
     [routerLink]="[base, contextId, 'metrics']"
     mat-menu-item
   >
-    <mat-icon>donut_large</mat-icon>
+    <mat-icon>bar_chart</mat-icon>
     <span class="text">{{ T.MH.METRICS | translate }}</span>
   </button>
 }
@@ -71,7 +71,7 @@
     (click)="copyPlainspaceInviteUrl(inviteUrl)"
     mat-menu-item
   >
-    <mat-icon>link</mat-icon>
+    <mat-icon>content_copy</mat-icon>
     <span class="text">{{ T.PLAINSPACE.COPY_INVITE_LINK | translate }}</span>
   </button>
 }
@@ -81,7 +81,7 @@
     (click)="addSection()"
     mat-menu-item
   >
-    <mat-icon>list</mat-icon>
+    <mat-icon>playlist_add</mat-icon>
     <span class="text">{{ T.MH.ADD_SECTION | translate }}</span>
   </button>
 }
@@ -109,7 +109,7 @@
       (click)="restoreProject()"
       mat-menu-item
     >
-      <mat-icon>{{ (isDone$ | async) ? 'replay' : 'unarchive' }}</mat-icon>
+      <mat-icon>{{ (isDone$ | async) ? 'restore' : 'unarchive' }}</mat-icon>
       <span class="text">
         {{
           ((isDone$ | async)
@@ -132,7 +132,7 @@
     (click)="duplicateProject()"
     mat-menu-item
   >
-    <mat-icon>file_copy</mat-icon>
+    <mat-icon>content_copy</mat-icon>
     <span class="text">{{ T.MH.DUPLICATE_PROJECT | translate }}</span>
   </button>
   <button

@@ -273,13 +273,13 @@ export class ProjectService {
     this._snackService.open(
       project?.isHiddenFromMenu
         ? {
-            ico: 'replay',
+            ico: 'restore',
             msg: T.F.PROJECT.S.REOPENED,
             actionStr: T.F.PROJECT.S.SHOW_IN_MENU,
             actionFn: () => this._store$.dispatch(toggleHideFromMenu({ id: projectId })),
           }
         : {
-            ico: 'replay',
+            ico: 'restore',
             msg: T.F.PROJECT.S.REOPENED,
           },
     );

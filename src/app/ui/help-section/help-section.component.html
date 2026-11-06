@@ -1,9 +1,9 @@
 <button
   (click)="isShowHelp = !isShowHelp"
-  aria-label="Show Help for section"
-  class="help-btn mat-elevation-z2"
-  color=""
-  mat-mini-fab
+  [attr.aria-label]="T.MH.HELP | translate"
+  [attr.aria-expanded]="isShowHelp"
+  class="help-btn"
+  mat-icon-button
   type="button"
 >
   <mat-icon>{{ isShowHelp ? 'close' : 'help_outline' }}</mat-icon>
@@ -12,14 +12,8 @@
 @if (isShowHelp) {
   <div
     [@expandFade]
-    class="help-text border-color-primary"
+    class="help-text"
   >
-    <div class="help-icon-wrapper color-primary">
-      <mat-icon>help_outline</mat-icon>
-    </div>
     <ng-content></ng-content>
-    <div class="help-icon-wrapper color-primary">
-      <mat-icon>help_outline</mat-icon>
-    </div>
   </div>
 }

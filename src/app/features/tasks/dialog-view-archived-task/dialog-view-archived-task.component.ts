@@ -28,6 +28,7 @@ import { from } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { TaskArchiveService } from '../../archive/task-archive.service';
 import { Log } from '../../../core/log';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 export interface ViewArchivedTaskData {
   task: Task;
@@ -54,6 +55,7 @@ export interface ViewArchivedTaskData {
   ],
 })
 export class DialogViewArchivedTaskComponent {
+  private readonly _dialogSize = useDialogSize('m');
   private _matDialog = inject(MatDialog);
   private _taskRepeatCfgService = inject(TaskRepeatCfgService);
   private _translateService = inject(TranslateService);

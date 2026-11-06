@@ -1,7 +1,7 @@
 <div
   class="tree"
   role="tree"
-  aria-label="Tree"
+  [attr.aria-label]="ariaLabel() || null"
   [class.is-dragging]="draggingId()"
   [class.is-drag-invalid]="isDragInvalid()"
   cdkDropListGroup

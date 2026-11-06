@@ -1923,7 +1923,7 @@ describe('shortSyntax', () => {
       expect(r?.attachments.length).toBe(1);
       expect(r?.attachments[0].path).toBe('https://example.com');
       expect(r?.attachments[0].type).toBe('LINK');
-      expect(r?.attachments[0].icon).toBe('bookmark');
+      expect(r?.attachments[0].icon).toBe('link');
       expect(r?.taskChanges.title).toBe('Task');
     });
 
@@ -2280,7 +2280,7 @@ describe('shortSyntax', () => {
             type: 'LINK' as const,
             path: 'https://example.com',
             title: 'example',
-            icon: 'bookmark',
+            icon: 'link',
           },
         ],
       };
@@ -2299,7 +2299,7 @@ describe('shortSyntax', () => {
             type: 'LINK' as const,
             path: 'https://example.com',
             title: 'example',
-            icon: 'bookmark',
+            icon: 'link',
           },
         ],
       };
@@ -2320,7 +2320,7 @@ describe('shortSyntax', () => {
             type: 'LINK' as const,
             path: 'https://example.com',
             title: 'example',
-            icon: 'bookmark',
+            icon: 'link',
           },
         ],
       };
@@ -2505,6 +2505,49 @@ describe('shortSyntax', () => {
 
   // Positions come from the parser's offset map, not from searching the raw
   // text — these inputs are exactly the ones where searching guesses wrong
+  describe('mid-title tokens leave no double space', () => {
+    const titleFor = async (title: string, isParseRepeat = false): Promise<string> => {
+      const r = await shortSyntax(
+        { ...TASK, title },
+        CONFIG,
+        ALL_TAGS,
+        [],
+        undefined,
+        'combine',
+        isParseRepeat,
+      );
+      return r?.taskChanges.title as string;
+    };
+
+    it('should join the words around an existing tag', async () => {
+      expect(await titleFor('Email Sam #blu about rent')).toBe('Email Sam about rent');
+    });
+
+    it('should join the words around a new tag', async () => {
+      expect(await titleFor('Email Sam #home about rent')).toBe('Email Sam about rent');
+    });
+
+    it('should join the words around several tags', async () => {
+      expect(await titleFor('Email #blu #bla Sam')).toBe('Email Sam');
+    });
+
+    it('should join the words around a due date', async () => {
+      expect(await titleFor('Call @tomorrow about rent')).toBe('Call about rent');
+    });
+
+    it('should join the words around an estimate', async () => {
+      expect(await titleFor('Fix 30m login bug')).toBe('Fix login bug');
+    });
+
+    it('should join the words around an unfinished recurrence', async () => {
+      expect(await titleFor('Odd @every 2 weekdays', true)).not.toContain('  ');
+    });
+
+    it("should keep the user's own spacing elsewhere in the title", async () => {
+      expect(await titleFor('Email  Sam #blu about')).toBe('Email  Sam about');
+    });
+  });
+
   describe('parsedRanges position tracking', () => {
     it('should not highlight an estimate inside a tag', async () => {
       const t = {

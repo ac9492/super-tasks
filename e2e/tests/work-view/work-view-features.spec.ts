@@ -127,7 +127,7 @@ test.describe('Work View Features', () => {
         new Promise<{ hasPanel: boolean; rows: number }[]>((resolve) => {
           const header = [...document.querySelectorAll('collapsible .collapsible-header')]
             .filter((el): el is HTMLElement => el instanceof HTMLElement)
-            .find((el) => el.textContent?.includes('Completed Tasks'));
+            .find((el) => /completed tasks/i.test(el.textContent || ''));
           const collapsible = header?.closest('collapsible');
           if (!header || !collapsible) {
             resolve([]);

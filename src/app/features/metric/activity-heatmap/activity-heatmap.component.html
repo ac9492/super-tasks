@@ -1,6 +1,6 @@
 <section class="activity-heatmap">
   <div class="heatmap-header">
-    <h1 class="heatmap-title">{{ T.F.METRIC.CMP.ACTIVITY_HEATMAP | translate }}</h1>
+    <h2 class="heatmap-title">{{ T.F.METRIC.CMP.ACTIVITY_HEATMAP | translate }}</h2>
     <div class="heatmap-header__actions">
       @if (heatmapData()) {
         <button
@@ -8,9 +8,14 @@
           (click)="shareHeatmap()"
           [disabled]="isSharing()"
           [matTooltip]="T.F.METRIC.CMP.SHARE_HEATMAP | translate"
+          [attr.aria-label]="T.F.METRIC.CMP.SHARE_HEATMAP | translate"
+          [attr.aria-busy]="isSharing()"
         >
           @if (isSharing()) {
-            <mat-icon>hourglass_empty</mat-icon>
+            <mat-spinner
+              [diameter]="24"
+              [attr.aria-label]="T.G.PROCESSING | translate"
+            ></mat-spinner>
           } @else {
             <mat-icon>share</mat-icon>
           }
@@ -22,10 +27,7 @@
   @if (heatmapData(); as data) {
     @if (availableYears().length > 0) {
       <div class="select-menu">
-        <mat-form-field
-          appearance="outline"
-          subscriptSizing="dynamic"
-        >
+        <mat-form-field subscriptSizing="dynamic">
           <mat-label>{{ T.F.METRIC.CMP.YEAR | translate }}</mat-label>
           <mat-select
             [value]="selectedYear()"

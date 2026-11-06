@@ -1577,6 +1577,10 @@ describe('OperationLogStoreService', () => {
         vectorClock: { remote: 7 },
         compactedAt: 123,
         snapshotIncludedOps: [existingOp, includedOp],
+        nativeBaseline: {
+          id: 'native-sync-active',
+          data: { encrypted: 'native-projection' },
+        },
         archiveYoung,
         archiveOld,
       });
@@ -1588,6 +1592,10 @@ describe('OperationLogStoreService', () => {
       });
       expect((await service.loadStateCache())?.lastAppliedOpSeq).toBe(2);
       expect(await service.getVectorClock()).toEqual({ remote: 7 });
+      expect(await service.loadNativeSyncBaseline('native-sync-active')).toEqual({
+        id: 'native-sync-active',
+        data: { encrypted: 'native-projection' },
+      });
       const db = (
         service as unknown as {
           db: IDBPDatabase<unknown>;
@@ -1656,6 +1664,10 @@ describe('OperationLogStoreService', () => {
           snapshotIncludedOps: [
             createTestOperation({ id: 'file-snapshot-rolled-back-op' }),
           ],
+          nativeBaseline: {
+            id: 'native-sync-active',
+            data: { encrypted: 'must-roll-back' },
+          },
         }),
       ).toBeRejectedWithError('injected vector-clock write failure');
 
@@ -1663,6 +1675,7 @@ describe('OperationLogStoreService', () => {
         priorOp.id,
       ]);
       expect((await service.loadStateCache())?.state).toEqual(priorState);
+      expect(await service.loadNativeSyncBaseline('native-sync-active')).toBeUndefined();
       expect(await service.getVectorClock()).toEqual({ testClient: 1 });
     });
 

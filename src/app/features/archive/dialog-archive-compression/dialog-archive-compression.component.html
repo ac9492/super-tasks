@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{ T.F.TIME_TRACKING.D_ARCHIVE_COMPRESS.TITLE | translate }}</h1>
+<h2 mat-dialog-title>{{ T.F.TIME_TRACKING.D_ARCHIVE_COMPRESS.TITLE | translate }}</h2>
 
 <div mat-dialog-content>
   @if (isLoading()) {
@@ -34,7 +34,7 @@
 
       @if (preview()!.notesToClear > 0) {
         <div class="stat-item">
-          <mat-icon>note</mat-icon>
+          <mat-icon>description</mat-icon>
           <div class="stat-info">
             <strong>{{ preview()!.notesToClear }}</strong>
             <span>{{
@@ -57,7 +57,7 @@
       }
 
       <div class="stat-item highlight">
-        <mat-icon>save</mat-icon>
+        <mat-icon>storage</mat-icon>
         <div class="stat-info">
           <strong>~{{ preview()!.estimatedSavingsKB }} KB</strong>
           <span>{{

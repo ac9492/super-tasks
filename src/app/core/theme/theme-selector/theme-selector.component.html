@@ -28,12 +28,20 @@
     [open]="colorsExpanded()"
     (toggle)="colorsExpanded.set(colorDetails.open)"
   >
-    <summary>{{ T.PS.REDESIGN.COLORS | translate }}</summary>
-    <h4>{{ T.GCF.MISC.PALETTE.TITLE | translate }}</h4>
-    <setting-help
-      [label]="T.GCF.MISC.PALETTE.TITLE | translate"
-      [text]="T.PS.REDESIGN.PALETTE_HELP | translate"
-    />
+    <summary>
+      <mat-icon
+        class="summary-icon"
+        aria-hidden="true"
+        >expand_more</mat-icon
+      >{{ T.PS.REDESIGN.COLORS | translate }}
+    </summary>
+    <div class="setting-row palette-heading">
+      <h4 class="setting-control">{{ T.GCF.MISC.PALETTE.TITLE | translate }}</h4>
+      <setting-help
+        [label]="T.GCF.MISC.PALETTE.TITLE | translate"
+        [text]="T.PS.REDESIGN.PALETTE_HELP | translate"
+      />
+    </div>
     <p>{{ T.GCF.MISC.PALETTE.DESCRIPTION | translate }}</p>
     <div
       class="palette-presets"
@@ -81,6 +89,19 @@
               (input)="updateColor(field.key, $event)"
             />
             <span class="color-value">{{ colors()[field.key] }}</span>
+            @if (roles().adjusted[field.key]) {
+              <span class="adjusted-color">
+                <span
+                  class="adjusted-swatch"
+                  aria-hidden="true"
+                  [style.background]="roles()[field.key]"
+                ></span>
+                {{
+                  T.GCF.MISC.PALETTE.ADJUSTED_TO
+                    | translate: { color: roles()[field.key] }
+                }}
+              </span>
+            }
           </label>
           <setting-help
             [label]="field.label | translate"
@@ -89,9 +110,12 @@
         </div>
       }
     </div>
+    @if (adjustedHint(); as hint) {
+      <p class="palette-hint">{{ hint | translate }}</p>
+    }
     <div
       class="palette-preview"
-      [style.background]="colors().background"
+      [style.background]="roles().background"
       [style.color]="previewInk().background"
       role="region"
       [attr.aria-label]="T.GCF.MISC.PALETTE.PREVIEW | translate"
@@ -99,14 +123,14 @@
       <span>{{ T.GCF.MISC.PALETTE.PREVIEW | translate }}</span>
       <div
         class="preview-card"
-        [style.background]="colors().surface"
+        [style.background]="roles().surface"
         [style.color]="previewInk().surface"
       >
         <mat-icon aria-hidden="true">radio_button_unchecked</mat-icon>
         <span>{{ T.GCF.MISC.PALETTE.PREVIEW_TASK | translate }}</span>
         <span
           class="preview-action"
-          [style.background]="colors().accent"
+          [style.background]="roles().accent"
           [style.color]="previewInk().accent"
           ><mat-icon aria-hidden="true">add</mat-icon
           >{{ T.GCF.MISC.PALETTE.PREVIEW_ACTION | translate }}</span

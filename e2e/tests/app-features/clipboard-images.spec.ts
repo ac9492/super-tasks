@@ -13,24 +13,17 @@ test.describe('Clipboard Images Settings', () => {
     // Wait for settings page to load
     await page.waitForLoadState('networkidle');
 
-    // Find and click on clipboard images section
-    // Look for the collapsible section title (not an h2/h3, but a div.collapsible-title)
-    const sectionHeading = page
-      .locator('.collapsible-title')
+    // The settings window lays its sections out open; Clipboard images is a
+    // section with a heading on the General tab, not a collapsible.
+    const section = page.locator('.section-clipboardImages');
+    const sectionHeading = section
+      .locator('.settings-section-heading h3')
       .filter({ hasText: /clipboard.*image/i });
-    await sectionHeading.first().waitFor({ state: 'visible', timeout: 10000 });
-
-    // Scroll into view if needed
-    await sectionHeading.first().scrollIntoViewIfNeeded();
-
-    // Click to expand the section if it's collapsed
-    await sectionHeading.first().click();
-
-    // Wait a moment for expansion animation
-    await page.waitForTimeout(500);
+    await sectionHeading.waitFor({ state: 'visible', timeout: 10000 });
+    await sectionHeading.scrollIntoViewIfNeeded();
 
     // In web version, verify IndexedDB manager button IS visible
-    const managerBtn = page.locator('button', {
+    const managerBtn = section.locator('button', {
       hasText: /manage.*image|open.*manager/i,
     });
     await expect(managerBtn.first()).toBeVisible({ timeout: 5000 });
@@ -38,6 +31,9 @@ test.describe('Clipboard Images Settings', () => {
     // Verify the button text contains expected text
     const btnText = await managerBtn.first().textContent();
     expect(btnText?.toLowerCase()).toMatch(/manage|manager/);
+
+    // The storage-location (folder path) field is desktop-only
+    await expect(section.locator('.image-path-section')).toHaveCount(0);
   });
 
   test('should open clipboard images manager dialog', async ({ page, settingsPage }) => {
@@ -47,31 +43,29 @@ test.describe('Clipboard Images Settings', () => {
     await settingsPage.navigateToSettings();
     await page.waitForLoadState('networkidle');
 
-    // Find clipboard images section (collapsible title, not h2/h3)
-    const sectionHeading = page
-      .locator('.collapsible-title')
+    // Find the clipboard images section (a heading, not a collapsible)
+    const section = page.locator('.section-clipboardImages');
+    const sectionHeading = section
+      .locator('.settings-section-heading h3')
       .filter({ hasText: /clipboard.*image/i });
-    await sectionHeading.first().waitFor({ state: 'visible', timeout: 10000 });
-    await sectionHeading.first().scrollIntoViewIfNeeded();
-
-    // Click to expand the section if it's collapsed
-    await sectionHeading.first().click();
-
-    // Wait a moment for expansion animation
-    await page.waitForTimeout(500);
+    await sectionHeading.waitFor({ state: 'visible', timeout: 10000 });
+    await sectionHeading.scrollIntoViewIfNeeded();
 
     // Click the manager button
-    const managerBtn = page.locator('button', {
+    const managerBtn = section.locator('button', {
       hasText: /manage.*image|open.*manager/i,
     });
     await managerBtn.first().click();
 
-    // Wait for dialog to open
-    const dialog = page.locator('mat-dialog-container');
+    // The manager opens as a second dialog on top of the settings window, so
+    // pick it by its title instead of taking every mat-dialog-container.
+    const dialog = page.locator('mat-dialog-container').filter({
+      has: page.locator('h2').filter({ hasText: /clipboard.*image/i }),
+    });
     await expect(dialog).toBeVisible({ timeout: 5000 });
 
     // Verify dialog title
-    const dialogTitle = dialog.locator('h1, h2').filter({ hasText: /clipboard.*image/i });
+    const dialogTitle = dialog.locator('h2').filter({ hasText: /clipboard.*image/i });
     await expect(dialogTitle).toBeVisible();
 
     // Verify close button exists (looking for button with "Close" text)
@@ -81,7 +75,8 @@ test.describe('Clipboard Images Settings', () => {
     // Close the dialog
     await closeBtn.first().click();
 
-    // Verify dialog is closed
+    // Verify dialog is closed; the settings window stays open underneath
     await expect(dialog).not.toBeVisible({ timeout: 5000 });
+    await expect(page.locator('.page-settings')).toBeVisible();
   });
 });

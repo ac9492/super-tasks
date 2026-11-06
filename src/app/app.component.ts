@@ -34,6 +34,7 @@ import { T } from './t.const';
 import { GlobalThemeService } from './core/theme/global-theme.service';
 import { IosKeyboardService } from './core/theme/ios-keyboard.service';
 import { resolveBgImageToDataUrl } from './core/theme/resolve-bg-image-to-data-url.util';
+import { GlassBackdropComponent } from './core/theme/glass-backdrop/glass-backdrop.component';
 import { LanguageService } from './core/language/language.service';
 import { WorkContextService } from './features/work-context/work-context.service';
 import { SyncTriggerService } from './imex/sync/sync-trigger.service';
@@ -93,6 +94,7 @@ import { OnboardingHintService } from './features/onboarding/onboarding-hint.ser
 import { QuickTourService } from './features/onboarding/quick-tour.service';
 import { MaterialIconsLoaderService } from './ui/material-icons-loader.service';
 import { BrowserTitleService } from './core/browser-title/browser-title.service';
+import { isAnimationDisabled } from './util/prefers-reduced-motion';
 
 const ENTRANCE_ANIMATION_DURATION = 1500;
 
@@ -130,6 +132,7 @@ interface BeforeInstallPromptEvent extends Event {
     MobileBottomNavComponent,
     OnboardingHintComponent,
     TaskMultiSelectBarComponent,
+    GlassBackdropComponent,
   ],
 })
 export class AppComponent implements OnDestroy, AfterViewInit {
@@ -202,10 +205,9 @@ export class AppComponent implements OnDestroy, AfterViewInit {
     return this._isDisableAnimations();
   }
 
-  private _isDisableAnimations = computed(() => {
-    const misc = this._globalConfigService.misc();
-    return misc?.isDisableAnimations ?? false;
-  });
+  private _isDisableAnimations = computed(() =>
+    isAnimationDisabled(this._globalConfigService.misc()),
+  );
 
   // Experimental: vertical action strip on the right edge instead of the
   // horizontal top header. Switches the DOM layout live (see template).
@@ -427,6 +429,20 @@ export class AppComponent implements OnDestroy, AfterViewInit {
     return this._activeWorkContextId() ?? null;
   }
 
+  /** Skip link target: the first task row if the page lists tasks, else <main>. */
+  skipToMainContent(main: HTMLElement): void {
+    const firstTask = main.querySelector<HTMLElement>('task');
+    if (firstTask) {
+      firstTask.focus();
+      return;
+    }
+    // Focusable only for this jump: a permanent tabindex would let any click
+    // on empty space move focus to <main>.
+    main.setAttribute('tabindex', '-1');
+    main.addEventListener('blur', () => main.removeAttribute('tabindex'), { once: true });
+    main.focus();
+  }
+
   onTaskAdded({ taskId }: TaskAddEvent): void {
     this.layoutService.setPendingFocusTaskId(taskId);
     this.layoutService.scrollToNewTask(taskId);
@@ -434,19 +450,6 @@ export class AppComponent implements OnDestroy, AfterViewInit {
       this.layoutService.hideAddTaskBar(taskId);
     }
   }
-
-  // Opacity + blur follow the resolved background source (per-context image or
-  // the global wallpaper), resolved centrally by GlobalThemeService — on
-  // non-context pages the active context is the sticky "Today" default and must
-  // not style the wallpaper.
-  readonly bgOverlayOpacity = this._globalThemeService.bgOverlayOpacity;
-  readonly bgImageBlur = this._globalThemeService.bgImageBlur;
-
-  readonly bgImageBlurFilter = computed((): string => {
-    const blur = this.bgImageBlur();
-
-    return blur > 0 ? `blur(${blur}px)` : 'none';
-  });
 
   async openSettings(): Promise<void> {
     const isForProject =
@@ -474,7 +477,9 @@ export class AppComponent implements OnDestroy, AfterViewInit {
     if (!ctxId || !ctxType) return;
     const title = await firstValueFrom(
       this._matDialog
-        .open(DialogPromptComponent, { data: { placeholder: T.WW.ADD_SECTION_TITLE } })
+        .open(DialogPromptComponent, {
+          data: { message: T.MH.ADD_SECTION, placeholder: T.WW.ADD_SECTION_TITLE },
+        })
         .afterClosed(),
     );
     if (typeof title === 'string' && title.trim()) {

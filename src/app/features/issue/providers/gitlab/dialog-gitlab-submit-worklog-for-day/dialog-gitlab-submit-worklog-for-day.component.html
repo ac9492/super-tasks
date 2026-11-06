@@ -1,10 +1,10 @@
-<h1 mat-dialog-title>
+<h2 mat-dialog-title>
   <mat-icon
     class="dialog-header-icon"
     svgIcon="gitlab"
   ></mat-icon>
   <span>{{ T.F.GITLAB.DIALOG_SUBMIT_WORKLOG.TITLE | translate }}</span>
-</h1>
+</h2>
 
 <mat-dialog-content>
   @if (isLoading) {
@@ -123,7 +123,6 @@
   >
     {{ T.G.CANCEL | translate }}
   </button>
-
   <button
     color="primary"
     mat-flat-button

@@ -4,18 +4,18 @@
     [style.color]="color()"
     class="tag-ico tag-ico-svg"
   ></mat-icon>
-} @else if (tag().icon) {
+} @else if (displayIcon()) {
   @if (isEmojiIcon()) {
     <span
       [style.color]="color()"
       class="tag-ico tag-ico-emoji"
-      >{{ tag().icon }}
+      >{{ displayIcon() }}
     </span>
   } @else {
     <mat-icon
       [style.color]="color()"
       class="tag-ico"
-      >{{ tag().icon }}
+      >{{ displayIcon() }}
     </mat-icon>
   }
 } @else {

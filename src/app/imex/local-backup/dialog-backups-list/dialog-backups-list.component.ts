@@ -22,10 +22,11 @@ import { T } from '../../../t.const';
 import { DialogConfirmComponent } from '../../../ui/dialog-confirm/dialog-confirm.component';
 import { SnackService } from '../../../core/snack/snack.service';
 import { BackupListEntry, BackupSourcesService } from '../backup-sources.service';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 const KIND_ICON: Record<BackupListEntry['kind'], string> = {
   RECOVERY_POINT: 'history',
-  BACKUP_FILE: 'folder',
+  BACKUP_FILE: 'description',
   MOBILE_SLOT: 'smartphone',
 };
 
@@ -51,6 +52,7 @@ const KIND_ICON: Record<BackupListEntry['kind'], string> = {
   ],
 })
 export class DialogBackupsListComponent implements OnInit {
+  private readonly _dialogSize = useDialogSize('m');
   private _dialogRef = inject(MatDialogRef<DialogBackupsListComponent>);
   private _matDialog = inject(MatDialog);
   private _snackService = inject(SnackService);

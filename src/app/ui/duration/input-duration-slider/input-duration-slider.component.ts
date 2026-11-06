@@ -43,6 +43,8 @@ export class InputDurationSliderComponent implements OnInit, OnDestroy {
 
   // Input signals
   readonly label = input('');
+  // Accessible name for the value input when no visible `label` is rendered.
+  readonly ariaLabel = input('');
   readonly model = input(0);
   // When true, the dial dynamically rescales above 1 hour: 5-min snap with
   // full-circle = 60 min while value < 1h, then 15-min snap with full-circle

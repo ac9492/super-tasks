@@ -56,6 +56,7 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { IS_ANDROID_WEB_VIEW } from '../../../util/is-android-web-view';
 import { IssueLog } from '../../../core/log';
 import { PluginIssueProviderRegistryService } from '../../../plugins/issue-provider/plugin-issue-provider-registry.service';
@@ -79,6 +80,7 @@ import {
   PLUGIN_OAUTH_TOKEN_KEY_CFG_KEY,
   shouldScopePluginOAuth,
 } from '../../../plugins/oauth/plugin-oauth-token-key.util';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 type OptionsLoadState = 'idle' | 'loading' | 'loaded' | 'empty' | 'failed';
 
@@ -100,6 +102,7 @@ type OptionsLoadState = 'idle' | 'loading' | 'loaded' | 'empty' | 'failed';
     MatDialogActions,
     MatButton,
     MatIcon,
+    MatProgressSpinner,
     MatDialogTitle,
     ChipListInputComponent,
   ],
@@ -108,6 +111,7 @@ type OptionsLoadState = 'idle' | 'loading' | 'loaded' | 'empty' | 'failed';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DialogEditIssueProviderComponent {
+  private readonly _dialogSize = useDialogSize('m');
   readonly T: typeof T = T;
   readonly HelperClasses = HelperClasses;
   readonly d = inject<{
@@ -362,6 +366,7 @@ export class DialogEditIssueProviderComponent {
         data: {
           cancelTxt: T.G.CANCEL,
           okTxt: T.G.DELETE,
+          isDestructive: true,
           message: T.F.ISSUE.DIALOG.DELETE_CONFIRM,
         },
       })

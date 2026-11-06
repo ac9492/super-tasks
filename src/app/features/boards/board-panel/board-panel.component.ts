@@ -44,6 +44,7 @@ import { BoardsActions } from '../store/boards.actions';
 import { unique } from '../../../util/unique';
 import { TaskSharedActions } from '../../../root-store/meta/task-shared.actions';
 import { LocalDateStrPipe } from '../../../ui/pipes/local-date-str.pipe';
+import { MatTooltip } from '@angular/material/tooltip';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -102,6 +103,7 @@ export interface BoardPanelNavigation {
     TranslatePipe,
     ShortPlannedAtPipe,
     MsToStringPipe,
+    MatTooltip,
   ],
   templateUrl: './board-panel.component.html',
   styleUrl: './board-panel.component.scss',
@@ -541,6 +543,10 @@ export class BoardPanelComponent implements TaskCardList {
 
     this._checkToScheduledTask(panelCfg, taskId);
     this._checkBacklogState(panelCfg, taskId);
+  }
+
+  isScheduledToday(task: TaskCopy): boolean {
+    return !!task.dueWithTime && this._dateService.isToday(task.dueWithTime);
   }
 
   scheduledDateColor(task: TaskCopy): ScheduledDateColor {

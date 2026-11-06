@@ -2,14 +2,14 @@
   #form="ngForm"
   (submit)="$event.preventDefault(); submit()"
 >
-  <h1 mat-dialog-title>
+  <h2 mat-dialog-title>
     {{
       (attachmentCopy.id
         ? T.F.ATTACHMENT.DIALOG_EDIT.EDIT_ATTACHMENT
         : T.F.ATTACHMENT.DIALOG_EDIT.ADD_ATTACHMENT
       ) | translate
     }}
-  </h1>
+  </h2>
 
   <mat-dialog-content>
     <div class="form-wrapper">
@@ -59,14 +59,12 @@
     >
       {{ T.G.CANCEL | translate }}
     </button>
-
     <button
       [disabled]="!form.valid"
       color="primary"
       mat-flat-button
       type="submit"
     >
-      <mat-icon>save</mat-icon>
       {{ T.G.SAVE | translate }}
     </button>
   </mat-dialog-actions>

@@ -7,7 +7,7 @@
   .heatmap-header {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: var(--s);
     margin-bottom: var(--s2);
 
@@ -16,6 +16,8 @@
       flex: 0 0 auto;
       width: auto;
       display: inline-block;
+      font: var(--type-title);
+      letter-spacing: var(--track-title);
     }
 
     .heatmap-header__actions {

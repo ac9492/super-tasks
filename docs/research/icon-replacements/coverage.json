@@ -1,0 +1,1522 @@
+[
+  {
+    "row": "R001",
+    "line": 68,
+    "usage": "Today default, navigation/header context, mobile bottom bar, date markers and jump-to-Today controls",
+    "cases": ["R001-1"],
+    "replacement_ids": ["IC001"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R004",
+    "line": 71,
+    "usage": "Schedule route and day-panel entry; desktop/mobile",
+    "cases": ["R004-1"],
+    "replacement_ids": ["IC002"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R005",
+    "line": 72,
+    "usage": "Boards route/title/mobile slot",
+    "cases": ["R005-1"],
+    "replacement_ids": ["IC003"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R006",
+    "line": 73,
+    "usage": "Habits route/title",
+    "cases": ["R006-1"],
+    "replacement_ids": ["IC004"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R009",
+    "line": 76,
+    "usage": "Donate route/page",
+    "cases": ["R009-1"],
+    "replacement_ids": ["IC005"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R014",
+    "line": 81,
+    "usage": "Project represented in drag preview",
+    "cases": ["R014-1"],
+    "replacement_ids": ["IC006"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R018",
+    "line": 85,
+    "usage": "Help menu and online help",
+    "cases": ["R018-1"],
+    "replacement_ids": ["IC007"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R021",
+    "line": 88,
+    "usage": "Contribute link",
+    "cases": ["R021-1"],
+    "replacement_ids": ["IC008"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R025",
+    "line": 92,
+    "usage": "Keyboard-navigation tour",
+    "cases": ["R025-1"],
+    "replacement_ids": ["IC009"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R027",
+    "line": 94,
+    "usage": "External issue/task provider panel",
+    "cases": ["R027-1"],
+    "replacement_ids": ["IC010"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R028",
+    "line": 95,
+    "usage": "Project/Today notes panel; note search result and missing-note-context fallback",
+    "cases": ["R028-1"],
+    "replacement_ids": ["IC011"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R032",
+    "line": 99,
+    "usage": "Open task-view customizer",
+    "cases": ["R032-1"],
+    "replacement_ids": ["IC012"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R035",
+    "line": 102,
+    "usage": "Disable Time tracking feature from the header play button context menu",
+    "cases": ["R035-1"],
+    "replacement_ids": ["IC013"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R037",
+    "line": 104,
+    "usage": "Header sync states",
+    "cases": ["R037-1"],
+    "replacement_ids": ["IC014"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R042",
+    "line": 114,
+    "usage": "System Urgent tag",
+    "cases": ["R042-1"],
+    "replacement_ids": ["IC015"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R043",
+    "line": 115,
+    "usage": "System Important tag",
+    "cases": ["R043-1"],
+    "replacement_ids": ["IC016"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R046",
+    "line": 118,
+    "usage": "Metrics for Today/project",
+    "cases": ["R046-1"],
+    "replacement_ids": ["IC017"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R050",
+    "line": 122,
+    "usage": "Copy project invite URL",
+    "cases": ["R050-1"],
+    "replacement_ids": ["IC018"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R051",
+    "line": 123,
+    "usage": "Add a task-list section",
+    "cases": ["R051-1"],
+    "replacement_ids": ["IC019"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R053",
+    "line": 125,
+    "usage": "Reopen completed project; archived completed project action",
+    "cases": ["R053-1"],
+    "replacement_ids": ["IC020"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R055",
+    "line": 127,
+    "usage": "Duplicate project/board",
+    "cases": ["R055-1"],
+    "replacement_ids": ["IC021"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R056",
+    "line": 128,
+    "usage": "Delete project/tag/board",
+    "cases": ["R056-1"],
+    "replacement_ids": ["IC022"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R058",
+    "line": 130,
+    "usage": "Remove tag chip from task",
+    "cases": ["R058-1"],
+    "replacement_ids": ["IC023"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R059",
+    "line": 131,
+    "usage": "Completed-project trophy; archived completed badge",
+    "cases": ["R059-1"],
+    "replacement_ids": ["IC024"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R062",
+    "line": 139,
+    "usage": "New-board tab",
+    "cases": ["R062-1"],
+    "replacement_ids": ["IC025"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R063",
+    "line": 140,
+    "usage": "Number of all tasks in board column or planner day/overdue header",
+    "cases": ["R063-1"],
+    "replacement_ids": ["IC026"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R066",
+    "line": 143,
+    "usage": "Any-date task chip in board; date-only create-task placeholder; schedule submit without time",
+    "cases": ["R066-1"],
+    "replacement_ids": ["IC027"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R067",
+    "line": 144,
+    "usage": "Schedule dialog submit with a selected time; create-task placeholder",
+    "cases": ["R067-1"],
+    "replacement_ids": ["IC028"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R076",
+    "line": 153,
+    "usage": "Reschedule a calendar event",
+    "cases": ["R076-1"],
+    "replacement_ids": ["IC029"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R077",
+    "line": 154,
+    "usage": "Create a task from a calendar event",
+    "cases": ["R077-1"],
+    "replacement_ids": ["IC030"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R081",
+    "line": 158,
+    "usage": "Schedule week view",
+    "cases": ["R081-1"],
+    "replacement_ids": ["IC031"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R083",
+    "line": 160,
+    "usage": "Calendar visibility/filter menu",
+    "cases": ["R083-1"],
+    "replacement_ids": ["IC032"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R086",
+    "line": 163,
+    "usage": "Today markers in planner/schedule headers and jump to Today",
+    "cases": ["R086-1"],
+    "replacement_ids": ["IC001"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R087",
+    "line": 164,
+    "usage": "FLOW/auto-placed task block in schedule",
+    "cases": ["R087-1"],
+    "replacement_ids": ["IC033"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R091",
+    "line": 173,
+    "usage": "Clear search text",
+    "cases": ["R091-1"],
+    "replacement_ids": ["IC034"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R092",
+    "line": 174,
+    "usage": "Subtask-parent breadcrumb in search results",
+    "cases": ["R092-1"],
+    "replacement_ids": ["IC035"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R093",
+    "line": 175,
+    "usage": "Project result in search",
+    "cases": ["R093-1"],
+    "replacement_ids": ["IC036"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R095",
+    "line": 177,
+    "usage": "Search result is deleted",
+    "cases": ["R095-1"],
+    "replacement_ids": ["IC037"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R097",
+    "line": 179,
+    "usage": "Open archived-task details",
+    "cases": ["R097-1"],
+    "replacement_ids": ["IC038"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R099",
+    "line": 181,
+    "usage": "Missing work-context fallback in search",
+    "cases": ["R099-1", "R099-2"],
+    "replacement_ids": ["IC039", "IC040"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R105",
+    "line": 187,
+    "usage": "Remove daily summary note text block",
+    "cases": ["R105-1"],
+    "replacement_ids": ["IC041"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R106",
+    "line": 188,
+    "usage": "Add day-end routine note block",
+    "cases": ["R106-1"],
+    "replacement_ids": ["IC042"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R107",
+    "line": 189,
+    "usage": "Finish day / clear and continue summary actions",
+    "cases": ["R107-1"],
+    "replacement_ids": ["IC043"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R108",
+    "line": 190,
+    "usage": "Move remaining Today tasks to tomorrow in summary",
+    "cases": ["R108-1"],
+    "replacement_ids": ["IC044"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R109",
+    "line": 191,
+    "usage": "Summary custom counter identity, duration, count, streak",
+    "cases": ["R109-1", "R109-2"],
+    "replacement_ids": ["IC045", "IC046"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R111",
+    "line": 193,
+    "usage": "Group-by submenu",
+    "cases": ["R111-1"],
+    "replacement_ids": ["IC047"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R113",
+    "line": 195,
+    "usage": "Reset sort/group/filter preferences",
+    "cases": ["R113-1"],
+    "replacement_ids": ["IC048"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R116",
+    "line": 217,
+    "usage": "Add task to Today; Today date badge; task-menu quick action; bulk action; reminder action",
+    "cases": ["R116-1"],
+    "replacement_ids": ["IC001"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R117",
+    "line": 218,
+    "usage": "Remove from Today (calls `parent.unschedule()`), task hover control",
+    "cases": ["R117-1"],
+    "replacement_ids": ["IC049"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R118",
+    "line": 219,
+    "usage": "Tomorrow quick action",
+    "cases": ["R118-1"],
+    "replacement_ids": ["IC050"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R119",
+    "line": 220,
+    "usage": "Next week quick action",
+    "cases": ["R119-1"],
+    "replacement_ids": ["IC051"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R120",
+    "line": 221,
+    "usage": "Pick an arbitrary date; schedule selected tasks; postpone reminder until tomorrow",
+    "cases": ["R120-1", "R120-2"],
+    "replacement_ids": ["IC027", "IC052"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R121",
+    "line": 222,
+    "usage": "Detail-panel date field: date-only, timed without reminder, recurring, then all other cases (including unscheduled task)",
+    "cases": ["R121-1", "R121-2"],
+    "replacement_ids": ["IC027", "IC053"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R122",
+    "line": 223,
+    "usage": "Task row timed/date-only due badge, except sun for current day",
+    "cases": ["R122-1"],
+    "replacement_ids": ["IC027"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R123",
+    "line": 224,
+    "usage": "Add-task date and timed-date chips; detail planning action; short-syntax date chip",
+    "cases": ["R123-1"],
+    "replacement_ids": ["IC054"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R126",
+    "line": 227,
+    "usage": "Add-task deadline chip changes from flag when a time is supplied",
+    "cases": ["R126-1"],
+    "replacement_ids": ["IC055"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R127",
+    "line": 228,
+    "usage": "Remove deadline / Set deadline buttons",
+    "cases": ["R127-1", "R127-2"],
+    "replacement_ids": ["IC056", "IC057"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R131",
+    "line": 232,
+    "usage": "Time-spent input; short-syntax time estimate chip",
+    "cases": ["R131-1"],
+    "replacement_ids": ["IC058"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R132",
+    "line": 233,
+    "usage": "Parent-task total time spent across subtasks",
+    "cases": ["R132-1"],
+    "replacement_ids": ["IC059"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R133",
+    "line": 234,
+    "usage": "Time conflict warning and priority-menu launcher",
+    "cases": ["R133-1"],
+    "replacement_ids": ["IC060"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R135",
+    "line": 236,
+    "usage": "Notes present/empty; task-row detail opener when notes exist; focus-mode note expander; archived task notes",
+    "cases": ["R135-1", "R135-2"],
+    "replacement_ids": ["IC061", "IC062"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R137",
+    "line": 238,
+    "usage": "Open details, close details, updated linked issue",
+    "cases": ["R137-1"],
+    "replacement_ids": ["IC063"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R138",
+    "line": 239,
+    "usage": "Subtasks panel, add subtask menu, add subtask input",
+    "cases": ["R138-1"],
+    "replacement_ids": ["IC064"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R139",
+    "line": 240,
+    "usage": "Convert subtask to main task; parent task field; follow parent",
+    "cases": ["R139-1"],
+    "replacement_ids": ["IC065"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R140",
+    "line": 241,
+    "usage": "Move/add to another project",
+    "cases": ["R140-1"],
+    "replacement_ids": ["IC066"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R142",
+    "line": 243,
+    "usage": "Reorder submenu; move to top/bottom",
+    "cases": ["R142-1", "R142-2"],
+    "replacement_ids": ["IC067", "IC068"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R144",
+    "line": 245,
+    "usage": "Create task from add-task bar; create-and-select task in focus chooser",
+    "cases": ["R144-1", "R144-2"],
+    "replacement_ids": ["IC069", "IC070"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R146",
+    "line": 247,
+    "usage": "Newly composed tag chip",
+    "cases": ["R146-1"],
+    "replacement_ids": ["IC071"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R147",
+    "line": 248,
+    "usage": "Existing-task selector; assign idle/untracked time to task",
+    "cases": ["R147-1", "R147-2"],
+    "replacement_ids": ["IC072", "IC073"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R148",
+    "line": 249,
+    "usage": "Task search result/project missing fallback",
+    "cases": ["R148-1", "R148-2"],
+    "replacement_ids": ["IC074", "IC075"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R149",
+    "line": 250,
+    "usage": "Normal task delete in context menu and bulk menu",
+    "cases": ["R149-1"],
+    "replacement_ids": ["IC022"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R151",
+    "line": 252,
+    "usage": "Won’t-do command versus won’t-do status in summary table",
+    "cases": ["R151-1"],
+    "replacement_ids": ["IC076"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R152",
+    "line": 253,
+    "usage": "Complete/reopen task; complete multiple reminder tasks",
+    "cases": ["R152-1"],
+    "replacement_ids": ["IC077"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R153",
+    "line": 254,
+    "usage": "Enter multi-select mode",
+    "cases": ["R153-1"],
+    "replacement_ids": ["IC078"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R154",
+    "line": 255,
+    "usage": "Duplicate task",
+    "cases": ["R154-1"],
+    "replacement_ids": ["IC021"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R155",
+    "line": 256,
+    "usage": "Assign Plainspace task / release assignment",
+    "cases": ["R155-1"],
+    "replacement_ids": ["IC079"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R157",
+    "line": 258,
+    "usage": "Task attachment badge and attachment panel/archived task",
+    "cases": ["R157-1"],
+    "replacement_ids": ["IC080"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R158",
+    "line": 259,
+    "usage": "Image / local file / web link attachment generated by short syntax",
+    "cases": ["R158-1"],
+    "replacement_ids": ["IC081"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R159",
+    "line": 260,
+    "usage": "Preview image versus open non-image attachment",
+    "cases": ["R159-1"],
+    "replacement_ids": ["IC082"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R160",
+    "line": 261,
+    "usage": "Attachment copy/edit/remove",
+    "cases": ["R160-1"],
+    "replacement_ids": ["IC022"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R163",
+    "line": 269,
+    "usage": "Recurrence header/preview, paused recurrence, configured reminder, start date picker, save/cancel, skip occurrence",
+    "cases": ["R163-1"],
+    "replacement_ids": ["IC083"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R164",
+    "line": 270,
+    "usage": "Recurrence quick settings: daily, Mon–Fri, weekly, monthly, yearly, custom",
+    "cases": ["R164-1", "R164-2", "R164-3"],
+    "replacement_ids": ["IC084", "IC085", "IC086"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R165",
+    "line": 271,
+    "usage": "Remove recurrence configuration",
+    "cases": ["R165-1"],
+    "replacement_ids": ["IC022"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R168",
+    "line": 274,
+    "usage": "Focus timer mode options: Flowtime, Pomodoro, Countdown",
+    "cases": ["R168-1"],
+    "replacement_ids": ["IC087"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R170",
+    "line": 276,
+    "usage": "Complete current focus session, distinct from completing task",
+    "cases": ["R170-1"],
+    "replacement_ids": ["IC088"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R171",
+    "line": 277,
+    "usage": "Back to planning, start next focus session, skip current break, reset Pomodoro cycles",
+    "cases": ["R171-1"],
+    "replacement_ids": ["IC089"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R173",
+    "line": 279,
+    "usage": "Switch current focus task, finish it/select next, select task when empty",
+    "cases": ["R173-1"],
+    "replacement_ids": ["IC090"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R174",
+    "line": 280,
+    "usage": "Idle time classified as break/task/split allocations; dynamic confirm repeats these (or add/check)",
+    "cases": ["R174-1", "R174-2"],
+    "replacement_ids": ["IC072", "IC073"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R176",
+    "line": 287,
+    "usage": "Round time spent in task summary tables",
+    "cases": ["R176-1"],
+    "replacement_ids": ["IC091"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R177",
+    "line": 288,
+    "usage": "Export task list or worklog",
+    "cases": ["R177-1"],
+    "replacement_ids": ["IC092"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R178",
+    "line": 289,
+    "usage": "Copy worklog text to clipboard",
+    "cases": ["R178-1"],
+    "replacement_ids": ["IC093"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R179",
+    "line": 290,
+    "usage": "Download worklog file; add export column",
+    "cases": ["R179-1"],
+    "replacement_ids": ["IC094"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R180",
+    "line": 291,
+    "usage": "Restore task from archive in worklog",
+    "cases": ["R180-1"],
+    "replacement_ids": ["IC095"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R181",
+    "line": 292,
+    "usage": "Worklog collapsed task count, expanded duration cue, recurring-task marker, focus count/time, habit totals, total duration",
+    "cases": ["R181-1", "R181-2", "R181-3"],
+    "replacement_ids": ["IC096", "IC097", "IC098"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R183",
+    "line": 294,
+    "usage": "Share chart / activity heatmap, busy state",
+    "cases": ["R183-1"],
+    "replacement_ids": ["IC099"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R187",
+    "line": 298,
+    "usage": "Default Standing Desk Timer counter",
+    "cases": ["R187-1"],
+    "replacement_ids": ["IC100"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R188",
+    "line": 299,
+    "usage": "Default Coffee Counter",
+    "cases": ["R188-1"],
+    "replacement_ids": ["IC101"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R189",
+    "line": 300,
+    "usage": "Default Stretching Counter",
+    "cases": ["R189-1"],
+    "replacement_ids": ["IC102"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R191",
+    "line": 302,
+    "usage": "Habit month navigation, add habit, reveal disabled habits, re-enable habit, edit/delete",
+    "cases": ["R191-1", "R191-2"],
+    "replacement_ids": ["IC103", "IC104"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R193",
+    "line": 321,
+    "usage": "Date-picker Today shortcut",
+    "cases": ["R193-1"],
+    "replacement_ids": ["IC001"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R194",
+    "line": 322,
+    "usage": "Date-picker Tomorrow shortcut",
+    "cases": ["R194-1"],
+    "replacement_ids": ["IC050"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R195",
+    "line": 323,
+    "usage": "Date-picker Next week shortcut",
+    "cases": ["R195-1"],
+    "replacement_ids": ["IC051"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R196",
+    "line": 324,
+    "usage": "Date-picker Next month shortcut",
+    "cases": ["R196-1"],
+    "replacement_ids": ["IC105"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R197",
+    "line": 325,
+    "usage": "Replaces the current day's numeral inside the calendar grid",
+    "cases": ["R197-1"],
+    "replacement_ids": ["IC106"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R200",
+    "line": 328,
+    "usage": "Clear selected time",
+    "cases": ["R200-1"],
+    "replacement_ids": ["IC107"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R204",
+    "line": 332,
+    "usage": "Insert fenced code block",
+    "cases": ["R204-1"],
+    "replacement_ids": ["IC108"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R206",
+    "line": 334,
+    "usage": "Plain-text/source-only editor view",
+    "cases": ["R206-1"],
+    "replacement_ids": ["IC109"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R208",
+    "line": 336,
+    "usage": "Rendered Markdown preview",
+    "cases": ["R208-1"],
+    "replacement_ids": ["IC110"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R209",
+    "line": 337,
+    "usage": "Discard / save note",
+    "cases": ["R209-1"],
+    "replacement_ids": ["IC111"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R211",
+    "line": 339,
+    "usage": "Open checklist batch-action menu",
+    "cases": ["R211-1"],
+    "replacement_ids": ["IC112"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R217",
+    "line": 345,
+    "usage": "Open custom color picker",
+    "cases": ["R217-1"],
+    "replacement_ids": ["IC113"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R226",
+    "line": 362,
+    "usage": "Pin project note to Today",
+    "cases": ["R226-1"],
+    "replacement_ids": ["IC001"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R227",
+    "line": 363,
+    "usage": "Unpin note from Today",
+    "cases": ["R227-1"],
+    "replacement_ids": ["IC114"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R229",
+    "line": 365,
+    "usage": "Move note to another project / add to project",
+    "cases": ["R229-1"],
+    "replacement_ids": ["IC066"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R230",
+    "line": 366,
+    "usage": "Enable / disable Markdown parsing (the menu calls `toggleLock()`)",
+    "cases": ["R230-1", "R230-2"],
+    "replacement_ids": ["IC115", "IC116"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R234",
+    "line": 370,
+    "usage": "Note-added success snack",
+    "cases": ["R234-1"],
+    "replacement_ids": ["IC011"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R235",
+    "line": 371,
+    "usage": "Startup reflection-note banner",
+    "cases": ["R235-1"],
+    "replacement_ids": ["IC117"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R236",
+    "line": 372,
+    "usage": "Draggable work-view split handle (reveals secondary/backlog area)",
+    "cases": ["R236-1"],
+    "replacement_ids": ["IC118"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R238",
+    "line": 374,
+    "usage": "Time worked today",
+    "cases": ["R238-1"],
+    "replacement_ids": ["IC119"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R240",
+    "line": 376,
+    "usage": "Reset break timer",
+    "cases": ["R240-1"],
+    "replacement_ids": ["IC120"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R241",
+    "line": 377,
+    "usage": "Add more tasks when Today empty",
+    "cases": ["R241-1"],
+    "replacement_ids": ["IC121"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R243",
+    "line": 379,
+    "usage": "Add all overdue tasks to My Day",
+    "cases": ["R243-1"],
+    "replacement_ids": ["IC001"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R244",
+    "line": 380,
+    "usage": "Move completed tasks to archive",
+    "cases": ["R244-1"],
+    "replacement_ids": ["IC122"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R247",
+    "line": 383,
+    "usage": "Export all, month, week history",
+    "cases": ["R247-1"],
+    "replacement_ids": ["IC123"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R250",
+    "line": 386,
+    "usage": "Show/hide day's detailed history",
+    "cases": ["R250-1", "R250-2"],
+    "replacement_ids": ["IC097", "IC124"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R251",
+    "line": 387,
+    "usage": "Recently Deleted entry point",
+    "cases": ["R251-1"],
+    "replacement_ids": ["IC037"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R255",
+    "line": 391,
+    "usage": "Archive compression preview: subtasks deleted, notes cleared, issue links removed",
+    "cases": ["R255-1"],
+    "replacement_ids": ["IC117"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R256",
+    "line": 392,
+    "usage": "Estimated storage saved by compression",
+    "cases": ["R256-1"],
+    "replacement_ids": ["IC125"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R258",
+    "line": 394,
+    "usage": "Onboarding feature teasers",
+    "cases": ["R258-1", "R258-2", "R258-3"],
+    "replacement_ids": ["IC002", "IC003", "IC004"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R259",
+    "line": 395,
+    "usage": "Onboarding line describing optional sync",
+    "cases": ["R259-1"],
+    "replacement_ids": ["IC126"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R261",
+    "line": 397,
+    "usage": "Inline onboarding instructional icons",
+    "cases": ["R261-1"],
+    "replacement_ids": ["IC001"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R263",
+    "line": 399,
+    "usage": "Onboarding tour dismiss",
+    "cases": ["R263-1"],
+    "replacement_ids": ["IC127"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R269",
+    "line": 405,
+    "usage": "Plainspace rejected connection / old server notices",
+    "cases": ["R269-1"],
+    "replacement_ids": ["IC128"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R271",
+    "line": 407,
+    "usage": "Claim shared task",
+    "cases": ["R271-1"],
+    "replacement_ids": ["IC129"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R273",
+    "line": 409,
+    "usage": "Labeled social-share targets",
+    "cases": ["R273-1", "R273-2", "R273-3"],
+    "replacement_ids": ["IC130", "IC131", "IC132"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R274",
+    "line": 410,
+    "usage": "Drop/paste attachment file, link, image",
+    "cases": ["R274-1"],
+    "replacement_ids": ["IC081"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R275",
+    "line": 411,
+    "usage": "Declared drop/paste command and note icon enum values",
+    "cases": ["R275-1", "R275-2"],
+    "replacement_ids": ["IC117", "IC133"],
+    "status": "Dormant declarations; future candidate only"
+  },
+  {
+    "row": "R283",
+    "line": 436,
+    "usage": "Enable Schedule",
+    "cases": ["R283-1"],
+    "replacement_ids": ["IC002"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R284",
+    "line": 437,
+    "usage": "Enable Boards",
+    "cases": ["R284-1"],
+    "replacement_ids": ["IC003"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R285",
+    "line": 438,
+    "usage": "Enable Habits",
+    "cases": ["R285-1"],
+    "replacement_ids": ["IC004"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R286",
+    "line": 439,
+    "usage": "Enable Time tracking",
+    "cases": ["R286-1"],
+    "replacement_ids": ["IC134"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R289",
+    "line": 442,
+    "usage": "Enable Issues panel",
+    "cases": ["R289-1"],
+    "replacement_ids": ["IC010"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R290",
+    "line": 443,
+    "usage": "Enable Project notes",
+    "cases": ["R290-1"],
+    "replacement_ids": ["IC011"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R293",
+    "line": 446,
+    "usage": "Show Donate page",
+    "cases": ["R293-1"],
+    "replacement_ids": ["IC005"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R297",
+    "line": 450,
+    "usage": "Reorder entries earlier/later in repeatable config list",
+    "cases": ["R297-1", "R297-2"],
+    "replacement_ids": ["IC135", "IC136"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R298",
+    "line": 451,
+    "usage": "Remove repeatable config entry",
+    "cases": ["R298-1"],
+    "replacement_ids": ["IC022"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R304",
+    "line": 457,
+    "usage": "No stored clipboard images",
+    "cases": ["R304-1"],
+    "replacement_ids": ["IC137"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R306",
+    "line": 464,
+    "usage": "Export data, handler `downloadBackup()`",
+    "cases": ["R306-1"],
+    "replacement_ids": ["IC138"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R307",
+    "line": 465,
+    "usage": "Privacy data export",
+    "cases": ["R307-1"],
+    "replacement_ids": ["IC139"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R308",
+    "line": 466,
+    "usage": "Import from local file, opens file picker",
+    "cases": ["R308-1"],
+    "replacement_ids": ["IC140"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R311",
+    "line": 469,
+    "usage": "Open Todoist import",
+    "cases": ["R311-1"],
+    "replacement_ids": ["IC141"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R312",
+    "line": 470,
+    "usage": "Open TickTick import",
+    "cases": ["R312-1"],
+    "replacement_ids": ["IC141"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R314",
+    "line": 472,
+    "usage": "Recovery point / desktop backup file / mobile backup slot kind",
+    "cases": ["R314-1"],
+    "replacement_ids": ["IC142"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R317",
+    "line": 475,
+    "usage": "Conflict resolution: use remote / use local",
+    "cases": ["R317-1", "R317-2"],
+    "replacement_ids": ["IC143", "IC144"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R320",
+    "line": 478,
+    "usage": "Sync safety banner / Jira unavailable snack",
+    "cases": ["R320-1"],
+    "replacement_ids": ["IC145"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R323",
+    "line": 481,
+    "usage": "Browser sync device",
+    "cases": ["R323-1"],
+    "replacement_ids": ["IC146"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R327",
+    "line": 490,
+    "usage": "Authorization-code input",
+    "cases": ["R327-1"],
+    "replacement_ids": ["IC147"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R330",
+    "line": 493,
+    "usage": "Encryption setup intro / migration banner",
+    "cases": ["R330-1"],
+    "replacement_ids": ["IC148"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R333",
+    "line": 496,
+    "usage": "Explanation that unencrypted imported data will be visible",
+    "cases": ["R333-1"],
+    "replacement_ids": ["IC149"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R340",
+    "line": 508,
+    "usage": "Unknown/nonbranded issue provider setup",
+    "cases": ["R340-1"],
+    "replacement_ids": ["IC150"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R341",
+    "line": 509,
+    "usage": "Linked issue changed upstream, replacing provider icon",
+    "cases": ["R341-1"],
+    "replacement_ids": ["IC151"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R346",
+    "line": 514,
+    "usage": "Connected / options loaded / connection test succeeded",
+    "cases": ["R346-1"],
+    "replacement_ids": ["IC152"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R347",
+    "line": 515,
+    "usage": "Loading provider options",
+    "cases": ["R347-1"],
+    "replacement_ids": ["IC153"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R350",
+    "line": 518,
+    "usage": "Test provider connection",
+    "cases": ["R350-1"],
+    "replacement_ids": ["IC154"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R352",
+    "line": 520,
+    "usage": "Delete provider configuration",
+    "cases": ["R352-1"],
+    "replacement_ids": ["IC022"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R358",
+    "line": 526,
+    "usage": "Issue already exists / restored task snack",
+    "cases": ["R358-1"],
+    "replacement_ids": ["IC155"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R359",
+    "line": 527,
+    "usage": "Issue task moved from backlog / another list",
+    "cases": ["R359-1"],
+    "replacement_ids": ["IC156"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R360",
+    "line": 528,
+    "usage": "GitLab worklog submitted remotely",
+    "cases": ["R360-1"],
+    "replacement_ids": ["IC144"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R364",
+    "line": 537,
+    "usage": "Plugin loading",
+    "cases": ["R364-1"],
+    "replacement_ids": ["IC157"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R366",
+    "line": 539,
+    "usage": "Plugin fails to load/run",
+    "cases": ["R366-1"],
+    "replacement_ids": ["IC158"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R367",
+    "line": 540,
+    "usage": "Plugin requires desktop app",
+    "cases": ["R367-1"],
+    "replacement_ids": ["IC159"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R368",
+    "line": 541,
+    "usage": "Go to integration setup",
+    "cases": ["R368-1"],
+    "replacement_ids": ["IC160"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R369",
+    "line": 542,
+    "usage": "Install a newer plugin version",
+    "cases": ["R369-1"],
+    "replacement_ids": ["IC128"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R372",
+    "line": 545,
+    "usage": "Community plugin already installed",
+    "cases": ["R372-1"],
+    "replacement_ids": ["IC152"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R373",
+    "line": 546,
+    "usage": "“Get listed” external contribution link",
+    "cases": ["R373-1"],
+    "replacement_ids": ["IC161"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R385",
+    "line": 565,
+    "usage": "Plugin/provider identity",
+    "cases": ["R385-1"],
+    "replacement_ids": ["IC162"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R387",
+    "line": 567,
+    "usage": "Plugin identity",
+    "cases": ["R387-1"],
+    "replacement_ids": ["IC163"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R388",
+    "line": 568,
+    "usage": "Plugin identity",
+    "cases": ["R388-1"],
+    "replacement_ids": ["IC164"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R389",
+    "line": 569,
+    "usage": "Plugin identity",
+    "cases": ["R389-1"],
+    "replacement_ids": ["IC165"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R390",
+    "line": 570,
+    "usage": "Plugin identity",
+    "cases": ["R390-1"],
+    "replacement_ids": ["IC166"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R391",
+    "line": 571,
+    "usage": "Plugin identity",
+    "cases": ["R391-1"],
+    "replacement_ids": ["IC167"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R392",
+    "line": 572,
+    "usage": "Plugin identity",
+    "cases": ["R392-1"],
+    "replacement_ids": ["IC168"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R395",
+    "line": 582,
+    "usage": "Heading 1 / 2 / 3",
+    "cases": ["R395-1", "R395-2", "R395-3"],
+    "replacement_ids": ["IC169", "IC170", "IC171"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R398",
+    "line": 585,
+    "usage": "Insert/convert to task block",
+    "cases": ["R398-1", "R398-2"],
+    "replacement_ids": ["IC172", "IC173"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R412",
+    "line": 606,
+    "usage": "Home screen widget incomplete/complete task",
+    "cases": ["R412-1", "R412-2"],
+    "replacement_ids": ["IC174", "IC175"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R418",
+    "line": 618,
+    "usage": "Add-task bar's “Adding to [project]” destination indicator",
+    "cases": ["R418-1"],
+    "replacement_ids": ["IC176"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R419",
+    "line": 619,
+    "usage": "Completed focus session / counter-goal success message",
+    "cases": ["R419-1"],
+    "replacement_ids": ["IC177"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R426",
+    "line": 626,
+    "usage": "Launcher Today quick action; sun path in standard/adaptive variants",
+    "cases": ["R426-1", "R426-2"],
+    "replacement_ids": ["IC178", "IC179"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R429",
+    "line": 629,
+    "usage": "Today home-screen quick action",
+    "cases": ["R429-1"],
+    "replacement_ids": ["IC180"],
+    "status": "Specific candidate supplied"
+  },
+  {
+    "row": "R432",
+    "line": 632,
+    "usage": "Main task rounded checkbox (open/check, X for Won’t do, play for tracked task); Doc Mode also uses a rounded rectangle and check",
+    "cases": ["R432-1", "R432-2"],
+    "replacement_ids": ["IC174", "IC175"],
+    "status": "Specific candidate supplied"
+  }
+]

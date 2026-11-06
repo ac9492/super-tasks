@@ -700,6 +700,42 @@ describe('TaskContextMenuInnerComponent', () => {
     }));
   });
 
+  describe('keyboard open (Q / ContextMenu key / Shift+F10)', () => {
+    beforeEach(() => {
+      (
+        component as unknown as {
+          contextMenuTrigger: () => { closeMenu: () => void; openMenu: () => void };
+        }
+      ).contextMenuTrigger = () => ({ closeMenu: () => {}, openMenu: () => {} });
+    });
+
+    it('anchors the menu below the task row instead of a default position', () => {
+      const row = document.createElement('task');
+      row.style.cssText =
+        'display: block; position: fixed; left: 300px; top: 200px; width: 600px; height: 40px';
+      document.body.appendChild(row);
+      row.appendChild(fixture.nativeElement);
+
+      component.open(new KeyboardEvent('keydown', { key: 'q' }), true);
+
+      expect(component.contextMenuPosition).toEqual({ x: '500px', y: '240px' });
+      row.remove();
+    });
+
+    it('keeps the focus instead of blurring it on the first open', fakeAsync(() => {
+      const focused = document.createElement('button');
+      document.body.appendChild(focused);
+      focused.focus();
+
+      component.ngAfterViewInit();
+      component.open(new KeyboardEvent('keydown', { key: 'q' }), true);
+      flush();
+
+      expect(document.activeElement).toBe(focused);
+      focused.remove();
+    }));
+  });
+
   describe('getElementById for task ID lookup', () => {
     it('registers its close callback when opened and clears it when closed', () => {
       const closeMenu = jasmine.createSpy('closeMenu');

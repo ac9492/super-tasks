@@ -1,26 +1,21 @@
 <div class="plugin-browser-toolbar">
-  <nav
+  <!-- A view switch is a segmented control. -->
+  <mat-button-toggle-group
     class="plugin-views"
+    hideSingleSelectionIndicator
+    [value]="view()"
+    (change)="setView($event.value)"
     [attr.aria-label]="T.PLUGINS.BROWSER.VIEWS | translate"
   >
-    <button
-      [matButton]="view() === 'installed' ? 'filled' : 'text'"
-      [attr.aria-pressed]="view() === 'installed'"
-      (click)="setView('installed')"
-    >
+    <mat-button-toggle value="installed">
       {{ T.PLUGINS.BROWSER.INSTALLED | translate }} ({{ installedCount() }})
-    </button>
-    <button
-      [matButton]="view() === 'discover' ? 'filled' : 'text'"
-      [attr.aria-pressed]="view() === 'discover'"
-      (click)="setView('discover')"
-    >
+    </mat-button-toggle>
+    <mat-button-toggle value="discover">
       {{ T.PLUGINS.BROWSER.DISCOVER | translate }}
-    </button>
-  </nav>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
   <div class="plugin-search-controls">
     <mat-form-field
-      appearance="outline"
       subscriptSizing="dynamic"
       class="plugin-search"
     >
@@ -46,12 +41,13 @@
       }
     </mat-form-field>
     <mat-form-field
-      appearance="outline"
       subscriptSizing="dynamic"
       class="plugin-type"
     >
-      <mat-label>{{ T.PLUGINS.BROWSER.TYPE | translate }}</mat-label>
+      <!-- No visible label: in the toolbar every control is as tall as the search
+           field, so the filter is named for assistive tech only. -->
       <mat-select
+        [aria-label]="T.PLUGINS.BROWSER.TYPE | translate"
         [value]="typeFilter()"
         (selectionChange)="setTypeFilter($event.value)"
       >
@@ -135,8 +131,13 @@
                 }
                 @if (isPluginLoading(plugin)) {
                   <mat-chip color="accent">
-                    <mat-icon class="loading-icon">autorenew</mat-icon>
-                    {{ T.PLUGINS.LOADING_PLUGIN | translate }}
+                    <span class="loading-status">
+                      <mat-spinner
+                        diameter="18"
+                        aria-hidden="true"
+                      ></mat-spinner>
+                      <span>{{ T.PLUGINS.LOADING_PLUGIN | translate }}</span>
+                    </span>
                   </mat-chip>
                 }
               </div>
@@ -172,7 +173,7 @@
                 [checked]="plugin.isEnabled"
                 [disabled]="!canEnablePlugin(plugin) || isPluginLoading(plugin)"
                 (change)="onPluginToggle(plugin, $event)"
-                [attr.aria-label]="
+                [aria-label]="
                   T.PLUGINS.TOGGLE_PLUGIN
                     | translate: { pluginName: plugin.manifest.name }
                 "
@@ -191,7 +192,7 @@
 
             @if (requiresNodeExecution(plugin) && !IS_ELECTRON) {
               <mat-error>
-                <mat-icon>desktop_windows</mat-icon>
+                <mat-icon>computer</mat-icon>
                 {{ getNodeExecutionMessage() }}
               </mat-error>
             }
@@ -259,7 +260,7 @@
                   (click)="goToIssuePanel()"
                   [disabled]="isPluginLoading(plugin)"
                 >
-                  <mat-icon>arrow_forward</mat-icon>
+                  <mat-icon>settings</mat-icon>
                   {{ T.PLUGINS.SETUP_ISSUE_PROVIDER | translate }}
                 </button>
               }
@@ -271,7 +272,7 @@
                     (click)="installCommunityPlugin(update.plugin)"
                     [disabled]="isUploading()"
                   >
-                    <mat-icon>update</mat-icon>
+                    <mat-icon>system_update_alt</mat-icon>
                     {{
                       T.PLUGINS.COMMUNITY_UPDATE
                         | translate: { version: update.release.version }
@@ -344,7 +345,7 @@
               <p class="plugin-desc">{{ plugin.shortDescription }}</p>
               @if (row.status === 'installed') {
                 <p class="community-plugin-action community-plugin-status">
-                  <mat-icon>check</mat-icon>
+                  <mat-icon>check_circle</mat-icon>
                   {{ T.PLUGINS.COMMUNITY_INSTALLED | translate }}
                 </p>
               } @else if (plugin.release && !isInAppInstall) {
@@ -371,7 +372,7 @@
                     [disabled]="isUploading()"
                   >
                     <mat-icon>{{
-                      row.status === 'updateAvailable' ? 'update' : 'download'
+                      row.status === 'updateAvailable' ? 'system_update_alt' : 'download'
                     }}</mat-icon>
                     {{
                       (row.status === 'updateAvailable'
@@ -388,12 +389,12 @@
 
         <div class="catalog-contribute">
           <a
-            href="https://github.com/super-productivity/super-productivity/blob/master/docs/plugin-development.md#get-listed-in-the-app"
+            href="https://github.com/ac9492/ultra-tasks/blob/main/docs/plugin-development.md#get-listed-in-the-app"
             target="_blank"
             mat-button
             color="primary"
           >
-            <mat-icon>add</mat-icon>
+            <mat-icon>open_in_new</mat-icon>
             {{ T.PLUGINS.COMMUNITY_GET_LISTED | translate }}
           </a>
         </div>

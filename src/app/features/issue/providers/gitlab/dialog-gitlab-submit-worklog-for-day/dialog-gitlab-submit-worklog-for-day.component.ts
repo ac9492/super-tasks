@@ -39,6 +39,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { InlineInputComponent } from '../../../../../ui/inline-input/inline-input.component';
 import { MatButton } from '@angular/material/button';
 import { IssueLog } from '../../../../../core/log';
+import { useDialogSize } from '../../../../../ui/dialog-size.util';
 
 interface TmpTask {
   id: string;
@@ -82,6 +83,7 @@ interface TmpTask {
   ],
 })
 export class DialogGitlabSubmitWorklogForDayComponent {
+  private readonly _dialogSize = useDialogSize('m');
   readonly data = inject<{
     issueProviderId: string;
     tasksForIssueProvider: Task[];
@@ -206,7 +208,7 @@ export class DialogGitlabSubmitWorklogForDayComponent {
 
       this._snackService.open({
         type: 'SUCCESS',
-        ico: 'file_upload',
+        ico: 'cloud_upload',
         // TODO translate
         msg: 'Gitlab: Successfully posted time tracking data for GitLab tasks',
       });

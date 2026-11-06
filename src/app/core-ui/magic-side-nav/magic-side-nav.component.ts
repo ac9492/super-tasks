@@ -15,7 +15,7 @@ import {
   signal,
   untracked,
 } from '@angular/core';
-import { NavigationStart, Router, RouterModule } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router, RouterModule } from '@angular/router';
 import { NavItemComponent } from './nav-item/nav-item.component';
 import { NavListTreeComponent } from './nav-list/nav-list-tree.component';
 import { NavItem } from './magic-side-nav.model';
@@ -29,7 +29,7 @@ import { TaskService } from '../../features/tasks/task.service';
 import { LayoutService } from '../layout/layout.service';
 import { magicSideNavAnimations } from './magic-side-nav.animations';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { filter, take } from 'rxjs/operators';
+import { filter, map, take } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { ScheduleExternalDragService } from '../../features/schedule/schedule-week/schedule-external-drag.service';
 import { Log } from '../../core/log';
@@ -117,6 +117,20 @@ export class MagicSideNavComponent implements OnDestroy, AfterViewInit {
   private readonly _initialState = this._getInitialState();
 
   activeWorkContextId = input<string | null>(null);
+
+  // The active work context stays set while another page (Planner, Search...)
+  // is open, so its row is only marked current on the context's own pages:
+  // its task list and its worklog, history and metrics pages alike.
+  private readonly _isOnWorkContextRoute = toSignal(
+    this._router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      map((event) => /^\/(project|tag)\//.test(event.urlAfterRedirects)),
+    ),
+    { initialValue: /^\/(project|tag)\//.test(this._router.url) },
+  );
+  readonly currentWorkContextId = computed(() =>
+    this._isOnWorkContextRoute() ? this.activeWorkContextId() : null,
+  );
 
   // Externally controlled mobile overlay visibility
   mobileVisibleChange = output<boolean>();

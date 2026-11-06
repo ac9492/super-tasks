@@ -12,6 +12,7 @@ import {
   MatDialog,
   MatDialogActions,
   MatDialogContent,
+  MatDialogTitle,
   MatDialogRef,
 } from '@angular/material/dialog';
 import {
@@ -73,6 +74,7 @@ import { ExactAlarmHintComponent } from '../../reminder/exact-alarm-hint/exact-a
     MatButton,
     MatDialogActions,
     MatDialogContent,
+    MatDialogTitle,
     DateTimePickerComponent,
     ExactAlarmHintComponent,
   ],

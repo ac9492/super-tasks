@@ -1,5 +1,10 @@
-import { ConfigFormSection, TasksConfig } from '../global-config.model';
+import {
+  ConfigFormSection,
+  LimitedFormlyFieldConfig,
+  TasksConfig,
+} from '../global-config.model';
 import { T } from '../../../t.const';
+import { IS_ELECTRON } from '../../../app.constants';
 
 export const TASKS_SETTINGS_FORM_CFG: ConfigFormSection<TasksConfig> = {
   title: T.GCF.TASKS.TITLE,
@@ -26,13 +31,18 @@ export const TASKS_SETTINGS_FORM_CFG: ConfigFormSection<TasksConfig> = {
         label: T.GCF.TASKS.IS_AUTO_MARK_PARENT_AS_DONE,
       },
     },
-    {
-      key: 'isTrayShowCurrent',
-      type: 'checkbox',
-      templateOptions: {
-        label: T.GCF.TASKS.IS_TRAY_SHOW_CURRENT,
-      },
-    },
+    // The tray only exists in the desktop app
+    ...(IS_ELECTRON
+      ? ([
+          {
+            key: 'isTrayShowCurrent',
+            type: 'checkbox',
+            templateOptions: {
+              label: T.GCF.TASKS.IS_TRAY_SHOW_CURRENT,
+            },
+          },
+        ] as LimitedFormlyFieldConfig<TasksConfig>[])
+      : []),
     {
       key: 'isMarkdownFormattingInNotesEnabled',
       type: 'checkbox',

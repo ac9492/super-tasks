@@ -1,0 +1,57 @@
+:host {
+  display: grid;
+  gap: var(--s2);
+}
+
+// Aligned with the Appearance rows above it (no extra inline inset).
+.st-glass-setting {
+  display: flex;
+  align-items: center;
+  gap: var(--s);
+  padding: var(--s2) 0;
+  color: var(--text-color);
+  cursor: pointer;
+
+  input {
+    accent-color: var(--c-accent);
+  }
+}
+
+small {
+  display: block;
+  margin-top: var(--s-half);
+  color: var(--text-color-less-intense);
+}
+
+.st-glass-background {
+  display: grid;
+  gap: var(--s);
+}
+
+.modes {
+  display: grid;
+  gap: var(--s);
+}
+
+.mode {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s);
+}
+
+.preview {
+  flex: none;
+  width: var(--s6);
+  height: calc(var(--s6) * 0.625);
+  border: 1px solid var(--separator-color);
+  border-radius: var(--card-border-radius);
+  object-fit: cover;
+  background: var(--bg);
+}
+
+// On narrow screens the buttons wrap below the label instead of squeezing it.
+.mode-label {
+  flex: 1 1 8em;
+  min-width: 0;
+}

@@ -7,7 +7,7 @@
 
 ## [[2.00-How_To]]
 
-### Using Super-Productivity
+### Using Ultra Tasks
 
 - [[2.01-Downloads and Install]]
 - [[2.02-Restore-Data-From-Backup]]
@@ -24,7 +24,7 @@
 - [[2.22-Import-from-TickTick]]
 - [[2.13-Run-with-Docker]]
 
-### Contributing to Super-Productivity
+### Contributing to Ultra Tasks
 
 - [[2.18-Contribute-Translations]]
 - [[2.11-Run-the-Development-Server]]

@@ -98,7 +98,7 @@ import { distinctUntilChanged, observeOn } from 'rxjs/operators';
           mat-menu-item
           (click)="disableTimeTracking()"
         >
-          <mat-icon>visibility_off</mat-icon>
+          <mat-icon>timer_off</mat-icon>
           <span>{{ T.MH.DISABLE_FEATURE | translate }}</span>
         </button>
       </mat-menu>
@@ -171,16 +171,15 @@ import { distinctUntilChanged, observeOn } from 'rxjs/operators';
           position: relative;
           margin-left: 0;
           z-index: 6;
-          box-shadow: var(--whiteframe-shadow-2dp);
+          /* Filled accent marks the one primary action, at rest without a
+             shadow (elevation is for floating surfaces). */
+          box-shadow: none;
 
           .mat-icon {
             position: relative;
             z-index: 2;
-            font-variation-settings:
-              'FILL' 1,
-              'wght' 400,
-              'GRAD' 0,
-              'opsz' 24;
+            /* FILL 1 means "on": the playing state of the control. */
+            font-variation-settings: 'FILL' 1;
           }
         }
       }

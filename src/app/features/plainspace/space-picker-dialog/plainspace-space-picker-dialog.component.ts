@@ -22,6 +22,7 @@ import {
   PlainspaceSpace,
 } from '../../issue/providers/plainspace/plainspace-api.service';
 import { DEFAULT_PLAINSPACE_CFG } from '../../issue/providers/plainspace/plainspace-cfg-form.const';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 /** What the user chose: link one of their existing spaces, or create a new one. */
 export type PlainspaceSpaceChoice =
@@ -59,6 +60,7 @@ export type PlainspaceSpaceChoice =
   ],
 })
 export class PlainspaceSpacePickerDialogComponent {
+  private readonly _dialogSize = useDialogSize('m');
   private _dialogRef =
     inject<MatDialogRef<PlainspaceSpacePickerDialogComponent, PlainspaceSpaceChoice>>(
       MatDialogRef,

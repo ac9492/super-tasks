@@ -82,6 +82,48 @@ describe('Keep pending ops on a catch-up file snapshot (#10972)', () => {
     remote = new TestClient('clientRemote');
   });
 
+  it('commits a native baseline without retaining the old projection ops, then keeps file edits', async () => {
+    const represented = edit(local, 'native-task');
+    await opLogStore.append(represented);
+    const nativeBaseline = {
+      id: 'native-sync-active',
+      data: { namespace: 'account-personal', envelope: 'encrypted-projection' },
+    };
+
+    await hydration.hydrateFromRemoteSync({ task: { ids: [] } }, undefined, {
+      nativeBaseline,
+    });
+
+    expect(await opLogStore.loadNativeSyncBaseline(nativeBaseline.id)).toEqual(
+      nativeBaseline,
+    );
+    expect(await opLogStore.getUnsynced()).toEqual([]);
+    const nativeCache = await opLogStore.loadStateCache();
+    expect(await opLogStore.getOpsAfterSeq(nativeCache!.lastAppliedOpSeq)).toEqual([]);
+    expect(TestBed.inject(SnackService).open).not.toHaveBeenCalled();
+
+    const kept = edit(local, 'file-task');
+    delete kept.entityIds;
+    await opLogStore.append(kept);
+    await hydration.hydrateFromRemoteSync(
+      { task: { ids: [] } },
+      {},
+      {
+        keepPendingOps: { discardOpIds: [] },
+      },
+    );
+
+    const fileCache = await opLogStore.loadStateCache();
+    expect(
+      (await opLogStore.getOpsAfterSeq(fileCache!.lastAppliedOpSeq)).map(({ op }) => op),
+    ).toEqual([kept]);
+    expect((await opLogStore.getUnsynced()).map(({ op }) => op)).toEqual([kept]);
+    expect(await opLogStore.loadNativeSyncBaseline(nativeBaseline.id)).toEqual(
+      nativeBaseline,
+    );
+    expect(TestBed.inject(SnackService).open).not.toHaveBeenCalled();
+  });
+
   it('keeps only the uncovered edits and replays them after a reload', async () => {
     // Uploaded before a crash skipped markSynced: the snapshot already holds it.
     const covered = edit(local, 'task-1');

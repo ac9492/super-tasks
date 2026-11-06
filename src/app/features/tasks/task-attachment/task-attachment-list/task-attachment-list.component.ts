@@ -21,6 +21,8 @@ import { MatAnchor, MatButton } from '@angular/material/button';
 import { ClipboardImageService } from '../../../../core/clipboard-image/clipboard-image.service';
 import { isPathSafeToOpen } from '../../../../../../electron/shared-with-frontend/is-external-url-allowed';
 import { Log } from '../../../../core/log';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MatTooltip } from '@angular/material/tooltip';
 
 interface ResolvedAttachment extends TaskAttachment {
   resolvedPath?: string;
@@ -40,6 +42,8 @@ interface ResolvedAttachment extends TaskAttachment {
     EnlargeImgDirective,
     MatAnchor,
     MatButton,
+    TranslatePipe,
+    MatTooltip,
   ],
 })
 export class TaskAttachmentListComponent {

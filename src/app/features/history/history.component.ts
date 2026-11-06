@@ -20,7 +20,7 @@ import { Store } from '@ngrx/store';
 import { selectAllProjectColorsAndTitles } from '../project/store/project.selectors';
 import { FullPageSpinnerComponent } from '../../ui/full-page-spinner/full-page-spinner.component';
 import { KeyValue, KeyValuePipe } from '@angular/common';
-import { MatButton, MatMiniFabButton } from '@angular/material/button';
+import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MsToClockStringPipe } from '../../ui/duration/ms-to-clock-string.pipe';
@@ -48,7 +48,7 @@ import { DialogRecentlyDeletedComponent } from '../tasks/recently-deleted/dialog
   imports: [
     FullPageSpinnerComponent,
     MatButton,
-    MatMiniFabButton,
+    MatIconButton,
     MatIcon,
     MatTooltip,
     KeyValuePipe,

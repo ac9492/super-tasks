@@ -31,7 +31,8 @@ import { LockService } from '../sync/lock.service';
 import { LOCK_NAMES } from '../core/operation-log.const';
 import { TaskTimeSyncService } from '../../features/tasks/task-time-sync.service';
 
-interface SnapshotHydrationHooks {
+export interface SnapshotHydrationHooks {
+  nativeBaseline?: { id: string; data: unknown };
   /** Remote operations already represented by a file-based snapshot. */
   snapshotIncludedOps?: readonly Operation[];
   /**
@@ -270,6 +271,7 @@ export class SyncHydrationService {
           vectorClock: clockForStorage,
           compactedAt: Date.now(),
           snapshotIncludedOps: hooks?.snapshotIncludedOps ?? [],
+          ...(hooks?.nativeBaseline ? { nativeBaseline: hooks.nativeBaseline } : {}),
           ...(rejectOpIds.length ? { rejectOpIds } : {}),
           ...(keepOpIds.length ? { keepOpIds } : {}),
           ...(downloadedArchiveYoung ? { archiveYoung: downloadedArchiveYoung } : {}),
@@ -290,7 +292,7 @@ export class SyncHydrationService {
         // Notify the user only after the rejection durably committed with the
         // new baseline — never before, so a failed commit leaves both the old
         // state and the still-uploadable local ops intact.
-        if (rejectOpIds.length > 0 && !hooks?.keepPendingOps) {
+        if (rejectOpIds.length > 0 && !hooks?.keepPendingOps && !hooks?.nativeBaseline) {
           OpLog.normal(
             `SyncHydrationService: Rejected ${rejectOpIds.length} local pending op(s) ` +
               `(superseded after file-based sync snapshot)`,

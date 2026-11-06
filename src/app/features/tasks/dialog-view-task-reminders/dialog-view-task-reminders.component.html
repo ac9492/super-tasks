@@ -1,8 +1,8 @@
 @if (tasks$ | async; as tasks) {
-  <h1 mat-dialog-title>
+  <h2 mat-dialog-title>
     <mat-icon class="dialog-header-icon">notifications</mat-icon>
     <span>{{ T.F.TASK.D_REMINDER_VIEW.TASK_REMINDERS | translate }}</span>
-  </h1>
+  </h2>
   <mat-dialog-content>
     @if (hasDeadlineTasks(tasks)) {
       <h3 class="section-heading">
@@ -82,7 +82,7 @@
             mat-flat-button
             type="button"
           >
-            <mat-icon>wb_sunny</mat-icon>
+            <mat-icon>today</mat-icon>
             {{
               (isAllDeadline
                 ? T.F.TASK.D_REMINDER_VIEW.ADD_TO_TODAY
@@ -127,7 +127,7 @@
       [disabled]="isDisableControls"
       mat-menu-item
     >
-      <mat-icon>today</mat-icon>
+      <mat-icon>event_upcoming</mat-icon>
       {{ T.F.TASK.D_REMINDER_VIEW.RESCHEDULE_UNTIL_TOMORROW | translate }}
     </button>
     @if (!isMultiple) {
@@ -165,7 +165,7 @@
         [disabled]="isDisableControls"
         mat-menu-item
       >
-        <mat-icon>wb_sunny</mat-icon>
+        <mat-icon>today</mat-icon>
         {{ T.F.TASK.D_REMINDER_VIEW.ADD_TO_TODAY | translate }}
       </button>
     }
@@ -235,7 +235,7 @@
         </div>
         @if (shouldShowDeadlineScheduleHint(task)) {
           <div class="schedule-hint">
-            <mat-icon>event</mat-icon>
+            <mat-icon>{{ task.dueWithTime ? 'schedule' : 'calendar_month' }}</mat-icon>
             <span>
               {{ T.F.TASK.D_REMINDER_VIEW.SCHEDULED_FOR | translate }}
               @if (task.dueWithTime) {
@@ -326,7 +326,7 @@
             mat-icon-button
             type="button"
           >
-            <mat-icon>wb_sunny</mat-icon>
+            <mat-icon>today</mat-icon>
           </button>
           <mat-menu #snoozeMenu="matMenu">
             <button
@@ -355,7 +355,7 @@
               [disabled]="isDisableControls"
               mat-menu-item
             >
-              <mat-icon>today</mat-icon>
+              <mat-icon>event_upcoming</mat-icon>
               {{ T.F.TASK.D_REMINDER_VIEW.RESCHEDULE_UNTIL_TOMORROW | translate }}
             </button>
             <button

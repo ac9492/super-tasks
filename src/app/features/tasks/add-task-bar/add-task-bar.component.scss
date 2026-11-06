@@ -83,14 +83,16 @@
   background-color: var(--bg-lighter);
   color: var(--text-color-most-intense);
 
-  // Inline compose bar: a light lift so it still reads as actionable, without
-  // floating at 3dp inside the now-flat lists. The global floating variant keeps
-  // its stronger elevation below.
-  box-shadow: var(--whiteframe-shadow-1dp);
-  border-radius: var(--card-border-radius);
+  // Inline compose bar (planner day, plan-tomorrow): part of the page, so a
+  // card, not a floating surface: a hairline ring at --r-md, no shadow.
+  box-shadow: 0 0 0 var(--st-line-width) var(--palette-separator);
+  border-radius: var(--r-md);
 
+  // The global capture bar floats over the page (a command palette): --r-lg and
+  // the second elevation level, which carries its own hairline.
   &.isGlobalBarVariant {
-    box-shadow: var(--whiteframe-shadow-6dp);
+    box-shadow: var(--elev-2);
+    border-radius: var(--r-lg);
   }
 }
 
@@ -118,7 +120,7 @@
     // line wraps (clipped, with a scrollbar) a few chars before the field grows.
     // With a padding-free textarea, measured and rendered wrap widths match and
     // the height grows exactly when the text wraps.
-    padding: 10px var(--s) 10px var(--s2);
+    padding: var(--s) var(--s) var(--s) var(--s2);
   }
 
   // Typography shared by the textarea and its highlight overlay — the overlay
@@ -134,12 +136,14 @@
   // property to this block rather than to one layer.
   %main-input-typography {
     font-family: var(--font-primary-stack);
-    font-size: 16px;
+    // Body size with a 24px line; 16px only on touch, where iOS zooms into a
+    // focused field below it.
+    font-size: var(--font-size-md);
     font-weight: 400;
     font-style: normal;
     font-variant: normal;
     font-stretch: normal;
-    line-height: 1.4;
+    line-height: 24px;
     letter-spacing: normal;
     word-spacing: normal;
     text-transform: none;
@@ -149,6 +153,9 @@
     tab-size: 8;
     white-space: pre-wrap;
     overflow-wrap: break-word;
+    @media (pointer: coarse) {
+      font-size: 16px;
+    }
     // `inherit`, not a fixed value: the app's RTL comes from `[dir]` on a shared
     // ancestor (app.component.html), which both layers must keep following. What
     // this pins is that they follow the SAME source — a theme rule targeting the
@@ -230,7 +237,7 @@
     // pins an exact px height), so the textarea must never paint its own
     // scrollbar. Without this the browser's default `overflow: auto` shows a
     // spurious scrollbar on a single line whenever the rendered line box
-    // (16px × 1.4 = 22.4px) doesn't land exactly on the integer height the
+    // doesn't land exactly on the integer height the
     // directive pins — which happens depending on font/zoom/platform. The
     // directive still keeps the caret in view via programmatic scroll.
     overflow: hidden;
@@ -312,17 +319,17 @@
   padding-right: var(--s-quarter);
   margin-right: var(--s-quarter);
 
-  // Match the neighbouring action chips (.action-btn, 36px) instead of the
+  // Match the neighbouring action chips (.action-btn, 32px) instead of the
   // default 40px icon button, so the whole row lines up at one height.
   .switch-add-to-bot-btn,
   .search-toggle-btn,
   .note-toggle-btn {
     flex-shrink: 0;
     align-self: center;
-    --mdc-icon-button-state-layer-size: 36px;
-    --mat-icon-button-icon-size: calc(var(--s2) + var(--s-half));
-    width: 36px;
-    height: 36px;
+    --mat-icon-button-state-layer-size: var(--ctl-sm);
+    --mat-icon-button-icon-size: var(--icon-md);
+    width: var(--ctl-sm);
+    height: var(--ctl-sm);
     padding: 0;
     --mat-icon-button-icon-color: var(--text-color-muted);
     transition:
@@ -392,9 +399,7 @@
   resize: none;
   background: transparent;
   color: inherit;
-  font-family: var(--font-primary-stack);
-  font-size: 14px;
-  line-height: 1.5;
+  font: var(--type-body);
 
   &::placeholder {
     color: var(--text-color-muted);
@@ -407,9 +412,9 @@
   // lets the ellipsis kick in instead of overflowing the flex row.
   flex: 1;
   min-width: 0;
-  height: 38px;
+  height: var(--ctl-sm);
   padding: 0 var(--s);
-  line-height: 38px;
+  line-height: var(--ctl-sm);
   color: var(--text-color-muted);
   @include truncateText();
 

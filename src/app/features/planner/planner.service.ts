@@ -18,6 +18,8 @@ import { selectActiveTaskRepeatCfgs } from '../task-repeat-cfg/store/task-repeat
 import { Log } from '../../core/log';
 import { LayoutService } from '../../core-ui/layout/layout.service';
 import { buildDayWindow } from './util/build-day-window';
+import { TranslateService } from '@ngx-translate/core';
+import { T } from '../../t.const';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +34,7 @@ export class PlannerService {
   private _dateService = inject(DateService);
   private _globalTrackingIntervalService = inject(GlobalTrackingIntervalService);
   private _layoutService = inject(LayoutService);
+  private _translateService = inject(TranslateService);
 
   private _userHasScrolled = signal(false);
 
@@ -157,11 +160,12 @@ export class PlannerService {
           if (!day) {
             return '';
           }
+          const totalTasks = `${this._translateService.instant(T.F.PLANNER.TOTAL_TASKS)}: ${day.itemsTotal}`;
           if (day.timeEstimate === 0) {
-            return ` – ∑ ${day.itemsTotal}`;
+            return ` – ${totalTasks}`;
           }
 
-          return `<br />∑ ${day.itemsTotal} ｜ ${msToString(day.timeEstimate)}`;
+          return `<br />${totalTasks} ｜ ${msToString(day.timeEstimate)}`;
         }),
       )
       .toPromise();

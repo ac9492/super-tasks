@@ -1060,7 +1060,7 @@ describe('TaskComponent shortcut handling', () => {
       expect(taskServiceSpy.setSelectedId).toHaveBeenCalledWith(null);
     });
 
-    it('closes the panel on mobile where the icon stays "chat" while open', () => {
+    it('closes the panel on mobile where the notes icon stays visible while open', () => {
       isXs().set(true);
       setTask({ notes: 'some notes' });
       selectedTaskId().set('top-1');
@@ -1068,6 +1068,34 @@ describe('TaskComponent shortcut handling', () => {
       component.onToggleDetailPanelBtnClick();
 
       expect(taskServiceSpy.setSelectedId).toHaveBeenCalledWith(null);
+    });
+  });
+
+  describe('openContextMenu()', () => {
+    let open: jasmine.Spy;
+
+    beforeEach(() => {
+      open = jasmine.createSpy('open');
+      (component as unknown as { taskContextMenu: () => unknown }).taskContextMenu =
+        () => ({ open });
+      component.isContextMenuLoaded.set(true);
+    });
+
+    // Q / ContextMenu key / Shift+F10: the menu keeps focus and opens at the row
+    it('opens a keyboard-opened menu for a keyboard shortcut', () => {
+      const ev = new KeyboardEvent('keydown', { key: 'q' });
+
+      component.openContextMenu(ev);
+
+      expect(open).toHaveBeenCalledWith(ev, true);
+    });
+
+    it('opens a pointer-opened menu for a right-click', () => {
+      const ev = new MouseEvent('contextmenu');
+
+      component.openContextMenu(ev);
+
+      expect(open).toHaveBeenCalledWith(ev, false);
     });
   });
 });

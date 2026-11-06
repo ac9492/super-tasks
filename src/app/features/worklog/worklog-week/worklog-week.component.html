@@ -22,15 +22,16 @@
               </div>
               <div class="center-box">
                 <div class="title">
-                  <h3 class="mat-h3">{{ day.value.dayStr }} {{ day.key }}.</h3>
+                  <h3>{{ day.value.dayStr }} {{ day.key }}.</h3>
                   @if (!visibility[i]) {
                     <div
                       [@expandFade]
                       class="icon-indicator-bar"
                     >
-                      <strong>∑ {{ day.value.timeSpent | msToClockString }}</strong>
+                      <mat-icon>timer</mat-icon>
+                      <strong>{{ day.value.timeSpent | msToClockString }}</strong>
                       &nbsp;
-                      <mat-icon>list</mat-icon>
+                      <mat-icon>checklist</mat-icon>
                       <strong>{{ day.value.logEntries.length }}</strong>
                       @if (day.value.workStart) {
                         <em
@@ -57,7 +58,9 @@
                           track sc
                         ) {
                           <div class="simple-counter-item">
-                            <mat-icon inline="true">{{ sc.icon }}</mat-icon>
+                            <mat-icon inline="true">{{
+                              sc | simpleCounterIcon
+                            }}</mat-icon>
                             @if (sc.type === 'StopWatch') {
                               <div class="count">
                                 {{
@@ -78,9 +81,7 @@
                 </div>
               </div>
               <div class="with-icon">
-                @if (visibility[i]) {
-                  <mat-icon [@fade]>timer </mat-icon>
-                }
+                <mat-icon>{{ visibility[i] ? 'expand_less' : 'expand_more' }}</mat-icon>
               </div>
             </div>
             @if (visibility[i]) {
@@ -127,11 +128,11 @@
         color=""
         mat-button
       >
-        <mat-icon>call_made</mat-icon>
+        <mat-icon>ios_share</mat-icon>
         {{ T.F.WORKLOG.WEEK.EXPORT | translate }}
       </button>
     </div>
   </div>
 } @else if (week === null) {
-  <div class="no-data">{{ T.F.WORKLOG.WEEK.NO_DATA | translate }}</div>
+  <div class="empty-state">{{ T.F.WORKLOG.WEEK.NO_DATA | translate }}</div>
 }

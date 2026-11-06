@@ -17,9 +17,9 @@
     resize: vertical;
     overflow: hidden;
     background: var(--bottom-panel-bg);
-    border-top-right-radius: 20px;
-    border-top-left-radius: 20px;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+    border-top-right-radius: var(--r-lg);
+    border-top-left-radius: var(--r-lg);
+    box-shadow: var(--elev-2);
 
     // While dragging: kill the height transition so the panel tracks the
     // finger 1:1. Only the parent rule — no descendant selectors — so we

@@ -1,3 +1,5 @@
+<!-- Names the dialog; schedule and deadline dialogs otherwise look alike. -->
+<h2 mat-dialog-title>{{ T.F.TASK.ADDITIONAL_INFO.DEADLINE | translate }}</h2>
 <mat-dialog-content>
   @if (isConfigReady()) {
     <datetime-picker
@@ -18,41 +20,40 @@
       <exact-alarm-hint />
     }
   }
-
-  <div class="dialog-actions-and-warnings">
-    <mat-dialog-actions align="end">
-      <button
-        mat-button
-        (click)="close()"
-        type="button"
-      >
-        <span class="action-label">{{ T.G.CANCEL | translate }}</span>
-      </button>
-      @if (hasExistingDeadline && !data.isSelectDeadlineOnly) {
-        <button
-          (click)="remove()"
-          color="warn"
-          mat-stroked-button
-          type="button"
-        >
-          <mat-icon>event_busy</mat-icon>
-          <span class="action-label">
-            {{ T.F.TASK.D_DEADLINE.REMOVE_DEADLINE | translate }}
-          </span>
-        </button>
-      }
-      <button
-        color="primary"
-        mat-flat-button
-        [disabled]="!selectedDate"
-        (click)="submit()"
-        type="button"
-      >
-        <mat-icon>event_available</mat-icon>
-        <span class="action-label">
-          {{ T.F.TASK.D_DEADLINE.SET_DEADLINE | translate }}
-        </span>
-      </button>
-    </mat-dialog-actions>
-  </div>
 </mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  @if (hasExistingDeadline && !data.isSelectDeadlineOnly) {
+    <button
+      (click)="remove()"
+      class="dialog-action-start"
+      color="warn"
+      mat-stroked-button
+      type="button"
+    >
+      <mat-icon>flag</mat-icon>
+      <span class="action-label">
+        {{ T.F.TASK.D_DEADLINE.REMOVE_DEADLINE | translate }}
+      </span>
+    </button>
+  }
+  <button
+    mat-button
+    (click)="close()"
+    type="button"
+  >
+    <span class="action-label">{{ T.G.CANCEL | translate }}</span>
+  </button>
+  <button
+    color="primary"
+    mat-flat-button
+    [disabled]="!selectedDate"
+    (click)="submit()"
+    type="button"
+  >
+    <mat-icon>flag</mat-icon>
+    <span class="action-label">
+      {{ T.F.TASK.D_DEADLINE.SET_DEADLINE | translate }}
+    </span>
+  </button>
+</mat-dialog-actions>

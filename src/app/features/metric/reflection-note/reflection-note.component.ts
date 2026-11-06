@@ -142,7 +142,6 @@ export class ReflectionNoteComponent {
 
     this._matDialog.open(ReflectionHistoryDialogComponent, {
       data: { entries: sortedEntries },
-      width: '520px',
     });
   }
 

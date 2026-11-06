@@ -124,9 +124,10 @@ test.describe('Worklog', () => {
   test('should navigate to worklog from side menu', async ({ page, workViewPage }) => {
     await workViewPage.waitForTaskList();
 
-    // Right-click on Today context to open menu
+    // Right-click on the Today context to open its menu. Today is addressed by
+    // its tag id: the first nav row is the global Search entry.
     const contextBtn = page
-      .locator('magic-side-nav .nav-list > li.nav-item:first-child nav-item')
+      .locator('magic-side-nav .nav-list > li.nav-item nav-item[data-tag-id="TODAY"]')
       .first();
 
     await contextBtn.waitFor({ state: 'visible', timeout: 5000 });

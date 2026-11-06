@@ -22,12 +22,27 @@
       (ngModelChange)="updateEnergyCheckin($event)"
       [ngModel]="metric.energyCheckin"
       name="energyCheckin"
+      [attr.aria-label]="T.F.METRIC.EVAL_FORM.ENERGY_LEVEL | translate"
     >
-      <mat-radio-button [value]="1">😫</mat-radio-button>
-      <mat-radio-button [value]="2">😐</mat-radio-button>
-      <mat-radio-button [value]="3">😊</mat-radio-button>
+      <mat-radio-button [value]="1">
+        <span class="energy-option">
+          <mat-icon>battery_0_bar</mat-icon>
+          {{ T.F.METRIC.EVAL_FORM.ENERGY_LOW | translate }}
+        </span>
+      </mat-radio-button>
+      <mat-radio-button [value]="2">
+        <span class="energy-option">
+          <mat-icon>battery_3_bar</mat-icon>
+          {{ T.F.METRIC.EVAL_FORM.ENERGY_MEDIUM | translate }}
+        </span>
+      </mat-radio-button>
+      <mat-radio-button [value]="3">
+        <span class="energy-option">
+          <mat-icon>battery_full</mat-icon>
+          {{ T.F.METRIC.EVAL_FORM.ENERGY_HIGH | translate }}
+        </span>
+      </mat-radio-button>
     </mat-radio-group>
-    <div class="hint">{{ T.F.METRIC.EVAL_FORM.ENERGY_LEVEL_HINT | translate }}</div>
   </div>
 
   <reflection-note [dayStr]="day()"></reflection-note>

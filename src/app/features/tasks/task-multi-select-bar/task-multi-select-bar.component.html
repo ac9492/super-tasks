@@ -57,7 +57,7 @@
     mat-menu-item
   >
     <span class="menuItemLeft">
-      <mat-icon>today</mat-icon>
+      <mat-icon>calendar_month</mat-icon>
       {{ T.F.TASK.CMP.SCHEDULE | translate }}
     </span>
     <span class="key-i">{{ kb().taskSchedule }}</span>
@@ -79,7 +79,7 @@
     mat-menu-item
   >
     <span class="menuItemLeft">
-      <mat-icon>wb_sunny</mat-icon>
+      <mat-icon>today</mat-icon>
       {{ T.F.TASK.CMP.ADD_TO_MY_DAY | translate }}
     </span>
     <span class="key-i">{{ kb().taskScheduleToday }}</span>
@@ -208,7 +208,7 @@
       mat-menu-item
     >
       <span class="menuItemLeft">
-        <mat-icon>forward</mat-icon>
+        <mat-icon>drive_file_move</mat-icon>
         {{ T.F.TASK.CMP.MOVE_TO_OTHER_PROJECT | translate }}
       </span>
       <span class="key-i">{{ kb().taskMoveToProject }}</span>
@@ -223,7 +223,7 @@
     mat-menu-item
   >
     <span class="menuItemLeft">
-      <mat-icon class="color-warn-i">delete_forever</mat-icon>
+      <mat-icon class="color-warn-i">delete</mat-icon>
       {{ T.F.TASK.CMP.DELETE | translate }}
     </span>
     <span class="key-i">{{ kb().taskDelete }}</span>
@@ -292,7 +292,7 @@
         >
           <select-option-row
             [title]="tag.title"
-            [icon]="tag.icon"
+            [icon]="tag | tagIcon"
             defaultIcon="label"
             [color]="tag.color || tag.theme?.primary"
             [isSelected]="bulk.isTagOnAllSelected(tag.id)"

@@ -184,9 +184,16 @@
         height: 140px;
         margin: -70px 0 0 -70px;
         border-radius: 50%;
-        background-color: #6495ed;
+        /* Brand accent of the default palette (palette.util.ts); light below. */
+        background-color: #63c5c3;
         opacity: 0;
         animation: sp-pulse 2s ease-in-out infinite;
+      }
+
+      @media (prefers-color-scheme: light) {
+        .app-loading .spinner-pulse {
+          background-color: #075b5e;
+        }
       }
 
       .productivity-tip {
@@ -293,18 +300,18 @@
         ],
         [
           'Achieve something new',
-          'Productivity is being able to do things that you were never able to do before. ― Franz Kafka',
+          'Productivity is being able to do things that you were never able to do before.',
         ],
         [
           'Focus on output not activity',
-          'Stressing output is the key to improving productivity, while looking to increase activity can result in just the opposite. ― Paul Gauguin',
+          'Stressing output is the key to improving productivity, while looking to increase activity can result in just the opposite. ― Andy Grove',
         ],
         [
           'There is only one solution to complex problems',
           'Try and correct, try and correct, try and correct, try and correct, try and correct...',
         ],
         [
-          'Two step super productivity',
+          'Two-step productivity',
           '1. Physically get in your work position. 2. Do one small thing.',
         ],
         ['Prioritize', 'Do first things first.'],
@@ -350,7 +357,7 @@
         ],
         [
           'We are what we repeatedly do',
-          'Excellence, then, is not an act, but a habit. ― Aristotle',
+          'Excellence, then, is not an act, but a habit. ― Will Durant, on Aristotle',
         ],
         [
           "You don't learn to walk by following rules",
@@ -408,7 +415,7 @@
         ],
         [
           'Decide to decide what not to do',
-          'There is only is so much time in your day (and your life). Decide what you really want to do.',
+          'There is only so much time in your day (and your life). Decide what you really want to do.',
         ],
       ];
       var randomIndex = Math.floor(Math.random() * productivityTips.length);

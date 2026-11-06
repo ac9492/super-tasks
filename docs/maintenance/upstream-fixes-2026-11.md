@@ -111,3 +111,17 @@ of landing without its required provider convergence proof.
 - **Outside scope:** the existing documented legacy replacement-detection and
   split-file check/write limitations. The backports do not redesign the file
   format or introduce speculative guards for those residuals.
+
+## Reconciliation with current main
+
+The backport commit `cf2d0141ad` is merged with organization main at
+`a0b84a077f`. This retains the newer native encrypted accounts, account-crypto
+package, UI styling, icon refresh and updated E2E helpers from main.
+
+The sync conflict resolution keeps the file snapshot `keepPending` argument
+separate from the native snapshot preparation callback. Native hydration still
+commits its baseline atomically and rejects obsolete projection operations;
+file catch-up preserves eligible pending edits without a discard notification.
+Fresh-context sync review checked both paths. The focused 453-test suite passed,
+including orchestration coverage and a real IndexedDB regression that applies a
+native baseline before preserving subsequent file edits.

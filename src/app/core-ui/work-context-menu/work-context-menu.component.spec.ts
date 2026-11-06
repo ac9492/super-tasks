@@ -450,7 +450,7 @@ describe('WorkContextMenuComponent', () => {
       );
       fixture.detectChanges();
 
-      const reopenBtn = menuButtonByIcon('replay');
+      const reopenBtn = menuButtonByIcon('restore');
       expect(reopenBtn).toBeTruthy();
 
       reopenBtn!.click();
@@ -535,6 +535,12 @@ describe('WorkContextMenuComponent', () => {
   });
 
   describe('rendered Copy-invite-link action', () => {
+    const copyInviteButton = (): HTMLButtonElement | null =>
+      Array.from<HTMLButtonElement>(
+        fixture.nativeElement.querySelectorAll('button'),
+      ).find((button) => button.textContent?.includes('PLAINSPACE.COPY_INVITE_LINK')) ??
+      null;
+
     beforeEach(() => {
       mockProjectService.getByIdLive$.and.returnValue(
         of({ id: 'project-123', isArchived: false } as any),
@@ -549,7 +555,7 @@ describe('WorkContextMenuComponent', () => {
       );
       fixture.detectChanges();
 
-      const copyBtn = menuButtonByIcon('link');
+      const copyBtn = copyInviteButton();
       expect(copyBtn).toBeTruthy();
       copyBtn!.click();
       expect(mockPlainspaceShareService.copyInviteUrl).toHaveBeenCalledWith(
@@ -559,7 +565,7 @@ describe('WorkContextMenuComponent', () => {
 
     it('hides the action while no invite URL resolves (not shared, offline)', () => {
       fixture.detectChanges();
-      expect(menuButtonByIcon('link')).toBeNull();
+      expect(copyInviteButton()).toBeNull();
     });
   });
 });

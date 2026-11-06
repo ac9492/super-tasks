@@ -1,7 +1,13 @@
 <form (ngSubmit)="save()">
-  <h1 mat-dialog-title>
-    {{ dialogData.simpleCounter.title }} – {{ T.MH.SETTINGS | translate }}
-  </h1>
+  <h2 mat-dialog-title>
+    @if (!dialogData.simpleCounter.id) {
+      {{ T.F.SIMPLE_COUNTER.HABIT_TRACKER.ADD_HABIT | translate }}
+    } @else if (dialogData.simpleCounter.title) {
+      {{ dialogData.simpleCounter.title }} – {{ T.MH.SETTINGS | translate }}
+    } @else {
+      {{ T.MH.SETTINGS | translate }}
+    }
+  </h2>
 
   <mat-dialog-content>
     <formly-form
@@ -13,19 +19,18 @@
     </formly-form>
   </mat-dialog-content>
 
-  <mat-dialog-actions>
+  <mat-dialog-actions align="end">
     @if (dialogData.simpleCounter.id) {
       <button
-        mat-button
+        class="dialog-action-start"
+        mat-stroked-button
         color="warn"
         type="button"
         (click)="delete()"
       >
-        <mat-icon>delete</mat-icon>
         {{ T.G.DELETE | translate }}
       </button>
     }
-    <span style="flex: 1"></span>
     <button
       mat-button
       type="button"
@@ -39,7 +44,6 @@
       type="submit"
       [disabled]="!isDirty()"
     >
-      <mat-icon>save</mat-icon>
       {{ T.G.SAVE | translate }}
     </button>
   </mat-dialog-actions>

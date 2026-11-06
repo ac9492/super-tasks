@@ -25,6 +25,7 @@ import {
   createJiraPreloadApiConsumer,
   toPayloadOnlyIpcListener,
 } from './shared-with-frontend/preload-api';
+import { parseNativeGlassMaterialArg } from './shared-with-frontend/native-glass.model';
 
 let pluginNodeExecutionApiConsumed = false;
 
@@ -45,6 +46,7 @@ const ea: ElectronAPI = {
   // SYNC
   // ----
   getDistChannel: (): ElectronDistChannel | null => getDistChannel(),
+  getNativeGlassMaterial: () => parseNativeGlassMaterialArg(process.argv),
 
   // INVOKE
   // ------
@@ -210,6 +212,7 @@ const ea: ElectronAPI = {
   updateTaskWidgetSettings: (cfg) => _send('UPDATE_TASK_WIDGET_SETTINGS', cfg),
   updateTitleBarDarkMode: (isDarkMode: boolean) =>
     _send('UPDATE_TITLE_BAR_DARK_MODE', isDarkMode),
+  setNativeGlass: (state) => _send('SET_NATIVE_GLASS', state),
   registerGlobalShortcuts: (keyboardCfg) =>
     _send('REGISTER_GLOBAL_SHORTCUTS', keyboardCfg),
   showFullScreenBlocker: (args) => _send('FULL_SCREEN_BLOCKER', args),

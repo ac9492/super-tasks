@@ -16,6 +16,9 @@ import { getPluralKey } from '../../../util/get-plural-key';
 import { TaskCopy } from '../../tasks/task.model';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs/operators';
 import { T } from '../../../t.const';
 
 // `grid-template-rows` repeats `var(--nr-of-weeks)`, which otherwise resolves to
@@ -26,6 +29,13 @@ const HOST_WEEKS_VAR = '[style.--nr-of-weeks]' as const;
 const HOST_BINDINGS = {
   [HOST_WEEKS_VAR]: 'weeksToShow()',
 } as const;
+
+// How many events a day cell of a six-week month has room for: one on a phone
+// or a short window, two from a typical laptop height, three on a tall screen.
+// The rest are counted in the cell header ("+N") instead of scrolling out of
+// sight inside the cell.
+const TWO_EVENTS_QUERY = '(min-width: 600px) and (min-height: 880px)';
+const THREE_EVENTS_QUERY = '(min-width: 600px) and (min-height: 1100px)';
 
 @Component({
   selector: 'schedule-month',
@@ -41,6 +51,17 @@ export class ScheduleMonthComponent {
   private _dateTimeFormatService = inject(DateTimeFormatService);
   private _translateService = inject(TranslateService);
   private _translateStore = inject(TranslateStore);
+
+  readonly maxVisibleEvents = toSignal(
+    inject(BreakpointObserver)
+      .observe([TWO_EVENTS_QUERY, THREE_EVENTS_QUERY])
+      .pipe(
+        map(({ breakpoints }) =>
+          breakpoints[THREE_EVENTS_QUERY] ? 3 : breakpoints[TWO_EVENTS_QUERY] ? 2 : 1,
+        ),
+      ),
+    { initialValue: 1 },
+  );
 
   readonly events = input<ScheduleEvent[] | null>([]);
   readonly daysToShow = input<string[]>([]);
@@ -80,11 +101,11 @@ export class ScheduleMonthComponent {
   // only recomputes when the days or the locale change.
   readonly dayNumberByDay = computed<Record<string, string>>(() => {
     const locale = this._dateTimeFormatService.currentLocale();
-    const map: Record<string, string> = {};
+    const labels: Record<string, string> = {};
     for (const day of this.daysToShow()) {
-      map[day] = safeFormatDate(day, 'd', locale);
+      labels[day] = safeFormatDate(day, 'd', locale);
     }
-    return map;
+    return labels;
   });
 
   readonly deadlineBadgesByDay = computed<

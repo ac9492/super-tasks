@@ -31,7 +31,7 @@
     .inline-icon {
       font-size: 1.15em;
       vertical-align: -0.2em;
-      color: var(--palette-primary-500);
+      color: var(--palette-accent-text);
     }
 
     kbd,
@@ -67,7 +67,7 @@
     width: 18px;
     height: 18px;
     font-size: 18px;
-    color: var(--palette-primary-500);
+    color: var(--palette-accent-text);
   }
 }
 
@@ -103,7 +103,7 @@
   font: inherit;
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-semibold);
-  color: var(--palette-primary-500);
+  color: var(--palette-accent-text);
   background: none;
   border: none;
   border-radius: var(--s-half);
@@ -143,6 +143,16 @@
 }
 
 .close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+
   position: relative;
   flex-shrink: 0;
   color: var(--text-color);

@@ -29,6 +29,14 @@ export interface SettingsSearchTab {
   sections: readonly GenericConfigFormSection[];
 }
 
+/** A setting of the bespoke Sound form, which expands when its row is picked. */
+const _soundTarget = (labelKey: string): SettingsSearchTarget => ({
+  labelKey,
+  tabLabelKey: T.PS.REDESIGN.TASKS,
+  tabIndex: 1,
+  scrollSelector: '.sound-section',
+});
+
 /**
  * Settings that aren't formly sections (bespoke components with no `items` to
  * filter), so they can only be found via a hand-written entry. Anything added
@@ -55,11 +63,25 @@ const CUSTOM_TARGETS: readonly SettingsSearchTarget[] = [
     scrollSelector: '.theme-select',
   },
   {
-    labelKey: T.GCF.SOUND.TITLE,
-    tabLabelKey: T.PS.TABS.TASKS,
-    tabIndex: 1,
-    scrollSelector: '.sound-section',
+    labelKey: T.F.ULTRA_TASKS.GLASS,
+    tabLabelKey: T.PS.TABS.GENERAL,
+    tabIndex: 0,
+    scrollSelector: '.st-glass-setting',
   },
+  // The image row sits under the Glass switch and only shows with Glass on
+  // (and not in the macOS / Windows 11 app), so the hit lands on the switch.
+  {
+    labelKey: T.F.ULTRA_TASKS.BG_IMAGE,
+    tabLabelKey: T.PS.TABS.GENERAL,
+    tabIndex: 0,
+    scrollSelector: '.st-glass-setting',
+  },
+  _soundTarget(T.GCF.SOUND.TITLE),
+  _soundTarget(T.GCF.SOUND.VOLUME),
+  _soundTarget(T.GCF.SOUND.DONE_SOUND),
+  _soundTarget(T.GCF.SOUND.IS_INCREASE_DONE_PITCH),
+  _soundTarget(T.GCF.SOUND.BREAK_REMINDER_SOUND),
+  _soundTarget(T.GCF.SOUND.TRACK_TIME_SOUND),
 
   {
     labelKey: T.PS.SYNC.SET_UP_SYNC,

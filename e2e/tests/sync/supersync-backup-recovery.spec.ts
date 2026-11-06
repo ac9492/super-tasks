@@ -1,4 +1,5 @@
 import { test, expect } from '../../fixtures/supersync.fixture';
+import { ImportPage } from '../../pages/import.page';
 import {
   createTestUser,
   getSuperSyncConfig,
@@ -60,7 +61,7 @@ const archiveDoneTasks = async (page: SimulatedE2EClient['page']): Promise<void>
   await page.waitForURL(/daily-summary/);
 
   const saveAndGoHomeBtn = page.locator(
-    'daily-summary button[mat-flat-button]:has(mat-icon:has-text("wb_sunny"))',
+    'daily-summary button[mat-flat-button]:has(mat-icon:text-matches("^(wb_sunny|check_circle)$"))',
   );
   await saveAndGoHomeBtn.waitFor({ state: 'visible', timeout: 10000 });
   await saveAndGoHomeBtn.click();
@@ -175,26 +176,7 @@ const importBackup = async (
   backupPath: string,
 ): Promise<void> => {
   // Navigate to settings/import page
-  await page.goto('/#/config');
-  await page.waitForLoadState('networkidle');
-  await page.waitForTimeout(1000);
-
-  // Navigate to Sync & Backup tab where Import/Export section is located
-  const syncBackupTab = page.locator(
-    'mat-tab-header .mat-mdc-tab:has-text("Sync & Backup"), mat-tab-header .mat-tab-label:has-text("Sync & Backup")',
-  );
-  await syncBackupTab.waitFor({ state: 'visible', timeout: 10000 });
-  await syncBackupTab.click();
-  await page.waitForTimeout(500);
-
-  // Expand Import/Export section
-  const importExportSection = page.locator('collapsible:has-text("Import/Export")');
-  await importExportSection.scrollIntoViewIfNeeded();
-  await page.waitForTimeout(300);
-
-  const collapsibleHeader = importExportSection.locator('.collapsible-header, .header');
-  await collapsibleHeader.click();
-  await page.waitForTimeout(500);
+  await new ImportPage(page).navigateToImportPage();
 
   // Set file on hidden input
   const fileInput = page.locator('file-imex input[type="file"]');

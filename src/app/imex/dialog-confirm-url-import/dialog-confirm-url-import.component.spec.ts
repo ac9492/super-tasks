@@ -129,7 +129,7 @@ describe('ConfirmUrlImportDialogComponent', () => {
 
   describe('template rendering and domain display', () => {
     it('should render dialog title', () => {
-      const titleElement = fixture.debugElement.query(By.css('h1[mat-dialog-title]'));
+      const titleElement = fixture.debugElement.query(By.css('h2[mat-dialog-title]'));
       expect(titleElement).toBeTruthy();
     });
 
@@ -199,7 +199,7 @@ describe('ConfirmUrlImportDialogComponent', () => {
     });
 
     it('should use translation pipes in template', () => {
-      const titleElement = fixture.debugElement.query(By.css('h1[mat-dialog-title]'));
+      const titleElement = fixture.debugElement.query(By.css('h2[mat-dialog-title]'));
       const paragraphs = fixture.debugElement.queryAll(By.css('mat-dialog-content p'));
       const buttons = fixture.debugElement.queryAll(By.css('mat-dialog-actions button'));
 

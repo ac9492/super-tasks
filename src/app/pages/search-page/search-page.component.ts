@@ -5,6 +5,7 @@ import {
   inject,
   OnInit,
   viewChild,
+  viewChildren,
 } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { T } from '../../t.const';
@@ -30,9 +31,8 @@ import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
 import { MatInput } from '@angular/material/input';
 import { IssueIconPipe } from '../../features/issue/issue-icon/issue-icon.pipe';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { TagComponent } from '../../features/tag/tag/tag.component';
-import { MatList, MatListItem } from '@angular/material/list';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogViewArchivedTaskComponent } from '../../features/tasks/dialog-view-archived-task/dialog-view-archived-task.component';
@@ -65,8 +65,6 @@ const MIN_DELETED_RESULTS = 5;
     IssueIconPipe,
     TranslatePipe,
     TagComponent,
-    MatList,
-    MatListItem,
     MatFormField,
     MatLabel,
     MatCheckbox,
@@ -83,8 +81,10 @@ export class SearchPageComponent implements OnInit {
   private _layoutService = inject(LayoutService);
   private _menuTreeService = inject(MenuTreeService);
   private _recentlyDeletedService = inject(RecentlyDeletedService);
+  private _translateService = inject(TranslateService);
 
   readonly inputEl = viewChild.required<ElementRef>('inputEl');
+  readonly resultBtns = viewChildren<ElementRef<HTMLButtonElement>>('resultBtn');
 
   T: typeof T = T;
   searchForm: UntypedFormControl = new UntypedFormControl('');
@@ -290,7 +290,7 @@ export class SearchPageComponent implements OnInit {
       const ctx = note.projectId
         ? projectMap.get(note.projectId) || {
             ...DEFAULT_TAG,
-            icon: 'comment',
+            icon: 'description',
             color: 'black',
           }
         : TODAY_TAG;
@@ -318,7 +318,7 @@ export class SearchPageComponent implements OnInit {
         ctx: {
           ...ctx,
           title: ctxTitle,
-          icon: (ctx as Tag).icon || (note.projectId && 'list') || 'comment',
+          icon: (ctx as Tag).icon || (note.projectId && 'list_alt') || 'description',
         } as Tag | Project,
         isArchiveTask: false,
         isDone: false,
@@ -340,7 +340,7 @@ export class SearchPageComponent implements OnInit {
       timeSpentOnDay: {},
       created: 0,
       issueType: null,
-      ctx: project,
+      ctx: { ...project, icon: project.icon || 'list_alt' },
       isArchiveTask: false,
       isDone: false,
       isProject: true,
@@ -381,7 +381,11 @@ export class SearchPageComponent implements OnInit {
 
     if (!context) {
       Log.err(`Could not find context for task: ${task.id}`);
-      context = { ...DEFAULT_TAG, icon: 'help_outline', color: 'black' };
+      context = {
+        ...DEFAULT_TAG,
+        title: this._translateService.instant(T.F.SEARCH_BAR.UNAVAILABLE_CONTEXT),
+        icon: task.projectId ? 'folder_off' : 'label_off',
+      };
     }
 
     let title = context.title;
@@ -400,7 +404,7 @@ export class SearchPageComponent implements OnInit {
     return {
       ...context,
       title,
-      icon: (context as Tag).icon || (task.projectId && 'list') || null,
+      icon: (context as Tag).icon || (task.projectId && 'list_alt') || null,
     };
   }
 
@@ -490,6 +494,24 @@ export class SearchPageComponent implements OnInit {
     await this._recentlyDeletedService.restore(item.deletedEntry);
     this._reloadDeleted$.next();
     await this._navigateToTaskService.navigate(item.id, false, { isFromSearch: true });
+  }
+
+  /** ArrowDown/ArrowUp move between the search field and the results. */
+  onKeydown(ev: KeyboardEvent): void {
+    if (ev.key !== 'ArrowDown' && ev.key !== 'ArrowUp') {
+      return;
+    }
+    const input = this.inputEl().nativeElement as HTMLElement;
+    const targets = [input, ...this.resultBtns().map((btn) => btn.nativeElement)];
+    const index = targets.indexOf(ev.target as HTMLElement);
+    if (index === -1 || targets.length < 2) {
+      return;
+    }
+    const next = ev.key === 'ArrowDown' ? index + 1 : index - 1;
+    if (next >= 0 && next < targets.length) {
+      ev.preventDefault();
+      targets[next].focus();
+    }
   }
 
   clearSearch(): void {
