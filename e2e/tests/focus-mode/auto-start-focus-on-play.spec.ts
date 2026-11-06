@@ -15,30 +15,15 @@ import { Page } from '@playwright/test';
 import { ensureSettingState } from '../../utils/config-helpers';
 
 const enableAutoStartOnPlay = async (page: Page): Promise<void> => {
-  await page.goto('/#/config');
+  // The setting is a primary field of the "Focus mode" section in the
+  // "Time & focus" category (tab 2) of the settings window. The window lays its
+  // sections out open, so there is nothing to expand.
+  await page.goto('/#/config?tab=2');
   await page.locator('.page-settings').waitFor({ state: 'visible', timeout: 10000 });
 
-  // The setting lives in the Productivity → Focus Mode section.
-  await page.getByRole('tab', { name: /Productivity/i }).click();
-
-  const focusModeSection = page
-    .locator('config-section')
-    .filter({
-      has: page.locator('.collapsible-title', { hasText: /^Focus mode$/ }),
-    })
-    .first();
+  const focusModeSection = page.locator('section.section-focusMode').first();
+  await focusModeSection.waitFor({ state: 'visible', timeout: 10000 });
   await focusModeSection.scrollIntoViewIfNeeded();
-
-  const collapsible = focusModeSection.locator('collapsible');
-  const isExpanded = await collapsible
-    .evaluate((el) => el.classList.contains('isExpanded'))
-    .catch(() => false);
-
-  if (!isExpanded) {
-    const header = collapsible.locator('.collapsible-header');
-    await header.click();
-    await page.waitForTimeout(500);
-  }
 
   // Use shared helper that handles both mat-slide-toggle and mat-checkbox
   await ensureSettingState(

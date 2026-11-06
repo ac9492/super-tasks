@@ -843,6 +843,22 @@ export class AddTaskBarComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   // UI event handlers
+  /**
+   * The autocomplete trigger reports a picked suggestion (an object) as the
+   * field's value. That is not text: taking it in would hand an object to the
+   * short-syntax parser, which throws and ends the parse stream for this bar.
+   * A pick is acted on and clears the text in `onTaskSuggestionSelected`.
+   */
+  onInputModelChange(value: unknown): void {
+    if (typeof value === 'string') {
+      this.stateService.updateInputTxt(value);
+    }
+  }
+
+  /** Shows typed text as is and a picked suggestion as nothing. */
+  readonly displayInputValue = (value: unknown): string =>
+    typeof value === 'string' ? value : '';
+
   onInputChange(event: Event): void {
     const target = event.target as HTMLTextAreaElement;
     // The title is single-line even though the field is now an auto-growing

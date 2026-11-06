@@ -41,32 +41,24 @@ test.describe('Project', () => {
     await expect(projectPage.globalErrorAlert).not.toBeVisible();
   });
 
-  test('navigate to project settings', async ({ page }) => {
+  test('navigate to project settings', async ({ page, settingsPage }) => {
     // Navigate to Inbox project
     const inboxMenuItem = page.locator('magic-side-nav button:has-text("Inbox")');
     await inboxMenuItem.click();
 
-    // Navigate directly to settings via the Settings nav item
+    // Open settings via the Settings nav item
     const settingsMenuItem = page
       .locator('magic-side-nav a[href="#/config"]')
       .or(page.locator('magic-side-nav a.tour-settingsMenuBtn'))
       .first();
     await settingsMenuItem.click();
 
-    // Navigate to project settings tab/section if needed
-    const projectSettingsTab = page
-      .locator('button:has-text("Project"), [role="tab"]:has-text("Project")')
-      .first();
-    if (await projectSettingsTab.isVisible()) {
-      await projectSettingsTab.click();
-    }
-
-    // Verify we're on the settings page - look for any settings-related content
-    const settingsIndicator = page
-      .locator(
-        'h1:has-text("Settings"), h2:has-text("Settings"), .settings-section, mat-tab-group',
-      )
-      .first();
-    await expect(settingsIndicator).toBeVisible();
+    // Settings is a window over the project, not a page with project tabs: it
+    // has no "Project" tab to pick, and the project stays behind it.
+    await expect(page.getByRole('dialog', { name: 'Settings' })).toBeVisible();
+    await expect(page.locator('.page-settings')).toBeVisible();
+    await expect(page.locator('.settings-categories button').first()).toBeVisible();
+    await settingsPage.closeSettings();
+    await expect(page).toHaveURL(/INBOX_PROJECT/);
   });
 });

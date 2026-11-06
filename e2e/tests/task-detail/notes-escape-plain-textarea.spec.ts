@@ -1,6 +1,7 @@
 import { expect, test } from '../../fixtures/test.fixture';
 import type { Page } from '@playwright/test';
 import { cssSelectors } from '../../constants/selectors';
+import type { SettingsPage } from '../../pages/settings.page';
 
 const { DETAIL_PANEL } = cssSelectors;
 
@@ -25,23 +26,19 @@ const { DETAIL_PANEL } = cssSelectors;
  * Run: npm run e2e:file e2e/tests/task-detail/notes-escape-plain-textarea.spec.ts -- --retries=0
  */
 
-const disableMarkdownFormatting = async (page: Page): Promise<void> => {
-  // Tab 1 is "Tasks"; the section class comes from the form cfg key.
+const disableMarkdownFormatting = async (
+  page: Page,
+  settingsPage: SettingsPage,
+): Promise<void> => {
+  // Tab 1 is "Tasks & planning"; the section class comes from the form cfg key.
   await page.goto('/#/config?tab=1');
-  await page.waitForURL(/config/);
+  // Settings opens as a dialog over the workspace and the URL snaps back, so
+  // wait for the dialog rather than the URL.
+  await page.locator('.page-settings').waitFor({ state: 'visible', timeout: 10000 });
 
-  const section = page.locator('.section-tasks collapsible').first();
-  await section.waitFor({ state: 'visible', timeout: 10000 });
-  await section.scrollIntoViewIfNeeded();
-  const isExpanded = await section.evaluate((el: Element) =>
-    el.classList.contains('isExpanded'),
-  );
-  if (!isExpanded) {
-    await section.locator('.collapsible-header').click();
-    await section
-      .locator('.collapsible-panel')
-      .waitFor({ state: 'visible', timeout: 5000 });
-  }
+  // The switch sits behind the section's "More options".
+  const section = page.locator('.section-tasks');
+  await settingsPage.expandSection('.section-tasks');
 
   const toggle = section
     .locator('mat-checkbox, mat-slide-toggle')
@@ -54,9 +51,14 @@ const disableMarkdownFormatting = async (page: Page): Promise<void> => {
 };
 
 test.describe('Notes without markdown formatting', () => {
-  test('Escape leaves the plain textarea', async ({ page, workViewPage, taskPage }) => {
+  test('Escape leaves the plain textarea', async ({
+    page,
+    workViewPage,
+    taskPage,
+    settingsPage,
+  }) => {
     await workViewPage.waitForTaskList();
-    await disableMarkdownFormatting(page);
+    await disableMarkdownFormatting(page, settingsPage);
 
     await page.goto('/#/tag/TODAY/tasks');
     await page.waitForLoadState('networkidle');

@@ -191,7 +191,13 @@ test.describe('Sections', () => {
     const panelGap = await donePanel.evaluate((panel) =>
       parseFloat(getComputedStyle(panel).getPropertyValue('--s2')),
     );
-    expect((await stableBoundingBox(donePanel)).y - rootList.y - rootList.height).toBe(
+    // The list's own "Add task" row follows it directly, and the Completed panel
+    // keeps its gap beneath that row: the section control sits inside the gap.
+    const addTaskRow = await stableBoundingBox(
+      page.locator('.default-task-list add-task-inline'),
+    );
+    expect(addTaskRow.y - rootList.y - rootList.height).toBe(0);
+    expect((await stableBoundingBox(donePanel)).y - addTaskRow.y - addTaskRow.height).toBe(
       panelGap,
     );
     await expectNoReservedSpace();

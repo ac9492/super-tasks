@@ -67,8 +67,12 @@ test.describe('Issue Provider Panel', () => {
       await expect(dialogContainer).toBeVisible({ timeout: 5000 });
       openedDialogCount++;
 
-      // Close the dialog from within the dialog container.
-      const cancelBtn = dialogContainer.locator('mat-dialog-actions button').first();
+      // Close the dialog from within the dialog container. Cancel is found by
+      // name: the "Test connection" action now sits before it at the start.
+      const cancelBtn = dialogContainer.getByRole('button', {
+        name: 'Cancel',
+        exact: true,
+      });
       await expect(cancelBtn).toBeVisible({ timeout: 5000 });
       await cancelBtn.click();
 

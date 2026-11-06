@@ -109,8 +109,11 @@ test.describe('Quick tour', () => {
     await expect(card).toContainText('5 of 5');
 
     // 5: the card leads to the feature switches in Settings.
+    // Settings open as a window over the Planner, so the route stays put.
     await card.getByRole('button', { name: 'Open settings ›' }).click();
-    await expect(page).toHaveURL(/\/config\?section=appFeatures/);
+    await expect(page.getByRole('dialog', { name: 'Settings' })).toBeVisible();
+    await expect(page.locator('.section-appFeatures')).toBeVisible();
+    await expect(page.getByRole('switch', { name: 'Planner', exact: true })).toBeVisible();
     await expect(card).toHaveCount(0);
 
     await waitForStatePersistence(page);

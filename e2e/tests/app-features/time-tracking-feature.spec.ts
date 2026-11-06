@@ -2,7 +2,11 @@ import { test, expect } from '../../fixtures/test.fixture';
 import { WorkViewPage } from '../../pages/work-view.page';
 
 test.describe('App Features - Time Tracking', () => {
-  test('play buttons hidden if feature is disabled', async ({ page, testPrefix }) => {
+  test('play buttons hidden if feature is disabled', async ({
+    page,
+    settingsPage,
+    testPrefix,
+  }) => {
     // elements on main page
     const workViewPage = new WorkViewPage(page, testPrefix);
     const firstTask = page.locator('task').first();
@@ -16,7 +20,8 @@ test.describe('App Features - Time Tracking', () => {
 
     // elements on settings page
     const timeTrackingSwitch = page.getByRole('switch', {
-      name: 'Stopwatch Time Tracking',
+      name: 'Stopwatch time tracking',
+      exact: true,
     });
 
     // Wait for task list and add a task
@@ -25,8 +30,9 @@ test.describe('App Features - Time Tracking', () => {
     await workViewPage.addTask('TestTask sd:today');
     await expect(firstTask).toBeVisible();
 
-    // Go to settings page
-    await page.goto('/#/config');
+    // Go to settings page. Time tracking sits behind the App features section's
+    // "More options" toggle.
+    await settingsPage.openSettingsSection('appFeatures');
 
     // Ensure timeTracking is enabled (default value)
     await expect(timeTrackingSwitch).toBeChecked();
@@ -51,7 +57,7 @@ test.describe('App Features - Time Tracking', () => {
     await expect(firstTask).not.toHaveClass(/isCurrent/, { timeout: 1000 });
 
     // Re-enable the feature
-    await page.goto('/#/config');
+    await settingsPage.openSettingsSection('appFeatures');
 
     // click toggle button to enable
     await timeTrackingSwitch.click();

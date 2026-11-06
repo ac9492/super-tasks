@@ -1,48 +1,49 @@
 import { test, expect } from '../../fixtures/test.fixture';
-import { waitForAppReady } from '../../utils/waits';
 
 /**
  * Issue #9423: the tag color picker rendered half off-screen on macOS.
  *
  * `backdrop-filter` makes an element the containing block for fixed-position
- * descendants, and three built-in themes apply it to `.mat-mdc-dialog-surface`.
- * The picker positioned its panel with `position: fixed` plus viewport
- * coordinates read from the trigger, so under those themes the offsets resolved
- * against the dialog surface instead of the viewport and the panel was
- * displaced by the dialog's own origin.
+ * descendants, and the built-in CSS themes of the time applied it to
+ * `.mat-mdc-dialog-surface`. The picker positioned its panel with
+ * `position: fixed` plus viewport coordinates read from the trigger, so under
+ * those themes the offsets resolved against the dialog surface instead of the
+ * viewport and the panel was displaced by the dialog's own origin.
  *
- * The unit spec pins the same behavior against a synthetic wrapper. Only this
- * test runs the real `liquid-glass.css` against the real dialog, which is the
- * exact combination the bug needed — so it asserts the theme is actually in
- * effect before it asserts anything about the panel.
- *
- * Liquid Glass is the default on Apple Silicon Macs (`pickInitialActiveRef`),
- * which is why the report came from macOS.
+ * The unit spec pins the same behavior against a synthetic wrapper. This test
+ * runs the real dialog and the real picker under the Glass appearance (the
+ * default look, which is what a Mac gets) with that exact condition present.
+ * The CSS themes are gone and Glass frosts the frame (side nav, header, side
+ * panel) but not dialogs, so the test adds the dialog-surface `backdrop-filter`
+ * itself and asserts it is in effect before it asserts anything about the
+ * panel. Without it the assertions below would pass on the broken code too.
  *
  * Run: npm run e2e:file e2e/tests/tags/tag-color-picker-9423.spec.ts -- --retries=0
  */
 test.describe('Tag color picker positioning', () => {
-  test('should keep the panel on screen and anchored under a glass-surface theme', async ({
+  test('should keep the panel on screen and anchored under a glass-surface dialog', async ({
     page,
     workViewPage,
     tagPage,
   }) => {
     await workViewPage.waitForTaskList();
-
-    await page.evaluate(() =>
-      localStorage.setItem('CUSTOM_THEME', 'builtin:liquid-glass'),
-    );
-    await page.reload({ waitUntil: 'domcontentloaded' });
-    await waitForAppReady(page);
+    // Glass is the default appearance.
+    await expect(page.locator('body')).toHaveClass(/st-glass/);
 
     await tagPage.openCreateTagDialog();
 
-    // Precondition: without the theme's backdrop-filter there is no containing
-    // block and the assertions below would pass on the broken code too.
-    const surfaceFilter = await page
-      .locator('.mat-mdc-dialog-surface')
-      .evaluate((el) => getComputedStyle(el).backdropFilter);
-    expect(surfaceFilter).not.toBe('none');
+    await page.addStyleTag({
+      content: '.mat-mdc-dialog-surface { backdrop-filter: blur(12px) !important; }',
+    });
+    // Precondition: without the backdrop-filter there is no containing block
+    // and the assertions below would pass on the broken code too.
+    await expect
+      .poll(() =>
+        page
+          .locator('.mat-mdc-dialog-surface')
+          .evaluate((el) => getComputedStyle(el).backdropFilter),
+      )
+      .not.toBe('none');
 
     const trigger = page.locator('input-color-picker .color-trigger');
     await trigger.click();

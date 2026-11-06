@@ -4,6 +4,7 @@ import { WorkViewPage } from '../../pages/work-view.page';
 test.describe('App Features - Focus Mode', () => {
   test('Focus mode controls hidden if feature is disabled', async ({
     page,
+    settingsPage,
     testPrefix,
   }) => {
     // elements on main page
@@ -19,7 +20,8 @@ test.describe('App Features - Focus Mode', () => {
 
     // elements on settings page
     const focusModeSwitch = page.getByRole('switch', {
-      name: 'Focus Mode',
+      name: 'Focus mode',
+      exact: true,
     });
 
     // Wait for task list and add a task
@@ -28,8 +30,9 @@ test.describe('App Features - Focus Mode', () => {
     await workViewPage.addTask('TestTask sd:today');
     await expect(firstTask).toBeVisible();
 
-    // Go to settings page
-    await page.goto('/#/config');
+    // Go to settings page. Focus mode sits behind the App features section's
+    // "More options" toggle.
+    await settingsPage.openSettingsSection('appFeatures');
 
     // Ensure focus mode feature is enabled (default value)
     await expect(focusModeSwitch).toBeChecked();
@@ -52,7 +55,7 @@ test.describe('App Features - Focus Mode', () => {
     await expect(focusModeOverlay).not.toBeAttached({ timeout: 1000 });
 
     // Re-enable the feature
-    await page.goto('/#/config');
+    await settingsPage.openSettingsSection('appFeatures');
 
     // click toggle button to enable
     await focusModeSwitch.click();
