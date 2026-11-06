@@ -23,7 +23,7 @@ for (const mode of ['dark', 'light'] as const) {
       await expect(menu).toBeVisible();
       await expect(menu).not.toHaveClass(/mat-menu-panel-animating/);
       await expect(menu).toHaveCSS('opacity', '1');
-      const action = menu.getByRole('menuitem', { name: /Toggle Tags/i });
+      const action = menu.locator('.e2e-edit-tags-btn');
       await expect(action).toBeEnabled();
       const hint = action.locator('.key-i');
       await expect(hint).toBeVisible();

@@ -28,7 +28,7 @@ test.describe('Schedule title bar drag region (#10170)', () => {
     workViewPage,
   }) => {
     await workViewPage.waitForTaskList();
-    await page.getByRole('menuitem', { name: 'Schedule' }).click();
+    await page.getByRole('menuitem', { name: 'Calendar' }).click();
 
     const wrapper = page.locator('schedule .scroll-wrapper');
     await expect(wrapper).toBeVisible();

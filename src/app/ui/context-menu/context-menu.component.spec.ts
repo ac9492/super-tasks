@@ -180,6 +180,8 @@ describe('ContextMenuComponent', () => {
     it('returns focus to the control it was opened from when closed by keyboard', () => {
       setup(true);
       const btn = host.moreBtnRef().nativeElement;
+      // A programmatic click does not focus the button like keyboard activation.
+      btn.focus();
       btn.click();
       btn.blur();
 

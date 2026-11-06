@@ -6,6 +6,7 @@ import {
   effect,
   ElementRef,
   inject,
+  input,
   Signal,
   signal,
   viewChild,
@@ -72,6 +73,10 @@ import {
   toScheduleDayPage,
 } from '../schedule-day-page';
 import { DateService } from '../../../core/date/date.service';
+import {
+  filterDeadlineTasksByDayByProject,
+  ProjectScope,
+} from '../../project/filter-by-project.util';
 
 @Component({
   selector: 'schedule',
@@ -100,6 +105,12 @@ import { DateService } from '../../../core/date/date.service';
 })
 export class ScheduleComponent {
   T = T;
+
+  /**
+   * Narrows the calendar to one project (a project's Calendar layout). Unset =
+   * all projects, which is the global Calendar page.
+   */
+  readonly scope = input<ProjectScope | null>(null);
   taskService = inject(TaskService);
   layoutService = inject(LayoutService);
   scheduleService = inject(ScheduleService);
@@ -139,6 +150,9 @@ export class ScheduleComponent {
   // is currently hidden — otherwise the user has no UI to re-enable the only
   // calendar after, e.g., deleting all but one provider in settings.
   readonly showCalFilterBtn = computed(() => {
+    // a project scope shows no provider events unless asked to, so there is nothing to filter
+    const scope = this.scope();
+    if (scope && !scope.isIncludeCalendarEvents) return false;
     const providers = this.enabledCalendarProviders();
     if (providers.length > 1) return true;
     const hidden = this.hiddenCalendarProviderIds();
@@ -350,6 +364,7 @@ export class ScheduleComponent {
       contextNow: this._contextNow(),
       realNow: Date.now(),
       currentTaskId: this.taskService.currentTaskId() ?? null,
+      scope: this.scope(),
     });
   });
 
@@ -358,9 +373,15 @@ export class ScheduleComponent {
     return mapScheduleDaysToScheduleEvents(days, FH);
   });
 
-  deadlineTasksByDay = toSignal(
+  private _allDeadlineTasksByDay = toSignal(
     this._store.pipe(select(selectUndoneDeadlineTasksByDay)),
     { initialValue: {} },
+  );
+  deadlineTasksByDay = computed(() =>
+    filterDeadlineTasksByDayByProject(
+      this._allDeadlineTasksByDay(),
+      this.scope()?.projectId,
+    ),
   );
 
   private _workStartEndHours = toSignal(
@@ -466,6 +487,7 @@ export class ScheduleComponent {
         contextNow: anchorContextNow(d, Date.now()),
         realNow: Date.now(),
         currentTaskId: this.taskService.currentTaskId() ?? null,
+        scope: this.scope(),
       });
       return toScheduleDayPage(d, scheduleDays);
     });

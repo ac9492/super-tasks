@@ -407,6 +407,82 @@ describe('Planner Selectors - selectPlannerDays', () => {
     expect(result[0].tasks[0].id).toBe('t1');
   });
 
+  describe('project scope', () => {
+    const tomorrow = getDbDateStr(new Date(Date.now() + 86400000));
+    const plannerState: PlannerState = {
+      ...emptyPlannerState,
+      days: { [tomorrow]: ['a1', 'b1'] },
+    };
+    const tasks = createTasksMapFromTasksArray([
+      createMockTask({ id: 'a1', projectId: 'A', timeEstimate: 60000 }),
+      createMockTask({ id: 'b1', projectId: 'B', timeEstimate: 120000 }),
+    ]);
+
+    it('keeps only the scoped project tasks and recomputes the totals', () => {
+      const selector = fromSelectors.selectPlannerDays(
+        [tomorrow],
+        [],
+        [],
+        [],
+        [],
+        today,
+        { projectId: 'A', isIncludeCalendarEvents: false },
+      );
+      const result = selector.projector(tasks, plannerState, defaultScheduleConfig, 0);
+
+      expect(result[0].tasks.map((t) => t.id)).toEqual(['a1']);
+      expect(result[0].itemsTotal).toBe(1);
+      expect(result[0].timeEstimate).toBe(60000);
+    });
+
+    it('keeps all projects without a scope', () => {
+      const selector = fromSelectors.selectPlannerDays([tomorrow], [], [], [], [], today);
+      const result = selector.projector(tasks, plannerState, defaultScheduleConfig, 0);
+
+      expect(result[0].tasks.map((t) => t.id)).toEqual(['a1', 'b1']);
+    });
+
+    it('drops calendar events unless the scope asks for them', () => {
+      const dayStart = new Date(`${tomorrow}T10:00:00`).getTime();
+      const calendarEvents = [
+        {
+          items: [
+            {
+              id: 'ev1',
+              calProviderId: 'p',
+              title: 'Event',
+              start: dayStart,
+              duration: 3600000,
+            },
+          ],
+        },
+      ] as unknown as ScheduleCalendarMapEntry[];
+      const make = (
+        isIncludeCalendarEvents: boolean,
+      ): ReturnType<typeof fromSelectors.selectPlannerDays> =>
+        fromSelectors.selectPlannerDays([tomorrow], [], [], calendarEvents, [], today, {
+          projectId: 'A',
+          isIncludeCalendarEvents,
+        });
+
+      const without = make(false).projector(
+        tasks,
+        plannerState,
+        defaultScheduleConfig,
+        0,
+      );
+      const withEvents = make(true).projector(
+        tasks,
+        plannerState,
+        defaultScheduleConfig,
+        0,
+      );
+
+      expect(without[0].scheduledIItems.length).toBe(0);
+      expect(withEvents[0].scheduledIItems.length).toBe(1);
+    });
+  });
+
   it('should compute availableHours when schedule config is enabled', () => {
     const scheduleConfig = {
       isWorkStartEndEnabled: true,

@@ -9,6 +9,7 @@ import {
 } from '@angular/animations';
 import {
   ANI_ENTER_TIMING,
+  ANI_LEAVE_TIMING,
   ANI_LONG_TIMING,
   ANI_STANDARD_TIMING_,
   TRANSITION_DURATION_L,
@@ -62,6 +63,8 @@ export const warpRouteAnimation = trigger('warpRoute', [
     ]),
   ]),
 
+  // Ordinary view switches: the old page eases out as the new one settles in
+  // from just above its place. A small scale, not the daily-summary "warp".
   transition('* <=> *', [
     /* 1 */ query(
       ':enter, :leave',
@@ -73,7 +76,7 @@ export const warpRouteAnimation = trigger('warpRoute', [
         ':leave',
         [
           style({ opacity: 1, transform: 'scale(1)' }),
-          animate(ANI_ENTER_TIMING, style({ opacity: 0, transform: 'scale(1.1)' })),
+          animate(ANI_LEAVE_TIMING, style({ opacity: 0, transform: 'scale(1.02)' })),
           animateChild(),
         ],
         { optional: true },
@@ -81,7 +84,7 @@ export const warpRouteAnimation = trigger('warpRoute', [
       query(
         ':enter',
         [
-          style({ opacity: 0, transform: 'scale(1.2)' }),
+          style({ opacity: 0, transform: 'scale(1.04)' }),
           animate(ANI_ENTER_TIMING, style({ opacity: 1, transform: 'scale(1)' })),
           animateChild(),
         ],

@@ -31,8 +31,21 @@ import {
 } from '@angular/material/menu';
 import { MatDivider } from '@angular/material/divider';
 import { ESTIMATE_OPTIONS } from '../../add-task-bar/add-task-bar.const';
-import { Task, TaskPriority, TaskWithSubTasks } from '../../task.model';
-import { from, Observable, of, ReplaySubject, Subject } from 'rxjs';
+import {
+  Task,
+  TaskPriority,
+  TaskWithSubTasks,
+  TaskDetailTargetPanel,
+} from '../../task.model';
+import {
+  combineLatest,
+  firstValueFrom,
+  from,
+  Observable,
+  of,
+  ReplaySubject,
+  Subject,
+} from 'rxjs';
 import {
   delay,
   distinctUntilChanged,
@@ -43,6 +56,9 @@ import {
   takeUntil,
 } from 'rxjs/operators';
 import { Project } from '../../../project/project.model';
+import { Section } from '../../../section/section.model';
+import { SectionService } from '../../../section/section.service';
+import { selectSectionsByContextIdMap } from '../../../section/store/section.selectors';
 import { TaskService } from '../../task.service';
 import { MatDialog } from '@angular/material/dialog';
 import { IssueService } from '../../../issue/issue.service';
@@ -103,6 +119,16 @@ import { IssueSyncStateService } from '../../../issue/two-way-sync/issue-sync-st
 import { PlainspaceHandoffService } from '../../../issue/providers/plainspace/plainspace-handoff.service';
 import { PlainspaceMember } from '../../../issue/providers/plainspace/plainspace-api.service';
 
+/** One project in the move menu, with the sections the task can be put in. */
+export interface MoveTarget {
+  project: Project;
+  /** Every section of the project, including the one the task is in. */
+  sections: Section[];
+  isCurrent: boolean;
+  /** The section the task is in, when it is in one of this project's. */
+  currentSectionId: string | null;
+}
+
 @Component({
   selector: 'task-context-menu-inner',
   imports: [
@@ -134,6 +160,7 @@ export class TaskContextMenuInnerComponent implements AfterViewInit, OnDestroy {
   private readonly _elementRef = inject(ElementRef);
   private readonly _snackService = inject(SnackService);
   private readonly _projectService = inject(ProjectService);
+  private readonly _sectionService = inject(SectionService);
   private readonly _globalConfigService = inject(GlobalConfigService);
   private readonly _issueSyncState = inject(IssueSyncStateService);
   private readonly _plainspaceHandoff = inject(PlainspaceHandoffService);
@@ -221,6 +248,44 @@ export class TaskContextMenuInnerComponent implements AfterViewInit, OnDestroy {
     distinctUntilChanged(),
     switchMap((pid) =>
       this._projectService.getProjectsWithoutIdInTreeOrder$(pid || null),
+    ),
+  );
+  /**
+   * Every project in tree order with its sections beneath it: one list for
+   * "move to project" and "move to section". The task's own project stays in
+   * it as a disabled header so its other sections are reachable.
+   */
+  moveTargets$: Observable<MoveTarget[]> = this._task$.pipe(
+    map((t) => t.projectId),
+    distinctUntilChanged(),
+    switchMap((currentProjectId) =>
+      combineLatest([
+        this._projectService.getProjectsWithoutIdInTreeOrder$(null),
+        this._store.select(selectSectionsByContextIdMap),
+      ]).pipe(
+        map(([projects, sectionsByContext]) =>
+          projects.map((project) => {
+            const isCurrent = project.id === currentProjectId;
+            const sections = sectionsByContext.get(project.id) ?? [];
+            return {
+              project,
+              isCurrent,
+              sections,
+              currentSectionId: isCurrent
+                ? (sections.find((x) => x.taskIds.includes(this.task.id))?.id ?? null)
+                : null,
+            };
+          }),
+        ),
+      ),
+    ),
+  );
+  /** The menu entry shows when there is a project or a section to move to. */
+  hasMoveTargets$: Observable<boolean> = this.moveTargets$.pipe(
+    map((targets) =>
+      targets.some(
+        (t) => !t.isCurrent || t.sections.some((x) => x.id !== t.currentSectionId),
+      ),
     ),
   );
   toggleTagList = this._tagService.tagsNoMyDayAndNoListInTreeOrder;
@@ -532,6 +597,11 @@ export class TaskContextMenuInnerComponent implements AfterViewInit, OnDestroy {
       });
   }
 
+  editDescription(): void {
+    this._taskService.setSelectedId(this.task.id, TaskDetailTargetPanel.Notes);
+    this._taskFocusService.requestDescriptionFocus(this.task.id);
+  }
+
   removeDeadline(): void {
     this._store.dispatch(
       TaskSharedActions.removeDeadline({
@@ -730,6 +800,40 @@ export class TaskContextMenuInnerComponent implements AfterViewInit, OnDestroy {
       return;
     }
     await this._taskMoveToProjectService.moveToProject(taskWithSubTasks, projectId);
+    this.onClose();
+  }
+
+  /**
+   * Into a section of `projectId`, moving the task there first when it lives
+   * in another project. Moving projects already strips it from the old
+   * project's sections, so the second step starts from "no section".
+   */
+  async moveTaskToSection(projectId: string, sectionId: string): Promise<void> {
+    if (this.task.parentId) {
+      return;
+    }
+    let sourceSectionId: string | null = null;
+    if (projectId === this.task.projectId) {
+      const sections = await firstValueFrom(
+        this._store.select(selectSectionsByContextIdMap),
+      );
+      sourceSectionId =
+        sections.get(projectId)?.find((s) => s.taskIds.includes(this.task.id))?.id ??
+        null;
+    } else {
+      const taskWithSubTasks = await this._getTaskWithSubtasks();
+      if (!taskWithSubTasks) {
+        return;
+      }
+      const isMoved = await this._taskMoveToProjectService.moveToProject(
+        taskWithSubTasks,
+        projectId,
+      );
+      if (!isMoved) {
+        return;
+      }
+    }
+    this._sectionService.addTaskToSection(sectionId, this.task.id, null, sourceSectionId);
     this.onClose();
   }
 

@@ -45,7 +45,7 @@ const RESUME_DETECTED_LOG =
   'OperationLogSyncService: Interrupted USE_REMOTE rebuild detected';
 
 /** The features NEW_INSTALL_APP_FEATURES turns off, by their side-nav label. */
-const HIDDEN_NAV_ITEMS = ['Schedule', 'Boards', 'Habits'];
+const HIDDEN_NAV_ITEMS = ['Calendar', 'Boards', 'Habits'];
 
 const NEW_INSTALL_APP_FEATURES_OFF = {
   isSchedulerEnabled: false,
@@ -106,7 +106,7 @@ const expectFeatures = async (
   context: string,
 ): Promise<void> => {
   const sideNav = page.locator('magic-side-nav');
-  await expect(sideNav.getByText('Planner', { exact: true }), context).toBeVisible({
+  await expect(sideNav.getByText('Upcoming', { exact: true }), context).toBeVisible({
     timeout: 15000,
   });
   for (const label of HIDDEN_NAV_ITEMS) {

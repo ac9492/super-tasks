@@ -120,6 +120,7 @@ import { GlobalTrackingIntervalService } from '../../../core/global-tracking-int
 import { LayoutService } from '../../../core-ui/layout/layout.service';
 import { TaskFocusService } from '../task-focus.service';
 import { MatTooltip } from '@angular/material/tooltip';
+import { TaskDescriptionPreviewPipe } from './task-description-preview.pipe';
 import { millisecondsDiffToRemindOption } from '../util/remind-option-to-milliseconds';
 import { MenuTreeService } from '../../menu-tree/menu-tree.service';
 import { SelectOptionRowComponent } from '../../../ui/select-option-row/select-option-row.component';
@@ -182,6 +183,7 @@ const isInteractiveTarget = (target: EventTarget | null): boolean =>
     LocalDateStrPipe,
     TranslatePipe,
     MatTooltip,
+    TaskDescriptionPreviewPipe,
     SubTaskTotalTimeSpentPipe,
     TagListComponent,
     ShortPlannedAtPipe,
@@ -708,6 +710,12 @@ export class TaskComponent implements OnDestroy, AfterViewInit {
       .subscribe((isPlanned) => {
         this.focusSelfOrNextIfNotPossible();
       });
+  }
+
+  openDescription(ev?: Event): void {
+    ev?.stopPropagation();
+    this._taskService.setSelectedId(this.task().id, TaskDetailTargetPanel.Notes);
+    this._taskFocusService.requestDescriptionFocus(this.task().id);
   }
 
   openDeadlineDialog(): void {

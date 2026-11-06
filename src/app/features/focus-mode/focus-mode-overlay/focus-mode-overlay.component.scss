@@ -3,10 +3,10 @@
 :host {
   position: fixed;
   z-index: var(--z-focus-mode-overlay);
-  inset: 0;
+  inset: var(--desktop-chrome-offset) 0 0;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: calc(100% - var(--desktop-chrome-offset));
   // No `-webkit-app-region` here. Since Electron 44 it is inherited and
   // Chromium emits each box as a region in DOM order, so a no-drag here made
   // every overlay box after `.electron-drag-bar` cancel it: the window could
@@ -26,21 +26,6 @@
   --z-focus-mode-drag-over: 31;
   --z-focus-mode-hide-notes: 2;
   --z-focus-mode-countdown: 11;
-}
-
-.electron-drag-bar {
-  -webkit-app-region: drag;
-  height: 50px;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: var(--z-focus-mode-drag-bar);
-  display: none;
-
-  :host-context(.isElectron) & {
-    display: block;
-  }
 }
 
 .focus-mode-dialog {

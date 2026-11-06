@@ -14,6 +14,26 @@
   min-height: -webkit-fill-available;
 }
 
+.desktop-title-bar {
+  display: none;
+}
+
+:host-context(body.isElectron.isMac:not(.isFullScreen)),
+:host-context(body.isElectron.isObsidianStyleHeader:not(.isFullScreen)) {
+  .desktop-title-bar {
+    display: block;
+    flex: 0 0 var(--desktop-title-bar-height);
+    background: var(--bg);
+    border-bottom: 1px solid var(--separator-color);
+    -webkit-app-region: drag;
+  }
+
+  .app-container {
+    height: calc(100vh - var(--desktop-title-bar-height));
+    min-height: calc(100vh - var(--desktop-title-bar-height));
+  }
+}
+
 // Vertical action bar (opt-in via misc.isVerticalActionBar): reserve a
 // column on the right for the fixed action strip teleported by main-header
 // (desktop only). The strip is position: fixed, so this padding keeps the

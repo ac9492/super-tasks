@@ -39,6 +39,10 @@ const TABS: SettingsSearchTab[] = [
       },
     ],
   },
+  ...Array.from({ length: 7 }, (_, index) => ({
+    labelKey: 'PS.TABS.Empty ' + index,
+    sections: [],
+  })),
 ];
 
 describe('searchSettings', () => {
@@ -89,13 +93,13 @@ describe('searchSettings', () => {
   it('should find non-formly settings via the hand-written targets', () => {
     const [hit] = searchSettings(TABS, 'title', translate);
     expect(hit.scrollSelector).toBe('.theme-select');
-    expect(hit.tabIndex).toBe(0);
+    expect(hit.tabIndex).toBe(6);
   });
 
   it('should find the Appearance group heading, which is not a config-section', () => {
     const [hit] = searchSettings(TABS, 'appearance', translate);
     expect(hit.scrollSelector).toBe('.appearance-section');
-    expect(hit.tabIndex).toBe(0);
+    expect(hit.tabIndex).toBe(6);
   });
 
   it('should find the Todoist and TickTick importers and expand Import/Export', () => {
@@ -115,7 +119,7 @@ describe('searchSettings', () => {
   it('should find the Glass appearance setting', () => {
     const [hit] = searchSettings(TABS, 'glass', translate);
     expect(hit.scrollSelector).toBe('.st-glass-setting');
-    expect(hit.tabIndex).toBe(0);
+    expect(hit.tabIndex).toBe(6);
   });
 
   it('should land the background image search on the Glass switch', () => {
@@ -125,7 +129,7 @@ describe('searchSettings', () => {
     expect(hit?.scrollSelector).toBe('.st-glass-setting');
   });
 
-  it('should find every Sound option under the Tasks & planning tab', () => {
+  it('should find every Sound option under the dedicated Sound tab', () => {
     for (const query of [
       'volume',
       'done_sound',
@@ -136,8 +140,8 @@ describe('searchSettings', () => {
       const hits = searchSettings(TABS, query, translate);
       expect(hits.length).withContext(query).toBe(1);
       expect(hits[0].scrollSelector).withContext(query).toBe('.sound-section');
-      expect(hits[0].tabIndex).withContext(query).toBe(1);
-      expect(hits[0].tabLabelKey).withContext(query).toBe('PS.REDESIGN.TASKS');
+      expect(hits[0].tabIndex).withContext(query).toBe(8);
+      expect(hits[0].tabLabelKey).withContext(query).toBe('PS.REFINEMENT.SOUND');
     }
   });
 

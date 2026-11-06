@@ -33,7 +33,7 @@
     // with the right edge). Only Win/Linux Electron with custom title
     // bar pushes the strip down by the band height to clear the WCO
     // overlay band (rule below).
-    inset: 0 0 0 auto;
+    inset: var(--desktop-chrome-offset) 0 0 auto;
     width: var(--vertical-action-bar-width);
     margin: 0;
     padding: var(--s-half) 0;
@@ -110,15 +110,6 @@
     // `.pill-slot` is still the wrapper's slack, and the pill still sits at its
     // inline-end, so once this rail has taken the action row away the pill
     // parks at the header's trailing edge.
-  }
-
-  // Win/Linux Electron with custom title bar: WCO renders a compact band
-  // (electron WCO_HEIGHT, which differs per platform) at top-right. Push the
-  // strip down by exactly that height so its first button sits flush
-  // below the WCO buttons and the strip reclaims the newly-freed space.
-  body.isElectron.isNoMac.isObsidianStyleHeader
-    > nav.action-nav-right.action-nav-right--teleported {
-    top: calc(env(titlebar-area-height, var(--wco-height)) + var(--s));
   }
 
   // Descendant, not child: the teleported nav's parent is `<body>`, and `dir`

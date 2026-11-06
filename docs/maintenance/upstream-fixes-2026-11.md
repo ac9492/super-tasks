@@ -125,3 +125,12 @@ file catch-up preserves eligible pending edits without a discard notification.
 Fresh-context sync review checked both paths. The focused 453-test suite passed,
 including orchestration coverage and a real IndexedDB regression that applies a
 native baseline before preserving subsequent file edits.
+
+That merge passed the complete pre-push checks (19,084 Angular tests in Berlin
+and 6,502 in Los Angeles), 20 focused UI checks, 10 WebDAV recovery/catch-up
+checks, the Electron suite and the desktop build. Before Git updated the remote,
+main advanced to `1bc5b36791`, so the normal push safely rejected the stale ref.
+The follow-up merge preserves the newer project layouts, navigation labels,
+workspace controls and phone layout fixes. It retains the new focus-overlay
+chrome offset alongside the macOS drag repair. No op-log code changed in that
+follow-up merge.

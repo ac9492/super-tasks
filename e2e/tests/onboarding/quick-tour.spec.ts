@@ -6,6 +6,7 @@ import {
   installDevErrorDialogHandler,
 } from '../../utils/runtime-errors';
 import { waitForStatePersistence } from '../../utils/waits';
+import { openGlobalAddTaskBar } from '../../utils/element-helpers';
 
 // Up to the inline icon, whose ligature name is part of the text content.
 const INBOX_TIP = 'Tasks without a project of your own stay in';
@@ -24,7 +25,7 @@ const openFreshApp = async (page: Page): Promise<void> => {
 };
 
 const addTaskViaComposer = async (page: Page, title: string): Promise<void> => {
-  await page.locator('.tour-addBtn').click();
+  await openGlobalAddTaskBar(page);
   const composer = page.locator('add-task-bar.global');
   const input = composer.locator('.main-input');
   await input.fill(title);

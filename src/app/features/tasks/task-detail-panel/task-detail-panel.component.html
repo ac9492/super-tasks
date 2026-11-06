@@ -28,16 +28,47 @@
     <button
       type="button"
       (click)="scheduleTask()"
+      [class.color-warn]="isOverdue()"
     >
-      <mat-icon aria-hidden="true">calendar_month</mat-icon
-      >{{ T.F.TASK.ADDITIONAL_INFO.DUE | translate }}
+      <mat-icon aria-hidden="true">{{ showScheduleIcon() }}</mat-icon>
+      <span class="planning-date">
+        <span class="planning-date-label">{{
+          T.F.TASK.ADDITIONAL_INFO.DUE | translate
+        }}</span>
+        @if (task().dueWithTime) {
+          <span>{{
+            task().dueWithTime | localeDate: 'short' : undefined : locale()
+          }}</span>
+        } @else if (task().dueDay) {
+          <span>{{
+            task().dueDay | localeDate: 'shortDate' : undefined : locale()
+          }}</span>
+        }
+        @if (task().repeatCfgId && repeatCfgLabel()) {
+          <span class="planning-date-label">{{ repeatCfgLabel() }}</span>
+        }
+      </span>
     </button>
     <button
       type="button"
       (click)="openDeadlineDialog()"
+      [class.color-warn]="isDeadlineOverdue()"
     >
-      <mat-icon aria-hidden="true">flag</mat-icon
-      >{{ T.F.TASK.ADDITIONAL_INFO.DEADLINE | translate }}
+      <mat-icon aria-hidden="true">flag</mat-icon>
+      <span class="planning-date">
+        <span class="planning-date-label">{{
+          T.F.TASK.ADDITIONAL_INFO.DEADLINE | translate
+        }}</span>
+        @if (task().deadlineWithTime) {
+          <span>{{
+            task().deadlineWithTime | localeDate: 'short' : undefined : locale()
+          }}</span>
+        } @else if (task().deadlineDay) {
+          <span>{{
+            task().deadlineDay | localeDate: 'shortDate' : undefined : locale()
+          }}</span>
+        }
+      </span>
     </button>
   </div>
 
@@ -143,91 +174,6 @@
       </ng-container>
     </task-detail-item>
   }
-  <p class="st-date-hint">{{ T.F.ULTRA_TASKS.DATE_HINT | translate }}</p>
-  <task-detail-item
-    (collapseParent)="collapseParent()"
-    (editActionTriggered)="scheduleTask()"
-    (keyPress)="onItemKeyPress($event)"
-    [inputIcon]="
-      task().dueWithTime || task().dueDay || task().repeatCfgId ? 'edit' : 'add'
-    "
-    class="input-item"
-    [class.color-warn]="isOverdue()"
-  >
-    <ng-container input-title>
-      <mat-icon>{{ showScheduleIcon() }}</mat-icon>
-      <span>{{ scheduleLabelKey() | translate }}</span>
-    </ng-container>
-    <ng-container input-value>
-      <div class="schedule-value">
-        @if (task().dueWithTime) {
-          <div class="schedule-value__date">
-            @if (task().remindAt) {
-              <mat-icon [title]="T.F.TASK.ADDITIONAL_INFO.REMINDER | translate"
-                >alarm</mat-icon
-              >
-            }
-            {{ task().dueWithTime | localeDate: 'short' : undefined : locale() }}
-          </div>
-        }
-        @if (task().dueDay) {
-          <div class="schedule-value__date">
-            @if (isPlannedForTodayDay()) {
-              <mat-icon>today</mat-icon>
-              {{ T.G.TODAY_TAG_TITLE | translate }}
-            } @else {
-              {{ task().dueDay | localeDate: 'shortDate' : undefined : locale() }}
-            }
-          </div>
-        }
-        @if (task().repeatCfgId && repeatCfgLabel()) {
-          <div class="schedule-value__repeat">
-            <mat-icon>repeat</mat-icon>
-            <span class="cdk-visually-hidden"
-              >{{ T.F.TASK.ADDITIONAL_INFO.REPEAT | translate }}:
-            </span>
-            <span>{{ repeatCfgLabel() }}</span>
-          </div>
-        }
-      </div>
-    </ng-container>
-  </task-detail-item>
-  <task-detail-item
-    (collapseParent)="collapseParent()"
-    (editActionTriggered)="openDeadlineDialog()"
-    (keyPress)="onItemKeyPress($event)"
-    [inputIcon]="task().deadlineWithTime || task().deadlineDay ? 'edit' : 'add'"
-    class="input-item"
-    [class.color-warn]="isDeadlineOverdue()"
-  >
-    <ng-container input-title>
-      <mat-icon>flag</mat-icon>
-      <span>{{ deadlineLabelKey() | translate }}</span>
-    </ng-container>
-    <ng-container input-value>
-      @if (task().deadlineWithTime) {
-        <div class="reminder-value">
-          {{ task().deadlineWithTime | localeDate: 'short' : undefined : locale() }}
-        </div>
-      } @else if (task().deadlineDay) {
-        <div class="reminder-value">
-          {{ task().deadlineDay | localDateStr: '' }}
-        </div>
-      }
-      @if (task().deadlineWithTime || task().deadlineDay) {
-        @let removeDeadlineLabel = T.F.TASK.CMP.REMOVE_DEADLINE | translate;
-        <button
-          mat-icon-button
-          class="quick-chip"
-          (click)="removeDeadline($event)"
-          [matTooltip]="removeDeadlineLabel"
-          [attr.aria-label]="removeDeadlineLabel"
-        >
-          <mat-icon>close</mat-icon>
-        </button>
-      }
-    </ng-container>
-  </task-detail-item>
 
   @if (task().issueId && task().issueType !== ICAL_TYPE) {
     <task-detail-item
@@ -261,22 +207,13 @@
     (collapseParent)="collapseParent()"
     (editActionTriggered)="panelState.isFocusNotes.set(true)"
     (keyPress)="onItemKeyPress($event)"
-    [expanded]="isExpandedNotesPanel() && !isDialogMode()"
+    [expanded]="isExpandedNotesPanel()"
+    (expandedChange)="isExpandedNotesPanel.set($event)"
     [type]="'panel'"
   >
     <ng-container panel-header>
-      @if (isMarkdownChecklist()) {
-        <mat-icon>checklist</mat-icon>
-        <span>{{ T.F.TASK.ADDITIONAL_INFO.CHECKLIST | translate }}</span>
-        <!-- -->
-      } @else if (task().notes) {
-        <mat-icon>description</mat-icon>
-        <span>{{ T.F.TASK.ADDITIONAL_INFO.NOTES | translate }}</span>
-      } @else {
-        <!-- No content yet: hint that this section can hold a note or a checklist -->
-        <mat-icon>description</mat-icon>
-        <span>{{ T.F.TASK.ADDITIONAL_INFO.NOTES_OR_CHECKLIST | translate }}</span>
-      }
+      <mat-icon>description</mat-icon>
+      <span>{{ T.F.TASK.D_DESCRIPTION.TITLE | translate }}</span>
     </ng-container>
 
     <ng-container panel-content>
@@ -287,10 +224,9 @@
         (keyboardUnToggle)="focusItem(noteWrapperElRef)"
         [isFocus]="panelState.isFocusNotes()"
         [isShowControls]="true"
-        [isShowChecklistToggle]="true"
-        [isDefaultText]="!task().notes"
-        [defaultText]="isStockNotesTemplate() ? defaultTaskNotes() : ''"
-        [model]="task().notes || defaultTaskNotes()"
+        [isScrollable]="true"
+        [ariaLabel]="T.F.TASK.D_DESCRIPTION.TITLE | translate"
+        [model]="task().notes || ''"
         [taskId]="task().id"
       ></inline-markdown>
     </ng-container>

@@ -1,5 +1,4 @@
 <div class="theme-selector-container">
-  <h3>{{ T.GCF.MISC.APPEARANCE | translate }}</h3>
   <div class="dark-mode-select">
     <span>{{ T.GCF.MISC.DARK_MODE | translate }}</span>
     <mat-button-toggle-group
@@ -22,19 +21,7 @@
       [text]="T.PS.REDESIGN.MODE_HELP | translate"
     />
   </div>
-  <details
-    class="theme-select"
-    #colorDetails
-    [open]="colorsExpanded()"
-    (toggle)="colorsExpanded.set(colorDetails.open)"
-  >
-    <summary>
-      <mat-icon
-        class="summary-icon"
-        aria-hidden="true"
-        >expand_more</mat-icon
-      >{{ T.PS.REDESIGN.COLORS | translate }}
-    </summary>
+  <section class="theme-select">
     <div class="setting-row palette-heading">
       <h4 class="setting-control">{{ T.GCF.MISC.PALETTE.TITLE | translate }}</h4>
       <setting-help
@@ -42,7 +29,6 @@
         [text]="T.PS.REDESIGN.PALETTE_HELP | translate"
       />
     </div>
-    <p>{{ T.GCF.MISC.PALETTE.DESCRIPTION | translate }}</p>
     <div
       class="palette-presets"
       role="group"
@@ -144,5 +130,5 @@
     >
       {{ T.GCF.MISC.PALETTE.RESET | translate }}
     </button>
-  </details>
+  </section>
 </div>

@@ -79,6 +79,13 @@
 .config-section {
   margin-bottom: var(--s4);
 }
+.date-examples {
+  display: grid;
+  gap: var(--s-half);
+  padding-block: var(--s);
+  color: var(--text-color-muted);
+  font: var(--type-meta);
+}
 .version-footer {
   padding: var(--s1-5) var(--dialog-gutter);
   border-top: 1px solid var(--separator);
@@ -176,4 +183,23 @@
     flex-wrap: wrap;
     gap: var(--s);
   }
+}
+:host .account-view {
+  .settings-search,
+  .settings-categories,
+  .settings-back {
+    display: none;
+  }
+  .settings-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .settings-content {
+    display: block;
+  }
+}
+
+.settings-categories button {
+  display: flex;
+  align-items: center;
+  gap: var(--s1-5);
 }

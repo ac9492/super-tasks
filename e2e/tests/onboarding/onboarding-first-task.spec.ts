@@ -6,6 +6,7 @@ import {
   installDevErrorDialogHandler,
 } from '../../utils/runtime-errors';
 import { waitForMenuSettled, waitForStatePersistence } from '../../utils/waits';
+import { openGlobalAddTaskBar } from '../../utils/element-helpers';
 
 const pixel5TestOptions = { ...devices['Pixel 5'] };
 // Browser type is worker-scoped and cannot be overridden inside a describe block.
@@ -62,7 +63,7 @@ const expectHintOnInboxChip = async (page: Page, taskTitle: string): Promise<voi
 };
 
 const addTaskViaComposer = async (page: Page, title: string): Promise<void> => {
-  await page.locator('.tour-addBtn').click();
+  await openGlobalAddTaskBar(page);
   const composer = page.locator('add-task-bar.global');
   const input = composer.locator('.main-input');
   await input.fill(title);
@@ -83,9 +84,9 @@ test.describe('First-run onboarding', () => {
     );
 
     const sideNav = page.locator('magic-side-nav');
-    await expect(sideNav.getByText('Planner', { exact: true })).toBeVisible();
+    await expect(sideNav.getByText('Upcoming', { exact: true })).toBeVisible();
     await expect(page.locator('.tour-playBtn')).toBeVisible();
-    for (const hidden of ['Schedule', 'Boards', 'Habits']) {
+    for (const hidden of ['Calendar', 'Boards', 'Habits']) {
       await expect(sideNav.getByText(hidden, { exact: true })).toHaveCount(0);
     }
     assertNoRuntimeBrowserErrors(runtimeErrors, 'onboarding defaults');

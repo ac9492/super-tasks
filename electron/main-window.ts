@@ -17,7 +17,7 @@ import { isExternalUrlSchemeAllowed } from './shared-with-frontend/is-external-u
 import { isLocalFileUrl, openLocalPath } from './open-url';
 import { getApiUserAgent, isGitLabApiUrl } from './api-user-agent';
 import { error, log } from 'electron-log/main';
-import { IS_MAC, IS_LINUX, IS_GNOME_WAYLAND } from './common.const';
+import { IS_MAC, IS_GNOME_WAYLAND } from './common.const';
 import {
   destroyTaskWidget,
   getIsTaskWidgetAlwaysShow,
@@ -78,7 +78,9 @@ let appLoadedUrl: string | undefined;
 // a 24px circle. Not taller: the strip behind the buttons is a native drag
 // region for the full band height, and with the right panel open it covers
 // the panel's top-right corner, swallowing clicks on the controls there.
-const WCO_HEIGHT = IS_LINUX ? 32 : 24;
+//
+// Desktop controls occupy their own compact strip above the app shell.
+const WCO_HEIGHT = 32;
 
 /**
  * Returns theme-aware background color for titlebar overlay.
@@ -89,6 +91,11 @@ const getTitleBarColor = (isDark: boolean): string => {
   // Light: matches --bg (#f8f8f7) with 0% opacity (fully transparent)
   return isDark ? 'rgba(19, 19, 20, 0)' : 'rgba(248, 248, 247, 0)';
 };
+
+/** The renderer sends `rgba(r, g, b, a)`; anything else falls back to transparent. */
+const isOverlayColor = (value: unknown): value is string =>
+  typeof value === 'string' &&
+  /^rgba\(\d{1,3}, \d{1,3}, \d{1,3}, (?:0|1|0?\.\d{1,3})\)$/.test(value);
 
 const mainWinModule: {
   win?: BrowserWindow;
@@ -511,19 +518,24 @@ export const createWindow = async ({
 
   // Listen for theme changes to update title bar overlay color and symbol
   if (isUseCustomWindowTitleBar && !IS_MAC) {
-    ipcMain.on(IPC.UPDATE_TITLE_BAR_DARK_MODE, (ev, isDarkMode: boolean) => {
-      try {
-        const symbolColor = isDarkMode ? '#fff' : '#000';
-        mainWin.setTitleBarOverlay({
-          color: getTitleBarColor(isDarkMode),
-          symbolColor,
-          height: WCO_HEIGHT,
-        });
-      } catch (e) {
-        // setTitleBarOverlay may not be available on all platforms
-        log('Failed to update title bar overlay:', e);
-      }
-    });
+    ipcMain.on(
+      IPC.UPDATE_TITLE_BAR_DARK_MODE,
+      (ev, isDarkMode: boolean, overlayColor?: unknown) => {
+        try {
+          const symbolColor = isDarkMode ? '#fff' : '#000';
+          mainWin.setTitleBarOverlay({
+            color: isOverlayColor(overlayColor)
+              ? overlayColor
+              : getTitleBarColor(isDarkMode),
+            symbolColor,
+            height: WCO_HEIGHT,
+          });
+        } catch (e) {
+          // setTitleBarOverlay may not be available on all platforms
+          log('Failed to update title bar overlay:', e);
+        }
+      },
+    );
   }
 
   return mainWin;

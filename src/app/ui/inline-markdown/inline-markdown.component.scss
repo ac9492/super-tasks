@@ -29,6 +29,26 @@
   &.isHideOverflow {
     overflow: hidden;
   }
+
+  &.is-scrollable {
+    min-height: calc(var(--s5) * 4);
+    max-height: min(40dvh, calc(var(--s5) * 8));
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    overscroll-behavior-y: contain;
+    border: 1px solid var(--input-border-color);
+    border-radius: var(--r-md);
+    background: var(--bg-lightest);
+
+    live-markdown-editor ::ng-deep .cm-content {
+      min-height: calc(var(--s5) * 4);
+    }
+  }
+}
+
+:host(.isFocused) .markdown-wrapper.is-scrollable {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: calc(-1 * var(--focus-ring-width));
 }
 
 .markdown-unparsed {

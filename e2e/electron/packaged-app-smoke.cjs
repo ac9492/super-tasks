@@ -144,8 +144,9 @@ const run = async () => {
     const taskTitle = `Packaged Electron smoke ${Date.now()}`;
     const addTaskInput = page.locator('add-task-bar.global .main-input').first();
     if (!(await addTaskInput.isVisible())) {
-      await page.locator('.tour-addBtn').waitFor({ state: 'visible', timeout: 20_000 });
-      await page.locator('.tour-addBtn').click();
+      // The header "+" is gone; the add-task shortcut opens the global bar.
+      await page.evaluate(() => document.activeElement?.blur());
+      await page.keyboard.press('Shift+A');
     }
     await addTaskInput.waitFor({ state: 'visible', timeout: 10_000 });
     await addTaskInput.fill(taskTitle);

@@ -84,8 +84,43 @@
   // the size, which task-title raises to 16px on touch iOS so that focusing the
   // title does not zoom the page (#9556); this selector outranks that rule.
   .task-title {
-    font-weight: var(--font-weight-medium);
-    line-height: 20px;
+    font: var(--type-body-strong);
+  }
+
+  // Tags, then the description on the same line. The tags keep their own width
+  // (and wrap among themselves); the description takes what is left and ends in
+  // an ellipsis rather than wrapping.
+  .task-meta-line {
+    display: flex;
+    align-items: center;
+    gap: var(--s);
+    min-width: 0;
+
+    tag-list {
+      flex: 0 1 auto;
+      min-width: 0;
+    }
+  }
+
+  .task-description {
+    flex: 1 1 0;
+    min-width: 0;
+    margin-top: var(--s-half);
+    margin-left: var(--s);
+    font: var(--type-meta);
+    color: var(--text-color-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  // The tags' own left margin already indents the line when there are tags.
+  tag-list + .task-description {
+    margin-left: 0;
+    border-inline-start: 1px solid var(--separator-color);
+    padding-inline-start: var(--s);
   }
 
   // note: we use .tags-container, since we don't want margins for an empty list

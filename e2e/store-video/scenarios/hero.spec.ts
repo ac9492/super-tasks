@@ -68,14 +68,12 @@ test.describe('@video hero', () => {
     markBeatsStart();
     await hold(900);
 
-    const addButton = page.locator('main-header button.tour-addBtn');
     const bar = page.locator('add-task-bar.global');
     for (const line of LINES) {
       markScene(page, line.title);
       // A fresh bar per task: consecutive adds keep the last project, date
       // and estimate, which would blur what each line sets.
-      await pointer.glideTo(addButton);
-      await addButton.click();
+      await page.keyboard.press('Shift+A');
       await expect(bar.locator('.main-input')).toBeFocused();
       await hold(250);
       await typeText(page, line.text, { delayMs: 70 });

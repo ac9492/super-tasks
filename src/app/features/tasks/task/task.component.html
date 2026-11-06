@@ -60,11 +60,27 @@
             class="task-title"
           ></task-title>
 
-          @if (t.tagIds?.length || t.projectId || t.repeatCfgId || t.issueId) {
-            <tag-list
-              [task]="t"
-              [isShowProjectTagNever]="isInSubTaskList()"
-            ></tag-list>
+          @if (t.tagIds?.length || t.projectId || t.repeatCfgId || t.issueId || t.notes) {
+            <div class="task-meta-line">
+              @if (t.tagIds?.length || t.projectId || t.repeatCfgId || t.issueId) {
+                <tag-list
+                  [task]="t"
+                  [isShowProjectTagNever]="isInSubTaskList()"
+                ></tag-list>
+              }
+              <!-- The description's first line, after the last tag; cut with an
+                   ellipsis where the row runs out. The tooltip has all of it. -->
+              @if (t.notes | taskDescriptionPreview; as descriptionPreview) {
+                <span
+                  class="task-description"
+                  [matTooltip]="t.notes"
+                  matTooltipClass="task-description-tooltip"
+                  [matTooltipShowDelay]="400"
+                  (click)="openDescription($event)"
+                  >{{ descriptionPreview }}</span
+                >
+              }
+            </div>
           }
         </div>
       </div>

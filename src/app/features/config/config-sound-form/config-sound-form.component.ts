@@ -1,5 +1,14 @@
 import { SettingHelpComponent } from '../../../ui/setting-help/setting-help.component';
-import { ChangeDetectionStrategy, Component, Input, model, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  model,
+  output,
+  signal,
+  OnDestroy,
+  inject,
+} from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GlobalConfigFormSectionKey, SoundConfig } from '../global-config.model';
 import { ProjectCfgFormKey } from '../../project/project.model';
@@ -7,9 +16,10 @@ import { exists } from 'src/app/util/exists';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { SOUND_OPTS } from '../form-cfgs/sound-form.const';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { playSound } from '../../../util/play-sound';
-import { playDoneSound } from '../../tasks/util/play-done-sound';
-import { CollapsibleComponent } from '../../../ui/collapsible/collapsible.component';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { SnackService } from '../../../core/snack/snack.service';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatSlider, MatSliderThumb } from '@angular/material/slider';
 import { MatInput } from '@angular/material/input';
@@ -27,7 +37,9 @@ const sectionKey = 'sound';
   styleUrls: ['./config-sound-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CollapsibleComponent,
+    MatIcon,
+    MatIconButton,
+    MatTooltip,
     SettingHelpComponent,
     FormsModule,
     ReactiveFormsModule,
@@ -42,7 +54,7 @@ const sectionKey = 'sound';
     TranslatePipe,
   ],
 })
-export class ConfigSoundFormComponent {
+export class ConfigSoundFormComponent implements OnDestroy {
   readonly expanded = model(false);
   // TODO: Skipped for migration because:
   //  Accessor inputs cannot be migrated as they are too complex.
@@ -121,17 +133,6 @@ export class ConfigSoundFormComponent {
       throw new Error('No config for ' + sectionKey);
     }
 
-    if (
-      cfg.breakReminderSound !== this.config?.breakReminderSound &&
-      cfg.breakReminderSound
-    ) {
-      playSound(cfg.breakReminderSound, cfg.volume);
-    } else if (cfg.trackTimeSound !== this.config?.trackTimeSound && cfg.trackTimeSound) {
-      playSound(cfg.trackTimeSound, cfg.volume);
-    } else {
-      playDoneSound(cfg);
-    }
-
     this.config = cfg;
     if (this.soundForm.valid) {
       this.save.emit({
@@ -141,5 +142,35 @@ export class ConfigSoundFormComponent {
     } else {
       this.soundForm.updateValueAndValidity();
     }
+  }
+  readonly previewing = signal<string | null>(null);
+  private _audio?: HTMLAudioElement;
+  private readonly _snack = inject(SnackService);
+  togglePreview(key: 'doneSound' | 'breakReminderSound' | 'trackTimeSound'): void {
+    const wasPlaying = this.previewing() === key;
+    this.stopPreview();
+    const filename = this.soundForm.controls[key].value;
+    if (wasPlaying || !filename) return;
+    const audio = new Audio('./assets/snd/' + filename);
+    this._audio = audio;
+    audio.volume = (this.soundForm.controls.volume.value ?? 0) / 100;
+    this.previewing.set(key);
+    audio.onended = () => {
+      if (this._audio === audio) this.stopPreview();
+    };
+    void audio.play().catch(() => {
+      if (this._audio !== audio) return;
+      this.stopPreview();
+      this._snack.open({ type: 'ERROR', msg: T.PS.REFINEMENT.PREVIEW_ERROR });
+    });
+  }
+  stopPreview(): void {
+    this._audio?.pause();
+    if (this._audio) this._audio.onended = null;
+    this._audio = undefined;
+    this.previewing.set(null);
+  }
+  ngOnDestroy(): void {
+    this.stopPreview();
   }
 }

@@ -80,7 +80,7 @@ test('task date styles and weekday preference work through settings and persist 
     await expect(dialog).toBeHidden();
   };
   const style = (): ReturnType<typeof page.getByRole> =>
-    page.getByRole('combobox', { name: 'Task date display style' });
+    page.getByRole('combobox', { name: 'Task date labels' });
   await settings();
   await expect(
     page.getByRole('switch', { name: 'Show weekdays for the next seven days' }),
@@ -129,7 +129,7 @@ test('task date styles and weekday preference work through settings and persist 
   await settings();
   await style().click();
   await page
-    .getByRole('option', { name: 'Numeric (follow Datetime format locale)', exact: true })
+    .getByRole('option', { name: 'Numeric (follow regional format)', exact: true })
     .click();
   await expect(style()).toContainText('Numeric');
 });

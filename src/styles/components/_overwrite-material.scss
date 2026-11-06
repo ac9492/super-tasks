@@ -876,6 +876,17 @@ mat-tooltip-component {
   pointer-events: none;
 }
 
+// Multi-line tooltip variant (`matTooltipClass="task-description-tooltip"`): a
+// whole description with its line breaks, wide enough to read, never taller
+// than half the window.
+.task-description-tooltip .mdc-tooltip__surface {
+  max-width: min(480px, 90vw);
+  max-height: 50vh;
+  overflow: hidden;
+  white-space: pre-wrap;
+  text-align: start;
+}
+
 // The tooltip's overlay PANE wrapper (not just the inner component) must
 // not swallow pointer events. A tooltip shown 'below' a button in the
 // vertical action strip lands directly over the next button — without
@@ -987,4 +998,35 @@ body .mat-mdc-slide-toggle {
   --mat-slide-toggle-selected-pressed-state-layer-opacity: var(
     --mat-slide-toggle-unselected-pressed-state-layer-opacity
   ) !important;
+}
+
+// A compact pill and plain thumb; interaction and focus targets stay full-sized.
+body .mat-mdc-slide-toggle {
+  --mat-slide-toggle-track-width: var(--s4);
+  --mat-slide-toggle-track-height: calc(var(--s2) + var(--s-half));
+  --mat-slide-toggle-selected-handle-size: var(--s2);
+  --mat-slide-toggle-unselected-handle-size: var(--s2);
+  --mat-slide-toggle-pressed-handle-size: var(--s2);
+  --mat-slide-toggle-with-icon-handle-size: var(--s2);
+  --mat-slide-toggle-track-outline-width: 1px;
+  --mat-slide-toggle-selected-track-color: var(--palette-accent);
+  --mat-slide-toggle-selected-hover-track-color: var(--palette-accent);
+  --mat-slide-toggle-selected-focus-track-color: var(--palette-accent);
+  --mat-slide-toggle-selected-pressed-track-color: var(--palette-accent);
+  --mat-slide-toggle-selected-handle-color: var(--palette-accent-ink);
+  --mat-slide-toggle-selected-hover-handle-color: var(--palette-accent-ink);
+  --mat-slide-toggle-selected-focus-handle-color: var(--palette-accent-ink);
+  --mat-slide-toggle-selected-pressed-handle-color: var(--palette-accent-ink);
+}
+
+// Bounded pickers share the same scrolling surface and selected-row treatment.
+.mat-mdc-menu-panel.mat-menu-scrollable {
+  max-height: min(60dvh, 360px);
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  overscroll-behavior-y: contain;
+}
+
+.mat-mdc-menu-panel .mat-mdc-menu-item.is-selected {
+  background: var(--state-selected);
 }

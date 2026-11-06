@@ -343,15 +343,19 @@ export class GlobalThemeService {
     // Update Electron title bar overlay when dark mode changes
     if (IS_ELECTRON && !IS_MAC) {
       effect(() => {
-        const isDark =
-          this._paletteThemeService.roles(this.isDarkTheme()).backgroundInk === '#ffffff';
+        const roles = this._paletteThemeService.roles(this.isDarkTheme());
+        const isDark = roles.backgroundInk === '#ffffff';
+        // Native controls share the dedicated title strip's opaque background,
+        // including when the workspace below it uses glass.
+        const [r, g, b] = colorChannels(roles.background);
+        const overlayColor = `rgba(${r}, ${g}, ${b}, 1)`;
         // Use untracked to prevent creating additional dependencies in this effect
         const isCustomWindowTitleBarEnabled = untracked(() =>
           this._isCustomWindowTitleBarEnabled(),
         );
         // Only update if custom window title bar is enabled
         if (isCustomWindowTitleBarEnabled) {
-          window.ea.updateTitleBarDarkMode(isDark);
+          window.ea.updateTitleBarDarkMode(isDark, overlayColor);
         }
       });
     }

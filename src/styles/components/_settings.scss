@@ -4,7 +4,8 @@
   backdrop-filter: blur(var(--s-half));
 }
 
-.settings-window .mat-mdc-dialog-surface {
+.settings-window .mat-mdc-dialog-surface,
+.search-popup .mat-mdc-dialog-surface {
   background: var(--card-bg);
   color: var(--text-color);
   overflow: hidden;

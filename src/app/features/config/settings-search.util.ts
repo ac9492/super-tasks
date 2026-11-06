@@ -32,8 +32,8 @@ export interface SettingsSearchTab {
 /** A setting of the bespoke Sound form, which expands when its row is picked. */
 const _soundTarget = (labelKey: string): SettingsSearchTarget => ({
   labelKey,
-  tabLabelKey: T.PS.REDESIGN.TASKS,
-  tabIndex: 1,
+  tabLabelKey: T.PS.REFINEMENT.SOUND,
+  tabIndex: 8,
   scrollSelector: '.sound-section',
 });
 
@@ -44,36 +44,49 @@ const _soundTarget = (labelKey: string): SettingsSearchTarget => ({
  * unsearchable.
  */
 const CUSTOM_TARGETS: readonly SettingsSearchTarget[] = [
+  ...[
+    T.PS.REFINEMENT.NATIVE,
+    T.PS.REFINEMENT.UPSTREAM,
+    T.PS.REFINEMENT.IMPORT,
+    T.PS.REFINEMENT.EXPORT,
+    T.PS.REFINEMENT.ENCRYPT,
+  ].map((labelKey) => ({
+    labelKey,
+    tabLabelKey: T.PS.REFINEMENT.DATA,
+    tabIndex: 5,
+    scrollSelector: '.imex-section',
+  })),
+
   {
     labelKey: T.GCF.MISC.APPEARANCE,
-    tabLabelKey: T.PS.TABS.GENERAL,
-    tabIndex: 0,
+    tabLabelKey: T.PS.REFINEMENT.APPEARANCE,
+    tabIndex: 6,
     scrollSelector: '.appearance-section',
   },
   {
     labelKey: T.GCF.MISC.DARK_MODE,
-    tabLabelKey: T.PS.TABS.GENERAL,
-    tabIndex: 0,
+    tabLabelKey: T.PS.REFINEMENT.APPEARANCE,
+    tabIndex: 6,
     scrollSelector: '.dark-mode-select',
   },
   {
     labelKey: T.GCF.MISC.PALETTE.TITLE,
-    tabLabelKey: T.PS.TABS.GENERAL,
-    tabIndex: 0,
+    tabLabelKey: T.PS.REFINEMENT.APPEARANCE,
+    tabIndex: 6,
     scrollSelector: '.theme-select',
   },
   {
     labelKey: T.F.ULTRA_TASKS.GLASS,
-    tabLabelKey: T.PS.TABS.GENERAL,
-    tabIndex: 0,
+    tabLabelKey: T.PS.REFINEMENT.APPEARANCE,
+    tabIndex: 6,
     scrollSelector: '.st-glass-setting',
   },
   // The image row sits under the Glass switch and only shows with Glass on
   // (and not in the macOS / Windows 11 app), so the hit lands on the switch.
   {
     labelKey: T.F.ULTRA_TASKS.BG_IMAGE,
-    tabLabelKey: T.PS.TABS.GENERAL,
-    tabIndex: 0,
+    tabLabelKey: T.PS.REFINEMENT.APPEARANCE,
+    tabIndex: 6,
     scrollSelector: '.st-glass-setting',
   },
   _soundTarget(T.GCF.SOUND.TITLE),
@@ -83,24 +96,18 @@ const CUSTOM_TARGETS: readonly SettingsSearchTarget[] = [
   _soundTarget(T.GCF.SOUND.BREAK_REMINDER_SOUND),
   _soundTarget(T.GCF.SOUND.TRACK_TIME_SOUND),
 
-  {
-    labelKey: T.PS.SYNC.SET_UP_SYNC,
-    tabLabelKey: T.PS.TABS.SYNC_BACKUP,
-    tabIndex: SETTINGS_SYNC_BACKUP_TAB_INDEX,
-    scrollSelector: '.sync-summary',
-  },
   // The importer buttons live inside the Import/Export custom section, whose
   // title and help never name the source apps — switching users search for them.
   {
     labelKey: T.FILE_IMEX.IMPORT_FROM_TODOIST,
-    tabLabelKey: T.PS.TABS.SYNC_BACKUP,
+    tabLabelKey: T.PS.REFINEMENT.DATA,
     tabIndex: SETTINGS_SYNC_BACKUP_TAB_INDEX,
     scrollSelector: `.section-${IMEX_FORM.key}`,
     sectionKey: IMEX_FORM.key,
   },
   {
     labelKey: T.FILE_IMEX.IMPORT_FROM_TICKTICK,
-    tabLabelKey: T.PS.TABS.SYNC_BACKUP,
+    tabLabelKey: T.PS.REFINEMENT.DATA,
     tabIndex: SETTINGS_SYNC_BACKUP_TAB_INDEX,
     scrollSelector: `.section-${IMEX_FORM.key}`,
     sectionKey: IMEX_FORM.key,

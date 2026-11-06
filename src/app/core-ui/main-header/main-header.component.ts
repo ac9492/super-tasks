@@ -47,7 +47,6 @@ import { TrackingPresenceService } from '../../features/tracking-presence/tracki
 import { DesktopPanelButtonsComponent } from './desktop-panel-buttons/desktop-panel-buttons.component';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FocusButtonComponent } from './focus-button/focus-button.component';
-import { EmlDropDirective } from '../../core/drop-paste-input/eml-drop.directive';
 
 /** One `DOM_DELTA_LINE` notch, in CSS pixels. Matches the row's icon metrics. */
 const WHEEL_LINE_HEIGHT_PX = 16;
@@ -72,7 +71,6 @@ const ACTION_ROW_REVEAL_PIN_MS = 400;
     TranslatePipe,
     SimpleCounterButtonComponent,
     LongPressDirective,
-    EmlDropDirective,
     PluginHeaderBtnsComponent,
     PluginWorkContextHeaderBtnsComponent,
     PluginSidePanelBtnsComponent,

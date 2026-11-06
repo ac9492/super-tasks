@@ -245,6 +245,47 @@
   }
 }
 
+.floating-events {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: var(--schedule-time-width) repeat(
+      var(--nr-of-days),
+      minmax(0, 1fr)
+    );
+  border-top: 1px solid var(--grid-color);
+
+  :host([data-horizontal-scroll]) & {
+    grid-template-columns: var(--schedule-time-width) repeat(
+        var(--nr-of-days),
+        minmax(var(--schedule-day-width), 1fr)
+      );
+  }
+}
+
+.floating-events-label {
+  padding: var(--s-half) var(--s-quarter);
+  color: var(--text-color-muted);
+  font: var(--type-meta);
+  text-align: center;
+}
+
+.floating-day {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-half);
+  min-width: 0;
+  max-height: min(24dvh, calc(var(--s5) * 4));
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-gutter: stable;
+  padding: var(--s-half);
+  border-inline-start: 1px solid var(--grid-color);
+}
+
+.week-header.isInPanel .floating-events {
+  grid-template-columns: var(--schedule-time-width) minmax(0, 1fr);
+}
+
 .day {
   position: relative;
   display: flex;

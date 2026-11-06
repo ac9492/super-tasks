@@ -102,10 +102,10 @@ export const HINT_STEP_CONFIGS = new Map<HintStep, HintStepConfig>([
   [
     'create-task',
     {
-      // The header + on wide layouts, the bottom-nav + at phone width. Which one
+      // The list's inline Add task row on wide layouts, the bottom-nav + at phone width. Which one
       // exists follows the layout, not the input: a mouse in a narrow window, or a
       // touch device that switches to a mouse, only has the bottom-nav +.
-      candidates: () => ['.tour-addBtn', '.add-task-button'],
+      candidates: () => ['.task-list-add-action', '.add-task-button'],
       message: ({ isTouch }) =>
         isTouch ? T.ONBOARDING.HINTS.CREATE_TASK_TOUCH : T.ONBOARDING.HINTS.CREATE_TASK,
       shortcut: 'addNewTask',

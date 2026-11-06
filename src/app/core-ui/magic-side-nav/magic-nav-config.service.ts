@@ -1,4 +1,5 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
+import { SearchDialogService } from '../../pages/search-page/search-dialog/search-dialog.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 import { MatDialog } from '@angular/material/dialog';
@@ -49,6 +50,7 @@ export class MagicNavConfigService {
   private readonly _shepherdService = inject(ShepherdService);
   private readonly _quickTourService = inject(QuickTourService);
   private readonly _matDialog = inject(MatDialog);
+  private readonly _searchDialog = inject(SearchDialogService);
   private readonly _store = inject(Store);
   private readonly _pluginBridge = inject(PluginBridgeService);
   private readonly _pluginService = inject(PluginService);
@@ -238,11 +240,13 @@ export class MagicNavConfigService {
       ...(this.isSearchEnabled()
         ? [
             {
-              type: 'route',
+              // A popup over the current page, not a destination: the page
+              // behind it stays where it is.
+              type: 'action',
               id: 'search',
               label: T.MH.SEARCH,
               icon: NAV_SECTION_ICON.SEARCH,
-              route: '/search',
+              action: () => void this._searchDialog.open(),
               featureConfigKey: 'isSearchEnabled',
             } as NavItem,
           ]
@@ -341,6 +345,13 @@ export class MagicNavConfigService {
         icon: NAV_SECTION_ICON.SETTINGS,
         route: '/config',
         tourClass: 'tour-settingsMenuBtn',
+      },
+      {
+        type: 'route',
+        id: 'account',
+        label: T.PS.REFINEMENT.ACCOUNT,
+        icon: 'account_circle',
+        route: '/account',
       },
     ],
     fullModeByDefault: true,

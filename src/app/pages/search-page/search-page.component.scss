@@ -150,3 +150,13 @@
     }
   }
 }
+
+// In the search popup: the dialog owns the width and the gutters, and the list
+// scrolls inside a bounded panel instead of filling a page.
+.search-page.is-popup {
+  padding: var(--s2) var(--s2) var(--s);
+  max-width: none;
+  height: auto;
+  max-height: 70dvh;
+  min-height: 0;
+}

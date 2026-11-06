@@ -72,6 +72,19 @@ describe('ConfigPageComponent', () => {
     await TestBed.configureTestingModule({
       imports: [NoopAnimationsModule],
       providers: [
+        {
+          provide: DateTimeFormatService,
+          useValue: {
+            formatDate: () => '18/11/2026',
+            formatTime: () => '14:30',
+            taskDateDisplay: () => ({
+              dateStyle: 'numeric',
+              showWeekdays: false,
+              locale: 'en-GB',
+              textLocale: 'en',
+            }),
+          },
+        },
         { provide: WorkContextService, useValue: { onWorkContextChange$: EMPTY } },
         { provide: SyncConfigService, useValue: mockSyncConfigService },
         { provide: IS_ANDROID_WEB_VIEW_TOKEN, useValue: isAndroidWebView },
@@ -286,14 +299,14 @@ describe('ConfigPageComponent', () => {
       component.ngOnInit();
     };
 
-    it('opens the last tab, Sync & Backup', () => {
+    it('opens the import, export & recovery category', () => {
       openWithTab('5');
 
       expect(component.selectedTabIndex).toBe(5);
     });
 
     it('ignores an index past the last tab', () => {
-      openWithTab('6');
+      openWithTab('10');
 
       expect(component.selectedTabIndex).toBe(0);
     });
@@ -324,7 +337,7 @@ describe('ConfigPageComponent', () => {
 
     it('keeps plugin management out of the settings groups', () => {
       expect(component.categories.map((category) => category.index)).toEqual([
-        0, 1, 2, 5,
+        0, 6, 1, 2, 7, 8, 5,
       ]);
       expect(
         component.generalFormCfg.find((section) => section.key === 'appFeatures')
@@ -340,3 +353,4 @@ describe('ConfigPageComponent', () => {
     });
   });
 });
+import { DateTimeFormatService } from '../../core/date-time-format/date-time-format.service';
