@@ -20,6 +20,7 @@ import { LayoutService } from '../../core-ui/layout/layout.service';
 import { buildDayWindow } from './util/build-day-window';
 import { TranslateService } from '@ngx-translate/core';
 import { T } from '../../t.const';
+import { ProjectScope } from '../project/filter-by-project.util';
 
 @Injectable({
   providedIn: 'root',
@@ -92,6 +93,7 @@ export class PlannerService {
   // TODO this needs to be more performant
   private _selectPlannerDaysFor$(
     dayDates$: Observable<string[]>,
+    scope?: ProjectScope,
   ): Observable<PlannerDay[]> {
     return dayDates$.pipe(
       switchMap((daysToShow) =>
@@ -118,6 +120,7 @@ export class PlannerService {
                   calendarEvents,
                   allTasksPlanned,
                   todayStr,
+                  scope,
                 ),
               ),
           ),
@@ -133,6 +136,14 @@ export class PlannerService {
     // tap((val) => Log.log('days$ SIs', val[0]?.scheduledIItems)),
     shareReplay({ bufferSize: 1, refCount: true }),
   );
+  /**
+   * Same days as `days$`, narrowed to one project (and without calendar-provider
+   * events unless `isIncludeCalendarEvents`). Used by a project's Upcoming layout.
+   */
+  daysForProject$(scope: ProjectScope): Observable<PlannerDay[]> {
+    return this._selectPlannerDaysFor$(this.daysToShow$, scope);
+  }
+
   tomorrow$ = this.days$.pipe(
     map((days) => {
       const tomorrowStr = getDbDateStr(this._dateService.getLogicalTomorrowMs());

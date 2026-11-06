@@ -1059,6 +1059,13 @@
         "L_THEME_COLOR": "Theme color",
         "TITLE": "Theme"
       },
+      "LAYOUT": {
+        "CALENDAR": "Calendar",
+        "LABEL": "Project layout",
+        "LIST": "List",
+        "SHOW_CALENDAR_EVENTS": "Show calendar events",
+        "UPCOMING": "Upcoming"
+      },
       "S": {
         "ARCHIVED": "Archived Project",
         "CREATED": "Created project <strong>{{title}}</strong>.",

@@ -1,9 +1,20 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { DateService } from '../../core/date/date.service';
 import { PlannerActions } from './store/planner.actions';
 import { selectTaskFeatureState } from '../tasks/store/task.selectors';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { switchMap } from 'rxjs/operators';
+import {
+  filterPlannerDayMapByProject,
+  ProjectScope,
+} from '../project/filter-by-project.util';
 import { T } from '../../t.const';
 import { CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { PlannerPlanViewComponent } from './planner-plan-view/planner-plan-view.component';
@@ -33,7 +44,17 @@ export class PlannerComponent {
 
   readonly T = T;
 
-  private _days = toSignal(this._plannerService.days$, { initialValue: [] });
+  /** Narrows Upcoming to one project (a project's Upcoming layout). Unset = all projects. */
+  readonly scope = input<ProjectScope | null>(null);
+
+  private _days = toSignal(
+    toObservable(this.scope).pipe(
+      switchMap((scope) =>
+        scope ? this._plannerService.daysForProject$(scope) : this._plannerService.days$,
+      ),
+    ),
+    { initialValue: [] },
+  );
   private _plannerDayMap = toSignal(this._store.select(selectPlannerDayMap), {
     initialValue: {},
   });
@@ -41,7 +62,10 @@ export class PlannerComponent {
   private _prevDaysWithTasks: ReadonlySet<string> = new Set();
   daysWithTasks = computed<ReadonlySet<string>>(() => {
     const days = this._days();
-    const plannerDayMap = this._plannerDayMap();
+    const plannerDayMap = filterPlannerDayMapByProject(
+      this._plannerDayMap(),
+      this.scope()?.projectId,
+    );
     const dayDates = new Set(
       Object.entries(plannerDayMap)
         .filter(([, tasks]) => tasks.length > 0)

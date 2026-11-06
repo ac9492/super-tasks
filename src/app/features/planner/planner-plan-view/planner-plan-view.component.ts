@@ -5,10 +5,13 @@ import {
   effect,
   ElementRef,
   inject,
+  input,
   signal,
   viewChildren,
 } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { T } from '../../../t.const';
 import { PlannerDay } from '../planner.model';
 import { PlannerService } from '../planner.service';
@@ -21,6 +24,7 @@ import {
 } from '../../tasks/store/task.selectors';
 import { PlannerDayOverdueComponent } from '../planner-day-overdue/planner-day-overdue.component';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { filterTasksByProject, ProjectScope } from '../../project/filter-by-project.util';
 
 @Component({
   selector: 'planner-plan-view',
@@ -40,9 +44,29 @@ export class PlannerPlanViewComponent {
   private _destroyRef = inject(DestroyRef);
   private _elRef = inject(ElementRef);
 
-  overdue$ = this._store.select(selectUndoneOverdue);
-  overdueDeadlines$ = this._store.select(selectUndoneOverdueDeadlineTasks);
-  days$: Observable<PlannerDay[]> = this._plannerService.days$;
+  /** Narrows the view to one project (a project's Upcoming layout). Unset = all projects. */
+  readonly scope = input<ProjectScope | null>(null);
+  private _scope$ = toObservable(this.scope);
+
+  overdue$ = this._scope$.pipe(
+    switchMap((scope) =>
+      this._store
+        .select(selectUndoneOverdue)
+        .pipe(map((tasks) => filterTasksByProject(tasks, scope?.projectId))),
+    ),
+  );
+  overdueDeadlines$ = this._scope$.pipe(
+    switchMap((scope) =>
+      this._store
+        .select(selectUndoneOverdueDeadlineTasks)
+        .pipe(map((tasks) => filterTasksByProject(tasks, scope?.projectId))),
+    ),
+  );
+  days$: Observable<PlannerDay[]> = this._scope$.pipe(
+    switchMap((scope) =>
+      scope ? this._plannerService.daysForProject$(scope) : this._plannerService.days$,
+    ),
+  );
   isLoadingMore$ = this._plannerService.isLoadingMore$;
 
   dayElements = viewChildren(PlannerDayComponent, { read: ElementRef });

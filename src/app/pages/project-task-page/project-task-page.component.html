@@ -21,10 +21,46 @@
     </button>
   </div>
 }
-<work-view
-  [unclaimedTasks]="unclaimedTasks()"
-  [backlogTasks]="backlogTasks()"
-  [doneTasks]="doneTasks()"
-  [isShowBacklog]="isShowBacklog()"
-  [undoneTasks]="undoneTasks()"
-></work-view>
+@if (currentProject()) {
+  <div class="layout-bar">
+    <segmented-button-group
+      size="md"
+      [options]="layoutOptions"
+      [selectedId]="layout()"
+      [ariaLabel]="T.F.PROJECT.LAYOUT.LABEL | translate"
+      (selectionChange)="setLayout($event)"
+    ></segmented-button-group>
+    @if (layout() !== 'list') {
+      <mat-slide-toggle
+        class="calendar-events-toggle"
+        [checked]="isShowCalendarEvents()"
+        (change)="setShowCalendarEvents($event.checked)"
+      >
+        {{ T.F.PROJECT.LAYOUT.SHOW_CALENDAR_EVENTS | translate }}
+      </mat-slide-toggle>
+    }
+  </div>
+}
+@switch (layout()) {
+  @case ('calendar') {
+    <schedule
+      class="layout-content"
+      [scope]="scope()"
+    ></schedule>
+  }
+  @case ('upcoming') {
+    <planner
+      class="layout-content"
+      [scope]="scope()"
+    ></planner>
+  }
+  @default {
+    <work-view
+      [unclaimedTasks]="unclaimedTasks()"
+      [backlogTasks]="backlogTasks()"
+      [doneTasks]="doneTasks()"
+      [isShowBacklog]="isShowBacklog()"
+      [undoneTasks]="undoneTasks()"
+    ></work-view>
+  }
+}
