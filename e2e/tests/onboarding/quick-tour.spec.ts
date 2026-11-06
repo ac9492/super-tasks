@@ -113,7 +113,9 @@ test.describe('Quick tour', () => {
     await card.getByRole('button', { name: 'Open settings ›' }).click();
     await expect(page.getByRole('dialog', { name: 'Settings' })).toBeVisible();
     await expect(page.locator('.section-appFeatures')).toBeVisible();
-    await expect(page.getByRole('switch', { name: 'Planner', exact: true })).toBeVisible();
+    await expect(
+      page.getByRole('switch', { name: 'Planner', exact: true }),
+    ).toBeVisible();
     await expect(card).toHaveCount(0);
 
     await waitForStatePersistence(page);

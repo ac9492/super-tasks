@@ -197,9 +197,9 @@ test.describe('Sections', () => {
       page.locator('.default-task-list add-task-inline'),
     );
     expect(addTaskRow.y - rootList.y - rootList.height).toBe(0);
-    expect((await stableBoundingBox(donePanel)).y - addTaskRow.y - addTaskRow.height).toBe(
-      panelGap,
-    );
+    expect(
+      (await stableBoundingBox(donePanel)).y - addTaskRow.y - addTaskRow.height,
+    ).toBe(panelGap);
     await expectNoReservedSpace();
     for (const title of ['First', 'Last']) {
       await openProjectContextMenu(page);
