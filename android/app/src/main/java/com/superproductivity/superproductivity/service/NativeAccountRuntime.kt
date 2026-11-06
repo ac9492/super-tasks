@@ -61,6 +61,14 @@ object NativeAccountRuntime {
         }
         return scopes
     }
+    private fun removeMissingReminders(context: Context, scopes: JSONArray) {
+        val valid = (0 until scopes.length()).map { scopes.getJSONObject(it).getString("id") }.toSet()
+        val managed = managed(context)
+        for (key in managed.keys().asSequence().toList()) if (managed.getJSONObject(key).getString("scopeId") !in valid) {
+            cancelRemindersForTask(context, key); managed.remove(key)
+        }
+        saveManaged(context, managed)
+    }
     @Synchronized fun available(context: Context): Boolean = try { prefs(context).contains(PROFILE) } catch (_: Exception) { false }
     private fun <T> foreground(run: () -> T): T {
         foregroundCalls.incrementAndGet()
@@ -82,7 +90,9 @@ object NativeAccountRuntime {
                 val expiry = prior?.getLong("expiresAt") ?: if (method == "configure") System.currentTimeMillis() + 600000 else 0L
                 val profile = JSONObject().put("serverId", input.getString("serverId")).put("accountId", input.getString("accountId"))
                     .put("baseUrl", base).put("tokens", tokens).put("expiresAt", expiry).put("scopes", validateScopes(input.getJSONArray("scopes")))
-                save(context, profile); NativeAccountScheduler.ensureScheduled(context)
+                save(context, profile)
+                removeMissingReminders(context, profile.getJSONArray("scopes"))
+                NativeAccountScheduler.ensureScheduled(context)
                 return JSONObject().put("configured", true)
             }
             "clear" -> { clear(context); return JSONObject().put("cleared", true) }
@@ -99,12 +109,7 @@ object NativeAccountRuntime {
                 val profile = read(context); requireIdentity(profile, input)
                 val scopes = validateScopes(input.getJSONArray("scopes")); profile.put("scopes", scopes)
                 save(context, profile)
-                val valid = (0 until scopes.length()).map { scopes.getJSONObject(it).getString("id") }.toSet()
-                val managed = managed(context)
-                for (key in managed.keys().asSequence().toList()) if (managed.getJSONObject(key).getString("scopeId") !in valid) {
-                    cancelRemindersForTask(context, key); managed.remove(key)
-                }
-                saveManaged(context, managed)
+                removeMissingReminders(context, scopes)
                 return JSONObject().put("updated", true)
             }
             "local-reminders" -> {

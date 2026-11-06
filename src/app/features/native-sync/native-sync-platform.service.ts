@@ -105,14 +105,16 @@ export class NativeSyncPlatformService {
           ...account.identity(),
           baseUrl,
           tokens: account.tokens,
-          scopes: nativeScopeCredentials(client),
+          // Session refresh can bind before the explicit personal-data choice.
+          // Content keys follow through update() only after that choice.
+          scopes: [],
         });
       else if (cachedRefreshToken)
         await this.command('bootstrap', {
           ...account.identity(),
           baseUrl,
           refreshToken: cachedRefreshToken,
-          scopes: nativeScopeCredentials(client),
+          scopes: [],
         });
       this.bound = account;
     }

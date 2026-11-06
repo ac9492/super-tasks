@@ -286,7 +286,7 @@ export class NativeSyncService {
     this.realtime.start();
   }
   private async updatePlatform(): Promise<void> {
-    if (!this.client || !this.unlocked()) return;
+    if (!this.client || !this.unlocked() || !this.linked()) return;
     try {
       await this.platform.update(this.client);
       this.backgroundError.set('');

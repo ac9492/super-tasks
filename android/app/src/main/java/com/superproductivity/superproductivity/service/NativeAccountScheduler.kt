@@ -12,6 +12,9 @@ object NativeAccountScheduler {
     private const val NAME = "ultra_native_reminder_check"
     fun ensureScheduled(context: Context) {
         val work = PeriodicWorkRequestBuilder<NativeAccountReminderWorker>(15, TimeUnit.MINUTES)
+            // The foreground sync is already current. Let its account/key
+            // handoff finish before the first best-effort background check.
+            .setInitialDelay(1, TimeUnit.MINUTES)
             .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()).build()
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(NAME, ExistingPeriodicWorkPolicy.KEEP, work)
     }

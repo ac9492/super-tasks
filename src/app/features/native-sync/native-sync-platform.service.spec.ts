@@ -111,7 +111,7 @@ describe('NativeSyncPlatformService', () => {
       record: () => ({ value: { title: 'Shared task', isDone: false } }),
     } as unknown as SyncClient;
   };
-  it('hands off narrow keys and routes refresh through the native owner', async () => {
+  it('binds only the session, hands off narrow keys after linking, and uses one refresh owner', async () => {
     const fixture = client();
     const base = jasmine.createSpy('transport').and.resolveTo({});
     await service.bind(
@@ -121,9 +121,17 @@ describe('NativeSyncPlatformService', () => {
       async () => undefined,
     );
     const payload = JSON.stringify(calls[0].input);
-    expect(payload).toContain('project-key');
+    expect(calls[0].input['scopes']).toEqual([]);
+    expect(payload).not.toContain('project-key');
+    expect(payload).not.toContain('personal-key');
     expect(payload).not.toContain('must-not-leave-vault');
     expect(payload).not.toContain('private-signing-key');
+    await service.update(fixture);
+    const scopePayload = JSON.stringify(calls.find((call) => call.method === 'scopes'));
+    expect(scopePayload).toContain('project-key');
+    expect(scopePayload).toContain('personal-key');
+    expect(scopePayload).not.toContain('must-not-leave-vault');
+    expect(scopePayload).not.toContain('private-signing-key');
     const wrapped = service.transport(base);
     expect(
       await wrapped('/sessions/refresh', { refreshToken: 'stale-web-cache' }),

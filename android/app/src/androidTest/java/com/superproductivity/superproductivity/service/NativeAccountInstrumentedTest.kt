@@ -37,12 +37,21 @@ class NativeAccountInstrumentedTest {
         NativeAccountRuntime.clear(context); server.shutdown()
         BackgroundReminderSettingsStore.save(context, false, false)
     }
-    private fun configure() {
+    private fun configure(): JSONObject {
         val all = vectors.getJSONArray("fixtures"); val scopes = JSONArray()
         for (i in 0 until all.length()) scopes.put(all.getJSONObject(i).getJSONObject("trusted"))
         val input = JSONObject(identity().toString()).put("baseUrl", server.url("/").toString().trimEnd('/')).put("scopes", scopes)
             .put("tokens", JSONObject().put("accessToken", "native-access-test").put("refreshToken", "refresh-secret-0").put("expiresIn", 600))
         NativeAccountRuntime.call(context, "configure", input)
+        return input
+    }
+    @Test fun sessionOnlyRebindRemovesPreviouslyManagedReminders() {
+        val input = configure()
+        val scopeId = identity().getString("id")
+        NativeAccountRuntime.saveManaged(context, JSONObject().put("native:$scopeId:task", JSONObject().put("scopeId", scopeId)))
+        NativeAccountRuntime.call(context, "configure", input.put("scopes", JSONArray()))
+        assertEquals(0, NativeAccountRuntime.managed(context).length())
+        assertTrue(NativeAccountRuntime.available(context))
     }
     @Test fun keystoreStorageAndSingleRefreshOwner() {
         configure()
