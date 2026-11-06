@@ -1464,9 +1464,9 @@ export const archiveDoneTasks = async (client: SimulatedE2EClient): Promise<void
     console.warn(`[archiveDoneTasks] Finish Day took ${finishDayAttempts} attempts`);
   }
 
-  // Click "Save & Go Home" button (has sun icon wb_sunny)
+  // Click "Save & Go Home" button (check_circle icon; wb_sunny before the icon refresh)
   const saveAndGoHomeBtn = client.page.locator(
-    'daily-summary button[mat-flat-button]:has(mat-icon:has-text("wb_sunny"))',
+    'daily-summary button[mat-flat-button]:has(mat-icon:text-matches("^(wb_sunny|check_circle)$"))',
   );
   await saveAndGoHomeBtn.waitFor({ state: 'visible', timeout: UI_VISIBLE_TIMEOUT });
   // Wait for navigation back to work view.
