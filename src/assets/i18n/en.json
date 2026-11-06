@@ -1060,9 +1060,12 @@
         "TITLE": "Theme"
       },
       "LAYOUT": {
+        "BOARD": "Board",
         "CALENDAR": "Calendar",
         "LABEL": "Project layout",
         "LIST": "List",
+        "NO_SECTION": "No section",
+        "RENAME_SECTION": "Rename section",
         "SHOW_CALENDAR_EVENTS": "Show calendar events",
         "UPCOMING": "Upcoming"
       },

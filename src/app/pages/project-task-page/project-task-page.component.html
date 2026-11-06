@@ -30,7 +30,7 @@
       [ariaLabel]="T.F.PROJECT.LAYOUT.LABEL | translate"
       (selectionChange)="setLayout($event)"
     ></segmented-button-group>
-    @if (layout() !== 'list') {
+    @if (layout() === 'calendar' || layout() === 'upcoming') {
       <mat-slide-toggle
         class="calendar-events-toggle"
         [checked]="isShowCalendarEvents()"
@@ -42,6 +42,15 @@
   </div>
 }
 @switch (layout()) {
+  @case ('board') {
+    @if (projectId(); as boardProjectId) {
+      <section-board
+        class="layout-content"
+        [projectId]="boardProjectId"
+        [tasks]="undoneTasks()"
+      ></section-board>
+    }
+  }
   @case ('calendar') {
     <schedule
       class="layout-content"

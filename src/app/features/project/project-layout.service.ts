@@ -2,10 +2,11 @@ import { Injectable, signal } from '@angular/core';
 import { loadFromRealLs, saveToRealLs } from '../../core/persistence/local-storage';
 import { LS } from '../../core/persistence/storage-keys.const';
 
-export type ProjectLayout = 'list' | 'calendar' | 'upcoming';
+export type ProjectLayout = 'list' | 'board' | 'calendar' | 'upcoming';
 
 export const PROJECT_LAYOUTS: readonly ProjectLayout[] = [
   'list',
+  'board',
   'calendar',
   'upcoming',
 ] as const;

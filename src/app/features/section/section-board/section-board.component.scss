@@ -1,0 +1,104 @@
+@use '../../../../styles/_globals.scss' as *;
+
+:host {
+  display: block;
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+}
+
+// Columns scroll sideways; each column scrolls its own cards.
+.columns {
+  display: flex;
+  align-items: stretch;
+  gap: var(--s2);
+  height: 100%;
+  min-width: min-content;
+  padding: var(--s2) var(--page-gutter) var(--s3);
+}
+
+// Same column box as a tag-board column (board-panel).
+.column {
+  @include extraBorder();
+  border-radius: var(--r-md);
+  flex: 0 0 280px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  max-height: 100%;
+  padding: 1px;
+
+  planner-task {
+    margin-bottom: var(--task-list-row-gap);
+    border-top: var(--task-row-edge);
+
+    &:last-child {
+      border-bottom: var(--task-row-edge);
+    }
+  }
+
+  add-task-inline {
+    display: block;
+  }
+}
+
+header {
+  padding: var(--s-half) var(--s2);
+  padding-right: var(--s-half);
+  display: flex;
+  align-items: center;
+
+  // Same label treatment as a tag-board column title.
+  .title {
+    font: var(--type-label);
+    letter-spacing: var(--track-label);
+    color: var(--text-color-muted);
+    margin-right: auto;
+    overflow-wrap: anywhere;
+  }
+
+  .task-count {
+    white-space: nowrap;
+    margin-left: var(--s);
+    margin-right: var(--s-half);
+    display: flex;
+    align-items: center;
+    gap: var(--s-quarter);
+    font: var(--type-meta);
+    color: var(--text-color-muted);
+
+    mat-icon {
+      font-size: var(--icon-sm);
+      line-height: var(--icon-sm);
+      height: var(--icon-sm);
+      width: var(--icon-sm);
+    }
+  }
+
+  .rename-section-btn {
+    opacity: 0.7;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+// The no-section column is the project root, not a user-made group.
+.is-no-section header .title {
+  font-style: italic;
+}
+
+.task-items {
+  overflow: auto;
+  padding: 0 var(--s);
+  border-radius: var(--r-md);
+  min-height: 100px;
+  flex-grow: 1;
+}
+
+.add-section-column {
+  flex: 0 0 200px;
+  padding-top: var(--s-half);
+}

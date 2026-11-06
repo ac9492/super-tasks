@@ -23,6 +23,7 @@ import {
 import { ProjectScope } from '../../features/project/filter-by-project.util';
 import { ScheduleComponent } from '../../features/schedule/schedule/schedule.component';
 import { PlannerComponent } from '../../features/planner/planner.component';
+import { SectionBoardComponent } from '../../features/section/section-board/section-board.component';
 
 @Component({
   selector: 'work-view-page',
@@ -37,6 +38,7 @@ import { PlannerComponent } from '../../features/planner/planner.component';
     SegmentedButtonGroupComponent,
     ScheduleComponent,
     PlannerComponent,
+    SectionBoardComponent,
   ],
 })
 export class ProjectTaskPageComponent {
@@ -83,6 +85,11 @@ export class ProjectTaskPageComponent {
   readonly layoutOptions: readonly SegmentedButtonOption[] = [
     { id: 'list', labelKey: T.F.PROJECT.LAYOUT.LIST, hintKey: T.F.PROJECT.LAYOUT.LIST },
     {
+      id: 'board',
+      labelKey: T.F.PROJECT.LAYOUT.BOARD,
+      hintKey: T.F.PROJECT.LAYOUT.BOARD,
+    },
+    {
       id: 'calendar',
       labelKey: T.F.PROJECT.LAYOUT.CALENDAR,
       hintKey: T.F.PROJECT.LAYOUT.CALENDAR,
@@ -100,6 +107,7 @@ export class ProjectTaskPageComponent {
     return projectId ? this._projectLayoutService.prefsFor(projectId) : null;
   });
   readonly layout = computed<ProjectLayout>(() => this._layoutPrefs()?.layout ?? 'list');
+  readonly projectId = computed(() => this.currentProject()?.id ?? null);
   readonly isShowCalendarEvents = computed(
     () => this._layoutPrefs()?.isShowCalendarEvents ?? false,
   );

@@ -9,6 +9,7 @@ import { PlainspaceClaimPoolService } from '../../features/plainspace/plainspace
 import { WorkViewComponent } from '../../features/work-view/work-view.component';
 import { ScheduleComponent } from '../../features/schedule/schedule/schedule.component';
 import { PlannerComponent } from '../../features/planner/planner.component';
+import { SectionBoardComponent } from '../../features/section/section-board/section-board.component';
 import { ProjectScope } from '../../features/project/filter-by-project.util';
 import { LS } from '../../core/persistence/storage-keys.const';
 import { Project } from '../../features/project/project.model';
@@ -25,6 +26,12 @@ class StubWorkViewComponent {
 @Component({ selector: 'schedule', template: '<i class="stub-schedule"></i>' })
 class StubScheduleComponent {
   scope = input<ProjectScope | null>(null);
+}
+
+@Component({ selector: 'section-board', template: '<i class="stub-board"></i>' })
+class StubSectionBoardComponent {
+  projectId = input<string>();
+  tasks = input<unknown>();
 }
 
 @Component({ selector: 'planner', template: '<i class="stub-planner"></i>' })
@@ -76,9 +83,21 @@ describe('ProjectTaskPageComponent layout switch', () => {
       ],
     })
       .overrideComponent(ProjectTaskPageComponent, {
-        remove: { imports: [WorkViewComponent, ScheduleComponent, PlannerComponent] },
+        remove: {
+          imports: [
+            WorkViewComponent,
+            ScheduleComponent,
+            PlannerComponent,
+            SectionBoardComponent,
+          ],
+        },
         add: {
-          imports: [StubWorkViewComponent, StubScheduleComponent, StubPlannerComponent],
+          imports: [
+            StubWorkViewComponent,
+            StubScheduleComponent,
+            StubPlannerComponent,
+            StubSectionBoardComponent,
+          ],
         },
       })
       .compileComponents();
@@ -99,7 +118,7 @@ describe('ProjectTaskPageComponent layout switch', () => {
   });
 
   it('switches to the calendar layout and remembers it for this project only', () => {
-    clickSegment(1);
+    clickSegment(2);
 
     expect(q('.stub-schedule')).toBeTruthy();
     expect(q('.stub-work')).toBeNull();
@@ -112,14 +131,22 @@ describe('ProjectTaskPageComponent layout switch', () => {
     expect(localStorage.getItem(key('p2'))).toBeNull();
   });
 
+  it('switches to the board layout without the calendar events toggle', () => {
+    clickSegment(1);
+
+    expect(q('.stub-board')).toBeTruthy();
+    expect(q('.stub-work')).toBeNull();
+    expect(q('.calendar-events-toggle')).toBeNull();
+  });
+
   it('switches to the upcoming layout', () => {
-    clickSegment(2);
+    clickSegment(3);
 
     expect(q('.stub-planner')).toBeTruthy();
   });
 
   it('scopes the calendar to the project and hides calendar events until toggled', () => {
-    clickSegment(1);
+    clickSegment(2);
     const schedule = fixture.debugElement.query((d) => d.name === 'schedule');
     expect(schedule.componentInstance.scope()).toEqual({
       projectId: 'p1',
