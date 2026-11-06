@@ -1,7 +1,11 @@
 <main>
   <h1>{{ T.NATIVE_SYNC.TITLE | translate }}</h1>
   <p>{{ T.NATIVE_SYNC.INTRO | translate }}</p>
+  <p>{{ T.NATIVE_SYNC.SUPERSYNC_COMPATIBILITY | translate }}</p>
   <p role="status">{{ native.status() | translate }}</p>
+  @if (native.backgroundError()) {
+    <p role="alert">{{ native.backgroundError() | translate }}</p>
+  }
   @if (message() || native.error()) {
     <p role="alert">{{ message() || native.error() | translate }}</p>
   }
@@ -78,12 +82,26 @@
       >
         {{ T.NATIVE_SYNC.LOCK | translate }}
       </button>
+      <button
+        type="button"
+        (click)="runSignOut()"
+        [disabled]="native.busy() || working()"
+      >
+        {{ T.NATIVE_SYNC.SIGN_OUT | translate }}
+      </button>
       <a
         [href]="native.serverUrl + '/account'"
         target="_blank"
         rel="noopener noreferrer"
         >{{ T.NATIVE_SYNC.MANAGE_ACCOUNT | translate }}</a
       >
+      <button
+        type="button"
+        (click)="deleteAccount()"
+        [disabled]="native.busy() || working()"
+      >
+        {{ T.NATIVE_SYNC.DELETE_ACCOUNT | translate }}
+      </button>
     </nav>
     @if (!native.linked()) {
       <section>
@@ -112,6 +130,27 @@
       </section>
     } @else {
       <p>{{ T.NATIVE_SYNC.PERIODIC | translate }}</p>
+      @if (native.projects().length) {
+        <p role="status">
+          {{
+            (native.live() ? T.NATIVE_SYNC.LIVE : T.NATIVE_SYNC.HTTP_FALLBACK) | translate
+          }}
+        </p>
+      }
+      @for (offer of native.ownershipOffers(); track offer.id) {
+        <section>
+          <p>
+            {{ T.NATIVE_SYNC.OWNERSHIP_OFFER | translate }}: {{ title(offer.scopeId) }}
+          </p>
+          <button
+            type="button"
+            (click)="acceptOwnership(offer)"
+            [disabled]="working()"
+          >
+            {{ T.NATIVE_SYNC.ACCEPT_OWNERSHIP | translate }}
+          </button>
+        </section>
+      }
       @for (invite of native.invitations(); track invite.id) {
         <section>
           <p>{{ T.NATIVE_SYNC.INVITATION | translate }}: {{ invite.role }}</p>
@@ -214,10 +253,54 @@
                     >
                       {{ T.NATIVE_SYNC.REMOVE | translate }}
                     </button>
+                    <button
+                      type="button"
+                      (click)="offerOwnership(member.authorization.accountId)"
+                      [disabled]="working() || project.state !== 'active'"
+                    >
+                      {{ T.NATIVE_SYNC.TRANSFER_OWNERSHIP | translate }}
+                    </button>
                   }
                 </li>
               }
             </ul>
+            <details>
+              <summary>{{ T.NATIVE_SYNC.PROJECT_RECOVERY | translate }}</summary>
+              <p>{{ T.NATIVE_SYNC.CHECKPOINT_HELP | translate }}</p>
+              <button
+                type="button"
+                (click)="saveCheckpoint()"
+                [disabled]="working() || project.state !== 'active'"
+              >
+                {{ T.NATIVE_SYNC.SAVE_CHECKPOINT | translate }}
+              </button>
+              <button
+                type="button"
+                (click)="loadCheckpoints()"
+                [disabled]="working()"
+              >
+                {{ T.NATIVE_SYNC.LOAD_CHECKPOINTS | translate }}
+              </button>
+              @for (checkpoint of checkpoints(); track checkpoint.sequence) {
+                @if (checkpoint.scopeId === project.id) {
+                  <button
+                    type="button"
+                    (click)="restore(checkpoint.sequence)"
+                    [disabled]="working() || project.state !== 'active'"
+                  >
+                    {{ T.NATIVE_SYNC.RESTORE_CHECKPOINT | translate }}
+                    {{ checkpoint.sequence }}
+                  </button>
+                }
+              }
+              <button
+                type="button"
+                (click)="deleteProject()"
+                [disabled]="working()"
+              >
+                {{ T.NATIVE_SYNC.DELETE_PROJECT | translate }}
+              </button>
+            </details>
           }
           @if (canEdit()) {
             <form (ngSubmit)="addTask()">
@@ -312,6 +395,15 @@
                       [ngModelOptions]="{ updateOn: 'blur' }"
                       [disabled]="working()"
                     ></textarea>
+                  </label>
+                  <label
+                    >{{ T.NATIVE_SYNC.MY_REMINDER | translate }}
+                    <input
+                      type="datetime-local"
+                      [ngModel]="item.reminderLocal"
+                      (ngModelChange)="remind(item.id, item.task.title, $event)"
+                      [disabled]="working()"
+                    />
                   </label>
                   <p>
                     {{ item.loggedMinutes }}

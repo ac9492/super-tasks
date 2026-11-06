@@ -1,0 +1,64 @@
+name: Native sync iOS build and Keychain smoke
+on:
+  push:
+    branches: [feat/native-encrypted-accounts]
+    paths:
+      - 'ios/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/native-sync-ios.yml'
+      - 'tools/ios-native-session-smoke.html'
+      - 'tools/verify-ios-native-session.swift'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: native-sync-ios-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ios-simulator:
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Prepare native project for compilation
+        # Angular behavior runs in the two-account browser suite. This fixture
+        # exercises the real WKWebView/Keychain bridge and is never distributed.
+        run: |
+          mkdir -p dist/browser
+          cp tools/ios-native-session-smoke.html dist/browser/index.html
+          npm run sync:ios
+      - name: Compile all iOS targets without signing or publishing
+        run: >-
+          xcodebuild -workspace ios/App/App.xcworkspace -scheme App
+          -configuration Debug -sdk iphonesimulator
+          -destination 'generic/platform=iOS Simulator'
+          -derivedDataPath /tmp/ultra-native-ios CODE_SIGNING_ALLOWED=NO build
+      - name: Exercise Keychain and offline session handoff in a fresh simulator
+        shell: bash
+        run: |
+          set -euo pipefail
+          sim_id=$(xcrun simctl list devices available -j | python3 -c 'import json,sys; print(next(d["udid"] for devices in json.load(sys.stdin)["devices"].values() for d in devices if "iPhone" in d["name"] and d["state"] == "Shutdown"))')
+          xcrun simctl boot "$sim_id"
+          xcrun simctl bootstatus "$sim_id" -b
+          xcrun simctl install "$sim_id" /tmp/ultra-native-ios/Build/Products/Debug-iphonesimulator/App.app
+          xcrun swiftc tools/verify-ios-native-session.swift -o /tmp/verify-ios-native-session
+          xcrun simctl launch "$sim_id" app.ultratasks
+          for attempt in {1..30}; do
+            xcrun simctl io "$sim_id" screenshot /tmp/ultra-native-smoke.png
+            if /tmp/verify-ios-native-session /tmp/ultra-native-smoke.png; then exit 0; fi
+            sleep 2
+          done
+          echo 'Native iOS session smoke did not pass.'
+          exit 1

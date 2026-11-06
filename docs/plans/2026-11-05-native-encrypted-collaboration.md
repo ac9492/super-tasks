@@ -3,32 +3,34 @@
 Status: In progress for the Ultra Tasks fork.
 Owner: Ultra Tasks maintainer.
 Tracking: feat/native-encrypted-accounts.
-Last verified against code: November 5, 2026, on the feature branch.
+Last verified against code: November 6, 2026, on the feature branch.
 Completion condition: Ship the milestones and their migration and acceptance
 checks; move the resulting contracts into maintained architecture, API,
 self-hosting, and user documentation, then retire this plan.
 
-Implementation progress: requested steps 1–4 are implemented behind the opt-in
-account service: crypto/accounts, periodic personal sync, and native project
-sharing. The app's Sync settings links to Native encrypted sync and sharing.
+Implementation progress: requested steps 1–6 now have implementations behind the
+opt-in account service: crypto/accounts, periodic personal sync, native project
+sharing, near-real-time delivery, recovery, and platform session/reminder support.
 See the [account guide](../../packages/super-sync-server/docs/ultra-accounts.md),
 [native sync contract](../../packages/super-sync-server/docs/native-sync.md),
 and [crypto package](../../packages/account-crypto/README.md).
-Shared projects currently use the same 60-second/manual scheduling as personal
-data; near real-time delivery is the next requested implementation step.
-Member removal already performs automatic staged rekeying. Ownership transfer,
-native workers, automatic legacy write fencing/provider retirement, and an
-independent security review remain later milestones/release gates.
+Owner transfer and restore use automatic staged rekeying; account deletion freezes
+remaining projects until an unlocked owner completes their automatic rekey.
+Android has a read-only reminder worker; iOS uses Keychain sessions and foreground/
+resume sync. Provider cutover/write fencing and independent security review remain
+the next milestone/release gates. SuperSync remains an optional personal provider.
 
 Initial integration deliberately keeps shared projects in a dedicated native
 page inside the app. Personal data continues in existing task views through a
 snapshot/intents bridge. Shared records are not projected into legacy plugin,
-Today, reminder, board, or worklog paths yet; these require scope-aware references
-before they can safely accept shared tasks. Shared private plans/time can be
+Today, board, or worklog paths yet; these require scope-aware references
+before they can safely accept shared tasks. Private shared reminders use their own scoped path. Shared private plans/time can be
 exported from the native page. Changed scopes currently download consistent
 heads rather than a paginated incremental stream. Legacy bulk changes larger
 than 100 records publish in bounded transactions. These are explicit differences
-from the target architecture below, not completed near-real-time/cutover work.
+from the target architecture below. Mobile background delivery is best effort;
+iOS has no periodic background polling, and Android project reminders wait for a
+foreground key handoff after a new epoch.
 
 Ultra Tasks will support native project sharing by email or username,
 password-based accounts with two-factor authentication, mandatory end-to-end
@@ -610,10 +612,14 @@ feed or revealing private timers.
 
 ## Provider consolidation and self hosting
 
-Expose two destinations in settings: Ultra Tasks and Custom server. Internally
+Expose two native destinations in settings: Ultra Tasks and Custom server.
+Keep SuperSync as an additional compatibility choice for personal sync. Internally
 these are the same adapter configured with different endpoints. Custom does
 not mean arbitrary WebDAV, S3, or a generic file URL: those lack the required
-account, transaction, and subscription protocol.
+account, transaction, and subscription protocol. SuperSync retains its upstream v1 wire format, credentials, and
+separate encryption password; it cannot host native scoped sharing or use v2
+account vaults/2FA without the Ultra API. A profile chooses one personal mode,
+with no dual write of the same dataset.
 
 Publish one versioned server image with PostgreSQL, HTTPS/WSS reverse-proxy
 instructions, SMTP configuration, server identity, secrets, backup/restore,

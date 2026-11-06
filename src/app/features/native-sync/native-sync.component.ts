@@ -4,6 +4,8 @@ import {
   computed,
   inject,
   signal,
+  OnInit,
+  DestroyRef,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -15,10 +17,17 @@ import {
   type Invitation,
   type SharedTask,
   type TaskOverlay,
+  type OwnershipOffer,
 } from '@ultra-tasks/account-crypto';
 import { T } from '../../t.const';
 import { DateService } from '../../core/date/date.service';
 import { download } from '../../util/download';
+import { MatDialog } from '@angular/material/dialog';
+import { firstValueFrom } from 'rxjs';
+import { DialogConfirmComponent } from '../../ui/dialog-confirm/dialog-confirm.component';
+import { formatDate } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { selectAllProjects } from '../project/store/project.selectors';
 
 @Component({
@@ -28,10 +37,14 @@ import { selectAllProjects } from '../project/store/project.selectors';
   styleUrl: './native-sync.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NativeSyncComponent {
+export class NativeSyncComponent implements OnInit {
+  private readonly route = inject(ActivatedRoute);
+  private readonly destroyRef = inject(DestroyRef);
   readonly native = inject(NativeSyncService);
   private readonly snapshots = inject(StateSnapshotService);
   private readonly dateService = inject(DateService);
+  private readonly dialogs = inject(MatDialog);
+  readonly checkpoints = signal<{ scopeId: string; sequence: number }[]>([]);
   readonly T = T;
   server = localStorage.getItem('ultra-native-server') ?? '';
   identifier = '';
@@ -80,6 +93,13 @@ export class NativeSyncComponent {
         id: record.entityId,
         task: record.value as SharedTask,
         overlay: this.overlay(record.entityId),
+        reminderLocal: this.overlay(record.entityId).remindAt
+          ? formatDate(
+              this.overlay(record.entityId).remindAt!,
+              "yyyy-MM-dd'T'HH:mm",
+              'en-US',
+            )
+          : '',
         loggedMinutes:
           Object.values(this.overlay(record.entityId).timeBuckets ?? {}).reduce(
             (sum, n) => sum + n,
@@ -92,10 +112,30 @@ export class NativeSyncComponent {
   });
   readonly drafts = computed(() => {
     this.native.revision();
-    return Object.values(this.native.client?.state.scopes ?? {}).flatMap((s) =>
-      s.conflicts.map((d) => ({ ...d, scopeId: s.info.id })),
-    );
+    return Object.values(this.native.client?.state.scopes ?? {}).flatMap((s) => [
+      ...s.conflicts.map((d) => ({ ...d, scopeId: s.info.id })),
+      ...(s.revoked
+        ? s.intents.flatMap((intent) =>
+            intent.changes.map((change) => ({
+              id: intent.id + ':' + change.entityId,
+              entityId: change.entityId,
+              value: change.value,
+              reason: 'permission',
+              createdAt: 0,
+              scopeId: s.info.id,
+            })),
+          )
+        : []),
+    ]);
   });
+  ngOnInit(): void {
+    this.route.queryParamMap
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((params) => {
+        const scope = params.get('scope');
+        if (scope) this.selected.set(scope);
+      });
+  }
   title(scopeId: string): string {
     this.native.revision();
     return (
@@ -247,6 +287,65 @@ export class NativeSyncComponent {
       await this.native.refresh();
     });
   }
+  private async confirm(message: string): Promise<boolean> {
+    return !!(await firstValueFrom(
+      this.dialogs.open(DialogConfirmComponent, { data: { message } }).afterClosed(),
+    ));
+  }
+  async offerOwnership(accountId: string): Promise<void> {
+    if (!(await this.confirm('NATIVE_SYNC.TRANSFER_NOTICE'))) return;
+    await this.run(async () => {
+      await this.native.client!.offerOwnership(this.selected(), accountId);
+      this.message.set('NATIVE_SYNC.TRANSFER_SENT');
+    });
+  }
+  async acceptOwnership(offer: OwnershipOffer): Promise<void> {
+    if (!(await this.confirm('NATIVE_SYNC.ACCEPT_OWNERSHIP_NOTICE'))) return;
+    await this.run(async () => {
+      await this.native.client!.acceptOwnership(offer);
+      await this.native.refresh();
+    });
+  }
+  async saveCheckpoint(): Promise<void> {
+    await this.run(async () => {
+      await this.native.client!.checkpoint(this.selected());
+      await this.loadCheckpoints();
+    });
+  }
+  async loadCheckpoints(): Promise<void> {
+    const scopeId = this.selected();
+    await this.run(async () =>
+      this.checkpoints.set(
+        (await this.native.client!.checkpoints(scopeId)).map((sequence) => ({
+          scopeId,
+          sequence,
+        })),
+      ),
+    );
+  }
+  async restore(sequence: number): Promise<void> {
+    if (!(await this.confirm('NATIVE_SYNC.RESTORE_NOTICE'))) return;
+    await this.run(async () => {
+      await this.native.client!.restoreProject(this.selected(), sequence);
+      this.checkpoints.set([]);
+      await this.native.refresh();
+    });
+  }
+  async deleteProject(): Promise<void> {
+    if (!(await this.confirm('NATIVE_SYNC.DELETE_PROJECT_NOTICE'))) return;
+    await this.run(async () => {
+      await this.native.client!.deleteProject(this.selected());
+      this.selected.set('');
+      await this.native.refresh();
+    });
+  }
+  async deleteAccount(): Promise<void> {
+    if (!(await this.confirm('NATIVE_SYNC.DELETE_ACCOUNT_NOTICE'))) return;
+    await this.run(() => this.native.deleteAccount());
+  }
+  async runSignOut(): Promise<void> {
+    await this.run(() => this.native.logout());
+  }
   async addTask(): Promise<void> {
     await this.run(async () => {
       if (!this.newTitle.trim()) return;
@@ -323,6 +422,20 @@ export class NativeSyncComponent {
         },
       ]),
     );
+  }
+  async remind(taskId: string, label: string, localTime: string): Promise<void> {
+    await this.run(async () => {
+      const remindAt = localTime ? new Date(localTime).getTime() : null;
+      if (remindAt !== null && !Number.isFinite(remindAt)) return;
+      await this.native.platform.requestReminderPermission();
+      await this.native.client!.edit(this.personalScope(), [
+        {
+          entityId: this.overlayId(taskId),
+          entityType: 'personal.overlay',
+          value: { ...this.overlay(taskId), label, remindAt },
+        },
+      ]);
+    });
   }
   async logTime(taskId: string, label: string, minutes: string): Promise<void> {
     const amount = Number(minutes);

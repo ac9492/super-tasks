@@ -264,9 +264,13 @@ object ReminderNotificationHelper {
             })
             .setContentIntent(contentPendingIntent)
             .setAutoCancel(true)
-            .addAction(0, "Done", donePendingIntent)
-            .addAction(0, "Snooze 10m", snoozePendingIntent)
-            .addAction(0, "Snooze 1h", snooze1hPendingIntent)
+            .apply {
+                if (reminderType != "NATIVE_SHARED") {
+                    addAction(0, "Done", donePendingIntent)
+                    addAction(0, "Snooze 10m", snoozePendingIntent)
+                    addAction(0, "Snooze 1h", snooze1hPendingIntent)
+                }
+            }
             .setGroup(GROUP_KEY)
             .setOngoing(isOngoing)
             .setPriority(NotificationCompat.PRIORITY_HIGH)

@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { AccountClient, SyncClient, randomKey } from '@ultra-tasks/account-crypto';
+import { AccountClient, SyncClient, randomKey, open } from '@ultra-tasks/account-crypto';
+import { NativeSyncPlatformService } from './native-sync-platform.service';
 import { NativeSyncService } from './native-sync.service';
 import { NativePersonalBridgeService } from './native-personal-bridge.service';
 
@@ -9,6 +10,16 @@ describe('NativeSyncService', () => {
     TestBed.configureTestingModule({
       providers: [
         NativeSyncService,
+        {
+          provide: NativeSyncPlatformService,
+          useValue: {
+            transport: (base: unknown) => base,
+            bind: async () => undefined,
+            update: async () => undefined,
+            current: async () => undefined,
+            clear: async () => undefined,
+          },
+        },
         {
           provide: NativePersonalBridgeService,
           useValue: { bind: async () => true, clear: () => undefined },
@@ -61,7 +72,27 @@ describe('NativeSyncService', () => {
       expect(sync).toHaveBeenCalledTimes(2);
       window.dispatchEvent(new Event('online'));
       expect(sync).toHaveBeenCalledTimes(3);
+      const accountKey = service.account!.unlocked!.masterKey;
+      spyOn(TestBed.inject(NativeSyncPlatformService), 'clear').and.resolveTo({
+        accessToken: 'native-access',
+        refreshToken: 'latest-native-refresh',
+        expiresIn: 500,
+      });
       await service.lock();
+      const cached = JSON.parse(
+        localStorage.getItem('ultra-native-account:http://localhost:1900')!,
+      );
+      expect(
+        await open(
+          accountKey,
+          cached.refresh,
+          JSON.stringify({
+            serverId: 'server',
+            accountId: 'account',
+            purpose: 'native-session',
+          }),
+        ),
+      ).toBe('latest-native-refresh');
       jasmine.clock().tick(60000);
       window.dispatchEvent(new Event('online'));
       expect(sync).toHaveBeenCalledTimes(3);
