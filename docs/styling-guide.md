@@ -148,13 +148,15 @@ device is below 40px.
 
 ### Layout
 
-| Token                   | Value                       | Notes                                   |
-| ----------------------- | --------------------------- | --------------------------------------- |
-| `--page-gutter`         | 8px, 16px ≥ 600, 24px ≥ 960 | Page content's one left edge            |
-| `--component-max-width` | `clamp(800px, 65vw, 960px)` | 900–1000px on iPad (`body.isIPad`)      |
-| `--bar-height-large`    | 56px                        | Header band and brand row               |
-| `--dialog-gutter`       | 16px, 24px ≥ 600            | Dialog title, content and actions inset |
-| `--dialog-w-s/m/l`      | 440 / 560 / 720px           | Dialog widths, see [Dialogs](#dialogs)  |
+| Token                   | Value                       | Notes                                              |
+| ----------------------- | --------------------------- | -------------------------------------------------- |
+| `--page-gutter`         | 8px, 16px ≥ 600, 24px ≥ 960 | Page content's one left edge                       |
+| `--component-max-width` | `clamp(800px, 65vw, 960px)` | 900–1000px on iPad (`body.isIPad`)                 |
+| `--bar-height-large`    | 56px                        | Header band and brand row                          |
+| `--side-nav-width`      | 260px                       | Side nav panel, expanded                           |
+| `--bottom-nav-height`   | 56px                        | Phone bottom nav (48px pills, 4px above and below) |
+| `--dialog-gutter`       | 16px, 24px ≥ 600            | Dialog title, content and actions inset            |
+| `--dialog-w-s/m/l`      | 440 / 560 / 720px           | Dialog widths, see [Dialogs](#dialogs)             |
 
 ### Legacy aliases
 
@@ -234,7 +236,7 @@ Rules:
 - **One disclosure.** "More options", Sound, the repeat dialog's Options, native `<details>` ("Customize colors", a plugin's details) are one pattern: a 40px row, a 20px chevron leading the label (14/500, the `--type-body-strong` role), on the content's own left edge; the chevron turns 180° when open. `collapsible` and `formly-collapsible` get it from `src/app/ui/_collapsible-shared.scss`, `<details>` from `src/styles/components/_disclosure.scss`. Give `collapsible` `[isIconBefore]="true"`. A section's "More options" is named for assistive tech with its section (`aria-label`: "More options – Language & region").
 - **Boolean rows** are a field-height bordered row, control first, label after it, hint below. A toggle outside formly sits in a `mat-form-field` with a hidden input, as `formly-slide-toggle` does.
 - **View switchers** (Plugins Installed/Discover, Appearance Dark mode) are a `mat-button-toggle-group`: 40px, `--r-md`, the chosen segment is the tonal "selected" role. A toggle button's role is `radio`.
-- **Selection** is one role: the active side-nav row, the open settings category, a pressed segment and the chosen customizer entry share `--palette-selected` / `--palette-selected-ink`.
+- **Selection** is one role: the active side-nav row, the open settings category, a pressed segment, the chosen customizer entry and the task open in the detail panel share `--palette-selected` / `--palette-selected-ink`. Filled accent (`--palette-accent` with `--palette-accent-ink`) is for the single primary action of a surface.
 
 ## Page layout
 
@@ -342,19 +344,22 @@ shared tokens and painted containers. [theming-contract.md](theming-contract.md)
 lists every role, its contrast guarantee and the aliases it feeds. New colours go
 through these roles, never a hex value.
 
-| Use case    | Tokens                                                                                                                   |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Text        | `--text-color`, `--text-color-muted` (the `--palette-ink-muted` tier), `--text-color-most-intense`                       |
-| Surfaces    | `--bg`, `--card-bg`, overlays on `--palette-surface-raised`                                                              |
-| Interaction | `--palette-hover`, `--palette-selected` (+ `-ink`), `--state-hover` / `--state-pressed` overlays                         |
-| Lines       | `--separator` (`--palette-separator`) for hairlines, `--input-border-color` (`--palette-outline`) for field edges        |
-| Focus       | `--focus-ring` (`--palette-focus-ring`)                                                                                  |
-| Semantic    | `--c-warn` / `--color-danger`, `--color-warning`, `--color-success` (the normaliser's danger, warning and success roles) |
-| Tooltips    | `--palette-tooltip-bg`, `--palette-tooltip-ink`                                                                          |
+| Use case    | Tokens                                                                                                                                                   |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Text        | `--text-color`, `--text-color-muted` (the `--palette-ink-muted` tier), `--text-color-most-intense`                                                       |
+| Surfaces    | `--bg`, `--card-bg`, overlays on `--palette-surface-raised`                                                                                              |
+| Interaction | `--palette-hover`, `--palette-selected` (+ `-ink`), `--state-hover` / `--state-pressed` overlays                                                         |
+| Lines       | `--separator` (`--palette-separator`) for hairlines, `--input-border-color` (`--palette-outline`) for field edges                                        |
+| Focus       | `--focus-ring` (`--palette-focus-ring`)                                                                                                                  |
+| Semantic    | `--c-warn` / `--color-danger`, `--color-warning`, `--color-success`, `--scheduled-date-*` (the normaliser's danger, warning, success and upcoming roles) |
+| Tooltips    | `--palette-tooltip-bg`, `--palette-tooltip-ink`                                                                                                          |
 
 Each painted container sets the ink that contrasts with its own colour, so text
 inherits a readable colour from its container. `color="warn"` buttons, overdue
-dates and destructive actions stay red and never follow the accent.
+dates and destructive actions stay red and never follow the accent. Links use the
+text ink; links inside running text (`p`, table cells, hints, markdown) are
+underlined, while anchors that are controls or rows (Material buttons, nav and
+footer links, card titles) keep the look they declare.
 
 ### Theme-Specific Overrides in Components
 
@@ -372,20 +377,26 @@ Mixins are in `src/styles/mixins/_theming.scss`.
 ## Task rows (cards vs flat)
 
 `src/index.html` always sets `body.ultra-tasks`, and `_ultra-tasks.scss` turns every
-`task` row into a card: a full `--st-line-width` border in `--task-border-color` (a
-low-contrast mix of the surface ink into `--card-bg`), the `--card-bg` surface,
-`--st-radius` (`--r-md`) corners, a `--s-half` gap between rows and no separator.
-Subtasks are cards too, nested inside their parent's card. The inherited tokens in
-`_css-variables.scss` still describe flat, hairline-separated rows, and planner,
-board and issue-panel items keep that flat default:
+top-level `task` row into a card: a full `--st-line-width` border in
+`--task-border-color` (the palette's quiet `--palette-border` role), the `--card-bg`
+surface, `--st-radius` (`--r-md`) corners and a `--s-half` gap between rows, with no
+separator. A row is exactly 48px tall with a title only and exactly 56px with a meta
+line, on every palette. The inherited tokens in `_css-variables.scss` still describe flat,
+hairline-separated rows, and planner, board and issue-panel items keep that flat
+default:
 
 | Token                  | Inherited default (flat)           | Ultra Tasks `task` rows               |
 | ---------------------- | ---------------------------------- | ------------------------------------- |
 | `--task-separator`     | `1px solid var(--separator-color)` | `none`                                |
-| `--task-border-color`  | `var(--divider-color)`             | surface ink mixed into `--card-bg`    |
+| `--task-border-color`  | `var(--divider-color)`             | `var(--palette-border)`               |
 | `--task-border-radius` | `0`                                | `var(--st-radius)`                    |
 | `--task-list-row-gap`  | `0`                                | `var(--s-half)`                       |
 | Row border and surface | none / `--task-c-bg: transparent`  | `--st-line-width` border, `--card-bg` |
+
+Cards or separators, never both and never nested: a **subtask is a row inside its
+parent's card**, with no border, radius or fill of its own, divided from its
+siblings by a hairline in `--task-border-color` (none above the first). It is
+indented so its toggle sits under the parent's title.
 
 Change the row look in these tokens and in `_ultra-tasks.scss` only — never
 hardcode a border or surface on a row in component styles. Rows that draw their own
@@ -394,23 +405,33 @@ box (planner, board and issue-panel items) take their top/bottom edge from
 on one element. Bare `task` hosts use `--task-separator`. Task rows are a
 performance hot path: CSS only, and no per-row shadow, filter or blur.
 
-Chrome around task lists — section headings (`collapsible.task-section`), board panel
-titles, the collapsed "+ n completed subtasks" label — is typed one level below the
-content it frames: `--font-size-sm`, `--font-weight-semibold` (regular for inline
-labels), `--letter-spacing-wide`, `--text-color-muted`. Task text stays at the 14px
-base, so the two never read alike. No `text-transform: uppercase` — these labels are
-often long and user-authored, where caps only add width. Meta counts follow the same
+Row states each have one channel:
+
+| State                      | Look                                                                                                                                  |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Open in the detail panel   | `--task-c-selected-bg` (`--palette-selected`) tint with the selected ink (`--palette-selected-ink`, muted tier `-selected-ink-muted`) |
+| Tracked (the current task) | an accent edge: the card border becomes `--palette-accent-text`; no tint, no shadow. A subtask shows only its play indicator          |
+| Multi-selected             | `--task-c-multi-selected-bg` tint plus a 1px accent outline                                                                           |
+| Keyboard focus             | a `--focus-ring-width` (2px) `--focus-ring` outline, no tint                                                                          |
+
+A tracked task is deliberately not tinted, so it never looks like the one open in
+the panel. The planner marks its tracked row the same way.
+
+Section headings in task lists (`collapsible.task-section`, including user-made
+sections) are a 32px (`--ctl-sm`) type-only row in `--type-label` with
+`--track-label`, muted, and **no rule** under it. The chevron sits in the same 24px
+leading slot as the cards' done toggles and the title on the cards' text column.
+Board panel titles follow the same label type. Task text stays at the body role, so
+the two never read alike. No `text-transform: uppercase` — these labels are often
+long and user-authored, where caps only add width. Meta counts follow the same
 label style and are omitted entirely when zero rather than shown as `-` or `0`.
 
-Task multi-selection is a `--task-c-multi-selected-bg` tint plus a 1px
-`--palette-primary-400` (palette accent) outline; keyboard focus is a
-`--focus-ring-width` (2px) outline in the same color and no tint. The tint is what
-separates them — a 1px vs 2px line in one color is not readable as two states — but
-it is the weaker channel, so the outline stays: `background` on a task row is
-contested (the `isCurrent` chain and the `isSelected` `!important` rule win over it),
-and author backgrounds are dropped in forced-colors mode while outlines survive.
-Never make a row state depend on `background` alone. The task open in the detail
-panel uses `--task-c-selected-bg`.
+Multi-selection is a tint plus an outline because `background` on a task row is
+contested (the `isSelected` `!important` rule wins over it), and author
+backgrounds are dropped in forced-colors mode while outlines survive. The tint is
+what separates it from keyboard focus — a 1px vs 2px line in one color is not
+readable as two states — but it is the weaker channel, so the outline stays. Never
+make a row state depend on `background` alone.
 
 Focus rings on rows and other focusable containers (anything carrying a `tabindex`,
 as opposed to a button or control — those keep the `.focus-ring` utility from the Focus

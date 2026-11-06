@@ -8,7 +8,7 @@
 //   --ink-muted
 //   --ink-on-channel       → RGB triplet (e.g. "0,0,0") for `rgba()` overlays
 //   --separator, --divider → border / hairline tones
-//   --scrim, --bg-overlay  → modal / wallpaper overlay tones
+//   --scrim, --bg-overlay  → modal / image overlay tones
 //   --brand, --focus-ring  → accent / focus surfaces (alias to Material palette)
 //   --state-{hover,focus,
 //   pressed,selected}-alpha,
@@ -53,7 +53,8 @@
   --st-line-width: 1px;
   --st-focus-width: 2px;
 
-  // Device-local palette defaults, replaced synchronously at startup.
+  // Device-local palette defaults, replaced synchronously at startup:
+  // one declaration per role (the service writes every one on the root).
   --palette-background: #f8f8f7;
   --palette-surface: #ffffff;
   --palette-accent: #075b5e;
@@ -67,13 +68,30 @@
   --palette-hover: #ebf2f2;
   --palette-hover-ink: #000000;
   // Normaliser roles the scale reads: the elevation hairline, the field edge
-  // and the tooltip pair. PaletteThemeService writes the solved values on the
-  // root element; these defaults only cover the first paint and follow the
-  // mode through the inks above (docs/theming-contract.md).
+  // and the tooltip pair. These defaults only cover the first paint and follow
+  // the mode through the inks above (docs/theming-contract.md).
   --palette-separator: rgba(var(--palette-background-ink-channel), 0.1);
   --palette-outline: rgba(var(--palette-surface-ink-channel), 0.42);
   --palette-tooltip-bg: var(--palette-surface-ink);
   --palette-tooltip-ink: var(--palette-surface);
+  // The remaining roles, first-paint values of the default light palette.
+  --palette-surface-raised: #ffffff;
+  --palette-ink-muted: #6c6c6c;
+  --palette-selected-ink-muted: #616161;
+  --palette-accent-text: #075b5e;
+  --palette-focus-ring: #075b5e;
+  --palette-border: rgba(var(--palette-surface-ink-channel), 0.123);
+  --palette-disabled: rgba(var(--palette-surface-ink-channel), 0.053);
+  --palette-disabled-ink: rgba(var(--palette-surface-ink-channel), 0.376);
+  --palette-scrollbar: rgba(var(--palette-background-ink-channel), 0.224);
+  --palette-danger: #c0161b;
+  --palette-danger-ink: #ffffff;
+  --palette-warning: #8d5300;
+  --palette-warning-ink: #ffffff;
+  --palette-success: #00703e;
+  --palette-success-ink: #ffffff;
+  --palette-upcoming: #823cc3;
+  --palette-upcoming-ink: #ffffff;
   // -----------------------------
   // Safe Areas (iOS notch, home indicator)
   // Uses env() for native iOS safe areas
@@ -315,7 +333,6 @@
   // Below cdk-overlay (1000): menus and dialogs cover the hint, not vice versa.
   --z-onboarding-hint: 998;
   --z-dragged-nav-item: 1002;
-  --z-bg-overlay: 1;
 
   // ===============================
   // COLORS - Theme Independent
@@ -324,11 +341,16 @@
   // -----------------------------
   // Semantic Colors
   // -----------------------------
-  --color-success: #4caf50;
-  --color-warning: #ff9800;
-  --color-danger: #f44336;
-  --success-green: #4fa758;
-  --sun-yellow: #fff400;
+  // The normaliser's semantic roles, solved for 4.5:1 text on every layer and
+  // independent of the accent (docs/theming-contract.md). The older names are
+  // aliases, declared here once; plugins receive them by name.
+  --color-success: var(--palette-success);
+  --color-warning: var(--palette-warning);
+  --color-danger: var(--palette-danger);
+  --success-green: var(--palette-success);
+  --scheduled-date-today: var(--palette-success);
+  --scheduled-date-tomorrow: var(--palette-warning);
+  --scheduled-date-upcoming: var(--palette-upcoming);
 
   // -----------------------------
   // Dark Theme Elevation Colors
@@ -372,7 +394,8 @@
   // Legacy palette references
   --c-primary: var(--palette-primary-500);
   --c-accent: var(--palette-accent-500);
-  --c-warn: var(--palette-warn-500);
+  --c-warn: var(--palette-danger);
+  --c-warn-contrast: var(--palette-danger-ink);
   --c-contrast: var(--palette-primary-contrast-500);
 
   // ===============================
@@ -601,10 +624,8 @@ body.isDarkTheme {
   // Navigation & panel (Cat A)
   --sidenav-bg: transparent;
   --sidenav-bg-mobile: var(--bg);
-  // Keep active labels contrast-safe on every project colour. Brand remains
-  // visible in the non-text selection tint instead of carrying text contrast.
-  --sidenav-item-active-bg: color-mix(in srgb, var(--brand) 18%, transparent);
-  --sidenav-active-text: var(--ink-strong);
+  // The active row is the tonal selected role (--sidenav-item-active-bg and
+  // --sidenav-active-text are mapped to it in _palette-theme.scss).
   --sidenav-text: var(--text-color-less-intense);
   --sidenav-text-hover: var(--text-color-most-intense);
   --sidenav-text-secondary: var(--text-color-muted);
@@ -643,7 +664,9 @@ body.isDarkTheme {
   // separators, sharp corners. The "classic" theme restores the boxed look by
   // setting these same tokens, so keep every switch here token-driven.
   --task-c-bg: transparent;
-  --task-c-current-bg: var(--surface-3);
+  // A tracked task is marked by an accent edge, not a tint; the token stays as
+  // the selected tint for plugins that style a "current" row.
+  --task-c-current-bg: var(--task-c-selected-bg);
   --task-c-drag-drop-bg: var(--surface-3);
   --task-border-color: var(--divider-color);
   --task-border: none;
@@ -725,16 +748,6 @@ body.isDarkTheme {
 
 /* stylelint-disable-next-line no-duplicate-selectors -- layered token file: Cat B follows Layer 1 primitives on the same selector */
 body {
-  // Warn/overdue red (overdue dates, deadlines, destructive buttons): a darker
-  // stop on light surfaces and a lighter one on dark surfaces keep it >= 4.5:1
-  // as text on every palette preset. --c-warn-contrast is the ink on a warn
-  // fill. Never mapped to the palette accent.
-  --c-warn: var(--palette-warn-800);
-  --c-warn-contrast: #fff;
-  // Saturated schedule text colors on light surfaces.
-  --scheduled-date-today: #007a29;
-  --scheduled-date-tomorrow: #b45b00;
-  --scheduled-date-upcoming: #8000d0;
   // Background colors (Cat B)
   --bg-drag-col: rgb(242, 242, 242);
   --bg-slightly-lighter: var(--bg);
@@ -763,7 +776,6 @@ body {
   --standard-note-bg-hovered: var(--standard-note-bg);
 
   // Task colors (Cat B)
-  --task-c-current-bg: color-mix(in srgb, var(--c-accent) 10%, var(--surface-2));
   --task-c-selected-bg: var(--state-selected);
   // Multi-selection reads as a tinted surface — the focus ring is the only
   // outlined state, so the two never look alike.
@@ -811,18 +823,10 @@ body {
 
   // Grid colors (Cat B)
   --grid-color: #dadce0;
-
-  // Special colors overrides for light theme
-  --sun-yellow: #ffc107;
 }
 
 /* stylelint-disable-next-line no-duplicate-selectors -- layered token file: Cat B follows Layer 1 primitives on the same selector */
 body.isDarkTheme {
-  --c-warn: var(--palette-warn-A100);
-  --c-warn-contrast: #000;
-  --scheduled-date-today: #00d45a;
-  --scheduled-date-tomorrow: #ffaa00;
-  --scheduled-date-upcoming: #d580ff;
   // Background colors (Cat B)
   --bg-slightly-lighter: var(--dark4);
   --bg-super-light: #616161;
@@ -849,7 +853,6 @@ body.isDarkTheme {
   --standard-note-bg-hovered: var(--dark24);
 
   // Task colors (Cat B)
-  --task-c-current-bg: color-mix(in srgb, var(--c-accent) 18%, var(--surface-3));
   --task-c-selected-bg: var(--state-selected);
   --task-c-multi-selected-bg: color-mix(in srgb, var(--c-primary) 28%, var(--surface-3));
   --sub-task-c-bg: var(--task-c-bg);
@@ -901,8 +904,4 @@ body.isDarkTheme {
   // Grid colors (Cat B — light gray hex would be opaque on dark surfaces;
   // dark uses low-opacity white instead).
   --grid-color: var(--c-light-10);
-
-  // Sidenav active item (Cat B — dark intentionally softer than the
-  // 0.10 alias resolves to; preserved at 0.075 to match pre-refactor visuals).
-  --sidenav-item-active-bg: rgba(255, 255, 255, 0.075);
 }

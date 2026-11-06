@@ -10,7 +10,7 @@
   color: var(--text-color);
   background: var(--task-c-bg);
   // Flat rows: resting elevation replaced by the shared task-border hairline so
-  // planner tasks match the main task list (isCurrent/isDragReady keep their lift).
+  // planner tasks match the main task list (isDragReady keeps its lift).
   box-shadow: none;
   border: var(--task-border);
   transition: var(--transition-standard);
@@ -41,9 +41,10 @@
     box-shadow var(--transition-duration-s) ease-out;
 }
 
+// The tracked task is an accent edge, as in the task list (_ultra-tasks.scss):
+// no tint (that is the "selected" role) and no shadow.
 :host.isCurrent {
-  background: var(--task-c-current-bg);
-  box-shadow: var(--task-current-shadow);
+  box-shadow: inset 0 0 0 var(--st-line-width) var(--palette-accent-text);
 }
 
 // Tint plus a 1px outline — see _task-base.scss for why the outline stays as the

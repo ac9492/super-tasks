@@ -100,6 +100,7 @@ export class IssuePanelComponent {
         data: {
           cancelTxt: T.G.CANCEL,
           okTxt: T.G.DELETE,
+          isDestructive: true,
           message: T.F.ISSUE.DIALOG.DELETE_CONFIRM,
         },
       })

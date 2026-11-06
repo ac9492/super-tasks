@@ -251,11 +251,11 @@
 // Multi-selection stays on the owning row, across SwipeBlock's projection wrapper.
 // The tint is what separates it from the focus ring below (a 1px vs 2px line in
 // one colour was not readable as two states). The 1px outline stays as the
-// fallback channel: `background` on this box is contested — the `isCurrent` chain
-// and the `isSelected` !important rule below both win, and several bundled themes
-// (velvet, and the `:not(.isSelected):not(.isCurrent)` hover rules) force it with
-// !important — whereas nothing else draws an outline here. It also survives
-// forced-colors mode, where author backgrounds are dropped.
+// fallback channel: `background` on this box is contested — the `isSelected`
+// !important rule above wins, and several bundled themes (velvet, and the
+// `:not(.isSelected):not(.isCurrent)` hover rules) force it with !important —
+// whereas nothing else draws an outline here. It also survives forced-colors
+// mode, where author backgrounds are dropped.
 :host.isMultiSelected > swipe-block ::ng-deep > .inner-wrapper > .inner-wrapper > .box {
   background: var(--task-c-multi-selected-bg);
   outline: 1px solid var(--palette-primary-400);

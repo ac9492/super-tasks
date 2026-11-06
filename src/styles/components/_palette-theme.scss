@@ -3,28 +3,9 @@
 // docs/theming-contract.md lists every role and its contrast guarantee.
 // Every painted container gets its paired ink and muted tier here. Scope
 // aliases at the painted container, never observe individual task rows.
-// First-paint defaults (the default light palette's roles) for the roles not
-// declared with the other palette defaults in _css-variables.scss.
-// PaletteThemeService replaces every one synchronously at startup.
-:root {
-  --palette-surface-raised: #ffffff;
-  --palette-ink-muted: #6c6c6c;
-  --palette-selected-ink-muted: #616161;
-  --palette-accent-text: #075b5e;
-  --palette-focus-ring: #075b5e;
-  --palette-border: rgba(var(--palette-surface-ink-channel), 0.123);
-  --palette-disabled: rgba(var(--palette-surface-ink-channel), 0.053);
-  --palette-disabled-ink: rgba(var(--palette-surface-ink-channel), 0.376);
-  --palette-scrollbar: rgba(var(--palette-background-ink-channel), 0.224);
-  --palette-danger: #c0161b;
-  --palette-danger-ink: #ffffff;
-  --palette-warning: #8d5300;
-  --palette-warning-ink: #ffffff;
-  --palette-success: #00703e;
-  --palette-success-ink: #ffffff;
-  --palette-upcoming: #823cc3;
-  --palette-upcoming-ink: #ffffff;
-}
+// The first-paint defaults of the roles live with the other palette defaults
+// in _css-variables.scss; the semantic colour aliases (--c-warn, --color-*,
+// --scheduled-date-*) are declared once at the same place.
 
 @mixin ink($color, $channels, $muted) {
   --ink: #{$color};
@@ -64,18 +45,6 @@ body:is(.isLightTheme, .isDarkTheme) {
   --c-primary: var(--palette-accent);
   --c-accent: var(--palette-accent);
   --c-contrast: var(--palette-accent-ink);
-  // One semantic set, solved for 4.5:1 text on every layer and independent of
-  // the accent. The older names stay as aliases.
-  --c-warn: var(--palette-danger);
-  --c-warn-contrast: var(--palette-danger-ink);
-  --color-danger: var(--palette-danger);
-  --color-warning: var(--palette-warning);
-  --color-success: var(--palette-success);
-  --success-green: var(--palette-success);
-  --scheduled-date-today: var(--palette-success);
-  --scheduled-date-tomorrow: var(--palette-warning);
-  --scheduled-date-upcoming: var(--palette-upcoming);
-  --sun-yellow: var(--palette-accent);
   --dark0: var(--palette-surface);
   --dark0-5: var(--palette-surface);
   --dark1: var(--palette-surface);
@@ -94,8 +63,8 @@ body:is(.isLightTheme, .isDarkTheme) {
   --bg-slightly-lighter: var(--palette-surface);
   --bg-super-light: var(--palette-surface);
   --sidenav-hover-bg: var(--palette-surface);
-  --sidenav-item-active-bg: var(--palette-accent);
-  --sidenav-active-text: var(--palette-accent-ink);
+  --sidenav-item-active-bg: var(--palette-selected);
+  --sidenav-active-text: var(--palette-selected-ink);
   --sidenav-text: var(--text-color);
   --sidenav-text-hover: var(--palette-surface-ink);
   --sidenav-text-secondary: var(--palette-ink-muted);
@@ -105,7 +74,6 @@ body:is(.isLightTheme, .isDarkTheme) {
   --standard-note-bg: var(--palette-surface);
   --standard-note-fg: var(--palette-surface-ink);
   --standard-note-bg-hovered: var(--palette-hover);
-  --task-c-current-bg: var(--palette-selected);
   --task-c-selected-bg: var(--palette-selected);
   --task-c-multi-selected-bg: var(--palette-selected);
   --task-detail-bg: var(--palette-surface);
@@ -150,7 +118,8 @@ body:is(.isLightTheme, .isDarkTheme) {
   --mat-tooltip-container-color: var(--palette-tooltip-bg);
   --mat-tooltip-supporting-text-color: var(--palette-tooltip-ink);
 
-  // Remove the former project tint and wallpaper overlay from the three-color canvas.
+  // The three-color canvas has no project tint: hide the backdrop gradient
+  // (page.scss).
   &::before {
     display: none;
   }
@@ -216,7 +185,26 @@ body :is(input, textarea)::placeholder {
   color: var(--ink-muted);
   opacity: 1;
 }
-body a[href] {
+// Links in running text are underlined: the link ink is the text ink, so colour
+// alone must not mark them (WCAG 1.4.1). Scoped to prose and kept at zero
+// specificity, so anchors that are controls or rows (Material buttons and menu
+// items, nav and footer links, card titles) keep the look they declare.
+:where(
+  body
+    :is(
+      p,
+      dd,
+      td,
+      blockquote,
+      figcaption,
+      label,
+      mat-hint,
+      mat-error,
+      .markdown,
+      .markdown-preview
+    )
+    a[href]
+) {
   text-decoration: underline;
 }
 
@@ -242,15 +230,8 @@ body .preview-action {
   background-color: var(--palette-accent);
 }
 
-// Work-context rows (buttons) and route rows (anchors) share one active look.
-body nav-item :is(button.active, .nav-link.active) {
-  @include ink(
-    var(--palette-accent-ink),
-    var(--palette-background-ink-channel),
-    var(--palette-accent-ink)
-  );
-  color: var(--palette-accent-ink) !important;
-}
+// Work-context rows take the surface ink on hover. The active nav row is the
+// tonal selected role (_ultra-tasks.scss), never the accent fill.
 body nav-item button:not(.active):hover {
   @include ink(
     var(--palette-surface-ink),
@@ -259,7 +240,9 @@ body nav-item button:not(.active):hover {
   );
   color: var(--palette-surface-ink) !important;
 }
-body :is(task, planner-task):is(.isCurrent, .isSelected, .isMultiSelected) {
+// A tracked task (.isCurrent) is marked by an accent edge, not a tint, so it
+// keeps its card's ink.
+body :is(task, planner-task):is(.isSelected, .isMultiSelected) {
   @include ink(
     var(--palette-selected-ink),
     var(--palette-surface-ink-channel),
@@ -310,8 +293,9 @@ body
   --mat-option-selected-state-layer-color: var(--palette-selected);
   --mat-button-toggle-background-color: var(--palette-surface);
   --mat-button-toggle-text-color: var(--palette-surface-ink);
-  --mat-button-toggle-selected-state-background-color: var(--palette-accent);
-  --mat-button-toggle-selected-state-text-color: var(--palette-accent-ink);
+  // A segmented control's chosen segment is the tonal selected role.
+  --mat-button-toggle-selected-state-background-color: var(--palette-selected);
+  --mat-button-toggle-selected-state-text-color: var(--palette-selected-ink);
 }
 body .mat-button-toggle {
   @include ink(
@@ -322,9 +306,9 @@ body .mat-button-toggle {
 }
 body .mat-button-toggle-checked {
   @include ink(
-    var(--palette-accent-ink),
-    var(--palette-background-ink-channel),
-    var(--palette-accent-ink)
+    var(--palette-selected-ink),
+    var(--palette-surface-ink-channel),
+    var(--palette-selected-ink-muted)
   );
 }
 body .mdc-text-field--filled {

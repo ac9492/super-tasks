@@ -160,6 +160,7 @@ export class TaskRepeatCfgService {
         data: {
           message: T.F.TASK_REPEAT.D_CONFIRM_REMOVE.MSG,
           okTxt: T.F.TASK_REPEAT.D_CONFIRM_REMOVE.OK,
+          isDestructive: true,
         },
       })
       .afterClosed()

@@ -126,12 +126,12 @@
         }
       </ul>
     } @else if (searchForm.value && searchForm.value.trim()) {
-      <div class="no-results">
+      <div class="empty-state">
         <mat-icon>search_off</mat-icon>
         <p>{{ T.F.SEARCH_BAR.NO_RESULTS | translate }}</p>
       </div>
     } @else {
-      <div class="search-prompt">
+      <div class="empty-state">
         <mat-icon>search</mat-icon>
         <p>{{ T.F.SEARCH_BAR.INFO | translate }}</p>
       </div>

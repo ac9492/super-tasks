@@ -148,29 +148,5 @@
         opacity: 0;
       }
     }
-
-    // Empty states are page-level: they start on the column's left edge.
-    .no-results,
-    .search-prompt {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
-      padding: var(--s4) 0;
-      text-align: start;
-      color: var(--text-color-muted);
-
-      mat-icon {
-        font-size: var(--icon-lg);
-        width: var(--icon-lg);
-        height: var(--icon-lg);
-        margin-bottom: var(--s2);
-      }
-
-      p {
-        margin: 0;
-        font: var(--type-heading);
-      }
-    }
   }
 }

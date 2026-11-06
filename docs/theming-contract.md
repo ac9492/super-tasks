@@ -114,10 +114,10 @@ containers and the legacy aliases.
 | -------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `--palette-background`, `--palette-surface`, `--palette-accent`                                          | normalised choices                                              | `--surface-*`, `--bg*`, `--card-bg`, `--dark*`, `--brand`, `--c-primary`, `--c-accent`, every `--palette-{primary,accent}-*` stop                                    |
 | `--palette-{background,surface,accent,hover,selected}-ink`, `--palette-{background,surface}-ink-channel` | black or white, ≥ 4.58:1                                        | `--ink`, `--text-color*`, `--c-contrast`, `--palette-{primary,accent}-contrast-*`                                                                                    |
-| `--palette-hover`, `--palette-selected`                                                                  | quiet, guaranteed steps                                         | hover rows, selected/current/multi-selected tasks, selected options                                                                                                  |
+| `--palette-hover`, `--palette-selected`                                                                  | quiet, guaranteed steps                                         | hover rows; the selected role: the active nav row, the task open in the panel, multi-selected tasks, a chosen segment, selected options                              |
 | `--palette-surface-raised`                                                                               | dialogs, menus, select/autocomplete panels, snackbars           | `--mat-{dialog,menu}-container-color`, `--mat-{select-panel,autocomplete}-background-color`, `--mat-snack-bar-container-color`                                       |
 | `--palette-ink-muted`                                                                                    | 4.5:1 on background, surface, raised, hover; ≥ 2:1 from the ink | `--ink-muted`, `--text-color-muted`, `--sidenav-text-secondary`, placeholders, select arrow, unselected checkbox/radio/toggle handle, card subtitle, scrollbar hover |
-| `--palette-selected-ink-muted`                                                                           | 4.5:1 on selected                                               | the muted tier inside selected, current and multi-selected task rows                                                                                                 |
+| `--palette-selected-ink-muted`                                                                           | 4.5:1 on selected                                               | the muted tier inside the active nav row, selected and multi-selected task rows, a chosen segment                                                                    |
 | `--palette-accent-text`                                                                                  | 4.5:1 on every layer                                            | `--mat-option-selected-state-label-text-color`                                                                                                                       |
 | `--palette-focus-ring`                                                                                   | = accent text (≥ 4.5:1)                                         | `--focus-ring`, `--focus-ring-color`: one ring everywhere                                                                                                            |
 | `--palette-separator`                                                                                    | 1.22:1 (light) / 1.30:1 (dark) on background and surface        | `--separator`, `--grid-color`, `--glass-edge-line`                                                                                                                   |
@@ -132,17 +132,24 @@ containers and the legacy aliases.
 The warn palette is written from danger: stops 50–400 are danger tints over the
 surface (10–75 %) for fills behind warn text, every other stop is danger itself,
 so `color="warn"` controls stay red and readable and never follow the accent.
-Plugins receive `--c-warn` and `--color-*` by name, now normalised.
+Plugins receive `--c-warn` and `--color-*` by name, now normalised. The semantic
+aliases (`--c-warn`, `--c-warn-contrast`, `--color-*`, `--success-green`,
+`--scheduled-date-*`) are declared once, on `:root` in `_css-variables.scss`,
+next to the first-paint value of every role (the default light palette's), which
+`PaletteThemeService` replaces synchronously at startup.
 
 The `ink()` mixin in `_palette-theme.scss` sets a container's ink and its muted
 tier: canvas, cards, panels, overlays and hover rows use `--palette-ink-muted`,
-selected rows use `--palette-selected-ink-muted`, accent fills (filled buttons,
-active navigation, checked toggles) use the accent ink for both. Text elements
+selected rows (the active nav row, the task open in the panel, a chosen segment)
+use `--palette-selected-ink-muted`, accent fills (filled buttons) use the accent
+ink for both. A tracked task is marked by an accent edge, not a tint, and keeps
+its card's ink. Text elements
 otherwise keep their component colors; only `a`, `button`, `input`, `textarea`
 and `select` inherit their container's ink, at zero specificity. Project/tag
 identity colors remain available for their icons and dots, rather than
-recoloring the entire application. Wallpapers and per-project contrast/hue
-controls are no longer shown or applied. New components should use the shared
+recoloring the entire application. Per-project backgrounds and contrast/hue
+controls are no longer shown or applied; the app-wide background image appears
+only behind Glass, always blurred. New components should use the shared
 surface styles and roles, rather than hardcoded colors.
 
 Native system bars, the Electron title bar and charts read the normalised roles:

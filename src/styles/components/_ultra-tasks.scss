@@ -55,11 +55,10 @@ body.ultra-tasks {
   }
 
   // Selected is one tonal role everywhere (active nav row, active bottom-nav
-  // item, the task open in the panel, a pressed toggle): the --palette-selected
+  // item, the task open in the panel, a chosen segment): the --palette-selected
   // fill, its paired ink and a filled icon. Filled accent is reserved for the
-  // single primary action of a surface. The painted-container rules in
-  // _palette-theme.scss still hand active rows the accent ink pair, so the
-  // selected pair is restated here, scoped to the row.
+  // single primary action of a surface. The nav row's own colour rules (Material
+  // menu-item, `--sidenav-text`) are overridden here, scoped to the row.
   nav-item .nav-link.active,
   nav-item .nav-link.active:is(:hover, :focus, :focus-visible) {
     --text-color: var(--palette-selected-ink);

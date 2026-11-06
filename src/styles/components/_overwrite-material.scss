@@ -957,24 +957,6 @@ body.isVerticalActionBar .cdk-overlay-pane.mat-mdc-tooltip-panel {
   }
 }
 
-// SEGMENTED CONTROL
-// -----------------
-// A button-toggle group is a segmented control (view switchers, Dark mode,
-// docs/styling-guide.md § Forms and disclosures): the chosen segment is the
-// tonal "selected" role, the same as the active nav row. The doubled selectors
-// outrank the palette mapping in _palette-theme.scss, which fills it with the
-// accent.
-body .mat-button-toggle-group.mat-button-toggle-group {
-  --mat-button-toggle-selected-state-background-color: var(--palette-selected);
-  --mat-button-toggle-selected-state-text-color: var(--palette-selected-ink);
-
-  .mat-button-toggle-checked {
-    --text-color: var(--palette-selected-ink);
-    --text-color-muted: var(--palette-selected-ink-muted);
-    color: var(--palette-selected-ink);
-  }
-}
-
 // SLIDE TOGGLE
 // ------------
 // The M2 theme declares the toggle's label typography on the toggle element
