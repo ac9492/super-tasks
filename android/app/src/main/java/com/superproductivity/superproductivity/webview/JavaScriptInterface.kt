@@ -24,6 +24,7 @@ import com.superproductivity.superproductivity.service.ForegroundServiceFailure
 import com.superproductivity.superproductivity.service.ReminderNotificationHelper
 import com.superproductivity.superproductivity.service.RemoteTrackingNotificationHelper
 import com.superproductivity.superproductivity.service.SyncReminderScheduler
+import com.superproductivity.superproductivity.service.NativeAccountRuntime
 import com.superproductivity.superproductivity.service.TrackingForegroundService
 import com.superproductivity.superproductivity.share.CaptureKeyStore
 import com.superproductivity.superproductivity.share.ShareUploadWorker
@@ -474,6 +475,7 @@ class JavaScriptInterface(
         isOngoing: Boolean
     ) {
         safeCall("Failed to schedule native reminder") {
+            NativeAccountRuntime.executor.execute { try { NativeAccountRuntime.protectNotification(activity.applicationContext, notificationId) } catch (_: Exception) { } }
             ReminderNotificationHelper.scheduleReminder(
                 activity,
                 notificationId,
@@ -492,6 +494,7 @@ class JavaScriptInterface(
     @JavascriptInterface
     fun cancelNativeReminder(notificationId: Int) {
         safeCall("Failed to cancel native reminder") {
+            NativeAccountRuntime.executor.execute { try { NativeAccountRuntime.protectNotification(activity.applicationContext, notificationId) } catch (_: Exception) { } }
             ReminderNotificationHelper.cancelReminder(activity, notificationId)
         }
     }
@@ -614,6 +617,19 @@ class JavaScriptInterface(
             BackgroundSyncCredentialStore.clear(activity)
             CaptureKeyStore.set(activity, "")
             SyncReminderScheduler.cancel(activity)
+        }
+    }
+    @Suppress("unused")
+    @JavascriptInterface
+    fun nativeAccountCall(requestId: String, method: String, payload: String) {
+        NativeAccountRuntime.executor.execute {
+            val detail = JSONObject().put("requestId", requestId)
+            try {
+                detail.put("data", NativeAccountRuntime.call(activity.applicationContext, method, JSONObject(payload))).put("ok", true)
+            } catch (_: Exception) {
+                detail.put("ok", false).put("error", "Native account storage or session unavailable. Sign in again.")
+            }
+            callJavaScriptFunction("window.dispatchEvent(new CustomEvent('ultra-native-account', {detail:" + detail.toString() + "}))")
         }
     }
 

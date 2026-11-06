@@ -1,0 +1,98 @@
+name: Native sync iOS build and Keychain smoke
+on:
+  push:
+    branches: [feat/native-encrypted-accounts]
+    paths:
+      - 'ios/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/native-sync-ios.yml'
+      - 'tools/ios-native-session-smoke.html'
+      - 'tools/verify-ios-native-session.swift'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  # A simulator still cleaning up must not block a later correction.
+  group: native-sync-ios-${{ github.ref }}-${{ github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  ios-simulator:
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Select the repository's Xcode version
+        run: sudo xcode-select -s /Applications/Xcode_26.2.app
+      - name: Install dependencies
+        run: npm ci
+      - name: Prepare native project for compilation
+        # Angular behavior runs in the two-account browser suite. This fixture
+        # exercises the real WKWebView/Keychain bridge and is never distributed.
+        run: |
+          mkdir -p dist/browser
+          cp tools/ios-native-session-smoke.html dist/browser/index.html
+          npm run sync:ios
+      - name: Compile all iOS targets without signing or publishing
+        run: >-
+          xcodebuild -workspace ios/App/App.xcworkspace -scheme App
+          -configuration Debug -sdk iphonesimulator
+          -destination 'generic/platform=iOS Simulator'
+          -derivedDataPath /tmp/ultra-native-ios CODE_SIGNING_ALLOWED=NO
+          ONLY_ACTIVE_ARCH=YES ARCHS="$(uname -m)" build
+      - name: Compile the simulator result reader
+        run: xcrun swiftc tools/verify-ios-native-session.swift -o /tmp/verify-ios-native-session
+      - name: Boot an available iPhone simulator
+        timeout-minutes: 12
+        run: |
+          python3 - <<'PY'
+          import json, os, subprocess
+          devices = json.loads(subprocess.check_output(['xcrun', 'simctl', 'list', 'devices', 'available', '-j']))['devices']
+          phones = [device for group in devices.values() for device in group if 'iPhone' in device['name']]
+          device = next((phone for phone in phones if phone['state'] == 'Booted'), None) or next(phone for phone in phones if phone['state'] == 'Shutdown')
+          identifier = device['udid']
+          print('Simulator:', device['name'], identifier, flush=True)
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('ULTRA_NATIVE_SIM_ID=' + identifier + '\n')
+          if device['state'] != 'Booted':
+              subprocess.run(['xcrun', 'simctl', 'boot', identifier], check=True, timeout=90)
+          subprocess.run(['xcrun', 'simctl', 'bootstatus', identifier, '-b'], check=True, timeout=600)
+          PY
+      - name: Install the native session fixture
+        timeout-minutes: 4
+        run: |
+          python3 - <<'PY'
+          import os, subprocess
+          print('Installing native session fixture', flush=True)
+          subprocess.run(['xcrun', 'simctl', 'install', os.environ['ULTRA_NATIVE_SIM_ID'], '/tmp/ultra-native-ios/Build/Products/Debug-iphonesimulator/App.app'], check=True, timeout=180)
+          PY
+      - name: Exercise Keychain and offline session handoff
+        timeout-minutes: 4
+        shell: bash
+        run: |
+          set -euxo pipefail
+          xcrun simctl launch "$ULTRA_NATIVE_SIM_ID" app.ultratasks
+          for attempt in {1..30}; do
+            xcrun simctl io "$ULTRA_NATIVE_SIM_ID" screenshot /tmp/ultra-native-smoke.png
+            if /tmp/verify-ios-native-session /tmp/ultra-native-smoke.png; then exit 0; fi
+            sleep 2
+          done
+          echo 'Native iOS session smoke did not pass.'
+          exit 1
+      - name: Preserve the failed simulator result
+        if: failure() || cancelled()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: native-ios-session-result-${{ github.run_id }}
+          path: /tmp/ultra-native-smoke.png
+          if-no-files-found: ignore
+          retention-days: 7

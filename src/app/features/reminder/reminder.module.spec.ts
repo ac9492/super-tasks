@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
@@ -57,6 +58,10 @@ describe('ReminderModule dialog opening', () => {
     TestBed.configureTestingModule({
       providers: [
         ReminderModule,
+        {
+          provide: Router,
+          useValue: { navigate: jasmine.createSpy('navigate').and.resolveTo(true) },
+        },
         {
           provide: ReminderService,
           useValue: jasmine.createSpyObj(
@@ -200,6 +205,10 @@ describe('ReminderModule iOS notification actions', () => {
       providers: [
         ReminderModule,
         {
+          provide: Router,
+          useValue: { navigate: jasmine.createSpy('navigate').and.resolveTo(true) },
+        },
+        {
           provide: ReminderService,
           useValue: jasmine.createSpyObj(
             'ReminderService',
@@ -255,6 +264,20 @@ describe('ReminderModule iOS notification actions', () => {
     deadlineWithTime?: number;
     deadlineRemindAt: number;
   };
+
+  it('opens native shared reminders without running legacy sync or mutating personal tasks', async () => {
+    await handleIOSNotificationAction({
+      actionId: 'tap',
+      notificationId: 42,
+      extra: { relatedId: 'native:project-id:task-id', reminderType: 'NATIVE_SHARED' },
+    });
+    expect(TestBed.inject(Router).navigate).toHaveBeenCalledWith(['/native-sync'], {
+      queryParams: { scope: 'project-id' },
+    });
+    expect(syncWrapperSpy.sync).not.toHaveBeenCalled();
+    expect(taskServiceSpy.getByIdOnce$).not.toHaveBeenCalled();
+    expect(storeSpy.dispatch).not.toHaveBeenCalled();
+  });
 
   it('snoozes iOS deadline notification actions via setDeadline (with-time)', async () => {
     spyOn(Date, 'now').and.returnValue(1_000);
@@ -543,6 +566,10 @@ describe('ReminderModule _handleAfterDataLoaded gate (#8551)', () => {
     TestBed.configureTestingModule({
       providers: [
         ReminderModule,
+        {
+          provide: Router,
+          useValue: { navigate: jasmine.createSpy('navigate').and.resolveTo(true) },
+        },
         {
           provide: ReminderService,
           useValue: jasmine.createSpyObj('ReminderService', ['init'], {
