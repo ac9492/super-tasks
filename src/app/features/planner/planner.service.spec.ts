@@ -20,6 +20,7 @@ import { selectPlannerState } from './store/planner.selectors';
 import { selectTimelineConfig } from '../config/store/global-config.reducer';
 import { selectStartOfNextDayDiffMs } from '../../root-store/app-state/app-state.selectors';
 import { findSpringForwardSunday } from '../tasks/dst.test-helper';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('PlannerService', () => {
   let service: PlannerService;
@@ -48,6 +49,7 @@ describe('PlannerService', () => {
     TestBed.configureTestingModule({
       providers: [
         DateService,
+        { provide: TranslateService, useValue: { instant: () => 'Tasks' } },
         provideMockStore({
           selectors: [
             { selector: selectAllTasksWithDueTime, value: [] },
@@ -548,7 +550,7 @@ describe('PlannerService', () => {
       });
       store.refreshState();
 
-      await expectAsync(service.getSnackExtraStr(dayStr)).toBeResolvedTo(' – ∑ 1');
+      await expectAsync(service.getSnackExtraStr(dayStr)).toBeResolvedTo(' – Tasks: 1');
     });
   });
 

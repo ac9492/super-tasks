@@ -27,11 +27,28 @@ export class SettingsPage extends BasePage {
   }
 
   /**
-   * Expand a collapsible section by scrolling to it and clicking header
+   * Show a flat settings section or expand a legacy collapsible section
    */
   async expandSection(sectionSelector: string): Promise<void> {
     const section = this.page.locator(sectionSelector);
     await section.scrollIntoViewIfNeeded();
+
+    const flatHeading = section.locator('.settings-section-heading');
+    if (await flatHeading.count()) {
+      await flatHeading.waitFor({ state: 'visible' });
+      const moreOptions = section.locator('formly-collapsible').first();
+      if (await moreOptions.count()) {
+        const header = moreOptions.locator(':scope > .collapsible-header');
+        if ((await header.getAttribute('aria-expanded')) !== 'true') {
+          await header.click();
+        }
+        await moreOptions
+          .locator(':scope > .collapsible-panel')
+          .waitFor({ state: 'visible' });
+      }
+      await waitForAngularStability(this.page);
+      return;
+    }
 
     const collapsible = section.locator('collapsible');
     const isExpanded = await collapsible.evaluate((el) =>

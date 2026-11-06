@@ -1,3 +1,4 @@
+import { resolveTagIcon } from '../tag/resolve-tag-icon.util';
 import { inject, Injectable } from '@angular/core';
 import { combineLatest, Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -44,7 +45,7 @@ const buildMentionConfig = (
         (tag): MentionListItem => ({
           title: tag.title,
           id: tag.id,
-          icon: tag.icon || 'label',
+          icon: resolveTagIcon(tag) || 'label',
           color: tag.color || tag.theme?.primary || DEFAULT_TAG_COLOR,
           isEmoji: !!tag.icon && isSingleEmoji(tag.icon),
         }),

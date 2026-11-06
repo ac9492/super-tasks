@@ -6,7 +6,7 @@
         <!-- placeholder hidden: the pipe renders '-' for any sub-minute total -->
         <span>{{ totalEstimate() | msToString: false : true }}</span>
       }
-      <mat-icon>task_alt</mat-icon>{{ tasks().length }}
+      <mat-icon>checklist</mat-icon>{{ tasks().length }}
     </div>
   }
   <button
@@ -75,7 +75,7 @@
           color=""
           mat-icon-button
         >
-          <mat-icon>today</mat-icon>
+          <mat-icon>calendar_month</mat-icon>
           <div class="time-badge">{{ task.dueDay | localDateStr }}</div>
         </button>
       }

@@ -198,3 +198,9 @@ mat-error {
     margin-left: 0;
   }
 }
+
+.loading-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s);
+}

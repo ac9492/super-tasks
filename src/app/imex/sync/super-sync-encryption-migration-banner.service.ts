@@ -43,7 +43,7 @@ export class SuperSyncEncryptionMigrationBannerService {
     this._bannerService.open({
       id: BannerId.SuperSyncEncryptionMigration,
       msg: T.APP.B_SUPER_SYNC_ENCRYPTION.MSG,
-      ico: 'enhanced_encryption',
+      ico: 'lock',
       action: {
         label: T.APP.B_SUPER_SYNC_ENCRYPTION.ENABLE,
         // Snooze is deferred into _startMigration (only once we actually reach the

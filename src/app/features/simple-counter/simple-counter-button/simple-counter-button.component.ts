@@ -1,3 +1,4 @@
+import { SimpleCounterIconPipe } from '../simple-counter-icon.pipe';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -45,6 +46,7 @@ import { ProgressCircleComponent } from '../../../ui/progress-circle/progress-ci
     '[class.isSuccess]': 'isSuccess()',
   },
   imports: [
+    SimpleCounterIconPipe,
     LongPressDirective,
     MatIcon,
     AsyncPipe,

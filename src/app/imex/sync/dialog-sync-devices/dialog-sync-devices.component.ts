@@ -39,7 +39,7 @@ const PLATFORMS: Record<PlatformCode, { icon: string; label: string }> = {
   E: { icon: 'computer', label: T.F.SYNC.D_DEVICES.PLATFORM_DESKTOP },
   A: { icon: 'smartphone', label: T.F.SYNC.D_DEVICES.PLATFORM_ANDROID },
   I: { icon: 'smartphone', label: T.F.SYNC.D_DEVICES.PLATFORM_IOS },
-  B: { icon: 'public', label: T.F.SYNC.D_DEVICES.PLATFORM_BROWSER },
+  B: { icon: 'web', label: T.F.SYNC.D_DEVICES.PLATFORM_BROWSER },
 };
 
 const UNKNOWN_PLATFORM = {

@@ -42,7 +42,7 @@ export class NoteStartupBannerService {
     this._bannerService.open({
       id: BannerId.StartupNote,
       msg: T.F.REFLECTION_NOTE.MSG,
-      ico: 'note',
+      ico: 'description',
       translateParams: {
         content,
         date: createdDate,

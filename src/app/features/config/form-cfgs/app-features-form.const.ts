@@ -22,7 +22,7 @@ export const APP_FEATURES_FORM_CFG: ConfigFormSection<AppFeaturesConfig> = {
       templateOptions: {
         label: T.GCF.APP_FEATURES.SCHEDULE,
         description: T.GCF.APP_FEATURES.SCHEDULE_HINT,
-        icon: 'schedule',
+        icon: 'calendar_view_week',
       },
     },
     {
@@ -31,7 +31,7 @@ export const APP_FEATURES_FORM_CFG: ConfigFormSection<AppFeaturesConfig> = {
       templateOptions: {
         label: T.GCF.APP_FEATURES.BOARDS,
         description: T.GCF.APP_FEATURES.BOARDS_HINT,
-        icon: 'grid_view',
+        icon: 'view_kanban',
       },
     },
     {
@@ -40,7 +40,7 @@ export const APP_FEATURES_FORM_CFG: ConfigFormSection<AppFeaturesConfig> = {
       templateOptions: {
         label: T.GCF.APP_FEATURES.HABITS,
         description: T.GCF.APP_FEATURES.HABITS_HINT,
-        icon: 'heart_check',
+        icon: 'event_repeat',
       },
     },
     {
@@ -49,7 +49,7 @@ export const APP_FEATURES_FORM_CFG: ConfigFormSection<AppFeaturesConfig> = {
       props: {
         label: T.GCF.APP_FEATURES.TIME_TRACKING,
         description: T.GCF.APP_FEATURES.TIME_TRACKING_HINT,
-        icon: 'play_arrow',
+        icon: 'timer',
       },
     },
     {
@@ -76,7 +76,7 @@ export const APP_FEATURES_FORM_CFG: ConfigFormSection<AppFeaturesConfig> = {
       templateOptions: {
         label: T.GCF.APP_FEATURES.ISSUES_PANEL,
         description: T.GCF.APP_FEATURES.ISSUES_PANEL_HINT,
-        icon: 'webhook',
+        icon: 'assignment',
       },
     },
     {
@@ -85,7 +85,7 @@ export const APP_FEATURES_FORM_CFG: ConfigFormSection<AppFeaturesConfig> = {
       templateOptions: {
         label: T.GCF.APP_FEATURES.PROJECT_NOTES,
         description: T.GCF.APP_FEATURES.PROJECT_NOTES_HINT,
-        icon: 'comment',
+        icon: 'description',
       },
     },
     {
@@ -115,7 +115,7 @@ export const APP_FEATURES_FORM_CFG: ConfigFormSection<AppFeaturesConfig> = {
       templateOptions: {
         label: T.GCF.APP_FEATURES.DONATE_PAGE,
         description: T.GCF.APP_FEATURES.DONATE_PAGE_HINT,
-        icon: 'favorite',
+        icon: 'volunteer_activism',
       },
     },
   ],

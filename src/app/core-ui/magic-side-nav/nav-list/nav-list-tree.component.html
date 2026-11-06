@@ -20,6 +20,7 @@
               class="additional-btn"
               mat-icon-button
               [matTooltip]="btn.tooltip | translate"
+              [attr.aria-label]="btn.tooltip | translate"
               [matMenuTriggerFor]="visibilityMenu"
             >
               <mat-icon>{{ btn.icon }}</mat-icon>
@@ -30,6 +31,7 @@
               mat-icon-button
               [attr.data-nav-btn]="btn.id"
               [matTooltip]="btn.tooltip | translate"
+              [attr.aria-label]="btn.tooltip | translate"
               (click)="btn.action?.()"
             >
               <mat-icon>{{ btn.icon }}</mat-icon>
@@ -143,7 +145,7 @@
           }"
         >
           <mat-icon [ngStyle]="{ 'font-size': '18px', width: '18px', height: '18px' }">
-            {{ data.isFolder ? 'folder' : 'assignment' }}
+            {{ data.isFolder ? 'folder' : 'list_alt' }}
           </mat-icon>
           <span>{{
             data.node.data?.k === MenuTreeKind.FOLDER

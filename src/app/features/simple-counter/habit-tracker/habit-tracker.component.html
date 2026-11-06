@@ -71,7 +71,7 @@
               class="habit-icon"
             ></mat-icon>
           } @else if (counter.icon) {
-            <mat-icon class="habit-icon">{{ counter.icon }}</mat-icon>
+            <mat-icon class="habit-icon">{{ counter | simpleCounterIcon }}</mat-icon>
           } @else {
             <div class="habit-initial">{{ counter.title.charAt(0).toUpperCase() }}</div>
           }
@@ -136,7 +136,7 @@
       (click)="addHabit()"
       class="add-habit-btn"
     >
-      <mat-icon>playlist_add</mat-icon>
+      <mat-icon>add</mat-icon>
       <span class="mdc-button__label">{{
         T.F.SIMPLE_COUNTER.HABIT_TRACKER.ADD_HABIT | translate
       }}</span>
@@ -164,7 +164,7 @@
                 @if (counter.icon && counter.icon.startsWith(':')) {
                   <mat-icon [svgIcon]="counter.icon"></mat-icon>
                 } @else if (counter.icon) {
-                  <mat-icon>{{ counter.icon }}</mat-icon>
+                  <mat-icon>{{ counter | simpleCounterIcon }}</mat-icon>
                 }
                 <span>{{ counter.title }}</span>
               </div>
@@ -173,13 +173,15 @@
                   mat-icon-button
                   (click)="enableHabit(counter.id)"
                   [matTooltip]="T.F.SIMPLE_COUNTER.FORM.L_IS_ENABLED | translate"
+                  [attr.aria-label]="T.F.SIMPLE_COUNTER.FORM.L_IS_ENABLED | translate"
                 >
-                  <mat-icon>visibility</mat-icon>
+                  <mat-icon>toggle_on</mat-icon>
                 </button>
                 <button
                   mat-icon-button
                   (click)="openEditSettings(counter)"
                   [matTooltip]="T.G.EDIT | translate"
+                  [attr.aria-label]="T.G.EDIT | translate"
                 >
                   <mat-icon>edit</mat-icon>
                 </button>
@@ -187,6 +189,7 @@
                   mat-icon-button
                   (click)="deleteHabit(counter)"
                   [matTooltip]="T.G.DELETE | translate"
+                  [attr.aria-label]="T.G.DELETE | translate"
                 >
                   <mat-icon>delete</mat-icon>
                 </button>

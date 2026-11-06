@@ -89,18 +89,14 @@
 }
 
 .success-info {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-half);
   margin: 0 var(--s2);
 }
 
-.spin {
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.loading-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s);
 }

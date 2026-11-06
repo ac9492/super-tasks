@@ -1,7 +1,14 @@
-@if (task().issueWasUpdated) {
-  <mat-icon>update</mat-icon>
-} @else {
+<span class="provider-icon">
   <mat-icon [svgIcon]="icon()"></mat-icon>
-}
-
+  @if (task().issueWasUpdated) {
+    <mat-icon
+      class="update-badge"
+      aria-hidden="true"
+      >sync</mat-icon
+    >
+  }
+</span>
 <span>{{ providerName() }}</span>
+@if (task().issueWasUpdated) {
+  <span class="updated-status">{{ T.F.ISSUE.S.UPDATED_UPSTREAM | translate }}</span>
+}

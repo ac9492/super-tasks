@@ -41,7 +41,14 @@ reflection-note {
 
   mat-radio-group {
     display: flex;
+    flex-wrap: wrap;
     gap: var(--s);
+  }
+
+  .energy-option {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-half);
   }
 
   .hint {

@@ -1,6 +1,9 @@
 <button
   (click)="isShowHelp = !isShowHelp"
-  aria-label="Show Help for section"
+  [attr.aria-label]="
+    (isShowHelp ? T.UI.HELP_SECTION.HIDE_HELP : T.UI.HELP_SECTION.SHOW_HELP) | translate
+  "
+  [attr.aria-expanded]="isShowHelp"
   class="help-btn mat-elevation-z2"
   color=""
   mat-mini-fab

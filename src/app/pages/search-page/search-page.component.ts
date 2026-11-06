@@ -30,7 +30,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
 import { MatInput } from '@angular/material/input';
 import { IssueIconPipe } from '../../features/issue/issue-icon/issue-icon.pipe';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { TagComponent } from '../../features/tag/tag/tag.component';
 import { MatList, MatListItem } from '@angular/material/list';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
@@ -83,6 +83,7 @@ export class SearchPageComponent implements OnInit {
   private _layoutService = inject(LayoutService);
   private _menuTreeService = inject(MenuTreeService);
   private _recentlyDeletedService = inject(RecentlyDeletedService);
+  private _translateService = inject(TranslateService);
 
   readonly inputEl = viewChild.required<ElementRef>('inputEl');
 
@@ -290,7 +291,7 @@ export class SearchPageComponent implements OnInit {
       const ctx = note.projectId
         ? projectMap.get(note.projectId) || {
             ...DEFAULT_TAG,
-            icon: 'comment',
+            icon: 'description',
             color: 'black',
           }
         : TODAY_TAG;
@@ -318,7 +319,7 @@ export class SearchPageComponent implements OnInit {
         ctx: {
           ...ctx,
           title: ctxTitle,
-          icon: (ctx as Tag).icon || (note.projectId && 'list') || 'comment',
+          icon: (ctx as Tag).icon || (note.projectId && 'list_alt') || 'description',
         } as Tag | Project,
         isArchiveTask: false,
         isDone: false,
@@ -340,7 +341,7 @@ export class SearchPageComponent implements OnInit {
       timeSpentOnDay: {},
       created: 0,
       issueType: null,
-      ctx: project,
+      ctx: { ...project, icon: project.icon || 'list_alt' },
       isArchiveTask: false,
       isDone: false,
       isProject: true,
@@ -381,7 +382,11 @@ export class SearchPageComponent implements OnInit {
 
     if (!context) {
       Log.err(`Could not find context for task: ${task.id}`);
-      context = { ...DEFAULT_TAG, icon: 'help_outline', color: 'black' };
+      context = {
+        ...DEFAULT_TAG,
+        title: this._translateService.instant(T.F.SEARCH_BAR.UNAVAILABLE_CONTEXT),
+        icon: task.projectId ? 'folder_off' : 'label_off',
+      };
     }
 
     let title = context.title;
@@ -400,7 +405,7 @@ export class SearchPageComponent implements OnInit {
     return {
       ...context,
       title,
-      icon: (context as Tag).icon || (task.projectId && 'list') || null,
+      icon: (context as Tag).icon || (task.projectId && 'list_alt') || null,
     };
   }
 

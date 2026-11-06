@@ -9,17 +9,17 @@
     <color name="webview_block_secondary">#424242</color>
 
     <!-- Home screen widget — mirrors the web app's theme tokens
-         (light surface #f8f8f7 / dark surface #131314, brand purple).
+         (light surface #f8f8f7 / dark surface #131314, emerald brand).
          Dark variants live in values-night/colors.xml. -->
     <color name="widget_bg">#F5F8F8F7</color>
     <color name="widget_ink">#DE000000</color>
     <color name="widget_ink_muted">#8A000000</color>
     <color name="widget_separator">#1F000000</color>
-    <color name="widget_brand">#8B4A9D</color>
+    <color name="widget_brand">#16845B</color>
 
-    <!-- Launcher shortcut icons (res/xml/shortcuts.xml): same blue as the
-         launcher icon background so they read as part of the app. -->
-    <color name="shortcut_icon_background">@color/ic_launcher_background</color>
+    <!-- Launcher shortcut icons (res/xml/shortcuts.xml): the production emerald
+         brand, with white action glyphs. -->
+    <color name="shortcut_icon_background">#16845B</color>
     <color name="shortcut_icon_glyph">#FFFFFF</color>
 
 </resources>

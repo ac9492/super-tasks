@@ -56,13 +56,13 @@ test.describe('note link hrefs', () => {
     const note = page.locator('note', { hasText: `${unique}-www` }).first();
     await expect(note).toBeVisible();
 
-    // Toggle lock via context menu ("Disable Markdown Parsing")
+    // Show plain text ("Disable Markdown Parsing" on released clients).
     await note.hover();
     const menuBtn = note.locator('button:has(mat-icon:has-text("more_vert"))');
     await menuBtn.click();
     const lockBtn = page
       .locator('.mat-mdc-menu-content button')
-      .filter({ has: page.locator('mat-icon:has-text("lock_open")') });
+      .filter({ has: page.locator('mat-icon', { hasText: /^(lock_open|code)$/ }) });
     await lockBtn.click();
 
     const wwwAnchor = note.locator(`a:has-text("${unique}-www")`);

@@ -845,7 +845,7 @@ export class IssueService {
       // above: the task reappearing in the project is the signal.
       if (!isBackgroundPoll) {
         this._snackService.open({
-          ico: 'info',
+          ico: 'unarchive',
           msg: T.F.TASK.S.FOUND_RESTORE_FROM_ARCHIVE,
           translateParams: { title: res.task.title },
         });
@@ -884,7 +884,7 @@ export class IssueService {
     if (res?.isFromArchive) {
       this._taskService.restoreTask(res.task, res.subTasks || []);
       this._snackService.open({
-        ico: 'info',
+        ico: 'unarchive',
         msg: T.F.TASK.S.FOUND_RESTORE_FROM_ARCHIVE,
         translateParams: { title: res.task.title },
       });
@@ -918,7 +918,7 @@ export class IssueService {
         }
         this._projectService.moveTaskToTodayList(res.task.id, res.task.projectId);
         this._snackService.open({
-          ico: 'arrow_upward',
+          ico: 'drive_file_move',
           msg: T.F.TASK.S.FOUND_MOVE_FROM_BACKLOG,
           translateParams: { title: res.task.title },
         });
@@ -946,7 +946,7 @@ export class IssueService {
         }
         this._taskService.moveToCurrentWorkContext(taskWithTaskSubTasks);
         this._snackService.open({
-          ico: 'arrow_upward',
+          ico: 'drive_file_move',
           msg: T.F.TASK.S.FOUND_MOVE_FROM_OTHER_LIST,
           translateParams: {
             title: res.task.title,

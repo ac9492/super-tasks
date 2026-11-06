@@ -18,6 +18,7 @@
         color=""
         type="button"
         class="remove-btn"
+        [attr.aria-label]="T.G.MORE_ACTIONS | translate"
       >
         <mat-icon>more_vert</mat-icon>
       </button>
@@ -34,8 +35,8 @@
             mat-menu-item
             (click)="moveItem(i, i - 1)"
           >
-            <mat-icon>arrow_back</mat-icon>
-            {{ T.G.MOVE_BACKWARD | translate }}
+            <mat-icon>arrow_upward</mat-icon>
+            {{ T.G.MOVE_UP | translate }}
           </button>
         }
         @if (i < field.fieldGroup?.length - 1) {
@@ -43,8 +44,8 @@
             mat-menu-item
             (click)="moveItem(i, i + 1)"
           >
-            <mat-icon>arrow_forward</mat-icon>
-            {{ T.G.MOVE_FORWARD | translate }}
+            <mat-icon>arrow_downward</mat-icon>
+            {{ T.G.MOVE_DOWN | translate }}
           </button>
         }
         <button
@@ -52,7 +53,7 @@
           class="color-warn-i"
           (click)="removeItem(i)"
         >
-          <mat-icon class="color-warn-i">delete_forever</mat-icon>
+          <mat-icon class="color-warn-i">delete</mat-icon>
           {{ T.G.DELETE | translate }}
         </button>
       </ng-template>

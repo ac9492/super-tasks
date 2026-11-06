@@ -15,6 +15,8 @@ import { observeOn, takeUntil } from 'rxjs/operators';
 import { isTouchOnly } from '../../../util/is-touch-only';
 import { MatFabButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { TranslatePipe } from '@ngx-translate/core';
+import { T } from '../../../t.const';
 
 const ANIMATABLE_CLASS = 'isAnimatable';
 
@@ -23,10 +25,12 @@ const ANIMATABLE_CLASS = 'isAnimatable';
   templateUrl: './split.component.html',
   styleUrls: ['./split.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatFabButton, MatIcon],
+  imports: [MatFabButton, MatIcon, TranslatePipe],
 })
 export class SplitComponent implements AfterViewInit {
   private _renderer = inject(Renderer2);
+
+  readonly T = T;
 
   readonly splitTopEl = input<ElementRef>();
   readonly splitBottomEl = input<ElementRef>();

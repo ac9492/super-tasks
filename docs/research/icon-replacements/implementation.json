@@ -1,0 +1,5871 @@
+{
+  "snapshot": "2026-11-05",
+  "scope": "Independent source/diff review of all 210 approved cards; no full tests run by this review. Diff evidence uses HEAD; generated plugin copies verified separately through owner build.",
+  "statusCounts": {
+    "implemented": 201,
+    "conditional-retained": 1,
+    "implemented-conditional": 2,
+    "dormant-declaration-updated": 1,
+    "already-correct": 2,
+    "implemented-equivalent": 3
+  },
+  "gaps": [],
+  "candidates": [
+    {
+      "id": "IC001",
+      "before": "wb_sunny",
+      "after": "today",
+      "title": "Today default, navigation/header context, mobile bottom bar, date markers and jump-to-Today controls",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Today uses today across explicit controls. Saved TODAY/wb_sunny is resolved at display time; custom identity is preserved.",
+      "evidence": [
+        {
+          "path": "src/app/features/tag/tag.const.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 3,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/core-ui/mobile-bottom-nav/mobile-bottom-nav.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/core-ui/magic-side-nav/magic-nav-config.service.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/task/task-hover-controls/task-hover-controls.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/task/task.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 9,
+          "removedBeforeLines": 2,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/task-detail-panel/task-detail-panel.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 5,
+          "removedBeforeLines": 3,
+          "addedAfterLines": 3
+        },
+        {
+          "path": "src/app/ui/datetime-picker/datetime-picker.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 3,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/note/note/note.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/work-view/work-view.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 5,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/onboarding/onboarding-hint-steps.const.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 3,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC002",
+      "before": "schedule",
+      "after": "calendar_view_week",
+      "title": "Schedule route and day-panel entry; desktop/mobile",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/core-ui/magic-side-nav/nav-section-icons.const.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/core-ui/main-header/desktop-panel-buttons/desktop-panel-buttons.component.ts",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/onboarding/quick-tour-card/quick-tour-card.component.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/config/form-cfgs/app-features-form.const.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC003",
+      "before": "grid_view",
+      "after": "view_kanban",
+      "title": "Boards route/title/mobile slot",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/core-ui/magic-side-nav/nav-section-icons.const.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/boards/board/board.component.html",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/onboarding/quick-tour-card/quick-tour-card.component.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/config/form-cfgs/app-features-form.const.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC004",
+      "before": "heart_check",
+      "after": "event_repeat",
+      "title": "Habits route/title",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/core-ui/magic-side-nav/nav-section-icons.const.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/onboarding/quick-tour-card/quick-tour-card.component.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/config/form-cfgs/app-features-form.const.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC005",
+      "before": "favorite",
+      "after": "volunteer_activism",
+      "title": "Donate route/page",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/core-ui/magic-side-nav/nav-section-icons.const.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/pages/donate-page/donate-page.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/config/form-cfgs/app-features-form.const.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC006",
+      "before": "assignment",
+      "after": "list_alt",
+      "title": "Project represented in drag preview",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/core-ui/magic-side-nav/nav-list/nav-list-tree.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC007",
+      "before": "help_center",
+      "after": "help_outline",
+      "title": "Help menu and online help",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/core-ui/magic-side-nav/magic-nav-config.service.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 2,
+          "addedAfterLines": 2
+        }
+      ]
+    },
+    {
+      "id": "IC008",
+      "before": "volunteer_activism",
+      "after": "code",
+      "title": "Contribute code only; broad contribution scope may retain current",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "conditional-retained",
+      "note": "Conditional proposal applies to code-only contribution. Current destination and label cover broad contributing; volunteer_activism is intentionally retained.",
+      "evidence": [
+        {
+          "path": "src/app/core-ui/magic-side-nav/magic-nav-config.service.ts",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC009",
+      "before": "directions",
+      "after": "keyboard",
+      "title": "Keyboard-navigation tour",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/core-ui/magic-side-nav/magic-nav-config.service.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC010",
+      "before": "webhook",
+      "after": "assignment",
+      "title": "External issue/task provider panel",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/core-ui/main-header/desktop-panel-buttons/desktop-panel-buttons.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/config/form-cfgs/app-features-form.const.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC011",
+      "before": "comment",
+      "after": "description",
+      "title": "Project/Today notes panel; note search result and missing-note-context fallback",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/pages/search-page/search-page.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 2
+        },
+        {
+          "path": "src/app/features/note/dialog-add-note/dialog-add-note.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/config/form-cfgs/app-features-form.const.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 13,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC012",
+      "before": "filter_list",
+      "after": "tune",
+      "title": "Open task-view customizer",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/core-ui/main-header/page-title/page-title.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC013",
+      "before": "visibility_off",
+      "after": "timer_off",
+      "title": "Disable Time tracking feature from the header play button context menu",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/core-ui/main-header/play-button/play-button.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC014",
+      "before": "wifi_off",
+      "after": "cloud_off",
+      "title": "Sync offline only; keep the shared custom sync states",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Offline uses cloud_off; coordinated custom sync-ring state family retained.",
+      "evidence": [
+        {
+          "path": "src/app/core-ui/main-header/main-header.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 3,
+          "removedBeforeLines": 3,
+          "addedAfterLines": 3
+        }
+      ]
+    },
+    {
+      "id": "IC015",
+      "before": "emergency",
+      "after": "priority_high",
+      "title": "System Urgent tag",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Default urgent now priority_high; legacy EM_URGENT/emergency has presentation resolver.",
+      "evidence": [
+        {
+          "path": "src/app/features/tag/tag.const.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tag/resolve-tag-icon.util.ts",
+          "modified": false,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/tasks/add-task-bar/add-task-bar-actions/add-task-bar-actions.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/tag/tag-toggle-menu-list/tag-toggle-menu-list.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/tasks/mention-config.service.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/tasks/add-task-bar/short-syntax-to-tags.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/core-ui/magic-side-nav/nav-list/nav-list-tree.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC016",
+      "before": "priority_high",
+      "after": "star",
+      "title": "System Important tag",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Default important now star; legacy EM_IMPORTANT/priority_high has presentation resolver.",
+      "evidence": [
+        {
+          "path": "src/app/features/tag/tag.const.ts",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tag/resolve-tag-icon.util.ts",
+          "modified": false,
+          "beforeTokenCount": 2,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/tasks/add-task-bar/add-task-bar-actions/add-task-bar-actions.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/tag/tag-toggle-menu-list/tag-toggle-menu-list.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/tasks/mention-config.service.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/tasks/add-task-bar/short-syntax-to-tags.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/core-ui/magic-side-nav/nav-list/nav-list-tree.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC017",
+      "before": "donut_large",
+      "after": "bar_chart",
+      "title": "Metrics for Today/project",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/core-ui/work-context-menu/work-context-menu.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC018",
+      "before": "link",
+      "after": "content_copy",
+      "title": "Copy project invite URL",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/core-ui/work-context-menu/work-context-menu.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 3,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 2
+        }
+      ]
+    },
+    {
+      "id": "IC019",
+      "before": "list",
+      "after": "playlist_add",
+      "title": "Add a task-list section",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/core-ui/work-context-menu/work-context-menu.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC020",
+      "before": "replay",
+      "after": "restore",
+      "title": "Reopen completed project; archived completed project action",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/core-ui/work-context-menu/work-context-menu.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/pages/archived-projects-page/archived-projects-page.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/project/project.service.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 4,
+          "removedBeforeLines": 2,
+          "addedAfterLines": 2
+        }
+      ]
+    },
+    {
+      "id": "IC021",
+      "before": "file_copy",
+      "after": "content_copy",
+      "title": "Duplicate project/board",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/boards/boards.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC022",
+      "before": "delete_forever",
+      "after": "delete",
+      "title": "Only if project deletion is recoverable; permanent deletion retains current icon",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented-conditional",
+      "note": "Recoverable task/attachment/recurrence/settings removal uses delete; irreversible project deletion keeps delete_forever.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/recently-deleted/recently-deleted.service.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 33,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/tasks/task-attachment/task-attachment-list/task-attachment-list.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/task-repeat-cfg/dialog-edit-task-repeat-cfg/dialog-edit-task-repeat-cfg.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/task-repeat-cfg/dialog-edit-task-repeat-cfg/dialog-edit-task-repeat-cfg.component.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 7,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/config/repeat-section-type/repeat-section-type.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/core-ui/work-context-menu/work-context-menu.component.html",
+          "modified": true,
+          "beforeTokenCount": 2,
+          "afterTokenCount": 4,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC023",
+      "before": "cancel",
+      "after": "close",
+      "title": "Remove tag chip from task",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tag/tag-edit/tag-edit.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC024",
+      "before": "emoji_events",
+      "after": "check_circle",
+      "title": "Archived completed-project badge",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented-conditional",
+      "note": "Archived completed-project status now check_circle. Trophy remains only in decorative project-completion celebration.",
+      "evidence": [
+        {
+          "path": "src/app/features/project/dialog-project-complete/dialog-project-complete.component.html",
+          "modified": false,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/pages/archived-projects-page/archived-projects-page.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC025",
+      "before": "add_circle",
+      "after": "add",
+      "title": "New-board tab",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/boards/boards.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC026",
+      "before": "task_alt",
+      "after": "checklist",
+      "title": "Number of all tasks in board column or planner day/overdue header",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/boards/board-panel/board-panel.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC027",
+      "before": "today",
+      "after": "calendar_month",
+      "title": "Any-date task chip in board; date-only create-task placeholder; schedule submit without time",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Generic scheduled dates use calendar_month. Actual Today status and actions retain today.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html",
+          "modified": true,
+          "beforeTokenCount": 2,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html",
+          "modified": true,
+          "beforeTokenCount": 5,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 2,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/task-detail-panel/task-detail-panel.component.ts",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 2
+        },
+        {
+          "path": "src/app/features/tasks/task-detail-panel/task-detail-panel.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/task/task.component.html",
+          "modified": true,
+          "beforeTokenCount": 9,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/boards/board-panel/board-panel.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/schedule/create-task-placeholder/create-task-placeholder.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/planner/dialog-schedule-task/dialog-schedule-task.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC028",
+      "before": "alarm",
+      "after": "schedule",
+      "title": "Timed event without a reminder",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Pure scheduled time uses schedule; actual enabled notification retains alarm.",
+      "evidence": [
+        {
+          "path": "src/app/features/planner/dialog-schedule-task/dialog-schedule-task.component.html",
+          "modified": true,
+          "beforeTokenCount": 2,
+          "afterTokenCount": 12,
+          "removedBeforeLines": 2,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/schedule/create-task-placeholder/create-task-placeholder.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC029",
+      "before": "schedule",
+      "after": "edit_calendar",
+      "title": "Reschedule a calendar event",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/planner/planner-calendar-event/planner-calendar-event.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/schedule/schedule-event/schedule-event.component.html",
+          "modified": true,
+          "beforeTokenCount": 5,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC030",
+      "before": "add",
+      "after": "add_task",
+      "title": "Create a task from a calendar event",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/planner/planner-calendar-event/planner-calendar-event.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/schedule/schedule-event/schedule-event.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC031",
+      "before": "view_week",
+      "after": "calendar_view_week",
+      "title": "Schedule week view",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/schedule/schedule/schedule.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC032",
+      "before": "event_note",
+      "after": "filter_alt",
+      "title": "Calendar visibility/filter menu",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/schedule/schedule/schedule.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC033",
+      "before": "wb_sunny",
+      "after": "calendar_clock",
+      "title": "Automatically placed schedule task; chosen instead of sparkles",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/schedule/schedule-event/schedule-event.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC034",
+      "before": "clear",
+      "after": "close",
+      "title": "Clear search text",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/pages/search-page/search-page.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC035",
+      "before": "subdirectory_arrow_right",
+      "after": "account_tree",
+      "title": "Optional subtask hierarchy icon consolidation",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/pages/search-page/search-page.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC036",
+      "before": "list",
+      "after": "list_alt",
+      "title": "Project search result default; preserve custom project identity",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Search renders saved project identity through tag component and list_alt fallback instead of generic list.",
+      "evidence": [
+        {
+          "path": "src/app/pages/search-page/search-page.component.html",
+          "modified": true,
+          "beforeTokenCount": 4,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/pages/search-page/search-page.component.ts",
+          "modified": true,
+          "beforeTokenCount": 9,
+          "afterTokenCount": 3,
+          "removedBeforeLines": 2,
+          "addedAfterLines": 3
+        }
+      ]
+    },
+    {
+      "id": "IC037",
+      "before": "delete_outline",
+      "after": "delete",
+      "title": "Search result is deleted",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/history/history.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 3,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/pages/search-page/search-page.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 6,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC038",
+      "before": "info",
+      "after": "description",
+      "title": "Open archived-task details",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/pages/search-page/search-page.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 2
+        }
+      ]
+    },
+    {
+      "id": "IC039",
+      "before": "help_outline",
+      "after": "label_off",
+      "title": "Unavailable tag",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/pages/search-page/search-page.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC040",
+      "before": "help_outline",
+      "after": "folder_off",
+      "title": "Unavailable project",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/pages/search-page/search-page.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC041",
+      "before": "visibility_off",
+      "after": "delete",
+      "title": "Remove daily summary note text block",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/pages/daily-summary/daily-summary.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC042",
+      "before": "note_alt",
+      "after": "note_add",
+      "title": "Add day-end routine note block",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/pages/daily-summary/daily-summary.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC043",
+      "before": "wb_sunny",
+      "after": "check_circle",
+      "title": "Finish day / clear and continue summary actions",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/pages/daily-summary/daily-summary.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 2,
+          "addedAfterLines": 2
+        }
+      ]
+    },
+    {
+      "id": "IC044",
+      "before": "wb_sunny",
+      "after": "event_upcoming",
+      "title": "Move remaining Today tasks to tomorrow in summary",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/pages/daily-summary/plan-tasks-tomorrow/plan-tasks-tomorrow.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC045",
+      "before": "adjust",
+      "after": "numbers",
+      "title": "Counter count summary",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/pages/daily-summary/simple-counter-summary-item/simple-counter-summary-item.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC046",
+      "before": "\ud83d\udd25",
+      "after": "calendar_month",
+      "title": "Consecutive-days summary, retain explicit text",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/pages/daily-summary/simple-counter-summary-item/simple-counter-summary-item.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/simple-counter/store/simple-counter.effects.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC047",
+      "before": "group_work",
+      "after": "view_agenda",
+      "title": "Group-by submenu",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/task-view-customizer/task-view-customizer-panel/task-view-customizer-panel.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC048",
+      "before": "refresh",
+      "after": "restart_alt",
+      "title": "Reset sort/group/filter preferences",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/task-view-customizer/task-view-customizer-panel/task-view-customizer-panel.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC049",
+      "before": "timer_off",
+      "after": "event_busy",
+      "title": "Remove from Today (calls `parent.unschedule()`), task hover control",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/task/task-hover-controls/task-hover-controls.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC050",
+      "before": "wb_twilight",
+      "after": "event_upcoming",
+      "title": "Tomorrow quick action",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/ui/datetime-picker/datetime-picker.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC051",
+      "before": "next_week",
+      "after": "date_range",
+      "title": "Next week quick action",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/ui/datetime-picker/datetime-picker.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC052",
+      "before": "today",
+      "after": "event_upcoming",
+      "title": "Postpone reminder to tomorrow",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Tomorrow postponements use event_upcoming; separate Add/Keep Today actions retain today.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html",
+          "modified": true,
+          "beforeTokenCount": 2,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/tasks/dialog-view-task-reminders/dialog-view-task-reminders.component.html",
+          "modified": true,
+          "beforeTokenCount": 5,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 2,
+          "addedAfterLines": 2
+        }
+      ]
+    },
+    {
+      "id": "IC053",
+      "before": "alarm",
+      "after": "calendar_month",
+      "title": "Unscheduled date field",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Unscheduled date field now calendar_month; actual remindAt date value retains alarm.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/task-detail-panel/task-detail-panel.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 2
+        },
+        {
+          "path": "src/app/features/tasks/task-detail-panel/task-detail-panel.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC054",
+      "before": "event",
+      "after": "calendar_month",
+      "title": "Date-only task chip",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/add-task-bar/add-task-bar-actions/add-task-bar-actions.component.html",
+          "modified": true,
+          "beforeTokenCount": 6,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/task-detail-panel/task-detail-panel.component.html",
+          "modified": true,
+          "beforeTokenCount": 21,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/add-task-bar/short-syntax-to-tags.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC055",
+      "before": "alarm",
+      "after": "flag",
+      "title": "Add-task deadline chip changes from flag when a time is supplied",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/add-task-bar/add-task-bar-actions/add-task-bar-actions.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC056",
+      "before": "event_busy",
+      "after": "flag",
+      "title": "Remove deadline, retaining Remove deadline text",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/dialog-deadline/dialog-deadline.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 2
+        }
+      ]
+    },
+    {
+      "id": "IC057",
+      "before": "event_available",
+      "after": "flag",
+      "title": "Set deadline, retaining Set deadline text",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/dialog-deadline/dialog-deadline.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 2
+        }
+      ]
+    },
+    {
+      "id": "IC058",
+      "before": "timer",
+      "after": "hourglass_empty",
+      "title": "Pure estimate chip",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Pure estimate chip uses hourglass_empty; actual time-spent entries in the dialog and dual-mode chip retain timer.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/dialog-time-estimate/dialog-time-estimate.component.html",
+          "modified": false,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/tasks/add-task-bar/short-syntax-to-tags.ts",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC059",
+      "before": "functions",
+      "after": "timer",
+      "title": "Parent-task total time spent across subtasks",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/task/task.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC060",
+      "before": "priority_high",
+      "after": "warning",
+      "title": "Time conflict only",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Time conflict uses warning. priority_high remains for actual priority control.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/task/task.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC061",
+      "before": "chat",
+      "after": "description",
+      "title": "Notes present",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/add-task-bar/add-task-bar.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/task-detail-panel/task-detail-panel.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 2,
+          "addedAfterLines": 2
+        },
+        {
+          "path": "src/app/features/tasks/task/task.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 5,
+          "removedBeforeLines": 6,
+          "addedAfterLines": 5
+        },
+        {
+          "path": "src/app/features/tasks/dialog-view-archived-task/dialog-view-archived-task.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 2,
+          "addedAfterLines": 2
+        }
+      ]
+    },
+    {
+      "id": "IC062",
+      "before": "chat_bubble_outline",
+      "after": "description",
+      "title": "Notes empty",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/add-task-bar/add-task-bar.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/task-detail-panel/task-detail-panel.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 2
+        },
+        {
+          "path": "src/app/features/tasks/task/task.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 5,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 5
+        },
+        {
+          "path": "src/app/features/tasks/dialog-view-archived-task/dialog-view-archived-task.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 2
+        }
+      ]
+    },
+    {
+      "id": "IC063",
+      "before": "update",
+      "after": "sync",
+      "title": "Issue-updated indicator; panel and close remain",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/task/task-hover-controls/task-hover-controls.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/task/task.component.ts",
+          "modified": true,
+          "beforeTokenCount": 9,
+          "afterTokenCount": 14,
+          "removedBeforeLines": 4,
+          "addedAfterLines": 4
+        }
+      ]
+    },
+    {
+      "id": "IC064",
+      "before": "list",
+      "after": "account_tree",
+      "title": "Subtask panel identity",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Existing subtask panel uses account_tree; creation controls retain playlist_add/add.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/task-detail-panel/task-detail-panel.component.html",
+          "modified": true,
+          "beforeTokenCount": 13,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html",
+          "modified": true,
+          "beforeTokenCount": 4,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/tasks/add-subtask-input/add-subtask-input.component.html",
+          "modified": false,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/tasks/dialog-view-archived-task/dialog-view-archived-task.component.html",
+          "modified": true,
+          "beforeTokenCount": 3,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC065",
+      "before": "subdirectory_arrow_left",
+      "after": "format_indent_decrease",
+      "title": "Promote subtask to main task",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/task-detail-panel/task-detail-panel.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC066",
+      "before": "forward",
+      "after": "drive_file_move",
+      "title": "Move/add to another project",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/task-multi-select-bar/task-multi-select-bar.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/note/note/note.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC067",
+      "before": "arrow_upward",
+      "after": "vertical_align_top",
+      "title": "Move to top",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC068",
+      "before": "arrow_downward",
+      "after": "vertical_align_bottom",
+      "title": "Move to bottom",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC069",
+      "before": "send",
+      "after": "add",
+      "title": "Create task in add-task bar",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/add-task-bar/add-task-bar.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 19,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/focus-mode/focus-mode-task-selector/focus-mode-task-selector.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC070",
+      "before": "send",
+      "after": "add_task",
+      "title": "Create-and-select in focus chooser",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/add-task-bar/add-task-bar.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/focus-mode/focus-mode-task-selector/focus-mode-task-selector.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC071",
+      "before": "new_releases",
+      "after": "new_label",
+      "title": "Newly composed tag",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/add-task-bar/add-task-bar-actions/add-task-bar-actions.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC072",
+      "before": "track_changes",
+      "after": "checklist",
+      "title": "Choose existing task",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Choosing an existing task uses checklist. Recording time is separately covered by IC073.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/select-task/select-task.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tracking-reminder/dialog-tracking-reminder/dialog-tracking-reminder.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/idle/dialog-idle/dialog-idle.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 2,
+          "addedAfterLines": 2
+        },
+        {
+          "path": "src/app/features/idle/dialog-idle/dialog-idle.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC073",
+      "before": "track_changes",
+      "after": "more_time",
+      "title": "Record time confirmation",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/select-task/select-task.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/tracking-reminder/dialog-tracking-reminder/dialog-tracking-reminder.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/idle/dialog-idle/dialog-idle.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 2,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/idle/dialog-idle/dialog-idle.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC074",
+      "before": "library_books",
+      "after": "checklist",
+      "title": "Existing task result",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/add-task-bar/add-task-bar.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/select-task/select-task.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC075",
+      "before": "library_books",
+      "after": "list_alt",
+      "title": "Missing-project fallback",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/add-task-bar/add-task-bar.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/tasks/select-task/select-task.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC076",
+      "before": "close",
+      "after": "block",
+      "title": "Won\u2019t-do summary status",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/tasks/task-summary-table/task-summary-table.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC077",
+      "before": "done",
+      "after": "check",
+      "title": "Finish task and select next \u00b7 optional alias cleanup",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/focus-mode/focus-mode-task-row/focus-mode-task-row.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 2
+        }
+      ]
+    },
+    {
+      "id": "IC078",
+      "before": "checklist_rtl",
+      "after": "select_check_box",
+      "title": "Select tasks",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC079",
+      "before": "group",
+      "after": "person_remove",
+      "title": "Release Plainspace assignment",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/task-context-menu/task-context-menu-inner/task-context-menu-inner.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC080",
+      "before": "attachment",
+      "after": "attach_file",
+      "title": "Attachment identity consolidation",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Attachment identity uses attach_file, including dynamically generated task-detail toggle config; attachment property/class names are unchanged.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/task/task.component.html",
+          "modified": true,
+          "beforeTokenCount": 2,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/tasks/task-detail-panel/task-detail-panel.component.html",
+          "modified": true,
+          "beforeTokenCount": 9,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 2,
+          "addedAfterLines": 2
+        },
+        {
+          "path": "src/app/features/tasks/dialog-view-archived-task/dialog-view-archived-task.component.html",
+          "modified": true,
+          "beforeTokenCount": 6,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC081",
+      "before": "bookmark",
+      "after": "link",
+      "title": "Web-link attachment",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/short-syntax.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 6,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/core/drop-paste-input/drop-paste.model.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC082",
+      "before": "search",
+      "after": "zoom_in",
+      "title": "Preview attached image",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/task-attachment/task-attachment-list/task-attachment-list.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC083",
+      "before": "calendar_today",
+      "after": "calendar_month",
+      "title": "Choose arbitrary recurrence start date",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/task-repeat-cfg/repeat-cfg-preview/repeat-cfg-preview.component.html",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/task-repeat-cfg/dialog-edit-task-repeat-cfg/dialog-edit-task-repeat-cfg.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC084",
+      "before": "today",
+      "after": "calendar_today",
+      "title": "Daily cadence",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/task-repeat-cfg/dialog-edit-task-repeat-cfg/build-repeat-quick-setting-options.ts",
+          "modified": true,
+          "beforeTokenCount": 2,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC085",
+      "before": "work",
+      "after": "date_range",
+      "title": "Monday\u2013Friday cadence",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/task-repeat-cfg/dialog-edit-task-repeat-cfg/build-repeat-quick-setting-options.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC086",
+      "before": "cake",
+      "after": "event_repeat",
+      "title": "Yearly cadence",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/task-repeat-cfg/dialog-edit-task-repeat-cfg/build-repeat-quick-setting-options.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC087",
+      "before": "auto_awesome",
+      "after": "all_inclusive",
+      "title": "Flowtime mode",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC088",
+      "before": "done_all",
+      "after": "stop_circle",
+      "title": "Complete current focus session, distinct from completing task",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC089",
+      "before": "arrow_forward",
+      "after": "play_arrow",
+      "title": "Start next focus session",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/focus-mode/focus-mode-main/focus-mode-main.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/focus-mode/focus-mode-break/focus-mode-break.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/focus-mode/focus-mode-session-done/focus-mode-session-done.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC090",
+      "before": "add_task",
+      "after": "checklist",
+      "title": "Choose an existing task",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/focus-mode/focus-mode-task-row/focus-mode-task-row.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC091",
+      "before": "restore",
+      "after": "more_time",
+      "title": "Round time spent in task summary tables",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/task-summary-tables/task-summary-tables.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC092",
+      "before": "call_made",
+      "after": "ios_share",
+      "title": "Export task list or worklog",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/task-summary-tables/task-summary-tables.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/worklog/worklog-week/worklog-week.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC093",
+      "before": "content_paste",
+      "after": "content_copy",
+      "title": "Copy worklog text to clipboard",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/worklog/worklog-export/worklog-export.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC094",
+      "before": "file_download",
+      "after": "download",
+      "title": "Download alias consolidation",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/worklog/worklog-export/worklog-export.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC095",
+      "before": "settings_backup_restore",
+      "after": "unarchive",
+      "title": "Restore task from archive in worklog",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/worklog/worklog-task-row/worklog-task-row.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC096",
+      "before": "list",
+      "after": "checklist",
+      "title": "Worklog task-count identity",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/worklog/worklog-week/worklog-week.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/worklog/worklog-task-row/worklog-task-row.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC097",
+      "before": "list",
+      "after": "expand_more",
+      "title": "Collapsed worklog disclosure",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/worklog/worklog-week/worklog-week.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/worklog/worklog-task-row/worklog-task-row.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/history/history.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC098",
+      "before": "timer",
+      "after": "expand_less",
+      "title": "Expanded worklog disclosure",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Expanded disclosure uses expand_less. Separate actual tracked-time totals retain timer.",
+      "evidence": [
+        {
+          "path": "src/app/features/worklog/worklog-week/worklog-week.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/worklog/worklog-task-row/worklog-task-row.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC099",
+      "before": "hourglass_empty",
+      "after": "control:progress-spinner",
+      "title": "Preparing chart share",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Both chart sharing branches now render MatProgressSpinner with Processing label.",
+      "evidence": [
+        {
+          "path": "src/app/features/metric/activity-heatmap/activity-heatmap.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/metric/lazy-chart/lazy-chart.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC100",
+      "before": "directions_walk",
+      "after": "man",
+      "title": "Standing desk counter; stationary person rather than the prior accessibility_new suggestion",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "New defaults plus ID-and-legacy-value-only presentation mapping; user-selected counter artwork preserved.",
+      "evidence": [
+        {
+          "path": "src/app/features/simple-counter/simple-counter.const.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/simple-counter/simple-counter-icon.pipe.ts",
+          "modified": false,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/history/history-day-meta/history-day-meta.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC101",
+      "before": "free_breakfast",
+      "after": "coffee",
+      "title": "Coffee counter style consolidation",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "New defaults plus ID-and-legacy-value-only presentation mapping; user-selected counter artwork preserved.",
+      "evidence": [
+        {
+          "path": "src/app/features/simple-counter/simple-counter.const.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/simple-counter/simple-counter-icon.pipe.ts",
+          "modified": false,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/history/history-day-meta/history-day-meta.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC102",
+      "before": "fitness_center",
+      "after": "accessibility_new",
+      "title": "Stretching counter; outstretched arms rather than the prior self_improvement meditation suggestion",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "New defaults plus ID-and-legacy-value-only presentation mapping; user-selected counter artwork preserved.",
+      "evidence": [
+        {
+          "path": "src/app/features/simple-counter/simple-counter.const.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/simple-counter/simple-counter-icon.pipe.ts",
+          "modified": false,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/history/history-day-meta/history-day-meta.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC103",
+      "before": "playlist_add",
+      "after": "add",
+      "title": "Add habit",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/simple-counter/habit-tracker/habit-tracker.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 3,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC104",
+      "before": "visibility",
+      "after": "toggle_on",
+      "title": "Re-enable habit",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/simple-counter/habit-tracker/habit-tracker.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC105",
+      "before": "bedtime",
+      "after": "calendar_month",
+      "title": "Date-picker Next month shortcut",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/ui/datetime-picker/datetime-picker.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC106",
+      "before": "wb_sunny",
+      "after": "layout:date-cell",
+      "title": "Restore day number with today outline",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Removed CSS that hid today day number and overlaid sunshine; native calendar number and today outline are restored.",
+      "evidence": [
+        {
+          "path": "src/app/ui/datetime-picker/datetime-picker.component.scss",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC107",
+      "before": "close",
+      "after": "control:clear-time-button",
+      "title": "Same X glyph in a native keyboard-operable labeled button",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Same close glyph is now inside native labeled mat-icon-button, including keyboard behavior.",
+      "evidence": [
+        {
+          "path": "src/app/ui/datetime-picker/datetime-picker.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC108",
+      "before": "integration_instructions",
+      "after": "code_blocks",
+      "title": "Insert fenced code block",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/ui/dialog-fullscreen-markdown/dialog-fullscreen-markdown.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC109",
+      "before": "notes",
+      "after": "code",
+      "title": "Plain-text/source-only editor view",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/ui/dialog-fullscreen-markdown/dialog-fullscreen-markdown.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 4,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 2
+        }
+      ]
+    },
+    {
+      "id": "IC110",
+      "before": "photo",
+      "after": "visibility",
+      "title": "Rendered Markdown preview",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/ui/dialog-fullscreen-markdown/dialog-fullscreen-markdown.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC111",
+      "before": "close",
+      "after": "none",
+      "title": "Discard note button retains text, removes redundant X",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Discard note button retains visible text; redundant X removed.",
+      "evidence": [
+        {
+          "path": "src/app/ui/dialog-fullscreen-markdown/dialog-fullscreen-markdown.component.html",
+          "modified": true,
+          "beforeTokenCount": 3,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC112",
+      "before": "playlist_add_check",
+      "after": "more_vert",
+      "title": "Open checklist batch-action menu",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/ui/inline-markdown/inline-markdown.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC113",
+      "before": "colorize",
+      "after": "palette",
+      "title": "Open custom color picker",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/ui/input-color-picker/input-color-picker.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC114",
+      "before": "remove_today",
+      "after": "custom:calendar-minus",
+      "title": "Unpin note from Today",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Existing remove_today SVG registration now loads approved calendar-minus artwork.",
+      "evidence": [
+        {
+          "path": "src/app/features/note/note/note.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/../assets/icons/remove-today-48px.svg",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC115",
+      "before": "lock",
+      "after": "visibility",
+      "title": "Show formatted note",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/note/note/note.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 2,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/note/note/note.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC116",
+      "before": "lock_open",
+      "after": "code",
+      "title": "Show plain text",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/note/note/note.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/note/note/note.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC117",
+      "before": "note",
+      "after": "description",
+      "title": "Startup reflection-note banner",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/note/note-startup-banner.service.ts",
+          "modified": true,
+          "beforeTokenCount": 6,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/archive/dialog-archive-compression/dialog-archive-compression.component.html",
+          "modified": true,
+          "beforeTokenCount": 2,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/core/drop-paste-input/drop-paste.model.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC118",
+      "before": "library_books",
+      "after": "drag_handle",
+      "title": "Resize work-view split",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/work-view/split/split.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC119",
+      "before": "timelapse",
+      "after": "timer",
+      "title": "Time worked today",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/work-view/work-view.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC120",
+      "before": "timer_off",
+      "after": "restart_alt",
+      "title": "Reset break timer",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/work-view/work-view.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC121",
+      "before": "playlist_add",
+      "after": "add_task",
+      "title": "Add more tasks",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/work-view/work-view.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC122",
+      "before": "done_all",
+      "after": "archive",
+      "title": "Move completed tasks to archive",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/work-view/work-view.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC123",
+      "before": "call_made",
+      "after": "download",
+      "title": "Export all, month, week history",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/history/history.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 3,
+          "removedBeforeLines": 3,
+          "addedAfterLines": 3
+        }
+      ]
+    },
+    {
+      "id": "IC124",
+      "before": "close",
+      "after": "expand_less",
+      "title": "Hide day details",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/history/history.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC125",
+      "before": "save",
+      "after": "storage",
+      "title": "Estimated storage saved by compression",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/archive/dialog-archive-compression/dialog-archive-compression.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC126",
+      "before": "cloud_off",
+      "after": "sync",
+      "title": "Onboarding line describing optional sync",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/onboarding/quick-tour-card/quick-tour-card.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC127",
+      "before": "\u2715",
+      "after": "close",
+      "title": "Onboarding tour dismiss",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/onboarding/quick-tour-card/quick-tour-card.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/onboarding/onboarding-hint.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 3,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC128",
+      "before": "update",
+      "after": "system_update_alt",
+      "title": "Upgrade old Plainspace server",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/plainspace/reconnect-notice/plainspace-reconnect-notice.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC129",
+      "before": "add",
+      "after": "person_add",
+      "title": "Claim shared task",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/plainspace/claim-pool/claim-pool.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC130",
+      "before": "link",
+      "after": "none",
+      "title": "Labeled social targets: remove indistinguishable generic link glyphs",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Redundant generic social icons removed; visible platform names retained.",
+      "evidence": [
+        {
+          "path": "src/app/core/share/dialog-share/dialog-share.component.ts",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 5,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/core/share/share.service.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 5,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC131",
+      "before": "chat",
+      "after": "none",
+      "title": "WhatsApp label only",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "WhatsApp generic chat icon removed; platform name retained.",
+      "evidence": [
+        {
+          "path": "src/app/core/share/dialog-share/dialog-share.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/core/share/share.service.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC132",
+      "before": "send",
+      "after": "none",
+      "title": "Telegram label only",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Telegram generic send icon removed; platform name retained.",
+      "evidence": [
+        {
+          "path": "src/app/core/share/dialog-share/dialog-share.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/core/share/share.service.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC133",
+      "before": "laptop_windows",
+      "after": "terminal",
+      "title": "Dormant command-type declaration only",
+      "active": false,
+      "optionalInOriginalReport": true,
+      "status": "dormant-declaration-updated",
+      "note": "Declaration-only COMMAND enum icon changed to terminal; it is not counted as currently displayed UI.",
+      "evidence": [
+        {
+          "path": "src/app/core/drop-paste-input/drop-paste.model.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC134",
+      "before": "play_arrow",
+      "after": "timer",
+      "title": "Enable Time tracking",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/config/form-cfgs/app-features-form.const.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC135",
+      "before": "arrow_back",
+      "after": "arrow_upward",
+      "title": "Move entry up",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/config/repeat-section-type/repeat-section-type.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC136",
+      "before": "arrow_forward",
+      "after": "arrow_downward",
+      "title": "Move entry down",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/config/repeat-section-type/repeat-section-type.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC137",
+      "before": "image_not_supported",
+      "after": "photo_library",
+      "title": "No clipboard images yet",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/config/clipboard-images-cfg/dialog-clipboard-images-manager/dialog-clipboard-images-manager.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC138",
+      "before": "file_upload",
+      "after": "download",
+      "title": "Export data, handler `downloadBackup()`",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/imex/file-imex/file-imex.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 4,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 2
+        }
+      ]
+    },
+    {
+      "id": "IC139",
+      "before": "code",
+      "after": "download",
+      "title": "Privacy data export",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/imex/file-imex/file-imex.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 4,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 2
+        }
+      ]
+    },
+    {
+      "id": "IC140",
+      "before": "file_download",
+      "after": "upload",
+      "title": "Import from local file, opens file picker",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/imex/file-imex/file-imex.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 3,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 3
+        }
+      ]
+    },
+    {
+      "id": "IC141",
+      "before": "move_to_inbox",
+      "after": "upload_file",
+      "title": "Import from Todoist; optional provider mark alternative",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/imex/file-imex/file-imex.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 2,
+          "addedAfterLines": 2
+        }
+      ]
+    },
+    {
+      "id": "IC142",
+      "before": "folder",
+      "after": "description",
+      "title": "Single backup-file kind",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/imex/local-backup/dialog-backups-list/dialog-backups-list.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC143",
+      "before": "file_download",
+      "after": "cloud_download",
+      "title": "Replace local with remote",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/imex/sync/dialog-sync-conflict/dialog-sync-conflict.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC144",
+      "before": "file_upload",
+      "after": "cloud_upload",
+      "title": "Replace remote with local",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/imex/sync/dialog-sync-conflict/dialog-sync-conflict.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/issue/providers/gitlab/dialog-gitlab-submit-worklog-for-day/dialog-gitlab-submit-worklog-for-day.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC145",
+      "before": "cloud_off",
+      "after": "sync_problem",
+      "title": "Synchronization paused for safety; offline state keeps cloud_off",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Safety-paused sync uses sync_problem. Jira verified-offline branch correctly retains cloud_off.",
+      "evidence": [
+        {
+          "path": "src/app/imex/sync/sync-safety-banner.service.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/issue/providers/jira/jira-api.service.ts",
+          "modified": false,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC146",
+      "before": "public",
+      "after": "web",
+      "title": "Browser sync device",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/imex/sync/dialog-sync-devices/dialog-sync-devices.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC147",
+      "before": "vpn_key",
+      "after": "key",
+      "title": "Authorization-code input",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/imex/sync/dialog-get-and-enter-auth-code/dialog-get-and-enter-auth-code.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC148",
+      "before": "enhanced_encryption",
+      "after": "lock",
+      "title": "Encryption category",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/imex/sync/dialog-enable-encryption/dialog-enable-encryption.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 3,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC149",
+      "before": "visibility",
+      "after": "lock_open",
+      "title": "Explanation that unencrypted imported data will be visible",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/imex/sync/dialog-import-encryption-warning/dialog-import-encryption-warning.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 4,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC150",
+      "before": "extension",
+      "after": "provider:runtime-svg",
+      "title": "Use actual selected provider SVG, not generic puzzle piece",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "already-correct",
+      "note": "Provider header already uses IssueIconPipe-selected SVG and extension only as unknown fallback; no replacement was necessary.",
+      "evidence": [
+        {
+          "path": "src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.html",
+          "modified": true,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC151",
+      "before": "update",
+      "after": "composite:provider-sync-badge",
+      "title": "Keep provider identity and add small sync status badge",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Header retains actual provider SVG plus small sync badge and visible translated Updated upstream status.",
+      "evidence": [
+        {
+          "path": "src/app/features/issue/issue-header/issue-header.component.html",
+          "modified": true,
+          "beforeTokenCount": 2,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC152",
+      "before": "check",
+      "after": "check_circle",
+      "title": "Static connection success",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Static success and installed states use check_circle. Existing OAuth connected/options-loaded instances were already check_circle.",
+      "evidence": [
+        {
+          "path": "src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.html",
+          "modified": true,
+          "beforeTokenCount": 3,
+          "afterTokenCount": 3,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/plugins/ui/plugin-management/plugin-management.component.html",
+          "modified": true,
+          "beforeTokenCount": 2,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC153",
+      "before": "sync",
+      "after": "control:progress-spinner",
+      "title": "Loading provider options",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Provider loading-options branch now renders real MatProgressSpinner and loading text.",
+      "evidence": [
+        {
+          "path": "src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC154",
+      "before": "online_prediction",
+      "after": "cable",
+      "title": "Test provider connection",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/issue/dialog-edit-issue-provider/dialog-edit-issue-provider.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC155",
+      "before": "info",
+      "after": "unarchive",
+      "title": "Restored issue task result",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/issue/issue.service.ts",
+          "modified": true,
+          "beforeTokenCount": 2,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 2,
+          "addedAfterLines": 2
+        }
+      ]
+    },
+    {
+      "id": "IC156",
+      "before": "arrow_upward",
+      "after": "drive_file_move",
+      "title": "Issue task moved from backlog / another list",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/issue/issue.service.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 2,
+          "addedAfterLines": 2
+        }
+      ]
+    },
+    {
+      "id": "IC157",
+      "before": "autorenew",
+      "after": "control:progress-spinner",
+      "title": "Plugin action loading",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Plugin loading branch now renders real MatProgressSpinner and loading text.",
+      "evidence": [
+        {
+          "path": "src/app/plugins/ui/plugin-management/plugin-management.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC158",
+      "before": "error_outline",
+      "after": "error",
+      "title": "Error-state alias consolidation",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/plugins/ui/plugin-index/plugin-index.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 8,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC159",
+      "before": "desktop_windows",
+      "after": "computer",
+      "title": "Desktop-required state",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/plugins/ui/plugin-management/plugin-management.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC160",
+      "before": "arrow_forward",
+      "after": "settings",
+      "title": "Optional Setup category identity; navigational arrow may remain",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/plugins/ui/plugin-management/plugin-management.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 3,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC161",
+      "before": "add",
+      "after": "open_in_new",
+      "title": "\u201cGet listed\u201d external contribution link",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/plugins/ui/plugin-management/plugin-management.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC162",
+      "before": "src/assets/bundled-plugins/google-calendar-provider/icon.svg",
+      "after": "provider:google-calendar",
+      "title": "Google Calendar provider identity",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved SVG path geometry installed in owning plugin source; embedded full relevant license metadata and exact provider provenance. Owner build regenerates matching bundled icon.svg.",
+      "evidence": [
+        {
+          "path": "src/assets/bundled-plugins/google-calendar-provider/icon.svg",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/google-calendar-provider/icon.svg",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC163",
+      "before": "src/assets/bundled-plugins/procrastination-buster/icon.svg",
+      "after": "psychology",
+      "title": "Guided reflection plugin identity",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved SVG path geometry installed in owning plugin source; embedded full relevant license metadata and exact provider provenance. Owner build regenerates matching bundled icon.svg.",
+      "evidence": [
+        {
+          "path": "src/assets/bundled-plugins/procrastination-buster/icon.svg",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/procrastination-buster/src/assets/icon.svg",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC164",
+      "before": "src/assets/bundled-plugins/sync-md/icon.svg",
+      "after": "custom:document-sync",
+      "title": "sync.md document synchronization identity",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved SVG path geometry installed in owning plugin source; embedded full relevant license metadata and exact provider provenance. Owner build regenerates matching bundled icon.svg.",
+      "evidence": [
+        {
+          "path": "src/assets/bundled-plugins/sync-md/icon.svg",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/sync-md/src/assets/icon.svg",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC165",
+      "before": "src/assets/bundled-plugins/todoist-import/icon.svg",
+      "after": "provider:todoist",
+      "title": "Todoist importer identity",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved SVG path geometry installed in owning plugin source; embedded full relevant license metadata and exact provider provenance. Owner build regenerates matching bundled icon.svg.",
+      "evidence": [
+        {
+          "path": "src/assets/bundled-plugins/todoist-import/icon.svg",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/assets/bundled-plugins/ticktick-import/icon.svg",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/plugins/ui/plugin-icon/plugin-icon.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/todoist-import/src/icon.svg",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC166",
+      "before": "src/assets/bundled-plugins/ticktick-import/icon.svg",
+      "after": "provider:ticktick",
+      "title": "TickTick importer identity",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved SVG path geometry installed in owning plugin source; embedded full relevant license metadata and exact provider provenance. Owner build regenerates matching bundled icon.svg.",
+      "evidence": [
+        {
+          "path": "src/assets/bundled-plugins/ticktick-import/icon.svg",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/assets/bundled-plugins/todoist-import/icon.svg",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/plugins/ui/plugin-icon/plugin-icon.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/ticktick-import/src/icon.svg",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC167",
+      "before": "src/assets/bundled-plugins/voice-reminder/icon.svg",
+      "after": "volume_up",
+      "title": "Optional outline bell+sound candidate; compare at16px before replacing speaker",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved SVG path geometry installed in owning plugin source; embedded full relevant license metadata and exact provider provenance. Owner build regenerates matching bundled icon.svg.",
+      "evidence": [
+        {
+          "path": "src/assets/bundled-plugins/voice-reminder/icon.svg",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/voice-reminder/icon.svg",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC168",
+      "before": "src/assets/bundled-plugins/yesterday-tasks-plugin/icon.svg",
+      "after": "custom:calendar-back",
+      "title": "Yesterday\u2019s Tasks identity",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Approved SVG path geometry installed in owning plugin source; embedded full relevant license metadata and exact provider provenance. Owner build regenerates matching bundled icon.svg.",
+      "evidence": [
+        {
+          "path": "src/assets/bundled-plugins/yesterday-tasks-plugin/icon.svg",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/yesterday-tasks-plugin/icon.svg",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC169",
+      "before": "doc:title",
+      "after": "format_h1",
+      "title": "Heading1",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Exact reviewed Material Symbols outline path installed in Doc Mode offline map; editor icon references updated and resolve.",
+      "evidence": [
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/editor.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 2
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/task-ref-node.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC170",
+      "before": "doc:text_fields",
+      "after": "format_h2",
+      "title": "Heading2",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Exact reviewed Material Symbols outline path installed in Doc Mode offline map; editor icon references updated and resolve.",
+      "evidence": [
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/editor.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 2
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/task-ref-node.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC171",
+      "before": "doc:short_text",
+      "after": "format_h3",
+      "title": "Heading3",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Exact reviewed Material Symbols outline path installed in Doc Mode offline map; editor icon references updated and resolve.",
+      "evidence": [
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/editor.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 2
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/task-ref-node.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC172",
+      "before": "doc:check_circle_outline",
+      "after": "add_task",
+      "title": "Insert task block",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Exact reviewed Material Symbols outline path installed in Doc Mode offline map; editor icon references updated and resolve.",
+      "evidence": [
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/editor.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 2
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/task-ref-node.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC173",
+      "before": "doc:check_circle_outline",
+      "after": "custom:rounded-checkbox",
+      "title": "Existing task block type",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "already-correct",
+      "note": "Audit card split implied an existing-task type symbol, but both old check_circle_outline callers create a new host task and correctly use add_task. Existing taskRef/subTaskRef completion controls already use rounded rectangles and remain intact.",
+      "evidence": [
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/editor.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/task-ref-node.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC174",
+      "before": "ic_widget_check_outline",
+      "after": "custom:rounded-checkbox-open",
+      "title": "Android incomplete widget task",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Android widget incomplete task now matches 24px main-list rounded-checkbox geometry.",
+      "evidence": [
+        {
+          "path": "android/app/src/main/java/com/superproductivity/superproductivity/widget/TaskListWidgetService.kt",
+          "modified": false,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "android/app/src/main/res/drawable/ic_widget_check_outline.xml",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/ui/done-toggle/done-toggle.component.html",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/task-ref-node.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "android/app/src/main/res/drawable/ic_widget_check_done.xml",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC175",
+      "before": "ic_widget_check_done",
+      "after": "custom:rounded-checkbox-done",
+      "title": "Android completed widget task",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Android widget completed task now uses matching rounded box plus checkmark; brand tint retained.",
+      "evidence": [
+        {
+          "path": "android/app/src/main/java/com/superproductivity/superproductivity/widget/TaskListWidgetService.kt",
+          "modified": false,
+          "beforeTokenCount": 1,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "android/app/src/main/res/drawable/ic_widget_check_outline.xml",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/ui/done-toggle/done-toggle.component.html",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/task-ref-node.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "android/app/src/main/res/drawable/ic_widget_check_done.xml",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC176",
+      "before": "drive_file_move",
+      "after": "list_alt",
+      "title": "New task capture destination default, preserve selected project identity",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Capture destination uses list_alt fallback while preserving selected project identity.",
+      "evidence": [
+        {
+          "path": "src/app/features/tasks/add-task-bar/add-task-bar.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC177",
+      "before": "celebration",
+      "after": "check_circle",
+      "title": "Completed focus session banner",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/focus-mode/store/focus-mode.effects.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC178",
+      "before": "ic_shortcut_today",
+      "after": "native:android-today-calendar",
+      "title": "Android launcher standard Today",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Calendar glyph installed within original standard 48px disc and 12px translation. Initial accidental background-glyph replacement was reported and fixed during review.",
+      "evidence": [
+        {
+          "path": "android/app/src/main/res/drawable/ic_shortcut_today.xml",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "android/app/src/main/res/drawable/ic_shortcut_today_foreground.xml",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "android/app/src/main/res/values/colors.xml",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "android/app/src/main/res/values/ic_launcher_background.xml",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/assets/ultra-tasks/logo.svg",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC179",
+      "before": "ic_shortcut_today_foreground",
+      "after": "native:android-today-calendar-adaptive",
+      "title": "Android adaptive Today foreground",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Calendar glyph installed within existing adaptive 108px foreground transform and safe zone.",
+      "evidence": [
+        {
+          "path": "android/app/src/main/res/drawable/ic_shortcut_today.xml",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "android/app/src/main/res/drawable/ic_shortcut_today_foreground.xml",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC180",
+      "before": "sun.max",
+      "after": "sf:calendar",
+      "title": "Native iOS Today shortcut",
+      "active": true,
+      "optionalInOriginalReport": false,
+      "status": "implemented",
+      "note": "Native iOS shortcut binds SF calendar; preview asset is not shipped as an Apple vector.",
+      "evidence": [
+        {
+          "path": "ios/App/App/Info.plist",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC181",
+      "before": "\ud83d\ude2b",
+      "after": "battery_0_bar",
+      "title": "Energy level radio choices",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/metric/evaluation-sheet/evaluation-sheet.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC182",
+      "before": "\ud83d\ude10",
+      "after": "battery_3_bar",
+      "title": "Energy level radio choices",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/metric/evaluation-sheet/evaluation-sheet.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC183",
+      "before": "\ud83d\ude0a",
+      "after": "battery_full",
+      "title": "Energy level radio choices",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/features/metric/evaluation-sheet/evaluation-sheet.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC184",
+      "before": "\ud83d\udd25",
+      "after": "check",
+      "title": "Counter date-picker streak goal status",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented-equivalent",
+      "note": "Removed streak flame emoji from date-chart string; translated Goal met text is used instead of an icon because this surface is a chart label.",
+      "evidence": [
+        {
+          "path": "src/app/features/simple-counter/dialog-simple-counter-edit/dialog-simple-counter-edit.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC185",
+      "before": "\u274c",
+      "after": "close",
+      "title": "Counter date-picker streak goal status",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented-equivalent",
+      "note": "Removed failure emoji from date-chart string; translated Goal not met text is used instead of an icon because this surface is a chart label.",
+      "evidence": [
+        {
+          "path": "src/app/features/simple-counter/dialog-simple-counter-edit/dialog-simple-counter-edit.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 3,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC186",
+      "before": "\u2211",
+      "after": "timer",
+      "title": "Tracked-duration total in worklog",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Tracked-duration sums use timer in worklog.",
+      "evidence": [
+        {
+          "path": "src/app/features/worklog/worklog-week/worklog-week.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/worklog/worklog-task-row/worklog-task-row.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 1,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC187",
+      "before": "\u2211",
+      "after": "checklist",
+      "title": "Planner total-task snack",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented-equivalent",
+      "note": "Removed sum sign from generated planner snack. Localized Total tasks: N text communicates count directly instead of embedding checklist in HTML message.",
+      "evidence": [
+        {
+          "path": "src/app/features/planner/planner.service.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 2,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC188",
+      "before": "src/assets/icons/calendar.svg",
+      "after": "calendar_month",
+      "title": "Generic calendar integration identity",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/app/core/theme/built-in-svg-icons.const.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/assets/icons/calendar.svg",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC189",
+      "before": "src/assets/icons/caldav.svg",
+      "after": "calendar_month",
+      "title": "CalDAV issue-provider identity",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved replacement verified in current source and diff.",
+      "evidence": [
+        {
+          "path": "src/assets/icons/caldav.svg",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/features/issue-panel/issue-provider-setup-overview/issue-provider-setup-overview.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 6,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC190",
+      "before": "src/assets/bundled-plugins/ai-productivity-prompts/icon.svg",
+      "after": "smart_toy",
+      "title": "AI Productivity Prompts plugin identity",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved SVG path geometry installed in owning plugin source; embedded full relevant license metadata and exact provider provenance. Owner build regenerates matching bundled icon.svg.",
+      "evidence": [
+        {
+          "path": "packages/plugin-dev/ai-productivity-prompts/src/assets/icon.svg",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/assets/bundled-plugins/ai-productivity-prompts/icon.svg",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC191",
+      "before": "src/assets/bundled-plugins/app-auto-track/icon.svg",
+      "after": "desktop_windows",
+      "title": "App Auto Track plugin identity",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved SVG path geometry installed in owning plugin source; embedded full relevant license metadata and exact provider provenance. Owner build regenerates matching bundled icon.svg.",
+      "evidence": [
+        {
+          "path": "packages/plugin-dev/app-auto-track/src/icon.svg",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/assets/bundled-plugins/app-auto-track/icon.svg",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC192",
+      "before": "src/assets/bundled-plugins/api-test-plugin/icon.svg",
+      "after": "terminal",
+      "title": "API Test Plugin identity",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved SVG path geometry installed in owning plugin source; embedded full relevant license metadata and exact provider provenance. Owner build regenerates matching bundled icon.svg.",
+      "evidence": [
+        {
+          "path": "packages/plugin-dev/api-test-plugin/icon.svg",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/assets/bundled-plugins/api-test-plugin/icon.svg",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC193",
+      "before": "src/assets/bundled-plugins/doc-mode/icon.svg",
+      "after": "description",
+      "title": "Doc Mode plugin identity under plugin-icon renderer",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved SVG path geometry installed in owning plugin source; embedded full relevant license metadata and exact provider provenance. Owner build regenerates matching bundled icon.svg.",
+      "evidence": [
+        {
+          "path": "src/assets/bundled-plugins/doc-mode/icon.svg",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/plugins/ui/plugin-icon/plugin-icon.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/icon.svg",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 1
+        }
+      ]
+    },
+    {
+      "id": "IC194",
+      "before": "src/assets/bundled-plugins/caldav-calendar-provider/icon.svg",
+      "after": "calendar_month",
+      "title": "CalDAV Events plugin identity under plugin-icon renderer",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Approved SVG path geometry installed in owning plugin source; embedded full relevant license metadata and exact provider provenance. Owner build regenerates matching bundled icon.svg.",
+      "evidence": [
+        {
+          "path": "src/assets/bundled-plugins/caldav-calendar-provider/icon.svg",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/app/plugins/ui/plugin-icon/plugin-icon.component.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/caldav-calendar-provider/icon.svg",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC195",
+      "before": "src/app/features/focus-mode/focus-mode-countdown/rocket/focus-mode-preparation-rocket.component.html",
+      "after": "rocket_launch",
+      "title": "Focus preparation rocket illustration",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Large rocket illustration replaced by monochrome rocket_launch while animation/session transition mechanism retained.",
+      "evidence": [
+        {
+          "path": "src/app/features/focus-mode/focus-mode-countdown/rocket/focus-mode-preparation-rocket.component.html",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "src/app/features/focus-mode/focus-mode-countdown/rocket/focus-mode-preparation-rocket.component.scss",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC196",
+      "before": "doc:add",
+      "after": "add",
+      "title": "Doc Mode \u00b7 add",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Exact reviewed Material Symbols outline path installed in Doc Mode offline map; editor icon references updated and resolve.",
+      "evidence": [
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 2
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/editor.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 43,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 2
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/task-ref-node.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 6,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC197",
+      "before": "doc:drag_indicator",
+      "after": "drag_indicator",
+      "title": "Doc Mode \u00b7 drag_indicator",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Exact reviewed Material Symbols outline path installed in Doc Mode offline map; editor icon references updated and resolve.",
+      "evidence": [
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/editor.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/task-ref-node.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC198",
+      "before": "doc:arrow_upward",
+      "after": "arrow_upward",
+      "title": "Doc Mode \u00b7 arrow_upward",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Exact reviewed Material Symbols outline path installed in Doc Mode offline map; editor icon references updated and resolve.",
+      "evidence": [
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/editor.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/task-ref-node.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC199",
+      "before": "doc:arrow_downward",
+      "after": "arrow_downward",
+      "title": "Doc Mode \u00b7 arrow_downward",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Exact reviewed Material Symbols outline path installed in Doc Mode offline map; editor icon references updated and resolve.",
+      "evidence": [
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/editor.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/task-ref-node.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC200",
+      "before": "doc:content_copy",
+      "after": "content_copy",
+      "title": "Doc Mode \u00b7 content_copy",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Exact reviewed Material Symbols outline path installed in Doc Mode offline map; editor icon references updated and resolve.",
+      "evidence": [
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/editor.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/task-ref-node.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC201",
+      "before": "doc:delete",
+      "after": "delete",
+      "title": "Doc Mode \u00b7 delete",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Exact reviewed Material Symbols outline path installed in Doc Mode offline map; editor icon references updated and resolve.",
+      "evidence": [
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/editor.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 28,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/task-ref-node.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 6,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC202",
+      "before": "doc:segment",
+      "after": "segment",
+      "title": "Doc Mode \u00b7 segment",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Exact reviewed Material Symbols outline path installed in Doc Mode offline map; editor icon references updated and resolve.",
+      "evidence": [
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/editor.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 2,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/task-ref-node.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC203",
+      "before": "doc:format_list_bulleted",
+      "after": "format_list_bulleted",
+      "title": "Doc Mode \u00b7 format_list_bulleted",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Exact reviewed Material Symbols outline path installed in Doc Mode offline map; editor icon references updated and resolve.",
+      "evidence": [
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/editor.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/task-ref-node.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC204",
+      "before": "doc:format_list_numbered",
+      "after": "format_list_numbered",
+      "title": "Doc Mode \u00b7 format_list_numbered",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Exact reviewed Material Symbols outline path installed in Doc Mode offline map; editor icon references updated and resolve.",
+      "evidence": [
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/editor.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/task-ref-node.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC205",
+      "before": "doc:format_quote",
+      "after": "format_quote",
+      "title": "Doc Mode \u00b7 format_quote",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Exact reviewed Material Symbols outline path installed in Doc Mode offline map; editor icon references updated and resolve.",
+      "evidence": [
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/editor.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/task-ref-node.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC206",
+      "before": "doc:code",
+      "after": "code",
+      "title": "Doc Mode \u00b7 code",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Exact reviewed Material Symbols outline path installed in Doc Mode offline map; editor icon references updated and resolve.",
+      "evidence": [
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/editor.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 9,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/task-ref-node.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC207",
+      "before": "doc:horizontal_rule",
+      "after": "horizontal_rule",
+      "title": "Doc Mode \u00b7 horizontal_rule",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Exact reviewed Material Symbols outline path installed in Doc Mode offline map; editor icon references updated and resolve.",
+      "evidence": [
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 1
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/editor.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/task-ref-node.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC208",
+      "before": "doc:open_in_new",
+      "after": "open_in_new",
+      "title": "Doc Mode \u00b7 open_in_new",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Exact reviewed Material Symbols outline path installed in Doc Mode offline map; editor icon references updated and resolve.",
+      "evidence": [
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/icons.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/editor.ts",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 1,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "packages/plugin-dev/doc-mode/src/ui/task-ref-node.ts",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC209",
+      "before": "ic_shortcut_add_task",
+      "after": "native:android-add-emerald",
+      "title": "Android launcher shortcut brand shell",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Shared launcher shell color is production emerald #16845B; plus geometry remains unchanged.",
+      "evidence": [
+        {
+          "path": "android/app/src/main/res/values/colors.xml",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "android/app/src/main/res/values/ic_launcher_background.xml",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/assets/ultra-tasks/logo.svg",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    },
+    {
+      "id": "IC210",
+      "before": "ic_shortcut_inbox",
+      "after": "native:android-inbox-emerald",
+      "title": "Android launcher shortcut brand shell",
+      "active": true,
+      "optionalInOriginalReport": true,
+      "status": "implemented",
+      "note": "Shared launcher shell color is production emerald #16845B; inbox geometry remains unchanged.",
+      "evidence": [
+        {
+          "path": "android/app/src/main/res/values/colors.xml",
+          "modified": true,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "android/app/src/main/res/values/ic_launcher_background.xml",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        },
+        {
+          "path": "src/assets/ultra-tasks/logo.svg",
+          "modified": false,
+          "beforeTokenCount": 0,
+          "afterTokenCount": 0,
+          "removedBeforeLines": 0,
+          "addedAfterLines": 0
+        }
+      ]
+    }
+  ]
+}

@@ -16,6 +16,7 @@ import { MatIconButton } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatIcon } from '@angular/material/icon';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { SnackService } from '../../../core/snack/snack.service';
 import { getDbDateStr } from '../../../util/get-db-date-str';
 import { ShareService } from '../../../core/share/share.service';
@@ -47,6 +48,7 @@ interface YearlyActivityData {
     MatSelectModule,
     MatTooltip,
     MatIcon,
+    MatProgressSpinner,
   ],
 })
 export class ActivityHeatmapComponent {

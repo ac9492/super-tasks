@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { TestBed } from '@angular/core/testing';
+import { TranslateService } from '@ngx-translate/core';
+import { T } from '../../../t.const';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DateService } from 'src/app/core/date/date.service';
 import { DateTimeFormatService } from 'src/app/core/date-time-format/date-time-format.service';
@@ -24,6 +26,13 @@ describe('DialogSimpleCounterEditComponent', () => {
         { provide: MAT_DIALOG_DATA, useValue: { simpleCounter, selectedDate } },
         { provide: MatDialogRef, useValue: {} },
         { provide: MatDialog, useValue: {} },
+        {
+          provide: TranslateService,
+          useValue: {
+            instant: (key: string) =>
+              key === T.F.SIMPLE_COUNTER.D_EDIT.GOAL_MET ? 'Goal met' : 'Goal not met',
+          },
+        },
         { provide: SimpleCounterService, useValue: {} },
         { provide: DateService, useValue: { todayStr: () => '2026-01-07' } },
         {
@@ -54,15 +63,15 @@ describe('DialogSimpleCounterEditComponent', () => {
       countOnDay: { '2026-01-05': 3 },
       isTrackStreaks: true,
       streakMinValue: 1,
-      // Monday only; 2026-01-05 is a Monday
-      streakWeekDays: { 1: true },
+      // 2026-01-05 is Monday; Tuesday has no entry and misses its goal.
+      streakWeekDays: { 1: true, 2: true },
     });
 
     const { labels, datasets } = component.chartData();
 
     expect(labels).toEqual([
-      `${label(2026, 1, 5)}🔥`,
-      label(2026, 1, 6),
+      `${label(2026, 1, 5)}: Goal met`,
+      `${label(2026, 1, 6)}: Goal not met`,
       label(2026, 1, 7),
     ]);
     expect(datasets[0].data).toEqual([3, 0, 0]);

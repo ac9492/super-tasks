@@ -1,0 +1,604 @@
+{
+  "snapshot": "2026-11-05",
+  "baseline": {
+    "brand": "Flat emerald task-note tile and white checkmark; production mark is src/assets/ultra-tasks/logo.svg. Brand artwork is an intentional exception to monochrome UI glyphs.",
+    "interface": "Calm neutral surfaces, restrained emerald accents, monochrome Material Symbols Outlined at weight400/FILL0/opsz24, and rounded-square task completion controls. Screenshots show minimal line icons with labels, not colorful decorative iconography.",
+    "evidence": [
+      "docs/brand/README.md:3",
+      "docs/brand/workspace-light.png",
+      "docs/brand/workspace-dark.png",
+      "docs/brand/task-details.png",
+      "src/styles/font/material-icons.scss:19",
+      "src/app/ui/done-toggle/done-toggle.component.html:7"
+    ],
+    "caveat": "Brand screenshots are reference captures with earlier product copy. Source establishes present assets and icon settings; this review does not mistake the screenshot product name for the current brand."
+  },
+  "intentional_exceptions": [
+    "Retain the emerald production brand tile; do not turn it into an outlined toolbar icon.",
+    "Retain official provider brands and their licensed forms; standardize size/alignment, not logo geometry.",
+    "Preserve explicitly user-selected emoji/project/tag/counter icons. These findings concern shipped system defaults and UI copy.",
+    "Retain intentional checked/rating state fill and conventional play triangles; outline consistency does not mean eliminating meaningful state differences.",
+    "Preserve the coordinated sync-ring SVG family; it already shares a ring footprint and meaningful state variants.",
+    "iOS/Android system action symbols may follow native conventions. Cross-platform parity is about meaning; a native stroke difference alone is not a defect.",
+    "Main task completion and Doc Mode already use rounded checkboxes. The Android widget is the actual shape mismatch.",
+    "The registered sp SVG is not the live app logo in sidebar, which already loads assets/ultra-tasks/logo.svg."
+  ],
+  "findings": [
+    {
+      "id": "VI-01",
+      "purpose": "Energy level radio choices",
+      "current_symbols": [],
+      "current_text": ["\ud83d\ude2b", "\ud83d\ude10", "\ud83d\ude0a"],
+      "current_assets": [],
+      "sources": [
+        "src/app/features/metric/evaluation-sheet/evaluation-sheet.component.html:26",
+        "src/app/features/metric/evaluation-sheet/evaluation-sheet.component.html:27",
+        "src/app/features/metric/evaluation-sheet/evaluation-sheet.component.html:28"
+      ],
+      "visual_mismatch": "Full-color OS-dependent emoji have illustration detail, facial tone and weight absent from the monochrome outlined system. Emotional expression also only approximates energy.",
+      "after_symbols": ["battery_0_bar", "battery_3_bar", "battery_full"],
+      "after_assets": [],
+      "candidate_strategy": "Three outlined battery-level candidates with persistent Low / Medium / High energy labels; retain radio semantics. Battery sequence is a proposed visual metaphor for approval, not a claim that energy is measured.",
+      "priority": "P2",
+      "kind": "visual-and-semantic",
+      "scope": "app"
+    },
+    {
+      "id": "VI-02",
+      "purpose": "Streak duration in daily summary",
+      "current_symbols": [],
+      "current_text": ["\ud83d\udd25"],
+      "current_assets": [],
+      "sources": [
+        "src/app/pages/daily-summary/simple-counter-summary-item/simple-counter-summary-item.component.html:18"
+      ],
+      "visual_mismatch": "Color flame is heavier and more attention-seeking than surrounding 16px monochrome summary icons; appearance varies by OS.",
+      "after_symbols": ["calendar_month"],
+      "after_assets": [],
+      "candidate_strategy": "Calendar-month outline + existing numeric duration + consecutive-days label. This preserves information without flame/streak excitement.",
+      "priority": "P2",
+      "kind": "visual-only",
+      "scope": "app"
+    },
+    {
+      "id": "VI-03",
+      "purpose": "Counter goal/streak success snack",
+      "current_symbols": [],
+      "current_text": ["\ud83d\udd25"],
+      "current_assets": [],
+      "sources": ["src/app/features/simple-counter/store/simple-counter.effects.ts:61"],
+      "visual_mismatch": "A color emoji is injected into a small status message alongside regular text/icons.",
+      "after_symbols": ["calendar_month"],
+      "after_assets": [],
+      "candidate_strategy": "Calendar-month outline with streak day count in the message or omit the redundant inline flame and retain explicit consecutive-days text. Keep existing success semantics; no new alert.",
+      "priority": "P2",
+      "kind": "visual-only",
+      "scope": "app"
+    },
+    {
+      "id": "VI-04",
+      "purpose": "Counter date-picker streak goal status",
+      "current_symbols": [],
+      "current_text": ["\ud83d\udd25", "\u274c"],
+      "current_assets": [],
+      "sources": [
+        "src/app/features/simple-counter/dialog-simple-counter-edit/dialog-simple-counter-edit.component.ts:309"
+      ],
+      "visual_mismatch": "Platform emoji introduce color and unmatched glyph metrics inside formatted date strings.",
+      "after_symbols": ["check", "close"],
+      "after_assets": [],
+      "candidate_strategy": "In a renderer that accepts glyphs use check / close with Goal met / Goal not met accessible text. If the option remains a string, use explicit words instead of inserting emoji. Approval preview can show both named states.",
+      "priority": "P2",
+      "kind": "visual-and-semantic",
+      "scope": "app"
+    },
+    {
+      "id": "VI-05",
+      "purpose": "Dismiss onboarding hint and quick-tour card",
+      "current_symbols": [],
+      "current_text": ["\u2715"],
+      "current_assets": [],
+      "sources": [
+        "src/app/features/onboarding/onboarding-hint.component.html:59",
+        "src/app/features/onboarding/quick-tour-card/quick-tour-card.component.html:31"
+      ],
+      "visual_mismatch": "The font-dependent multiplication/X glyph has a different stroke and alignment from the app close icon.",
+      "after_symbols": ["close"],
+      "after_assets": [],
+      "candidate_strategy": "Use the actual Material Symbols close glyph at the same optical size; retain explicit dismiss name.",
+      "priority": "P2",
+      "kind": "visual-only",
+      "scope": "app"
+    },
+    {
+      "id": "VI-06",
+      "purpose": "Tracked-duration total in worklog",
+      "current_symbols": [],
+      "current_text": ["\u2211"],
+      "current_assets": [],
+      "sources": [
+        "src/app/features/worklog/worklog-week/worklog-week.component.html:31",
+        "src/app/features/worklog/worklog-task-row/worklog-task-row.component.html:32"
+      ],
+      "visual_mismatch": "A typographic mathematical operator mixes text-font stroke and baseline with UI icons. It is purposeful as a total but visually inconsistent.",
+      "after_symbols": ["timer"],
+      "after_assets": [],
+      "candidate_strategy": "Replace the operator with the outlined timer, retain Total time and duration text.",
+      "priority": "P2",
+      "kind": "visual-and-semantic",
+      "scope": "app"
+    },
+    {
+      "id": "VI-07",
+      "purpose": "Planner total-task snack",
+      "current_symbols": [],
+      "current_text": ["\u2211"],
+      "current_assets": [],
+      "sources": [
+        "src/app/features/planner/planner.service.ts:161",
+        "src/app/features/planner/planner.service.ts:164"
+      ],
+      "visual_mismatch": "Same text-font summation mark used as an icon for a task count; requires interpreting math and differs from system glyph metrics.",
+      "after_symbols": ["checklist"],
+      "after_assets": [],
+      "candidate_strategy": "Use checklist with total count where rich content permits; otherwise explicit Tasks: [count] text is the concrete string-only candidate.",
+      "priority": "P2",
+      "kind": "visual-and-semantic",
+      "scope": "app"
+    },
+    {
+      "id": "VI-08",
+      "purpose": "Generic calendar integration identity",
+      "current_symbols": [],
+      "current_text": [],
+      "current_assets": ["src/assets/icons/calendar.svg"],
+      "sources": [
+        "src/app/core/theme/built-in-svg-icons.const.ts:8",
+        "src/assets/icons/calendar.svg:1"
+      ],
+      "visual_mismatch": "Legacy Material calendar artwork has a heavier filled header and older geometry than the current Material Symbols Outlined date family. Registration does not prove every use is visible.",
+      "after_symbols": ["calendar_month"],
+      "after_assets": [],
+      "candidate_strategy": "Use current bundled calendar_month outline with provider/date label; do not redraw a genuine provider brand.",
+      "priority": "P2",
+      "kind": "visual-only",
+      "scope": "registered-asset"
+    },
+    {
+      "id": "VI-09",
+      "purpose": "CalDAV issue-provider identity",
+      "current_symbols": [],
+      "current_text": [],
+      "current_assets": ["src/assets/icons/caldav.svg"],
+      "sources": [
+        "src/assets/icons/caldav.svg:1",
+        "src/app/features/issue-panel/issue-provider-setup-overview/issue-provider-setup-overview.component.html:83"
+      ],
+      "visual_mismatch": "Legacy calendar/check asset uses older filled geometry, while the same category elsewhere uses the current outlined calendar family.",
+      "after_symbols": ["calendar_month"],
+      "after_assets": [],
+      "candidate_strategy": "Use calendar_month outline and keep CalDAV text. CalDAV is a protocol label here, not a logo that must remain a checked-calendar mark.",
+      "priority": "P2",
+      "kind": "visual-only",
+      "scope": "app"
+    },
+    {
+      "id": "VI-10",
+      "purpose": "AI Productivity Prompts plugin identity",
+      "current_symbols": [],
+      "current_text": [],
+      "current_assets": ["src/assets/bundled-plugins/ai-productivity-prompts/icon.svg"],
+      "sources": [
+        "packages/plugin-dev/ai-productivity-prompts/src/assets/icon.svg:1",
+        "src/assets/bundled-plugins/ai-productivity-prompts/icon.svg:1"
+      ],
+      "visual_mismatch": "Solid legacy robot with small cutout facial detail occupies only part of a 100-unit viewport and appears optically smaller/heavier than adjacent outline glyphs.",
+      "after_symbols": ["smart_toy"],
+      "after_assets": [],
+      "candidate_strategy": "Extract/use the bundled smart_toy outline as the plugin icon, with the plugin name.",
+      "priority": "P2",
+      "kind": "visual-only",
+      "scope": "bundled-plugin"
+    },
+    {
+      "id": "VI-11",
+      "purpose": "App Auto Track plugin identity",
+      "current_symbols": [],
+      "current_text": [],
+      "current_assets": ["src/assets/bundled-plugins/app-auto-track/icon.svg"],
+      "sources": [
+        "packages/plugin-dev/app-auto-track/src/icon.svg:1",
+        "src/assets/bundled-plugins/app-auto-track/icon.svg:1"
+      ],
+      "visual_mismatch": "The inset clock face becomes a tiny filled detail at compact navigation sizes. This is an optional simplification rather than a wrong-purpose icon.",
+      "after_symbols": ["desktop_windows"],
+      "after_assets": [],
+      "candidate_strategy": "Candidate A desktop_windows outline with App Auto Track label. If retaining the timer motif, a monitor-clock outline custom SVG is a better alternative than losing the clock silently. Show both for approval.",
+      "priority": "P3",
+      "kind": "visual-only",
+      "scope": "bundled-plugin"
+    },
+    {
+      "id": "VI-12",
+      "purpose": "Voice Reminder plugin identity",
+      "current_symbols": [],
+      "current_text": [],
+      "current_assets": ["src/assets/bundled-plugins/voice-reminder/icon.svg"],
+      "sources": [
+        "packages/plugin-dev/voice-reminder/icon.svg:1",
+        "src/assets/bundled-plugins/voice-reminder/icon.svg:1"
+      ],
+      "visual_mismatch": "Legacy solid speaker cone has a darker visual weight than adjacent outlined system glyphs, despite correctly indicating spoken output.",
+      "after_symbols": ["volume_up"],
+      "after_assets": [],
+      "candidate_strategy": "Use volume_up from the current outlined family and retain Voice Reminder name. Avoid microphone because the feature speaks reminders rather than recording.",
+      "priority": "P2",
+      "kind": "visual-only",
+      "scope": "bundled-plugin"
+    },
+    {
+      "id": "VI-13",
+      "purpose": "sync.md plugin identity",
+      "current_symbols": [],
+      "current_text": [],
+      "current_assets": ["src/assets/bundled-plugins/sync-md/icon.svg"],
+      "sources": [
+        "packages/plugin-dev/sync-md/src/assets/icon.svg:1",
+        "src/assets/bundled-plugins/sync-md/icon.svg:1"
+      ],
+      "visual_mismatch": "Tiny Arial MD lettering introduces another type style, loses legibility at 16px and does not match the glyph-based system.",
+      "after_symbols": ["sync_saved_locally"],
+      "after_assets": [],
+      "candidate_strategy": "Use outlined sync_saved_locally with full sync.md label, or a custom document+sync outline candidate. Supply an actual SVG asset in approval pack.",
+      "priority": "P2",
+      "kind": "visual-and-semantic",
+      "scope": "bundled-plugin"
+    },
+    {
+      "id": "VI-14",
+      "purpose": "API Test Plugin identity",
+      "current_symbols": [],
+      "current_text": [],
+      "current_assets": ["src/assets/bundled-plugins/api-test-plugin/icon.svg"],
+      "sources": [
+        "packages/plugin-dev/api-test-plugin/icon.svg:1",
+        "src/assets/bundled-plugins/api-test-plugin/icon.svg:1"
+      ],
+      "visual_mismatch": "6px API text plus prompt/cursor creates too much detail at compact size, with mixed stroke weights. Meaning is suitable but artwork is less clear than system glyphs.",
+      "after_symbols": ["terminal"],
+      "after_assets": [],
+      "candidate_strategy": "Use bundled outlined terminal and keep API Test Plugin name; developer/test scope stays explicit.",
+      "priority": "P3",
+      "kind": "visual-only",
+      "scope": "bundled-developer-plugin"
+    },
+    {
+      "id": "VI-15",
+      "purpose": "Procrastination Buster plugin identity",
+      "current_symbols": [],
+      "current_text": [],
+      "current_assets": ["src/assets/bundled-plugins/procrastination-buster/icon.svg"],
+      "sources": [
+        "packages/plugin-dev/procrastination-buster/src/assets/icon.svg:1",
+        "src/assets/bundled-plugins/procrastination-buster/icon.svg:1"
+      ],
+      "visual_mismatch": "Large solid bespoke spiky star differs from the calm outlined set as well as suggesting favorites/awards.",
+      "after_symbols": ["psychology"],
+      "after_assets": [],
+      "candidate_strategy": "Use psychology outline with complete Procrastination Buster name. This adds a visual-fit reason to the prior semantic replacement.",
+      "priority": "P2",
+      "kind": "visual-and-semantic",
+      "scope": "bundled-plugin"
+    },
+    {
+      "id": "VI-16",
+      "purpose": "Yesterday\u2019s Tasks plugin identity",
+      "current_symbols": [],
+      "current_text": [],
+      "current_assets": ["src/assets/bundled-plugins/yesterday-tasks-plugin/icon.svg"],
+      "sources": [
+        "packages/plugin-dev/yesterday-tasks-plugin/icon.svg:1",
+        "src/assets/bundled-plugins/yesterday-tasks-plugin/icon.svg:1"
+      ],
+      "visual_mismatch": "Two large filled rewind triangles are optically heavy beside outline icons and denote playback rather than a calendar day.",
+      "after_symbols": ["calendar_month", "arrow_back"],
+      "after_assets": [],
+      "candidate_strategy": "Provide custom 24px calendar-with-back-arrow SVG from the chosen calendar vocabulary. Candidate must be a single readable composed icon, not two unrelated adjacent toolbar icons.",
+      "priority": "P2",
+      "kind": "visual-and-semantic",
+      "scope": "bundled-plugin"
+    },
+    {
+      "id": "VI-17",
+      "purpose": "Doc Mode plugin identity under plugin-icon renderer",
+      "current_symbols": [],
+      "current_text": [],
+      "current_assets": ["src/assets/bundled-plugins/doc-mode/icon.svg"],
+      "sources": [
+        "src/assets/bundled-plugins/doc-mode/icon.svg:1",
+        "src/app/plugins/ui/plugin-icon/plugin-icon.component.ts:55"
+      ],
+      "visual_mismatch": "The original stroke-only SVG root declares fill=none, but renderer CSS forces fill=currentColor on the root, which can fill the document silhouette. Source-identified rendering risk, not a screenshot-reproduced defect.",
+      "after_symbols": ["description"],
+      "after_assets": [],
+      "candidate_strategy": "Use the current description outline candidate and ensure renderer does not override intentional fill/stroke; before preview should model actual root fill override and identify it as source-based simulation.",
+      "priority": "P2",
+      "kind": "visual-only",
+      "scope": "bundled-plugin"
+    },
+    {
+      "id": "VI-18",
+      "purpose": "CalDAV Events plugin identity under plugin-icon renderer",
+      "current_symbols": [],
+      "current_text": [],
+      "current_assets": ["src/assets/bundled-plugins/caldav-calendar-provider/icon.svg"],
+      "sources": [
+        "src/assets/bundled-plugins/caldav-calendar-provider/icon.svg:1",
+        "src/app/plugins/ui/plugin-icon/plugin-icon.component.ts:55"
+      ],
+      "visual_mismatch": "Same root fill override can make the outline calendar body a solid block, hiding its dots/grid.",
+      "after_symbols": ["calendar_month"],
+      "after_assets": [],
+      "candidate_strategy": "Use current calendar_month outline candidate or preserve original geometry with explicit per-shape fill=none. Show actual before-source simulation and corrected render.",
+      "priority": "P2",
+      "kind": "visual-only",
+      "scope": "bundled-plugin"
+    },
+    {
+      "id": "VI-19",
+      "purpose": "Todoist and TickTick importer stroke-only icon rendering",
+      "current_symbols": [],
+      "current_text": [],
+      "current_assets": [
+        "src/assets/bundled-plugins/todoist-import/icon.svg",
+        "src/assets/bundled-plugins/ticktick-import/icon.svg"
+      ],
+      "sources": [
+        "src/assets/bundled-plugins/todoist-import/icon.svg:1",
+        "src/assets/bundled-plugins/ticktick-import/icon.svg:1",
+        "src/app/plugins/ui/plugin-icon/plugin-icon.component.ts:55"
+      ],
+      "visual_mismatch": "Identical thin custom paths differ from system glyph geometry and inherited fill can create an unintended filled tray shape. They also fail to distinguish source brands.",
+      "after_symbols": ["upload_file"],
+      "after_assets": [],
+      "candidate_strategy": "Use current upload_file outline with full Import from Todoist / Import from TickTick labels, or licensed source-brand candidate from parent asset research. Preserve intentional fills in renderer.",
+      "priority": "P2",
+      "kind": "visual-and-semantic",
+      "scope": "bundled-plugin"
+    },
+    {
+      "id": "VI-20",
+      "purpose": "Android widget task-completion controls",
+      "current_symbols": [],
+      "current_text": [],
+      "current_assets": [
+        "android/app/src/main/res/drawable/ic_widget_check_outline.xml",
+        "android/app/src/main/res/drawable/ic_widget_check_done.xml"
+      ],
+      "sources": [
+        "android/app/src/main/res/drawable/ic_widget_check_outline.xml:11",
+        "android/app/src/main/res/drawable/ic_widget_check_done.xml:11",
+        "src/app/ui/done-toggle/done-toggle.component.html:7",
+        "packages/plugin-dev/doc-mode/src/ui/task-ref-node.ts:41"
+      ],
+      "visual_mismatch": "Android widget uses a ring/filled check-circle while main list and Doc Mode use rounded-square checkbox geometry. It works but breaks the product\u2019s task-state identity.",
+      "after_symbols": ["check_box_outline_blank", "check_box"],
+      "after_assets": ["src/app/ui/done-toggle/done-toggle.component.html"],
+      "candidate_strategy": "Preferred custom native vector pair should reproduce the current app rounded rectangle rx5.5 and same check path, rather than use sharp stock checkbox corners. Parent should export that pair as actual SVG candidates for preview and Android vector implementation later. The completed-state candidate also adopts the documented emerald accent instead of the current widget purple.",
+      "priority": "P2",
+      "kind": "visual-only",
+      "scope": "native"
+    },
+    {
+      "id": "VI-21",
+      "purpose": "Focus preparation rocket illustration",
+      "current_symbols": [],
+      "current_text": [],
+      "current_assets": [
+        "src/app/features/focus-mode/focus-mode-countdown/rocket/focus-mode-preparation-rocket.component.html"
+      ],
+      "sources": [
+        "src/app/features/focus-mode/focus-mode-countdown/rocket/focus-mode-preparation-rocket.component.html:7",
+        "src/app/features/focus-mode/focus-mode-countdown/rocket/focus-mode-preparation-rocket.component.scss:27",
+        "src/app/features/focus-mode/focus-mode-countdown/rocket/focus-mode-preparation-rocket.component.scss:85"
+      ],
+      "visual_mismatch": "Large 80x140 filled, shaded, orange-gradient animated rocket differs from the flat quiet interface. This is an illustration, not a standard toolbar icon; optional art-direction refinement.",
+      "after_symbols": ["rocket_launch"],
+      "after_assets": [],
+      "candidate_strategy": "Offer a static single-color rocket_launch outline at comparable illustration footprint, or remove optional illustration and retain countdown text. Do not claim replacing the image alone fixes animation behavior; present choice for approval.",
+      "priority": "P3",
+      "kind": "visual-only",
+      "scope": "illustration"
+    },
+    {
+      "id": "VI-22",
+      "purpose": "Doc Mode inline editor/menu icons",
+      "current_symbols": [
+        "add",
+        "drag_indicator",
+        "arrow_upward",
+        "arrow_downward",
+        "content_copy",
+        "delete",
+        "segment",
+        "title",
+        "text_fields",
+        "short_text",
+        "format_list_bulleted",
+        "format_list_numbered",
+        "format_quote",
+        "code",
+        "horizontal_rule",
+        "open_in_new",
+        "check_circle_outline"
+      ],
+      "current_text": [],
+      "current_assets": ["packages/plugin-dev/doc-mode/src/ui/icons.ts"],
+      "sources": [
+        "packages/plugin-dev/doc-mode/src/ui/icons.ts:7",
+        "packages/plugin-dev/doc-mode/src/ui/icons.ts:15",
+        "packages/plugin-dev/doc-mode/src/ui/icons.ts:17",
+        "packages/plugin-dev/doc-mode/src/ui/editor.ts:860",
+        "packages/plugin-dev/doc-mode/src/ui/editor.ts:913",
+        "packages/plugin-dev/doc-mode/src/ui/editor.ts:1802",
+        "packages/plugin-dev/doc-mode/src/ui/editor.ts:1828"
+      ],
+      "visual_mismatch": "The source comment says standard Material Symbols outlines, but the static path map retains legacy Material geometry. Confirmed examples: delete is a solid bin silhouette, while the bundled current f400/outlined delete has an outlined bin with internal slots; legacy title uses a 3-unit stem while the extracted current title is 2.5 units. Other paths such as segment use older bar spacing/footprints. They can serve the correct purpose while appearing heavier or differently proportioned than the rest of the app.",
+      "after_symbols": [
+        "add",
+        "drag_indicator",
+        "arrow_upward",
+        "arrow_downward",
+        "content_copy",
+        "delete",
+        "segment",
+        "format_h1",
+        "format_h2",
+        "format_h3",
+        "format_list_bulleted",
+        "format_list_numbered",
+        "format_quote",
+        "code",
+        "horizontal_rule",
+        "open_in_new",
+        "add_task"
+      ],
+      "after_assets": [
+        "src/assets/fonts/material-symbols-outlined.woff2",
+        "src/app/ui/done-toggle/done-toggle.component.html"
+      ],
+      "candidate_strategy": "Replace the offline map geometry with paths extracted from the ACTUAL bundled Material Symbols Outlined font at f400/opsz24, preserving offline inline SVG delivery. Retain names/meanings for conventional actions. For heading selectors use format_h1 / format_h2 / format_h3. For New task / Turn into task use add_task; for an existing task-type identity or completion affordance use the app rounded-checkbox geometry, not a checked circle. Keep intentional checked states filled/checked where state requires it; this does not call for globally removing state fill.",
+      "before_after_map": [
+        {
+          "before_name": "add",
+          "after_name": "add",
+          "reason": "Purpose preserved; normalize geometry to actual bundled current outlined family"
+        },
+        {
+          "before_name": "drag_indicator",
+          "after_name": "drag_indicator",
+          "reason": "Purpose preserved; normalize geometry to actual bundled current outlined family"
+        },
+        {
+          "before_name": "arrow_upward",
+          "after_name": "arrow_upward",
+          "reason": "Purpose preserved; normalize geometry to actual bundled current outlined family"
+        },
+        {
+          "before_name": "arrow_downward",
+          "after_name": "arrow_downward",
+          "reason": "Purpose preserved; normalize geometry to actual bundled current outlined family"
+        },
+        {
+          "before_name": "content_copy",
+          "after_name": "content_copy",
+          "reason": "Purpose preserved; normalize geometry to actual bundled current outlined family"
+        },
+        {
+          "before_name": "delete",
+          "after_name": "delete",
+          "reason": "Purpose preserved; normalize geometry to actual bundled current outlined family"
+        },
+        {
+          "before_name": "segment",
+          "after_name": "segment",
+          "reason": "Purpose preserved; normalize geometry to actual bundled current outlined family"
+        },
+        {
+          "before_name": "title",
+          "after_name": "format_h1",
+          "reason": "Heading level clarity plus current-family geometry"
+        },
+        {
+          "before_name": "text_fields",
+          "after_name": "format_h2",
+          "reason": "Heading level clarity plus current-family geometry"
+        },
+        {
+          "before_name": "short_text",
+          "after_name": "format_h3",
+          "reason": "Heading level clarity plus current-family geometry"
+        },
+        {
+          "before_name": "format_list_bulleted",
+          "after_name": "format_list_bulleted",
+          "reason": "Purpose preserved; normalize geometry to actual bundled current outlined family"
+        },
+        {
+          "before_name": "format_list_numbered",
+          "after_name": "format_list_numbered",
+          "reason": "Purpose preserved; normalize geometry to actual bundled current outlined family"
+        },
+        {
+          "before_name": "format_quote",
+          "after_name": "format_quote",
+          "reason": "Purpose preserved; normalize geometry to actual bundled current outlined family"
+        },
+        {
+          "before_name": "code",
+          "after_name": "code",
+          "reason": "Purpose preserved; normalize geometry to actual bundled current outlined family"
+        },
+        {
+          "before_name": "horizontal_rule",
+          "after_name": "horizontal_rule",
+          "reason": "Purpose preserved; normalize geometry to actual bundled current outlined family"
+        },
+        {
+          "before_name": "open_in_new",
+          "after_name": "open_in_new",
+          "reason": "Purpose preserved; normalize geometry to actual bundled current outlined family"
+        },
+        {
+          "before_name": "check_circle_outline",
+          "after_name": "add_task",
+          "reason": "Task creation/conversion; existing-task identity separately uses app rounded-checkbox SVG"
+        }
+      ],
+      "contextual_variants": [
+        {
+          "before_name": "check_circle_outline",
+          "usage": "New task / Turn into task",
+          "after_symbol": "add_task"
+        },
+        {
+          "before_name": "check_circle_outline",
+          "usage": "If used as an existing task-type identity/completion",
+          "after_custom": "rounded-checkbox",
+          "geometry_source": "src/app/ui/done-toggle/done-toggle.component.html"
+        }
+      ],
+      "priority": "P2",
+      "kind": "visual-and-semantic",
+      "scope": "bundled-plugin"
+    },
+    {
+      "id": "VI-23",
+      "purpose": "Android launcher shortcut brand shell",
+      "current_symbols": [
+        "ic_shortcut_add_task",
+        "ic_shortcut_inbox",
+        "ic_shortcut_today"
+      ],
+      "current_text": [],
+      "current_assets": [],
+      "sources": [
+        "android/app/src/main/res/values/colors.xml:22",
+        "android/app/src/main/res/values/ic_launcher_background.xml",
+        "src/assets/ultra-tasks/logo.svg"
+      ],
+      "visual_mismatch": "Shortcut backgrounds inherit the legacy launcher color #075b5e, while the documented production mark uses emerald #16845B. Plus and Inbox glyphs already convey their purpose; only the icon shell color changes for those shortcuts.",
+      "after_symbols": [
+        "native:android-add-emerald",
+        "native:android-inbox-emerald",
+        "native:android-today-calendar"
+      ],
+      "after_assets": [],
+      "candidate_strategy": "Keep the native shortcut canvases and Plus/Inbox glyphs; use an emerald #16845B shell. Today also adopts the calendar replacement already flagged semantically. This does not change the rest of the Android theme.",
+      "priority": "P2",
+      "kind": "visual-only",
+      "scope": "native",
+      "evidence": "Source palette comparison, not a captured launcher screenshot."
+    }
+  ]
+}

@@ -11,7 +11,7 @@
   @if (subTasks().length) {
     <section class="section">
       <h3>
-        <mat-icon>list</mat-icon>
+        <mat-icon>account_tree</mat-icon>
         <strong>{{
           T.F.TASK.ADDITIONAL_INFO.SUB_TASKS | translate: { nr: subTasks().length }
         }}</strong>
@@ -49,7 +49,7 @@
   @if (task.notes) {
     <section class="section notes-section">
       <h3>
-        <mat-icon>chat</mat-icon>
+        <mat-icon>description</mat-icon>
         <strong>{{ T.F.TASK.ADDITIONAL_INFO.NOTES | translate }}</strong>
       </h3>
       <div class="notes-content">
@@ -64,7 +64,7 @@
   @if (task.attachments?.length) {
     <section class="section">
       <h3>
-        <mat-icon>attachment</mat-icon>
+        <mat-icon>attach_file</mat-icon>
         <strong>{{
           T.F.TASK.ADDITIONAL_INFO.ATTACHMENTS
             | translate: { nr: task.attachments.length }

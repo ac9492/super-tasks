@@ -1,5 +1,6 @@
 import { of, switchMap } from 'rxjs';
 import { TODAY_TAG } from '../../../features/tag/tag.const';
+import { resolveTagIcon } from '../../../features/tag/resolve-tag-icon.util';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -175,11 +176,19 @@ export class NavItemComponent {
     return !!(wc as Project | null)?.isHiddenFromMenu;
   });
 
+  readonly workContextIcon = computed(() => {
+    const wc = this.workContext();
+    return (
+      (wc && this.type() === WorkContextType.TAG ? resolveTagIcon(wc) : wc?.icon) ||
+      this.defaultIcon()
+    );
+  });
+
   // Emoji detection for work context icons
   isWorkContextEmojiIcon = computed<boolean>(() => {
     const wc = this.workContext();
     if (!wc) return false;
-    const icon = wc.icon || this.defaultIcon();
+    const icon = this.workContextIcon();
     return isSingleEmoji(icon);
   });
 

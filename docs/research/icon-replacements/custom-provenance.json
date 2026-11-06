@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-05",
+  "source_font_sha256": "f7ebbdfac4f5f19c7d4dd7da5b836955fea1e8eda7fc8288d12c8a482a95ed7f",
+  "candidates": [
+    {
+      "id": "calendar-minus",
+      "path": "/tmp/icon-custom-candidates/calendar-minus.svg",
+      "meaning": "Remove/unpin from Today; calendar date removed, task/note retained",
+      "base_symbol": "calendar_today",
+      "base_source": "/tmp/icon-material-svg/calendar_today.svg",
+      "geometry": "24x24; exact same-family base outline at 90%, custom 1.5px round-capped badge; transparency-safe SVG mask",
+      "license": "Base Google Material Symbols Apache-2.0; original Ultra Tasks badge composition",
+      "note": "Review candidate, not installed into application. Masks use white/black only as transparency operators, not UI colors."
+    },
+    {
+      "id": "calendar-back",
+      "path": "/tmp/icon-custom-candidates/calendar-back.svg",
+      "meaning": "Yesterday\u2019s Tasks plugin identity; labeled previous-day calendar",
+      "base_symbol": "calendar_today",
+      "base_source": "/tmp/icon-material-svg/calendar_today.svg",
+      "geometry": "24x24; exact same-family base outline at 90%, custom 1.5px round-capped badge; transparency-safe SVG mask",
+      "license": "Base Google Material Symbols Apache-2.0; original Ultra Tasks badge composition",
+      "note": "Review candidate, not installed into application. Masks use white/black only as transparency operators, not UI colors."
+    },
+    {
+      "id": "document-sync",
+      "path": "/tmp/icon-custom-candidates/document-sync.svg",
+      "meaning": "sync.md identity: document synchronized in both directions",
+      "base_symbol": "description",
+      "base_source": "/tmp/icon-material-svg/description.svg",
+      "geometry": "24x24; exact same-family base outline at 90%, custom 1.5px round-capped badge; transparency-safe SVG mask",
+      "license": "Base Google Material Symbols Apache-2.0; original Ultra Tasks badge composition",
+      "note": "Review candidate, not installed into application. Masks use white/black only as transparency operators, not UI colors."
+    }
+  ]
+}

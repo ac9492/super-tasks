@@ -23,11 +23,13 @@ import { GlobalConfigService } from '../../../features/config/global-config.serv
       <button
         class="panel-btn e2e-toggle-schedule-day-panel"
         [class.isActive]="isShowScheduleDayPanel()"
+        [attr.aria-pressed]="isShowScheduleDayPanel()"
+        [attr.aria-label]="T.MH.SCHEDULE | translate"
         (click)="layoutService.toggleScheduleDayPanel()"
         mat-icon-button
         matTooltip="{{ T.MH.SCHEDULE | translate }}"
       >
-        <mat-icon>schedule</mat-icon>
+        <mat-icon>calendar_view_week</mat-icon>
       </button>
     }
 
@@ -35,13 +37,15 @@ import { GlobalConfigService } from '../../../features/config/global-config.serv
       <button
         class="panel-btn e2e-toggle-issue-provider-panel"
         [class.isActive]="isShowIssuePanel()"
+        [attr.aria-pressed]="isShowIssuePanel()"
+        [attr.aria-label]="T.MH.TOGGLE_SHOW_ISSUE_PANEL | translate"
         (click)="layoutService.toggleAddTaskPanel()"
         mat-icon-button
         matTooltip="{{ T.MH.TOGGLE_SHOW_ISSUE_PANEL | translate }} {{
           kb()?.toggleIssuePanel ? '[' + kb()?.toggleIssuePanel + ']' : ''
         }}"
       >
-        <mat-icon>webhook</mat-icon>
+        <mat-icon>assignment</mat-icon>
       </button>
     }
 
@@ -49,13 +53,15 @@ import { GlobalConfigService } from '../../../features/config/global-config.serv
       <button
         class="panel-btn e2e-toggle-notes-btn"
         [class.isActive]="isShowNotes()"
+        [attr.aria-pressed]="isShowNotes()"
+        [attr.aria-label]="T.MH.TOGGLE_SHOW_NOTES | translate"
         (click)="layoutService.toggleNotes()"
         mat-icon-button
         matTooltip="{{ T.MH.TOGGLE_SHOW_NOTES | translate }} {{
           kb()?.openProjectNotes ? '[' + kb()?.openProjectNotes + ']' : ''
         }}"
       >
-        <mat-icon>comment</mat-icon>
+        <mat-icon>description</mat-icon>
       </button>
     }
   `,

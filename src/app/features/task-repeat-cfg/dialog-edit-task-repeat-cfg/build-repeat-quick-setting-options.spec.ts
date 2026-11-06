@@ -58,14 +58,14 @@ describe('buildRepeatQuickSettingOptions', () => {
       'en-US',
     );
     expect(options.map((o) => o.icon)).toEqual([
-      'today',
-      'work',
+      'calendar_today',
+      'date_range',
       'calendar_view_week',
       'calendar_month',
       'calendar_month',
       'calendar_month',
       'calendar_month',
-      'cake',
+      'event_repeat',
       'tune',
     ]);
   });

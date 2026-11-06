@@ -47,6 +47,7 @@ import { T } from '../../../t.const';
           class="task-side-btn task-side-btn--switch"
           (click)="$event.stopPropagation(); switchTask.emit()"
           [matTooltip]="T.F.FOCUS_MODE.SWITCH_TASK | translate"
+          [attr.aria-label]="T.F.FOCUS_MODE.SWITCH_TASK | translate"
         >
           <mat-icon>swap_horiz</mat-icon>
         </button>
@@ -67,9 +68,10 @@ import { T } from '../../../t.const';
             mat-icon-button
             class="task-side-btn"
             [matTooltip]="T.F.FOCUS_MODE.FINISH_TASK_AND_SELECT_NEXT | translate"
+            [attr.aria-label]="T.F.FOCUS_MODE.FINISH_TASK_AND_SELECT_NEXT | translate"
             (click)="finishTask.emit()"
           >
-            <mat-icon>done</mat-icon>
+            <mat-icon>check</mat-icon>
           </button>
         </div>
       </div>
@@ -85,7 +87,7 @@ import { T } from '../../../t.const';
         class="select-task-cta task-title-placeholder"
         (click)="$event.stopPropagation(); selectTask.emit()"
       >
-        <mat-icon>add_task</mat-icon>
+        <mat-icon>checklist</mat-icon>
         {{ T.F.FOCUS_MODE.SELECT_TASK_TO_FOCUS | translate }}
       </button>
     }

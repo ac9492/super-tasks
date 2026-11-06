@@ -50,7 +50,7 @@
       [title]="T.PDS.ROUND_TIME_SPENT_TITLE | translate"
       mat-button
     >
-      <mat-icon>restore</mat-icon>
+      <mat-icon>more_time</mat-icon>
       {{ T.PDS.ROUND_TIME_SPENT | translate }}
     </button>
     @if (isForToday()) {
@@ -58,7 +58,7 @@
         (click)="showExportModal(project.id)"
         mat-button
       >
-        <mat-icon>call_made</mat-icon>
+        <mat-icon>ios_share</mat-icon>
         {{ T.PDS.EXPORT_TASK_LIST | translate }}
       </button>
     }

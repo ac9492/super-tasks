@@ -22,7 +22,7 @@
     mat-menu-item
     [matMenuTriggerFor]="groupMenu"
   >
-    <mat-icon>group_work</mat-icon>
+    <mat-icon>view_agenda</mat-icon>
     <span>{{ T.F.TASK_VIEW.CUSTOMIZER.GROUP_BY | translate }}</span>
     @if (customizerService.selectedGroup().type) {
       <span class="current-value">
@@ -52,7 +52,7 @@
     mat-menu-item
     (click)="onResetAll()"
   >
-    <mat-icon>refresh</mat-icon>
+    <mat-icon>restart_alt</mat-icon>
     <span>{{ T.F.TASK_VIEW.CUSTOMIZER.RESET_ALL | translate }}</span>
   </button>
 </mat-menu>
@@ -76,6 +76,14 @@
                   : 'arrow_upward'
               }}
             </mat-icon>
+            <span class="current-value">
+              {{
+                (customizerService.selectedSort().order === OPTIONS.sort.order.ASC
+                  ? T.F.BOARDS.FORM.SORT_DIR_ASC
+                  : T.F.BOARDS.FORM.SORT_DIR_DESC
+                ) | translate
+              }}
+            </span>
           } @else {
             <mat-icon class="check-icon">check</mat-icon>
           }

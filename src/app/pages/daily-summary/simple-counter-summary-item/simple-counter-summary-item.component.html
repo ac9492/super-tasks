@@ -1,4 +1,4 @@
-<mat-icon>{{ simpleCounter().icon }}</mat-icon>
+<mat-icon>{{ simpleCounter() | simpleCounterIcon }}</mat-icon>
 
 <div class="title">{{ simpleCounter().title }}</div>
 
@@ -7,15 +7,17 @@
     <mat-icon>timer</mat-icon>
     <div class="summary-val">{{ simpleCounter().countOnDay[dayStr()] | msToString }}</div>
   } @else {
-    <mat-icon>adjust</mat-icon>
+    <mat-icon>numbers</mat-icon>
     <div class="summary-val">{{ simpleCounter().countOnDay[dayStr()] || 0 }}</div>
   }
 </div>
 
 @if (simpleCounter().streakDuration) {
   <div class="value-wrapper">
-    <!--    <mat-icon>local_fire_department</mat-icon>-->
-    <div class="emoji">🔥</div>
-    <div class="summary-val">{{ simpleCounter().streakDuration }}</div>
+    <mat-icon>calendar_month</mat-icon>
+    <div class="summary-val">
+      {{ simpleCounter().streakDuration }}
+      {{ T.F.SIMPLE_COUNTER.CONSECUTIVE_DAYS | translate }}
+    </div>
   </div>
 }

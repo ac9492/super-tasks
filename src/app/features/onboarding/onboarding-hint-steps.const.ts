@@ -66,7 +66,7 @@ const icon = (name: string): string =>
   `<span class="material-icons inline-icon" aria-hidden="true">${name}</span>`;
 
 export const HINT_ICON_PARAMS: Record<string, string> = {
-  todayIcon: icon('wb_sunny'),
+  todayIcon: icon('today'),
   inboxIcon: icon('inbox'),
   playIcon: icon('play_arrow'),
   subtaskIcon: icon('playlist_add'),

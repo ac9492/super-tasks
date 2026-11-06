@@ -56,7 +56,7 @@
           [attr.aria-label]="T.ONBOARDING.HINTS.SKIP_ARIA | translate"
           (click)="close()"
         >
-          <span aria-hidden="true">✕</span>
+          <mat-icon aria-hidden="true">close</mat-icon>
         </button>
       </div>
       @if (actions(); as action) {

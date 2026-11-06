@@ -1,7 +1,7 @@
 <header>
   <div class="day-title">
     @if (day.isToday) {
-      <mat-icon inline="true">wb_sunny</mat-icon>
+      <mat-icon inline="true">today</mat-icon>
     }
     {{ dayLabel() }}
     <span class="date">{{ day.dayDate | shortDate2 }}</span>
@@ -31,7 +31,7 @@
     }
 
     @if (day.itemsTotal > 5) {
-      <mat-icon inline="true">task_alt</mat-icon>
+      <mat-icon inline="true">checklist</mat-icon>
       <span>{{ day.itemsTotal }}</span>
     }
   </div>
@@ -105,7 +105,7 @@
 >
   @if (day.scheduledIItems.length > 0) {
     <div class="section-title">
-      <mat-icon>alarm</mat-icon>
+      <mat-icon>schedule</mat-icon>
     </div>
   }
 
@@ -131,7 +131,7 @@
               class="time-time"
               [innerHTML]="scheduledItem.start | roundDuration | shortTimeHtml"
             ></span>
-            <mat-icon>alarm</mat-icon>
+            <mat-icon>{{ scheduledItem.task.remindAt ? 'alarm' : 'schedule' }}</mat-icon>
           </div>
         } @else {
           <div

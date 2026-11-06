@@ -101,8 +101,10 @@
                 <div class="time-val">
                   <mat-icon
                     inline="true"
-                    style="margin-top: -6px"
-                    >functions
+                    [title]="T.F.TASK.CMP.TOTAL_TIME | translate"
+                    [attr.aria-label]="T.F.TASK.CMP.TOTAL_TIME | translate"
+                    aria-hidden="false"
+                    >timer
                   </mat-icon>
                   <span>{{ subTaskTimeSpent | msToString }}</span>
                 </div>
@@ -199,7 +201,7 @@
                 mat-icon-button
               >
                 @if (isScheduledToday()) {
-                  <mat-icon>wb_sunny</mat-icon>
+                  <mat-icon>today</mat-icon>
                 } @else {
                   <mat-icon>schedule</mat-icon>
                 }
@@ -238,9 +240,9 @@
                 mat-icon-button
               >
                 @if (isScheduledToday()) {
-                  <mat-icon>wb_sunny</mat-icon>
-                } @else {
                   <mat-icon>today</mat-icon>
+                } @else {
+                  <mat-icon>calendar_month</mat-icon>
                 }
                 <div class="time-badge">
                   {{
@@ -266,7 +268,7 @@
               class="time-conflict-ico"
               [matTooltip]="T.F.TASK.CMP.TIME_CONFLICT | translate"
               matTooltipPosition="above"
-              >priority_high</mat-icon
+              >warning</mat-icon
             >
           }
           @if (hasDeadline()) {
@@ -346,13 +348,25 @@
                     ? '[' + kb.taskToggleDetailPanelOpen + ']'
                     : ''
                 }}"
+                [attr.aria-label]="
+                  toggleButtonIcon() === 'sync'
+                    ? (T.F.TASK.CMP.ISSUE_UPDATED | translate) +
+                      '. ' +
+                      (T.F.TASK.CMP.TOGGLE_DETAIL_PANEL | translate)
+                    : (T.F.TASK.CMP.TOGGLE_DETAIL_PANEL | translate)
+                "
+                [matTooltip]="
+                  toggleButtonIcon() === 'sync'
+                    ? (T.F.TASK.CMP.ISSUE_UPDATED | translate)
+                    : ''
+                "
                 class="ico-btn show-additional-info-btn"
                 color=""
                 mat-icon-button
               >
                 <mat-icon
-                  [class.updated-icon]="toggleButtonIcon() === 'update'"
-                  [color]="toggleButtonIcon() === 'update' ? 'accent' : ''"
+                  [class.updated-icon]="toggleButtonIcon() === 'sync'"
+                  [color]="toggleButtonIcon() === 'sync' ? 'accent' : ''"
                 >
                   {{ toggleButtonIcon() }}
                 </mat-icon>

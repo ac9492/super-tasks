@@ -39,6 +39,7 @@ import { GlobalConfigService } from '../../features/config/global-config.service
 import { AppFeaturesConfig } from '../../features/config/global-config.model';
 import { SnackService } from '../../core/snack/snack.service';
 import { IS_DONATION_UI_RESTRICTED } from '../../app.constants';
+import { resolveTagIcon } from '../../features/tag/resolve-tag-icon.util';
 
 @Injectable({
   providedIn: 'root',
@@ -266,13 +267,13 @@ export class MagicNavConfigService {
         type: 'menu',
         id: 'help',
         label: T.MH.HELP,
-        icon: 'help_center',
+        icon: 'help_outline',
         children: [
           {
             type: 'href',
             id: 'help-online',
             label: T.MH.HM.GET_HELP_ONLINE,
-            icon: 'help_center',
+            icon: 'help_outline',
             href: 'https://github.com/ac9492/ultra-tasks/blob/main/README.md#question-how-to-use-it',
           },
           {
@@ -327,7 +328,7 @@ export class MagicNavConfigService {
             type: 'action',
             id: 'tour-keyboard',
             label: T.MH.HM.KEYBOARD,
-            icon: 'directions',
+            icon: 'keyboard',
             action: () => this._startTour(TourId.KeyboardNav),
           },
         ],
@@ -386,7 +387,7 @@ export class MagicNavConfigService {
         type: 'workContext',
         id: `main-${mainContext.id}`,
         label: mainContext.title,
-        icon: mainContext.icon || 'today',
+        icon: resolveTagIcon(mainContext) || 'today',
         route: `/tag/${mainContext.id}/tasks`,
         workContext: mainContext,
         workContextType: WorkContextType.TAG,

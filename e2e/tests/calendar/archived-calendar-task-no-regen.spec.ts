@@ -26,7 +26,7 @@ const CONTROL_TITLE = 'E2E-7971 Control Tomorrow';
 const PANEL_BTN = '.e2e-toggle-issue-provider-panel';
 const BANNER_SELECTOR = 'banner';
 const SAVE_AND_GO_HOME_BTN =
-  'daily-summary button[mat-flat-button]:has(mat-icon:has-text("wb_sunny"))';
+  'daily-summary button[mat-flat-button]:has(mat-icon:text-matches("^(wb_sunny|check_circle)$"))';
 
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 

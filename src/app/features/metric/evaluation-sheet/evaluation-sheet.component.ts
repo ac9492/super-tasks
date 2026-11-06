@@ -7,6 +7,7 @@ import { shareReplay, switchMap } from 'rxjs/operators';
 import { T } from '../../../t.const';
 import { FormsModule } from '@angular/forms';
 import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
+import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ImpactStarsComponent } from '../impact-stars/impact-stars.component';
 import { ReflectionNoteComponent } from '../reflection-note/reflection-note.component';
@@ -21,6 +22,7 @@ import { GlobalTrackingIntervalService } from '../../../core/global-tracking-int
     FormsModule,
     MatRadioGroup,
     MatRadioButton,
+    MatIcon,
     TranslatePipe,
     ImpactStarsComponent,
     ReflectionNoteComponent,

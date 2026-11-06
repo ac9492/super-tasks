@@ -25,6 +25,7 @@ import type {
 import { MatIconButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatIcon } from '@angular/material/icon';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatRadioButton, MatRadioChange, MatRadioGroup } from '@angular/material/radio';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ChartLazyLoaderService } from '../chart-lazy-loader.service';
@@ -72,6 +73,7 @@ const TIMEFRAME_OPTIONS: ReadonlyArray<TimeframeOption> = [
     MatIconButton,
     MatTooltip,
     MatIcon,
+    MatProgressSpinner,
     TranslatePipe,
     MatRadioGroup,
     MatRadioButton,

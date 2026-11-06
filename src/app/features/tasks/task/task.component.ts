@@ -242,15 +242,15 @@ export class TaskComponent implements OnDestroy, AfterViewInit {
   isShowToggleButton = computed(() => {
     const t = this.task();
     // A checklist already shows its own badge (which opens the notes panel), so
-    // suppress the redundant plain 'chat' notes indicator. The button is kept for
-    // the 'close' (panel open) and 'update' (issue changed) states.
-    if (this.checklistProgress() && this.toggleButtonIcon() === 'chat') {
+    // suppress the redundant notes indicator. The button is kept for the
+    // 'close' (panel open) and 'sync' (issue changed) states.
+    if (this.checklistProgress() && this.toggleButtonIcon() === 'description') {
       return false;
     }
     // iCal and Plainspace mirror all their issue data into native task fields, so
     // their detail panel only repeats what's already on the task. Don't surface the
     // button just because they carry an issueId — only for real notes, a remote
-    // update (the 'update' icon), or when the panel is open.
+    // update (the 'sync' icon), or when the panel is open.
     const isMirroredIssueType =
       t.issueType === ICAL_TYPE || t.issueType === PLAINSPACE_TYPE;
     return (
@@ -262,11 +262,11 @@ export class TaskComponent implements OnDestroy, AfterViewInit {
   });
 
   // Determines which icon to show in the toggle button
-  toggleButtonIcon = computed((): 'chat' | 'close' | 'update' => {
+  toggleButtonIcon = computed((): 'description' | 'close' | 'sync' => {
     const t = this.task();
-    if (t.issueWasUpdated) return 'update';
+    if (t.issueWasUpdated) return 'sync';
     if (this.isShowCloseButton()) return 'close';
-    return 'chat';
+    return 'description';
   });
 
   isTodayListActive = computed(() => this.workContextService.isTodayListSignal());
@@ -1203,13 +1203,13 @@ export class TaskComponent implements OnDestroy, AfterViewInit {
     if (task.issueWasUpdated) {
       this._taskService.markIssueUpdatesAsRead(task.id);
     }
-    // In its plain 'chat' state the button reads as a notes indicator (it also
+    // In its plain 'description' state the button reads as a notes indicator (it also
     // shows for issue-linked tasks without notes, hence the notes guard), so
     // land on the notes section — expanded and scrolled into view — rather
     // than the collapsed accordion; on mobile that used to cost a second tap
     // on "Note" (#9850).
     const targetPanel =
-      this.toggleButtonIcon() === 'chat' && task.notes
+      this.toggleButtonIcon() === 'description' && task.notes
         ? TaskDetailTargetPanel.Notes
         : TaskDetailTargetPanel.Default;
     this.toggleShowDetailPanel(ev, targetPanel);

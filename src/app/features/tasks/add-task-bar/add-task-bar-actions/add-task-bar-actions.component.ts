@@ -1,3 +1,4 @@
+import { TagIconPipe } from '../../../tag/tag-icon.pipe';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -63,6 +64,7 @@ const INTERVAL_LABEL_KEYS: Record<RepeatCycleOption, string> = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
+    TagIconPipe,
     MatButton,
     MatIcon,
     MatTooltip,

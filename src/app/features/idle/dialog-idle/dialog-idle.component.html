@@ -24,7 +24,7 @@
           {{ T.F.TIME_TRACKING.D_IDLE.MODE_BREAK | translate }}
         </mat-button-toggle>
         <mat-button-toggle value="TASK">
-          <mat-icon>track_changes</mat-icon>
+          <mat-icon>checklist</mat-icon>
           {{ T.F.TIME_TRACKING.D_IDLE.MODE_TASK | translate }}
         </mat-button-toggle>
         <mat-button-toggle value="SPLIT">
@@ -115,7 +115,7 @@
                   [aria-label]="T.F.TIME_TRACKING.D_IDLE.TASK | translate"
                   [matTooltip]="T.F.TIME_TRACKING.D_IDLE.TASK | translate"
                 >
-                  <mat-icon>track_changes</mat-icon>
+                  <mat-icon>checklist</mat-icon>
                 </mat-button-toggle>
               </mat-button-toggle-group>
 
@@ -272,7 +272,7 @@
       [matTooltip]="simpleCounterLabel"
       [color]="simpleCounterBtn.isTrackTo ? 'primary' : ''"
     >
-      <mat-icon>{{ simpleCounterBtn.icon }}</mat-icon>
+      <mat-icon>{{ simpleCounterBtn | simpleCounterIcon }}</mat-icon>
     </button>
   </ng-template>
 }

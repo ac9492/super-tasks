@@ -120,11 +120,12 @@
         [placeholderTxt]="T.PDS.END_OF_DAYS_RITUALS_PLACEHOLDER | translate"
       >
         <button
-          [matTooltip]="'Remove daily summary note'"
+          [matTooltip]="T.PDS.REMOVE_DAILY_SUMMARY_NOTE | translate"
+          [attr.aria-label]="T.PDS.REMOVE_DAILY_SUMMARY_NOTE | translate"
           (click)="updateDailySummaryTxt(undefined)"
           mat-icon-button
         >
-          <mat-icon>visibility_off</mat-icon>
+          <mat-icon>delete</mat-icon>
         </button>
       </inline-markdown>
     } @else {
@@ -134,7 +135,7 @@
         (click)="updateDailySummaryTxt('', true)"
         matTooltip="Click to add a custom text block to describe your day end routine."
       >
-        <mat-icon>note_alt</mat-icon>
+        <mat-icon>note_add</mat-icon>
       </button>
     }
     <!--      <inline-markdown-->
@@ -225,7 +226,7 @@
           color="primary"
           mat-flat-button
         >
-          <mat-icon>wb_sunny</mat-icon>
+          <mat-icon>check_circle</mat-icon>
           {{ T.PDS.SAVE_AND_GO_HOME | translate }}
         </button>
       }
@@ -235,7 +236,7 @@
           color="primary"
           mat-flat-button
         >
-          <mat-icon>wb_sunny</mat-icon>
+          <mat-icon>check_circle</mat-icon>
           {{ T.PDS.CLEAR_ALL_CONTINUE | translate }}
         </button>
       }

@@ -146,9 +146,9 @@ const toggle = async (
   const note = client.page.locator(`#n-${id}`);
   await note.hover();
   const button = pin
-    ? note
-        .locator('button')
-        .filter({ has: client.page.locator('mat-icon', { hasText: /^wb_sunny$/ }) })
+    ? note.locator('button').filter({
+        has: client.page.locator('mat-icon', { hasText: /^(wb_sunny|today)$/ }),
+      })
     : note.locator('button:has(mat-icon[data-mat-icon-name="remove_today"])');
   await button.click();
   await expect

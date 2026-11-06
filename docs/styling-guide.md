@@ -20,6 +20,26 @@
 | Custom z-index values                | Z-index variables (`--z-main-header`, `--z-backdrop`, etc.)               |
 | New styled elements without checking | Check `src/app/ui/` for existing reusable components first                |
 
+## UI icon vocabulary
+
+Use the existing Material Symbols Outlined family at weight 400 and `FILL=0` for
+built-in UI actions. Keep native platform symbols and provider/brand marks where
+they identify their actual source. Preserve user-selected icons and emoji.
+
+Today uses `today`; generic dates use `calendar_month`; time-of-day uses
+`schedule`; tracked duration uses `timer`; estimates use `hourglass_empty`.
+Keep `alarm` for actual reminders, `flag` for deadlines, `repeat` for recurrence,
+and `event_busy` for removing a planned date. Notes use `description`, not chat
+bubbles. Use `delete` for recoverable deletion and `delete_forever` only for
+permanent deletion. Imports/uploads, downloads/exports and clipboard copies
+must follow the actual action direction.
+
+Every icon-only action needs a translated accessible name on its button. Keep
+visible labels when the icon alone cannot distinguish the meaning, such as
+Tomorrow, next week, energy levels, and timer controls with different scopes.
+Match repeated navigation icons through `NAV_SECTION_ICON`; use pure display
+resolvers for known legacy built-in defaults instead of rewriting saved icons.
+
 ## Dialog action buttons
 
 One treatment per role so dialogs feel consistent. Classify by **function, not label** ("Close" that dismisses a read-only view is secondary; "Close" that commits is primary).
@@ -33,7 +53,7 @@ One treatment per role so dialogs feel consistent. Classify by **function, not l
 
 Rules:
 
-- **Icons:** drop generic `check`/`close` icons on OK/Cancel/Save/Submit — they add nothing. Keep icons that carry meaning (`alarm`/`today`/`event_busy` in scheduling, `wb_sunny`, `save`, `cloud_upload`, `delete_forever`).
+- **Icons:** drop generic `check`/`close` icons on OK/Cancel/Save/Submit — they add nothing. Keep icons that carry meaning (`alarm`/`today`/`event_busy` in scheduling, `flag`, `save`, `cloud_upload`, `delete_forever`).
 - **No `color` on cancel/close** — leftover `color="primary"` on a Cancel just tints it; remove it.
 - **Reactive appearance** — when a button's appearance must change at runtime, bind it on a single element (`[matButton]="cond ? 'filled' : 'outlined'"`) instead of swapping two buttons in an `@if`/`@else`. The attribute form is fixed at construction, and the swap re-creates the node, dropping focus and any click that lands mid-flip. See `finish-day-btn.component.html`.
 - **No dead classes** — the legacy Bootstrap `btn btn-primary` classes are gone; don't reintroduce them. `submit-button` is only styled inside `dialog-create-tag`.

@@ -8,7 +8,7 @@
     @for (day of daysToShow(); track $index) {
       <div class="day">
         @if (day === todayDateStr()) {
-          <mat-icon>wb_sunny</mat-icon>
+          <mat-icon>today</mat-icon>
         }
         <div class="day-num">{{ dayHeaderLabels()[day].num }}</div>
         <div class="day-day">{{ dayHeaderLabels()[day].day }}</div>
