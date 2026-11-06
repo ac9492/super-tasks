@@ -1,6 +1,7 @@
 {
   "name": "@super-productivity/vite-plugin",
   "version": "1.0.0",
+  "license": "AGPL-3.0-only",
   "description": "Vite plugin for Super Productivity plugins",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

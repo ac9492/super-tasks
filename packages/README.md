@@ -1,5 +1,7 @@
 # Workspace packages
 
+Ultra Tasks is distributed under [AGPL-3.0-only](../LICENSE), while inherited MIT and third-party rights remain in force. See [licensing and provenance](../LICENSING.md); package-level licensing does not revoke the original upstream MIT grants.
+
 Use the package that owns the behavior. The Angular app composes these packages;
 package code must respect the [sync dependency boundaries](../docs/sync-and-op-log/package-boundaries.md).
 
