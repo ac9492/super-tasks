@@ -92,7 +92,7 @@ test.describe('Phone menus (touch)', () => {
 
     await page.locator('mobile-bottom-nav .tour-navMenuBtn').tap();
     const plannerRow = page.locator('magic-side-nav nav-item', {
-      has: page.locator('a.nav-link', { hasText: 'Planner' }),
+      has: page.locator('a.nav-link', { hasText: 'Upcoming' }),
     });
     await expect(plannerRow).toBeVisible();
     // Out of sight and untappable, but still in the DOM for keyboard and

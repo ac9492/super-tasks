@@ -28,7 +28,7 @@ test.describe('Schedule day view', () => {
     workViewPage,
   }) => {
     await workViewPage.waitForTaskList();
-    await page.getByRole('menuitem', { name: 'Schedule' }).click();
+    await page.getByRole('menuitem', { name: 'Calendar' }).click();
 
     const dayCols = page.locator(DAY_COL);
     const dayBtn = page.getByRole('button', { name: 'View Day' });
@@ -102,7 +102,7 @@ test.describe('Schedule day view', () => {
 
   test('pages a day at a time by swiping on a phone', async ({ page, workViewPage }) => {
     await workViewPage.waitForTaskList();
-    await page.getByRole('menuitem', { name: 'Schedule' }).click();
+    await page.getByRole('menuitem', { name: 'Calendar' }).click();
     await page.getByRole('button', { name: 'View Day' }).click();
     await page.setViewportSize(PHONE_VIEWPORT);
 

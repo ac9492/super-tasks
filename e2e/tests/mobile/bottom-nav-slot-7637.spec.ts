@@ -9,7 +9,7 @@ import {
 } from '../../helpers/plugin-test.helpers';
 
 /**
- * #7637: the phone bottom nav's second slot (Planner by default) can be pointed
+ * #7637: the phone bottom nav's second slot (Upcoming by default) can be pointed
  * at another destination by long-pressing it. The choice is device-local
  * (localStorage), so it must survive a reload.
  */
@@ -47,7 +47,7 @@ test.describe('Bottom nav configurable slot #7637', () => {
   }) => {
     await workViewPage.waitForTaskList();
     const slot = page.locator('mobile-bottom-nav .e2e-bottom-nav-slot');
-    await expect(slot).toHaveAttribute('aria-label', 'Planner');
+    await expect(slot).toHaveAttribute('aria-label', 'Upcoming');
 
     await longPress(page, slot);
     await waitForMenuSettled(page);

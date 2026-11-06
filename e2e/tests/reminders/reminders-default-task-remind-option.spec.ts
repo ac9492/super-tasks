@@ -159,7 +159,7 @@ test.describe('Default task reminder option', () => {
     await waitForNav();
     await changeDefaultTaskReminderOption(page);
 
-    await page.getByRole('menuitem', { name: 'Schedule' }).click();
+    await page.getByRole('menuitem', { name: 'Calendar' }).click();
     await page.locator('schedule-week').waitFor({ state: 'visible', timeout: 10000 });
     // Click somewhere during the final day column to create a placeholder task
     await page.locator('schedule-week [data-day]').last().click();

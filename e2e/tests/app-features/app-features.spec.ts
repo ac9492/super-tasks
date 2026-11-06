@@ -18,21 +18,21 @@ test.describe('App Features', () => {
   // check simple feature toggles which effectively just hide ui elements
   [
     {
-      label: 'Schedule',
-      locator: (page: Page) => page.getByRole('menuitem', { name: 'Schedule' }),
+      label: 'Calendar',
+      locator: (page: Page) => page.getByRole('menuitem', { name: 'Calendar' }),
     },
     {
-      label: 'Planner',
-      locator: (page: Page) => page.getByRole('menuitem', { name: 'Planner' }),
+      label: 'Upcoming',
+      locator: (page: Page) => page.getByRole('menuitem', { name: 'Upcoming' }),
     },
     {
       label: 'Boards',
       locator: (page: Page) => page.getByRole('menuitem', { name: 'Boards' }),
     },
     {
-      // the day panel button follows the Schedule switch
-      label: 'Schedule',
-      title: 'Schedule (day panel button)',
+      // the day panel button follows the Calendar switch
+      label: 'Calendar',
+      title: 'Calendar (day panel button)',
       locator: (page: Page) => page.locator('.e2e-toggle-schedule-day-panel'),
     },
     {
