@@ -552,3 +552,20 @@
   height: 0;
   visibility: hidden;
 }
+
+:host(.is-all-day) {
+  flex: 0 0 auto;
+  margin: 0;
+  font: var(--type-meta);
+
+  .ico-wrapper {
+    margin: 0 var(--s-half);
+  }
+  .title {
+    padding: var(--s-quarter) var(--s-half) var(--s-quarter) 0;
+    font: inherit;
+  }
+  min-height: var(--s3);
+  align-items: center;
+  border-radius: var(--r-sm);
+}

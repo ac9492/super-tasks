@@ -210,8 +210,8 @@ const ea: ElectronAPI = {
     _send('TRANSFER_SETTINGS_TO_ELECTRON', globalCfg),
   sendSettingsUpdate: (globalCfg) => _send('UPDATE_SETTINGS', globalCfg),
   updateTaskWidgetSettings: (cfg) => _send('UPDATE_TASK_WIDGET_SETTINGS', cfg),
-  updateTitleBarDarkMode: (isDarkMode: boolean) =>
-    _send('UPDATE_TITLE_BAR_DARK_MODE', isDarkMode),
+  updateTitleBarDarkMode: (isDarkMode: boolean, overlayColor?: string) =>
+    _send('UPDATE_TITLE_BAR_DARK_MODE', isDarkMode, overlayColor),
   setNativeGlass: (state) => _send('SET_NATIVE_GLASS', state),
   registerGlobalShortcuts: (keyboardCfg) =>
     _send('REGISTER_GLOBAL_SHORTCUTS', keyboardCfg),

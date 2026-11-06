@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UiHelperService } from '../../features/ui-helper/ui-helper.service';
 import { SyncWrapperService } from '../../imex/sync/sync-wrapper.service';
 import { Store } from '@ngrx/store';
+import { SearchDialogService } from '../../pages/search-page/search-dialog/search-dialog.service';
 import { PluginBridgeService } from '../../plugins/plugin-bridge.service';
 import { TaskShortcutService } from '../../features/tasks/task-shortcut.service';
 import { DialogAddNoteComponent } from '../../features/note/dialog-add-note/dialog-add-note.component';
@@ -25,6 +26,7 @@ describe('ShortcutService', () => {
   let service: ShortcutService;
   let mockTaskShortcutService: any;
   let mockRouter: any;
+  let mockSearchDialog: { open: jasmine.Spy };
   let mockConfigService: any;
   let mockMatDialog: any;
   let mockPluginBridgeService: any;
@@ -43,6 +45,7 @@ describe('ShortcutService', () => {
         .createSpy('handleTogglePlayFallback')
         .and.returnValue(false),
     };
+    mockSearchDialog = { open: jasmine.createSpy('open').and.resolveTo() };
     mockRouter = {
       navigate: jasmine.createSpy('navigate'),
       url: '/',
@@ -75,6 +78,7 @@ describe('ShortcutService', () => {
       providers: [
         ShortcutService,
         { provide: TaskShortcutService, useValue: mockTaskShortcutService },
+        { provide: SearchDialogService, useValue: mockSearchDialog },
         { provide: Router, useValue: mockRouter },
         { provide: GlobalConfigService, useValue: mockConfigService },
         { provide: LayoutService, useValue: mockLayoutService },
@@ -177,7 +181,7 @@ describe('ShortcutService', () => {
       expect(mockRouter.navigate).not.toHaveBeenCalled();
     });
 
-    it('should navigate to search when Shift+F is pressed and search is enabled', () => {
+    it('should open the search popup when Shift+F is pressed and search is enabled', () => {
       mockConfigService.appFeatures.set({
         isFocusModeEnabled: true,
         isSchedulerEnabled: true,
@@ -194,10 +198,11 @@ describe('ShortcutService', () => {
       service.handleKeyDown(ev);
 
       expect(mockTaskShortcutService.handleTaskShortcuts).toHaveBeenCalledWith(ev);
-      expect(mockRouter.navigate).toHaveBeenCalledWith(['/search']);
+      expect(mockSearchDialog.open).toHaveBeenCalled();
+      expect(mockRouter.navigate).not.toHaveBeenCalled();
     });
 
-    it('should NOT navigate to search when search is disabled', () => {
+    it('should NOT open the search popup when search is disabled', () => {
       mockConfigService.appFeatures.set({
         isFocusModeEnabled: true,
         isSchedulerEnabled: true,
@@ -212,6 +217,7 @@ describe('ShortcutService', () => {
 
       service.handleKeyDown(ev);
 
+      expect(mockSearchDialog.open).not.toHaveBeenCalled();
       expect(mockRouter.navigate).not.toHaveBeenCalled();
     });
 

@@ -2,6 +2,7 @@ import { Locator, Page } from '@playwright/test';
 
 import { expect, test } from '../../fixtures/test.fixture';
 import { waitForAngularStability } from '../../utils/waits';
+import { openGlobalAddTaskBar } from '../../utils/element-helpers';
 
 test.describe('Default task reminder option', () => {
   test.use({ locale: 'en-US', timezoneId: 'UTC' });
@@ -122,9 +123,7 @@ test.describe('Default task reminder option', () => {
     const addTaskInput = page.locator('add-task-bar.global .main-input');
     const inputCount = await addTaskInput.count();
     if (inputCount === 0) {
-      const addBtn = page.locator('.tour-addBtn');
-      await addBtn.waitFor({ state: 'visible', timeout: 10000 });
-      await addBtn.click();
+      await openGlobalAddTaskBar(page);
     }
 
     // Wait for the global add-task input to be available

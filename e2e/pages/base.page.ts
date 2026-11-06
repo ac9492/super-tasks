@@ -1,5 +1,5 @@
 import { type Locator, type Page } from '@playwright/test';
-import { safeIsVisible } from '../utils/element-helpers';
+import { safeIsVisible, openGlobalAddTaskBar } from '../utils/element-helpers';
 
 export abstract class BasePage {
   protected page: Page;
@@ -163,10 +163,7 @@ export abstract class BasePage {
       .isVisible()
       .catch(() => false);
     if (!isInputVisible) {
-      const addBtn = this.page.locator('.tour-addBtn');
-      // Wait for add button with longer timeout - it depends on config loading
-      await addBtn.waitFor({ state: 'visible', timeout: 20000 });
-      await addBtn.click();
+      await openGlobalAddTaskBar(this.page);
     }
 
     // Ensure input is visible - Playwright auto-waits for actionability

@@ -3,7 +3,9 @@ import {
   Component,
   ElementRef,
   inject,
+  input,
   OnInit,
+  output,
   viewChild,
   viewChildren,
 } from '@angular/core';
@@ -82,6 +84,11 @@ export class SearchPageComponent implements OnInit {
   private _menuTreeService = inject(MenuTreeService);
   private _recentlyDeletedService = inject(RecentlyDeletedService);
   private _translateService = inject(TranslateService);
+
+  /** Shown in a dialog over another page rather than as a page of its own. */
+  readonly isPopup = input(false);
+  /** The user picked a result (the popup closes itself then). */
+  readonly itemChosen = output<void>();
 
   readonly inputEl = viewChild.required<ElementRef>('inputEl');
   readonly resultBtns = viewChildren<ElementRef<HTMLButtonElement>>('resultBtn');
@@ -454,8 +461,16 @@ export class SearchPageComponent implements OnInit {
     return [...head, ...deleted.slice(0, MAX_RESULTS - head.length)];
   }
 
+  /** In the popup the target's context may be the page behind it: always route. */
+  private _navOpts(): { isFromSearch: true; isForceRouteChange?: true } {
+    return this.isPopup()
+      ? { isFromSearch: true, isForceRouteChange: true }
+      : { isFromSearch: true };
+  }
+
   navigateToItem(item: SearchItem): void {
     if (!item) return;
+    this.itemChosen.emit();
     if (item.isProject) {
       this._router.navigate([`/project/${item.id}/tasks`]);
       return;
@@ -479,21 +494,24 @@ export class SearchPageComponent implements OnInit {
       });
     } else {
       this._navigateToTaskService
-        .navigate(item.id, item.isArchiveTask, { isFromSearch: true })
+        .navigate(item.id, item.isArchiveTask, this._navOpts())
         .then(() => {});
     }
   }
 
   async restoreDeletedItem(item: SearchItem, event?: MouseEvent): Promise<void> {
     event?.stopPropagation();
+    const navOpts = this._navOpts();
     if (!item.deletedEntry || !this._shownDeletedIds.has(item.id)) {
       // Live again meanwhile (e.g. restored by sync): just go there.
-      await this._navigateToTaskService.navigate(item.id, false, { isFromSearch: true });
+      this.itemChosen.emit();
+      await this._navigateToTaskService.navigate(item.id, false, navOpts);
       return;
     }
     await this._recentlyDeletedService.restore(item.deletedEntry);
     this._reloadDeleted$.next();
-    await this._navigateToTaskService.navigate(item.id, false, { isFromSearch: true });
+    this.itemChosen.emit();
+    await this._navigateToTaskService.navigate(item.id, false, navOpts);
   }
 
   /** ArrowDown/ArrowUp move between the search field and the results. */
@@ -501,8 +519,8 @@ export class SearchPageComponent implements OnInit {
     if (ev.key !== 'ArrowDown' && ev.key !== 'ArrowUp') {
       return;
     }
-    const input = this.inputEl().nativeElement as HTMLElement;
-    const targets = [input, ...this.resultBtns().map((btn) => btn.nativeElement)];
+    const searchInput = this.inputEl().nativeElement as HTMLElement;
+    const targets = [searchInput, ...this.resultBtns().map((btn) => btn.nativeElement)];
     const index = targets.indexOf(ev.target as HTMLElement);
     if (index === -1 || targets.length < 2) {
       return;

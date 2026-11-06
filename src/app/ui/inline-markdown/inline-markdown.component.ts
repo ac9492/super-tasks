@@ -102,6 +102,8 @@ export class InlineMarkdownComponent implements OnChanges, OnInit, OnDestroy {
   readonly isLock = input<boolean>(false);
   readonly isShowControls = input<boolean>(false);
   readonly isShowChecklistToggle = input<boolean>(false);
+  readonly isScrollable = input<boolean>(false);
+  readonly ariaLabel = input<string>('');
   readonly isDefaultText = input<boolean>(false);
   // The default/placeholder text currently shown when there are no real notes.
   // When set and still unmodified, the checklist button REPLACES it with a fresh

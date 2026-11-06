@@ -446,6 +446,24 @@ describe('NavigateToTaskService', () => {
       expect('isFromSearch' in queryParams).toBeFalse();
     });
 
+    it('routes even inside the context on screen when the popup search forces it', async () => {
+      router.url = '/project/p1/tasks';
+      const task = createTask({ id: 's3', projectId: 'p1', tagIds: [] });
+      setNavigatedTask(task, [createProject('p1', ['s3'])]);
+
+      await service.navigate('s3', false, {
+        isFromSearch: true,
+        isForceRouteChange: true,
+      });
+
+      expect(router.navigate).toHaveBeenCalledWith(
+        ['/project/p1/tasks'],
+        jasmine.objectContaining({
+          queryParams: jasmine.objectContaining({ focusItem: 's3', isFromSearch: true }),
+        }),
+      );
+    });
+
     it('highlights the revealed row on a same-context search jump', async () => {
       router.url = '/project/p1/tasks';
       const task = createTask({ id: 's3', projectId: 'p1', tagIds: [] });

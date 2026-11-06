@@ -37,12 +37,12 @@ test('settings opens over the workspace, finds advanced options, and dismisses h
   ).toBeVisible();
 });
 
-test('a bookmarked sync settings URL opens the dialog with recovery controls', async ({
-  page,
-}) => {
+test('data settings separates import and export from account sync', async ({ page }) => {
   await page.goto('/#/config?tab=5');
   const dialog = page.getByRole('dialog');
-  await expect(dialog.locator('.sync-summary')).toBeVisible();
+  await expect(dialog.locator('.sync-summary')).toHaveCount(0);
+  await expect(dialog.locator('.import-section')).toBeVisible();
+  await expect(dialog.locator('.export-section')).toBeVisible();
   await expect(dialog.locator('file-imex')).toBeVisible();
 });
 

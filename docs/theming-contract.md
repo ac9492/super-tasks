@@ -165,17 +165,19 @@ normaliser computes them per palette and mode.
 | Token                                                                  | Value                                                                            |
 | ---------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
 | `--glass-panel-tint`, `--glass-canvas-tint`                            | the background role                                                              |
-| `--glass-panel-alpha`, `--glass-canvas-alpha`, `--glass-overlay-alpha` | max(design value 84 % / 92 % / 95 %, contrast floor), as a percentage            |
+| `--glass-panel-alpha`, `--glass-canvas-alpha`, `--glass-overlay-alpha` | max(design value 75 % / 84 % / 95 %, contrast floor), as a percentage            |
 | `--glass-ink-muted`                                                    | muted text, 4.5:1 on the panel tint over the worst backdrop                      |
 | `--glass-focus-ring`                                                   | the focus ring, moved further toward the ink only if it falls below 3:1 on glass |
 | `--glass-edge-line`                                                    | the separator: 1.15–1.75:1 over the palette-gradient backdrop                    |
 
 The floor is the smallest alpha at which body ink stays ≥ 4.5:1 over the worst
-backdrop (black behind black ink, white behind white ink) **and** a muted tier
-still fits (worst composite luminance ≥ 0.42 in light, ≤ 0.061 in dark). It
-therefore holds for any image, OS material or gradient. The design values hold
-for every shipped palette; very light dark-mode backgrounds raise the panel
-alpha to about 90 %.
+backdrop **and** a muted tier still fits (worst composite luminance ≥ 0.42 in
+light, ≤ 0.061 in dark). The worst backdrop is the ink colour pulled 35 % toward
+the background (a dark-grey wallpaper under a light theme, the mirror in dark;
+`GLASS_WORST_BACKDROP_LIFT`), not pure black behind black ink, which no OS
+material, blurred image or palette gradient reaches. The design values hold for
+every shipped palette (floors 0.54–0.74); very light dark-mode backgrounds raise
+the panel alpha toward 90 %.
 
 ## Palette editor
 

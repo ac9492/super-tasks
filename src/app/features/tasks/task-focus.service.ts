@@ -1,5 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { TaskComponent } from './task/task.component';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,12 @@ export class TaskFocusService {
   readonly lastFocusedTaskComponent = signal<TaskComponent | null>(null);
   readonly isTaskContextMenuOpen = signal(false);
   readonly closeActiveTaskContextMenu = signal<(() => void) | null>(null);
+  private readonly _descriptionFocusRequests = new Subject<string>();
+  readonly descriptionFocusRequests$ = this._descriptionFocusRequests.asObservable();
+
+  requestDescriptionFocus(taskId: string): void {
+    this._descriptionFocusRequests.next(taskId);
+  }
 
   // Registry of all task components for efficient focus navigation
   private _taskComponentsRegistry = new Map<string, TaskComponent>();

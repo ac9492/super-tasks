@@ -58,7 +58,18 @@ describe('settings presentation', () => {
     expect(duplicated).toEqual([]);
   });
 
-  it('gives a field help only from its dedicated help entry', () => {
+  it('gives every labeled setting an independent help control', () => {
+    expect(
+      allPrepared()
+        .filter(
+          ({ field }) =>
+            field.key !== undefined && !!field.props?.label && !field.props?.['helpKey'],
+        )
+        .map(({ section, field }) => section + '.' + field.key),
+    ).toEqual([]);
+  });
+
+  it('moves existing descriptions into help when no dedicated entry exists', () => {
     const [withHelp, withoutHelp] = prepareSettingsFields(
       [
         { key: 'isMinimizeToTray', type: 'checkbox', props: { label: 'L' } },
@@ -72,13 +83,14 @@ describe('settings presentation', () => {
       '',
     );
     expect(withHelp.props?.['helpKey']).toBe(T.PS.OPTION_HELP.isMinimizeToTray);
-    expect(withoutHelp.props?.['helpKey']).toBeUndefined();
+    expect(withoutHelp.props?.['helpKey']).toBe('Shown below the control');
+    expect(withoutHelp.props?.description).toBeUndefined();
   });
 
-  it('adds no per-row help to keyboard shortcuts', () => {
+  it('adds per-row help to keyboard shortcuts', () => {
     const keyboardRows = allPrepared().filter(({ field }) => field.type === 'keyboard');
     expect(keyboardRows.length).toBeGreaterThan(0);
-    expect(keyboardRows.filter(({ field }) => field.props?.['helpKey'])).toEqual([]);
+    expect(keyboardRows.every(({ field }) => !!field.props?.['helpKey'])).toBeTrue();
   });
 
   // Every section's expander is labelled "More options": the section title tells

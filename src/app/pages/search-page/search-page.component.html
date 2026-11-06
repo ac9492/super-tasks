@@ -1,5 +1,6 @@
 <div
   class="search-page"
+  [class.is-popup]="isPopup()"
   (keydown)="onKeydown($event)"
 >
   <div class="search-header">

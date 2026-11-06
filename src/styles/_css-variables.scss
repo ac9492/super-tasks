@@ -261,12 +261,12 @@
   --dialog-w-m: 560px; // entity forms: project, tag, habit, repeat, sync, import
   --dialog-w-l: 720px; // reference: keyboard help, logs, conflict details
   --mat-mini-fab-size: 48px;
-  --mac-title-bar-padding: 20px;
+  --mac-title-bar-padding: 0px;
   --vertical-action-bar-width: 48px;
-  // Fallback for env(titlebar-area-height), which reports the real WCO band
-  // (WCO_HEIGHT in electron/main-window.ts: 24px Windows, 32px Linux) and is
-  // unset while the overlay is hidden, e.g. in fullscreen.
-  --wco-height: 24px;
+  // Dedicated desktop chrome; keep in sync with Electron WCO_HEIGHT.
+  --desktop-title-bar-height: var(--s4);
+  --desktop-chrome-offset: 0px;
+  --wco-height: var(--desktop-title-bar-height);
 
   --window-controls-width: 140px; // Fallback for non-WCO contexts; main-header uses env() directly
 
@@ -402,21 +402,24 @@
   // ANIMATION & TRANSITIONS
   // ===============================
 
-  // Timing functions
-  --ani-standard-timing: cubic-bezier(0.4, 0, 0.2, 1);
-  --ani-enter-timing: cubic-bezier(0, 0, 0.2, 1);
-  --ani-leave-timing: cubic-bezier(0.4, 0, 1, 1);
+  // Timing functions. Standard and enter settle on a long, soft tail (the way a
+  // physical object comes to rest) instead of Material's symmetric ease; leave
+  // accelerates away without the hard cut-off of a pure ease-in.
+  --ani-standard-timing: cubic-bezier(0.25, 0.8, 0.25, 1);
+  --ani-enter-timing: cubic-bezier(0.16, 1, 0.3, 1);
+  --ani-leave-timing: cubic-bezier(0.4, 0, 0.9, 0.5);
   --ani-sharp-timing: cubic-bezier(0.4, 0, 0.6, 1);
   --ease-in-out-quint: cubic-bezier(0.38, 0.04, 0.35, 0.96);
 
-  // Durations
-  --transition-duration-xs: 90ms;
-  --transition-duration-s: 150ms;
-  --transition-duration-m: 225ms;
-  --transition-duration-l: 375ms;
-  --transition-duration-enter: 225ms;
-  --transition-duration-leave: 195ms;
-  --page-transition-duration: 225ms;
+  // Durations (about 15% quicker than the Material defaults they replace).
+  // Keep in sync with src/app/ui/animations/animation.const.ts.
+  --transition-duration-xs: 80ms;
+  --transition-duration-s: 130ms;
+  --transition-duration-m: 190ms;
+  --transition-duration-l: 320ms;
+  --transition-duration-enter: 190ms;
+  --transition-duration-leave: 165ms;
+  --page-transition-duration: 190ms;
 
   // Transition shorthands
   // Property-less on purpose: valid both as `transition: var(...)` (defaults
@@ -424,7 +427,7 @@
   --transition-fast: var(--transition-duration-xs) ease-in-out;
   --transition-standard: all var(--transition-duration-m) var(--ani-standard-timing);
   --transition-enter: all var(--transition-duration-m) var(--ani-enter-timing);
-  --transition-leave: all var(--transition-duration-m) var(--ani-leave-timing);
+  --transition-leave: all var(--transition-duration-leave) var(--ani-leave-timing);
 
   // ===============================
   // COMPONENT-SPECIFIC VARIABLES

@@ -1,3 +1,5 @@
+import { normalizePalette } from '../palette-normalize.util';
+import { contrastRatio } from '../palette-color.util';
 import { signal, WritableSignal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ThemeSelectorComponent } from './theme-selector.component';
@@ -74,5 +76,20 @@ describe('ThemeSelectorComponent', () => {
     service.select(presets[2].colors);
     expect(component.presets()[2].selected).toBeTrue();
     expect(component.presets()[0].selected).toBeFalse();
+  });
+  it('offers twelve readable presets in both modes', () => {
+    const { component } = setup(false);
+    expect(component.presets().length).toBe(12);
+    for (const preset of component.presets()) {
+      for (const mode of ['light', 'dark'] as const) {
+        const roles = normalizePalette(preset.colors[mode], mode);
+        expect(contrastRatio(roles.surfaceInk, roles.surface))
+          .withContext(preset.label + mode)
+          .toBeGreaterThanOrEqual(4.5);
+        expect(contrastRatio(roles.accentInk, roles.accent))
+          .withContext(preset.label + mode)
+          .toBeGreaterThanOrEqual(4.5);
+      }
+    }
   });
 });

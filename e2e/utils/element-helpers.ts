@@ -27,15 +27,23 @@ export const safeIsVisible = async (
  * @param page - Playwright page object
  * @returns Promise<Locator> - The add task input locator, ready for interaction
  */
+/**
+ * Opens the global add-task bar with its shortcut. The header "+" is gone, so
+ * the shortcut (and the phone bottom nav's FAB) is the way in; focus leaves
+ * any field first, because shortcuts do not fire while one is focused.
+ */
+export const openGlobalAddTaskBar = async (page: Page): Promise<void> => {
+  await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+  await page.keyboard.press('Shift+A');
+};
+
 export const ensureGlobalAddTaskBarOpen = async (page: Page): Promise<Locator> => {
   const ADD_TASK_INPUT = 'add-task-bar.global .main-input';
   const addTaskInput = page.locator(ADD_TASK_INPUT).first();
   const isVisible = await addTaskInput.isVisible().catch(() => false);
 
   if (!isVisible) {
-    const addBtn = page.locator('.tour-addBtn').first();
-    await addBtn.waitFor({ state: 'visible', timeout: 10000 });
-    await addBtn.click();
+    await openGlobalAddTaskBar(page);
   }
 
   await addTaskInput.waitFor({ state: 'visible', timeout: 10000 });

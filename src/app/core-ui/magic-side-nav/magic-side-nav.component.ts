@@ -49,12 +49,12 @@ const COLLAPSED_WIDTH = 56;
 const MOBILE_NAV_WIDTH = 300;
 const FOCUS_DELAY_MS = 10;
 const INITIAL_ENTER_ANIMATION_DURATION_MS = 425;
-// `--transition-duration-l` (375ms) plus a 50ms buffer — the duration the panel
+// `--transition-duration-l` (320ms) plus a 50ms buffer — the duration the panel
 // animates its width over (`--sidenav-transition-duration` in the stylesheet).
 // The timeout is a fixed timer rather than a `transitionend` listener, so the
 // buffer is what keeps it from firing before the width has settled and clipping
 // the last of the collapse; the two numbers have to move together.
-const SIDENAV_WIDTH_ANIMATION_DURATION_MS = 425;
+const SIDENAV_WIDTH_ANIMATION_DURATION_MS = 370;
 
 @Component({
   selector: 'magic-side-nav',

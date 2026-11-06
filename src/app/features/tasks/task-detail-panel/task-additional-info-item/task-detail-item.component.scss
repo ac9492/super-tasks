@@ -132,36 +132,9 @@
 }
 
 .panel-content-wrapper {
-  margin: 0 var(--s2) var(--s);
+  margin: 0 var(--s) var(--s);
   display: block;
   color: var(--text-color-less-intense);
-}
-
-// Notes and the checklist are the panel's one field-like surface: a hairline
-// box at --r-md, inset 16, with the focus ring (no lift) while editing.
-.panel-content-wrapper::ng-deep inline-markdown {
-  &.isFocused {
-    border-color: transparent;
-  }
-
-  .markdown-wrapper {
-    min-height: 60px;
-    border-radius: var(--r-md);
-    overflow: visible !important;
-    transition: var(--transition-standard);
-  }
-
-  &.isFocused .markdown-wrapper {
-    outline: var(--focus-ring-width) solid var(--focus-ring-color);
-    outline-offset: calc(-1 * var(--focus-ring-width));
-  }
-
-  .markdown-unparsed,
-  .markdown-parsed {
-    background: var(--bg-lightest);
-    color: inherit;
-    border: var(--st-line-width) solid var(--input-border-color);
-  }
 }
 
 :host::ng-deep issue-header > * {

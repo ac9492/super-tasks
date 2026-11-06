@@ -1,6 +1,7 @@
 <div
   class="custom-option-layout"
   [class.has-checkbox]="showCheckbox()"
+  [class.has-checkmark]="showCheckmark()"
 >
   <!-- Icons go through fontIcon, so their names stay out of the row's text,
        which mat-option uses as its label. -->
@@ -28,5 +29,11 @@
   <span class="option-title">{{ title() }}</span>
   @if (folderPath(); as f) {
     <span class="folder-subtitle">{{ f }}</span>
+  }
+  @if (showCheckmark() && isSelected()) {
+    <mat-icon
+      class="selection-checkmark"
+      fontIcon="check"
+    ></mat-icon>
   }
 </div>

@@ -65,6 +65,28 @@ describe('ScheduleWeekComponent', () => {
     });
   });
 
+  it('halves weekly hour heights while preserving the day view density', () => {
+    fixture.componentInstance.scheduleRowHeightPx.set(9);
+    fixture.componentRef.setInput('daysToShow', ['2026-05-11', '2026-05-12']);
+    expect(fixture.componentInstance.scheduleRowHeightCss()).toBe('4.5px');
+    fixture.componentRef.setInput('daysToShow', ['2026-05-11']);
+    expect(fixture.componentInstance.scheduleRowHeightCss()).toBe('9px');
+  });
+
+  it('renders date-only tasks in the pinned row and excludes them from the time grid', () => {
+    fixture.componentRef.setInput('daysToShow', ['2026-05-11']);
+    fixture.componentRef.setInput('events', [
+      createTaskEvent('task-1', '2026-05-11', false),
+    ]);
+    fixture.detectChanges();
+    expect(
+      fixture.nativeElement.querySelectorAll('.floating-day schedule-event').length,
+    ).toBe(1);
+    expect(
+      fixture.nativeElement.querySelectorAll('.grid-container schedule-event').length,
+    ).toBe(0);
+  });
+
   it('should dedupe visible and hidden beyond-budget tasks in the day badge', () => {
     fixture.componentRef.setInput('daysToShow', ['2026-05-11']);
     fixture.componentRef.setInput('events', [
@@ -148,6 +170,8 @@ describe('ScheduleWeekComponent', () => {
 class ScheduleEventStubComponent {
   @Input() event?: ScheduleEvent;
   @Input() isDragPreview?: boolean;
+  @Input() isAllDay?: boolean;
+  @Input() isResizeDisabled?: boolean;
   @Input() cdkDragData?: ScheduleEvent;
   @Input() cdkDragDisabled?: boolean;
   @Input() cdkDragStartDelay?: number;

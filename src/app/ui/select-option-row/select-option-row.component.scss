@@ -78,4 +78,19 @@
       grid-row: 2;
     }
   }
+
+  &.has-checkmark {
+    grid-template-columns: var(--icon-md) minmax(0, 1fr) var(--icon-md);
+    column-gap: var(--s1-5);
+
+    .selection-checkmark {
+      grid-column: 3;
+      grid-row: 1 / span 2;
+      margin: 0;
+      color: var(--text-color);
+      width: var(--icon-md);
+      height: var(--icon-md);
+      font-size: var(--icon-md);
+    }
+  }
 }

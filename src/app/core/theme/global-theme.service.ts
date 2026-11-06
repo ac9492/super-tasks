@@ -343,15 +343,24 @@ export class GlobalThemeService {
     // Update Electron title bar overlay when dark mode changes
     if (IS_ELECTRON && !IS_MAC) {
       effect(() => {
-        const isDark =
-          this._paletteThemeService.roles(this.isDarkTheme()).backgroundInk === '#ffffff';
+        const roles = this._paletteThemeService.roles(this.isDarkTheme());
+        const isDark = roles.backgroundInk === '#ffffff';
+        // The window controls are drawn by the OS over the top-right corner and
+        // cannot show the header's CSS glass. With a window material behind the
+        // app they would show it untinted, so paint them with the header's own
+        // tint and alpha; otherwise main keeps its transparent default.
+        const [r, g, b] = colorChannels(roles.background);
+        const overlayColor =
+          this._appearanceService.backdrop() === 'native'
+            ? `rgba(${r}, ${g}, ${b}, ${Math.round(roles.glass.alpha.panel * 1000) / 1000})`
+            : undefined;
         // Use untracked to prevent creating additional dependencies in this effect
         const isCustomWindowTitleBarEnabled = untracked(() =>
           this._isCustomWindowTitleBarEnabled(),
         );
         // Only update if custom window title bar is enabled
         if (isCustomWindowTitleBarEnabled) {
-          window.ea.updateTitleBarDarkMode(isDark);
+          window.ea.updateTitleBarDarkMode(isDark, overlayColor);
         }
       });
     }

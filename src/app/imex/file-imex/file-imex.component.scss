@@ -1,17 +1,21 @@
-.import-text-area {
-  width: 100%;
+:host {
   display: block;
-  margin-top: var(--s2);
-  min-height: 90px;
-  margin-bottom: var(--s);
 }
-
-a,
-button {
-  margin-bottom: var(--s);
-  margin-right: var(--s);
-}
-
 section {
-  margin-top: var(--s2);
+  margin-bottom: var(--s4);
+}
+mat-form-field {
+  width: 100%;
+}
+.setting-row {
+  align-items: center;
+  margin-bottom: var(--s2);
+}
+h3 {
+  margin: 0;
+  font: var(--type-heading);
+}
+button {
+  margin-inline-end: var(--s);
+  margin-bottom: var(--s);
 }

@@ -17,6 +17,8 @@ import { LocaleDatePipe } from 'src/app/ui/pipes/locale-date.pipe';
 import { DateAdapter } from '@angular/material/core';
 import { of, throwError } from 'rxjs';
 import { selectTaskByIdWithSubTaskData } from '../../store/task.selectors';
+import { selectSectionsByContextIdMap } from '../../../section/store/section.selectors';
+import { Section } from '../../../section/section.model';
 import { TaskSharedActions } from '../../../../root-store/meta/task-shared.actions';
 import { DateService } from '../../../../core/date/date.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -153,6 +155,7 @@ describe('TaskContextMenuInnerComponent', () => {
             focusedTaskId: { set: () => {} },
             isTaskContextMenuOpen,
             closeActiveTaskContextMenu,
+            requestDescriptionFocus: jasmine.createSpy('requestDescriptionFocus'),
           },
         },
         { provide: LocaleDatePipe, useValue: {} },
@@ -176,9 +179,13 @@ describe('TaskContextMenuInnerComponent', () => {
       projectId: 'project-current',
     } as Task;
     store = TestBed.inject(MockStore);
+    store.overrideSelector(selectSectionsByContextIdMap, new Map<string, Section[]>());
   });
 
   afterEach(() => {
+    // Before the selectors reset: the template's async pipes would otherwise
+    // re-run the real section selector against the mock store's empty state.
+    fixture.destroy();
     selectTaskByIdWithSubTaskData.release();
     store.resetSelectors();
   });
@@ -256,6 +263,36 @@ describe('TaskContextMenuInnerComponent', () => {
 
       component.moveToProjectList$.subscribe((projects) => {
         expect(projects.map((project) => project.id)).toEqual(['project-b', 'project-a']);
+        done();
+      });
+    });
+
+    it('should list each project with all its sections and mark the one the task is in', (done) => {
+      const section = (id: string, taskIds: string[]): Section =>
+        ({ id, title: id, contextId: 'project-b', taskIds }) as unknown as Section;
+      store.overrideSelector(
+        selectSectionsByContextIdMap,
+        new Map<string, Section[]>([
+          ['project-b', [section('in', ['task-1']), section('other', [])]],
+        ]),
+      );
+      component.taskSet = {
+        ...DEFAULT_TASK,
+        id: 'task-1',
+        title: 'Task 1',
+        projectId: 'project-b',
+        tagIds: [],
+        subTaskIds: [],
+      } as unknown as Task;
+
+      component.moveTargets$.subscribe((targets) => {
+        expect(targets.map((t) => [t.project.id, t.isCurrent])).toEqual([
+          ['project-b', true],
+          ['project-a', false],
+        ]);
+        expect(targets[0].sections.map((x) => x.id)).toEqual(['in', 'other']);
+        expect(targets[0].currentSectionId).toBe('in');
+        expect(targets[1].currentSectionId).toBeNull();
         done();
       });
     });

@@ -77,7 +77,7 @@ export const LANGUAGE_SELECTION_FORM_FORM: ConfigFormSection<LocalizationConfig>
       type: 'select',
       templateOptions: {
         label: T.GCF.LANG.TIME_LOCALE,
-        description: T.GCF.LANG.TIME_LOCALE_DESCRIPTION,
+        description: T.PS.REFINEMENT.REGIONAL_HELP,
         ...SYSTEM_DEFAULT_SHOWN,
         options: [
           // TODO sort by popular
@@ -121,8 +121,8 @@ export const LANGUAGE_SELECTION_FORM_FORM: ConfigFormSection<LocalizationConfig>
       defaultValue: 'day-month',
       type: 'select',
       templateOptions: {
-        label: T.GCF.LANG.TASK_DATE_STYLE,
-        description: T.GCF.LANG.TASK_DATE_STYLE_DESCRIPTION,
+        label: T.PS.REFINEMENT.TASK_DATE,
+        description: T.PS.REFINEMENT.TASK_DATE_HELP,
         options: [
           { label: T.GCF.LANG.TASK_DATE_NUMERIC, value: 'numeric' },
           { label: T.GCF.LANG.TASK_DATE_COMPACT, value: 'day-month' },
@@ -132,3 +132,14 @@ export const LANGUAGE_SELECTION_FORM_FORM: ConfigFormSection<LocalizationConfig>
     },
   ],
 };
+
+LANGUAGE_SELECTION_FORM_FORM.items?.sort((a, b) => {
+  const order = [
+    'lng',
+    'dateTimeLocale',
+    'taskDateStyle',
+    'isShowWeekdayForNextWeek',
+    'firstDayOfWeek',
+  ];
+  return order.indexOf(String(a.key)) - order.indexOf(String(b.key));
+});

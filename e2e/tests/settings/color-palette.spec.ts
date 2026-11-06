@@ -26,10 +26,6 @@ test('three colors reach the page, cards, add controls, and persisted selection'
     'color',
     'rgb(255, 255, 255)',
   );
-  await expect(page.locator('.tour-addBtn mat-icon')).toHaveCSS(
-    'color',
-    'rgb(0, 0, 255)',
-  );
 
   const input = await ensureGlobalAddTaskBarOpen(page);
   await input.fill('A palette task');

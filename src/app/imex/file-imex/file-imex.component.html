@@ -1,78 +1,97 @@
-<button
-  (click)="downloadBackup()"
-  color="primary"
-  mat-stroked-button
-  type="button"
->
-  <mat-icon>download</mat-icon>
-  {{ T.FILE_IMEX.EXPORT_DATA | translate }}
-</button>
-
-<button
-  (click)="privacyAppDataDownload()"
-  color="primary"
-  mat-stroked-button
-  type="button"
-  [matTooltip]="T.FILE_IMEX.PRIVACY_EXPORT_DESCRIPTION | translate"
->
-  <mat-icon>download</mat-icon>
-  {{ T.FILE_IMEX.PRIVACY_EXPORT | translate }}
-</button>
-
-<button
-  (click)="fileInput.click()"
-  color="primary"
-  mat-stroked-button
-  type="button"
->
-  <mat-icon>upload</mat-icon>
-  {{ T.FILE_IMEX.IMPORT_FROM_FILE | translate }}
-</button>
-
-<input
-  #fileInput
-  (change)="handleFileInput($event)"
-  hidden
-  id="file"
-  type="file"
-/>
-
-<button
-  (click)="openUrlImportDialog()"
-  color="primary"
-  mat-stroked-button
-  type="button"
->
-  <mat-icon>cloud_download</mat-icon>
-  {{ T.FILE_IMEX.OPEN_IMPORT_FROM_URL_DIALOG | translate }}
-</button>
-
-<button
-  (click)="openArchiveCompression()"
-  color="primary"
-  mat-stroked-button
-  type="button"
->
-  <mat-icon>compress</mat-icon>
-  {{ T.FILE_IMEX.BTN_COMPRESS_ARCHIVE | translate }}
-</button>
-
-<button
-  (click)="openTodoistImport()"
-  color="primary"
-  mat-stroked-button
-  type="button"
->
-  <mat-icon>upload_file</mat-icon>
-  {{ T.FILE_IMEX.IMPORT_FROM_TODOIST | translate }}
-</button>
-
-<button
-  (click)="openTickTickImport()"
-  color="primary"
-  mat-stroked-button
-  type="button"
->
-  <mat-icon>upload_file</mat-icon>
-  {{ T.FILE_IMEX.IMPORT_FROM_TICKTICK | translate }}
-</button>
+<section class="import-section">
+  <div class="setting-row">
+    <h3 class="setting-control">{{ T.PS.REFINEMENT.IMPORT | translate }}</h3>
+    <setting-help
+      [label]="T.PS.REFINEMENT.IMPORT | translate"
+      [text]="T.PS.REFINEMENT.IMPORT_HELP | translate"
+    />
+  </div>
+  <div class="setting-row">
+    <mat-form-field class="setting-control">
+      <mat-label>{{ T.PS.REFINEMENT.SOURCE | translate }}</mat-label>
+      <mat-select [(ngModel)]="importSource">
+        <mat-option value="ultra">{{ T.PS.REFINEMENT.NATIVE | translate }}</mat-option>
+        <mat-option value="super-productivity">{{
+          T.PS.REFINEMENT.UPSTREAM | translate
+        }}</mat-option>
+        <mat-option value="todoist">{{ T.PS.REFINEMENT.TODOIST | translate }}</mat-option>
+        <mat-option value="ticktick">{{
+          T.PS.REFINEMENT.TICKTICK | translate
+        }}</mat-option>
+        <mat-option value="url">{{
+          T.FILE_IMEX.OPEN_IMPORT_FROM_URL_DIALOG | translate
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <setting-help
+      [label]="T.PS.REFINEMENT.SOURCE | translate"
+      [text]="T.PS.REFINEMENT.IMPORT_HELP | translate"
+    />
+  </div>
+  <button
+    (click)="importSelected()"
+    mat-stroked-button
+    type="button"
+  >
+    <mat-icon>upload_file</mat-icon>{{ T.PS.REFINEMENT.IMPORT | translate }}
+  </button>
+  <input
+    #fileInput
+    (change)="handleFileInput($event)"
+    hidden
+    id="file"
+    type="file"
+    accept=".json,application/json"
+  />
+</section>
+<section class="export-section">
+  <div class="setting-row">
+    <h3 class="setting-control">{{ T.PS.REFINEMENT.EXPORT | translate }}</h3>
+    <setting-help
+      [label]="T.PS.REFINEMENT.EXPORT | translate"
+      [text]="T.PS.REFINEMENT.EXPORT_HELP | translate"
+    />
+  </div>
+  <div class="setting-row">
+    <mat-slide-toggle
+      class="setting-control"
+      [(ngModel)]="encryptExport"
+      >{{ T.PS.REFINEMENT.ENCRYPT | translate }}</mat-slide-toggle
+    >
+    <setting-help
+      [label]="T.PS.REFINEMENT.ENCRYPT | translate"
+      [text]="T.PS.REFINEMENT.ENCRYPT_HELP | translate"
+    />
+  </div>
+  <button
+    (click)="downloadBackup()"
+    mat-stroked-button
+    type="button"
+  >
+    <mat-icon>download</mat-icon>{{ T.PS.REFINEMENT.NATIVE | translate }}
+  </button>
+</section>
+<section class="recovery-section">
+  <div class="setting-row">
+    <h3 class="setting-control">{{ T.PS.REFINEMENT.RECOVERY | translate }}</h3>
+    <setting-help
+      [label]="T.PS.REFINEMENT.RECOVERY | translate"
+      [text]="T.PS.REFINEMENT.BACKUP_HELP | translate"
+    />
+  </div>
+  <button
+    (click)="openArchiveCompression()"
+    mat-button
+    type="button"
+  >
+    <mat-icon>compress</mat-icon>{{ T.FILE_IMEX.BTN_COMPRESS_ARCHIVE | translate }}
+  </button>
+  <button
+    (click)="privacyAppDataDownload()"
+    mat-button
+    type="button"
+    [matTooltip]="T.FILE_IMEX.PRIVACY_EXPORT_DESCRIPTION | translate"
+  >
+    <mat-icon>download</mat-icon>{{ T.FILE_IMEX.PRIVACY_EXPORT | translate }}
+  </button>
+</section>

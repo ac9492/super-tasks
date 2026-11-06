@@ -46,7 +46,6 @@ import { HISTORY_STATE, IS_ELECTRON } from '../../../app.constants';
 import { LayoutService } from '../../../core-ui/layout/layout.service';
 import { devError } from '../../../util/dev-error';
 import { GlobalConfigService } from '../../config/global-config.service';
-import { DEFAULT_GLOBAL_CONFIG } from '../../config/default-global-config.const';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { getTaskRepeatInfoText } from './get-task-repeat-info-text.util';
 import { DateTimeFormatService } from '../../../core/date-time-format/date-time-format.service';
@@ -80,7 +79,6 @@ import { IssueIconPipe } from '../../issue/issue-icon/issue-icon.pipe';
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { getDbDateStr, isDBDateStr } from '../../../util/get-db-date-str';
 import { isDeadlineOverdue as isDeadlineOverdueFn } from '../util/is-deadline-overdue';
-import { isMarkdownChecklist } from '../../markdown-checklist/is-markdown-checklist';
 import { Log } from '../../../core/log';
 import { isInputElement } from '../../../util/dom-element';
 import { clipboardHasText } from '../../../util/clipboard-has-text';
@@ -96,6 +94,7 @@ import {
 import { findNextTaskAfterSubtree } from '../../../util/find-adjacent-focusable';
 import { TaskContextMenuComponent } from '../task-context-menu/task-context-menu.component';
 import { isWontDoTask } from '../util/is-wont-do-task';
+import { TaskFocusService } from '../task-focus.service';
 
 @Component({
   selector: 'task-detail-panel',
@@ -150,6 +149,7 @@ export class TaskDetailPanelComponent implements OnInit, AfterViewInit, OnDestro
   private readonly _issueSyncState = inject(IssueSyncStateService);
   private _translateService = inject(TranslateService);
   private _destroyRef = inject(DestroyRef);
+  private readonly _taskFocusService = inject(TaskFocusService);
   private _dateTimeFormatService = inject(DateTimeFormatService);
 
   // Exposed so the template can pass the reactive locale to the now-pure
@@ -196,12 +196,6 @@ export class TaskDetailPanelComponent implements OnInit, AfterViewInit, OnDestro
 
   // Observable conversions
   private _task$ = toObservable(this.task);
-  private _taskDetailTargetPanel = toSignal(
-    this.taskService.taskDetailPanelTargetPanel$,
-    {
-      initialValue: null,
-    },
-  );
 
   @HostListener('keydown', ['$event'])
   onKeydown(ev: KeyboardEvent): void {
@@ -317,19 +311,6 @@ export class TaskDetailPanelComponent implements OnInit, AfterViewInit, OnDestro
     return [];
   });
 
-  // Default task notes computed signal
-  defaultTaskNotes = computed(() => {
-    const tasks = this._globalConfigService.tasks();
-    return tasks?.notesTemplate || '';
-  });
-
-  // True only for the app's generic stock template (not a user-customized one).
-  // Used to let the checklist button replace the shown default text with a fresh
-  // checklist; customized templates are treated as real content and preserved.
-  isStockNotesTemplate = computed(
-    () => this.defaultTaskNotes() === DEFAULT_GLOBAL_CONFIG.tasks.notesTemplate,
-  );
-
   // Local attachments computed signal
   localAttachments = computed(() => {
     return this.task().attachments || [];
@@ -346,22 +327,7 @@ export class TaskDetailPanelComponent implements OnInit, AfterViewInit, OnDestro
     return !this.layoutService.isXs() && (!!this.issueData() || hasSyncNotice);
   });
 
-  isExpandedNotesPanel = computed(() => {
-    if (this._taskDetailTargetPanel() === TaskDetailTargetPanel.Notes) {
-      return true;
-    }
-
-    const task = this.task();
-    return this.layoutService.isXs()
-      ? this.isMarkdownChecklist()
-      : !!task.notes || (!task.issueId && !task.attachments?.length);
-  });
-
-  // Task-based computed signals
-  isMarkdownChecklist = computed(() => {
-    const notes = this.task().notes;
-    return isMarkdownChecklist(notes || '');
-  });
+  isExpandedNotesPanel = signal(true);
 
   isPlannedForTodayDay = computed(() => {
     const task = this.task();
@@ -495,6 +461,8 @@ export class TaskDetailPanelComponent implements OnInit, AfterViewInit, OnDestro
       // unlike per-row <task> components).
       this.isAddSubtaskInputVisible.set(false);
       this.isSubTasksExpanded.set(false);
+      this.isExpandedNotesPanel.set(true);
+      this.panelState.isFocusNotes.set(false);
       // Only auto-focus panel content when focus is already inside the panel,
       // to avoid stealing focus from the main task list during navigation (#6578)
       if (document.activeElement?.closest('task-detail-panel')) {
@@ -571,6 +539,16 @@ export class TaskDetailPanelComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   ngAfterViewInit(): void {
+    // The selected target selector does not emit again for the same task.
+    // Explicit editor requests must still focus it after the menu restores focus.
+    this._taskFocusService.descriptionFocusRequests$
+      .pipe(delay(50), takeUntilDestroyed(this._destroyRef))
+      .subscribe((taskId) => {
+        if (this.task().id === taskId) {
+          this.isExpandedNotesPanel.set(true);
+          this.panelState.isFocusNotes.set(true);
+        }
+      });
     this.taskService.taskDetailPanelTargetPanel$
       .pipe(takeUntilDestroyed(this._destroyRef), delay(50))
       .subscribe((v) => {
@@ -585,26 +563,21 @@ export class TaskDetailPanelComponent implements OnInit, AfterViewInit, OnDestro
             }
           } else if (v === TaskDetailTargetPanel.Notes) {
             const noteWrapperElRef = this.noteWrapperElRef();
-            // Focus the notes section in its rendered (preview) state — do NOT
-            // also enter edit mode. This target opens via a checklist progress
-            // badge or the "open notes" (N) shortcut; both should land on the
-            // rendered notes, not the raw editor. Setting isFocusNotes opened
-            // the textarea that focusItem() below immediately blurred back to
-            // preview — a flash of raw "- [ ] " source (only visible for
-            // checklists). Preview was always the settled state; explicit edits
-            // still work via click/Enter (editActionTriggered).
             if (!noteWrapperElRef) {
               devError('this.noteWrapperElRef not ready');
               this._focusFirst();
             } else {
-              this.focusItem(noteWrapperElRef);
+              // Let the live editor own focus, including when its chunk is loading.
+              // Focusing the wrapper afterwards would immediately blur the editor.
+              this.isExpandedNotesPanel.set(true);
+              this.panelState.isFocusNotes.set(true);
             }
           } else {
             this._focusFirst();
           }
         }
       });
-    Log.verbose('Task Detail Panel', this.task());
+    Log.verbose('Task Detail Panel', { id: this.task().id });
   }
 
   ngOnDestroy(): void {
@@ -619,11 +592,8 @@ export class TaskDetailPanelComponent implements OnInit, AfterViewInit, OnDestro
     window.clearTimeout(this._focusTimeout);
   }
 
-  changeTaskNotes($event: string): void {
-    const defaultNotes = this.defaultTaskNotes();
-    if (!defaultNotes || !$event || $event.trim() !== defaultNotes.trim()) {
-      this.taskService.update(this.task().id, { notes: $event });
-    }
+  changeTaskNotes(notes: string): void {
+    this.taskService.update(this.task().id, { notes });
   }
 
   openTaskMenu(event: MouseEvent): void {

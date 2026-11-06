@@ -88,10 +88,7 @@ export class TagPage extends BasePage {
     // Right-click to open context menu
     await task.click({ button: 'right' });
 
-    // Click "Toggle Tags" menu item
-    const toggleTagsBtn = this.page.locator('.mat-mdc-menu-content button', {
-      hasText: 'Toggle Tags',
-    });
+    const toggleTagsBtn = this.page.locator('.e2e-edit-tags-btn');
     await toggleTagsBtn.waitFor({ state: 'visible', timeout: 5000 });
     await waitForMenuSettled(this.page);
     await toggleTagsBtn.click();
@@ -154,10 +151,7 @@ export class TagPage extends BasePage {
     // Right-click to open context menu
     await task.click({ button: 'right' });
 
-    // Click "Toggle Tags" menu item
-    const toggleTagsBtn = this.page.locator('.mat-mdc-menu-content button', {
-      hasText: 'Toggle Tags',
-    });
+    const toggleTagsBtn = this.page.locator('.e2e-edit-tags-btn');
     await toggleTagsBtn.waitFor({ state: 'visible', timeout: 5000 });
     await waitForMenuSettled(this.page);
     await toggleTagsBtn.click();
