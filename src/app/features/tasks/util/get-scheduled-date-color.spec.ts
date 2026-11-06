@@ -1,4 +1,9 @@
-import { getScheduledDateColor, ScheduledDateColor } from './get-scheduled-date-color';
+import { computed, Signal, signal } from '@angular/core';
+import {
+  getScheduledDateColor,
+  readClockUntilDue,
+  ScheduledDateColor,
+} from './get-scheduled-date-color';
 
 describe('getScheduledDateColor', () => {
   const today = '2026-10-03';
@@ -48,5 +53,71 @@ describe('getScheduledDateColor', () => {
     expect(classify('2027-01-08', '2026-12-30')).toBe('');
     expect(classify('2026-03-09', '2026-03-07')).toBe('upcoming');
     expect(classify('2026-11-02', '2026-10-31')).toBe('upcoming');
+  });
+});
+
+describe('readClockUntilDue', () => {
+  const MINUTE = 60 * 1000;
+  const due = new Date(2026, 9, 3, 12).getTime();
+  const dueMinute = due / MINUTE;
+  const trackColor = (
+    clock: Signal<number>,
+    clockMinute: Signal<number>,
+  ): { color: Signal<ScheduledDateColor>; runs: () => number } => {
+    let runs = 0;
+    const color = computed(() => {
+      runs++;
+      return getScheduledDateColor(
+        { isDone: false, dueWithTime: due },
+        '2026-10-03',
+        0,
+        readClockUntilDue(clock, clockMinute, due),
+      );
+    });
+    return { color, runs: () => runs };
+  };
+
+  it('stops re-running a color once the task is due', () => {
+    const clock = signal(due - 2000);
+    const clockMinute = signal(dueMinute - 1);
+    const { color, runs } = trackColor(clock, clockMinute);
+
+    expect(color()).toBe('today');
+    clock.set(due - 1000);
+    expect(color()).toBe('today');
+    clock.set(due);
+    expect(color()).toBe('overdue');
+    expect(runs()).toBe(3);
+
+    clock.set(due + 1000);
+    clockMinute.set(dueMinute);
+    expect(color()).toBe('overdue');
+    expect(runs()).toBe(3);
+  });
+
+  it('re-runs a color once a minute until the last two minutes before it is due', () => {
+    const clockMinute = signal(dueMinute - 10);
+    const clock = signal(clockMinute() * MINUTE);
+    const { color, runs } = trackColor(clock, clockMinute);
+
+    expect(color()).toBe('today');
+    clock.set(clock() + 1000);
+    clock.set(clock() + 29000);
+    expect(color()).toBe('today');
+    expect(runs()).toBe(1);
+
+    for (let minutesLeft = 9; minutesLeft >= 2; minutesLeft--) {
+      clockMinute.set(dueMinute - minutesLeft);
+      clock.set(clockMinute() * MINUTE);
+      expect(color()).toBe('today');
+    }
+    expect(runs()).toBe(9);
+
+    // Two minutes before it is due, the color follows the second clock.
+    clock.set(due - 1000);
+    expect(color()).toBe('today');
+    clock.set(due);
+    expect(color()).toBe('overdue');
+    expect(runs()).toBe(11);
   });
 });

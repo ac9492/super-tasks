@@ -620,7 +620,8 @@ magic-side-nav {
  * the panel down so its top edge clears the controls with a
  * comfortable gap above. */
 body.isMac.isElectron magic-side-nav {
-  margin-top: calc(var(--mac-title-bar-padding) + 12px);
+  --title-bar-drag-height: calc(var(--mac-title-bar-padding) + 12px);
+  margin-top: var(--title-bar-drag-height);
 }
 
 magic-side-nav .nav-sidenav {

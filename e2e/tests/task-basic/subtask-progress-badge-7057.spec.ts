@@ -1,9 +1,9 @@
 import { expect, test } from '../../fixtures/test.fixture';
 
-// Collapsed sub tasks show a done/total badge on the toggle button (#7057).
+// Ultra Tasks keeps completion counts visible in every subtask visibility mode.
 
 test.describe('Sub task progress badge', () => {
-  test('shows done/total only while sub tasks are collapsed', async ({
+  test('keeps done/total while sub tasks are expanded, filtered or collapsed', async ({
     workViewPage,
     taskPage,
     testPrefix,
@@ -22,12 +22,12 @@ test.describe('Sub task progress badge', () => {
 
     const toggleBtn = parent.locator('.toggle-sub-tasks-btn').first();
     const badge = toggleBtn.locator('.sub-task-progress-badge');
-    await expect(badge).toHaveCount(0);
+    await expect(badge).toHaveText('1/3');
 
     // with some sub tasks done the toggle cycles: shown -> hide done -> hide all
     await toggleBtn.click();
     await expect(toggleBtn.locator('mat-icon')).toHaveText('remove');
-    await expect(badge).toHaveCount(0);
+    await expect(badge).toHaveText('1/3');
     await toggleBtn.click();
     await expect(toggleBtn.locator('mat-icon')).toHaveText('add');
 
@@ -35,7 +35,7 @@ test.describe('Sub task progress badge', () => {
     await expect(toggleBtn).toHaveAttribute('aria-label', 'Subtasks: 1 of 3 done');
 
     await toggleBtn.click();
-    await expect(badge).toHaveCount(0);
+    await expect(badge).toHaveText('1/3');
     await expect(subTasks).toHaveCount(3);
   });
 });

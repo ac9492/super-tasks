@@ -84,7 +84,13 @@ test('task date styles and weekday preference work through settings and persist 
     .click();
   await style().click();
   await page.getByRole('option', { name: 'December 3rd (English)', exact: true }).click();
-  await page.getByRole('menuitem', { name: 'Inbox', exact: true }).click();
+  // Settings is a dialog in Ultra Tasks; close it before using navigation.
+  await page
+    .getByRole('dialog')
+    .getByRole('button', { name: 'Close', exact: true })
+    .click();
+  await page.goto('/#/project/INBOX_PROJECT/tasks');
+  await workViewPage.waitForTaskList();
   for (let i = 0; i < 3; i++) {
     const row = taskPage.getTaskByText(`${testPrefix} date ${i}`);
     await expect(row.locator('.schedule-btn .time-badge')).toHaveText(
@@ -116,7 +122,13 @@ test('task date styles and weekday preference work through settings and persist 
   await page
     .getByRole('option', { name: '3-Dec (abbreviated month)', exact: true })
     .click();
-  await page.getByRole('menuitem', { name: 'Inbox', exact: true }).click();
+  // Settings is a dialog in Ultra Tasks; close it before using navigation.
+  await page
+    .getByRole('dialog')
+    .getByRole('button', { name: 'Close', exact: true })
+    .click();
+  await page.goto('/#/project/INBOX_PROJECT/tasks');
+  await workViewPage.waitForTaskList();
   await expect(
     taskPage.getTaskByText(`${testPrefix} date 1`).locator('.schedule-btn .time-badge'),
   ).toHaveText(expected[1].compact);

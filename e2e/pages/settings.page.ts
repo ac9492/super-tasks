@@ -33,6 +33,20 @@ export class SettingsPage extends BasePage {
     const section = this.page.locator(sectionSelector);
     await section.scrollIntoViewIfNeeded();
 
+    // Ultra Tasks' settings window renders sections expanded without a wrapper.
+    if (await section.locator('.settings-section-heading').count()) {
+      await section.locator('.settings-section-heading').waitFor({ state: 'visible' });
+      const more = section.getByRole('button', { name: 'More options', exact: true });
+      if ((await more.count()) && (await more.getAttribute('aria-expanded')) !== 'true') {
+        await more.click();
+        await section
+          .locator('formly-collapsible > .collapsible-panel')
+          .waitFor({ state: 'visible' });
+      }
+      await waitForAngularStability(this.page);
+      return;
+    }
+
     const collapsible = section.locator('collapsible');
     const isExpanded = await collapsible.evaluate((el) =>
       el.classList.contains('isExpanded'),

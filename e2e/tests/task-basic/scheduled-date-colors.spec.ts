@@ -90,8 +90,13 @@ test('scheduled badges restore the relative-day palette in light and dark mode w
         .first();
       const colors = await control.evaluate((button, name) => {
         const probe = document.createElement('span');
-        probe.style.color =
-          name === 'overdue' ? 'var(--c-warn)' : `var(--scheduled-date-${name})`;
+        // The fork's palette gives text an important inherited color; make this
+        // temporary probe resolve the semantic token instead.
+        probe.style.setProperty(
+          'color',
+          name === 'overdue' ? 'var(--c-warn)' : `var(--scheduled-date-${name})`,
+          'important',
+        );
         button.appendChild(probe);
         const expectedColor = getComputedStyle(probe).color;
         probe.remove();
@@ -112,7 +117,7 @@ test('scheduled badges restore the relative-day palette in light and dark mode w
       .first();
     const warningColors = await overdue.evaluate((button) => {
       const probe = document.createElement('span');
-      probe.style.color = 'var(--c-warn)';
+      probe.style.setProperty('color', 'var(--c-warn)', 'important');
       button.appendChild(probe);
       const expected = getComputedStyle(probe).color;
       probe.remove();
@@ -278,7 +283,7 @@ test('colors overdue Board cards like task rows', async ({
     );
     const colors = await button.evaluate((element) => {
       const probe = document.createElement('span');
-      probe.style.color = 'var(--c-warn)';
+      probe.style.setProperty('color', 'var(--c-warn)', 'important');
       element.appendChild(probe);
       const expected = getComputedStyle(probe).color;
       probe.remove();
