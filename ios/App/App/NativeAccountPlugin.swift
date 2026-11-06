@@ -7,7 +7,7 @@ import Capacitor
 public class NativeAccountPlugin: CAPPlugin, CAPBridgedPlugin, URLSessionTaskDelegate {
     public let identifier = "NativeAccountPlugin"
     public let jsName = "NativeAccount"
-    public let pluginMethods = [CAPPluginMethod(name: "command", returnType: CAPPluginReturnPromise)]
+    public let pluginMethods: [CAPPluginMethod] = [CAPPluginMethod(name: "command", returnType: CAPPluginReturnPromise)]
     private let queue = DispatchQueue(label: "app.ultratasks.native-account")
     private let service = "app.ultratasks.native-account-v2"
     private lazy var session: URLSession = {
