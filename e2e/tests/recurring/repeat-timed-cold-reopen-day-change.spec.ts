@@ -52,7 +52,7 @@ test.describe('Repeat Task - Timed + Cold Reopen Day Change', () => {
     const scheduleDialog = await openRecurScheduleDialog(page);
 
     // Set a valid startTime
-    const startTimeField = scheduleDialog.getByLabel('Time');
+    const startTimeField = scheduleDialog.getByLabel('Time', { exact: true });
     await expect(startTimeField).toBeVisible({ timeout: 5000 });
     await startTimeField.fill('13:00');
     await startTimeField.blur();

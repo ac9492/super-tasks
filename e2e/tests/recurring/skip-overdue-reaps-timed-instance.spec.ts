@@ -131,7 +131,7 @@ const createTimedDailyRepeat = async (
 
   // Timed daily: setting a start time makes remindAt default to AtStart.
   const scheduleDialog = await openRecurScheduleDialog(page);
-  const startTimeField = scheduleDialog.getByLabel('Time');
+  const startTimeField = scheduleDialog.getByLabel('Time', { exact: true });
   await expect(startTimeField).toBeVisible({ timeout: 5000 });
   await startTimeField.fill(START_TIME);
   await startTimeField.blur();

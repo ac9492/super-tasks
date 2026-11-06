@@ -77,7 +77,7 @@ test.describe('Default task reminder option', () => {
       .locator(
         'task-detail-item:has(mat-icon:text("alarm")), ' +
           'task-detail-item:has(mat-icon:text("today")), ' +
-          'task-detail-item:has(mat-icon:text("schedule"))',
+          'task-detail-item:has(mat-icon:text("schedule")), task-detail-item:has(mat-icon:text("calendar_month"))',
       )
       .first();
     await scheduleItem.waitFor({ state: 'visible', timeout: 10000 });
@@ -170,7 +170,7 @@ test.describe('Default task reminder option', () => {
       .locator(
         'task-detail-item:has(mat-icon:text("alarm")), ' +
           'task-detail-item:has(mat-icon:text("today")), ' +
-          'task-detail-item:has(mat-icon:text("schedule"))',
+          'task-detail-item:has(mat-icon:text("schedule")), task-detail-item:has(mat-icon:text("calendar_month"))',
       )
       .first();
     await scheduleItem.waitFor({ state: 'visible', timeout: 10000 });

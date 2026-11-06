@@ -18,17 +18,18 @@ export class ImportPage extends BasePage {
 
   constructor(page: Page) {
     super(page);
-    // The import button contains text "Import from file" and has file_download icon
+    // The import button contains text "Import from file" and has the upload icon
     this.importFromFileBtn = page.locator(
-      'file-imex button:has(mat-icon:has-text("file_download"))',
+      'file-imex button:has(mat-icon:text-is("upload"))',
     );
     this.fileInput = page.locator('file-imex input[type="file"]');
     this.importFromUrlBtn = page.locator(
       'file-imex button:has(mat-icon:has-text("cloud_download"))',
     );
-    this.exportBackupBtn = page.locator(
-      'file-imex button:has(mat-icon:has-text("file_upload"))',
-    );
+    // "Export data" is the first download-icon button (privacy export is the second)
+    this.exportBackupBtn = page
+      .locator('file-imex button:has(mat-icon:text-is("download"))')
+      .first();
   }
 
   /**
