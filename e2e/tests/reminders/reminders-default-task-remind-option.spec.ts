@@ -1,4 +1,4 @@
-import { Locator, Page } from '@playwright/test';
+import { Page } from '@playwright/test';
 
 import { expect, test } from '../../fixtures/test.fixture';
 import { waitForAngularStability } from '../../utils/waits';
@@ -13,34 +13,22 @@ test.describe('Default task reminder option', () => {
   // text precisely and not collide with substrings like the "...never run code..."
   // tooltip on the theme upload button in the General tab.
   const changedOptionText = 'Never';
-  const expandConfigSection = async (section: Locator): Promise<void> => {
-    const collapsible = section.locator('collapsible').first();
-    await collapsible.waitFor({ state: 'visible', timeout: 10000 });
-
-    const isExpanded = await collapsible.evaluate((el) =>
-      el.classList.contains('isExpanded'),
-    );
-    if (!isExpanded) {
-      await collapsible.locator('.collapsible-header').click();
-    }
-
-    await collapsible
-      .locator('.collapsible-panel')
-      .waitFor({ state: 'visible', timeout: 5000 });
-  };
 
   const changeDefaultTaskReminderOption = async (page: Page): Promise<void> => {
-    await page.goto('/#/config');
-    await page.locator('.page-settings').waitFor({ state: 'visible', timeout: 10000 });
+    // Tab 1 is "Tasks & planning", which holds the Reminders section. The
+    // settings window lays its sections out open, so nothing needs expanding:
+    // the default reminder timing is one of the section's primary fields.
+    await page.goto('/#/config?tab=1');
+    const settingsDialog = page.getByRole('dialog', { name: 'Settings', exact: true });
+    await settingsDialog.waitFor({ state: 'visible', timeout: 10000 });
 
-    await page.getByRole('tab', { name: /Time & Tracking/i }).click();
-
-    const remindersSection = page.locator('section.section-reminder').first();
+    const remindersSection = settingsDialog.locator('section.section-reminder').first();
     await remindersSection.waitFor({ state: 'visible', timeout: 10000 });
-    await expandConfigSection(remindersSection);
 
     // Should match the option set inside the default global configuration
-    const reminderSelect = remindersSection.locator('mat-select').first();
+    const reminderSelect = remindersSection
+      .locator('[data-setting-key="defaultTaskRemindOption"] mat-select')
+      .first();
     await expect(reminderSelect).toContainText(defaultOptionText);
 
     // Change it to another option to check whether the setting takes effect
@@ -50,6 +38,11 @@ test.describe('Default task reminder option', () => {
     await page.getByRole('option', { name: changedOptionText, exact: true }).click();
     await expect(reminderSelect).toContainText(changedOptionText);
     await waitForAngularStability(page).catch(() => {});
+
+    // Settings is a modal dialog over the workspace: close it so the work view
+    // behind it (side menu, add-task bar) is reachable again.
+    await settingsDialog.getByRole('button', { name: 'Close', exact: true }).click();
+    await settingsDialog.waitFor({ state: 'hidden', timeout: 10000 });
   };
 
   test('should apply when scheduling a task using the due action', async ({

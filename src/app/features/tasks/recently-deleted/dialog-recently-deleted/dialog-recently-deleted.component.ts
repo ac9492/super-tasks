@@ -24,6 +24,7 @@ import { DialogConfirmComponent } from '../../../../ui/dialog-confirm/dialog-con
 import { DateTimeFormatService } from '../../../../core/date-time-format/date-time-format.service';
 import { LocaleDatePipe } from '../../../../ui/pipes/locale-date.pipe';
 import { getPluralKey } from '../../../../util/get-plural-key';
+import { useDialogSize } from '../../../../ui/dialog-size.util';
 
 interface RecentlyDeletedRow {
   entry: RecentlyDeletedEntry;
@@ -48,6 +49,7 @@ interface RecentlyDeletedRow {
   ],
 })
 export class DialogRecentlyDeletedComponent {
+  private readonly _dialogSize = useDialogSize('m');
   private readonly _recentlyDeletedService = inject(RecentlyDeletedService);
   private readonly _matDialog = inject(MatDialog);
   private readonly _taskEntities = inject(Store).selectSignal(selectTaskEntities);
@@ -94,6 +96,7 @@ export class DialogRecentlyDeletedComponent {
         restoreFocus: true,
         data: {
           okTxt: T.F.TASK.D_RECENTLY_DELETED.EMPTY,
+          isDestructive: true,
           message: T.F.TASK.D_RECENTLY_DELETED.CONFIRM_EMPTY,
         },
       })

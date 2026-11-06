@@ -52,10 +52,11 @@ const UNIVERSAL_RECOVERY_STEPS =
  * unknown or future channel must inherit safe text at RUNTIME, which matters
  * more here than a compile error would.
  *
- * Package identifiers per the store links in README.md — snapcraft.io/superproductivity
- * and flathub.org/apps/com.super_productivity.SuperProductivity. They differ from
- * both the top-level `appId` and the mac/Capacitor `com.super-productivity.app`;
- * a wrong id here makes the one command we give the user fail outright.
+ * No package id is named: Ultra Tasks publishes no Snap or Flatpak package yet
+ * (the upstream ids would update a different app), and a wrong id makes the one
+ * command we give the user fail outright. Without an id, `snap refresh` and
+ * `flatpak update` update every package installed from a store or remote and
+ * cannot fail on a wrong id. Name the package here once a store listing exists.
  *
  * @see https://github.com/super-productivity/super-productivity/issues/9187
  */
@@ -67,14 +68,14 @@ const versionErrorRecoverySteps = (channel: DistChannel): string => {
       return (
         '1. Close this window.\n' +
         '2. Update to the newest version:\n' +
-        '   flatpak update com.super_productivity.SuperProductivity\n\n'
+        '   flatpak update\n\n'
       );
     case 'linux-snap':
       // sudo IS required: snapd's io.snapcraft.snapd.manage is
       // `auth_admin_keep`, so the bare command dies with "access denied".
       return (
         '1. Close this window.\n' +
-        '2. Update to the newest version: sudo snap refresh superproductivity\n' +
+        '2. Update to the newest version: sudo snap refresh\n' +
         '3. If you ran `snap revert` recently, that is what caused this.\n\n'
       );
     default:

@@ -24,16 +24,15 @@
 
 .weekday-header {
   text-align: center;
-  font-weight: 600;
-  padding: 6px;
+  font: var(--type-label);
+  padding: var(--s-half) var(--s-half);
   background: var(--bg);
   color: var(--text-color);
   border: 1px solid var(--grid-color);
   grid-row: 1;
 
   @include mq(xs, max) {
-    padding: 3px;
-    font-size: 11px;
+    padding: var(--s-quarter);
   }
 
   &:nth-child(1) {
@@ -81,7 +80,7 @@
   &.today {
     .month-day-number {
       background: var(--c-primary);
-      color: white;
+      color: var(--c-contrast);
       border-radius: 50%;
       width: 24px;
       height: 24px;
@@ -114,6 +113,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: var(--s-half);
   border-bottom: 1px solid var(--grid-color);
 
   @include mq(xs, max) {
@@ -145,43 +145,32 @@
 .month-day-events {
   flex: 1;
   padding: var(--s-half);
-  overflow-y: auto;
-  overflow-x: hidden;
-  max-height: calc(100% - 35px);
+  // Only as many events as fit are rendered (maxVisibleEvents); the header
+  // counts the rest, so nothing may scroll out of sight in here.
+  overflow: hidden;
   width: 100%;
   box-sizing: border-box;
 
   @include mq(xs, max) {
     padding: var(--s-quarter);
-    max-height: calc(100% - 25px);
-  }
-
-  .month-event:nth-child(n + 4) {
-    display: none;
-
-    @media (min-height: 800px) {
-      display: block;
-    }
-
-    @media (min-height: 800px) and (max-width: 768px) {
-      &:nth-child(n + 3) {
-        display: none;
-      }
-    }
   }
 }
 
 .month-more-events {
-  display: none;
+  // Pushes itself and the deadline badge after it to the end of the header
+  margin-left: auto;
+  color: var(--text-color-muted);
+  font: var(--type-meta);
+  white-space: nowrap;
 }
 
 .month-event {
   margin-bottom: 1px;
 
   .month-schedule-event {
-    font-size: 11px;
+    font: var(--type-meta);
     padding: var(--s-quarter) var(--s-half);
-    border-radius: 3px;
+    border-radius: var(--r-sm);
     cursor: pointer;
     display: flex;
     width: 100%;
@@ -189,7 +178,7 @@
     box-sizing: border-box;
 
     @include mq(xs, max) {
-      font-size: 10px;
+      font-size: var(--font-size-xs);
       padding: 1px var(--s-quarter);
     }
 
@@ -210,23 +199,6 @@
 
   .month-day-cell {
     min-height: 60px;
-  }
-
-  .month-day-events {
-    overflow-y: hidden;
-
-    .month-event:nth-child(n + 2) {
-      display: none;
-    }
-  }
-
-  .month-more-events {
-    display: block;
-    padding: 0 var(--s-quarter);
-    color: var(--text-color-muted);
-    font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-medium);
-    white-space: nowrap;
   }
 
   :host ::ng-deep schedule-event .ico-wrapper {

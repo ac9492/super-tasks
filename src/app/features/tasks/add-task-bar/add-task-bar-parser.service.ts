@@ -30,6 +30,9 @@ interface PreviousParseResult {
   timeEstimate: number | null;
   dueDate: string | null;
   dueTime: string | null;
+  // The due date came from a token in the text (not the context default or a
+  // schedule pick), so it goes with that token
+  isDateFromSyntax: boolean;
   attachments: TaskAttachment[];
   deadlineDate: string | null;
   deadlineTime: string | null;
@@ -71,6 +74,12 @@ export class AddTaskBarParserService {
   // for the current input has not landed yet and callers fall back.
   private _lastParsedRanges: { forText: string; ranges: ShortSyntaxRange[] } | null =
     null;
+  // The context default the last parse fell back to, for resetting a
+  // syntax-set date after the task is added
+  private _lastDefaultDue: { date: string | null; time: string | null } = {
+    date: null,
+    time: null,
+  };
 
   private _arraysEqual<T>(a: T[], b: T[]): boolean {
     return a.length === b.length && a.every((val, i) => val === b[i]);
@@ -93,8 +102,16 @@ export class AddTaskBarParserService {
     dateLocale: DateInputLocale = DEFAULT_DATE_INPUT_LOCALE,
   ): Promise<void> {
     const parseRunId = ++this._parseRunId;
+    this._lastDefaultDue = { date: defaultDate || null, time: defaultTime || null };
 
     if (!text) {
+      if (this._previousParseResult?.isDateFromSyntax) {
+        // The text that set the date is gone: back to the context default
+        this._stateService.updateDate(
+          this._lastDefaultDue.date,
+          this._lastDefaultDue.time,
+        );
+      }
       if (this._previousParseResult?.isDeadlineFromSyntax) {
         this._stateService.updateDeadline(null, null);
         this._stateService.updateDeadlineRemindOption(null);
@@ -159,13 +176,18 @@ export class AddTaskBarParserService {
       this._previousParseResult?.isDeadlineFromSyntax ?? false;
     // Same ownership rule for the repeat setting (menu-selected vs "@every ...")
     const wasRepeatFromSyntax = this._previousParseResult?.isRepeatFromSyntax ?? false;
+    // Same for the due date: a date the text set goes when its token goes
+    // (deleted, or never finished — "@every 2" reads as 02:00 on the way to
+    // "@every 2 weeks"), falling back to the context default rather than
+    // sticking. A schedule pick or the default stays as the state holds it.
+    const wasDateFromSyntax = this._previousParseResult?.isDateFromSyntax ?? false;
     const isDateExplicitlyCleared = currentState.isDateExplicitlyCleared === true;
     const defaultDueDate = isDateExplicitlyCleared
       ? null
-      : currentState.date || defaultDate || null;
+      : (wasDateFromSyntax ? null : currentState.date) || defaultDate || null;
     const defaultDueTime = isDateExplicitlyCleared
       ? null
-      : currentState.time || defaultTime || null;
+      : (wasDateFromSyntax ? null : currentState.time) || defaultTime || null;
 
     if (!parseResult) {
       // No parse result means no short syntax found
@@ -184,6 +206,7 @@ export class AddTaskBarParserService {
         // But if the user explicitly cleared a default date, keep it cleared.
         dueDate: defaultDueDate,
         dueTime: defaultDueTime,
+        isDateFromSyntax: false,
         attachments: [],
         deadlineDate: wasDeadlineFromSyntax ? null : currentState.deadlineDate || null,
         deadlineTime: wasDeadlineFromSyntax ? null : currentState.deadlineTime || null,
@@ -277,6 +300,7 @@ export class AddTaskBarParserService {
         timeEstimate: parseResult.taskChanges.timeEstimate || null,
         dueDate: dueDate,
         dueTime: dueTime,
+        isDateFromSyntax: !!parseResult.taskChanges.dueWithTime,
         attachments: parseResult.attachments || [],
         deadlineDate: deadlineDate,
         deadlineTime: deadlineTime,
@@ -418,9 +442,22 @@ export class AddTaskBarParserService {
     this._previousParseResult = currentResult;
   }
 
+  /**
+   * Starts the next task from a clean parse. A date the submitted text set was
+   * that task's, so the next one starts from the context default again; a date
+   * picked with the schedule button carries over.
+   */
   resetPreviousResult(): void {
     this._parseRunId++;
+    if (this._previousParseResult?.isDateFromSyntax) {
+      this._stateService.updateDate(this._lastDefaultDue.date, this._lastDefaultDue.time);
+    }
     this._previousParseResult = null;
+  }
+
+  /** Whether the state holds the parse of exactly this input text. */
+  isParsedFor(text: string): boolean {
+    return this._lastParsedRanges?.forText === text;
   }
 
   /**
@@ -442,8 +479,16 @@ export class AddTaskBarParserService {
    *    deleted their syntax", which would clear the value instead of keeping it.
    */
   applyUserRepeatPick(repeat: AddTaskBarRepeat): void {
+    const input = this._stateService.inputTxt();
     const cleanedInput = this._stripSyntaxForUserPick('repeat');
-    this._recordUserPick({ repeat, isRepeatFromSyntax: false });
+    // The strip takes the whole due token, so the date that token set lives on
+    // in the state alone: take ownership of it too, or the queued parse would
+    // read the vanished token as "date removed" and reset it to the default.
+    this._recordUserPick({
+      repeat,
+      isRepeatFromSyntax: false,
+      ...(cleanedInput !== input ? { isDateFromSyntax: false } : {}),
+    });
     this._stateService.updateRepeatSetting(repeat, cleanedInput);
   }
 
@@ -460,6 +505,7 @@ export class AddTaskBarParserService {
     this._recordUserPick({
       dueDate: date,
       dueTime: time,
+      isDateFromSyntax: false,
       ...(repeat ? { repeat, isRepeatFromSyntax: false } : {}),
     });
     this._stateService.updateDate(date, time, cleanedInput);

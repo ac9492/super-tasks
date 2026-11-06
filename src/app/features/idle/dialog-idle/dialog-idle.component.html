@@ -1,5 +1,6 @@
 @if (isTaskDataLoadedIfNeeded) {
   <form (submit)="$event.preventDefault(); confirm()">
+    <h2 mat-dialog-title>{{ T.F.TIME_TRACKING.D_IDLE.TITLE | translate }}</h2>
     <div
       class="dialog-content"
       mat-dialog-content
@@ -231,7 +232,7 @@
     </div>
 
     <div
-      class="dialog-actions"
+      align="end"
       mat-dialog-actions
     >
       <button
@@ -247,7 +248,6 @@
         mat-flat-button
         type="submit"
       >
-        <mat-icon>{{ confirmIcon }}</mat-icon>
         {{ confirmLabelKey | translate }}
       </button>
     </div>

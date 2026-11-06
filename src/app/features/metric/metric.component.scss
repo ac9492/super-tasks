@@ -1,30 +1,28 @@
 @use '../../../styles/_globals.scss' as *;
 
-:host {
-  text-align: center;
-}
-
+// Report page: one left-aligned column on the page gutter; section headings
+// use the heading role, the page title lives in the shell header.
 h3 {
   margin-top: var(--s4);
   margin-bottom: var(--s);
+  font: var(--type-heading);
+  letter-spacing: 0;
 }
 
 .basic-stats {
-  max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
+  max-width: 560px;
 }
 
 .metrics-header {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: var(--s);
   position: relative;
 
-  h1 {
+  .metrics-title {
     margin: 0;
+    font: var(--type-title);
+    letter-spacing: var(--track-title);
   }
 }
 
@@ -60,9 +58,5 @@ section {
 
 .heatmap-section {
   max-width: 880px;
-  margin: var(--s4) auto 0;
-}
-
-.no-data-msg {
-  margin-top: var(--s4);
+  margin: var(--s4) 0 0;
 }

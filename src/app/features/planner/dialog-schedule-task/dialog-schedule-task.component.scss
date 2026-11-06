@@ -6,14 +6,14 @@
 }
 
 :host {
+  // A column no taller than the viewport: the content scrolls between the title
+  // and the actions, which stay in view (the pane's own max-height does not
+  // reach the content, so the dialog would otherwise run off short screens).
+  display: flex;
   flex-direction: column;
-  justify-content: stretch;
-  align-items: stretch;
+  max-height: calc(100vh - var(--s8) - var(--safe-area-top) - var(--safe-area-bottom));
+  max-height: calc(100dvh - var(--s8) - var(--safe-area-top) - var(--safe-area-bottom));
   user-select: none;
-  width: max-content;
-  min-width: min(400px, calc(100vw - var(--s4)));
-  max-width: min(560px, 100%);
-  display: block;
 
   :host-context([dir='rtl']) {
     direction: rtl;
@@ -29,16 +29,11 @@
 
 mat-dialog-content {
   position: relative;
-  padding: 0 !important;
-  max-height: calc(
-    100vh - 64px - env(safe-area-inset-top) - env(safe-area-inset-bottom)
-  ) !important;
+  // The host's max-height governs; Material's 65vh would scroll the calendar.
+  max-height: none;
 }
 
 mat-dialog-actions {
-  padding: 0 0 var(--s2) 0 !important;
-  row-gap: calc(var(--s) + var(--s-half));
-
   // On very narrow phones (≤398px) the three action buttons don't fit with
   // their icons and wrap onto a second row — drop the icons, keep the labels.
   @include mq(xxxs, max) {
@@ -46,10 +41,6 @@ mat-dialog-actions {
       display: none;
     }
   }
-}
-
-.dialog-actions-and-warnings {
-  margin: 0 var(--s2) var(--s2);
 }
 
 .action-label {

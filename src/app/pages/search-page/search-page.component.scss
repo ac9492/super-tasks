@@ -1,185 +1,151 @@
+// One column on the page anatomy: starts at the page gutter (the same left edge
+// as the header title and the task list) and keeps the content max width, with
+// the field and the results sharing it.
 .search-page {
-  padding: 1rem;
+  padding: var(--s) var(--page-gutter) 0;
+  max-width: var(--component-max-width);
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 
   .search-header {
-    margin-bottom: 1rem;
+    margin-bottom: var(--s2);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     gap: var(--s-half);
-    justify-content: center;
 
     .search-field {
       width: 100%;
-      max-width: 600px;
     }
 
     .include-completed-toggle {
       width: 100%;
-      max-width: 600px;
     }
   }
 
   .search-results {
     flex: 1;
     overflow-y: auto;
+    width: 100%;
 
-    mat-list-item {
-      cursor: pointer !important;
-      height: auto !important;
-      min-height: var(--s6);
+    .search-results-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
 
-      &::ng-deep .mdc-list-item {
-        height: auto !important;
-        min-height: var(--s6);
-        padding-top: var(--s);
-        padding-bottom: var(--s);
-      }
+    .search-result {
+      display: flex;
+      align-items: center;
+      border-radius: var(--card-border-radius);
 
       &:hover {
-        background-color: var(--state-hover) !important;
+        background-color: var(--state-hover);
 
         .view-details-btn {
           opacity: 0.4;
-
-          &:hover {
-            opacity: 1;
-          }
         }
       }
 
-      &::ng-deep {
-        .search-result-content {
-          width: 100%;
-          cursor: pointer !important;
-
-          .task-info {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-
-            .context-tag {
-              flex-shrink: 0;
-            }
-
-            .task-title {
-              font-weight: 500;
-            }
-
-            .task-archived,
-            .task-done {
-              text-decoration: line-through;
-            }
-
-            .task-subtask {
-              font-style: italic;
-            }
-
-            .task-deleted {
-              color: var(--text-color-muted);
-            }
-
-            .subtask-icon {
-              font-size: 1.2rem;
-              width: 1.2rem;
-              height: 1.2rem;
-              opacity: 0.7;
-              margin-right: -0.25rem;
-            }
-
-            .subtask-breadcrumb {
-              opacity: 0.6;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              max-width: 10rem;
-            }
-
-            .task-icons {
-              display: flex;
-              align-items: center;
-              gap: 0.25rem;
-
-              .issue-icon,
-              .archive-icon {
-                font-size: 1.2rem;
-                width: 1.2rem;
-                height: 1.2rem;
-                opacity: 0.7;
-              }
-
-              .archive-icon {
-                color: var(--text-color-muted);
-              }
-
-              .deleted-label {
-                display: inline-flex;
-                align-items: center;
-                gap: var(--s-half);
-                color: var(--text-color-muted);
-                font-size: var(--font-size-sm);
-              }
-
-              .view-details-btn {
-                opacity: 0.4;
-
-                :host-context(.isMousePrimary) & {
-                  opacity: 0;
-                }
-
-                &:hover {
-                  opacity: 1;
-                }
-              }
-            }
-          }
-        }
+      .view-details-btn:hover,
+      .view-details-btn:focus-visible {
+        opacity: 1;
       }
     }
 
-    .no-results,
-    .search-prompt {
+    .search-result-main {
+      flex: 1;
+      min-width: 0;
+      min-height: var(--s6);
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      text-align: center;
-      opacity: 0.6;
+      flex-wrap: wrap;
+      gap: var(--s);
+      padding: var(--s) var(--s2);
+      border: 0;
+      border-radius: var(--card-border-radius);
+      background: none;
+      color: inherit;
+      font: inherit;
+      text-align: start;
+      cursor: pointer;
 
-      mat-icon {
-        font-size: 3rem;
-        width: 3rem;
-        height: 3rem;
-        margin-bottom: 1rem;
+      &:focus-visible {
+        outline: var(--focus-ring-width) solid var(--focus-ring-color);
+        outline-offset: calc(-1 * var(--focus-ring-width));
       }
 
-      p {
-        margin: 0;
-        font-size: 1.1rem;
+      .context-tag {
+        flex-shrink: 0;
+      }
+
+      .task-title {
+        font-weight: 500;
+      }
+
+      .task-archived,
+      .task-done {
+        text-decoration: line-through;
+      }
+
+      .task-subtask {
+        font-style: italic;
+      }
+
+      .task-deleted {
+        color: var(--text-color-muted);
+      }
+
+      .subtask-icon {
+        font-size: var(--icon-sm);
+        width: var(--icon-sm);
+        height: var(--icon-sm);
+        opacity: 0.7;
+        margin-right: calc(-1 * var(--s-half));
+      }
+
+      .subtask-breadcrumb {
+        color: var(--text-color-muted);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 10rem;
+      }
+
+      .task-icons {
+        display: flex;
+        align-items: center;
+        gap: var(--s-half);
+
+        .issue-icon,
+        .archive-icon {
+          font-size: var(--icon-sm);
+          width: var(--icon-sm);
+          height: var(--icon-sm);
+          opacity: 0.7;
+        }
+
+        .archive-icon {
+          color: var(--text-color-muted);
+        }
+
+        .deleted-label {
+          display: inline-flex;
+          align-items: center;
+          gap: var(--s-half);
+          color: var(--text-color-muted);
+          font-size: var(--font-size-sm);
+        }
       }
     }
-  }
-}
 
-@media (max-width: 768px) {
-  .search-page {
-    padding: 0.5rem;
+    .view-details-btn {
+      opacity: 0.4;
 
-    .search-results {
-      .search-result-item {
-        .search-result-content {
-          .task-info {
-            .task-title {
-              font-size: 0.9rem;
-            }
-          }
-        }
+      :host-context(.isMousePrimary) & {
+        opacity: 0;
       }
     }
   }

@@ -153,7 +153,6 @@
 
 .options-collapsible {
   margin-top: var(--s2);
-  text-align: center;
 }
 
 .options {
@@ -170,8 +169,4 @@
 
     border-color: var(--options-border-color);
   }
-}
-
-collapsible::ng-deep .collapsible-header {
-  text-transform: uppercase;
 }

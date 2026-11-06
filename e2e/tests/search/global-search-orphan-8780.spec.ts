@@ -194,7 +194,7 @@ test.describe('Global Search — orphan task (#8780)', () => {
     await openGlobalSearch(page);
     await page.locator('search-page .search-field input').fill(taskName);
     const result = page
-      .locator('search-page mat-list-item')
+      .locator('search-page .search-result')
       .filter({ hasText: taskName });
     await expect(result).toHaveCount(1);
     await result.click();
@@ -263,7 +263,7 @@ test.describe('Global Search — orphan task (#8780)', () => {
     await openGlobalSearch(page);
     await page.locator('search-page .search-field input').fill(taskName);
     const result = page
-      .locator('search-page mat-list-item')
+      .locator('search-page .search-result')
       .filter({ hasText: taskName });
     await expect(result).toHaveCount(1);
     await result.click();

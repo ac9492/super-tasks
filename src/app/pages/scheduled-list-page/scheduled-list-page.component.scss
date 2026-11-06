@@ -1,17 +1,10 @@
 @use '../../../styles/_globals.scss' as *;
 @use '../../features/tasks/task/task.component.mixins' as *;
 
-:host ::ng-deep mat-card-content {
-  padding: 0 !important;
-}
-
+// Card surface, outline and gap come from the task-card rules in
+// src/styles/components/_ultra-tasks.scss, so these rows match task rows.
 .repeat-task-cfg {
-  margin-bottom: var(--s);
   padding: var(--s-half) var(--s2);
-  // Flat rows: match the task list's hairline border instead of a resting shadow.
-  box-shadow: none;
-  background: var(--task-c-bg);
-  border: var(--task-border, 1px solid var(--task-border-color));
 }
 
 .repeat-task-cfg-content {
@@ -45,7 +38,7 @@
   }
 
   .repeat-text-and-icon {
-    border-radius: var(--card-border-radius);
+    border-radius: var(--r-md);
     display: flex;
     font-style: italic;
     flex-direction: column;
@@ -65,7 +58,7 @@
       flex-direction: row;
     }
     @include mq(xs, max) {
-      font-size: 13px;
+      font: var(--type-meta);
       margin-right: calc(-1 * var(--s));
     }
 
@@ -86,11 +79,6 @@
       opacity: 1;
     }
   }
-}
-
-.no-scheduled-tasks {
-  margin: var(--s);
-  margin-top: var(--s2);
 }
 
 .task-title {

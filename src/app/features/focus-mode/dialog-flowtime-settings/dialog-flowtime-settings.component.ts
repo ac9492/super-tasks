@@ -6,7 +6,12 @@ import {
   signal,
 } from '@angular/core';
 import { AbstractControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatDialogRef, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
+import {
+  MatDialogActions,
+  MatDialogRef,
+  MatDialogTitle,
+  MatDialogContent,
+} from '@angular/material/dialog';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { GlobalConfigService } from '../../config/global-config.service';
 import { T } from '../../../t.const';
@@ -19,6 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 /** Break-rule shape used inside the form (values in minutes, not ms). */
 interface FlowtimeBreakRuleInMinutes {
@@ -48,6 +54,7 @@ interface FlowtimeFormModel {
     FormlyModule,
     MatDialogTitle,
     MatDialogContent,
+    MatDialogActions,
     TranslatePipe,
     MatButton,
     MatCheckboxModule,
@@ -61,6 +68,7 @@ interface FlowtimeFormModel {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DialogFlowtimeSettingsComponent {
+  private readonly _dialogSize = useDialogSize('m');
   private readonly _dialogRef = inject(MatDialogRef<DialogFlowtimeSettingsComponent>);
   private readonly _globalConfigService = inject(GlobalConfigService);
   private readonly _translateService = inject(TranslateService);

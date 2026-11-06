@@ -1475,15 +1475,18 @@ export class TaskComponent implements OnDestroy, AfterViewInit {
       }
     }
 
+    // A keyboard-opened menu keeps focus in the menu (it is otherwise blurred
+    // for pointer users) and opens at the row instead of a pointer position.
+    const isOpenedFromKeyboard = event instanceof KeyboardEvent;
     if (!this.isContextMenuLoaded()) {
       this.isContextMenuLoaded.set(true);
       setTimeout(() => {
-        this.taskContextMenu()?.open(event);
+        this.taskContextMenu()?.open(event, isOpenedFromKeyboard);
       });
       return;
     }
 
-    this.taskContextMenu()?.open(event);
+    this.taskContextMenu()?.open(event, isOpenedFromKeyboard);
   }
 
   onTagsUpdated(tagIds: string[]): void {

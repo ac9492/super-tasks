@@ -74,7 +74,7 @@ describe('ShareFormatter', () => {
       });
 
       expect(payload.text).toContain('#productivity');
-      expect(payload.text).toContain('#SuperProductivity');
+      expect(payload.text).toContain('#UltraTasks');
     });
 
     it('should set project name in title when provided', () => {

@@ -1,5 +1,10 @@
+// Button row inside dialog actions. The gap spaces the buttons (Material's
+// sibling margin is zeroed in _overwrite-material.scss), also when they wrap.
 .wrap-buttons {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s);
   max-width: 100%;
   justify-content: flex-end;
   flex: 1;

@@ -11,7 +11,6 @@ import { TourId } from '../../features/shepherd/shepherd-steps.const';
 import { QuickTourService } from '../../features/onboarding/quick-tour.service';
 import { T } from '../../t.const';
 import { LS } from '../../core/persistence/storage-keys.const';
-import { getGithubErrorUrl } from '../../core/error-handler/global-error-handler.util';
 import { DialogPromptComponent } from '../../ui/dialog-prompt/dialog-prompt.component';
 import {
   DialogCreateTagComponent,
@@ -179,10 +178,11 @@ export class MagicNavConfigService {
         action: () => this._toggleProjectsExpanded(),
         additionalButtons: [
           {
+            // No action: nav-list-tree renders this one as the visibility
+            // menu trigger.
             id: 'project-visibility',
             icon: 'visibility',
             tooltip: T.F.PROJECT_FOLDER.TOOLTIP_VISIBILITY,
-            action: () => this._openProjectVisibilityMenu(),
           },
           {
             id: 'add-project-folder',
@@ -273,14 +273,14 @@ export class MagicNavConfigService {
             id: 'help-online',
             label: T.MH.HM.GET_HELP_ONLINE,
             icon: 'help_center',
-            href: 'https://github.com/ac9492/ultra-tasks/blob/main/README.md#question-how-to-use-it',
+            href: 'https://github.com/ac9492/ultra-tasks/blob/main/docs/wiki/1.01-First-Steps.md',
           },
           {
-            type: 'action',
+            type: 'href',
             id: 'help-report',
             label: T.MH.HM.REPORT_A_PROBLEM,
             icon: 'bug_report',
-            action: () => this._openBugReport(),
+            href: 'https://github.com/ac9492/ultra-tasks/issues/new?template=bug_report.yml',
           },
           {
             type: 'href',
@@ -302,13 +302,6 @@ export class MagicNavConfigService {
                 },
               ]
             : []),
-          {
-            type: 'href',
-            id: 'help-reddit',
-            label: T.MH.HM.REDDIT_COMMUNITY,
-            icon: 'forum',
-            href: 'https://www.reddit.com/r/superProductivity/',
-          },
           {
             type: 'action',
             id: 'help-quick-tour',
@@ -536,6 +529,7 @@ export class MagicNavConfigService {
       .open(DialogPromptComponent, {
         restoreFocus: true,
         data: {
+          message: T.F.PROJECT_FOLDER.DIALOG.CREATE_TITLE,
           placeholder: T.F.PROJECT_FOLDER.DIALOG.NAME_PLACEHOLDER,
         },
       })
@@ -557,6 +551,7 @@ export class MagicNavConfigService {
       .open(DialogPromptComponent, {
         restoreFocus: true,
         data: {
+          message: T.F.TAG_FOLDER.DIALOG.CREATE_TITLE,
           placeholder: T.F.TAG_FOLDER.DIALOG.NAME_PLACEHOLDER,
         },
       })
@@ -590,10 +585,6 @@ export class MagicNavConfigService {
       });
   }
 
-  private _openBugReport(): void {
-    window.open(getGithubErrorUrl('', undefined, true), '_blank');
-  }
-
   private _startQuickTour(): void {
     // Here, not in QuickTourService: ShepherdService already injects it.
     if (this._shepherdService.isActive) {
@@ -604,11 +595,6 @@ export class MagicNavConfigService {
 
   private _startTour(tourId: TourId): void {
     void this._shepherdService.show(tourId);
-  }
-
-  private _openProjectVisibilityMenu(): void {
-    // Project visibility is handled by the nav-list component's additional buttons
-    // This method is called but the actual menu is rendered in the template
   }
 
   toggleProjectVisibility(projectId: string): void {

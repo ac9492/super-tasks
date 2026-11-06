@@ -19,6 +19,24 @@ import {
   RepeatQuickSetting,
 } from '../task-repeat-cfg/task-repeat-cfg.model';
 import { TextRange, TrackedTitle } from './tracked-title';
+
+const WS_RUN_REG_EX = /^\s+/;
+
+/**
+ * Removes a token from the working title. A token inside the title has
+ * whitespace on both sides; keep only the one before it, so "Email Sam #home
+ * about rent" becomes "Email Sam about rent" and not "Email Sam  about rent".
+ */
+const removeToken = (tracked: TrackedTitle, start: number, end: number): void => {
+  tracked.remove(start, end);
+  if (start > 0 && /\s/.test(tracked.text.charAt(start - 1))) {
+    const wsAfter = tracked.text.slice(start).match(WS_RUN_REG_EX);
+    if (wsAfter) {
+      tracked.remove(start, start + wsAfter[0].length);
+    }
+  }
+};
+
 type ProjectChanges = {
   title?: string;
   projectId?: string;
@@ -790,7 +808,7 @@ const parseTagChanges = (
           const start = tracked.text.indexOf(matchedText);
           if (start !== -1) {
             ranges.push(...tracked.rawRanges(start, start + matchedText.length));
-            tracked.remove(start, start + matchedText.length);
+            removeToken(tracked, start, start + matchedText.length);
           }
         });
         tracked.trim();
@@ -874,7 +892,7 @@ const parseShortSyntaxDate = async (
         return [];
       }
       const ranges = tracked.rawRanges(removeStart, removeStart + textToReplace.length);
-      tracked.remove(removeStart, removeStart + textToReplace.length);
+      removeToken(tracked, removeStart, removeStart + textToReplace.length);
       tracked.trim();
       return ranges;
     };
@@ -1369,7 +1387,7 @@ const parseTimeSpentTracked = (
   const [matchSpan, preSplit, postSplit] = matches;
   const start = matches.index;
   const ranges = tracked.rawRanges(start, start + matchSpan.length);
-  tracked.remove(start, start + matchSpan.length);
+  removeToken(tracked, start, start + matchSpan.length);
   tracked.trim();
   const timeSpent = matchSpan.includes(CH_TSP) ? preSplit : null;
   const timeEstimate = timeSpent === null ? preSplit : postSplit;

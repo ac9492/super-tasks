@@ -12,6 +12,7 @@ import { GlobalConfigService } from '../../../features/config/global-config.serv
 import { KEYBOARD_SETTINGS_FORM_CFG } from '../../../features/config/form-cfgs/keyboard-form.const';
 import { createPluginShortcutFormItems } from '../../../features/config/form-cfgs/plugin-keyboard-shortcuts';
 import { PluginBridgeService } from '../../../plugins/plugin-bridge.service';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 interface ShortcutRow {
   heading?: string;
@@ -34,6 +35,7 @@ interface ShortcutRow {
   ],
 })
 export class DialogKeyboardShortcutsComponent {
+  private readonly _dialogSize = useDialogSize('l');
   private _configService = inject(GlobalConfigService);
   private _pluginBridgeService = inject(PluginBridgeService);
 

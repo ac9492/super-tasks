@@ -51,6 +51,7 @@ export class FolderContextMenuComponent {
     const dialogRef = this._matDialog.open(DialogPromptComponent, {
       restoreFocus: true,
       data: {
+        message: folderNs.DIALOG.EDIT_TITLE,
         txtLabel: this._translateService.instant(folderNs.DIALOG.NAME_LABEL),
         txtValue: folder.name,
         placeholder: this._translateService.instant(folderNs.DIALOG.NAME_PLACEHOLDER),
@@ -113,6 +114,10 @@ export class FolderContextMenuComponent {
     const dialogRef = this._matDialog.open(DialogPromptComponent, {
       restoreFocus: true,
       data: {
+        message:
+          this.treeKind === MenuTreeKind.PROJECT
+            ? T.F.PROJECT_FOLDER.DIALOG.CREATE_TITLE
+            : T.F.TAG_FOLDER.DIALOG.CREATE_TITLE,
         placeholder: this._translateService.instant(
           this.treeKind === MenuTreeKind.PROJECT
             ? T.F.PROJECT_FOLDER.DIALOG.NAME_PLACEHOLDER

@@ -1,14 +1,14 @@
 @if (missingTagIds().length) {
-  <div class="missing-tags-msg-wrapper">
-    <div class="msg">
+  <div class="missing-tags-msg-wrapper empty-state">
+    <p>
       @if (missingTagIds().length > 1) {
         {{ T.F.BOARDS.V.CREATE_NEW_TAGS_MSG | translate: { nr: missingTagIds().length } }}
       } @else {
         {{ T.F.BOARDS.V.CREATE_NEW_TAG_MSG | translate }}
       }
-    </div>
+    </p>
     <button
-      mat-raised-button
+      mat-flat-button
       color="primary"
       (click)="createTags()"
     >
@@ -21,11 +21,11 @@
   </div>
 } @else {
   @if (boardCfg().panels.length === 0) {
-    <div class="empty-board-msg">
-      <div class="msg">{{ T.F.BOARDS.V.NO_PANELS_MSG | translate }}</div>
+    <div class="empty-board-msg empty-state">
+      <p>{{ T.F.BOARDS.V.NO_PANELS_MSG | translate }}</p>
       <button
         color="primary"
-        mat-raised-button
+        mat-flat-button
         (click)="editBoard()"
       >
         <mat-icon>edit</mat-icon>

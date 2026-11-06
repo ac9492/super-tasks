@@ -56,7 +56,6 @@ export class EncryptionPasswordDialogOpenerService {
     providerType: 'supersync' | 'file-based' = 'supersync',
   ): Promise<ChangeEncryptionPasswordResult | undefined> {
     const dialogRef = this._matDialog.open(DialogChangeEncryptionPasswordComponent, {
-      width: mode === 'disable-only' ? '450px' : '400px',
       disableClose: true,
       data: { mode, providerType } as ChangeEncryptionPasswordDialogData,
     });
@@ -68,7 +67,6 @@ export class EncryptionPasswordDialogOpenerService {
     providerType: 'supersync' | 'file-based' = 'supersync',
   ): Promise<EnableEncryptionResult | undefined> {
     const dialogRef = this._matDialog.open(DialogEnableEncryptionComponent, {
-      width: '450px',
       disableClose: true,
       data: { providerType } as EnableEncryptionDialogData,
     });

@@ -929,11 +929,9 @@ export class TaskService {
   }
 
   focusTaskIfPossible(id: string): void {
-    const tEl = document.getElementById('t-' + id);
-
-    if (tEl) {
-      tEl.focus();
-    }
+    // Planner and board cards carry the id as data-task-id instead.
+    const sel = `#t-${CSS.escape(id)}, [data-task-selectable][data-task-id="${CSS.escape(id)}"]`;
+    document.querySelector<HTMLElement>(sel)?.focus();
   }
 
   focusFirstTaskIfVisible(): void {

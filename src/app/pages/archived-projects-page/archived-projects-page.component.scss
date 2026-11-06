@@ -1,17 +1,11 @@
+// Same column as the list below (.component-wrapper), so field and rows align.
 .search-header {
-  margin-bottom: 1rem;
-  display: flex;
-  justify-content: center;
+  max-width: var(--component-max-width);
+  margin: 0 0 var(--s2);
 
   .search-field {
     width: 100%;
-    max-width: 600px;
   }
-}
-
-.empty-state {
-  opacity: 0.6;
-  font-style: italic;
 }
 
 .project-list {
@@ -40,7 +34,7 @@
   min-width: 0;
   color: inherit;
   text-decoration: none;
-  border-radius: var(--s-half);
+  border-radius: var(--r-md);
   padding: var(--s-half);
   margin: calc(var(--s-half) * -1);
 
@@ -67,12 +61,12 @@
   align-items: center;
   gap: var(--s-half);
   flex-shrink: 0;
-  font-size: 12px;
-  opacity: 0.7;
+  font: var(--type-meta);
+  color: var(--text-color-muted);
 
   mat-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
+    font-size: var(--icon-sm);
+    width: var(--icon-sm);
+    height: var(--icon-sm);
   }
 }

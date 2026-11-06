@@ -40,6 +40,23 @@ describe('PluginI18nService', () => {
       expect(service.translate('test-plugin', 'GREETING')).toBe('Hallo');
     });
 
+    it('should apply the app product name to non-English plugin translations only', () => {
+      const translations = {
+        en: JSON.stringify({ HELP: 'Works with the upstream Super Productivity API' }),
+        de: JSON.stringify({ HELP: 'Hier kannst du Super Productivity konfigurieren' }),
+      };
+
+      service.loadPluginTranslationsFromContent('test-plugin', translations);
+
+      expect(service.translate('test-plugin', 'HELP')).toBe(
+        'Works with the upstream Super Productivity API',
+      );
+      service.setCurrentLanguage('de');
+      expect(service.translate('test-plugin', 'HELP')).toBe(
+        'Hier kannst du Ultra Tasks konfigurieren',
+      );
+    });
+
     it('should skip invalid JSON content', () => {
       const translations = {
         en: JSON.stringify({ GREETING: 'Hello' }),

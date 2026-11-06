@@ -24,9 +24,13 @@ describe('global-error-handler.util', () => {
       expect(url).toContain('function1');
     });
 
-    it('should use bug report template', () => {
-      const url = getGithubErrorUrl('Error');
-      expect(url).toContain('template=in_app_bug_report.md');
+    // The old in_app_bug_report.md does not exist; with blank issues disabled
+    // the link lost the report on the template chooser
+    it('should open the internal error report form with the details prefilled', () => {
+      const url = new URL(getGithubErrorUrl('Error', 'at function1'));
+      expect(url.searchParams.get('template')).toBe('internal_error_report.yml');
+      expect(url.searchParams.get('console-output')).toContain('at function1');
+      expect(url.searchParams.get('body')).toBeNull();
     });
   });
 

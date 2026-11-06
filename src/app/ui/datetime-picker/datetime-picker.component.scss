@@ -138,7 +138,7 @@
   &:after {
     @include materialIcon('wb_sunny');
     @include center;
-    color: var(--c-accent) !important;
+    color: var(--palette-accent-text) !important;
   }
 
   &.mat-calendar-body-selected:after {
@@ -155,7 +155,7 @@
     box-shadow: none !important;
 
     &:not(.mat-calendar-body-selected) {
-      color: var(--c-accent) !important;
+      color: var(--palette-accent-text) !important;
     }
   }
 }

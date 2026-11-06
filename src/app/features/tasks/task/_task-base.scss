@@ -60,9 +60,10 @@
 
 .inner-wrapper {
   position: relative;
-  // NOTE: -1 px because we move the box slightly up
-  padding: calc(var(--task-inner-padding-top-bottom) - 1px) 0
-    var(--task-inner-padding-top-bottom);
+  // Symmetric: with the card's 1px border, content sits 4px inside the card
+  // edge on every side, so a title-only row is exactly 48px and a row with a
+  // meta line exactly 56px (no fractional heights).
+  padding: calc(var(--task-inner-padding-top-bottom) - 1px) 0;
   margin-bottom: 0;
 }
 
@@ -95,7 +96,7 @@
     > .inner-wrapper
     > .inner-wrapper
     > & {
-    outline: var(--focus-ring-width) solid var(--c-accent);
+    outline: var(--focus-ring-width) solid var(--palette-focus-ring);
   }
 
   :host.isCurrent.isCurrent.isCurrent.isCurrent.isCurrent
@@ -104,9 +105,10 @@
     > .inner-wrapper
     > .inner-wrapper
     > & {
-    background: var(--task-c-current-bg);
+    // The tracked task is marked by an accent card edge (_ultra-tasks.scss) and
+    // its play indicator, not by a tint or a shadow: the tint is the "selected"
+    // role, and a tracked task must not look like the one open in the panel.
     border-radius: var(--task-border-radius);
-    box-shadow: var(--task-current-shadow);
   }
 
   // Time conflict no longer draws a border/bar on the task box — it's surfaced as
@@ -124,23 +126,28 @@
 }
 
 .sub-tasks {
-  margin: var(--s) var(--s) var(--s) var(--s3);
+  // Rows inside the parent card (hairlines between siblings are drawn by
+  // _ultra-tasks.scss), indented so a subtask's toggle sits under the parent's
+  // title text.
+  margin: 0 var(--s) var(--s-half) var(--s3);
   position: relative;
 
   @include mq(xs) {
-    //margin: var(--s) var(--s2) var(--s) var(--s3);
-    margin: var(--s) var(--s) var(--s) var(--s5);
+    margin: 0 var(--s) var(--s-half) var(--s5);
   }
 
+  // Four px of content inset on both sides of a row, as in a top-level card,
+  // although a subtask has no border of its own (its hairline sits on top).
+  ::ng-deep task {
+    --task-inner-padding-top-bottom: calc(var(--s-half) + 1px);
+  }
+
+  // A subtask is a row, not a card: no radius, border or shadow. Its selected
+  // and current tints still paint on this same box.
   ::ng-deep .box {
     box-shadow: var(--task-shadow-sub-task);
     border-color: var(--sub-task-border-color);
     border-radius: 0;
-    top: -1px;
-    // Overlap neighbours by 1px so adjacent subtask borders collapse to a single
-    // hairline. Was light-only (dark relied on a shadow); dark now uses a border
-    // too, so it needs the collapse as well.
-    bottom: 0;
 
     @include darkTheme {
       background: var(--sub-task-c-bg);
@@ -232,16 +239,23 @@
 :host.isSelected > swipe-block ::ng-deep > .inner-wrapper > .inner-wrapper > .box {
   // Override theme resting surfaces, including nested task surfaces.
   background: var(--task-c-selected-bg) !important;
+
+  // Forced colors drop author backgrounds; a dashed outline keeps the row open
+  // in the detail panel distinguishable from the solid multi-select outline.
+  @media (forced-colors: active) {
+    outline: 1px dashed CanvasText;
+    outline-offset: -1px;
+  }
 }
 
 // Multi-selection stays on the owning row, across SwipeBlock's projection wrapper.
 // The tint is what separates it from the focus ring below (a 1px vs 2px line in
 // one colour was not readable as two states). The 1px outline stays as the
-// fallback channel: `background` on this box is contested — the `isCurrent` chain
-// and the `isSelected` !important rule below both win, and several bundled themes
-// (velvet, and the `:not(.isSelected):not(.isCurrent)` hover rules) force it with
-// !important — whereas nothing else draws an outline here. It also survives
-// forced-colors mode, where author backgrounds are dropped.
+// fallback channel: `background` on this box is contested — the `isSelected`
+// !important rule above wins, and several bundled themes (velvet, and the
+// `:not(.isSelected):not(.isCurrent)` hover rules) force it with !important —
+// whereas nothing else draws an outline here. It also survives forced-colors
+// mode, where author backgrounds are dropped.
 :host.isMultiSelected > swipe-block ::ng-deep > .inner-wrapper > .inner-wrapper > .box {
   background: var(--task-c-multi-selected-bg);
   outline: 1px solid var(--palette-primary-400);
@@ -265,7 +279,7 @@
   > .inner-wrapper
   > .box,
 :host:focus-visible > swipe-block ::ng-deep > .inner-wrapper > .inner-wrapper > .box {
-  outline: var(--focus-ring-width) solid var(--palette-primary-400);
+  outline: var(--focus-ring-width) solid var(--palette-focus-ring);
   outline-offset: calc(-1 * var(--focus-ring-width));
 }
 

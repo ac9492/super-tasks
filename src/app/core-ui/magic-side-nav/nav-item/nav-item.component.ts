@@ -30,6 +30,7 @@ import { CdkDragPlaceholder } from '@angular/cdk/drag-drop';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenuItem, MatMenuModule, MatMenuPanel } from '@angular/material/menu';
+import { MatTooltip } from '@angular/material/tooltip';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import {
   selectAllDoneIds,
@@ -54,6 +55,7 @@ import { PluginIconComponent } from '../../../plugins/ui/plugin-icon/plugin-icon
     MatIcon,
     MatMenuItem,
     MatMenuModule,
+    MatTooltip,
     TranslatePipe,
     PluginIconComponent,
   ],
@@ -102,6 +104,8 @@ export class NavItemComponent {
   type = input<WorkContextType | null>(null);
   defaultIcon = input<string>(DEFAULT_PROJECT_ICON);
 
+  // Id of the project/tag whose pages are open (set only on its routes), so its
+  // row is marked current on its task list and on its sub-pages alike.
   activeWorkContextId = input<string>('');
   // Folder inputs
 

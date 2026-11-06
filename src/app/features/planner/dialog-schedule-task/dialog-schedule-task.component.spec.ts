@@ -183,8 +183,10 @@ describe('DialogScheduleTaskComponent', () => {
     const actionLabels = actions.querySelectorAll<HTMLElement>('.action-label');
 
     expect(actionButtons.length).toBe(3);
-    expect(actionButtons[0].dataset.testId).toBe('schedule-cancel-btn');
-    expect(actionButtons[1].getAttribute('color')).toBe('warn');
+    // The destructive action leads at the start edge; Cancel and the primary
+    // action stay together at the end.
+    expect(actionButtons[0].getAttribute('color')).toBe('warn');
+    expect(actionButtons[1].dataset.testId).toBe('schedule-cancel-btn');
     expect(actionButtons[2].dataset.testId).toBe('schedule-submit-btn');
     actionButtons.forEach((button) => {
       expect(button.parentElement).toBe(actions);
@@ -208,7 +210,8 @@ describe('DialogScheduleTaskComponent', () => {
       expect(left).toBeGreaterThanOrEqual(actionsRect.left);
       expect(right).toBeLessThanOrEqual(actionsRect.right);
     });
-    expect(getComputedStyle(actions).rowGap).toBe('12px');
+    // The row gap between wrapped buttons is the shared `.mat-mdc-dialog-actions`
+    // gap (_overwrite-material.scss), which Karma does not load.
   });
 
   describe('schedule hints', () => {

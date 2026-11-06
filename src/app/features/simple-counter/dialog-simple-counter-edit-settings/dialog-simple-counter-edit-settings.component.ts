@@ -19,11 +19,11 @@ import { FormsModule, ReactiveFormsModule, UntypedFormGroup } from '@angular/for
 import { adjustToDialogFormlyForm } from '../../../util/adjust-to-dialog-formly-form';
 import { SIMPLE_COUNTER_FORM } from '../../config/form-cfgs/simple-counter-form.const';
 import { MatButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { EMPTY_SIMPLE_COUNTER } from '../simple-counter.const';
 import { SimpleCounterService } from '../simple-counter.service';
 import { DialogConfirmComponent } from '../../../ui/dialog-confirm/dialog-confirm.component';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 @Component({
   selector: 'dialog-simple-counter-edit-settings',
@@ -34,7 +34,6 @@ import { DialogConfirmComponent } from '../../../ui/dialog-confirm/dialog-confir
     MatDialogContent,
     MatDialogActions,
     MatButton,
-    MatIcon,
     TranslatePipe,
     ReactiveFormsModule,
     FormsModule,
@@ -42,6 +41,7 @@ import { DialogConfirmComponent } from '../../../ui/dialog-confirm/dialog-confir
   ],
 })
 export class DialogSimpleCounterEditSettingsComponent {
+  private readonly _dialogSize = useDialogSize('m');
   private readonly _dialogRef = inject(
     MatDialogRef<DialogSimpleCounterEditSettingsComponent>,
   );
@@ -99,6 +99,7 @@ export class DialogSimpleCounterEditSettingsComponent {
         data: {
           message: T.F.SIMPLE_COUNTER.D_CONFIRM_REMOVE.MSG,
           okTxt: T.F.SIMPLE_COUNTER.D_CONFIRM_REMOVE.OK,
+          isDestructive: true,
         },
       })
       .afterClosed()

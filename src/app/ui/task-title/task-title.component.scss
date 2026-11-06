@@ -33,19 +33,28 @@
   align-items: center;
   text-align: start;
   outline: none;
-  margin-left: 1px;
+  // 3px + the 1px border: the text sits 4px inside its edit box on every side,
+  // and starts on the row's 56px text column.
+  margin-left: calc(var(--s-half) - var(--st-line-width));
   background: inherit;
   overflow: visible;
   // needed for z-index to work
   position: relative;
   user-select: none;
-  border-radius: var(--card-border-radius);
+  // Inline-edit field: the inline radius.
+  border-radius: var(--r-sm);
   //z-index: var(--z-task-title);
   z-index: 4;
   border: 1px solid transparent;
   transition: var(--transition-leave);
-  padding: 3px 3px 3px 5px;
+  padding: calc(var(--s-half) - var(--st-line-width));
   cursor: text;
+
+  // Forced colors paint the transparent resting border as text color, boxing
+  // every title; blend it into the canvas until the title is edited.
+  @media (forced-colors: active) {
+    border-color: Canvas;
+  }
 
   &:focus {
     outline: none !important;
@@ -57,6 +66,10 @@
     border: 1px solid var(--focus-ring-color);
     @include inlineEditElevation();
     box-shadow: var(--whiteframe-shadow-4dp);
+
+    @media (forced-colors: active) {
+      border-color: Highlight;
+    }
   }
 
   // In readonly mode, use default cursor instead of text cursor
@@ -86,7 +99,8 @@
   font-family: var(--font-primary-stack);
   color: inherit;
   min-height: 20px;
-  line-height: 1.5;
+  // Follows the host: 20px in a row, 24px in the detail panel heading.
+  line-height: inherit;
   width: 100%;
 
   // Ensure links don't add extra spacing.
@@ -102,8 +116,9 @@
   }
 }
 
+// The muted text tier (4.5:1 on its container), not a dimmed ink.
 .display-value.is-placeholder {
-  opacity: 0.6;
+  color: var(--text-color-muted);
   font-style: italic;
 }
 
@@ -131,7 +146,8 @@
   width: 100%;
   overflow: hidden;
   min-height: 20px;
-  line-height: 1.5;
+  // Follows the host: 20px in a row, 24px in the detail panel heading.
+  line-height: inherit;
   overflow-wrap: anywhere;
   white-space-collapse: preserve;
   border: none;
@@ -168,7 +184,8 @@
   width: 100%;
   overflow: hidden;
   min-height: 20px;
-  line-height: 1.5;
+  // Follows the host: 20px in a row, 24px in the detail panel heading.
+  line-height: inherit;
   overflow-wrap: anywhere;
   white-space-collapse: preserve;
   border: none;

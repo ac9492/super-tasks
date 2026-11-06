@@ -23,6 +23,7 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
 import { Log } from '../../../../core/log';
+import { useDialogSize } from '../../../../ui/dialog-size.util';
 
 type SortOrder = 'newest' | 'oldest' | 'largest' | 'smallest';
 
@@ -46,6 +47,7 @@ type SortOrder = 'newest' | 'oldest' | 'largest' | 'smallest';
   ],
 })
 export class DialogClipboardImagesManagerComponent implements OnInit {
+  private readonly _dialogSize = useDialogSize('m');
   private readonly _matDialogRef = inject(
     MatDialogRef<DialogClipboardImagesManagerComponent>,
   );

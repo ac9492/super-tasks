@@ -27,7 +27,7 @@
             track trackByIndex($index, helpSection)
           ) {
             @if (helpSection.h) {
-              <div class="mat-caption">{{ helpSection.h | translate }}</div>
+              <div class="help-heading">{{ helpSection.h | translate }}</div>
             }
             @if (helpSection.p) {
               <p [innerHTML]="helpSection.p | translate"></p>
@@ -64,6 +64,7 @@
         [expandedField]="expandedField"
         [formCfg]="$safeNavigationMigration(section?.items)"
         [sectionKey]="$safeNavigationMigration(section?.key)"
+        [sectionTitle]="section?.title"
       ></config-form>
     }
 

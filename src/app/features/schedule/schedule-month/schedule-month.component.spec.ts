@@ -12,7 +12,8 @@ import { ScheduleEventComponent } from '../schedule-event/schedule-event.compone
 import { ScheduleEvent } from '../schedule.model';
 import { SVEType } from '../schedule.const';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { firstValueFrom } from 'rxjs';
+import { BehaviorSubject, firstValueFrom } from 'rxjs';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { DEFAULT_TASK, TaskCopy } from '../../tasks/task.model';
 
 describe('ScheduleMonthComponent', () => {
@@ -20,8 +21,23 @@ describe('ScheduleMonthComponent', () => {
   let fixture: ComponentFixture<ScheduleMonthComponent>;
   let mockScheduleService: jasmine.SpyObj<ScheduleService>;
   let mockDateTimeFormatService: jasmine.SpyObj<DateTimeFormatService>;
+  // Phone or short window by default: room for one event per cell
+  let breakpointState$: BehaviorSubject<BreakpointState>;
+  const setRoomForEvents = (nr: 1 | 2 | 3): void => {
+    breakpointState$.next({
+      matches: nr > 1,
+      breakpoints: {
+        ['(min-width: 600px) and (min-height: 880px)']: nr >= 2,
+        ['(min-width: 600px) and (min-height: 1100px)']: nr >= 3,
+      },
+    });
+  };
 
   beforeEach(async () => {
+    breakpointState$ = new BehaviorSubject<BreakpointState>({
+      matches: false,
+      breakpoints: {},
+    });
     mockScheduleService = jasmine.createSpyObj('ScheduleService', [
       'getDayClass',
       'getEventsForDay',
@@ -43,6 +59,10 @@ describe('ScheduleMonthComponent', () => {
       providers: [
         { provide: ScheduleService, useValue: mockScheduleService },
         { provide: DateTimeFormatService, useValue: mockDateTimeFormatService },
+        {
+          provide: BreakpointObserver,
+          useValue: { observe: () => breakpointState$.asObservable() },
+        },
       ],
     })
       .overrideComponent(ScheduleMonthComponent, {
@@ -264,36 +284,60 @@ describe('ScheduleMonthComponent', () => {
       expect(accessibleCount.textContent.trim()).toBe('Jeszcze 2 wydarzenia');
     });
 
-    it('should make the hidden-event count visible at the mobile breakpoint', () => {
-      const findMobileVisibilityRule = (
-        rules: CSSRuleList,
-        isInsideMobileQuery = false,
-      ): CSSStyleRule | undefined => {
-        for (const rule of Array.from(rules)) {
-          if (rule instanceof CSSMediaRule) {
-            const isMobileQuery =
-              isInsideMobileQuery || rule.conditionText.includes('max-width: 599px');
-            const match = findMobileVisibilityRule(rule.cssRules, isMobileQuery);
-            if (match) {
-              return match;
-            }
-          } else if (
-            isInsideMobileQuery &&
-            rule instanceof CSSStyleRule &&
-            rule.selectorText.includes('.month-more-events') &&
-            rule.style.display === 'block'
-          ) {
-            return rule;
-          }
-        }
-        return undefined;
-      };
+    it('should not hide the hidden-event count at any width', () => {
+      fixture.componentRef.setInput('daysToShow', ['2026-01-15']);
+      mockScheduleService.getEventsForDay.and.returnValue([
+        createTaskScheduleEvent('task-1', '2026-01-15'),
+        createTaskScheduleEvent('task-2', '2026-01-15'),
+      ]);
 
-      const visibilityRule = Array.from(document.styleSheets)
-        .map((styleSheet) => findMobileVisibilityRule(styleSheet.cssRules))
-        .find((rule) => rule !== undefined);
+      fixture.detectChanges();
 
-      expect(visibilityRule).toBeDefined();
+      const moreEvents = fixture.nativeElement.querySelector('.month-more-events');
+      expect(getComputedStyle(moreEvents).display).not.toBe('none');
+    });
+
+    // Desktop cells used to render every event in a scroll area with no cue
+    // that more than the visible two were there
+    it('should render only the events that fit and count the rest', () => {
+      setRoomForEvents(2);
+      fixture.componentRef.setInput('daysToShow', ['2026-01-15']);
+      mockScheduleService.getEventsForDay.and.returnValue(
+        [1, 2, 3, 4, 5, 6].map((i) => createTaskScheduleEvent(`task-${i}`, '2026-01-15')),
+      );
+
+      fixture.detectChanges();
+
+      expect(fixture.debugElement.queryAll(By.css('.month-event')).length).toBe(2);
+      expect(
+        fixture.nativeElement
+          .querySelector('.month-more-events-count')
+          .textContent.trim(),
+      ).toBe('+4');
+
+      setRoomForEvents(3);
+      fixture.detectChanges();
+
+      expect(fixture.debugElement.queryAll(By.css('.month-event')).length).toBe(3);
+      expect(
+        fixture.nativeElement
+          .querySelector('.month-more-events-count')
+          .textContent.trim(),
+      ).toBe('+3');
+    });
+
+    it('should not count anything when every event fits a desktop cell', () => {
+      setRoomForEvents(2);
+      fixture.componentRef.setInput('daysToShow', ['2026-01-15']);
+      mockScheduleService.getEventsForDay.and.returnValue([
+        createTaskScheduleEvent('task-1', '2026-01-15'),
+        createTaskScheduleEvent('task-2', '2026-01-15'),
+      ]);
+
+      fixture.detectChanges();
+
+      expect(fixture.debugElement.queryAll(By.css('.month-event')).length).toBe(2);
+      expect(fixture.nativeElement.querySelector('.month-more-events')).toBeNull();
     });
 
     it('should not show a hidden-event count when every event fits', () => {

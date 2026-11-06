@@ -16,13 +16,14 @@ import { expect, test } from '../../fixtures/test.fixture';
 test('teleports the action bar into a single column when enabled', async ({
   page,
   workViewPage,
+  settingsPage,
 }) => {
   await workViewPage.waitForTaskList();
   await page.setViewportSize({ width: 1400, height: 900 });
 
-  await page.goto('/#/config');
-  // Config sections start collapsed.
-  await page.getByText('Misc Settings', { exact: false }).first().click();
+  // The switch is a secondary option of the "Startup & interface" section, so
+  // it sits behind that section's "More options" toggle.
+  await settingsPage.openSettingsSection('misc');
   const toggle = page.getByText('Vertical action bar on the side (experimental)').first();
   await toggle.waitFor({ state: 'visible' });
   await toggle.click();

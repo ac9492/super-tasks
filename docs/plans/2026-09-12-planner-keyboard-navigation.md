@@ -27,9 +27,10 @@ this plan using Sol.
   that day's real tasks. Overdue is its own selection scope.
 - Ctrl/Cmd-click can retain selections across days. Escape clears selection.
   Selection styling, bulk toolbar, and existing bulk actions work for Planner.
-- Single-click focuses a task card; double-click opens its details. Enter also
-  opens details. Embedded controls retain their own focus and behavior. Modifier
-  selection must not open details, toggle completion, or activate links/drag.
+- Single-click focuses a task card; double-click opens its details (single-click
+  opens details again since the 2026-11 update below). Enter also opens details.
+  Embedded controls retain their own focus and behavior. Modifier selection must
+  not open details, toggle completion, or activate links/drag.
 - Completing, deleting, or rescheduling tasks preserves useful focus and removes
   selection only when the task no longer has a live selectable card. Closing the
   bulk menu restores focus without stealing it from dialogs or inputs.
@@ -163,6 +164,13 @@ Follow-up: single-click now focuses Planner cards and double-click opens details
 Enter remains available. Embedded controls keep their own interactions, and other
 views retain single-click detail opening. The expanded PlannerTask suite passes
 all 30 tests; live browser checks confirm the click and double-click behavior.
+
+Update (2026-11): a plain click on a Planner card now focuses it and opens its
+details again (`planner-task.component.ts` click handler; spec "focuses and
+opens details for an opted-in Planner card on a plain click"). Double-click and
+Enter still open details; only Board cards keep focus-only clicks. The
+single-click/double-click split described above and in the outcome list is
+historical.
 
 Additional follow-up: Ctrl+Shift+Left/Right shifts the focused task by one day.
 The PlannerTask suite now passes all 35 tests, and a new browser regression verifies

@@ -28,8 +28,8 @@ test.describe('Plugin Management Feature Check', () => {
     const pluginManagement = page.locator('plugin-management');
     await expect(pluginManagement).toBeVisible({ timeout: 10000 });
     await pluginManagement
-      .getByRole('navigation', { name: 'Plugin views' })
-      .getByRole('button', { name: 'Discover', exact: true })
+      .getByRole('radiogroup', { name: 'Plugin views' })
+      .getByRole('radio', { name: 'Discover', exact: true })
       .click();
     await expect(pluginManagement.locator('.community-plugins-card h2')).toContainText(
       'Community Plugins',
@@ -50,8 +50,8 @@ test.describe('Plugin Management Feature Check', () => {
     await expect(browser.locator('.installed-plugin').first()).toBeVisible();
     await expect(browser.locator('.community-plugins-card')).toHaveCount(0);
     await browser
-      .getByRole('navigation', { name: 'Plugin views' })
-      .getByRole('button', { name: 'Discover', exact: true })
+      .getByRole('radiogroup', { name: 'Plugin views' })
+      .getByRole('radio', { name: 'Discover', exact: true })
       .click();
     await expect(browser.locator('.community-plugin-item')).toHaveCount(24);
     await browser.getByRole('button', { name: 'Next', exact: true }).click();
@@ -71,7 +71,7 @@ test.describe('Plugin Management Feature Check', () => {
     await browser.getByRole('button', { name: 'Reset filters', exact: true }).click();
     await expect(browser.locator('.community-plugin-item')).toHaveCount(24);
     await page.screenshot({ path: '.tmp/plugins-discover-desktop.png' });
-    await browser.getByRole('button', { name: /Installed \(/ }).click();
+    await browser.getByRole('radio', { name: /Installed \(/ }).click();
     await search.fill('github');
     await expect(browser.locator('.installed-plugin')).toHaveCount(1);
     await expect(browser.locator('.installed-plugin')).toContainText('GitHub');
@@ -85,8 +85,8 @@ test.describe('Plugin Management Feature Check', () => {
     await page.goto('/#/plugins');
     const browser = page.locator('plugin-management');
     await browser
-      .getByRole('navigation', { name: 'Plugin views' })
-      .getByRole('button', { name: 'Discover', exact: true })
+      .getByRole('radiogroup', { name: 'Plugin views' })
+      .getByRole('radio', { name: 'Discover', exact: true })
       .click();
     const search = browser.getByRole('searchbox');
     await expect(search).toBeVisible();

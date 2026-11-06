@@ -11,7 +11,6 @@ import { FormsModule } from '@angular/forms';
 import { HelpSectionComponent } from '../../../ui/help-section/help-section.component';
 import { InputDurationSliderComponent } from '../../../ui/duration/input-duration-slider/input-duration-slider.component';
 import { MatButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
 import { LocaleDatePipe } from 'src/app/ui/pipes/locale-date.pipe';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DateTimeFormatService } from 'src/app/core/date-time-format/date-time-format.service';
@@ -36,7 +35,6 @@ export interface NewTimeEntry {
     MatDialogActions,
     MatButton,
     MatDialogClose,
-    MatIcon,
     LocaleDatePipe,
     TranslatePipe,
     DatePickerInputComponent,

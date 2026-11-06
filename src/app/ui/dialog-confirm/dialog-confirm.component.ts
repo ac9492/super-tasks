@@ -13,10 +13,26 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 
+export interface DialogConfirmData {
+  message: string;
+  title?: string;
+  titleIcon?: string;
+  translateParams?: Record<string, unknown>;
+  okTxt?: string;
+  cancelTxt?: string;
+  hideCancelButton?: boolean;
+  isFocusConfirm?: boolean;
+  showDontShowAgain?: boolean;
+  /**
+   * The confirm button permanently removes something (delete, remove): it uses
+   * the warn colour instead of primary, per docs/styling-guide.md.
+   */
+  isDestructive?: boolean;
+}
+
 @Component({
   selector: 'dialog-confirm',
   templateUrl: './dialog-confirm.component.html',
-  styleUrls: ['./dialog-confirm.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MatDialogContent,
@@ -32,7 +48,7 @@ import { FormsModule } from '@angular/forms';
 export class DialogConfirmComponent {
   private readonly _matDialogRef =
     inject<MatDialogRef<DialogConfirmComponent>>(MatDialogRef);
-  readonly data = inject(MAT_DIALOG_DATA);
+  readonly data: DialogConfirmData = inject(MAT_DIALOG_DATA);
 
   readonly cancelButton = viewChild<MatButton>('cancelButton');
 

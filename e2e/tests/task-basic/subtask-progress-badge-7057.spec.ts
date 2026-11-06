@@ -1,9 +1,10 @@
 import { expect, test } from '../../fixtures/test.fixture';
 
-// Collapsed sub tasks show a done/total badge on the toggle button (#7057).
+// The sub task toggle shows a done/total badge in every visibility mode (#7057;
+// the fork keeps it visible while expanded too, not only when collapsed).
 
 test.describe('Sub task progress badge', () => {
-  test('shows done/total only while sub tasks are collapsed', async ({
+  test('shows done/total in every sub task visibility mode', async ({
     workViewPage,
     taskPage,
     testPrefix,
@@ -22,20 +23,22 @@ test.describe('Sub task progress badge', () => {
 
     const toggleBtn = parent.locator('.toggle-sub-tasks-btn').first();
     const badge = toggleBtn.locator('.sub-task-progress-badge');
-    await expect(badge).toHaveCount(0);
+    // all sub tasks shown
+    await expect(badge).toHaveText('1/3');
+    await expect(toggleBtn).toHaveAttribute('aria-label', 'Subtasks: 1 of 3 done');
 
     // with some sub tasks done the toggle cycles: shown -> hide done -> hide all
     await toggleBtn.click();
     await expect(toggleBtn.locator('mat-icon')).toHaveText('remove');
-    await expect(badge).toHaveCount(0);
+    await expect(badge).toHaveText('1/3');
     await toggleBtn.click();
     await expect(toggleBtn.locator('mat-icon')).toHaveText('add');
-
     await expect(badge).toHaveText('1/3');
     await expect(toggleBtn).toHaveAttribute('aria-label', 'Subtasks: 1 of 3 done');
 
+    // cycling back to "shown" keeps the count and all three sub tasks
     await toggleBtn.click();
-    await expect(badge).toHaveCount(0);
+    await expect(badge).toHaveText('1/3');
     await expect(subTasks).toHaveCount(3);
   });
 });

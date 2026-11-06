@@ -110,7 +110,7 @@ test.describe('@supersync @import-conflict Sync Import Conflict Dialog', () => {
       console.log('[Conflict Dialog] Dialog appeared');
 
       // Verify dialog title
-      const dialogTitle = dialog.locator('h1');
+      const dialogTitle = dialog.locator('h2');
       await expect(dialogTitle).toContainText('Sync Conflict');
       console.log('[Conflict Dialog] ✓ Dialog title is correct');
 

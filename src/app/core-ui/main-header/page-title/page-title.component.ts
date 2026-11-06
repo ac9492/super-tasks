@@ -15,7 +15,11 @@ import { filter, map, switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { WorkContextService } from '../../../features/work-context/work-context.service';
 import { WorkContextType } from '../../../features/work-context/work-context.model';
-import { DEFAULT_PROJECT_ICON } from '../../../features/project/project.const';
+import {
+  DEFAULT_PROJECT_ICON,
+  INBOX_PROJECT,
+} from '../../../features/project/project.const';
+import { TODAY_TAG } from '../../../features/tag/tag.const';
 import { NAV_SECTION_ICON } from '../../magic-side-nav/nav-section-icons.const';
 import { isSingleEmoji } from '../../../util/extract-first-emoji';
 import { selectIsProjectSharedOnPlainspace } from '../../../features/issue/store/issue-provider.selectors';
@@ -47,7 +51,7 @@ import { PluginIconComponent } from '../../../plugins/ui/plugin-icon/plugin-icon
   ],
   template: `
     @if (activeWorkContextTypeAndId()) {
-      <div
+      <a
         [matTooltip]="T.MH.GO_TO_TASK_LIST | translate"
         class="page-title"
         mat-ripple
@@ -73,7 +77,7 @@ import { PluginIconComponent } from '../../../plugins/ui/plugin-icon/plugin-icon
           >
         }
         <span class="page-title-text">{{ displayTitle() }}</span>
-      </div>
+      </a>
       @if (!isXxxs() && !isSpecialSection()) {
         <div class="page-title-actions">
           @if (isSharedOnPlainspace()) {
@@ -88,8 +92,8 @@ import { PluginIconComponent } from '../../../plugins/ui/plugin-icon/plugin-icon
           }
           <button
             [mat-menu-trigger-for]="activeWorkContextMenu"
-            [matTooltip]="T.MH.PROJECT_MENU | translate"
-            [attr.aria-label]="T.MH.PROJECT_MENU | translate"
+            [matTooltip]="T.G.MORE_ACTIONS | translate"
+            [attr.aria-label]="T.G.MORE_ACTIONS | translate"
             class="project-settings-btn"
             mat-icon-button
           >
@@ -146,14 +150,14 @@ import { PluginIconComponent } from '../../../plugins/ui/plugin-icon/plugin-icon
       .page-title {
         display: flex;
         align-items: center;
-        gap: var(--s-half);
-        font-size: var(--font-size-xl);
-        font-weight: var(--font-weight-semibold);
-        letter-spacing: var(--letter-spacing-tight);
+        gap: var(--s);
+        /* The title role (18/24, 600) with its own tracking. */
+        font: var(--type-title);
+        letter-spacing: var(--track-title);
         overflow: hidden;
         max-width: 100%;
         cursor: pointer;
-        border-radius: var(--card-border-radius);
+        border-radius: var(--r-md);
         /* Inline padding comes from main-header, which owns the row's spacing
            scale and reads these same tokens back when it sizes the row. The
            fallbacks only apply if this component is ever mounted outside the
@@ -208,9 +212,17 @@ import { PluginIconComponent } from '../../../plugins/ui/plugin-icon/plugin-icon
            row exists to avoid. So the token is a floor on the BOX: read it as
            "about six characters", not as an exact promise to the name. */
         min-width: var(--header-title-text-min, 0px);
+        /* A link to the task list: keep the heading look. */
+        color: inherit;
+        text-decoration: none;
 
         &:focus {
           outline: none;
+        }
+
+        &:focus-visible {
+          outline: var(--focus-ring-width) solid var(--focus-ring-color);
+          outline-offset: calc(-1 * var(--focus-ring-width));
         }
       }
 
@@ -222,7 +234,7 @@ import { PluginIconComponent } from '../../../plugins/ui/plugin-icon/plugin-icon
          than breaking. */
       .page-title:has(.page-title-icon) {
         min-width: calc(
-          var(--header-title-text-min, 0px) + var(--page-title-icon-size) + var(--s-half)
+          var(--header-title-text-min, 0px) + var(--page-title-icon-size) + var(--s)
         );
       }
 
@@ -249,7 +261,8 @@ import { PluginIconComponent } from '../../../plugins/ui/plugin-icon/plugin-icon
         &.page-title-icon--emoji {
           font-family:
             'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
-          font-size: 18px;
+          /* Same size as an emoji icon in the side nav. */
+          font-size: var(--icon-sm);
           font-feature-settings: normal;
           font-variation-settings: normal;
           text-transform: none;
@@ -269,6 +282,15 @@ import { PluginIconComponent } from '../../../plugins/ui/plugin-icon/plugin-icon
         gap: var(--header-title-action-gap, var(--s-quarter));
         margin-left: calc(-1 * var(--header-title-actions-inset, var(--s)));
         margin-right: var(--header-title-actions-gutter, var(--s2));
+      }
+
+      /* Every header glyph is 20px, the title's menu and filter included (the
+         action row beside them is on the same grid). */
+      .page-title-actions .mat-icon {
+        font-size: var(--icon-md);
+        width: var(--icon-md);
+        height: var(--icon-md);
+        line-height: var(--icon-md);
       }
 
       .project-settings-btn {
@@ -302,9 +324,15 @@ import { PluginIconComponent } from '../../../plugins/ui/plugin-icon/plugin-icon
           display: block;
         }
 
+        /* An active filter is a pressed toggle: the "selected" role. */
         &.isCustomized {
-          color: var(--c-accent);
+          color: var(--palette-selected-ink);
+          background-color: var(--palette-selected);
           box-shadow: none;
+
+          .mat-icon {
+            font-variation-settings: 'FILL' 1;
+          }
         }
 
         &:hover:not(.isCustomized):not(:disabled) {
@@ -328,7 +356,8 @@ import { PluginIconComponent } from '../../../plugins/ui/plugin-icon/plugin-icon
       }
 
       .project-settings-btn[aria-expanded='true'] {
-        color: var(--brand);
+        color: var(--palette-selected-ink);
+        background-color: var(--palette-selected);
       }
     `,
   ],
@@ -457,6 +486,11 @@ export class PageTitleComponent {
   contextIconColor = computed<string | null>(() => {
     const wc = this.activeWorkContext();
     if (!wc) {
+      return null;
+    }
+    // Today and Inbox read like the nav's destinations (ink): the stored colour
+    // of the virtual Today tag is a legacy blue that follows no palette.
+    if (wc.id === TODAY_TAG.id || wc.id === INBOX_PROJECT.id) {
       return null;
     }
     if (wc.type === WorkContextType.TAG) {

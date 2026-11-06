@@ -1,9 +1,12 @@
-<div (click)="editDeadline()">
+<button
+  type="button"
+  (click)="editDeadline()"
+>
   <mat-icon>flag</mat-icon>
-  <div class="title">{{ task().title }}</div>
-  <div class="planner-time-remaining-shared">
+  <span class="title">{{ task().title }}</span>
+  <span class="planner-time-remaining-shared">
     @if (task().timeEstimate) {
       {{ task().timeEstimate | msToString }}
     }
-  </div>
-</div>
+  </span>
+</button>

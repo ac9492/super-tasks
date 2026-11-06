@@ -11,13 +11,28 @@ app-root,
   height: 100%;
   height: -webkit-fill-available;
   box-sizing: border-box;
+  // Base text is the body role (14/20).
+  font: var(--type-body);
   font-optical-sizing: auto;
-  font-family: var(--font-primary-stack);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: var(--font-size-md);
-  line-height: var(--line-height-normal);
   letter-spacing: var(--letter-spacing-normal);
+}
+
+// body carries .mat-typography, whose M2 rule (`font: 400 14px/20px …;
+// letter-spacing: 0.0179em`) outranks the element selector above. Restate the
+// body role at the same specificity, after it, so Material's 0.25px tracking
+// stops leaking into every text node.
+.mat-typography {
+  font: var(--type-body);
+  letter-spacing: var(--letter-spacing-normal);
+}
+
+// UA stylesheets give form controls their own font (Arial 13.33px in
+// Chromium), which leaks into custom buttons and badges. Zero specificity so
+// any component or Material rule still wins.
+:where(button, input, textarea, select) {
+  font-family: inherit;
 }
 
 // Tabular figures — opt-in only (avoid applying to non-numeric <time> content)
@@ -26,44 +41,53 @@ app-root,
   font-feature-settings: 'tnum' 1;
 }
 
-// Wrapped in :where() so the global rules specificity is (0,0,0) — any
-// component or Material typography override wins trivially.
-// Excludes Material dialog/card titles explicitly.
-:where(h1, h2, h3, h4, h5, h6):not([mat-dialog-title]):not(.mat-mdc-dialog-title):not(
-    .mat-mdc-card-title
-  ) {
+// Global heading ramp for headings that have no rule of their own. It
+// replaces Material's M2 hierarchy (`.mat-typography h1 { font: 400 24px/32px }`
+// …, body carries .mat-typography): each selector has that hierarchy's
+// specificity (0,1,1) and comes after it, so it wins over Material while every
+// component rule wins over it (an encapsulated `h2` is already (0,1,1) and is
+// injected later). The exclusions sit in :where() and add nothing. Material
+// dialog and card titles keep their own typography. Line heights are whole
+// pixels on the 4px grid.
+$not-material-title: ':where(:not([mat-dialog-title], .mat-mdc-dialog-title, .mat-mdc-card-title))';
+
+.mat-typography :is(h1, h2, h3, h4, h5, h6)#{$not-material-title} {
   font-family: inherit;
   font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-snug);
   letter-spacing: var(--letter-spacing-tight);
   color: var(--text-color-most-intense);
 }
 
-:where(h1):not([mat-dialog-title]):not(.mat-mdc-dialog-title):not(.mat-mdc-card-title) {
+.mat-typography h1#{$not-material-title} {
   font-size: var(--font-size-3xl);
+  line-height: 36px;
   letter-spacing: var(--letter-spacing-tighter);
-  line-height: var(--line-height-tight);
 }
 
-:where(h2):not([mat-dialog-title]):not(.mat-mdc-dialog-title):not(.mat-mdc-card-title) {
+.mat-typography h2#{$not-material-title} {
   font-size: var(--font-size-2xl);
+  line-height: 28px;
   letter-spacing: var(--letter-spacing-tighter);
 }
 
-:where(h3):not([mat-dialog-title]):not(.mat-mdc-dialog-title):not(.mat-mdc-card-title) {
+.mat-typography h3#{$not-material-title} {
   font-size: var(--font-size-xl);
+  line-height: 24px;
 }
 
-:where(h4):not([mat-dialog-title]):not(.mat-mdc-dialog-title):not(.mat-mdc-card-title) {
+.mat-typography h4#{$not-material-title} {
   font-size: var(--font-size-lg);
+  line-height: 24px;
 }
 
-:where(h5):not([mat-dialog-title]):not(.mat-mdc-dialog-title):not(.mat-mdc-card-title) {
+.mat-typography h5#{$not-material-title} {
   font-size: var(--font-size-md);
+  line-height: 20px;
 }
 
-:where(h6):not([mat-dialog-title]):not(.mat-mdc-dialog-title):not(.mat-mdc-card-title) {
+.mat-typography h6#{$not-material-title} {
   font-size: var(--font-size-sm);
+  line-height: 16px;
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-wide);
   color: var(--text-color-muted);
@@ -126,9 +150,8 @@ body {
   // absolute` above) -- there's nothing between the two to clip it. A
   // transform/scale added here would expand this layer's painted bounds
   // without changing its layout size, feeding that straight into `body`'s
-  // scrollable-overflow region -- the same bug `.bg-image` had
-  // (app.component.scss). If this ever needs a transform, give it
-  // `position: fixed` like `.bg-image` too.
+  // scrollable-overflow region. If this ever needs a transform, give it
+  // `position: fixed`.
   &:before {
     display: none;
     transition: 1s opacity;
@@ -206,40 +229,34 @@ body {
   }
 }
 
+// Secondary pages (docs/styling-guide.md § Page layout): one column that
+// starts at the page gutter, the left edge of the header title, and is at most
+// --component-max-width wide. Never centred: it lines up with the task column.
+// 16px above, 72px below for the FAB and the bottom nav.
 .page-wrapper {
-  padding: var(--s) var(--s) calc(var(--s) * 9);
-
-  @include media-queries.mq(xs) {
-    padding: var(--s) var(--s2) calc(var(--s) * 9);
-  }
+  padding: var(--s2) var(--page-gutter) var(--s9);
 }
 
 .component-wrapper {
   max-width: var(--component-max-width);
-  margin: auto;
+  margin: 0;
 }
 
 .task-list-wrapper {
-  padding: 0 var(--s) var(--s7);
+  // The task column is anchored at the page gutter, the one left edge shared by
+  // the header title, the summary line, section headers, cards, the add row and
+  // Finish Day. It is not centred: opening a side panel then never moves the
+  // list, and the title above it stays on the same x on every page.
+  padding: 0 var(--page-gutter) var(--s7);
   // for a little bit of extra space for 800 width
   max-width: calc(var(--component-max-width) - 40px);
-  margin: auto;
-
-  @include media-queries.mq(xxs) {
-    padding: 0 var(--s) var(--s7);
-  }
-
-  @include media-queries.mq(xs) {
-    padding: 0 calc(var(--s) * 1.5) var(--s7);
-  }
+  margin: 0;
 
   @include media-queries.mq(sm) {
-    padding: 0 var(--s3) var(--s7);
     max-width: var(--component-max-width);
   }
 
   @include media-queries.mq(lg) {
-    padding: 0 var(--s3) var(--s7);
     max-width: calc(var(--component-max-width) + 100px);
   }
 

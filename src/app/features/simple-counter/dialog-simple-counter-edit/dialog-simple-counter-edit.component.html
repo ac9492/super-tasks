@@ -1,5 +1,5 @@
 <form (submit)="$event.preventDefault(); save()">
-  <h1 mat-dialog-title>{{ localCounter().title }}</h1>
+  <h2 mat-dialog-title>{{ localCounter().title }}</h2>
 
   <mat-dialog-content>
     @let counter = localCounter();
@@ -112,7 +112,6 @@
       color="primary"
       type="submit"
     >
-      <mat-icon>save</mat-icon>
       {{ T.G.SAVE | translate }}
     </button>
   </mat-dialog-actions>

@@ -16,11 +16,11 @@ export class NotePage extends BasePage {
     this.toggleNotesBtn = page.locator('.e2e-toggle-notes-btn');
     // Use multiple selectors for addNoteBtn - the button text or ID
     this.addNoteBtn = page.locator(
-      '#add-note-btn, button:has-text("Add new Note"), [role="button"]:has-text("Add new Note")',
+      '#add-note-btn, button:has-text("Add note"), [role="button"]:has-text("Add note")',
     );
     // notes section can be the Angular component or the panel containing the add note button
     this.notesSection = page.locator(
-      'notes, .notes-panel, [class*="notes"]:has(button:has-text("Add new Note"))',
+      'notes, .notes-panel, [class*="notes"]:has(button:has-text("Add note"))',
     );
     this.notesList = page.locator('notes .notes, .notes-list');
     // Use dialog-fullscreen-markdown specifically as it's the note edit component
@@ -38,7 +38,7 @@ export class NotePage extends BasePage {
     // Wait for the page to be ready
     await this.page.waitForLoadState('networkidle');
 
-    // Check if "Add new Note" button is visible as indicator that notes panel is open
+    // Check if "Add note" button is visible as indicator that notes panel is open
     const addNoteBtnVisible = await this.addNoteBtn
       .first()
       .isVisible({ timeout: 2000 })
@@ -65,7 +65,7 @@ export class NotePage extends BasePage {
       await this.toggleNotesBtn.click();
       // Wait for either the section or the add note button to become visible
       await this.page
-        .locator('notes, button:has-text("Add new Note")')
+        .locator('notes, button:has-text("Add note")')
         .first()
         .waitFor({ state: 'visible', timeout: 5000 });
     }

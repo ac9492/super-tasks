@@ -24,21 +24,18 @@
   z-index: var(--z-mobile-bottom-nav);
   display: flex;
 
-  //// Glass effect only when background image is present
-  :host-context(.hasBgImage) & {
-    //backdrop-filter: blur(10px);
-    //-webkit-backdrop-filter: blur(10px);
-  }
-
+  // Items are icon-only 48px pills (touch height), 4px above and below in the
+  // 56px bar.
   .nav-button {
     flex: 1 1 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: var(--bottom-nav-height);
+    height: var(--ctl-lg);
     min-width: 0;
-    border-radius: var(--radius-xl);
+    margin: 0 var(--s-half);
+    border-radius: var(--r-full);
     transition: var(--transition-standard);
 
     // No `:active` here: as a `mat-button` it already has Material's
@@ -52,29 +49,31 @@
     }
 
     mat-icon {
-      font-size: 24px;
-      width: 24px;
-      height: 24px;
+      font-size: var(--icon-lg);
+      width: var(--icon-lg);
+      height: var(--icon-lg);
       padding: 0;
       margin: 0;
     }
 
-    // Active state styling - reuse magic side nav theme variables
+    // Active is the one "selected" role (tonal fill, its paired ink, a filled
+    // glyph); the accent fill is reserved for the add button.
     &.active {
-      background: var(--sidenav-item-active-bg);
-      color: var(--sidenav-active-text);
+      background: var(--palette-selected);
+      color: var(--palette-selected-ink);
       box-shadow: none;
       margin-bottom: 0;
 
       mat-icon {
-        color: var(--sidenav-active-text);
+        color: var(--palette-selected-ink);
+        font-variation-settings: 'FILL' 1;
       }
 
       // Maintain active state on hover/focus
       &:hover,
       &:focus {
-        background: var(--sidenav-item-active-bg);
-        color: var(--sidenav-active-text);
+        background: var(--palette-selected);
+        color: var(--palette-selected-ink);
       }
     }
   }
@@ -90,19 +89,21 @@
     pointer-events: none;
   }
 
+  // The add button sits in the bar (no longer floating 24px above it, where it
+  // covered list content): a 48px accent circle, the bar's one filled control,
+  // with no shadow at rest.
   .add-task-button {
-    flex: 0 0 var(--s7);
-    width: var(--s7);
-    height: var(--s7);
+    flex: 0 0 var(--ctl-lg);
+    width: var(--ctl-lg);
+    height: var(--ctl-lg);
     margin-left: var(--s);
     margin-right: var(--s);
-    margin-bottom: var(--s3);
-    box-shadow: var(--whiteframe-shadow-4dp);
+    margin-bottom: 0;
+    box-shadow: none;
     transition: var(--transition-standard);
 
     @include hoverWithPointer {
       transform: scale(1.05);
-      box-shadow: var(--whiteframe-shadow-6dp);
     }
 
     &:active {
@@ -110,18 +111,15 @@
     }
 
     &.smaller {
-      flex-basis: var(--bottom-nav-height);
-      width: var(--bottom-nav-height);
-      height: var(--bottom-nav-height);
-      margin-left: var(--s);
-      margin-right: var(--s);
-      margin-bottom: 0;
+      flex-basis: var(--ctl-lg);
+      width: var(--ctl-lg);
+      height: var(--ctl-lg);
     }
 
     mat-icon {
-      font-size: 28px;
-      width: 28px;
-      height: 28px;
+      font-size: var(--icon-lg);
+      width: var(--icon-lg);
+      height: var(--icon-lg);
     }
   }
 }

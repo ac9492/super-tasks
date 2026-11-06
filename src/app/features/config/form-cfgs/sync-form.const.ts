@@ -213,7 +213,7 @@ export const SYNC_FORM: ConfigFormSection<SyncConfig> = {
           ...(IS_ELECTRON || IS_ANDROID_WEB_VIEW
             ? [
                 {
-                  label: 'LocalFile (experimental &  deprecated)',
+                  label: 'Local file (experimental)',
                   value: SyncProviderId.LocalFile,
                 },
               ]

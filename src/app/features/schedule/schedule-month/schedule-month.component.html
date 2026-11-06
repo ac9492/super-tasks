@@ -1,3 +1,4 @@
+@let maxEvents = maxVisibleEvents();
 <div class="month-grid-container">
   @for (header of weekdayHeaders(); track $index) {
     <div class="weekday-header">{{ header }}</div>
@@ -15,6 +16,20 @@
       >
         <div class="month-day-header">
           <span class="month-day-number">{{ dayNumberByDay()[day] }}</span>
+          @if (dayEvents.length > maxEvents) {
+            @let hiddenEventCount = dayEvents.length - maxEvents;
+            <span class="month-more-events">
+              <span
+                class="month-more-events-count"
+                aria-hidden="true"
+                >+{{ hiddenEventCount }}</span
+              >
+              <span class="cdk-visually-hidden">{{
+                getMoreEventsKey(hiddenEventCount)
+                  | translate: { count: hiddenEventCount }
+              }}</span>
+            </span>
+          }
           @if (deadlineBadgesByDay()[day]; as deadlineBadge) {
             <span
               class="deadline-badge"
@@ -36,31 +51,19 @@
         </div>
         <div class="month-day-events">
           @for (ev of dayEvents; track ev.id) {
-            <div
-              class="month-event"
-              [class]="ev.type"
-            >
-              <schedule-event
-                [event]="ev"
-                [isMonthView]="true"
-                [cdkDragDisabled]="true"
-                class="month-schedule-event"
-              ></schedule-event>
-            </div>
-          }
-          @if (dayEvents.length > 1) {
-            @let hiddenEventCount = dayEvents.length - 1;
-            <span class="month-more-events">
-              <span
-                class="month-more-events-count"
-                aria-hidden="true"
-                >+{{ hiddenEventCount }}</span
+            @if ($index < maxEvents) {
+              <div
+                class="month-event"
+                [class]="ev.type"
               >
-              <span class="cdk-visually-hidden">{{
-                getMoreEventsKey(hiddenEventCount)
-                  | translate: { count: hiddenEventCount }
-              }}</span>
-            </span>
+                <schedule-event
+                  [event]="ev"
+                  [isMonthView]="true"
+                  [cdkDragDisabled]="true"
+                  class="month-schedule-event"
+                ></schedule-event>
+              </div>
+            }
           }
         </div>
       </div>

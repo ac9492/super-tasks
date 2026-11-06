@@ -5,9 +5,9 @@
       [@fade]
     >
       <div class="metrics-header">
-        <h1 class="mat-h1">
+        <h2 class="metrics-title">
           {{ metricsTitle() | translate }}
-        </h1>
+        </h2>
         <share-button
           [payload]="sharePayload()"
           [tooltip]="T.F.METRIC.CMP.SHARE_STATS | translate"
@@ -155,7 +155,7 @@
         </section>
       </section>
     } @else {
-      <p class="no-data-msg">
+      <p class="empty-state">
         {{ T.F.METRIC.CMP.NO_ADDITIONAL_DATA_YET | translate }}
       </p>
     }

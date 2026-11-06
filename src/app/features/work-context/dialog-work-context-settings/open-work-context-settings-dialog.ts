@@ -1,4 +1,5 @@
 import type { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { dialogSize } from '../../../ui/dialog-size.util';
 import type {
   DialogWorkContextSettingsComponent,
   WorkContextSettingsDialogData,
@@ -8,8 +9,7 @@ export const WORK_CONTEXT_SETTINGS_DIALOG_CONFIG: MatDialogConfig<WorkContextSet
   {
     restoreFocus: true,
     backdropClass: 'cdk-overlay-transparent-backdrop',
-    width: '600px',
-    maxWidth: '95vw',
+    ...dialogSize('m'),
   };
 
 export const openWorkContextSettingsDialog = async (

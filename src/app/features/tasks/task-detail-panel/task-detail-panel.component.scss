@@ -32,18 +32,19 @@ progress-bar {
   }
 }
 
+// The panel's title area is flat: a heading in the same 56px band as the page
+// header, with one hairline under it (drawn in _ultra-tasks.scss) — no box, no
+// accent rule. The title's own 4px edit inset brings its text to the 16px
+// column every row of the panel starts on.
 .task-title-wrapper {
-  min-height: var(--bar-height);
+  min-height: var(--bar-height-large);
   display: flex;
   align-items: center;
   z-index: var(--z-right-panel);
-  border-radius: var(--card-border-radius);
-  margin: var(--s);
-  border-bottom: 2px solid var(--c-primary) !important;
+  margin: 0;
+  padding: var(--s) var(--s) var(--s) calc(var(--s2) - var(--s-half));
 
   task-title {
-    padding-top: var(--s-half);
-    padding-bottom: var(--s-half);
     margin-top: 0;
     color: var(--text-color);
   }
@@ -54,31 +55,17 @@ progress-bar {
   }
 }
 
-// In the side panel, a window-controls band (see right-panel.component.scss)
-// already separates the title from the window's top edge, so drop the title's
-// own top margin under it rather than stacking both. The env() is unset
-// without a band, which keeps the margin.
-:host-context(.right-panel) .task-title-wrapper {
-  margin-top: max(0px, var(--s) - env(titlebar-area-height, 0px));
-}
-
 .task-title.task-title {
-  font-weight: bold;
+  // The heading role (16/24, 600); the inline-edit box inherits its metrics.
+  font: var(--type-heading);
+  letter-spacing: 0;
   transform-origin: top center;
-  padding: var(--s);
   margin: 0;
   flex-grow: 1;
   // Keep the title shrinkable next to the trailing overflow button so a long
   // unbroken title wraps/truncates instead of pushing the button off-row.
   min-width: 0;
-  margin-top: var(--s-half);
-  line-height: 1.4;
-  min-height: 40px;
-  font-size: 17px;
-
-  @include mq(xs) {
-    font-size: 15px;
-  }
+  min-height: var(--ctl-md);
 
   &:focus {
     transform: scale(1);
@@ -94,8 +81,9 @@ progress-bar {
 
 .created,
 .date-info {
-  padding: var(--s);
-  text-align: center;
+  padding: var(--s) var(--s2);
+  text-align: start;
+  font: var(--type-meta);
   color: var(--text-color-muted);
 }
 
@@ -148,9 +136,9 @@ progress-bar {
 
   mat-icon {
     flex: 0 0 auto;
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
+    font-size: var(--icon-sm);
+    width: var(--icon-sm);
+    height: var(--icon-sm);
   }
 
   // Let a long recurrence label (e.g. "Monthly on the first Thursday") shrink and

@@ -1,4 +1,5 @@
 import { test, expect } from '../../fixtures/supersync.fixture';
+import { ImportPage } from '../../pages/import.page';
 import {
   createTestUser,
   getSuperSyncConfig,
@@ -31,26 +32,7 @@ import * as os from 'os';
  */
 const exportBackup = async (page: SimulatedE2EClient['page']): Promise<string> => {
   // Navigate to settings page
-  await page.goto('/#/config');
-  await page.waitForLoadState('networkidle');
-  await page.waitForTimeout(1000);
-
-  // Navigate to Sync & Backup tab where Import/Export section is located
-  const syncBackupTab = page.locator(
-    'mat-tab-header .mat-mdc-tab:has-text("Sync & Backup"), mat-tab-header .mat-tab-label:has-text("Sync & Backup")',
-  );
-  await syncBackupTab.waitFor({ state: 'visible', timeout: 10000 });
-  await syncBackupTab.click();
-  await page.waitForTimeout(500);
-
-  // Expand Import/Export section
-  const importExportSection = page.locator('collapsible:has-text("Import/Export")');
-  await importExportSection.scrollIntoViewIfNeeded();
-  await page.waitForTimeout(300);
-
-  const collapsibleHeader = importExportSection.locator('.collapsible-header, .header');
-  await collapsibleHeader.click();
-  await page.waitForTimeout(500);
+  await new ImportPage(page).navigateToImportPage();
 
   // Set up download handler before clicking export
   const tempDir = os.tmpdir();
@@ -94,25 +76,7 @@ const importBackup = async (
   };
   page.on('console', errorHandler);
 
-  await page.goto('/#/config');
-  await page.waitForLoadState('networkidle');
-  await page.waitForTimeout(1000);
-
-  // Navigate to Sync & Backup tab where Import/Export section is located
-  const syncBackupTab = page.locator(
-    'mat-tab-header .mat-mdc-tab:has-text("Sync & Backup"), mat-tab-header .mat-tab-label:has-text("Sync & Backup")',
-  );
-  await syncBackupTab.waitFor({ state: 'visible', timeout: 10000 });
-  await syncBackupTab.click();
-  await page.waitForTimeout(500);
-
-  const importExportSection = page.locator('collapsible:has-text("Import/Export")');
-  await importExportSection.scrollIntoViewIfNeeded();
-  await page.waitForTimeout(300);
-
-  const collapsibleHeader = importExportSection.locator('.collapsible-header, .header');
-  await collapsibleHeader.click();
-  await page.waitForTimeout(500);
+  await new ImportPage(page).navigateToImportPage();
 
   const fileInput = page.locator('file-imex input[type="file"]');
   await fileInput.setInputFiles(backupPath);

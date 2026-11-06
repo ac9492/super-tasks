@@ -2171,6 +2171,114 @@ describe('AddTaskBarParserService', () => {
     });
   });
 
+  // The due date has the same ownership rule as deadline and repeat: a date a
+  // token set leaves with the token (deleted, or a prefix of a longer token),
+  // and the next task starts from the context default again.
+  describe('a due date typed as syntax does not stick', () => {
+    let realState: AddTaskBarStateService;
+    const cfg = {
+      isEnableProject: true,
+      isEnableDue: true,
+      isEnableTag: true,
+    } as ShortSyntaxConfig;
+    const defaultProject = { id: 'default-project', title: 'Default Project' } as Project;
+    const today = getDbDateStr(new Date());
+    const tomorrowDate = new Date();
+    tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+    const tomorrow = getDbDateStr(tomorrowDate);
+
+    const parse = (text: string, defaultDate?: string): Promise<void> =>
+      service.parseAndUpdateText(text, cfg, [], [], defaultProject, defaultDate);
+    // What the add bar does after a task is added (AddTaskBarComponent._resetAfterAdd)
+    const addTask = async (defaultDate?: string): Promise<void> => {
+      realState.resetAfterAdd();
+      service.resetPreviousResult();
+      await parse('', defaultDate);
+    };
+
+    beforeEach(() => {
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        providers: [AddTaskBarParserService, AddTaskBarStateService],
+      });
+      service = TestBed.inject(AddTaskBarParserService);
+      realState = TestBed.inject(AddTaskBarStateService);
+    });
+
+    it('should fall back to the context default when the token is deleted', async () => {
+      await parse('Plan trip @tomorrow', today);
+      expect(realState.state().date).toBe(tomorrow);
+
+      await parse('Plan trip', today);
+
+      expect(realState.state().date).toBe(today);
+      expect(realState.state().time).toBeNull();
+    });
+
+    it('should drop the date where the context has no default date', async () => {
+      await parse('Plan trip @tomorrow 3pm');
+      expect(realState.state().time).toBe('15:00');
+
+      await parse('Plan trip');
+
+      expect(realState.state().date).toBeNull();
+      expect(realState.state().time).toBeNull();
+    });
+
+    it('should drop the date when the whole text is deleted', async () => {
+      await parse('Plan trip @tomorrow', today);
+
+      await parse('', today);
+      await parse('Plan holiday', today);
+
+      expect(realState.state().date).toBe(today);
+    });
+
+    it('should not carry the date into the next task', async () => {
+      await parse('Call dentist @tomorrow 3pm', today);
+      expect(realState.state().time).toBe('15:00');
+
+      await addTask(today);
+      await parse('Buy bread', today);
+
+      expect(realState.state().date).toBe(today);
+      expect(realState.state().time).toBeNull();
+    });
+
+    it('should keep a date picked with the schedule button for the next task', async () => {
+      realState.updateInputTxt('Standup');
+      await parse('Standup', today);
+      service.applyUserDatePick('2027-03-29', '09:00', null);
+      await parse('Standup', today);
+
+      await addTask(today);
+      await parse('Retro', today);
+
+      expect(realState.state().date).toBe('2027-03-29');
+      expect(realState.state().time).toBe('09:00');
+    });
+
+    it('should give "@every 2 weeks" typed key by key the same date as pasted', async () => {
+      const typed = 'Review @every 2 weeks';
+      for (let i = 'Review @'.length; i <= typed.length; i++) {
+        await parse(typed.slice(0, i));
+      }
+      const afterTyping = { ...realState.state() };
+
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        providers: [AddTaskBarParserService, AddTaskBarStateService],
+      });
+      service = TestBed.inject(AddTaskBarParserService);
+      realState = TestBed.inject(AddTaskBarStateService);
+      await parse(typed);
+
+      expect(afterTyping.time).toBeNull();
+      expect(afterTyping.date).toBe(realState.state().date);
+      expect(afterTyping.repeat).toEqual(realState.state().repeat);
+    });
+  });
+
   describe('syntax highlight ranges', () => {
     const cfg = {
       isEnableProject: true,

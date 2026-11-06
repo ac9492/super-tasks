@@ -27,6 +27,7 @@ export const getTaskDeleteConfirmData = (
   okTxt: string;
   message: string;
   isFocusConfirm: boolean;
+  isDestructive: boolean;
   translateParams: { title: string };
 } => ({
   okTxt: T.F.TASK.D_CONFIRM_DELETE.OK,
@@ -35,5 +36,6 @@ export const getTaskDeleteConfirmData = (
       ? T.F.TASK.D_CONFIRM_DELETE.MSG_PLAINSPACE
       : T.F.TASK.D_CONFIRM_DELETE.MSG,
   isFocusConfirm: true,
+  isDestructive: true,
   translateParams: { title },
 });

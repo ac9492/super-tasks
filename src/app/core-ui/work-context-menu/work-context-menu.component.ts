@@ -121,6 +121,8 @@ export class WorkContextMenuComponent implements OnInit {
         data: {
           message: T.F.TAG.D_DELETE.CONFIRM_MSG,
           translateParams: { tagName: tag.title },
+          okTxt: T.G.DELETE,
+          isDestructive: true,
         },
       })
       .afterClosed()
@@ -146,6 +148,8 @@ export class WorkContextMenuComponent implements OnInit {
         data: {
           message: T.F.PROJECT.D_DELETE.MSG,
           translateParams: { title: project.title },
+          okTxt: T.G.DELETE,
+          isDestructive: true,
         },
       })
       .afterClosed()
@@ -390,15 +394,9 @@ export class WorkContextMenuComponent implements OnInit {
   addSection(): void {
     this._matDialog
       .open(DialogPromptComponent, {
-        // Omit `message` to match the Add Tag pattern — the dialog
-        // collapses its outer padding when there's no message text
-        // (`dialog-prompt.scss: mat-dialog-content.isNoMsg`).
-        // Use a descriptive placeholder ("Add Section") rather than a
-        // generic "Title" so screen readers and visual users get the
-        // dialog's purpose without a separate title element.
-        data: {
-          placeholder: T.WW.ADD_SECTION_TITLE,
-        },
+        // Same prompt as the work view's "Add section" so both entry points
+        // name the dialog the same way.
+        data: { message: T.MH.ADD_SECTION, placeholder: T.WW.ADD_SECTION_TITLE },
       })
       // NOTE: do NOT pipe takeUntilDestroyed here. This component lives inside
       // a <mat-menu>; the menu (and component) is destroyed the moment the

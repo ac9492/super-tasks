@@ -7,9 +7,9 @@ within `packages/plugin-dev/`.
 
 Start from [yesterday-tasks-plugin](yesterday-tasks-plugin): `manifest.json`,
 `plugin.js`, optional `index.html`, `icon.svg` and `i18n/`. No build step — zip
-the files and upload them via Settings → Plugins. Every folder with a
-`package.json` here is an npm workspace: rename its `"name"` and run `npm install`,
-or delete the copied `package.json` if you only upload the zip.
+the files and upload them via Plugins & integrations in the side nav. Every
+folder with a `package.json` here is an npm workspace: rename its `"name"` and
+run `npm install`, or delete the copied `package.json` if you only upload the zip.
 
 ## Option 2: TypeScript, host-side (issue providers, background logic)
 
@@ -45,6 +45,7 @@ built with [`@super-productivity/vite-plugin`](../vite-plugin).
 
 1. Build it, then zip the contents of `dist/` (or the plain-JS folder):
    `rm -f plugin.zip && (cd dist && zip -r ../plugin.zip .)`.
-2. Upload the zip via Settings → Plugins.
+2. Upload the zip via Plugins & integrations in the side nav → Install from a
+   ZIP file.
 
 Adding a new issue provider? Read [add-new-integration.md](../../docs/add-new-integration.md).

@@ -1,4 +1,4 @@
-import { type Page, type Locator } from '@playwright/test';
+import { expect, type Page, type Locator } from '@playwright/test';
 import { BasePage } from './base.page';
 import * as path from 'path';
 
@@ -32,94 +32,24 @@ export class ImportPage extends BasePage {
   }
 
   /**
-   * Navigate to the import/export settings page.
+   * Navigate to the import/export controls.
+   *
+   * Settings is a dialog with a category list; the import/export buttons
+   * (`file-imex`) are always visible in the "Sync & Backup" category, there is
+   * no expander to open.
    */
   async navigateToImportPage(): Promise<void> {
     await this.page.goto('/#/config', { waitUntil: 'domcontentloaded' });
     await this.page.locator('config-page').waitFor({ state: 'visible', timeout: 10000 });
-    // Wait for page content to fully render
-    await this.page.waitForTimeout(1000);
 
-    // The file-imex component is now in the "Sync & Backup" tab (5th tab, index 4)
-    // Step 1: Click on the "Sync & Backup" tab to navigate to it
-    const syncBackupTab = this.page.locator(
-      'mat-tab-header .mat-mdc-tab:has(mat-icon:has-text("cloud_sync"))',
-    );
-    await syncBackupTab.waitFor({ state: 'visible', timeout: 10000 });
+    const syncBackupCategory = this.page
+      .locator('config-page .settings-categories')
+      .getByRole('button', { name: 'Sync & Backup', exact: true });
+    await syncBackupCategory.waitFor({ state: 'visible', timeout: 10000 });
+    await syncBackupCategory.click();
+    await expect(syncBackupCategory).toHaveAttribute('aria-current', 'page');
 
-    // Ensure tab is scrolled into view and stable before clicking
-    await syncBackupTab.scrollIntoViewIfNeeded();
-    await this.page.waitForTimeout(200);
-
-    await syncBackupTab.click();
-
-    // Verify the tab became active by checking for aria-selected attribute
-    // Retry click if tab didn't become active
-    const maxTabRetries = 3;
-    for (let i = 0; i < maxTabRetries; i++) {
-      const isActive = await syncBackupTab
-        .getAttribute('aria-selected')
-        .then((val) => val === 'true')
-        .catch(() => false);
-
-      if (isActive) {
-        break;
-      }
-
-      if (i < maxTabRetries - 1) {
-        console.log(
-          `[ImportPage] Tab click didn't register, retrying (attempt ${i + 2})`,
-        );
-        await this.page.waitForTimeout(300);
-        await syncBackupTab.click();
-      }
-    }
-
-    // Wait for tab panel content to load
-    await this.page.waitForTimeout(500);
-
-    // Step 2: Within the tab, expand the "Import/Export" collapsible section
-    const importExportSection = this.page.locator(
-      'collapsible:has-text("Import/Export")',
-    );
-    await importExportSection.waitFor({ state: 'visible', timeout: 10000 });
-    await importExportSection.scrollIntoViewIfNeeded();
-    await this.page.waitForTimeout(300);
-
-    // Click on the collapsible header to expand it with retry logic
-    const collapsibleHeader = importExportSection.locator('.collapsible-header, .header');
-    await collapsibleHeader.click();
-
-    // Verify expansion by checking if import button becomes visible
-    // Retry if expansion failed
-    const maxExpandRetries = 3;
-    for (let i = 0; i < maxExpandRetries; i++) {
-      const isExpanded = await this.importFromFileBtn
-        .waitFor({ state: 'visible', timeout: 2000 })
-        .then(() => true)
-        .catch(() => false);
-
-      if (isExpanded) {
-        break;
-      }
-
-      if (i < maxExpandRetries - 1) {
-        console.log(
-          `[ImportPage] Collapsible expansion failed, retrying (attempt ${i + 2})`,
-        );
-        await this.page.waitForTimeout(300);
-        await collapsibleHeader.click();
-      }
-    }
-
-    // Now the file-imex component should be visible in the active tab
     await this.importFromFileBtn.waitFor({ state: 'visible', timeout: 10000 });
-
-    // Controls become visible before the panel finishes expanding. Wait for
-    // Angular's animation to finish so clicks land on the intended button.
-    await importExportSection
-      .locator('.collapsible-panel:not(.ng-animating)')
-      .waitFor({ state: 'visible', timeout: 10000 });
   }
 
   /**

@@ -17,19 +17,25 @@ test.describe('Settings', () => {
     await page.goto('/#/config');
     await page.waitForLoadState('networkidle');
 
-    // Find first config section and click its collapsible header.
+    // The settings window lays its sections out open; a section's secondary
+    // fields sit behind its own "More options" toggle. Fold and unfold it.
     const firstSection = page.locator('config-section').first();
     await expect(firstSection).toBeVisible({ timeout: 5000 });
-    const header = firstSection.locator('collapsible > .collapsible-header').first();
-    const expandedContent = firstSection.locator('.collapsible-panel').first();
+    const header = firstSection.locator('formly-collapsible > .collapsible-header');
+    const expandedContent = firstSection.locator(
+      'formly-collapsible > .collapsible-panel',
+    );
+    await expect(header).toBeVisible({ timeout: 5000 });
 
     if (await expandedContent.isVisible().catch(() => false)) {
       await header.click();
       await expect(expandedContent).toBeHidden();
+      await expect(header).toHaveAttribute('aria-expanded', 'false');
     }
 
     await header.click();
     await expect(expandedContent).toBeVisible();
+    await expect(header).toHaveAttribute('aria-expanded', 'true');
   });
 
   test('should have multiple config sections', async ({ page, workViewPage }) => {
@@ -56,20 +62,20 @@ test.describe('Settings', () => {
 
     await expect(page.locator('.page-settings')).toBeVisible();
 
-    // Expand first config section to reveal form elements, unless it starts
-    // open (App Features does) — a click there would land on a switch.
+    // The first section shows its primary controls up front; no click needed.
     const firstSection = page.locator('config-section').first();
     await expect(firstSection).toBeVisible({ timeout: 5000 });
-    const panel = firstSection.locator('.collapsible-panel').first();
-    if (!(await panel.isVisible().catch(() => false))) {
-      await firstSection.locator('collapsible > .collapsible-header').first().click();
-    }
 
-    // Look for visible form elements in the section we opened.
+    // Look for visible form elements in the section.
     const formElements = firstSection.locator(
       'input:visible, mat-checkbox:visible, mat-slide-toggle:visible, mat-select:visible',
     );
     await expect(formElements.first()).toBeVisible({ timeout: 5000 });
-    await expect.poll(() => formElements.count()).toBeGreaterThan(0);
+    const primaryCount = await formElements.count();
+    expect(primaryCount).toBeGreaterThan(0);
+
+    // Opening "More options" reveals the section's secondary controls too.
+    await firstSection.locator('formly-collapsible > .collapsible-header').click();
+    await expect.poll(() => formElements.count()).toBeGreaterThan(primaryCount);
   });
 });

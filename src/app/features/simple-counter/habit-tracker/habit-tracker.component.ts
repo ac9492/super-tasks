@@ -287,7 +287,6 @@ export class HabitTrackerComponent {
     this._matDialog.open(DialogSimpleCounterEditSettingsComponent, {
       data: { simpleCounter: newHabit },
       restoreFocus: true,
-      width: '600px',
     });
   }
 
@@ -300,7 +299,6 @@ export class HabitTrackerComponent {
     this._matDialog.open(DialogSimpleCounterEditSettingsComponent, {
       data: { simpleCounter: counterCopy },
       restoreFocus: true,
-      width: '600px',
     });
   }
 
@@ -315,6 +313,7 @@ export class HabitTrackerComponent {
         data: {
           message: T.F.SIMPLE_COUNTER.D_CONFIRM_REMOVE.MSG,
           okTxt: T.F.SIMPLE_COUNTER.D_CONFIRM_REMOVE.OK,
+          isDestructive: true,
         },
       })
       .afterClosed()

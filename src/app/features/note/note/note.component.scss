@@ -13,6 +13,10 @@
 .note {
   @include noteStyle;
 
+  // A note is a list item like a task: a card with a hairline and no resting
+  // shadow (it lifts on hover/focus below).
+  box-shadow: none;
+  border: var(--st-line-width) solid var(--palette-border);
   overflow: hidden;
 
   &:hover,
@@ -20,7 +24,7 @@
     transform-origin: center center;
     position: relative;
     z-index: 4;
-    box-shadow: var(--whiteframe-shadow-3dp);
+    box-shadow: var(--elev-1);
     //outline: 2px dashed var(--c-accent);
   }
 
@@ -114,7 +118,10 @@
   }
 }
 
-:host:hover .bottom-controls {
+// Keyboard focus on a control (or the note) reveals the bar, so Tab never
+// lands on invisible buttons.
+:host:hover .bottom-controls,
+:host:focus-within .bottom-controls {
   opacity: 1;
 
   &.isOver {
@@ -135,9 +142,10 @@
     opacity: 1;
   }
 
+  // No negative margin: the bar sits below the content's own padding instead
+  // of running its dashed border through the last line of text.
   @include mq(xs) {
     z-index: 1;
-    margin-top: -8px;
   }
 
   &:active {

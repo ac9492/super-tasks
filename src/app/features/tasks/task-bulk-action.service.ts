@@ -225,6 +225,7 @@ export class TaskBulkActionService {
         .open(DialogConfirmComponent, {
           data: {
             okTxt: T.F.TASK.MULTI_SELECT.D_CONFIRM_DELETE.OK,
+            isDestructive: true,
             message: this._plural(
               // A task Plainspace no longer lists for me is only deleted here.
               tasks.some(

@@ -29,5 +29,5 @@
     "TIME_SPENT": "Time Spent",
     "DESCRIPTION": "Description"
   },
-  "FORM_HELP": "<p>Here you can configure Super Productivity to list open Redmine (either its the online version or a self-hosted instance) issues for a specific project in the task creation panel in the daily planning view. They will be listed as suggestions and will provide a link to the issue as well as more information about it.</p><p>In addition you can automatically import all open issues.</p>"
+  "FORM_HELP": "<p>Here you can configure Ultra Tasks to list open Redmine (either the online version or a self-hosted instance) issues for a specific project in the task creation panel in the daily planning view. They will be listed as suggestions and will provide a link to the issue as well as more information about it.</p><p>In addition you can automatically import all open issues.</p>"
 }

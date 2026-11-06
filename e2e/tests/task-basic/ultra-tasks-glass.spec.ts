@@ -21,8 +21,14 @@ test('top search and device-local glass control work and persist', async ({
   await page.goto('/#/config');
   const toggle = page.getByRole('checkbox', { name: 'Glass appearance' });
   await expect(toggle).toBeChecked();
+  // The web app draws its own blurred backdrop behind the glass surfaces.
+  await expect(page.locator('body')).toHaveClass(/st-glass-bitmap/);
+  await expect(page.locator('glass-backdrop canvas')).toBeAttached();
+  await expect(page.locator('glass-settings .st-glass-background')).toBeVisible();
   await toggle.uncheck();
-  await expect(page.locator('.app-container')).toHaveClass(/st-solid/);
+  await expect(page.locator('body')).toHaveClass(/st-solid/);
+  await expect(page.locator('glass-backdrop')).toHaveCount(0);
+  await expect(page.locator('glass-settings .st-glass-background')).toHaveCount(0);
   await page.reload();
   // Settings opens as a dialog; reopen it after the route restores the workspace.
   await page.goto('/#/config');

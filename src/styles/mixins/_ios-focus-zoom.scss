@@ -5,8 +5,9 @@
 // zoom on every sub-16px input (#9415, #9551, #9556).
 //
 // Apply to bare inputs/textareas that are NOT inside a mat-form-field — those
-// already resolve to 16px via --mat-form-field-container-text-size, which is
-// why most of the app was unaffected.
+// resolve to 16px on touch via --mat-form-field-container-text-size, which
+// _overwrite-material.scss raises from the 14px body size under
+// `(pointer: coarse)`.
 //
 // Keep the literal: 16px is a WebKit platform threshold, not a design token.
 // Binding it to --font-size-lg (also 16px today) would silently re-arm the bug

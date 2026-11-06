@@ -7,7 +7,6 @@ export { ScheduleComponent } from '../features/schedule/schedule/schedule.compon
 export { BoardsComponent } from '../features/boards/boards.component';
 export { HabitPageComponent } from '../pages/habit-page/habit-page.component';
 export { DonatePageComponent } from '../pages/donate-page/donate-page.component';
-export { ContrastTestComponent } from '../pages/contrast-test/contrast-test.component';
 export { PluginIndexComponent } from '../plugins/ui/plugin-index/plugin-index.component';
 // Dialogs opened from always-rendered header buttons. Importing them through
 // this (preloaded) barrel keeps their code in the existing pages chunk; a

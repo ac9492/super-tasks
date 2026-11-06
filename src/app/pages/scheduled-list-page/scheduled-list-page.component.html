@@ -1,55 +1,61 @@
 <div class="page-wrapper">
   @if (taskRepeatCfgs$ | async; as taskRepeatCfgs) {
-    <section
-      class="component-wrapper"
-      style="margin-top: 24px"
-    >
+    <section class="component-wrapper">
       @if (!taskRepeatCfgs?.length) {
-        <p class="no-scheduled-tasks">{{ T.SCHEDULE.NO_REPEATABLE_TASKS | translate }}</p>
+        <p class="empty-state">{{ T.SCHEDULE.NO_REPEATABLE_TASKS | translate }}</p>
       }
       <div
         [@standardList]="$safeNavigationMigration(taskRepeatCfgs?.length)"
         class="repeat-task-cfgs"
       >
         @for (taskRepeatCfg of taskRepeatCfgs; track taskRepeatCfg.id) {
-          <mat-card
-            appearance="outlined"
-            class="repeat-task-cfg"
-          >
-            <mat-card-content>
-              <div class="repeat-task-cfg-content">
-                <div class="task-info">
-                  <div class="title">
-                    <task-title
-                      (valueEdited)="
-                        updateRepeatableTitleIfChanged(
-                          $event.wasChanged,
-                          $event.newVal,
-                          taskRepeatCfg
-                        )
-                      "
-                      [value]="taskRepeatCfg.title"
-                      class="task-title"
-                    ></task-title>
-                    <tag-list
-                      [isShowProjectTagAlways]="true"
-                      [task]="taskRepeatCfg"
-                    ></tag-list>
-                  </div>
+          <div class="repeat-task-cfg">
+            <div class="repeat-task-cfg-content">
+              <div class="task-info">
+                <div class="title">
+                  <task-title
+                    (valueEdited)="
+                      updateRepeatableTitleIfChanged(
+                        $event.wasChanged,
+                        $event.newVal,
+                        taskRepeatCfg
+                      )
+                    "
+                    [value]="taskRepeatCfg.title"
+                    class="task-title"
+                  ></task-title>
+                  <tag-list
+                    [isShowProjectTagAlways]="true"
+                    [task]="taskRepeatCfg"
+                  ></tag-list>
+                </div>
 
-                  <div
-                    (click)="editTaskRepeatCfg(taskRepeatCfg)"
-                    class="repeat-text-and-icon"
-                    [matTooltip]="getTooltipText(taskRepeatCfg)"
-                    mat-ripple
-                  >
-                    <div class="repeat-text">{{ getRepeatInfoText(taskRepeatCfg) }}</div>
-                    <mat-icon>repeat</mat-icon>
-                  </div>
+                <!-- role="button" rather than a <button>: this page's styles
+                       are not reset for one. -->
+                <div
+                  (click)="editTaskRepeatCfg(taskRepeatCfg)"
+                  (keydown.enter)="editTaskRepeatCfg(taskRepeatCfg)"
+                  (keydown.space)="
+                    $event.preventDefault(); editTaskRepeatCfg(taskRepeatCfg)
+                  "
+                  role="button"
+                  tabindex="0"
+                  [attr.aria-label]="
+                    (T.F.PLANNER.EDIT_REPEATED_TASK
+                      | translate: { taskName: taskRepeatCfg.title }) +
+                    ': ' +
+                    getRepeatInfoText(taskRepeatCfg)
+                  "
+                  class="repeat-text-and-icon focus-ring"
+                  [matTooltip]="getTooltipText(taskRepeatCfg)"
+                  mat-ripple
+                >
+                  <div class="repeat-text">{{ getRepeatInfoText(taskRepeatCfg) }}</div>
+                  <mat-icon>repeat</mat-icon>
                 </div>
               </div>
-            </mat-card-content>
-          </mat-card>
+            </div>
+          </div>
         }
       </div>
     </section>

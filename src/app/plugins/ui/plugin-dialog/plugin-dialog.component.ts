@@ -13,13 +13,14 @@ import { PluginSecurityService } from '../../plugin-security';
 import { TranslateService } from '@ngx-translate/core';
 import { T } from '../../../t.const';
 import { PluginLog } from '../../../core/log';
+import { useDialogSize } from '../../../ui/dialog-size.util';
 
 @Component({
   selector: 'plugin-dialog',
   template: `
-    <div mat-dialog-title>
+    <h2 mat-dialog-title>
       {{ dialogData.title || _translateService.instant(T.PLUGINS.PLUGIN_DIALOG_TITLE) }}
-    </div>
+    </h2>
 
     <mat-dialog-content>
       @if (sanitizedContent) {
@@ -37,7 +38,7 @@ import { PluginLog } from '../../../core/log';
       @for (button of dialogData.buttons || defaultButtons; track $index) {
         @if (button.raised) {
           <button
-            mat-raised-button
+            mat-flat-button
             [color]="button.color || 'primary'"
             (click)="onButtonClick(button)"
           >
@@ -49,7 +50,7 @@ import { PluginLog } from '../../../core/log';
         } @else {
           <button
             mat-button
-            [color]="button.color || 'primary'"
+            [color]="button.color"
             (click)="onButtonClick(button)"
           >
             @if (button.icon) {
@@ -64,48 +65,28 @@ import { PluginLog } from '../../../core/log';
   styles: [
     `
       mat-dialog-content {
-        min-width: 300px;
-        max-width: 900px;
-        width: 70vw;
         max-height: 70vh;
         overflow-y: auto;
       }
 
-      @media (max-width: 599px) {
-        mat-dialog-content {
-          min-width: unset;
-          width: auto;
-        }
-      }
-
-      mat-dialog-actions {
-        gap: 8px;
-      }
-
-      mat-icon {
-        margin-right: 8px;
-      }
-
-      /* Default styles for native form elements injected by plugins */
+      /* Default styles for native form elements injected by plugins: the app's field look */
       :host ::ng-deep select,
       :host ::ng-deep textarea,
       :host ::ng-deep input {
-        background: var(--bg-lighter);
+        background: var(--input-bg);
         color: var(--text-color);
-        border: none;
-        border-bottom: 1px solid var(--divider-color);
-        border-radius: 4px 4px 0 0;
-        padding: 8px;
-        font-family: var(--font-primary-stack);
-        font-size: 14px;
+        border: 1px solid var(--input-border-color);
+        border-radius: var(--input-border-radius);
+        padding: var(--s) var(--s1-5);
+        font: var(--type-body);
       }
 
       :host ::ng-deep select:focus,
       :host ::ng-deep textarea:focus,
       :host ::ng-deep input:focus {
         outline: none;
-        border-bottom-color: var(--c-primary);
-        border-bottom-width: 2px;
+        border-color: var(--input-border-color-focus);
+        box-shadow: 0 0 0 1px var(--input-border-color-focus);
       }
 
       :host ::ng-deep input[type='checkbox'],
@@ -131,6 +112,7 @@ export class PluginDialogComponent {
   private readonly _sanitizer = inject(DomSanitizer);
   private readonly _pluginSecurity = inject(PluginSecurityService);
   readonly _translateService = inject(TranslateService);
+  private readonly _size = useDialogSize('m');
 
   readonly dialogData: DialogCfg & { title?: string };
   readonly sanitizedContent: SafeHtml | null = null;

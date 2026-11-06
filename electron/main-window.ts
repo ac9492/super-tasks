@@ -28,7 +28,7 @@ import {
 import { ensureIndicator } from './indicator';
 import { getIsMinimizeToTray, getIsQuiting, setIsQuiting } from './shared-state';
 import { createMenuTemplate } from './menu';
-import { loadSimpleStoreAll } from './simple-store';
+import { loadSimpleStoreAll, saveSimpleStore } from './simple-store';
 import { SimpleStoreKey } from './shared-with-frontend/simple-store.const';
 import {
   getWasMaximizedBeforeHide,
@@ -47,6 +47,13 @@ import { markGpuStartupSuccess } from './gpu-startup-guard';
 import { isAppOriginUrl } from './navigation-guard';
 import { assertSecureWebPreferences } from './web-preferences-guard';
 import { applyJiraImageAuth } from './jira-image-auth';
+import {
+  getNativeGlassWindowOptions,
+  initNativeGlassIpc,
+  parsePersistedNativeGlass,
+  resolveNativeGlassMaterial,
+} from './native-glass';
+import { NATIVE_GLASS_ARG_PREFIX } from './shared-with-frontend/native-glass.model';
 
 // Long enough to outlast a resize or move gesture, so a drag records one
 // sample rather than one per frame.
@@ -191,6 +198,20 @@ export const createWindow = async ({
     : isUseCustomWindowTitleBar
       ? 'hidden'
       : 'default';
+  // Glass appearance: the OS material this window supports, and whether the
+  // user had it on last time. The light/dark variant follows themeSource, so
+  // set it before the window exists (the tray has already read nativeTheme).
+  const nativeGlassMaterial = resolveNativeGlassMaterial({
+    platform: process.platform,
+    systemVersion: process.getSystemVersion(),
+    isCustomTitleBar: titleBarStyle === 'hidden',
+  });
+  const persistedNativeGlass = parsePersistedNativeGlass(
+    simpleStore[SimpleStoreKey.NATIVE_GLASS],
+  );
+  if (nativeGlassMaterial && persistedNativeGlass?.isEnabled) {
+    nativeTheme.themeSource = persistedNativeGlass.themeSource;
+  }
   // Determine initial symbol color based on system theme preference
   const initialSymbolColor = nativeTheme.shouldUseDarkColors ? '#fff' : '#000';
   const titleBarOverlay: BrowserWindowConstructorOptions['titleBarOverlay'] =
@@ -229,6 +250,9 @@ export const createWindow = async ({
     // Disable spell checker to prevent connections to Google services (#5314)
     // This maintains our "offline-first with zero data collection" promise
     spellcheck: false,
+    // Read synchronously by the preload so the first frame already knows
+    // whether the window can be translucent.
+    additionalArguments: [`${NATIVE_GLASS_ARG_PREFIX}${nativeGlassMaterial ?? 'none'}`],
   };
   // Fail closed if the renderer's IPC trust boundary ever silently regresses:
   // contextIsolation/nodeIntegration are what keep require/ipcRenderer out of
@@ -251,6 +275,20 @@ export const createWindow = async ({
     // Wayland compatibility: disable transparent/frameless features that can cause issues
     transparent: false,
     // frame: true,
+    // macOS vibrancy / Windows acrylic while Glass appearance is on. Neither
+    // needs `transparent`, so shadow, resizing and maximize stay native.
+    ...getNativeGlassWindowOptions(nativeGlassMaterial, persistedNativeGlass),
+  });
+  initNativeGlassIpc({
+    ipcMain,
+    win: mainWin,
+    material: nativeGlassMaterial,
+    persisted: persistedNativeGlass,
+    theme: nativeTheme,
+    save: (value) =>
+      saveSimpleStore(SimpleStoreKey.NATIVE_GLASS, value).catch((e) =>
+        error('Failed to persist glass appearance:', e),
+      ),
   });
 
   const apiUserAgent = getApiUserAgent(app.getVersion());

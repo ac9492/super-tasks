@@ -18,7 +18,7 @@
 
   &::before {
     @include materialIcon('info');
-    color: var(--c-primary);
+    color: var(--palette-accent-text);
     font-size: 20px;
     position: absolute;
     left: 12px;

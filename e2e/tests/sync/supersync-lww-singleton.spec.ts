@@ -8,6 +8,7 @@ import {
 } from '../../utils/supersync-helpers';
 import {
   navigateToMiscSettings,
+  closeSettings,
   toggleSetting,
   isSettingChecked,
   ensureSettingState,
@@ -92,6 +93,8 @@ test.describe('@supersync SuperSync LWW Singleton Conflict Resolution', () => {
       await ensureSettingState(clientA.page, 'Disable celebration', true);
       console.log('[LWW-Singleton] Client A set both settings ON');
 
+      // The settings window's backdrop would swallow the sync click.
+      await closeSettings(clientA.page);
       await clientA.sync.syncAndWait();
       console.log('[LWW-Singleton] Client A synced (initial)');
 
@@ -117,7 +120,7 @@ test.describe('@supersync SuperSync LWW Singleton Conflict Resolution', () => {
 
       // Navigate B away from config page to prevent formly modelChange
       // from interfering with sync operations
-      await clientB.page.goto('/#/tag/TODAY/tasks');
+      await closeSettings(clientB.page);
       await clientB.page.waitForURL(/tag\/TODAY/);
 
       // 5. Client B syncs FIRST → uploads B's change to server
@@ -128,6 +131,7 @@ test.describe('@supersync SuperSync LWW Singleton Conflict Resolution', () => {
       await clientA.page.waitForTimeout(2000);
 
       // 7. Client A toggles "Disable celebration" OFF (later timestamp)
+      await navigateToMiscSettings(clientA.page);
       await toggleSetting(clientA.page, 'Disable celebration');
       console.log(
         '[LWW-Singleton] Client A toggled celebration OFF (A: anim=ON, celeb=OFF)',
@@ -136,7 +140,7 @@ test.describe('@supersync SuperSync LWW Singleton Conflict Resolution', () => {
       // Navigate A away from config page before syncing to prevent formly's
       // (modelChange) from dispatching updateGlobalConfigSection during
       // conflict resolution, which could overwrite the winning LWW state
-      await clientA.page.goto('/#/tag/TODAY/tasks');
+      await closeSettings(clientA.page);
       await clientA.page.waitForURL(/tag\/TODAY/);
 
       // 8. Client A syncs → upload conflicts with B's op on server

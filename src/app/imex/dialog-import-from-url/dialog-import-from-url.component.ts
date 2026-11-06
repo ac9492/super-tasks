@@ -15,6 +15,7 @@ import { MatDialogModule } from '@angular/material/dialog'; // Import MatDialogM
 import { T } from '../../t.const';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Log } from '../../core/log';
+import { useDialogSize } from '../../ui/dialog-size.util';
 
 @Component({
   selector: 'dialog-import-from-url',
@@ -33,6 +34,7 @@ import { Log } from '../../core/log';
   ],
 })
 export class DialogImportFromUrlComponent {
+  private readonly _dialogSize = useDialogSize('m');
   @Output() urlEntered = new EventEmitter<string>();
 
   url = signal('');

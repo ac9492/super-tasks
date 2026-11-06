@@ -39,6 +39,7 @@ import { MatButton } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Log } from '../../../../core/log';
 import { PlainspaceShareService } from '../../../issue/providers/plainspace/plainspace-share.service';
+import { useDialogSize } from '../../../../ui/dialog-size.util';
 
 @Component({
   selector: 'dialog-create-project',
@@ -57,6 +58,7 @@ import { PlainspaceShareService } from '../../../issue/providers/plainspace/plai
   ],
 })
 export class DialogCreateProjectComponent implements OnInit, OnDestroy {
+  private readonly _dialogSize = useDialogSize('m');
   private _project = inject<Project>(MAT_DIALOG_DATA);
   private _projectService = inject(ProjectService);
   private _plainspaceShareService = inject(PlainspaceShareService);

@@ -335,6 +335,33 @@ describe('PageTitleComponent', () => {
       expect(c.contextIconColor()).toBe('#123456');
     });
 
+    it('does not colour the Today and Inbox icons (they read like the nav destinations)', () => {
+      activeWorkContext$.next(
+        wc({
+          id: 'TODAY',
+          title: 'Today',
+          type: WorkContextType.TAG,
+          icon: 'wb_sunny',
+          color: '#3f51b5',
+          theme: { primary: '#3f51b5' } as WorkContext['theme'],
+        }),
+      );
+      expect(setupComponent('/tag/TODAY/tasks').contextIconColor()).toBeNull();
+
+      activeWorkContext$.next(
+        wc({
+          id: 'INBOX_PROJECT',
+          title: 'Inbox',
+          type: WorkContextType.PROJECT,
+          icon: 'inbox',
+          theme: { primary: 'rgb(144, 187, 165)' } as WorkContext['theme'],
+        }),
+      );
+      expect(
+        setupComponent('/project/INBOX_PROJECT/tasks').contextIconColor(),
+      ).toBeNull();
+    });
+
     it('detects an emoji icon', () => {
       activeWorkContext$.next(
         wc({
@@ -426,9 +453,9 @@ describe('PageTitleComponent', () => {
       );
 
     // The work-context menu holds Delete Project / Delete Tag, and `.page-title`
-    // itself is a roleless `<div>` carrying `routerLink` — not focusable, not a
-    // button. So this button is the only keyboard-reachable route to that menu
-    // from the header, which is why it stays rather than folding into the title.
+    // itself is a link to the task list, not a menu button. So this button is
+    // the only keyboard-reachable route to that menu from the header, which is
+    // why it stays rather than folding into the title.
     it('always offers the work-context menu on a context route', async () => {
       expect(buttons(await renderAt('/active/tasks'))).toContain('project-settings-btn');
       expect(buttons(await renderAt('/active/notes'))).toContain('project-settings-btn');

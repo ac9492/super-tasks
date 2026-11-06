@@ -12,6 +12,7 @@ import {
 } from './app.guard';
 
 import { TagTaskPageComponent } from './pages/tag-task-page/tag-task-page.component';
+import { environment } from '../environments/environment';
 
 export const APP_ROUTES: Routes = [
   // Eagerly loaded — this is the main view
@@ -126,12 +127,19 @@ export const APP_ROUTES: Routes = [
     },
     canActivate: [DonatePageGuard, FeatureEnabledGuard, FocusOverlayOpenGuard],
   },
-  {
-    path: 'contrast-test',
-    loadComponent: () =>
-      import('./routes/pages.routes').then((m) => m.ContrastTestComponent),
-    data: { page: 'contrast-test' },
-  },
+  // Developer aid for checking theme contrast; not part of the app.
+  ...(environment.production
+    ? []
+    : [
+        {
+          path: 'contrast-test',
+          loadComponent: () =>
+            import('./pages/contrast-test/contrast-test.component').then(
+              (m) => m.ContrastTestComponent,
+            ),
+          data: { page: 'contrast-test' },
+        },
+      ]),
   {
     path: 'plugins/:pluginId/index',
     loadComponent: () =>

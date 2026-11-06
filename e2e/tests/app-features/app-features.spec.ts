@@ -1,11 +1,13 @@
 import { Page } from 'playwright/test';
 import { test, expect } from '../../fixtures/test.fixture';
+import { SettingsPage } from '../../pages/settings.page';
 import { waitForAngularStability } from '../../utils/waits';
 
-// Navigate to config page and wait for it to be ready
-const goToConfig = async (page: Page): Promise<void> => {
-  await page.goto('/#/config');
-  await waitForAngularStability(page);
+// Open the settings window on "App features" with every switch reachable:
+// Planner, Boards and Project notes are always shown, the rest sit behind the
+// section's "More options" toggle.
+const goToAppFeatures = async (settingsPage: SettingsPage): Promise<void> => {
+  await settingsPage.openSettingsSection('appFeatures');
 };
 
 // Navigate to main view and wait for it to be ready
@@ -50,6 +52,7 @@ test.describe('App Features', () => {
   ].forEach((feature) => {
     test(`Element assigned with App feature ${feature.title ?? feature.label} is only visible if feature is enabled`, async ({
       page,
+      settingsPage,
     }) => {
       const featureElement = feature.locator(page);
 
@@ -60,9 +63,7 @@ test.describe('App Features', () => {
       });
 
       // Go to settings page
-      await goToConfig(page);
-
-      // "App Features" is open by default; wait for the switch
+      await goToAppFeatures(settingsPage);
       await expect(featureSwitch).toBeVisible();
 
       // Ensure feature is enabled (all features are enabled by default)
@@ -79,9 +80,7 @@ test.describe('App Features', () => {
       await expect(featureElement).not.toBeAttached();
 
       // Re-enable the feature
-      await goToConfig(page);
-
-      // "App Features" is open by default; wait for the switch
+      await goToAppFeatures(settingsPage);
       await expect(featureSwitch).toBeVisible();
 
       // Click toggle button to enable and verify state change
@@ -96,6 +95,7 @@ test.describe('App Features', () => {
 
   test('Issues panel app feature hides the mobile bottom-nav panel option', async ({
     page,
+    settingsPage,
   }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     const featureSwitch = page.getByRole('switch', {
@@ -114,7 +114,7 @@ test.describe('App Features', () => {
     await expect(issuePanelButton).toBeVisible();
     await page.keyboard.press('Escape');
 
-    await goToConfig(page);
+    await goToAppFeatures(settingsPage);
     await expect(featureSwitch).toBeVisible();
     await expect(featureSwitch).toBeChecked();
     await featureSwitch.click();

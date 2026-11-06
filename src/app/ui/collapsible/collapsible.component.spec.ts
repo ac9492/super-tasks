@@ -25,6 +25,10 @@ import { CollapsibleComponent } from './collapsible.component';
       [title]="'Non-Group'"
       [isGroup]="false"
     ></collapsible>
+    <collapsible
+      [title]="'More options'"
+      [ariaLabel]="'More options – Sound'"
+    ></collapsible>
   `,
   imports: [CollapsibleComponent],
 })
@@ -54,6 +58,11 @@ describe('CollapsibleComponent', () => {
 
   afterEach(() => {
     fixture.destroy();
+  });
+
+  it('should name a toggle whose visible title repeats, and leave the others to their title', () => {
+    expect(headerElements[3].getAttribute('aria-label')).toBe('More options – Sound');
+    expect(headerElements[0].hasAttribute('aria-label')).toBe(false);
   });
 
   it('should toggle the current group with ArrowLeft and ArrowRight', () => {

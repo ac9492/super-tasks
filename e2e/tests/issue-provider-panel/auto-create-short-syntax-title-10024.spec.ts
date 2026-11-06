@@ -14,13 +14,16 @@ import { expectNoGlobalError } from '../../utils/assertions';
  * real reducer — and holds the create response until short syntax has landed
  * locally, which is exactly the reported timing.
  *
- * The add-task bar runs its own async short-syntax parse and would often
- * dispatch the already-cleaned title, hiding the effect-level race. We hold
- * the lazy date-parser module (imported on the first date-token parse)
- * until after the task is added, so the action carries the RAW title — the
- * exact input from the report — and assert the raw title landed before
- * letting the parse proceed. The hold matches the parser chunk by name in
- * dev and falls back to same-origin lazy chunks for CI's built app.
+ * The add-task bar parses the exact text it submits before it dispatches
+ * (it waits for the parse, see `_parseInputBeforeAdd`), so it never hands the
+ * effects a raw title any more. Every other caller of `TaskService.add` still
+ * does (focus-mode selector, schedule slot, deep links, plugin and REST API),
+ * and that is the input from the report. The test dispatches the same
+ * `addTask` action `TaskService.add` builds, with the RAW title, into the real
+ * store, and holds the lazy date-parser module (imported on the first
+ * date-token parse) until the raw title has landed, so the race is certain
+ * rather than timing luck. The hold matches the parser chunk by name in dev
+ * and falls back to same-origin lazy chunks for CI's built app.
  */
 type TaskSnapshot = {
   title: string;
@@ -82,6 +85,70 @@ const getTomorrowDbDate = async (page: Page): Promise<string> =>
     const day = `${date.getDate()}`.padStart(2, '0');
     return `${date.getFullYear()}-${month}-${day}`;
   });
+
+/**
+ * Dispatches the `addTask` action `TaskService.add` builds for a title typed
+ * anywhere but the add-task bar: the title goes in untouched, short syntax and
+ * all, and it is the effects that parse it.
+ */
+const dispatchAddTaskWithRawTitle = async (
+  page: Page,
+  projectName: string,
+  title: string,
+): Promise<void> =>
+  page.evaluate(
+    ({ projectName: name, title: rawTitle }) => {
+      type StoreState = {
+        projects?: {
+          entities?: Record<string, { id?: string; title?: string } | undefined>;
+        };
+      };
+      type StoreLike = {
+        subscribe: (next: (state: StoreState) => void) => { unsubscribe: () => void };
+        dispatch: (action: unknown) => void;
+      };
+      const store = (window as unknown as { __e2eTestHelpers?: { store?: StoreLike } })
+        .__e2eTestHelpers?.store;
+      if (!store) {
+        throw new Error('__e2eTestHelpers.store missing');
+      }
+      let latestState: StoreState | undefined;
+      store
+        .subscribe((state) => {
+          latestState = state;
+        })
+        .unsubscribe();
+      const project = Object.values(latestState?.projects?.entities ?? {}).find(
+        (candidate) => candidate?.title === name,
+      );
+      if (!project?.id) {
+        throw new Error(`project "${name}" not found`);
+      }
+      const id = `e2e-10024-${Date.now()}`;
+      store.dispatch({
+        type: '[Task Shared] addTask',
+        task: {
+          id,
+          projectId: project.id,
+          title: rawTitle,
+          subTaskIds: [],
+          timeSpentOnDay: {},
+          timeSpent: 0,
+          timeEstimate: 0,
+          isDone: false,
+          tagIds: [],
+          created: Date.now(),
+          attachments: [],
+        },
+        workContextId: project.id,
+        workContextType: 'PROJECT',
+        isAddToBacklog: false,
+        isAddToBottom: false,
+        meta: { isPersistent: true, entityType: 'TASK', entityId: id, opType: 'CRT' },
+      });
+    },
+    { projectName, title },
+  );
 
 test('auto-created issue excludes short syntax tokens (#10024)', async ({
   page,
@@ -194,12 +261,12 @@ test('auto-created issue excludes short syntax tokens (#10024)', async ({
 
   // The reported case: raw tokens in the title of an auto-created task
   const tomorrowBeforeAdd = await getTomorrowDbDate(page);
-  await workViewPage.addTask('Write report #work @tomorrow', false, null);
-  // The hold must actually gate the parse — in dev AND built assets. If it
-  // did not, the add-task bar's parse would have dispatched the cleaned
-  // title and the rest would pass trivially, so prove the raw title is on
-  // the task before letting parsing proceed.
   const rawTitle = `${testPrefix}-Write report #work @tomorrow`;
+  await dispatchAddTaskWithRawTitle(page, projectName, rawTitle);
+  // The hold must actually gate the parse — in dev AND built assets. If it
+  // did not, the short-syntax effect would clean the title before this
+  // assertion and the rest would pass trivially, so prove the raw title is on
+  // the task before letting parsing proceed.
   await expect
     .poll(async () => (await getTaskSnapshot(page, cleanTitle))?.title ?? null)
     .toBe(rawTitle);

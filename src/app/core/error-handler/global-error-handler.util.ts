@@ -266,90 +266,57 @@ export const isHandledError = (err: unknown): boolean => {
   );
 };
 
+// The crash report form in .github/ISSUE_TEMPLATE. Issue forms ignore a `body`
+// and prefill fields by their id instead, so the details go into the form's
+// console output field; the user fills in the steps to reproduce.
+const GITHUB_ERROR_REPORT_TEMPLATE = 'internal_error_report.yml';
+const GITHUB_ERROR_REPORT_DETAILS_FIELD_ID = 'console-output';
+
 export const getGithubErrorUrl = (
   title: string,
   stackTrace?: string,
   origErr?: Error | unknown,
   isHideActionsBeforeError = false,
 ): string => {
-  return newGithubIssueUrl({
-    user: 'ac9492',
-    repo: 'ultra-tasks',
-    title: '💥 ' + title,
-    template: 'in_app_bug_report.md',
-    body: getGithubIssueErrorMarkdown(stackTrace, origErr, isHideActionsBeforeError),
-  });
+  const url = new URL(
+    newGithubIssueUrl({
+      user: 'ac9492',
+      repo: 'ultra-tasks',
+      title: '💥 ' + title,
+      template: GITHUB_ERROR_REPORT_TEMPLATE,
+    }),
+  );
+  url.searchParams.set(
+    GITHUB_ERROR_REPORT_DETAILS_FIELD_ID,
+    getGithubIssueErrorDetails(stackTrace, origErr, isHideActionsBeforeError),
+  );
+  return url.toString();
 };
 
-const getGithubIssueErrorMarkdown = (
+// Plain text: the form renders this field as one code block, so no fences
+const getGithubIssueErrorDetails = (
   stacktrace?: string,
   origErr?: Error | unknown,
   isHideActionsBeforeError = false,
 ): string => {
-  const code = '```';
-  let txt = `### Steps to Reproduce
-<!-- !!! Please provide an unambiguous set of steps to reproduce this bug! !!! -->
-1.
-2.
-3.
-
-### Additional Console Output
-<!-- Is there any output if you press Ctrl+Shift+i (Cmd+Alt+i for mac) in the console tab? If so please post it here. -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-### URL
-${window.location.href}
-
-${typeof origErr === 'object' && origErr && 'additionalLog' in origErr ? `### AL\n${origErr.additionalLog}` : ''}
-
-### Meta Info
+  let txt = `URL: ${window.location.href}
+${typeof origErr === 'object' && origErr && 'additionalLog' in origErr ? `\nAL:\n${origErr.additionalLog}\n` : ''}
+Meta Info:
 ${getSimpleMeta()}
 `;
 
   if (stacktrace) {
     txt += `
-
-### Stacktrace
-${code}
+Stacktrace:
 ${stacktrace}
-${code}
 `;
   }
 
   if (!isHideActionsBeforeError) {
     txt += `
-
-### Actions Before Error
-${code}
+Actions Before Error:
 ${getBeforeLastErrorActionLog().join(' \n')}
-${code}`;
+`;
   }
 
   return txt;

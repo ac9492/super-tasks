@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{ T.F.SYNC.D_DEVICES.TITLE | translate }}</h1>
+<h2 mat-dialog-title>{{ T.F.SYNC.D_DEVICES.TITLE | translate }}</h2>
 
 <div mat-dialog-content>
   @if (isLoading()) {
@@ -54,8 +54,8 @@
        exactly when it must stay reachable. -->
   @if (!isLoading()) {
     <button
-      class="sign-out-btn"
-      mat-button
+      class="sign-out-btn dialog-action-start"
+      mat-stroked-button
       color="warn"
       [disabled]="isSigningOut()"
       (click)="signOutOtherDevices()"

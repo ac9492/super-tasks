@@ -1,4 +1,4 @@
-<h4>Connect Calendar</h4>
+<h4>{{ T.F.ISSUE.SETUP_OVERVIEW.CONNECT_CALENDAR | translate }}</h4>
 <div class="items">
   <button
     class="provider-tile focus-ring"
@@ -6,7 +6,7 @@
     (click)="openSetupDialog('ICAL', 'GOOGLE')"
   >
     <mat-icon>calendar_month</mat-icon>
-    <span>Google Calendar (iCal)</span>
+    <span>{{ T.F.ISSUE.SETUP_OVERVIEW.GOOGLE_CALENDAR_ICAL | translate }}</span>
   </button>
   <button
     class="provider-tile focus-ring"
@@ -22,7 +22,7 @@
     (click)="openSetupDialog('ICAL', 'OTHER')"
   >
     <mat-icon>calendar_month</mat-icon>
-    <span>Other (iCal)</span>
+    <span>{{ T.F.ISSUE.SETUP_OVERVIEW.OTHER_ICAL | translate }}</span>
   </button>
   @for (provider of pluginCalendarProviders(); track provider.pluginId) {
     <button
@@ -54,7 +54,7 @@
   }
 </div>
 
-<h4>Setup Issue Provider</h4>
+<h4>{{ T.F.ISSUE.SETUP_OVERVIEW.SET_UP_ISSUE_PROVIDER | translate }}</h4>
 
 <div class="items">
   <button
@@ -81,7 +81,7 @@
     (click)="openSetupDialog('CALDAV')"
   >
     <mat-icon svgIcon="caldav"></mat-icon>
-    <span>CalDAV Todo</span>
+    <span>{{ T.F.ISSUE.SETUP_OVERVIEW.CALDAV_TODO | translate }}</span>
   </button>
   <button
     class="provider-tile focus-ring"

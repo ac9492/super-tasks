@@ -5,7 +5,6 @@ import {
   HostBinding,
   inject,
   input,
-  viewChild,
 } from '@angular/core';
 import { ScheduleFromCalendarEvent } from '../../schedule/schedule.model';
 import { MatIcon } from '@angular/material/icon';
@@ -55,8 +54,6 @@ export class PlannerCalendarEventComponent {
     return this.isBeingSubmitted;
   }
 
-  readonly menuTrigger = viewChild.required(MatMenuTrigger);
-
   // Only the default `event` glyph has the dot the color is drawn on.
   readonly hasColorDot = computed(() => {
     const evt = this.calendarEvent();
@@ -70,12 +67,6 @@ export class PlannerCalendarEventComponent {
   readonly hasEventUrl = computed(() =>
     this._calEventActions.hasEventUrl(this.calendarEvent()),
   );
-
-  openMenu(event: MouseEvent): void {
-    event.preventDefault();
-    event.stopPropagation();
-    this.menuTrigger().openMenu();
-  }
 
   async openEventLink(): Promise<void> {
     await this._calEventActions.openEventLink(this.calendarEvent());

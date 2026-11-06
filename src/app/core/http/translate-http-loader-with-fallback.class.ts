@@ -10,24 +10,44 @@ import EN_TRANSLATIONS from '../../../assets/i18n/en.json';
 
 // Upstream locale files retain their translated prose. Apply the fork's product
 // identity once when loading them. Keep keys, placeholders and service URLs stable.
-const withProductName = (value: TranslationObject[string]): TranslationObject[string] => {
-  if (typeof value === 'string')
-    return value
-      .replace(/super productivity|super tasks/gi, 'Ultra Tasks')
-      .replaceAll('superproductivity://', 'ultratasks://')
-      .replaceAll('com.super-productivity.app://', 'app.ultratasks://')
-      .replaceAll('https://app.super-productivity.com', 'https://ultratasks.app')
-      .replaceAll(
-        'https://super-productivity.com/download/',
-        'https://github.com/ac9492/ultra-tasks/releases/latest',
-      );
+// en.json is maintained in this fork and already names Ultra Tasks; it also names
+// genuinely upstream things on purpose (the SuperSync operator, the upstream
+// Chrome extension), so the source language is never rewritten.
+const UPSTREAM_CONTACT_EMAIL = 'contact@super-productivity.com';
+
+const withProductNameStr = (value: string): string =>
+  value
+    .replace(/super productivity|super tasks/gi, 'Ultra Tasks')
+    .replace(/SuperProductivity/g, 'Ultra Tasks')
+    .replaceAll('superproductivity://', 'ultratasks://')
+    .replaceAll('com.super-productivity.app://', 'app.ultratasks://')
+    .replaceAll('https://app.super-productivity.com', 'https://ultratasks.app')
+    .replaceAll(
+      'https://super-productivity.com/download/',
+      'https://github.com/ac9492/ultra-tasks/releases/latest',
+    )
+    .replaceAll(
+      'https://github.com/super-productivity/super-productivity/wiki/2.09-Configure-Sync-Backend',
+      'https://github.com/ac9492/ultra-tasks/blob/main/docs/wiki/2.09-Configure-Sync-Backend.md',
+    );
+
+// A string that still sends users to the upstream maintainer's inbox cannot be
+// fixed by a rename: the fork publishes no maintainer email. Dropping the key
+// lets ngx-translate fall back to the English text, which names the fork's own
+// channel.
+const isUpstreamContactText = (value: unknown): boolean =>
+  typeof value === 'string' && value.includes(UPSTREAM_CONTACT_EMAIL);
+
+export const withProductName = (
+  value: TranslationObject[string],
+): TranslationObject[string] => {
+  if (typeof value === 'string') return withProductNameStr(value);
   if (Array.isArray(value)) return value.map(withProductName);
   if (value && typeof value === 'object') {
     return Object.fromEntries(
-      Object.entries(value).map(([key, translation]) => [
-        key,
-        withProductName(translation),
-      ]),
+      Object.entries(value)
+        .map(([key, translation]) => [key, withProductName(translation)] as const)
+        .filter(([, translation]) => !isUpstreamContactText(translation)),
     );
   }
   return value;
@@ -62,7 +82,11 @@ export class TranslateHttpLoaderWithFallback implements TranslateLoader {
 
   getTranslation(lang: string): Observable<TranslationObject> {
     return this._httpLoader.getTranslation(lang).pipe(
-      map((translations) => withProductName(translations) as TranslationObject),
+      map((translations) =>
+        lang === DEFAULT_LANGUAGE
+          ? translations
+          : (withProductName(translations) as TranslationObject),
+      ),
       catchError((err: unknown) => {
         if (err instanceof HttpErrorResponse && err.status === 0) {
           // Expected, recoverable offline degrade — warn, don't err.

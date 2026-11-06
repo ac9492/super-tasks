@@ -85,7 +85,9 @@ describe('PluginDialogComponent', () => {
 
     const input = fixture.nativeElement.querySelector('mat-dialog-content input');
 
-    expect(fixture.nativeElement.querySelector('h2').textContent).toBe('Plugin settings');
+    expect(fixture.nativeElement.querySelector('mat-dialog-content h2').textContent).toBe(
+      'Plugin settings',
+    );
     expect(input.value).toBe('Example');
     expect(fixture.nativeElement.querySelector('strong').textContent).toBe('Ready');
   });

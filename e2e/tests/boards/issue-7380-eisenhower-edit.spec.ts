@@ -44,7 +44,8 @@ test.describe('Boards — Eisenhower Matrix edit dialog (#7380)', () => {
     const dialog = page.locator('dialog-board-edit');
     await expect(dialog).toBeVisible({ timeout: 5000 });
 
-    const saveBtn = dialog.locator('button:has(mat-icon:has-text("save"))');
+    // Save is a text-only button (dialog actions carry no generic save icon).
+    const saveBtn = dialog.getByRole('button', { name: 'Save', exact: true });
     await expect(saveBtn).toBeVisible();
 
     // Pre-fix: this expectation fails — the form is invalid on open because

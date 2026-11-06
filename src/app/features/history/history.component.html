@@ -1,28 +1,30 @@
 @if (worklogData(); as wData) {
-  <div [@fadeInSlow]>
-    <h1 class="mat-headline-5 total-time">
-      {{ T.F.WORKLOG.CMP.TOTAL_TIME | translate }} <br /><strong>{{
-        wData.totalTimeSpent | msToString
-      }}</strong>
-    </h1>
-    <button
-      (click)="exportAllData()"
-      [attr.aria-label]="T.F.WORKLOG.CMP.EXPORT_DATA | translate"
-      [disabled]="!wData.totalTimeSpent"
-      [matTooltip]="T.F.WORKLOG.CMP.EXPORT_DATA | translate"
-      class="mat-elevation-z1 export-all"
-      color="primary"
-      mat-mini-fab
-    >
-      <mat-icon>call_made</mat-icon>
-    </button>
+  <div
+    [@fadeInSlow]
+    class="page-wrapper"
+  >
+    <div class="total-time">
+      <span
+        >{{ T.F.WORKLOG.CMP.TOTAL_TIME | translate }}
+        <strong>{{ wData.totalTimeSpent | msToString }}</strong></span
+      >
+      <button
+        (click)="exportAllData()"
+        [attr.aria-label]="T.F.WORKLOG.CMP.EXPORT_DATA | translate"
+        [disabled]="!wData.totalTimeSpent"
+        [matTooltip]="T.F.WORKLOG.CMP.EXPORT_DATA | translate"
+        mat-icon-button
+      >
+        <mat-icon>call_made</mat-icon>
+      </button>
+    </div>
     <div class="years">
       @for (year of wData.worklog | keyvalue: sortWorklogItems; track year.key) {
         <div class="year">
-          <h1
+          <h2
             [innerHtml]="year.key"
-            class="year-title mat-headline-5"
-          ></h1>
+            class="year-title"
+          ></h2>
           <div class="year-time-spent">
             {{ T.F.WORKLOG.CMP.MONTH_WORKED | translate }}
             <strong>{{ year.value.monthWorked }}</strong
@@ -36,7 +38,7 @@
           <div class="months">
             @for (month of year.value.ent | keyvalue: sortWorklogItems; track month.key) {
               <div class="month">
-                <h2 class="month-title mat-headline-5">
+                <h3 class="month-title">
                   <button
                     type="button"
                     class="month-toggle"
@@ -55,13 +57,11 @@
                   <button
                     (click)="exportData(year.key, month.key)"
                     [attr.aria-label]="T.F.WORKLOG.CMP.EXPORT_DATA | translate"
-                    class="mat-elevation-z1"
-                    color="primary"
-                    mat-mini-fab
+                    mat-icon-button
                   >
                     <mat-icon>call_made</mat-icon>
                   </button>
-                </h2>
+                </h3>
                 <div class="month-time-spent">
                   {{ T.F.WORKLOG.CMP.DAYS_WORKED | translate }}
                   <strong>{{ month.value.daysWorked }}</strong
@@ -79,12 +79,12 @@
                       <div class="week">
                         <div class="week-header">
                           <div class="wrap">
-                            <h3 class="week-title mat-h4">
+                            <h4 class="week-title">
                               {{
                                 T.F.WORKLOG.CMP.WEEK_NR | translate: { nr: week.weekNr }
                               }}
-                            </h3>
-                            <div>{{ week.timeSpent | msToString }}</div>
+                            </h4>
+                            <div class="week-time">{{ week.timeSpent | msToString }}</div>
                           </div>
                           <button
                             (click)="exportData(year.key, month.key, week.weekNr)"
@@ -99,9 +99,7 @@
                                     }
                             "
                             [attr.aria-label]="T.F.WORKLOG.CMP.EXPORT_DATA | translate"
-                            class="mat-elevation-z1"
-                            color=""
-                            mat-mini-fab
+                            mat-icon-button
                           >
                             <mat-icon>call_made</mat-icon>
                           </button>

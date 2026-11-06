@@ -19,10 +19,18 @@
 // own menu icons, so the labels of all items line up.
 :host[matMenuItemIcon] {
   justify-content: center;
-  width: var(--s3);
-  height: var(--s3);
+  width: var(--icon-md);
+  height: var(--icon-md);
   // Logical property so the gap stays between icon and label in RTL languages.
-  margin-inline-end: var(--mat-menu-item-spacing, var(--s2));
+  margin-inline-end: var(--mat-menu-item-spacing, var(--s1-5));
+
+  // the glyph fills the 20px menu icon slot like Material's own menu icons
+  mat-icon.icon {
+    width: var(--icon-md);
+    height: var(--icon-md);
+    font-size: var(--icon-md);
+    line-height: var(--icon-md);
+  }
 }
 
 // Keyed on this component's own host attribute, so the rule can never match a

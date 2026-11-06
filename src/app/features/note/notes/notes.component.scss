@@ -19,9 +19,9 @@ header {
 }
 
 .notes {
-  padding: calc(var(--s) * 1.5);
+  padding: var(--s2);
   // Add extra bottom padding to ensure last note is fully visible
-  padding-bottom: calc(var(--s) * 3);
+  padding-bottom: var(--s3);
 
   // Remove max-height and overflow-y to prevent double scrollbars
   // Let the parent bottom-panel-content handle scrolling instead
@@ -29,7 +29,7 @@ header {
 
 note {
   display: block;
-  margin-bottom: calc(var(--s) * 1.5);
+  margin-bottom: var(--s);
 }
 
 .drag-over-msg {
@@ -48,7 +48,7 @@ note {
 
 .highlight-searched-item note ::ng-deep .note {
   outline: 2px solid var(--c-accent) !important;
-  box-shadow: var(--whiteframe-shadow-6dp) !important;
+  box-shadow: var(--elev-2) !important;
   transition:
     outline 0.2s ease,
     box-shadow 0.2s ease;

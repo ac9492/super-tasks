@@ -24,6 +24,10 @@ import {
 } from './shared-with-frontend/local-rest-api.model';
 import { ElectronDistChannel } from './shared-with-frontend/get-dist-channel';
 import {
+  NativeGlassMaterial,
+  NativeGlassState,
+} from './shared-with-frontend/native-glass.model';
+import {
   AssistantAccessCredentialResult,
   AssistantAccessScope,
   AssistantAccessState,
@@ -250,6 +254,11 @@ export interface ElectronAPI {
   updateTaskWidgetSettings(cfg: TaskWidgetConfig): void;
 
   updateTitleBarDarkMode(isDarkMode: boolean): void;
+
+  /** The OS material this window supports (fixed for the window's lifetime). */
+  getNativeGlassMaterial(): NativeGlassMaterial | null;
+
+  setNativeGlass(state: NativeGlassState): void;
 
   registerGlobalShortcuts(keyboardConfig: KeyboardConfig): void;
 
