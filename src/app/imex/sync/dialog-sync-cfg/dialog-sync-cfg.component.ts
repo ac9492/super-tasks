@@ -7,6 +7,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   MatDialog,
@@ -72,6 +73,7 @@ type SyncFormModel = SyncConfig & {
   templateUrl: './dialog-sync-cfg.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    RouterLink,
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,

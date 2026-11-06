@@ -79,17 +79,25 @@ test.describe('Task detail iOS focus zoom', () => {
       'zoom threshold task',
     );
 
-    // Tag field — the control all three issues named.
-    await page.locator('tag-edit input').waitFor({ state: 'visible' });
-    expect(await getFontSizePx(page, 'tag-edit input')).toBeGreaterThanOrEqual(
-      IOS_ZOOM_THRESHOLD_PX,
-    );
-
-    // Add-subtask field — same panel, same gesture, same defect.
+    // Add-subtask field — same panel, same gesture, same defect. Raised
+    // unconditionally, so no touch class is needed.
     await openSubTaskDraft(page, task);
     expect(await getFontSizePx(page, '.e2e-add-subtask-input')).toBeGreaterThanOrEqual(
       IOS_ZOOM_THRESHOLD_PX,
     );
+
+    // Tag field — the control all three issues named. It follows the body size
+    // with a mouse and is raised to 16px where
+    // touch is primary, which is the only place iOS zooms. Force what a phone
+    // sets at startup via InputIntentService.
+    await page.locator('tag-edit input').waitFor({ state: 'visible' });
+    await page.evaluate(() => {
+      document.body.classList.remove('isMousePrimary');
+      document.body.classList.add('isTouchPrimary');
+    });
+    await expect
+      .poll(() => getFontSizePx(page, 'tag-edit input'))
+      .toBeGreaterThanOrEqual(IOS_ZOOM_THRESHOLD_PX);
 
     // The panel title is not asserted. `.task-title` is 17px below 600px, so
     // phones already clear the threshold; its >=600px rule stays at 15px, so a

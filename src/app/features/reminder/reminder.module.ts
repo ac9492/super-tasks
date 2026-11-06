@@ -43,6 +43,7 @@ import { Log } from '../../core/log';
 import { IS_ANDROID_WEB_VIEW } from '../../util/is-android-web-view';
 import { androidInterface } from '../android/android-interface';
 import { DateService } from '../../core/date/date.service';
+import { Router } from '@angular/router';
 
 const SNOOZE_10M_MS = 10 * 60 * 1000;
 const SNOOZE_1H_MS = 60 * 60 * 1000;
@@ -71,6 +72,7 @@ export class ReminderModule {
   private readonly _syncWrapperService = inject(SyncWrapperService);
   private readonly _dateService = inject(DateService);
   private readonly _isElectron = inject(IS_ELECTRON_TOKEN);
+  private readonly _router = inject(Router);
 
   constructor() {
     // Initialize reminder service (runs migration in background)
@@ -382,6 +384,12 @@ export class ReminderModule {
    * Handle notification tap: sync, then navigate to task or show "already done".
    */
   private async _handleTapAction(taskId: string, reminderType?: string): Promise<void> {
+    if (taskId.startsWith('native:')) {
+      await this._router.navigate(['/native-sync'], {
+        queryParams: { scope: taskId.split(':')[1] },
+      });
+      return;
+    }
     Log.log('ReminderModule: Handling notification tap', { taskId });
     try {
       await this._syncWrapperService.sync();
@@ -414,6 +422,10 @@ export class ReminderModule {
    * Handle "Done" action: sync, then mark task done or show "already done".
    */
   private async _handleDoneAction(taskId: string): Promise<void> {
+    if (taskId.startsWith('native:')) {
+      await this._handleTapAction(taskId);
+      return;
+    }
     Log.log('ReminderModule: Handling done action', { taskId });
     try {
       await this._syncWrapperService.sync();

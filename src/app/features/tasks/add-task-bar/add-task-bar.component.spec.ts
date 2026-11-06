@@ -336,6 +336,27 @@ describe('AddTaskBarComponent', () => {
     });
   });
 
+  describe('input model from the suggestion autocomplete', () => {
+    it('takes typed text into the state', () => {
+      component.onInputModelChange('Buy milk');
+
+      expect(component.stateService.inputTxt()).toBe('Buy milk');
+    });
+
+    it('ignores a picked suggestion, which is not text', () => {
+      component.stateService.updateInputTxt('Existing');
+
+      component.onInputModelChange({ taskId: 'task-1', title: 'Existing task' });
+
+      expect(component.stateService.inputTxt()).toBe('Existing');
+    });
+
+    it('shows typed text as is and a picked suggestion as nothing', () => {
+      expect(component.displayInputValue('Buy milk')).toBe('Buy milk');
+      expect(component.displayInputValue({ taskId: 'task-1' })).toBe('');
+    });
+  });
+
   describe('highlightSegments', () => {
     it('splits the input by the ranges parsed from that exact text', () => {
       component.stateService.updateInputTxt('Buy milk #shop');

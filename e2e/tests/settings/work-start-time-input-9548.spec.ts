@@ -26,9 +26,11 @@ const openScheduleSection = async (
   page: Page,
   settingsPage: SettingsPage,
 ): Promise<void> => {
-  await page.goto('/#/config?tab=2');
-  await page.waitForURL(/config/);
-  await page.locator(`${SECTION} collapsible`).waitFor({ state: 'visible' });
+  // Tab 1 is "Tasks & planning", which holds the schedule section.
+  await page.goto('/#/config?tab=1');
+  // Settings opens as a dialog over the workspace and the URL snaps back, so
+  // wait for the dialog rather than the URL.
+  await page.locator('.page-settings').waitFor({ state: 'visible', timeout: 10000 });
   await settingsPage.expandSection(SECTION);
   // `isWorkStartEndEnabled` defaults to true, so the time fields are rendered.
   await page.locator(WORK_START_INPUT).first().waitFor({ state: 'visible' });

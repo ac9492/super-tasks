@@ -80,6 +80,9 @@
 
   // The title is the one thing on the row that should read first; project,
   // tags and estimate are muted secondary text (see .parent-title, .time).
+  // Weight and line height only, not the `font` shorthand: it would also reset
+  // the size, which task-title raises to 16px on touch iOS so that focusing the
+  // title does not zoom the page (#9556); this selector outranks that rule.
   .task-title {
     font: var(--type-body-strong);
   }

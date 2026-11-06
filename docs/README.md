@@ -49,6 +49,11 @@ must link to their replacement, and keep their original number.
 
 ## Active plans
 
+- [Native encrypted collaboration](plans/2026-11-05-native-encrypted-collaboration.md)
+  — proposed Ultra Tasks fork direction: password accounts and 2FA, encrypted
+  project sharing, periodic personal sync, near real-time shared sync, and one
+  protocol for hosted and self-hosted destinations
+
 [`plans/`](plans/) and [`long-term-plans/`](long-term-plans/) contain proposals,
 not current behavior. Every active plan should start with:
 
@@ -82,6 +87,8 @@ it wrong: any claim about which releases carry a change must be re-derived with
 any code changing.
 
 - [Recurring events implementation plan](research/recurring-events-implementation-plan.md)
+- [Main interface UI/UX simplification audit](research/2026-11-05-main-interface-ui-ux-audit.md)
+  — recommendations against Claude's November 5 shell/task-surface checkpoint
 - [UI icon audit](research/icon-audit.md) — dated semantic inventory, contextual
   replacement recommendations, source locations and a searchable visual review
 - [Icon replacement approval report](research/icon-replacements.md) — concrete

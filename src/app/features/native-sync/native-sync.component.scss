@@ -1,0 +1,31 @@
+:host {
+  display: block;
+}
+main {
+  max-width: 60em;
+  margin: auto;
+  padding: var(--s2);
+}
+section {
+  margin-block: var(--s2);
+}
+label {
+  display: block;
+  margin-block: var(--s);
+}
+input:not([type='checkbox']),
+textarea,
+select {
+  display: block;
+  width: min(100%, 35em);
+}
+button,
+a {
+  margin-inline-end: var(--s);
+}
+li {
+  margin-block: var(--s);
+}
+.tasks {
+  padding-inline-start: var(--s2);
+}

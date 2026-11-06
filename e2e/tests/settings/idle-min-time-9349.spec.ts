@@ -27,23 +27,19 @@ const enableAdvancedFeatures = async (page: Page): Promise<void> => {
 };
 
 const openIdleSection = async (page: Page): Promise<void> => {
+  // Tab 2 is "Time & focus". The settings window lays its sections out open, so
+  // there is no section to expand: the idle fields are always rendered, just
+  // CSS-hidden in plain web.
   await page.goto('/#/config?tab=2');
-  await page.waitForURL(/config/);
+  // Settings opens as a dialog over the workspace and the URL snaps back, so
+  // wait for the dialog rather than the URL.
+  await page.locator('.page-settings').waitFor({ state: 'visible', timeout: 10000 });
+  await page
+    .locator(`${IDLE_SECTION} [data-setting-key]`)
+    .first()
+    .waitFor({ state: 'attached', timeout: 10000 });
   await enableAdvancedFeatures(page);
-
-  const collapsible = page.locator(`${IDLE_SECTION} collapsible`);
-  await collapsible.waitFor({ state: 'visible', timeout: 10000 });
-  await collapsible.scrollIntoViewIfNeeded();
-
-  const isExpanded = await collapsible.evaluate((el: Element) =>
-    el.classList.contains('isExpanded'),
-  );
-  if (!isExpanded) {
-    await collapsible.locator('.collapsible-header').click();
-    await collapsible
-      .locator('.collapsible-panel')
-      .waitFor({ state: 'visible', timeout: 5000 });
-  }
+  await page.locator(IDLE_SECTION).scrollIntoViewIfNeeded();
 };
 
 /** Idle tracking is off by default; minIdleTime is hidden behind it. */

@@ -10,7 +10,6 @@
  */
 
 import { test, expect } from '../../fixtures/test.fixture';
-import { Page } from '@playwright/test';
 import { waitForAppReady } from '../../utils/waits';
 
 test.describe('Bug #5995: Resume paused break (CRITICAL BUG TEST)', () => {
@@ -47,10 +46,10 @@ test.describe('Bug #5995: Resume paused break (CRITICAL BUG TEST)', () => {
     page,
     workViewPage,
   }) => {
-    // Step 1: Enable the critical setting
-    await enableSyncSetting(page);
-
-    // Navigate back to work view
+    // Step 1: Open the work view. The legacy "sync focus sessions with time
+    // tracking" setting this test used to switch on no longer exists (it became
+    // the opt-in `autoStartFocusOnPlay`, off by default), so the focus session is
+    // started by hand below.
     await page.goto('/');
     await waitForAppReady(page);
 
@@ -70,8 +69,8 @@ test.describe('Bug #5995: Resume paused break (CRITICAL BUG TEST)', () => {
     await page.waitForURL(/#\/(tag|project)\/.+\/tasks/, { timeout: 10000 });
 
     // Step 3: Start Pomodoro session
-    // Note: With isSyncSessionWithTracking enabled, the focus overlay may auto-open
-    // when we start tracking. Check if it's already open before clicking the button.
+    // Note: the focus overlay may already be open after tracking starts. Check
+    // before clicking the button.
     const focusOverlay = page.locator('focus-mode-overlay');
     const isOverlayAlreadyOpen = await focusOverlay.isVisible().catch(() => false);
 
@@ -162,55 +161,3 @@ test.describe('Bug #5995: Resume paused break (CRITICAL BUG TEST)', () => {
     expect(hasBreakText).toBe(true);
   });
 });
-
-const enableSyncSetting = async (page: Page): Promise<void> => {
-  console.log('\n=== STEP: Enabling sync setting ===');
-
-  await page.goto('/#/config');
-  await page.waitForLoadState('domcontentloaded');
-  await page.waitForTimeout(500);
-
-  // Navigate to Productivity tab
-  const productivityTab = page.locator('[role="tab"]', { hasText: /Productivity/i });
-  if (await productivityTab.isVisible({ timeout: 3000 }).catch(() => false)) {
-    await productivityTab.click();
-    await page.waitForTimeout(500);
-  }
-
-  // Find and expand the Focus Mode section
-  const focusModeSection = page
-    .locator('config-section')
-    .filter({ hasText: 'Focus Mode' })
-    .first();
-  await focusModeSection.scrollIntoViewIfNeeded();
-
-  const collapsible = focusModeSection.locator('collapsible');
-  const isExpanded = await collapsible
-    .evaluate((el) => el.classList.contains('isExpanded'))
-    .catch(() => false);
-
-  if (!isExpanded) {
-    const header = collapsible.locator('.collapsible-header');
-    await header.click();
-    await page.waitForTimeout(500);
-  }
-
-  // Find and enable the sync toggle
-  const syncToggle = page
-    .locator('mat-slide-toggle')
-    .filter({ hasText: 'Sync focus sessions with time tracking' })
-    .first();
-
-  if (await syncToggle.isVisible({ timeout: 3000 }).catch(() => false)) {
-    const classes = await syncToggle.getAttribute('class');
-    if (!classes?.includes('mat-checked')) {
-      console.log('>>> Enabling sync setting...');
-      await syncToggle.click();
-      await page.waitForTimeout(500);
-    } else {
-      console.log('>>> Sync setting already enabled');
-    }
-  } else {
-    console.log('>>> Sync setting toggle not found - may already be enabled by default');
-  }
-};

@@ -6,7 +6,13 @@
 }
 
 :host {
-  display: block;
+  // A column no taller than the viewport: the content scrolls between the title
+  // and the actions, which stay in view (the pane's own max-height does not
+  // reach the content, so the dialog would otherwise run off short screens).
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - var(--s8) - var(--safe-area-top) - var(--safe-area-bottom));
+  max-height: calc(100dvh - var(--s8) - var(--safe-area-top) - var(--safe-area-bottom));
   user-select: none;
 
   :host-context([dir='rtl']) {
@@ -23,7 +29,7 @@
 
 mat-dialog-content {
   position: relative;
-  // The pane's own max-height governs; Material's 65vh would scroll the calendar.
+  // The host's max-height governs; Material's 65vh would scroll the calendar.
   max-height: none;
 }
 

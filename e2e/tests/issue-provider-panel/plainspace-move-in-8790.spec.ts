@@ -30,7 +30,7 @@ const moveToProject = async (
   const menu = page.locator('.mat-mdc-menu-panel').first();
   await menu
     .locator('button[mat-menu-item]')
-    .filter({ has: page.locator('mat-icon:has-text("forward")') })
+    .filter({ has: page.locator('mat-icon:has-text("drive_file_move")') })
     .first()
     .click();
   await page.locator('.mat-mdc-menu-panel').nth(1).waitFor({ state: 'visible' });

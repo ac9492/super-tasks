@@ -9,6 +9,7 @@
     <exclude
       domain="sharedpref"
       path="SuperProductivitySync.xml" />
+    <exclude domain="sharedpref" path="UltraNativeAccountV2.xml" />
     <!-- Per-device WebView verdict; see backup_rules.xml. -->
     <exclude
       domain="sharedpref"
@@ -27,6 +28,7 @@
     <exclude
       domain="sharedpref"
       path="SuperProductivitySync.xml" />
+    <exclude domain="sharedpref" path="UltraNativeAccountV2.xml" />
     <!-- Per-device WebView verdict; see backup_rules.xml. -->
     <exclude
       domain="sharedpref"

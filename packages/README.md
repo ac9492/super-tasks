@@ -5,6 +5,7 @@ package code must respect the [sync dependency boundaries](../docs/sync-and-op-l
 
 | Package                                          | Responsibility / starting point                                                                        |
 | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| [account-crypto](account-crypto/README.md)       | Encrypted account vaults, password authentication client, recipient keys, and account portal           |
 | [sync-core](sync-core/README.md)                 | Framework-independent sync primitives, conflicts, clocks, compression, encryption                      |
 | [sync-providers](sync-providers/src/)            | Provider contracts, transports, credential storage, and platform adapters                              |
 | [shared-schema](shared-schema/src/)              | Shared schema versions, validation, and migrations                                                     |

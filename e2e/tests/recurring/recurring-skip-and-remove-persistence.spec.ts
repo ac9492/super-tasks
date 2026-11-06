@@ -144,7 +144,9 @@ test.describe('Recurring task occurrence and series removal persistence', () => 
     await expect(repeatValue).toContainText('Every day');
 
     const repeatDialog = await openRecurDialog(page);
-    await repeatDialog.getByRole('button', { name: 'Remove', exact: true }).click();
+    await repeatDialog
+      .getByRole('button', { name: 'Remove recurrence', exact: true })
+      .click();
     const removeConfirmation = page
       .locator('mat-dialog-container')
       .filter({ hasText: 'Removing the recurring config' });

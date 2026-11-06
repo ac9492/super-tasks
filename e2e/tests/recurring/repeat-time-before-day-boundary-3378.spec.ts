@@ -103,7 +103,7 @@ test.describe('Repeat Task - start time before the start of the next day (#3378)
     await openRecurDialog(page);
 
     const scheduleDialog = await openRecurScheduleDialog(page);
-    const startTimeField = scheduleDialog.getByLabel('Time');
+    const startTimeField = scheduleDialog.getByLabel('Time', { exact: true });
     await expect(startTimeField).toBeVisible({ timeout: 5000 });
     await startTimeField.fill('02:00');
     await startTimeField.blur();

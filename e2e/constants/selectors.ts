@@ -123,7 +123,7 @@ export const cssSelectors = {
   DETAIL_PANEL: 'task-detail-panel',
   DETAIL_PANEL_BTN: '.show-additional-info-btn',
   SCHEDULE_TASK_ITEM:
-    'task-detail-item:has(mat-icon:text("alarm")), task-detail-item:has(mat-icon:text("today")), task-detail-item:has(mat-icon:text("schedule"))',
+    'task-detail-item:has(mat-icon:text("alarm")), task-detail-item:has(mat-icon:text("today")), task-detail-item:has(mat-icon:text("schedule")), task-detail-item:has(mat-icon:text("calendar_month"))',
   TASK_SCHEDULE_BTN: '.ico-btn.schedule-btn',
 
   // ============================================================================

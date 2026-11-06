@@ -264,6 +264,11 @@ export interface ElectronAPI {
 
   setNativeGlass(state: NativeGlassState): void;
 
+  /** The OS material this window supports (fixed for the window's lifetime). */
+  getNativeGlassMaterial(): NativeGlassMaterial | null;
+
+  setNativeGlass(state: NativeGlassState): void;
+
   registerGlobalShortcuts(keyboardConfig: KeyboardConfig): void;
 
   showFullScreenBlocker(args: { msg?: string; takeABreakCfg: TakeABreakConfig }): void;

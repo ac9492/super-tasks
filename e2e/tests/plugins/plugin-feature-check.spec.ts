@@ -28,7 +28,7 @@ test.describe('Plugin Management Feature Check', () => {
     const pluginManagement = page.locator('plugin-management');
     await expect(pluginManagement).toBeVisible({ timeout: 10000 });
     await pluginManagement
-      .getByRole('navigation', { name: 'Plugin views' })
+      .getByRole('radiogroup', { name: 'Plugin views' })
       .getByRole('radio', { name: 'Discover', exact: true })
       .click();
     await expect(pluginManagement.locator('.community-plugins-card h2')).toContainText(
@@ -50,7 +50,7 @@ test.describe('Plugin Management Feature Check', () => {
     await expect(browser.locator('.installed-plugin').first()).toBeVisible();
     await expect(browser.locator('.community-plugins-card')).toHaveCount(0);
     await browser
-      .getByRole('navigation', { name: 'Plugin views' })
+      .getByRole('radiogroup', { name: 'Plugin views' })
       .getByRole('radio', { name: 'Discover', exact: true })
       .click();
     await expect(browser.locator('.community-plugin-item')).toHaveCount(24);
@@ -85,7 +85,7 @@ test.describe('Plugin Management Feature Check', () => {
     await page.goto('/#/plugins');
     const browser = page.locator('plugin-management');
     await browser
-      .getByRole('navigation', { name: 'Plugin views' })
+      .getByRole('radiogroup', { name: 'Plugin views' })
       .getByRole('radio', { name: 'Discover', exact: true })
       .click();
     const search = browser.getByRole('searchbox');

@@ -19,7 +19,7 @@ export const openRecurDialog = async (page: Page): Promise<Locator> => {
     .locator('task-detail-item')
     .filter({
       has: page.locator('mat-icon', {
-        hasText: /^(alarm|today|schedule|repeat)$/,
+        hasText: /^(alarm|today|schedule|calendar_month|repeat)$/,
       }),
     })
     .first();

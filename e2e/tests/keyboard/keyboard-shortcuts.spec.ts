@@ -14,8 +14,12 @@ import { waitForStatePersistence } from '../../utils/waits';
 const { ADD_TASK_INPUT, DETAIL_PANEL } = cssSelectors;
 
 test.describe('Keyboard Shortcuts', () => {
-  test('should keep an assigned shortcut after Escape and reload', async ({ page }) => {
-    await page.goto('/#/config?section=keyboard');
+  test('should keep an assigned shortcut after Escape and reload', async ({
+    page,
+    settingsPage,
+  }) => {
+    // Every shortcut sits behind the Keyboard section's "More options" toggle.
+    await settingsPage.openSettingsSection('keyboard');
 
     const shortcutInput = page.locator('keyboard-input input').first();
     await expect(shortcutInput).toBeVisible();
@@ -26,7 +30,10 @@ test.describe('Keyboard Shortcuts', () => {
     await page.keyboard.press('Escape');
     await expect(shortcutInput).toHaveValue(assignedShortcut);
 
+    // Settings is a dialog over the workspace, so a reload lands on the
+    // workspace; reopen the section to read the stored shortcut.
     await page.reload();
+    await settingsPage.openSettingsSection('keyboard');
     const reloadedShortcutInput = page.locator('keyboard-input input').first();
     await expect(reloadedShortcutInput).toHaveValue(assignedShortcut);
   });
@@ -44,9 +51,10 @@ test.describe('Keyboard Shortcuts', () => {
   test('should persist and apply a remapped add-task shortcut', async ({
     page,
     workViewPage,
+    settingsPage,
   }) => {
     await workViewPage.waitForTaskList();
-    await page.goto('/#/config?section=keyboard');
+    await settingsPage.openSettingsSection('keyboard');
 
     const shortcutInput = page.getByRole('textbox', {
       name: 'Add new task',
@@ -59,8 +67,11 @@ test.describe('Keyboard Shortcuts', () => {
 
     await waitForStatePersistence(page);
     await page.reload();
+    await settingsPage.openSettingsSection('keyboard');
     await expect(shortcutInput).toHaveValue('Shift+V');
 
+    // The settings window keeps the workspace route, so close it explicitly.
+    await settingsPage.closeSettings();
     await page.goto('/#/tag/TODAY/tasks');
     await workViewPage.waitForTaskList();
     const addTaskInput = page.locator(ADD_TASK_INPUT);

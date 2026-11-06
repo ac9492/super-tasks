@@ -51,11 +51,12 @@ test.describe('Basic Navigation', () => {
     await expect(page).toHaveURL(/\/#\/tag\/TODAY\/daily-summary/);
     await expect(page.locator('daily-summary')).toBeVisible();
 
-    // Navigate to settings
+    // Navigate to settings. They open as a dialog over the current view (the
+    // route stays where it was), so the dialog is what proves they opened.
     await page.goto('/#/config');
     await page.waitForLoadState('networkidle');
-    await expect(page).toHaveURL(/\/#\/config/);
     await expect(page.locator('.page-settings')).toBeVisible();
+    await expect(page.getByRole('dialog', { name: 'Settings' })).toBeVisible();
 
     // Navigate back to work view
     await page.goto('/#/tag/TODAY/tasks');
@@ -64,18 +65,28 @@ test.describe('Basic Navigation', () => {
     await expect(page.locator('task-list').first()).toBeVisible();
   });
 
-  test('should navigate using side nav buttons', async ({ page, workViewPage }) => {
+  test('should navigate using side nav buttons', async ({
+    page,
+    workViewPage,
+    settingsPage,
+  }) => {
     // Wait for work view to be ready
     await workViewPage.waitForTaskList();
+    const sideNav = page.locator('magic-side-nav');
 
-    // Based on screenshot, look for Settings text in the nav - simpler approach
-    await page.click('text=Settings');
+    // Settings opens as a dialog over the current view instead of a route
+    await sideNav.getByText('Settings', { exact: true }).click();
     await page.waitForLoadState('networkidle');
-    await expect(page).toHaveURL(/\/#\/config/);
     await expect(page.locator('.page-settings')).toBeVisible();
+    await expect(page.getByRole('dialog', { name: 'Settings' })).toBeVisible();
+    await settingsPage.closeSettings();
 
-    // Navigate back to work view by clicking the Today tag
-    await page.click('text=Today');
+    // Side nav buttons change the route: Planner, then back via the Today tag
+    await sideNav.getByText('Planner', { exact: true }).click();
+    await page.waitForLoadState('networkidle');
+    await expect(page).toHaveURL(/\/#\/planner/);
+
+    await sideNav.getByText('Today', { exact: true }).click();
     await page.waitForLoadState('networkidle');
     await expect(page).toHaveURL(/\/#\/tag\/TODAY/);
     await expect(page.locator('task-list').first()).toBeVisible();

@@ -60,6 +60,7 @@
       <button
         [matTooltip]="taskListLabel"
         [attr.aria-label]="taskListLabel"
+        [attr.aria-pressed]="isCurrentlyChecklist()"
         (mousedown)="$event.preventDefault()"
         (click)="toggleChecklistMode($event)"
         mat-icon-button

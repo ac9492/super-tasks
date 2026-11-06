@@ -106,11 +106,7 @@ test.describe('Recurring task - repeat dialog start date and fall-behind default
 
     await setRecurQuickSetting(page, /Custom…/i);
     // "If you fall behind" is rendered (and can emit) once Options is open.
-    await dialog
-      .locator('collapsible')
-      .filter({ hasText: /^\s*Options/ })
-      .first()
-      .click();
+    await dialog.getByRole('button', { name: 'Options', exact: true }).click();
     const fallBehind = dialog
       .locator('mat-form-field')
       .filter({ hasText: /If you fall behind/i });

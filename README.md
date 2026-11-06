@@ -89,4 +89,4 @@ Please bring fork-specific support and feedback to this repository. We aim to co
 
 Ultra Tasks is based on Super Productivity, created by Johannes Millan and its contributors. Their work provides the foundation for this fork. Ultra Tasks is independently maintained and is not affiliated with or endorsed by the upstream project.
 
-The project retains the [MIT license](LICENSE) and upstream copyright notice. Third-party components retain their respective licenses.
+The client application and most shared packages retain the [MIT license](LICENSE) and original upstream copyright notices. The Ultra Tasks distribution of the [SuperSync server](packages/super-sync-server/) is licensed under [AGPL-3.0-only](packages/super-sync-server/LICENSE), while preserving the original upstream MIT rights and notices. See [LICENSING.md](LICENSING.md) for scope, compatibility, and contributor guidance; third-party components retain their respective licenses.

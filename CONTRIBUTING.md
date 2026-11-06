@@ -4,6 +4,16 @@ Ultra Tasks is independently maintained and published by Adrian Chase ([@ac9492]
 
 For general questions, use the [Ultra Tasks issue tracker](https://github.com/ac9492/ultra-tasks/issues). To report a vulnerability privately, follow the [security policy](SECURITY.md).
 
+### Licensing by directory
+
+Ultra Tasks keeps the client and most reusable packages under MIT, while its
+distributed SuperSync server is under AGPL-3.0-only. Contributions to
+`packages/super-sync-server/` should be suitable for AGPL-3.0-only
+distribution and must preserve inherited copyright notices and compatible
+third-party license terms. Contributors retain their copyrights; this policy
+does not request a copyright assignment. See [LICENSING.md](LICENSING.md)
+before contributing server changes.
+
 ### Code of conduct
 
 Don't be a d\*\*\*!

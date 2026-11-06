@@ -77,7 +77,6 @@ const QUICK_ACCESS_ITEMS = [
     MatInput,
     MatSelect,
     MatOption,
-    MatIconButton,
     TranslateModule,
     TranslatePipe,
     TimeStepDirective,

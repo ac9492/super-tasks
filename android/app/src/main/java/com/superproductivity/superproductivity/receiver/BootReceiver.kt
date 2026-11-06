@@ -7,6 +7,8 @@ import android.util.Log
 import com.superproductivity.superproductivity.service.BackgroundSyncCredentialStore
 import com.superproductivity.superproductivity.service.ReminderNotificationHelper
 import com.superproductivity.superproductivity.service.SyncReminderScheduler
+import com.superproductivity.superproductivity.service.NativeAccountRuntime
+import com.superproductivity.superproductivity.service.NativeAccountScheduler
 
 /**
  * Re-registers all saved alarms after device reboot or app update.
@@ -35,5 +37,6 @@ class BootReceiver : BroadcastReceiver() {
         if (BackgroundSyncCredentialStore.get(context) != null) {
             SyncReminderScheduler.ensureScheduled(context)
         }
+        if (NativeAccountRuntime.available(context)) NativeAccountScheduler.ensureScheduled(context)
     }
 }

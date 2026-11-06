@@ -13,6 +13,7 @@
   <exclude
     domain="sharedpref"
     path="SuperProductivitySync.xml" />
+  <exclude domain="sharedpref" path="UltraNativeAccountV2.xml" />
   <!--
     Per-device WebView verdict. block_override is the user's decision to bypass
     the block screen on THIS device; restoring it elsewhere silently disarms a
