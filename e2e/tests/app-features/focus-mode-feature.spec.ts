@@ -48,6 +48,11 @@ test.describe('App Features - Focus Mode', () => {
     // Focus Mode in the task context menu should not be visible
     await firstTask.click({ button: 'right' });
     await expect(taskContextStartFocus).not.toBeAttached();
+    // Close the menu: it would otherwise stay open behind the settings window
+    // below and block the next right-click, and the shortcut below must reach
+    // the task rather than the menu.
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('menu')).not.toBeAttached();
 
     // send shortcut for focus mode, ensure that focus overlay is not showing
     await page.keyboard.press('F');
