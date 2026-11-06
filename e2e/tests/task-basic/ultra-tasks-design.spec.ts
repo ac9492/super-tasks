@@ -60,6 +60,19 @@ test('Ultra Tasks workspace stays readable across themes and narrow screens', as
   await page.goto('/#/project/INBOX_PROJECT/tasks');
   await workViewPage.waitForTaskList();
   await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.locator('work-view-page')).toHaveCount(1);
+  const upcomingLabel = page
+    .locator('.layout-bar .segment-label')
+    .filter({ hasText: 'Upcoming' });
+  await expect
+    .poll(() =>
+      upcomingLabel.evaluate(
+        (el) =>
+          el.getBoundingClientRect().height <=
+          parseFloat(getComputedStyle(el).lineHeight) + 1,
+      ),
+    )
+    .toBe(true);
   await page.screenshot({
     path: '.tmp/e2e-test-results/ultra-tasks-mobile.png',
     fullPage: true,
