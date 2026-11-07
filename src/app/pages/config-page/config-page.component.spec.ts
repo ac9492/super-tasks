@@ -187,7 +187,9 @@ describe('ConfigPageComponent', () => {
     const automaticBackupsSection = component.globalImexFormCfg.find(
       (section) => section.key === 'localBackup',
     );
-    const action = automaticBackupsSection?.actions?.[0];
+    const action = automaticBackupsSection?.actions?.find(
+      (item) => item.label === T.GCF.AUTO_BACKUPS.RESTORE_LATEST,
+    );
 
     expect(action?.label).toBe(T.GCF.AUTO_BACKUPS.RESTORE_LATEST);
 
