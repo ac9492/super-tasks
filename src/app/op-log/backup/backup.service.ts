@@ -46,6 +46,10 @@ import { TaskTimeSyncService } from '../../features/tasks/task-time-sync.service
   providedIn: 'root',
 })
 export class BackupService {
+  /** Explicit user deletion of device-local recovery points; no synced state changes. */
+  async clearImportBackups(): Promise<void> {
+    await this._opLogStore.clearImportBackup(undefined, true);
+  }
   private _imexViewService = inject(ImexViewService);
   private _store = inject(Store);
   private _stateSnapshotService = inject(StateSnapshotService);

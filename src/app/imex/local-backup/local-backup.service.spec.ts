@@ -153,6 +153,36 @@ describe('LocalBackupService', () => {
     window.ea = originalElectronApi as typeof window.ea;
   });
 
+  it('waits for an in-flight automatic backup before clearing files and its timestamp', async () => {
+    const data = await stateSnapshotServiceSpy.getAllSyncModelDataFromStoreAsync();
+    let finishSnapshot!: (value: typeof data) => void;
+    stateSnapshotServiceSpy.getAllSyncModelDataFromStoreAsync.and.returnValue(
+      new Promise((resolve) => {
+        finishSnapshot = resolve;
+      }),
+    );
+    const events: string[] = [];
+    window.ea = {
+      ...window.ea,
+      backupAppData: jasmine.createSpy('backup').and.callFake(async () => {
+        events.push('write');
+      }),
+      clearBackups: jasmine.createSpy('clear').and.callFake(async () => {
+        events.push('clear');
+      }),
+    };
+    (service as unknown as LocalBackupServiceWithPlatformFlags)._isElectron = true;
+    const writing = (service as unknown as LocalBackupServiceWithPrivate)._backup();
+    await Promise.resolve();
+    const clearing = service.clearAutomaticBackups();
+    await Promise.resolve();
+    expect(events).toEqual([]);
+    finishSnapshot(data);
+    await Promise.all([writing, clearing]);
+    expect(events).toEqual(['write', 'clear']);
+    expect(service.getLastBackupTime()).toBeNull();
+  });
+
   describe('backup data should include archives', () => {
     it('should use async method to get data with archives (not sync method)', async () => {
       // This test verifies that the service uses getAllSyncModelDataFromStoreAsync()

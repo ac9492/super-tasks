@@ -88,6 +88,22 @@ export function initBackupAdapter(): void {
   // BACKUP_LIST — every file, newest first (Settings → backups list)
   ipcMain.handle(IPC.BACKUP_LIST, (): LocalBackupMeta[] => listBackupFiles());
 
+  // No path is accepted from the renderer. Only files listed in this app's
+  // automatic-backup directory can be removed; manual exports elsewhere survive.
+  ipcMain.handle(IPC.BACKUP_CLEAR_ALL, (): void => {
+    const backupDir = path.resolve(getBackupDir());
+    try {
+      for (const file of listBackupFiles()) {
+        if (!isPathInsideDir(backupDir, path.resolve(file.path))) {
+          throw new Error('Backup outside automatic-backup directory');
+        }
+        unlinkSync(file.path);
+      }
+    } catch (e) {
+      throw createSafeIpcError(IPC.BACKUP_CLEAR_ALL, e);
+    }
+  });
+
   // RESTORE_BACKUP
   ipcMain.handle(IPC.BACKUP_LOAD_DATA, (ev, backupPath: string): string => {
     // `backupPath` comes from the renderer, which runs untrusted plugin code,

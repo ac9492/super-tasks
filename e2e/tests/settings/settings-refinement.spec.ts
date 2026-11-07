@@ -50,9 +50,7 @@ test('encrypted native export unlocks and restores through the normal import pat
   await workViewPage.addTask('Encrypted settings round trip');
   await page.locator('a[href="#/config"]').click();
   const dialog = page.getByRole('dialog', { name: 'Settings', exact: true });
-  await dialog
-    .getByRole('button', { name: 'Import, export & recovery', exact: true })
-    .click();
+  await dialog.getByRole('button', { name: 'Import & export', exact: true }).click();
   await dialog.getByRole('switch', { name: 'Encrypt this export', exact: true }).click();
   await dialog
     .locator('.export-section')
@@ -96,6 +94,31 @@ test('encrypted native export unlocks and restores through the normal import pat
   await expect(
     page.locator('task').filter({ hasText: 'Encrypted settings round trip' }),
   ).toBeVisible();
+  await page.reload();
+  await expect(
+    page.locator('task').filter({ hasText: 'Encrypted settings round trip' }),
+  ).toBeVisible();
+  await page.locator('a[href="#/config"]').click();
+  await dialog.getByRole('button', { name: 'Import & export', exact: true }).click();
+  await dialog.getByRole('button', { name: 'Browse backups', exact: true }).click();
+  const backups = page.getByRole('dialog', {
+    name: 'Backups on this device',
+    exact: true,
+  });
+  await expect(backups.locator('button.backup').first()).toBeVisible();
+  await backups.getByRole('button', { name: 'Clear all', exact: true }).click();
+  const confirmation = page.getByRole('dialog', {
+    name: 'Clear all local backups?',
+    exact: true,
+  });
+  await expect(confirmation).toContainText('This cannot be undone');
+  await confirmation.getByRole('button', { name: 'Cancel', exact: true }).click();
+  await expect(backups.locator('button.backup').first()).toBeVisible();
+  await backups.getByRole('button', { name: 'Clear all', exact: true }).click();
+  await confirmation.getByRole('button', { name: 'Clear all', exact: true }).click();
+  await expect(backups.locator('button.backup')).toHaveCount(0);
+  await backups.getByRole('button', { name: 'Cancel', exact: true }).click();
+  await dialog.getByRole('button', { name: 'Close', exact: true }).click();
   await page.reload();
   await expect(
     page.locator('task').filter({ hasText: 'Encrypted settings round trip' }),

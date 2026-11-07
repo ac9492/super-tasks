@@ -9,7 +9,11 @@
   <div class="setting-row">
     <mat-form-field class="setting-control">
       <mat-label>{{ T.PS.REFINEMENT.SOURCE | translate }}</mat-label>
-      <mat-select [(ngModel)]="importSource">
+      <mat-select
+        [(ngModel)]="importSource"
+        (ngModelChange)="resetImport()"
+        [disabled]="isImporting"
+      >
         <mat-option value="ultra">{{ T.PS.REFINEMENT.NATIVE | translate }}</mat-option>
         <mat-option value="super-productivity">{{
           T.PS.REFINEMENT.UPSTREAM | translate
@@ -28,12 +32,34 @@
       [text]="T.PS.REFINEMENT.IMPORT_HELP | translate"
     />
   </div>
+  <div
+    class="import-guide"
+    aria-live="polite"
+  >
+    <h4>{{ selectedGuide.title | translate }}</h4>
+    <ol>
+      @for (step of selectedGuide.steps; track step) {
+        <li>{{ step | translate }}</li>
+      }
+    </ol>
+    @if (selectedGuide.url; as url) {
+      <a
+        [href]="url"
+        target="_blank"
+        rel="noopener noreferrer"
+        >{{ T.PS.IMPORTER.EXPORT_GUIDE | translate }}</a
+      >
+    }
+    <p class="callout callout--warning">{{ selectedGuide.help | translate }}</p>
+  </div>
   <button
     (click)="importSelected()"
+    [disabled]="isImporting"
     mat-stroked-button
     type="button"
   >
-    <mat-icon>upload_file</mat-icon>{{ T.PS.REFINEMENT.IMPORT | translate }}
+    <mat-icon>upload_file</mat-icon
+    >{{ (isCsvImport ? T.PS.IMPORTER.CHOOSE_FILE : T.PS.REFINEMENT.IMPORT) | translate }}
   </button>
   <input
     #fileInput
@@ -41,8 +67,81 @@
     hidden
     id="file"
     type="file"
-    accept=".json,application/json"
+    [accept]="isCsvImport ? '.csv,text/csv' : '.json,application/json'"
   />
+  @if (importError) {
+    <p
+      class="callout callout--danger"
+      role="alert"
+    >
+      {{ importError | translate }}
+    </p>
+  }
+  @if (importPreview; as preview) {
+    <div
+      class="import-preview"
+      aria-live="polite"
+    >
+      <h4>
+        {{ (importResult ? T.PS.IMPORTER.RESULT : T.PS.IMPORTER.PREVIEW) | translate }}
+      </h4>
+      @if (!importResult) {
+        <p>{{ T.PS.IMPORTER.TASKS | translate }}: {{ preview.taskCount }}</p>
+        <ul>
+          @for (project of preview.plan.projects; track project.extId) {
+            <li>{{ project.title }} · {{ project.taskCount + project.subTaskCount }}</li>
+          }
+        </ul>
+        @if (preview.skippedCount) {
+          <p>{{ T.PS.IMPORTER.SKIPPED | translate }}: {{ preview.skippedCount }}</p>
+        }
+        @if (preview.truncatedCount) {
+          <p class="callout callout--warning">
+            {{ T.PS.IMPORTER.TRUNCATED | translate }}: {{ preview.truncatedCount }}
+          </p>
+        }
+        <p>{{ T.PS.IMPORTER.ADDITIVE | translate }}</p>
+        <button
+          mat-flat-button
+          type="button"
+          [disabled]="isImporting || !preview.taskCount"
+          (click)="importTasks()"
+        >
+          {{
+            (isImporting ? T.PS.IMPORTER.IMPORTING : T.PS.IMPORTER.IMPORT_TASKS)
+              | translate
+          }}
+        </button>
+      } @else {
+        @if (importResult.errorMessage || importResult.failedProjectTitle) {
+          <p
+            class="callout callout--danger"
+            role="alert"
+          >
+            {{ T.PS.IMPORTER.PARTIAL_ERROR | translate }}
+            {{ importResult.failedProjectTitle }}
+          </p>
+        }
+        @if (importResult.isCountUnverified) {
+          <p class="callout callout--warning">
+            {{ T.PS.IMPORTER.UNVERIFIED | translate }}
+          </p>
+        }
+        <ul>
+          @for (project of importResult.imported; track project.projectId) {
+            <li>
+              {{ project.title }} ·
+              {{
+                importResult.isCountUnverified
+                  ? '—'
+                  : project.landedTaskCount + project.landedSubTaskCount
+              }}
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  }
 </section>
 <section class="export-section">
   <div class="setting-row">

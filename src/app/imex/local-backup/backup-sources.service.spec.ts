@@ -20,6 +20,7 @@ describe('BackupSourcesService', () => {
     backupService = jasmine.createSpyObj('BackupService', [
       'listImportBackups',
       'restoreImportBackupById',
+      'clearImportBackups',
     ]);
     backupService.listImportBackups.and.resolveTo([]);
     localBackupService = jasmine.createSpyObj('LocalBackupService', [
@@ -27,6 +28,7 @@ describe('BackupSourcesService', () => {
       'restoreBackupStr',
       'loadBackupElectron',
       'getLastBackupTime',
+      'clearAutomaticBackups',
     ]);
     localBackupService.listMobileBackupSlots.and.resolveTo([]);
     localBackupService.getLastBackupTime.and.returnValue(500);
@@ -41,6 +43,20 @@ describe('BackupSourcesService', () => {
       ],
     });
     service = TestBed.inject(BackupSourcesService);
+  });
+
+  it('clears both automatic backups and recovery points without restoring or changing current data', async () => {
+    await service.clearAll();
+    expect(backupService.clearImportBackups).toHaveBeenCalledTimes(1);
+    expect(localBackupService.clearAutomaticBackups).toHaveBeenCalledTimes(1);
+    expect(backupService.restoreImportBackupById).not.toHaveBeenCalled();
+    expect(localDraftService.deleteAllDrafts).not.toHaveBeenCalled();
+  });
+
+  it('reports partial failure after attempting both backup sources', async () => {
+    localBackupService.clearAutomaticBackups.and.rejectWith(new Error('disk error'));
+    await expectAsync(service.clearAll()).toBeRejected();
+    expect(backupService.clearImportBackups).toHaveBeenCalledTimes(1);
   });
 
   it('lists recovery points with reason label and known task count, newest first', async () => {

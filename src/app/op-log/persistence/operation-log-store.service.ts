@@ -2285,11 +2285,11 @@ export class OperationLogStoreService implements RemoteOperationApplyStorePort<O
     );
   }
 
-  /** Retires the Undo slot (only if it still matches `expectedBackupId`). */
-  async clearImportBackup(expectedBackupId?: string): Promise<void> {
+  /** Retires matching Undo; `all` explicitly deletes this device's recovery history. */
+  async clearImportBackup(expectedBackupId?: string, all = false): Promise<void> {
     await this._ensureInit();
     await this._importBackupTx('readwrite', (tx) =>
-      clearImportBackupTx(tx, expectedBackupId),
+      clearImportBackupTx(tx, expectedBackupId, all),
     );
   }
 

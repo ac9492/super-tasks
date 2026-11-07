@@ -12,6 +12,7 @@ import {
 } from './encrypted-backup.util';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   inject,
@@ -59,10 +60,11 @@ import {
   DataValidationFailedError,
 } from '../../op-log/core/errors/sync-errors';
 import { alertDialog } from '../../util/native-dialogs';
-import { PluginService } from '../../plugins/plugin.service';
-
-const TODOIST_IMPORT_PLUGIN_ID = 'todoist-import';
-const TICKTICK_IMPORT_PLUGIN_ID = 'ticktick-import';
+import {
+  BuiltinImportService,
+  BuiltinImportPreview,
+} from '../importers/builtin-import.service';
+import { ImportResult } from '../../../../packages/plugin-dev/todoist-import/src/map/run-import';
 
 @Component({
   selector: 'file-imex',
@@ -92,17 +94,76 @@ export class FileImexComponent implements OnInit {
   private _matDialog = inject(MatDialog);
   private _http = inject(HttpClient);
   private _importEncryptionHandler = inject(ImportEncryptionHandlerService);
-  private _pluginService = inject(PluginService);
+  private _builtinImport = inject(BuiltinImportService);
+  private _cd = inject(ChangeDetectorRef);
 
   readonly fileInputRef = viewChild<ElementRef>('fileInput');
   T: typeof T = T;
   importSource = 'ultra';
   encryptExport = false;
+  importPreview: BuiltinImportPreview | null = null;
+  importResult: ImportResult | null = null;
+  importError = '';
+  isImporting = false;
+  readonly importGuides = {
+    ultra: {
+      title: T.PS.REFINEMENT.NATIVE,
+      steps: [T.PS.IMPORTER.ULTRA_STEP_1, T.PS.IMPORTER.NATIVE_STEP_2],
+      help: T.PS.IMPORTER.NATIVE_WARNING,
+    },
+    ['super-productivity']: {
+      title: T.PS.REFINEMENT.UPSTREAM,
+      steps: [T.PS.IMPORTER.SP_STEP_1, T.PS.IMPORTER.NATIVE_STEP_2],
+      help: T.PS.IMPORTER.NATIVE_WARNING,
+    },
+    todoist: {
+      title: T.PS.REFINEMENT.TODOIST,
+      steps: [T.PS.IMPORTER.TODOIST_STEP_1, T.PS.IMPORTER.CSV_STEP_2],
+      help: T.PS.IMPORTER.TODOIST_LIMITS,
+      url: 'https://www.todoist.com/help/account-and-billing/security/import-or-export-a-project-as-a-csv-file-in-todoist-YC8YvN',
+    },
+    ticktick: {
+      title: T.PS.REFINEMENT.TICKTICK,
+      steps: [T.PS.IMPORTER.TICKTICK_STEP_1, T.PS.IMPORTER.CSV_STEP_2],
+      help: T.PS.IMPORTER.TICKTICK_LIMITS,
+      url: 'https://help.ticktick.com/articles/7055781405648748544',
+    },
+    url: {
+      title: T.FILE_IMEX.OPEN_IMPORT_FROM_URL_DIALOG,
+      steps: [T.PS.IMPORTER.URL_STEP_1, T.PS.IMPORTER.URL_STEP_2],
+      help: T.PS.IMPORTER.NATIVE_WARNING,
+    },
+  };
+  get selectedGuide(): { title: string; steps: string[]; help: string; url?: string } {
+    return this.importGuides[this.importSource as keyof typeof this.importGuides];
+  }
+  get isCsvImport(): boolean {
+    return this.importSource === 'todoist' || this.importSource === 'ticktick';
+  }
+  resetImport(): void {
+    this.importPreview = this.importResult = null;
+    this.importError = '';
+    const input = this.fileInputRef()?.nativeElement;
+    if (input) input.value = '';
+  }
   async importSelected(): Promise<void> {
-    if (this.importSource === 'todoist') await this.openTodoistImport();
-    else if (this.importSource === 'ticktick') await this.openTickTickImport();
-    else if (this.importSource === 'url') this.openUrlImportDialog();
+    if (this.importSource === 'url') this.openUrlImportDialog();
     else this.fileInputRef()?.nativeElement.click();
+  }
+
+  async importTasks(): Promise<void> {
+    if (!this.importPreview || this.isImporting || this.importResult) return;
+    this.isImporting = true;
+    try {
+      this.importResult = await this._builtinImport.run(this.importPreview);
+    } catch {
+      // A run can have created projects already: do not offer a blind retry.
+      this.importError = T.PS.IMPORTER.PARTIAL_ERROR;
+      this.importPreview = null;
+    } finally {
+      this.isImporting = false;
+      this._cd.markForCheck();
+    }
   }
 
   ngOnInit(): void {
@@ -153,6 +214,25 @@ export class FileImexComponent implements OnInit {
 
     if (!file) {
       // No file selected or selection cancelled
+      return;
+    }
+
+    if (this.importSource === 'todoist' || this.importSource === 'ticktick') {
+      this.resetImport();
+      this.isImporting = true;
+      const source = this.importSource;
+      try {
+        this.importPreview = this._builtinImport.preview(
+          source,
+          await file.text(),
+          file.name,
+        );
+      } catch {
+        this.importError = T.PS.IMPORTER.INVALID_FILE;
+      } finally {
+        this.isImporting = false;
+        this._cd.markForCheck();
+      }
       return;
     }
 
@@ -380,41 +460,5 @@ export class FileImexComponent implements OnInit {
 
   openArchiveCompression(): void {
     this._matDialog.open(DialogArchiveCompressionComponent);
-  }
-
-  openTodoistImport(): Promise<void> {
-    return this._openImportPlugin(
-      TODOIST_IMPORT_PLUGIN_ID,
-      T.FILE_IMEX.S_ERR_TODOIST_IMPORT_OPEN,
-    );
-  }
-
-  openTickTickImport(): Promise<void> {
-    return this._openImportPlugin(
-      TICKTICK_IMPORT_PLUGIN_ID,
-      T.FILE_IMEX.S_ERR_TICKTICK_IMPORT_OPEN,
-    );
-  }
-
-  private async _openImportPlugin(pluginId: string, errorMsg: string): Promise<void> {
-    try {
-      if (!this._pluginService.isInitialized()) {
-        await this._pluginService.initializePlugins();
-      }
-      // In-memory activation only (not persisted): the importer is a one-time
-      // tool and should be dormant again after a restart.
-      const instance = await this._pluginService.activatePlugin(pluginId, true);
-      if (!instance) {
-        throw new Error('Plugin activation returned no instance');
-      }
-      // The importer is a page, not a dialog: close Settings (opened as a
-      // dialog by settingsDialogGuard) or it stays on top of the importer.
-      // MatDialog only closes on popstate, not on this navigation.
-      this._matDialog.getDialogById('settings-window')?.close();
-      await this._router.navigate(['/plugins', pluginId, 'index']);
-    } catch (e) {
-      Log.err('Failed to open importer', { pluginId }, e);
-      this._snackService.open({ type: 'ERROR', msg: errorMsg });
-    }
   }
 }

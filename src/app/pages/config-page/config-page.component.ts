@@ -269,6 +269,11 @@ export class ConfigPageComponent implements OnInit {
           undefined,
           [
             {
+              label: T.GCF.AUTO_BACKUPS.D_LIST.CLEAR_ALL,
+              icon: 'delete_sweep',
+              onClick: () => this.clearBackups(),
+            },
+            {
               label: T.GCF.AUTO_BACKUPS.RESTORE_LATEST,
               icon: 'settings_backup_restore',
               onClick: () =>
@@ -282,7 +287,13 @@ export class ConfigPageComponent implements OnInit {
       window.ea.getBackupPath().then((backupPath) => {
         this.globalImexFormCfg = [
           ...this.globalImexFormCfg,
-          getAutomaticBackUpFormCfg(backupPath),
+          getAutomaticBackUpFormCfg(backupPath, [
+            {
+              label: T.GCF.AUTO_BACKUPS.D_LIST.CLEAR_ALL,
+              icon: 'delete_sweep',
+              onClick: () => this.clearBackups(),
+            },
+          ]),
         ];
         this._cd.detectChanges();
       });
@@ -501,6 +512,10 @@ export class ConfigPageComponent implements OnInit {
     this.mobileCategoryVisible = true;
     this._content()?.nativeElement.scrollTo({ top: 0 });
     this._layout()?.nativeElement.scrollTo({ top: 0 });
+  }
+
+  clearBackups(): void {
+    this._matDialog.open(DialogBackupsListComponent, { data: { confirmClear: true } });
   }
 
   /** Jumps to a hit: right tab, section expanded, scrolled into view. */

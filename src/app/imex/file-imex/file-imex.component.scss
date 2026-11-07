@@ -19,3 +19,14 @@ button {
   margin-inline-end: var(--s);
   margin-bottom: var(--s);
 }
+.import-guide,
+.import-preview {
+  margin-block: var(--s2);
+  h4 {
+    font: var(--type-body-strong);
+    margin: 0 0 var(--s);
+  }
+  li + li {
+    margin-top: var(--s);
+  }
+}

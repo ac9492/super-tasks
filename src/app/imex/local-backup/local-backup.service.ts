@@ -58,6 +58,33 @@ const SUBSTANTIAL_EXISTING_TASKS = 10;
   providedIn: 'root',
 })
 export class LocalBackupService {
+  private _pendingBackup: Promise<unknown> = Promise.resolve();
+
+  private _withBackupLock<T>(work: () => Promise<T>): Promise<T> {
+    const task = this._pendingBackup.then(work);
+    this._pendingBackup = task.catch(() => undefined);
+    return task;
+  }
+
+  /** Serialize with automatic writes so an in-flight backup cannot survive Clear all. */
+  clearAutomaticBackups(): Promise<void> {
+    return this._withBackupLock(async () => {
+      if (this._isElectron) {
+        await window.ea.clearBackups();
+      } else if (this._isAndroidWebView) {
+        for (const key of [ANDROID_DB_KEY, ANDROID_DB_KEY_PREV]) {
+          await androidInterface.removeFromDbWrapped(key);
+        }
+      } else if (this._platformService.isIOS()) {
+        for (const path of [IOS_BACKUP_FILENAME, IOS_BACKUP_PREV_FILENAME]) {
+          if (await this._iosFileExists(path)) {
+            await Filesystem.deleteFile({ path, directory: Directory.Data });
+          }
+        }
+      }
+      localStorage.removeItem(LS.LAST_LOCAL_BACKUP);
+    });
+  }
   private _destroyRef = inject(DestroyRef);
   private _configService = inject(GlobalConfigService);
   private _stateSnapshotService = inject(StateSnapshotService);
@@ -412,6 +439,10 @@ export class LocalBackupService {
   }
 
   private async _backup(): Promise<void> {
+    return this._withBackupLock(() => this._writeBackup());
+  }
+
+  private async _writeBackup(): Promise<void> {
     // Use async method to include archives from IndexedDB (not empty DEFAULT_ARCHIVE)
     const data =
       (await this._stateSnapshotService.getAllSyncModelDataFromStoreAsync()) as AppDataComplete;

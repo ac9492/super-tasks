@@ -6,6 +6,68 @@ One calm design language for every surface. This guide describes the scale in
 follows. Colour roles come from the palette normaliser; see
 [theming-contract.md](theming-contract.md).
 
+## Conventions at a glance
+
+Read this first. Every UI change, by a person or an agent, follows it, so the
+app can grow without drifting. The sections below are the detail.
+
+### Which token for what
+
+| I need…                                 | Use                                                                                              | Never                                                  |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------ |
+| Space between or inside things          | `--s-half` 4, `--s` 8, `--s1-5` 12, `--s2` 16, `--s3` 24 (the 4/8 grid)                          | `px`, `rem`, `calc(var(--s) * 1.5)`                    |
+| Rounded corners                         | By role: `--r-sm` inline, `--r-md` controls and cards, `--r-lg` floating, `--r-full`             | `4px`, `12px`, `50%`, a radius picked by height        |
+| A box that holds content                | A card: `--card-bg`, 1px `--palette-border`, `--r-md`, no shadow                                 | A shadow on something that rests                       |
+| A box that floats (menu, dialog, sheet) | `--elev-1` (menus, popovers) or `--elev-2` (dialogs, sheets), `--r-lg`                           | Your own `box-shadow`, an extra border                 |
+| Any text                                | One type role: `font: var(--type-title)`, `-heading`, `-body`, `-body-strong`, `-label`, `-meta` | `font-size`, `font-weight`, `line-height` on their own |
+| An icon                                 | `--icon-sm` 16, `--icon-md` 20, `--icon-lg` 24; the glyph equals its box                         | 13, 15.75 or 18px                                      |
+| Something clickable                     | `--ctl-sm` 32 (40 on touch), `--ctl-md` 40, `--ctl-lg` 48 for touch surfaces                     | A hit area under 40px on touch                         |
+| A colour                                | A palette role through a token (`--text-color`, `--card-bg`, `--palette-*`)                      | A hex, `rgb()`, `red`, `rgba(255, 152, 0, …)`          |
+| Hover, selected, pressed                | `--palette-hover`, `--palette-selected` (+ `-ink`), `--state-hover`, `--state-pressed`           | A new tint                                             |
+| The one primary action                  | Filled accent: `--palette-accent` with `--palette-accent-ink`                                    | Two filled accents on one surface                      |
+| Keyboard focus                          | `--focus-ring` via `.focus-ring` or the outline pattern in [Focus Ring](#focus-ring)             | `outline: none` with no replacement                    |
+| Motion                                  | `--transition-*` and `--ani-*-timing`; honour reduced motion                                     | `300ms`, `ease-in-out` literals                        |
+| Stacking                                | `--z-*` tokens                                                                                   | `z-index: 9999`                                        |
+| A message box                           | `.callout` (see [Callouts](#callouts-info--warning--danger--success))                            | A local `.warning-box`                                 |
+| A dialog                                | `useDialogSize()` / `dialogSize()` and the anatomy in [Dialogs](#dialogs)                        | `width` or `max-width` on a dialog                     |
+
+### Highlights and accents
+
+The accent is scarce on purpose.
+
+- **Selected** is one role (`--palette-selected`, tonal): the active nav row, the open settings category, a pressed segment, the task in the detail panel.
+- **Primary** is one filled accent per surface: the add-task bar's submit, a dialog's confirm. A second competing filled button is a design bug.
+- **Hover** and **pressed** are `--state-hover` and `--state-pressed` overlays, never a different hue.
+- **Semantic colours** (danger, warning, success, upcoming) mean what they say and never follow the accent; overdue dates and destructive actions stay red.
+- **Muted text** (`--text-color-muted`) is for secondary information only. Titles, values and anything the user must act on stay in the body ink.
+
+### Keeping it consistent as the app scales
+
+1. **Reuse before you create.** Look in `src/app/ui/` and `src/styles/components/` first. A near-fit is a reason to add a variant there, not a local copy.
+2. **A new page** uses the page wrappers and gutter ([Page layout](#page-layout)); **a new list** uses the task-row or flat-row pattern; **a new setting** uses the settings row; **a new empty state** uses `.empty-state`.
+3. **A new token or pattern is added once**, in `_css-variables.scss` or the shared layer, and documented in this file in the same change. Do not add a one-off value "for now".
+4. **Check the matrix** before calling a UI change done: light and dark, glass on and off (and reduced transparency), a window under 600px, a touch pointer (`(pointer: coarse)`), reduced motion, and a long title or a large list.
+5. **Task rows are a hot path.** Row heights are exactly 48px (title only) and 56px (with a meta line); no template function calls in `task.component.*`.
+6. **Copy matters as much as spacing.** Labels are sentence case, buttons name their action ("Save", "Discard"), and every user-facing string goes through `en.json`.
+
+### What is enforced and what is not
+
+| Check                                               | Catches                                                         |
+| --------------------------------------------------- | --------------------------------------------------------------- |
+| `npm run lint:css-vars` (`tools/check-css-vars.js`) | A `var(--x)` whose `--x` can't reach the rule                   |
+| `npm run lint:scss` (stylelint, recommended-scss)   | SCSS syntax and basic errors; **not** hardcoded values          |
+| Review and the self-check below                     | Literal colours, spacing, radii, font sizes, durations, z-index |
+
+Nothing automated stops a hardcoded `16px` or `#fff`, so check your own diff:
+
+```bash
+git diff -U0 -- '*.scss' '*.html' | rg '^\+.*(#[0-9a-fA-F]{3,8}\b|\b[0-9.]+(px|rem|ms)\b|z-index:\s*[0-9])'
+```
+
+Every hit needs a token, or a comment saying why it is a deliberate layout
+dimension (a 1px hairline, a fixed illustration size). Positioning and layout
+(flexbox, grid, `position`, widths) may stay plain CSS.
+
 ## Rules
 
 - **All visual styling uses tokens** from `src/styles/_css-variables.scss`: spacing, radius, elevation, type, icon sizes, control heights, colours, transitions and z-index. Never hardcode them.
@@ -356,6 +418,25 @@ for installed items, with secondary metadata in Details, and a responsive grid f
 discovery. Render at most 24 results per page; reset to page one after a search or
 filter changes. Empty results must offer a way to clear filters.
 
+## Glass surfaces
+
+With Glass appearance on (Settings → General → Appearance) the window reads as one
+pane of glass in three tiers. All values come from `_glass.scss` and the palette
+normaliser, never from component SCSS.
+
+| Tier    | Surfaces                                                  | Tint alpha (design) | Blur                      |
+| ------- | --------------------------------------------------------- | ------------------- | ------------------------- |
+| Frame   | Side nav, header, right panels, mobile bottom nav         | 75%                 | `--glass-blur` (20px)     |
+| Canvas  | The content sheet behind the task list (`.route-wrapper`) | 84%                 | same, on the wrapper only |
+| Overlay | Full-width phone right panel (the phone drawer is solid)  | 95%                 | none                      |
+
+- The canvas sits one step denser than the frame around it, so the focus area stands out while the frame stays see-through.
+- **Opaque on purpose:** task cards, dialogs, menus, popovers and the add-task bar. Content the user reads and edits never sits on a translucent fill.
+- **Alpha is `max(design value, contrast floor)`.** The floor keeps body and muted text readable over a worst-case backdrop (the ink colour pulled 35% toward the background; see [theming-contract.md](theming-contract.md#glass-roles)). Do not lower an alpha in a component; change the design value and re-run `palette-normalize.util.spec.ts`.
+- **Blur never animates.** Put `backdrop-filter` on the static wrapper, not on a routed page, a drawer or anything inside a route transition, and never on the `magic-side-nav` host (see the `magic-side-nav` rule near the end of this guide).
+- **Fallbacks:** reduced transparency, forced colours and `st-solid` make every tier opaque; a browser without `backdrop-filter` gets the overlay alpha.
+- **Windows window controls** are drawn by the OS over the top-right corner and can't show CSS. The renderer sends the frame tint and alpha to the main process (`updateTitleBarDarkMode(isDark, overlayColor)`), and the control band is `WCO_HEIGHT` (56px, the header height) so the glyphs share the header's centre line. Keep both in step with the header if either changes.
+
 ## Colour
 
 Colours come from the device-local three-colour palette (background, cards and
@@ -394,6 +475,14 @@ footer links, card titles) keep the look they declare.
 ```
 
 Mixins are in `src/styles/mixins/_theming.scss`.
+
+## Popups, search and descriptions
+
+- **Popups over the page** (global search, the description editor) are Material dialogs: opaque surface, `--r-lg`, `--elev-2`, one of the dialog sizes. The search popup uses the Settings window's surface (`.search-popup`, `settings-backdrop`), `dialogSize('l')` and sits near the top; Escape closes it and so does picking a result. The search page is shared with the phone route, so it takes an `isPopup` input rather than a second copy.
+- **Save / Discard dialogs** write nothing until Save. Discard, Escape and the backdrop leave the data as it was; Save is the single filled button, disabled until something changed.
+- **Task description** is the task's `notes` field. On the row it is one muted `--type-meta` line after the last tag, cut with an ellipsis where the row runs out; the full text is in a multi-line tooltip (`matTooltipClass="task-description-tooltip"`, defined once in `_overwrite-material.scss`). It adds no height: the row stays 56px.
+- **Add actions** live where the thing is added: the inline "Add task" row in each list or section. The header has no global "+"; quick capture is Shift+A and the phone's bottom-nav "+".
+- **One list, many destinations:** a picker that can target a project or a section lists projects in tree order with their sections indented beneath, led by a dash. The current location is shown and disabled.
 
 ## Task rows (cards vs flat)
 
@@ -473,14 +562,24 @@ input, use a class instead (see `highlight-searched-task`).
 
 ## Transitions & Animations
 
-| Type       | Variables                                                                                                          |
-| ---------- | ------------------------------------------------------------------------------------------------------------------ |
-| Shorthands | `--transition-fast`, `--transition-standard`, `--transition-enter`, `--transition-leave`                           |
-| Durations  | `--transition-duration-xs` (90ms), `-s` (150ms), `-m` (225ms), `-l` (375ms)                                        |
-| Additional | `--transition-duration-enter` (225ms), `--transition-duration-leave` (195ms), `--page-transition-duration` (225ms) |
-| Timing     | `--ani-standard-timing`, `--ani-enter-timing`, `--ani-leave-timing`, `--ani-sharp-timing`                          |
+Motion is quick and settles softly: an element decelerates into place like a
+physical object, and leaves without a hard cut-off. Durations are about 15% under
+the Material defaults. The CSS tokens in `_css-variables.scss` and the Angular
+constants in `src/app/ui/animations/animation.const.ts` mirror each other; change
+both together.
 
-When migrating hardcoded durations, pick the nearest bucket — up to ~15% drift is acceptable for UI transitions. Under touch intent (`body.isTouchPrimary`) the `-s` and `-m` durations are shorter.
+| Type       | Variables                                                                                                                                   |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Shorthands | `--transition-fast`, `--transition-standard`, `--transition-enter`, `--transition-leave`                                                    |
+| Durations  | `--transition-duration-xs` (80ms), `-s` (130ms), `-m` (190ms), `-l` (320ms)                                                                 |
+| Additional | `--transition-duration-enter` (190ms), `--transition-duration-leave` (165ms), `--page-transition-duration` (190ms)                          |
+| Timing     | `--ani-standard-timing` (.25, .8, .25, 1), `--ani-enter-timing` (.16, 1, .3, 1), `--ani-leave-timing` (.4, 0, .9, .5), `--ani-sharp-timing` |
+
+- When migrating hardcoded durations, pick the nearest bucket; up to ~15% drift is acceptable.
+- Under touch intent (`body.isTouchPrimary`) the `-s` and `-m` durations are shorter.
+- **Ordinary view switches** fade and scale slightly (the new page settles in from 1.04, the old one leaves toward 1.02). The large "warp" is for the daily summary only.
+- **Reduced motion:** animations are off when the in-app "Disable all animations" setting is on or the OS asks for reduced motion (`isAnimationDisabled`). The app follows the OS setting; it does not override it. New CSS animations need no extra work (`body.isDisableAnimations` zeroes them); JS timers that wait for an animation must use the same flag.
+- Code that waits on a duration (the side nav's width collapse, the header's reveal pin) must be at least as long as the token it waits for; check those constants when you change a duration.
 
 ## Focus Ring
 

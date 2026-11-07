@@ -46,6 +46,7 @@ describe('DialogBackupsListComponent', () => {
       'listBackups',
       'loadTaskCount',
       'restore',
+      'clearAll',
     ]);
     sources.listBackups.and.resolveTo({
       entries: [ringEntry, fileEntry],
@@ -93,6 +94,42 @@ describe('DialogBackupsListComponent', () => {
     await flush();
     const row: HTMLButtonElement = fixture.nativeElement.querySelector('button.backup');
     expect(row.getAttribute('aria-pressed')).toBe('true');
+  });
+
+  it('cancelling Clear all does not remove any backups', async () => {
+    matDialog.open.and.returnValue({ afterClosed: () => of(false) } as never);
+    await component.clearAll();
+    expect(sources.clearAll).not.toHaveBeenCalled();
+    expect(component.entries().length).toBe(2);
+  });
+
+  it('requires a destructive confirmation and reloads the list after clearing', async () => {
+    sources.listBackups.and.resolveTo({ entries: [], failedSources: [] });
+    await component.select(ringEntry);
+    await component.clearAll();
+    expect(matDialog.open).toHaveBeenCalledWith(
+      jasmine.any(Function),
+      jasmine.objectContaining({
+        data: jasmine.objectContaining({
+          isDestructive: true,
+          message: T.GCF.AUTO_BACKUPS.D_LIST.CLEAR_WARNING,
+        }),
+      }),
+    );
+    expect(sources.clearAll).toHaveBeenCalledTimes(1);
+    expect(component.selected()).toBeNull();
+    expect(component.entries()).toEqual([]);
+    expect(component.isClearing()).toBeFalse();
+  });
+
+  it('shows remaining copies when a source cannot be cleared', async () => {
+    sources.clearAll.and.rejectWith(new Error('disk failure'));
+    await component.clearAll();
+    expect(snack.open).toHaveBeenCalledWith({
+      type: 'ERROR',
+      msg: T.GCF.AUTO_BACKUPS.D_LIST.CLEAR_ERROR,
+    });
+    expect(component.entries().length).toBe(2);
   });
 
   it('shows the available backups with a warning when one source failed', async () => {

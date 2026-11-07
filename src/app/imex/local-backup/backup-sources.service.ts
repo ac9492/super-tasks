@@ -53,6 +53,17 @@ export class BackupSourcesService {
   // service is provided by the dialog, so they are released with it.
   private _mobileBlobs = new Map<string, string>();
 
+  async clearAll(): Promise<void> {
+    const results = await Promise.allSettled([
+      this._localBackupService.clearAutomaticBackups(),
+      this._backupService.clearImportBackups(),
+    ]);
+    this._mobileBlobs.clear();
+    if (results.some((result) => result.status === 'rejected')) {
+      throw new Error('Some local backups could not be cleared');
+    }
+  }
+
   /**
    * One failing source must not hide the others (a closed IndexedDB vs. the
    * file dir); the failure is reported so the UI can say the list is partial.

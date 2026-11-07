@@ -3039,6 +3039,18 @@ describe('OperationLogStoreService', () => {
       expect(backup).toBeNull();
     });
 
+    it('explicit Clear all removes ring snapshots and Undo, while ordinary clear only retires Undo', async () => {
+      const first = await service.saveImportBackup({ data: 'first' });
+      const second = await service.saveImportBackup({ data: 'second' });
+      await service.clearImportBackup(second.backupId);
+      expect((await service.listImportBackups()).length).toBe(2);
+      await service.clearImportBackup(undefined, true);
+      expect(await service.listImportBackups()).toEqual([]);
+      expect(await service.loadImportBackup()).toBeNull();
+      expect(await service.loadImportBackupById(first.backupId)).toBeNull();
+      expect(await service.loadImportBackupById(second.backupId)).toBeNull();
+    });
+
     it('should not let a stale identity clear a replacement backup', async () => {
       const first = await service.saveImportBackup({ version: 1 });
       const second = await service.saveImportBackup({ version: 2 });

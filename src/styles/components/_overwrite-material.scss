@@ -1008,6 +1008,16 @@ body .mat-mdc-slide-toggle {
   --mat-slide-toggle-unselected-handle-size: var(--s2);
   --mat-slide-toggle-pressed-handle-size: var(--s2);
   --mat-slide-toggle-with-icon-handle-size: var(--s2);
+  // MDC computes travel from handle-width, independently of the visible size.
+  // Include both 2px insets so the thumb has equal clearance at either end.
+  --mat-slide-toggle-handle-width: calc(var(--s2) + var(--s-half));
+  --mat-slide-toggle-handle-height: var(--s2);
+  --mat-slide-toggle-selected-handle-horizontal-margin: 0 var(--s-quarter);
+  --mat-slide-toggle-unselected-handle-horizontal-margin: 0 var(--s-quarter);
+  --mat-slide-toggle-selected-pressed-handle-horizontal-margin: 0 var(--s-quarter);
+  --mat-slide-toggle-unselected-pressed-handle-horizontal-margin: 0 var(--s-quarter);
+  --mat-slide-toggle-selected-with-icon-handle-horizontal-margin: 0 var(--s-quarter);
+  --mat-slide-toggle-unselected-with-icon-handle-horizontal-margin: 0 var(--s-quarter);
   --mat-slide-toggle-track-outline-width: 1px;
   --mat-slide-toggle-selected-track-color: var(--palette-accent);
   --mat-slide-toggle-selected-hover-track-color: var(--palette-accent);

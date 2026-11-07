@@ -227,7 +227,12 @@ export const pruneImportBackupRingTx = async (
 export const clearImportBackupTx = async (
   tx: OpLogTx,
   expectedBackupId?: string,
+  all = false,
 ): Promise<void> => {
+  if (all) {
+    await tx.clear(STORE_NAMES.IMPORT_BACKUP);
+    return;
+  }
   if (expectedBackupId !== undefined) {
     const pointer = await tx.get<PointerRow>(STORE_NAMES.IMPORT_BACKUP, SINGLETON_KEY);
     if (pointer?.backupId !== expectedBackupId) {

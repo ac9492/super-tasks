@@ -11,6 +11,7 @@ import {
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle,
+  MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { MatButton } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
@@ -57,6 +58,9 @@ export class DialogBackupsListComponent implements OnInit {
   private _matDialog = inject(MatDialog);
   private _snackService = inject(SnackService);
   private _sources = inject(BackupSourcesService);
+  private _confirmClear = !!inject<{ confirmClear?: boolean } | null>(MAT_DIALOG_DATA, {
+    optional: true,
+  })?.confirmClear;
 
   T = T;
   KIND_ICON = KIND_ICON;
@@ -65,6 +69,7 @@ export class DialogBackupsListComponent implements OnInit {
   selected = signal<BackupListEntry | null>(null);
   isLoading = signal(true);
   isRestoring = signal(false);
+  isClearing = signal(false);
   /** Listing failed outright; replaces the list. */
   error = signal<string | null>(null);
   /** The last restore failed; shown above the list so another backup can be picked. */
@@ -73,6 +78,7 @@ export class DialogBackupsListComponent implements OnInit {
   isPartial = signal(false);
 
   async ngOnInit(): Promise<void> {
+    this.isLoading.set(true);
     try {
       const { entries, failedSources } = await this._sources.listBackups();
       this.entries.set(entries);
@@ -84,6 +90,10 @@ export class DialogBackupsListComponent implements OnInit {
       this.error.set(T.GCF.AUTO_BACKUPS.D_LIST.ERROR_LOADING);
     } finally {
       this.isLoading.set(false);
+    }
+    if (this._confirmClear) {
+      this._confirmClear = false;
+      await this.clearAll();
     }
   }
 
@@ -107,6 +117,7 @@ export class DialogBackupsListComponent implements OnInit {
   }
 
   async restore(): Promise<void> {
+    if (this.isRestoring() || this.isClearing()) return;
     const entry = this.selected();
     if (!entry) {
       return;
@@ -155,5 +166,44 @@ export class DialogBackupsListComponent implements OnInit {
 
   cancel(): void {
     this._dialogRef.close(false);
+  }
+
+  async clearAll(): Promise<void> {
+    if (this.isClearing() || this.isRestoring()) return;
+    this.isClearing.set(true);
+    try {
+      const confirmed = await firstValueFrom(
+        this._matDialog
+          .open(DialogConfirmComponent, {
+            data: {
+              title: T.GCF.AUTO_BACKUPS.D_LIST.CLEAR_TITLE,
+              message: T.GCF.AUTO_BACKUPS.D_LIST.CLEAR_WARNING,
+              okTxt: T.GCF.AUTO_BACKUPS.D_LIST.CLEAR_ALL,
+              titleIcon: 'warning',
+              isDestructive: true,
+            },
+          })
+          .afterClosed(),
+      );
+      if (!confirmed) return;
+      try {
+        await this._sources.clearAll();
+        this._snackService.open({
+          type: 'SUCCESS',
+          msg: T.GCF.AUTO_BACKUPS.D_LIST.CLEAR_SUCCESS,
+        });
+      } catch {
+        this._snackService.open({
+          type: 'ERROR',
+          msg: T.GCF.AUTO_BACKUPS.D_LIST.CLEAR_ERROR,
+        });
+      }
+      this.selected.set(null);
+      this.restoreError.set(null);
+      this.error.set(null);
+      await this.ngOnInit();
+    } finally {
+      this.isClearing.set(false);
+    }
   }
 }

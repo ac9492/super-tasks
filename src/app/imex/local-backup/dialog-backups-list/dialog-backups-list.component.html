@@ -39,6 +39,7 @@
           [class.selected]="selected()?.id === entry.id"
           [attr.aria-pressed]="selected()?.id === entry.id"
           (click)="select(entry)"
+          [disabled]="isClearing() || isRestoring()"
         >
           <mat-icon class="kind-icon">{{ KIND_ICON[entry.kind] }}</mat-icon>
           <span class="backup-info">
@@ -78,8 +79,19 @@
   align="end"
 >
   <button
+    mat-stroked-button
+    color="warn"
+    class="dialog-action-start"
+    [disabled]="
+      isLoading() || isClearing() || isRestoring() || (!entries().length && !isPartial())
+    "
+    (click)="clearAll()"
+  >
+    {{ T.GCF.AUTO_BACKUPS.D_LIST.CLEAR_ALL | translate }}
+  </button>
+  <button
     mat-button
-    [disabled]="isRestoring()"
+    [disabled]="isRestoring() || isClearing()"
     (click)="cancel()"
   >
     {{ T.G.CANCEL | translate }}
@@ -87,7 +99,7 @@
   <button
     mat-flat-button
     color="warn"
-    [disabled]="!selected() || isRestoring()"
+    [disabled]="!selected() || isRestoring() || isClearing()"
     (click)="restore()"
   >
     @if (isRestoring()) {

@@ -20,7 +20,7 @@ import { ConfirmUrlImportDialogComponent } from '../dialog-confirm-url-import/di
 import { DialogImportFromUrlComponent } from '../dialog-import-from-url/dialog-import-from-url.component';
 import { createAppDataCompleteMock } from '../../util/app-data-mock';
 import { ImportEncryptionHandlerService } from '../sync/import-encryption-handler.service';
-import { PluginService } from '../../plugins/plugin.service';
+import { BuiltinImportService } from '../importers/builtin-import.service';
 
 describe('FileImexComponent', () => {
   let component: FileImexComponent;
@@ -59,13 +59,6 @@ describe('FileImexComponent', () => {
     importEncryptionHandlerSpy.checkEncryptionStateChange.and.returnValue(
       Promise.resolve({ willChange: false }),
     );
-    const pluginServiceSpy = jasmine.createSpyObj('PluginService', [
-      'isInitialized',
-      'initializePlugins',
-      'activatePlugin',
-    ]);
-    pluginServiceSpy.isInitialized.and.returnValue(true);
-    pluginServiceSpy.activatePlugin.and.returnValue(Promise.resolve(null));
     importEncryptionHandlerSpy.handleImportEncryptionIfNeeded.and.returnValue(
       Promise.resolve(null),
     );
@@ -92,7 +85,10 @@ describe('FileImexComponent', () => {
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
         { provide: MatDialog, useValue: matDialogSpy },
         { provide: ImportEncryptionHandlerService, useValue: importEncryptionHandlerSpy },
-        { provide: PluginService, useValue: pluginServiceSpy },
+        {
+          provide: BuiltinImportService,
+          useValue: jasmine.createSpyObj('BuiltinImportService', ['preview', 'run']),
+        },
       ],
     }).compileComponents();
 
@@ -436,30 +432,15 @@ describe('FileImexComponent', () => {
     });
   });
 
-  describe('openTodoistImport', () => {
-    // The importer is a page; Settings is a dialog that closes only on popstate
-    it('should close the settings dialog before navigating to the importer', async () => {
-      const settingsDialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
-      mockMatDialog.getDialogById.and.callFake((id: string) =>
-        id === 'settings-window' ? settingsDialogRef : undefined,
-      );
-      const pluginService = TestBed.inject(
-        PluginService,
-      ) as jasmine.SpyObj<PluginService>;
-      pluginService.activatePlugin.and.returnValue(Promise.resolve({} as any));
-      mockRouter.navigate.and.callFake(() => {
-        expect(settingsDialogRef.close).toHaveBeenCalled();
-        return Promise.resolve(true);
-      });
-
-      await component.openTodoistImport();
-
-      expect(settingsDialogRef.close).toHaveBeenCalledTimes(1);
-      expect(mockRouter.navigate).toHaveBeenCalledWith([
-        '/plugins',
-        jasmine.any(String),
-        'index',
-      ]);
-    });
+  it('keeps CSV imports inside settings instead of navigating to a plugin', async () => {
+    component.importSource = 'todoist';
+    const input = fixture.nativeElement.querySelector(
+      'input[type=file]',
+    ) as HTMLInputElement;
+    spyOn(input, 'click');
+    await component.importSelected();
+    expect(input.click).toHaveBeenCalled();
+    expect(mockRouter.navigate).not.toHaveBeenCalled();
+    expect(mockMatDialog.getDialogById).not.toHaveBeenCalled();
   });
 });

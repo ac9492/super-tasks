@@ -51,6 +51,7 @@ export interface ElectronAPI {
 
   /** All automatic backup files, newest first. */
   listBackups(): Promise<LocalBackupMeta[]>;
+  clearBackups(): Promise<void>;
 
   loadBackupData(backupPath: string): Promise<string>;
 

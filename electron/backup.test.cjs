@@ -71,6 +71,10 @@ const installMocks = () => {
           readPaths.push(p);
           return storedFiles.get(path.resolve(p));
         },
+        unlinkSync: (p) => {
+          backupFiles.delete(path.basename(p));
+          storedFiles.delete(path.resolve(p));
+        },
       };
     }
 
@@ -103,6 +107,31 @@ test.afterEach(() => {
   Module._load = originalModuleLoad;
   delete process.windowsStore;
   resetModule();
+});
+
+test('Clear all removes JSON backups only inside the current app backup folder', () => {
+  existingPaths.add(BACKUP_DIR);
+  backupFiles.set('first.json', 1);
+  backupFiles.set('second.json', 2);
+  backupFiles.set('keep.txt', 3);
+  const manual = path.resolve(USER_DATA, 'manual-export.json');
+  storedFiles.set(manual, 'keep');
+  const { initBackupAdapter } = loadBackupModule();
+  initBackupAdapter();
+  assert.equal(typeof handleHandlers.get('BACKUP_CLEAR_ALL'), 'function');
+  handleHandlers.get('BACKUP_CLEAR_ALL')({});
+  assert.deepEqual(Array.from(backupFiles.keys()), ['keep.txt']);
+  assert.equal(storedFiles.get(manual), 'keep');
+});
+
+test('Clear all rejects a resolved path outside the backup directory', () => {
+  existingPaths.add(BACKUP_DIR);
+  backupFiles.set('../outside.json', 1);
+  const { initBackupAdapter } = loadBackupModule();
+  initBackupAdapter();
+  assert.equal(typeof handleHandlers.get('BACKUP_CLEAR_ALL'), 'function');
+  assert.throws(() => handleHandlers.get('BACKUP_CLEAR_ALL')({}));
+  assert.equal(backupFiles.size, 1);
 });
 
 // Sanity check: without this the Windows-only branches below could never be

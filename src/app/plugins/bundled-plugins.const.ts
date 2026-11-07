@@ -24,8 +24,6 @@ export const BUNDLED_PLUGIN_PATHS = [
   'assets/bundled-plugins/caldav-calendar-provider',
   'assets/bundled-plugins/doc-mode',
   'assets/bundled-plugins/app-auto-track',
-  'assets/bundled-plugins/todoist-import',
-  'assets/bundled-plugins/ticktick-import',
   'assets/bundled-plugins/parallel-code',
 ] as const;
 
