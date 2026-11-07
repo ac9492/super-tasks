@@ -47,6 +47,7 @@ import { TrackingPresenceService } from '../../features/tracking-presence/tracki
 import { DesktopPanelButtonsComponent } from './desktop-panel-buttons/desktop-panel-buttons.component';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FocusButtonComponent } from './focus-button/focus-button.component';
+import { ProjectViewMenuComponent } from './project-view-menu/project-view-menu.component';
 
 /** One `DOM_DELTA_LINE` notch, in CSS pixels. Matches the row's icon metrics. */
 const WHEEL_LINE_HEIGHT_PX = 16;
@@ -81,6 +82,7 @@ const ACTION_ROW_REVEAL_PIN_MS = 400;
     RemoteTrackingPillComponent,
     DesktopPanelButtonsComponent,
     FocusButtonComponent,
+    ProjectViewMenuComponent,
   ],
 })
 export class MainHeaderComponent implements OnDestroy {
@@ -143,7 +145,6 @@ export class MainHeaderComponent implements OnDestroy {
   });
   isShowIssuePanel = this.layoutService.isShowIssuePanel;
   isShowNotes = this.layoutService.isShowNotes;
-  isShowScheduleDayPanel = this.layoutService.isShowScheduleDayPanel;
 
   /**
    * Which right-panel content is open, as one comparable key.
@@ -164,9 +165,6 @@ export class MainHeaderComponent implements OnDestroy {
     }
     if (this.isShowIssuePanel()) {
       return 'ISSUES';
-    }
-    if (this.isShowScheduleDayPanel()) {
-      return 'SCHEDULE';
     }
     if (this.layoutService.isShowPluginPanel()) {
       return `PLUGIN:${this.layoutService.activePluginId()}`;

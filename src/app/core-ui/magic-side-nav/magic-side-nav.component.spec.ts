@@ -14,7 +14,7 @@ import { MagicNavConfigService } from './magic-nav-config.service';
 import { LayoutService } from '../layout/layout.service';
 import { TaskService } from '../../features/tasks/task.service';
 import { DataInitStateService } from '../../core/data-init/data-init-state.service';
-import { ScheduleExternalDragService } from '../../features/schedule/schedule-week/schedule-external-drag.service';
+import { TaskExternalDragService } from '../../features/tasks/task-external-drag.service';
 import { NavActionItem, NavConfig, NavPluginItem } from './magic-side-nav.model';
 
 describe('MagicSideNavComponent', () => {
@@ -106,7 +106,7 @@ describe('MagicSideNavComponent', () => {
         provideRouter([]),
         { provide: DragDropRegistry, useValue: { pointerUp: EMPTY } },
         {
-          provide: ScheduleExternalDragService,
+          provide: TaskExternalDragService,
           useValue: {
             activeTask: signal(null),
             activeDragRef: signal(null),

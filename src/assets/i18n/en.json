@@ -47,7 +47,6 @@
   "BN": {
     "SHOW_ISSUE_PANEL": "Issue Provider Panel",
     "SHOW_NOTES": "Project Notes",
-    "SHOW_SCHEDULE": "Calendar",
     "SLOT_CHANGE_HINT": "Long-press to change this button",
     "SLOT_MENU_LABEL": "Choose this button's destination"
   },
@@ -1062,7 +1061,7 @@
       "LAYOUT": {
         "BOARD": "Board",
         "CALENDAR": "Calendar",
-        "LABEL": "Project layout",
+        "LABEL": "Project view",
         "LIST": "List",
         "NO_SECTION": "No section",
         "RENAME_SECTION": "Rename section",
@@ -1862,7 +1861,8 @@
         "SUB_TASKS_EMPTY": "Subtasks",
         "TIME": "Time spent / estimate",
         "TITLE_PLACEHOLDER": "Enter a title",
-        "OPEN_IN_FULLSCREEN": "Open in fullscreen"
+        "OPEN_IN_FULLSCREEN": "Open in fullscreen",
+        "OPEN_DESCRIPTION_EDITOR": "Open description editor"
       },
       "B": {
         "ADD_ALL_TO_TODAY": "Add all to today",
@@ -3249,7 +3249,6 @@
     "TASKS": "Tasks",
     "TOGGLE_SHOW_ISSUE_PANEL": "Show/hide issue provider panel",
     "TOGGLE_SHOW_NOTES": "Show/hide project notes",
-    "TOGGLE_SHOW_SCHEDULE_PANEL": "Show/hide calendar panel",
     "TOGGLE_TRACK_TIME": "Start/stop tracking time",
     "TRIGGER_SYNC": "Sync now",
     "UNPLAN_ALL_TASKS": "Unschedule all tasks",

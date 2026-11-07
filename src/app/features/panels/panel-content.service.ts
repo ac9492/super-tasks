@@ -14,8 +14,7 @@ export type PanelContentType =
   | 'ADD_TASK_PANEL'
   | 'ISSUE_PANEL'
   | 'TASK_VIEW_CUSTOMIZER_PANEL'
-  | 'PLUGIN'
-  | 'SCHEDULE_DAY_PANEL';
+  | 'PLUGIN';
 
 @Injectable({ providedIn: 'root' })
 export class PanelContentService {
@@ -48,14 +47,12 @@ export class PanelContentService {
       isShowIssuePanel,
       isShowTaskViewCustomizerPanel,
       isShowPluginPanel,
-      isShowScheduleDayPanel,
     } = layoutState;
 
     if (isShowNotes) return 'NOTES';
     if (isShowIssuePanel) return 'ISSUE_PANEL';
     if (isShowTaskViewCustomizerPanel) return 'TASK_VIEW_CUSTOMIZER_PANEL';
     if (isShowPluginPanel) return 'PLUGIN';
-    if (isShowScheduleDayPanel) return 'SCHEDULE_DAY_PANEL';
     if (selectedTask) return 'TASK';
     return null;
   });
@@ -69,15 +66,13 @@ export class PanelContentService {
       isShowIssuePanel,
       isShowTaskViewCustomizerPanel,
       isShowPluginPanel,
-      isShowScheduleDayPanel,
     } = layoutState;
     return !!(
       selectedTask ||
       isShowNotes ||
       isShowIssuePanel ||
       isShowTaskViewCustomizerPanel ||
-      isShowPluginPanel ||
-      isShowScheduleDayPanel
+      isShowPluginPanel
     );
   });
 

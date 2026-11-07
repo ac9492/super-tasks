@@ -86,7 +86,6 @@ export class ScheduleWeekComponent implements OnInit, AfterViewInit, OnDestroy {
   private _translateService = inject(TranslateService);
   private _calendarEventActions = inject(CalendarEventActionsService);
 
-  isInPanel = input<boolean>(false);
   isHorizontalScrollMode = input<boolean>(false);
   isHScrolled = input<boolean>(false);
   events = input<ScheduleEvent[] | null>([]);
@@ -523,19 +522,6 @@ export class ScheduleWeekComponent implements OnInit, AfterViewInit, OnDestroy {
       return dayStr;
     }
     return formatMonthDay(date, this._dateTimeFormatService.currentLocale());
-  }
-
-  // Public methods for external preview control (used by schedule-day-panel)
-  showExternalPreview(event: ScheduleEvent, style: string, timestamp: number): void {
-    this._service.showExternalPreview(event, style, timestamp);
-  }
-
-  updateExternalPreview(style: string, timestamp: number): void {
-    this._service.updateExternalPreview(style, timestamp);
-  }
-
-  hideExternalPreview(): void {
-    this._service.hideExternalPreview();
   }
 }
 

@@ -91,15 +91,11 @@ export class MobileBottomNavComponent {
   // Panel state signals from layout service
   readonly isShowNotes = this._layoutService.isShowNotes;
   readonly isShowIssuePanel = this._layoutService.isShowIssuePanel;
-  readonly isShowScheduleDayPanel = this._layoutService.isShowScheduleDayPanel;
   readonly isIssuesPanelEnabled = computed(
     () => this._globalConfigService.appFeatures().isIssuesPanelEnabled,
   );
   readonly isProjectNotesEnabled = computed(
     () => this._globalConfigService.appFeatures().isProjectNotesEnabled,
-  );
-  readonly isScheduleDayPanelEnabled = computed(
-    () => this._globalConfigService.appFeatures().isSchedulerEnabled,
   );
 
   // Second slot: configurable destination, Planner by default (#7637).
@@ -136,10 +132,7 @@ export class MobileBottomNavComponent {
   /**
    * Below 600px this menu is the *only* route to every right-panel toggle --
    * `desktop-panel-buttons` is not rendered there at all. So every enabled
-   * panel must be listed here and must count towards showing the button:
-   * schedule was in neither, and `toggleScheduleDayPanel()` has no other
-   * caller and no keyboard shortcut, so the panel was simply unreachable on a
-   * phone.
+   * panel must be listed here and must count towards showing the button.
    *
    * With exactly one entry the menu is skipped and that entry is rendered as
    * the nav button itself.
@@ -147,7 +140,6 @@ export class MobileBottomNavComponent {
   readonly sidePanelItemCount = computed(
     () =>
       this.sidePanelButtons().length +
-      (this.isScheduleDayPanelEnabled() ? 1 : 0) +
       (this.isIssuesPanelEnabled() ? 1 : 0) +
       (this.isProjectNotesEnabled() ? 1 : 0),
   );
@@ -226,9 +218,5 @@ export class MobileBottomNavComponent {
 
   toggleNotes(): void {
     this._layoutService.toggleNotes();
-  }
-
-  toggleScheduleDayPanel(): void {
-    this._layoutService.toggleScheduleDayPanel();
   }
 }

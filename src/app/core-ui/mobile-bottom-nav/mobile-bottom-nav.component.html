@@ -80,17 +80,6 @@
           [fallbackIcon]="button.icon || 'extension'"
         ></plugin-icon>
       </button>
-    } @else if (isScheduleDayPanelEnabled()) {
-      <button
-        mat-button
-        class="nav-button e2e-toggle-schedule-day-panel"
-        [class.active]="isShowScheduleDayPanel()"
-        [attr.aria-pressed]="isShowScheduleDayPanel()"
-        (click)="toggleScheduleDayPanel()"
-        [attr.aria-label]="T.BN.SHOW_SCHEDULE | translate"
-      >
-        <mat-icon>calendar_view_week</mat-icon>
-      </button>
     } @else if (isIssuesPanelEnabled()) {
       <button
         mat-button
@@ -151,18 +140,6 @@
         [fallbackIcon]="button.icon || 'extension'"
       ></plugin-icon>
       <span>{{ button.label }}</span>
-    </button>
-  }
-
-  @if (isScheduleDayPanelEnabled()) {
-    <button
-      mat-menu-item
-      class="e2e-toggle-schedule-day-panel"
-      [class.active]="isShowScheduleDayPanel()"
-      (click)="toggleScheduleDayPanel()"
-    >
-      <mat-icon>calendar_view_week</mat-icon>
-      <span>{{ T.BN.SHOW_SCHEDULE | translate }}</span>
     </button>
   }
 

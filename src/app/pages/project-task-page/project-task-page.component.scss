@@ -12,14 +12,6 @@ work-view {
   min-height: 0;
 }
 
-.layout-bar {
-  display: flex;
-  align-items: center;
-  gap: var(--s2);
-  padding: var(--s) var(--s2);
-  border-bottom: 1px solid var(--divider-color);
-}
-
 .layout-content {
   display: flex;
   flex-direction: column;

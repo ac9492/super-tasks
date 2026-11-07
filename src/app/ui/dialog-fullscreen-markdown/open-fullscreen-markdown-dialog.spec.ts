@@ -52,6 +52,22 @@ describe('openFullscreenMarkdownDialog', () => {
     expect(config?.data).toEqual({ content: 'x' });
   });
 
+  it('opens task descriptions in a bounded window while keeping navigation persistence', () => {
+    openFullscreenMarkdownDialog(matDialog, location, {
+      content: 'Task context',
+      taskId: 'task-1',
+    });
+
+    const config = matDialog.open.calls.mostRecent().args[1];
+    expect(config?.panelClass).toBe('dialog-window');
+    expect(config?.height).toBe('86dvh');
+    expect(config?.maxHeight).toBe('96dvh');
+    expect(config?.minWidth).toBeUndefined();
+    expect(config?.closeOnNavigation).toBe(false);
+    navigate();
+    expect(closeSpy).toHaveBeenCalledTimes(1);
+  });
+
   // A navigation while the editor is open — an Android back-button press, or
   // the involuntary route change a breakpoint-crossing window resize fires —
   // must close the dialog through its save path rather than silently drop it.

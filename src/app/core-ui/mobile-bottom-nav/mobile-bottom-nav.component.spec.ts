@@ -24,18 +24,7 @@ import { INBOX_PROJECT } from '../../features/project/project.const';
 import { T } from '../../t.const';
 import { PluginMenuEntryCfg } from '../../plugins/plugin-api.model';
 
-/**
- * Below 600px this nav's panels menu is the ONLY route to every right-panel
- * toggle — `desktop-panel-buttons` is not rendered at that width at all, and
- * `toggleScheduleDayPanel()` has no keyboard shortcut and no other caller. So a
- * panel this menu forgets is a panel that cannot be opened on a phone, which is
- * exactly what happened to Schedule: it was in neither the menu nor the
- * button's show condition, and stayed unreachable for ~11 months because
- * nothing here asserted the two agree with the feature flags.
- *
- * That is what these pin: every enabled panel is reachable — listed in the
- * menu, or, when it is the only one, shown as the nav button itself.
- */
+/** Every enabled panel stays reachable from the mobile panels menu or a direct button. */
 describe('MobileBottomNavComponent', () => {
   interface SidePanelBtn {
     pluginId: string;
@@ -44,19 +33,13 @@ describe('MobileBottomNavComponent', () => {
     onClick?: () => void;
   }
 
-  type LayoutToggle = 'toggleScheduleDayPanel' | 'toggleAddTaskPanel' | 'toggleNotes';
-  type LayoutShowSignal = 'isShowScheduleDayPanel' | 'isShowIssuePanel' | 'isShowNotes';
+  type LayoutToggle = 'toggleAddTaskPanel' | 'toggleNotes';
+  type LayoutShowSignal = 'isShowIssuePanel' | 'isShowNotes';
 
   /** Feature flag → the item it must produce, what it toggles, and its state. */
   const PANEL_ITEMS: ReadonlyArray<
     [keyof AppFeaturesConfig, string, LayoutToggle, LayoutShowSignal]
   > = [
-    [
-      'isSchedulerEnabled',
-      '.e2e-toggle-schedule-day-panel',
-      'toggleScheduleDayPanel',
-      'isShowScheduleDayPanel',
-    ],
     [
       'isIssuesPanelEnabled',
       '.e2e-toggle-issue-provider-panel',
@@ -76,11 +59,9 @@ describe('MobileBottomNavComponent', () => {
   let layout: {
     isShowNotes: WritableSignal<boolean>;
     isShowIssuePanel: WritableSignal<boolean>;
-    isShowScheduleDayPanel: WritableSignal<boolean>;
     showAddTaskBar: jasmine.Spy;
     toggleAddTaskPanel: jasmine.Spy;
     toggleNotes: jasmine.Spy;
-    toggleScheduleDayPanel: jasmine.Spy;
   };
   let dispatch: jasmine.Spy;
   let activePluginId$: BehaviorSubject<string | null>;
@@ -99,11 +80,9 @@ describe('MobileBottomNavComponent', () => {
     layout = {
       isShowNotes: signal(false),
       isShowIssuePanel: signal(false),
-      isShowScheduleDayPanel: signal(false),
       showAddTaskBar: jasmine.createSpy('showAddTaskBar'),
       toggleAddTaskPanel: jasmine.createSpy('toggleAddTaskPanel'),
       toggleNotes: jasmine.createSpy('toggleNotes'),
-      toggleScheduleDayPanel: jasmine.createSpy('toggleScheduleDayPanel'),
     };
     dispatch = jasmine.createSpy('dispatch');
     activePluginId$ = new BehaviorSubject<string | null>(null);
@@ -188,9 +167,8 @@ describe('MobileBottomNavComponent', () => {
   });
 
   const cases: Array<[string, Partial<AppFeaturesConfig>]> = [
-    ['all three enabled', {}],
-    ['schedule and notes', { isIssuesPanelEnabled: false }],
-    ['issues and notes', { isSchedulerEnabled: false }],
+    ['both enabled', {}],
+    ['issues and notes with Calendar disabled', { isSchedulerEnabled: false }],
   ];
 
   cases.forEach(([name, over]) => {

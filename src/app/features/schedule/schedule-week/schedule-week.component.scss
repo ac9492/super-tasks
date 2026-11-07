@@ -165,7 +165,6 @@
   }
 }
 
-// TODO fix that this currently only shows inside schedule-day-panel
 // Fix drag placeholder to stay in original position and make it subtle
 .cdk-drag-placeholder {
   opacity: 0.2 !important;
@@ -191,39 +190,6 @@
   background: var(--bg-lighter);
   // Flat sticky header: the extraBorder bottom line separates it from scrolling
   // content; a resting shadow on top of it just reads as a floating bar.
-
-  &.isInPanel {
-    //border: 0;
-    // Day navigation buttons are projected in left and right of the date.
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    border-top: 0;
-    box-shadow: none;
-    // Opaque, so the sticky date stays readable over the scrolled grid.
-    background: var(--schedule-panel-header-bg, transparent);
-    border: none;
-    --over-budget-badge-bg: var(--schedule-event-bg-in-side-panel);
-
-    .week-header-dates {
-      grid-template-columns: 1fr;
-    }
-
-    .day {
-      border: none !important;
-    }
-
-    // Panel is a single, full-width day cell with centered content. Anchoring
-    // the badge container absolutely to the right edge leaves a large gap from
-    // the centered date; let it flow next to the date instead.
-    .day-badges {
-      position: static;
-      transform: none;
-    }
-
-    .filler {
-      display: none;
-    }
-  }
 }
 
 .week-header-dates {
@@ -280,10 +246,6 @@
   scrollbar-gutter: stable;
   padding: var(--s-half);
   border-inline-start: 1px solid var(--grid-color);
-}
-
-.week-header.isInPanel .floating-events {
-  grid-template-columns: var(--schedule-time-width) minmax(0, 1fr);
 }
 
 .day {

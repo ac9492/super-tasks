@@ -19,20 +19,6 @@ import { GlobalConfigService } from '../../../features/config/global-config.serv
   standalone: true,
   imports: [MatIconButton, MatIcon, MatTooltip, TranslatePipe],
   template: `
-    @if (isScheduleDayPanelEnabled()) {
-      <button
-        class="panel-btn e2e-toggle-schedule-day-panel"
-        [class.isActive]="isShowScheduleDayPanel()"
-        [attr.aria-pressed]="isShowScheduleDayPanel()"
-        (click)="layoutService.toggleScheduleDayPanel()"
-        mat-icon-button
-        matTooltip="{{ T.MH.TOGGLE_SHOW_SCHEDULE_PANEL | translate }}"
-        [attr.aria-label]="T.MH.TOGGLE_SHOW_SCHEDULE_PANEL | translate"
-      >
-        <mat-icon>calendar_view_week</mat-icon>
-      </button>
-    }
-
     @if (isIssuesPanelEnabled()) {
       <button
         class="panel-btn e2e-toggle-issue-provider-panel"
@@ -108,15 +94,11 @@ export class DesktopPanelButtonsComponent {
   private readonly _configService = inject(GlobalConfigService);
 
   readonly kb = input<KeyboardConfig | null>();
-  readonly isShowScheduleDayPanel = input.required<boolean>();
   readonly isShowIssuePanel = input.required<boolean>();
   readonly isShowNotes = input.required<boolean>();
 
   readonly isIssuesPanelEnabled = computed(
     () => this._configService.appFeatures().isIssuesPanelEnabled,
-  );
-  readonly isScheduleDayPanelEnabled = computed(
-    () => this._configService.appFeatures().isSchedulerEnabled,
   );
   readonly isProjectNotesEnabled = computed(
     () => this._configService.appFeatures().isProjectNotesEnabled,

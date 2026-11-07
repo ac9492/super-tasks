@@ -82,30 +82,6 @@ test.describe('@video reel', () => {
     // ── Pre-roll (trimmed off the gif) ────────────────────────────────────
     await page.goto('/#/tag/TODAY/tasks');
     await page.locator('task').first().waitFor({ state: 'visible', timeout: 15_000 });
-    const scheduleBtn = page.locator('.e2e-toggle-schedule-day-panel').first();
-    if (!isShorts) {
-      await expect(scheduleBtn).toBeVisible();
-      await scheduleBtn.click();
-      await expect(page.locator('schedule-day-panel').first()).toBeVisible({
-        timeout: 5_000,
-      });
-      // The panel's `_scrollToCurrentTime` runs on a 100ms timeout after init
-      // and parks the current-time marker ~50px from the top, which lands the
-      // simulated 09:30 close to the panel's top edge. Wait past that and
-      // nudge further down so the visible window covers more of the working
-      // day — gives beat 2's drop target more visual context (the drag lands
-      // on a populated mid-day stretch instead of an empty pre-9:30 area).
-      await page.waitForTimeout(200);
-      await page.evaluate(() => {
-        const panel = document.querySelector('schedule-day-panel');
-        const container =
-          (panel?.closest('.side-inner') as HTMLElement | null) ??
-          (document.querySelector('.side-inner') as HTMLElement | null);
-        if (container) {
-          container.scrollTop += 120;
-        }
-      });
-    }
     await parkCursor(page);
     await page.waitForTimeout(400);
 
@@ -202,45 +178,10 @@ test.describe('@video reel', () => {
       );
     }
 
-    // ── Beat 2 — Plan your day. (native app drag) ────────────────────────
-    // Shorts variant skips this entirely: the side schedule panel doesn't
-    // open on portrait, and there's nothing meaningful to drag onto.
-    const schedulePanel = page.locator('schedule-day-panel').first();
-    const dragSource = page
-      .locator('task')
-      .filter({ hasText: CAPTURED_TASK_DISPLAY_TITLE })
-      .first();
+    // ── Beat 2 — Plan your day in the Calendar view. ────────────────────
     if (!isShorts) {
-      await dragSource.waitFor({ state: 'visible', timeout: 5_000 });
-    }
-    if (!isShorts) {
-      await expect(schedulePanel).toBeVisible();
-      const taskBox = await dragSource.boundingBox();
-      const panelBox = await schedulePanel.boundingBox();
-      if (!taskBox || !panelBox)
-        throw new Error('Drag source or schedule panel has no box');
-      const taskHalfW = taskBox.width * 0.5;
-      const taskHalfH = taskBox.height * 0.5;
-      const panelHalfW = panelBox.width * 0.5;
-      const panelMidH = panelBox.height * 0.5;
-      const startX = taskBox.x + taskHalfW;
-      const startY = taskBox.y + taskHalfH;
-      const endX = panelBox.x + panelHalfW;
-      const endY = panelBox.y + panelMidH;
-      await page.mouse.move(startX, startY);
-      await page.waitForTimeout(120);
-      await page.mouse.down();
-      await page.waitForTimeout(120);
-      await page.mouse.move(endX, endY, { steps: 25 });
-      await page.waitForTimeout(180);
-      await page.mouse.up();
-      await page.waitForTimeout(isFull ? 250 : 150);
-      await expect(
-        schedulePanel
-          .locator('schedule-event:not(.custom-drag-preview)')
-          .filter({ hasText: CAPTURED_TASK_DISPLAY_TITLE })
-          .first(),
-      ).toBeVisible({ timeout: 5_000 });
+      await page.goto('/#/schedule');
+      await expect(page.locator('schedule')).toBeVisible();
       await parkCursor(page);
     }
     await page.waitForTimeout(isFull ? 900 : isShorts ? 0 : 600);
@@ -254,8 +195,8 @@ test.describe('@video reel', () => {
       async () => {
         if (!isShorts) void b2!.hide();
         if (!isShorts) {
-          await expect(scheduleBtn).toBeVisible();
-          await scheduleBtn.click();
+          await page.goto('/#/tag/TODAY/tasks');
+          await expect(page.locator('task').first()).toBeVisible();
         }
         if (capturedTaskId) {
           await page.evaluate((id) => {

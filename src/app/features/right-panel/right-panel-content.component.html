@@ -14,10 +14,6 @@
     }
   }
   <!-- Task content comes last so we can avoid an extra effect to unset selected task -->
-} @else if (panelContent() === 'SCHEDULE_DAY_PANEL') {
-  @defer (prefetch on idle) {
-    <schedule-day-panel [@slideInFromRight]></schedule-day-panel>
-  }
 } @else {
   @if (selectedTaskWithDelayForNone(); as task) {
     <!-- Render `on immediate`, not `on idle`: the task panel is the default and

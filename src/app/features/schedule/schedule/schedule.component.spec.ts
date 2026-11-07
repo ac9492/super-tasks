@@ -1208,8 +1208,7 @@ describe('ScheduleComponent', () => {
       expect(opts.left).toBe(0);
     });
 
-    // schedule-day-panel renders its own schedule-week, so a second
-    // `#work-start` can exist outside this component. Resolving it through the
+    // A second `#work-start` can exist outside this component. Resolving it through the
     // document would anchor on whichever came first.
     it('should ignore a work-start element outside its own host', () => {
       const stray = document.createElement('div');

@@ -1,3 +1,7 @@
+@if (data.taskId) {
+  <h2 mat-dialog-title>{{ T.F.TASK.D_DESCRIPTION.TITLE | translate }}</h2>
+}
+
 <div
   class="content"
   [class.split-view]="!isLiveMarkdown() && viewMode === 'SPLIT'"
@@ -223,6 +227,7 @@
             #liveEditorEl
             [model]="data.content"
             [autoFocus]="true"
+            [fillHeight]="true"
             [extraKeymap]="liveEditorKeymap"
             [resolveImageSrc]="resolveImageSrc"
             (docChanged)="onLiveEditorDocChanged($event)"
@@ -294,9 +299,8 @@
     id="T-save-note"
     (click)="close()"
     color="primary"
-    mat-stroked-button
+    mat-flat-button
   >
-    <mat-icon>save</mat-icon>
     {{ T.G.SAVE | translate }}
   </button>
 </div>

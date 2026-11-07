@@ -97,7 +97,6 @@ body:is(.isLightTheme, .isDarkTheme) {
   --attachment-bg: var(--palette-surface);
   --attachment-control-bg: var(--palette-surface);
   --attachment-control-hover-bg: var(--palette-hover);
-  --schedule-event-bg-in-side-panel: var(--palette-surface);
 
   // Material's mode-based foreground tokens already match the mode (the
   // normaliser keeps light palettes light and dark ones dark); these point the

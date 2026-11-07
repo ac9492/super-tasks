@@ -815,7 +815,6 @@ body {
   --attachment-control-hover-bg: var(--c-light-90);
 
   // Schedule events (Cat B)
-  --schedule-event-bg-in-side-panel: var(--schedule-event-bg);
 
   // Hover controls (Cat B — visible vs invisible per mode)
   --hover-controls-border: 1px solid;
@@ -891,7 +890,6 @@ body.isDarkTheme {
   --attachment-control-hover-bg: var(--c-dark-90);
 
   // Schedule events (Cat B)
-  --schedule-event-bg-in-side-panel: var(--dark12);
 
   // Hover controls (Cat B)
   --hover-controls-border: none;

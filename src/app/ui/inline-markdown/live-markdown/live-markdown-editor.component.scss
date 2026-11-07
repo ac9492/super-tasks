@@ -6,6 +6,12 @@
   width: 100%;
 }
 
+.cm-host.fill-height {
+  height: 100%;
+  // CodeMirror owns its DOM; the theme reads this below the encapsulation boundary.
+  --live-markdown-editor-height: 100%;
+}
+
 // iOS zooms the page when the focused control computes below 16px (#9556).
 // CodeMirror builds its own DOM outside Angular's view encapsulation, so the
 // editable element has to be reached with ::ng-deep.

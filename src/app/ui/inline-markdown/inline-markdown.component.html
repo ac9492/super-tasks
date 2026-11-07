@@ -103,7 +103,11 @@
         </button>
       </mat-menu>
     }
-    @let fullscreenLabel = T.F.TASK.ADDITIONAL_INFO.OPEN_IN_FULLSCREEN | translate;
+    @let fullscreenLabel =
+      (taskId()
+        ? T.F.TASK.ADDITIONAL_INFO.OPEN_DESCRIPTION_EDITOR
+        : T.F.TASK.ADDITIONAL_INFO.OPEN_IN_FULLSCREEN
+      ) | translate;
     <button
       [matTooltip]="fullscreenLabel"
       [attr.aria-label]="fullscreenLabel"

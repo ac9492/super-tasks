@@ -10,7 +10,7 @@ import { AppFeaturesConfig } from '../../../features/config/global-config.model'
 
 /**
  * Each panel toggle is gated on its own app feature, and the mobile bottom
- * nav's panels menu mirrors these three exactly (`mobile-bottom-nav.component`).
+ * nav's panels menu mirrors these toggles exactly (`mobile-bottom-nav.component`).
  * A button added here without a matching entry there is how a panel ends up
  * with no home below 600px.
  */
@@ -33,7 +33,6 @@ describe('DesktopPanelButtonsComponent', () => {
     }).compileComponents();
 
     const fixture = TestBed.createComponent(DesktopPanelButtonsComponent);
-    fixture.componentRef.setInput('isShowScheduleDayPanel', false);
     fixture.componentRef.setInput('isShowIssuePanel', false);
     fixture.componentRef.setInput('isShowNotes', false);
     fixture.detectChanges();
@@ -47,21 +46,9 @@ describe('DesktopPanelButtonsComponent', () => {
   };
 
   const cases: Array<[string, Partial<AppFeaturesConfig>, string[]]> = [
-    [
-      'all three enabled',
-      {},
-      [
-        'e2e-toggle-schedule-day-panel',
-        'e2e-toggle-issue-provider-panel',
-        'e2e-toggle-notes-btn',
-      ],
-    ],
+    ['both enabled', {}, ['e2e-toggle-issue-provider-panel', 'e2e-toggle-notes-btn']],
     ['none enabled', NONE, []],
-    [
-      'only schedule',
-      { ...NONE, isSchedulerEnabled: true },
-      ['e2e-toggle-schedule-day-panel'],
-    ],
+    ['only schedule', { ...NONE, isSchedulerEnabled: true }, []],
     [
       'only issues',
       { ...NONE, isIssuesPanelEnabled: true },
@@ -69,9 +56,9 @@ describe('DesktopPanelButtonsComponent', () => {
     ],
     ['only notes', { ...NONE, isProjectNotesEnabled: true }, ['e2e-toggle-notes-btn']],
     [
-      'schedule and notes',
+      'notes with Calendar enabled',
       { isIssuesPanelEnabled: false },
-      ['e2e-toggle-schedule-day-panel', 'e2e-toggle-notes-btn'],
+      ['e2e-toggle-notes-btn'],
     ],
   ];
 

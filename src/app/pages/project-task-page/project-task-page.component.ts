@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { MatButton } from '@angular/material/button';
-import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { TranslatePipe } from '@ngx-translate/core';
 import { WorkContextService } from '../../features/work-context/work-context.service';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -12,11 +11,6 @@ import { PlainspaceClaimPoolService } from '../../features/plainspace/plainspace
 import { PlainspaceSharedTask } from '../../features/plainspace/plainspace-shared-task.model';
 import { T } from '../../t.const';
 import {
-  SegmentedButtonGroupComponent,
-  SegmentedButtonOption,
-} from '../../ui/segmented-button-group/segmented-button-group.component';
-import {
-  PROJECT_LAYOUTS,
   ProjectLayout,
   ProjectLayoutService,
 } from '../../features/project/project-layout.service';
@@ -32,10 +26,8 @@ import { SectionBoardComponent } from '../../features/section/section-board/sect
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MatButton,
-    MatSlideToggle,
     TranslatePipe,
     WorkViewComponent,
-    SegmentedButtonGroupComponent,
     ScheduleComponent,
     PlannerComponent,
     SectionBoardComponent,
@@ -82,25 +74,6 @@ export class ProjectTaskPageComponent {
     initialValue: null,
   });
 
-  readonly layoutOptions: readonly SegmentedButtonOption[] = [
-    { id: 'list', labelKey: T.F.PROJECT.LAYOUT.LIST, hintKey: T.F.PROJECT.LAYOUT.LIST },
-    {
-      id: 'board',
-      labelKey: T.F.PROJECT.LAYOUT.BOARD,
-      hintKey: T.F.PROJECT.LAYOUT.BOARD,
-    },
-    {
-      id: 'calendar',
-      labelKey: T.F.PROJECT.LAYOUT.CALENDAR,
-      hintKey: T.F.PROJECT.LAYOUT.CALENDAR,
-    },
-    {
-      id: 'upcoming',
-      labelKey: T.F.PROJECT.LAYOUT.UPCOMING,
-      hintKey: T.F.PROJECT.LAYOUT.UPCOMING,
-    },
-  ];
-
   // Device-local presentation preference per project, see ProjectLayoutService.
   private readonly _layoutPrefs = computed(() => {
     const projectId = this.currentProject()?.id;
@@ -119,20 +92,6 @@ export class ProjectTaskPageComponent {
       ? { projectId, isIncludeCalendarEvents: this.isShowCalendarEvents() }
       : null;
   });
-
-  setLayout(layout: string | number): void {
-    const projectId = this.currentProject()?.id;
-    if (projectId && PROJECT_LAYOUTS.includes(layout as ProjectLayout)) {
-      this._projectLayoutService.setLayout(projectId, layout as ProjectLayout);
-    }
-  }
-
-  setShowCalendarEvents(isShow: boolean): void {
-    const projectId = this.currentProject()?.id;
-    if (projectId) {
-      this._projectLayoutService.setShowCalendarEvents(projectId, isShow);
-    }
-  }
 
   restoreProject(): void {
     const project = this.currentProject();

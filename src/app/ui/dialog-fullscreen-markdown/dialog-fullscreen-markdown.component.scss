@@ -15,7 +15,21 @@
 }
 
 :host-context(.isMac.isElectron) {
-  padding-top: var(--mac-title-bar-padding);
+  &:not(.is-windowed) {
+    padding-top: var(--mac-title-bar-padding);
+  }
+}
+
+// Task descriptions use the same bounded window as Settings. Stay inside the
+// overlay surface so the editor scrolls while its toolbar and actions stay put.
+:host(.is-windowed) {
+  position: relative;
+  top: auto;
+  left: auto;
+  min-height: 0;
+  padding-top: 0;
+  overflow: hidden;
+  border-radius: inherit;
 }
 
 // position:fixed bypasses body's safe-area padding, so apply it here so the
@@ -58,6 +72,7 @@
 
 .formatting-toolbar {
   display: flex;
+  flex-shrink: 0;
   flex-wrap: nowrap;
   overflow-x: auto;
   gap: var(--s-quarter);
@@ -76,27 +91,11 @@
   }
 
   .heading-label {
-    font-weight: bold;
-    font-size: 11px;
-    line-height: 1;
+    font: var(--type-label);
   }
 
-  .mat-mdc-icon-button {
-    --mdc-icon-button-icon-size: 18px;
-    min-width: 28px;
-    width: 28px;
-    height: 28px;
-    padding: 0;
-    line-height: 28px;
+  > button {
     flex-shrink: 0;
-
-    mat-icon,
-    .mat-icon {
-      font-size: 18px;
-      width: 18px;
-      height: 18px;
-      line-height: 18px;
-    }
   }
 }
 
@@ -125,9 +124,7 @@
       flex-grow: 1;
       // Allow proper flex shrinking
       min-height: 0;
-      overflow: auto;
-
-      @include scrollY;
+      overflow: hidden;
     }
 
     textarea {
@@ -181,6 +178,7 @@
 }
 
 .controls {
+  flex-shrink: 0;
   flex-direction: row;
   display: flex;
   justify-content: flex-end;

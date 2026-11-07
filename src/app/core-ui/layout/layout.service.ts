@@ -8,8 +8,6 @@ import {
   toggleIssuePanel,
   toggleShowNotes,
   toggleTaskViewCustomizerPanel,
-  toggleScheduleDayPanel,
-  hideScheduleDayPanel,
 } from './store/layout.actions';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
@@ -21,7 +19,6 @@ import {
   selectIsShowNotes,
   selectIsShowPluginPanel,
   selectIsShowTaskViewCustomizerPanel,
-  selectIsShowScheduleDayPanel,
 } from './store/layout.reducer';
 import { map } from 'rxjs/operators';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -110,11 +107,6 @@ export class LayoutService {
   );
 
   readonly isShowIssuePanel = toSignal(this.isShowIssuePanel$, { initialValue: false });
-
-  readonly isShowScheduleDayPanel = toSignal(
-    this._store$.pipe(select(selectIsShowScheduleDayPanel)),
-    { initialValue: false },
-  );
 
   // The plugin side panel's open state and which plugin owns it. Exposed for
   // the header's action-row reveal: a plugin panel's toggle sits at the row's
@@ -358,11 +350,4 @@ export class LayoutService {
   }
 
   // Schedule Day Panel controls
-  toggleScheduleDayPanel(): void {
-    this._store$.dispatch(toggleScheduleDayPanel());
-  }
-
-  hideScheduleDayPanel(): void {
-    this._store$.dispatch(hideScheduleDayPanel());
-  }
 }

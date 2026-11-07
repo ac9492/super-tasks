@@ -1,9 +1,9 @@
 import { Injectable, signal } from '@angular/core';
-import { TaskWithSubTasks } from '../../tasks/task.model';
+import { TaskWithSubTasks } from './task.model';
 import { DragRef } from '@angular/cdk/drag-drop';
 
 @Injectable({ providedIn: 'root' })
-export class ScheduleExternalDragService {
+export class TaskExternalDragService {
   private readonly _activeTask = signal<TaskWithSubTasks | null>(null);
   private _activeDragRef: DragRef | null = null;
   private _cancelNextDrop: boolean = false;

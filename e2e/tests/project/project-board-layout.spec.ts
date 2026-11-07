@@ -1,4 +1,5 @@
 import { expect, test } from '../../fixtures/test.fixture';
+import { selectProjectView } from '../../utils/project-view';
 import type { Locator, Page } from '@playwright/test';
 
 /** CDK drag-drop ignores HTML5 drag events, so drive it with real mouse moves. */
@@ -33,10 +34,7 @@ test.describe('Project board layout', () => {
     await workViewPage.waitForTaskList();
     await workViewPage.addTask('Board card');
 
-    await page
-      .getByRole('radiogroup', { name: 'Project layout' })
-      .getByRole('radio', { name: 'Board' })
-      .click();
+    await selectProjectView(page, 'Board');
     const board = page.locator('work-view-page section-board');
     await expect(board).toBeVisible();
 
@@ -67,10 +65,7 @@ test.describe('Project board layout', () => {
     await expect(noSection.locator('planner-task')).toHaveCount(0);
 
     // the same section holds the task in the List layout
-    await page
-      .getByRole('radiogroup', { name: 'Project layout' })
-      .getByRole('radio', { name: 'List' })
-      .click();
+    await selectProjectView(page, 'List');
     await expect(page.locator('.section-container .collapsible-title')).toHaveText([
       'Doing (1)',
     ]);

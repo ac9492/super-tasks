@@ -38,7 +38,7 @@ import { DateService } from '../../../core/date/date.service';
  */
 @Component({
   selector: 'live-markdown-editor',
-  template: '<div #hostEl class="cm-host"></div>',
+  template: '<div #hostEl class="cm-host" [class.fill-height]="fillHeight()"></div>',
   styleUrls: ['./live-markdown-editor.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -49,6 +49,8 @@ export class LiveMarkdownEditorComponent {
   readonly placeholderTxt = input<string>('');
   readonly ariaLabel = input<string>('');
   readonly autoFocus = input<boolean>(false);
+  /** Fill a bounded container and scroll inside CodeMirror instead of its parents. */
+  readonly fillHeight = input<boolean>(false);
   /** Extra key bindings, e.g. the fullscreen dialog's Ctrl+Enter save. */
   readonly extraKeymap = input<readonly KeyBinding[]>([]);
   /**

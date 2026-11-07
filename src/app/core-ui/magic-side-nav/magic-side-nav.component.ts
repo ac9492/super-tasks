@@ -31,7 +31,7 @@ import { magicSideNavAnimations } from './magic-side-nav.animations';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { filter, map, take } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
-import { ScheduleExternalDragService } from '../../features/schedule/schedule-week/schedule-external-drag.service';
+import { TaskExternalDragService } from '../../features/tasks/task-external-drag.service';
 import { Log } from '../../core/log';
 import { TODAY_TAG } from '../../features/tag/tag.const';
 import { DragDropRegistry } from '@angular/cdk/drag-drop';
@@ -99,7 +99,7 @@ export class MagicSideNavComponent implements OnDestroy, AfterViewInit {
   private readonly _router = inject(Router);
   private _dragDropRegistry = inject(DragDropRegistry);
   private _multiDrag = inject(TaskMultiDragService);
-  private _externalDragService = inject(ScheduleExternalDragService);
+  private _externalDragService = inject(TaskExternalDragService);
   private _pointerUpSubscription: Subscription | null = null;
 
   // Use service's computed signal directly

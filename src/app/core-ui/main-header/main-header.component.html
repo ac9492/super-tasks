@@ -132,6 +132,8 @@
         ></plugin-work-context-header-btns>
         <plugin-header-btns class="secondary-header-action"></plugin-header-btns>
 
+        <project-view-menu class="secondary-header-action"></project-view-menu>
+
         <!-- One action, one home: below 600px the bottom nav's panels menu
              lists these (or shows a lone one as a nav button), so the header
              must not render them as well. Rendering
@@ -144,7 +146,6 @@
           <desktop-panel-buttons
             class="secondary-header-action"
             [kb]="kb"
-            [isShowScheduleDayPanel]="isShowScheduleDayPanel()"
             [isShowIssuePanel]="isShowIssuePanel()"
             [isShowNotes]="isShowNotes()"
           ></desktop-panel-buttons>

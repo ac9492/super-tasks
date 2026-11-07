@@ -13,6 +13,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { SnackService } from '../../../core/snack/snack.service';
 import { IS_MOBILE } from 'src/app/util/is-mobile';
 import { LiveMarkdownEditorComponent } from '../../../ui/inline-markdown/live-markdown/live-markdown-editor.component';
+import { MatDialogTitle } from '@angular/material/dialog';
 
 @Component({
   // selector: 'dialog-add-note',
@@ -31,6 +32,7 @@ import { LiveMarkdownEditorComponent } from '../../../ui/inline-markdown/live-ma
     MatTooltip,
     MatIcon,
     MatButton,
+    MatDialogTitle,
     MatIconButton,
     TranslatePipe,
     LiveMarkdownEditorComponent,

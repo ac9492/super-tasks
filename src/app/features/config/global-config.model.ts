@@ -12,8 +12,8 @@ export type AppFeaturesConfig = Readonly<{
   isSchedulerEnabled: boolean;
   isPlannerEnabled: boolean;
   isBoardsEnabled: boolean;
-  // No longer read: the day panel follows isSchedulerEnabled. Kept because
-  // persisted and synced data (and released clients) still carry it.
+  // Deprecated, inert compatibility key for backups and released sync clients.
+  // The calendar side panel has been removed; use the Calendar view instead.
   isScheduleDayPanelEnabled: boolean;
   isIssuesPanelEnabled: boolean;
   isProjectNotesEnabled: boolean;

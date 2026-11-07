@@ -13,6 +13,10 @@ import { SectionBoardComponent } from '../../features/section/section-board/sect
 import { ProjectScope } from '../../features/project/filter-by-project.util';
 import { LS } from '../../core/persistence/storage-keys.const';
 import { Project } from '../../features/project/project.model';
+import {
+  PROJECT_LAYOUTS,
+  ProjectLayoutService,
+} from '../../features/project/project-layout.service';
 
 @Component({ selector: 'work-view', template: '<i class="stub-work"></i>' })
 class StubWorkViewComponent {
@@ -46,12 +50,8 @@ describe('ProjectTaskPageComponent layout switch', () => {
 
   const q = (sel: string): HTMLElement | null =>
     (fixture.nativeElement as HTMLElement).querySelector(sel);
-  const clickSegment = (index: number): void => {
-    (
-      (fixture.nativeElement as HTMLElement).querySelectorAll('.segment')[
-        index
-      ] as HTMLButtonElement
-    ).click();
+  const selectLayout = (index: number): void => {
+    TestBed.inject(ProjectLayoutService).setLayout('p1', PROJECT_LAYOUTS[index]);
     fixture.detectChanges();
   };
 
@@ -118,7 +118,7 @@ describe('ProjectTaskPageComponent layout switch', () => {
   });
 
   it('switches to the calendar layout and remembers it for this project only', () => {
-    clickSegment(2);
+    selectLayout(2);
 
     expect(q('.stub-schedule')).toBeTruthy();
     expect(q('.stub-work')).toBeNull();
@@ -132,7 +132,7 @@ describe('ProjectTaskPageComponent layout switch', () => {
   });
 
   it('switches to the board layout without the calendar events toggle', () => {
-    clickSegment(1);
+    selectLayout(1);
 
     expect(q('.stub-board')).toBeTruthy();
     expect(q('.stub-work')).toBeNull();
@@ -140,20 +140,20 @@ describe('ProjectTaskPageComponent layout switch', () => {
   });
 
   it('switches to the upcoming layout', () => {
-    clickSegment(3);
+    selectLayout(3);
 
     expect(q('.stub-planner')).toBeTruthy();
   });
 
   it('scopes the calendar to the project and hides calendar events until toggled', () => {
-    clickSegment(2);
+    selectLayout(2);
     const schedule = fixture.debugElement.query((d) => d.name === 'schedule');
     expect(schedule.componentInstance.scope()).toEqual({
       projectId: 'p1',
       isIncludeCalendarEvents: false,
     });
 
-    (q('.calendar-events-toggle button') as HTMLButtonElement).click();
+    TestBed.inject(ProjectLayoutService).setShowCalendarEvents('p1', true);
     fixture.detectChanges();
 
     expect(schedule.componentInstance.scope()).toEqual({

@@ -21,13 +21,6 @@ export const openNotesPanel = async (page: Page): Promise<void> => {
   await btn.click();
 };
 
-/** Toggle the schedule day panel via the e2e-tagged header button. */
-export const openSchedulePanel = async (page: Page): Promise<void> => {
-  const btn = page.locator('.e2e-toggle-schedule-day-panel').first();
-  await btn.waitFor({ state: 'visible', timeout: 10_000 });
-  await btn.click();
-};
-
 /** Toggle the issue provider panel via the e2e-tagged header button. */
 export const openIssueProviderPanel = async (page: Page): Promise<void> => {
   const btn = page.locator('.e2e-toggle-issue-provider-panel').first();

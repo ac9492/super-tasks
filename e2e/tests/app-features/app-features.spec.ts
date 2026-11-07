@@ -32,12 +32,6 @@ test.describe('App Features', () => {
       locator: (page: Page) => page.getByRole('menuitem', { name: 'Boards' }),
     },
     {
-      // the day panel button follows the Calendar switch
-      label: 'Calendar',
-      title: 'Calendar (day panel button)',
-      locator: (page: Page) => page.locator('.e2e-toggle-schedule-day-panel'),
-    },
-    {
       label: 'Issues panel',
       locator: (page: Page) => page.locator('.e2e-toggle-issue-provider-panel'),
     },

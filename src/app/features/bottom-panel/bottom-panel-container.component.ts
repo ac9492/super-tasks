@@ -22,7 +22,6 @@ import { NotesComponent } from '../note/notes/notes.component';
 import { IssuePanelComponent } from '../issue-panel/issue-panel.component';
 import { TaskViewCustomizerPanelComponent } from '../task-view-customizer/task-view-customizer-panel/task-view-customizer-panel.component';
 import { PluginPanelContainerComponent } from '../../plugins/ui/plugin-panel-container/plugin-panel-container.component';
-import { ScheduleDayPanelComponent } from '../schedule/schedule-day-panel/schedule-day-panel.component';
 import { fadeAnimation } from '../../ui/animations/fade.ani';
 import { taskDetailPanelTaskChangeAnimation } from '../tasks/task-detail-panel/task-detail-panel.ani';
 import { TaskService } from '../tasks/task.service';
@@ -116,7 +115,6 @@ const KEYBOARD_RESIZE_DEBOUNCE_MS = 100;
     IssuePanelComponent,
     TaskViewCustomizerPanelComponent,
     PluginPanelContainerComponent,
-    ScheduleDayPanelComponent,
   ],
   standalone: true,
 })

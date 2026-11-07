@@ -172,7 +172,7 @@ export const STORE_RULES: readonly StoreRule[] = [
     localeLayout: 'global',
     masterDir: 'electron',
     scenarioOrder: [
-      'desktop-01-list-with-schedule',
+      'desktop-01-task-list',
       'desktop-08-planner',
       'desktop-02-eisenhower',
       'desktop-03-schedule-dark',

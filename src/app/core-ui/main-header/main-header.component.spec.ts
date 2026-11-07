@@ -448,7 +448,6 @@ describe('MainHeaderComponent action placement', () => {
             isShowMobileBottomNav: isXs,
             isShowIssuePanel: signal(false),
             isShowNotes,
-            isShowScheduleDayPanel: signal(false),
             isShowPluginPanel: signal(false),
             activePluginId: signal(null),
           },

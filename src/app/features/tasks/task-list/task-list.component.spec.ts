@@ -8,7 +8,7 @@ import { WorkContextService } from '../../work-context/work-context.service';
 import { IssueService } from '../../issue/issue.service';
 import { TaskViewCustomizerService } from '../../task-view-customizer/task-view-customizer.service';
 import { NO_TAG_GROUP_ID } from '../../task-view-customizer/types';
-import { ScheduleExternalDragService } from '../../schedule/schedule-week/schedule-external-drag.service';
+import { TaskExternalDragService } from '../task-external-drag.service';
 import { DropListService } from '../../../core-ui/drop-list/drop-list.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
@@ -119,7 +119,7 @@ describe('TaskListComponent', () => {
         { provide: IssueService, useValue: {} },
         { provide: TaskViewCustomizerService, useValue: { setSort: () => {} } },
         {
-          provide: ScheduleExternalDragService,
+          provide: TaskExternalDragService,
           useValue: {
             activeTask: () => null,
             setActiveTask: () => {},

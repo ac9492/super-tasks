@@ -21,7 +21,6 @@ import {
   gotoAndSettle,
   openIssueProviderPanel,
   openNotesPanel,
-  openSchedulePanel,
   openTaskDetailPanel,
   resetView,
   scrollScheduleUp,
@@ -34,14 +33,12 @@ const captureDarkScenes = async (
   page: Page,
   shoot: (scenario: string, name: string) => Promise<void>,
 ): Promise<void> => {
-  // 01 — Today + schedule day-panel open. Side nav collapsed so the right
-  // panel doesn't squeeze the task list.
+  // 01 — Today task list with a collapsed sidebar.
   await applySideNavCollapsed(page, true);
   await gotoAndSettle(page, '/#/tag/TODAY/tasks');
   await page.locator('task').first().waitFor({ state: 'visible' });
-  await openSchedulePanel(page);
   await page.waitForTimeout(500);
-  await shoot('desktop-01-list-with-schedule', 'list-with-schedule');
+  await shoot('desktop-01-task-list', 'task-list');
   await applySideNavCollapsed(page, false);
   await resetView(page);
 

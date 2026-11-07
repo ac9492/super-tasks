@@ -17,6 +17,7 @@ export const liveMarkdownTheme = EditorView.theme({
     color: 'inherit',
     backgroundColor: 'transparent',
     fontSize: 'inherit',
+    height: 'var(--live-markdown-editor-height, auto)',
   },
   '&.cm-focused': { outline: 'none' },
   // CodeMirror's base theme hard-codes `font-family: monospace` on .cm-scroller;

@@ -54,7 +54,7 @@ import { AsyncPipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { TaskViewCustomizerService } from '../../task-view-customizer/task-view-customizer.service';
 import { TaskLog } from '../../../core/log';
-import { ScheduleExternalDragService } from '../../schedule/schedule-week/schedule-external-drag.service';
+import { TaskExternalDragService } from '../task-external-drag.service';
 import { DEFAULT_OPTIONS, NO_TAG_GROUP_ID } from '../../task-view-customizer/types';
 import { dragDelayForTouch, isTouchActive } from '../../../util/input-intent';
 import { performHapticFeedback } from '../../../util/haptic-feedback';
@@ -125,7 +125,7 @@ export class TaskListComponent implements OnDestroy, AfterViewInit {
   private _sectionService = inject(SectionService);
   private _issueService = inject(IssueService);
   private _taskViewCustomizerService = inject(TaskViewCustomizerService);
-  private _scheduleExternalDragService = inject(ScheduleExternalDragService);
+  private _externalDragService = inject(TaskExternalDragService);
   private _dateService = inject(DateService);
   private _ngZone = inject(NgZone);
   dropListService = inject(DropListService);
@@ -194,7 +194,7 @@ export class TaskListComponent implements OnDestroy, AfterViewInit {
   ngOnDestroy(): void {
     this._clearDragPointerTracking?.();
     this.dropListService.unregisterDropList(this.dropList()!);
-    this._scheduleExternalDragService.setActiveTask(null);
+    this._externalDragService.setActiveTask(null);
     this.dropListService.setActiveDragPointer(null);
   }
 
@@ -220,8 +220,8 @@ export class TaskListComponent implements OnDestroy, AfterViewInit {
       performHapticFeedback('longPress');
     }
     this.multiDrag.start(task);
-    // External schedule/tag drops remain single-task paths.
-    this._scheduleExternalDragService.setActiveTask(
+    // Sidebar tag drops remain single-task paths.
+    this._externalDragService.setActiveTask(
       this.multiDrag.ids().length > 1 ? null : task,
       event.source._dragRef,
     );
@@ -237,7 +237,7 @@ export class TaskListComponent implements OnDestroy, AfterViewInit {
   onDragEnded(): void {
     this.multiDrag.finish();
     this._clearDragPointerTracking?.();
-    this._scheduleExternalDragService.setActiveTask(null);
+    this._externalDragService.setActiveTask(null);
     this.dropListService.setActiveDragPointer(null);
   }
 
@@ -449,8 +449,8 @@ export class TaskListComponent implements OnDestroy, AfterViewInit {
       taskCount: this.filteredTasks()?.length,
     });
 
-    if (this._scheduleExternalDragService.isCancelNextDrop()) {
-      this._scheduleExternalDragService.setCancelNextDrop(false);
+    if (this._externalDragService.isCancelNextDrop()) {
+      this._externalDragService.setCancelNextDrop(false);
       return;
     }
 
