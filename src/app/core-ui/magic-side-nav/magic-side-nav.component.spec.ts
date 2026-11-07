@@ -61,6 +61,10 @@ describe('MagicSideNavComponent', () => {
           removeEventListener: () => undefined,
         }) as unknown as MediaQueryList,
     );
+    // Opening and closing the drawer must not navigate Karma's shared browser.
+    spyOn(window.history, 'pushState');
+    spyOn(window.history, 'replaceState');
+    spyOn(window.history, 'back');
 
     await TestBed.configureTestingModule({
       imports: [MagicSideNavComponent, NoopAnimationsModule, TranslateModule.forRoot()],
