@@ -30,6 +30,8 @@ jobs:
             platform: win
           - os: macos-15
             platform: mac
+          - os: ubuntu-latest
+            platform: linux
     runs-on: ${{ matrix.os }}
     timeout-minutes: 40
     env:
@@ -37,11 +39,20 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - uses: ./.github/actions/setup-electron-build
+      - name: Install Linux packaging and display dependencies
+        if: matrix.platform == 'linux'
+        run: sudo apt-get update && sudo apt-get install -y rpm xvfb
       - run: npm ci
       - run: npm run buildFrontend:prod:es6
       - run: npm run electron:build
       - name: Package desktop downloads
-        run: npx electron-builder --config electron-builder.desktop.yaml --${{ matrix.platform }} --publish never
+        shell: bash
+        run: |
+          if [ '${{ matrix.platform }}' = 'linux' ]; then
+            npx electron-builder --config electron-builder.desktop.yaml --linux AppImage deb rpm --x64 --publish never
+          else
+            npx electron-builder --config electron-builder.desktop.yaml --${{ matrix.platform }} --publish never
+          fi
       - name: Verify packaged require targets
         shell: bash
         run: |
@@ -52,6 +63,9 @@ jobs:
           if [ '${{ matrix.platform }}' = 'win' ]; then
             SOURCE='.tmp/app-builds/win-unpacked'
             EXECUTABLE='Ultra Tasks.exe'
+          elif [ '${{ matrix.platform }}' = 'linux' ]; then
+            SOURCE='.tmp/app-builds/linux-unpacked'
+            EXECUTABLE='ultratasks'
           elif [ "$(node -p process.arch)" = 'arm64' ]; then
             SOURCE='.tmp/app-builds/mac-arm64'
             EXECUTABLE='Ultra Tasks.app/Contents/MacOS/Ultra Tasks'
@@ -62,7 +76,11 @@ jobs:
           # The shared smoke test also verifies URLs from a path containing '#'.
           mv "$SOURCE" "${SOURCE} # packaged app"
           APP="${SOURCE} # packaged app/$EXECUTABLE"
-          node e2e/electron/packaged-app-smoke.cjs "$APP"
+          if [ '${{ matrix.platform }}' = 'linux' ]; then
+            xvfb-run --auto-servernum --server-args="-screen 0 1280x720x24" node e2e/electron/packaged-app-smoke.cjs "$APP"
+          else
+            node e2e/electron/packaged-app-smoke.cjs "$APP"
+          fi
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: desktop-${{ matrix.platform }}
@@ -70,6 +88,9 @@ jobs:
             .tmp/app-builds/*.exe
             .tmp/app-builds/*.dmg
             .tmp/app-builds/*.zip
+            .tmp/app-builds/*.AppImage
+            .tmp/app-builds/*.deb
+            .tmp/app-builds/*.rpm
           if-no-files-found: error
   publish:
     needs: [validate, package]
@@ -95,6 +116,9 @@ jobs:
           test "$(find downloads -name '*.exe' | wc -l)" -eq 2
           test "$(find downloads -name '*.dmg' | wc -l)" -eq 3
           test "$(find downloads -name '*.zip' | wc -l)" -eq 2
+          test "$(find downloads -name '*.AppImage' | wc -l)" -eq 1
+          test "$(find downloads -name '*.deb' | wc -l)" -eq 1
+          test "$(find downloads -name '*.rpm' | wc -l)" -eq 1
           (cd downloads && sha256sum * > SHA256SUMS.txt)
           # GITHUB_TOKEN deliberately prevents inherited tag/release workflows
           # from submitting this GitHub-only release to upstream stores.

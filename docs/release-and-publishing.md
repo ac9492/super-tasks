@@ -78,19 +78,21 @@ website until DNS and hosting are connected.
 
 ### GitHub-only desktop releases
 
-If validation and both package jobs pass but publication fails, dispatch
+If validation and all three package jobs pass but publication fails, dispatch
 `publish-desktop-artifacts.yml` with the original build run ID. It verifies those
-three successful jobs and reuses their artifacts. It verifies that only release
+four successful jobs and reuses their artifacts. It verifies that only release
 workflows and documentation differ from the tested source before tagging the
 current publication commit with `GITHUB_TOKEN`; the release notes record the
 original build commit. This avoids GitHub's restriction on tagging historical
 workflow revisions. It does not rebuild or move an existing tag.
 macOS currently also produces a Universal DMG through the inherited target list,
-so publication expects three DMGs, two ZIPs, and two Windows executables.
+so publication expects three DMGs, two ZIPs, two Windows executables, and one
+Linux x64 download each in AppImage, DEB, and RPM format.
 
 For Ultra Tasks desktop downloads, dispatch **Desktop GitHub Release**
 (`desktop-release.yml`) from the reviewed `main` commit. It validates the app,
-builds Windows x64/ARM64 executables and macOS Intel/Apple Silicon DMG/ZIP files,
+builds Windows x64/ARM64 executables, macOS Intel/Apple Silicon DMG/ZIP files,
+and Linux x64 AppImage/DEB/RPM packages,
 and smoke-tests the native packaged app on each runner. Only after every job
 passes does it create `ultra-tasks-v<package version>` and publish the GitHub
 release with SHA-256 checksums and `build/desktop-release-notes.md`.
@@ -105,7 +107,10 @@ The publish job deliberately uses `GITHUB_TOKEN`: GitHub does not trigger other
 tag/release workflows for these events, so inherited store/deployment workflows
 do not run. Do not push the tag manually or publish through a personal token for
 this path. No npm version lifecycle is needed when package.json already has the
-intended version. Update the version and release notes before a later dispatch;
+intended version. For a desktop-only version bump, use
+`npm version 0.2.0 --no-git-tag-version --ignore-scripts` to update the root
+package and lockfile without invoking mobile release tooling or creating a tag.
+Update the version and release notes before a later dispatch;
 an existing published tag must never be moved or overwritten.
 
 The remaining sections describe the inherited multi-channel release path.
