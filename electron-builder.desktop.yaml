@@ -6,6 +6,8 @@ nsis:
   artifactName: Ultra-Tasks-${version}-Setup.${ext}
 portable:
   artifactName: Ultra-Tasks-${version}-Portable.${ext}
+linux:
+  maintainer: Adrian Chase <8574757+ac9492@users.noreply.github.com>
 mac:
   appId: app.ultratasks
   identity: '-'
