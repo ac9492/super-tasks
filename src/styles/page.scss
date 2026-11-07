@@ -231,7 +231,7 @@ body {
 
 // Secondary pages (docs/styling-guide.md § Page layout): one column that
 // starts at the page gutter, the left edge of the header title, and is at most
-// --component-max-width wide. Never centred: it lines up with the task column.
+// --component-max-width wide. These secondary pages use the page gutter.
 // 16px above, 72px below for the FAB and the bottom nav.
 .page-wrapper {
   padding: var(--s2) var(--page-gutter) var(--s9);
@@ -243,14 +243,14 @@ body {
 }
 
 .task-list-wrapper {
-  // The task column is anchored at the page gutter, the one left edge shared by
-  // the header title, the summary line, section headers, cards, the add row and
-  // Finish Day. It is not centred: opening a side panel then never moves the
-  // list, and the title above it stays on the same x on every page.
+  // Centre the bounded task column inside its available pane, including when
+  // a side panel narrows it. The summary, sections, add row and Finish Day use
+  // the same column, while subtasks keep their indentation inside each row.
   padding: 0 var(--page-gutter) var(--s7);
   // for a little bit of extra space for 800 width
   max-width: calc(var(--component-max-width) - 40px);
-  margin: 0;
+  margin-block: 0;
+  margin-inline: auto;
 
   @include media-queries.mq(sm) {
     max-width: var(--component-max-width);

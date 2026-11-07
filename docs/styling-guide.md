@@ -326,7 +326,8 @@ Rules:
 
 Secondary pages (Habits, Recurring tasks, Archived projects, Metrics, Worklog and History, Daily summary, Support us) are one column:
 
-- **Column:** `.page-wrapper` puts the content at the page gutter (`--page-gutter`, the header title's left edge), 16px from the top and 72px from the bottom (FAB and bottom nav). `.component-wrapper` caps it at `--component-max-width`. Neither centres: the column lines up with the task list.
+- **Secondary-page column:** `.page-wrapper` puts the content at the page gutter (`--page-gutter`, the header title's left edge), 16px from the top and 72px from the bottom (FAB and bottom nav). `.component-wrapper` caps it at `--component-max-width` and stays aligned to the page gutter.
+- **Task lists:** `.task-list-wrapper` centres the bounded task column within its available pane, with equal inline margins. The summary, sections, task cards, add row and Finish Day align inside that column. Opening a side panel recentres the column within the remaining workspace; narrow screens keep the normal page gutters. Subtasks retain their indentation.
 - **Canvas pages** (Planner, Schedule, Boards) span the width and use the same gutter: day columns, the schedule toolbar and the board tabs and panels start at `--page-gutter`.
 - **No second page title.** The shell header names the page. Sections inside a report use the title role (`--type-title`), then the heading role (`--type-heading`); no centred headings. Report tables are `--r-md` hairline cards (`.material-table`), never shadowed.
 - **Empty states** are one layout, `.empty-state` (`src/styles/components/_empty-state.scss`): on the column's start edge, an optional 24px muted icon, one line of muted body text (a heading line may lead it) and at most one action. `<p class="empty-state">text</p>` is the text-only form.
