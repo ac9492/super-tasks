@@ -9,7 +9,7 @@
 set -euo pipefail
 
 APP="${1:?usage: $0 <path/to/App.app>}"
-GROUP='group.com.super-productivity.app'
+GROUP='group.app.ultratasks'
 
 check_bundle() {
   local bundle="$1" entitlements

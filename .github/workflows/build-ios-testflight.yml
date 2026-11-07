@@ -8,7 +8,7 @@ name: iOS TestFlight Build on Label
 
 on:
   pull_request:
-    branches: [master]
+    branches: [main]
     types: [labeled]
 
 permissions:
@@ -65,8 +65,8 @@ jobs:
           # The PR's frozen base commit can predate these helpers, and the PR's
           # own copies are untrusted. Take the helpers and the version inputs
           # from the default branch, which is where this workflow is defined.
-          if ! TRUSTED_SHA=$(git rev-parse --verify --quiet origin/master); then
-            git fetch --force --tags origin master
+          if ! TRUSTED_SHA=$(git rev-parse --verify --quiet origin/main); then
+            git fetch --force --tags origin main
             TRUSTED_SHA=$(git rev-parse FETCH_HEAD)
           fi
           git cat-file -e "$TRUSTED_SHA:tools/ios-testflight-version.js"

@@ -1,14 +1,21 @@
-name: iOS App Store Release on Release
+name: iOS Release and Device Testing
 on:
   push:
     tags:
       - ultra-tasks-v*
   workflow_dispatch:
     inputs:
+      distribution:
+        description: 'App Store Connect or direct installation on registered devices'
+        type: choice
+        options:
+          - app-store-connect
+          - ad-hoc
+        default: ad-hoc
       build_only:
         description: 'Build and export IPA without uploading to App Store Connect'
         type: boolean
-        default: false
+        default: true
 
 permissions:
   contents: read
@@ -46,9 +53,34 @@ jobs:
         with:
           mac_certs: ${{ secrets.apple_distribution_cert }}
           mac_certs_password: ${{ secrets.apple_distribution_cert_password }}
-          ios_provision_profile: ${{ secrets.IOS_APP_STORE_PROFILE }}
-          ios_share_provision_profile: ${{ secrets.IOS_SHARE_APP_STORE_PROFILE }}
-          ios_widget_provision_profile: ${{ secrets.IOS_WIDGET_APP_STORE_PROFILE }}
+          ios_provision_profile: ${{ secrets[inputs.distribution == 'ad-hoc' && 'IOS_ADHOC_PROFILE' || 'IOS_APP_STORE_PROFILE'] }}
+          ios_share_provision_profile: ${{ secrets[inputs.distribution == 'ad-hoc' && 'IOS_SHARE_ADHOC_PROFILE' || 'IOS_SHARE_APP_STORE_PROFILE'] }}
+          ios_widget_provision_profile: ${{ secrets[inputs.distribution == 'ad-hoc' && 'IOS_WIDGET_ADHOC_PROFILE' || 'IOS_WIDGET_APP_STORE_PROFILE'] }}
+
+      - name: Validate export credentials
+        env:
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          DISTRIBUTION: ${{ inputs.distribution || 'app-store-connect' }}
+          ASC_KEY_ID: ${{ secrets.mac_api_key_id }}
+          ASC_ISSUER_ID: ${{ secrets.mac_api_key_issuer_id }}
+          ASC_KEY_CONTENT: ${{ secrets.mac_api_key }}
+          UPLOAD: ${{ inputs.distribution != 'ad-hoc' && !inputs.build_only }}
+        run: |
+          set -euo pipefail
+          test -n "$APPLE_TEAM_ID" || { echo '::error::Missing APPLE_TEAM_ID'; exit 1; }
+          for target in ShareExtension SupWidget; do
+            name=SHARE_PROVISIONING_PROFILE_UUID
+            if [ "$target" = SupWidget ]; then name=WIDGET_PROVISIONING_PROFILE_UUID; fi
+            if [ -f "ios/App/$target/Info.plist" ] && [ -z "${!name:-}" ]; then
+              echo "::error::Missing $target profile for $DISTRIBUTION ($name). See docs/apple-release-automation.md."
+              exit 1
+            fi
+          done
+          if [ "$UPLOAD" = true ]; then
+            for name in ASC_KEY_ID ASC_ISSUER_ID ASC_KEY_CONTENT; do
+              test -n "${!name}" || { echo "::error::Missing App Store Connect credential: $name"; exit 1; }
+            done
+          fi
 
       - name: Get npm cache directory
         id: npm-cache-dir
@@ -114,6 +146,9 @@ jobs:
         run: tools/sign-ios-archive-adhoc.sh "$RUNNER_TEMP/App.xcarchive"
 
       - name: Create ExportOptions.plist
+        env:
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          EXPORT_METHOD: ${{ inputs.distribution == 'ad-hoc' && 'release-testing' || 'app-store-connect' }}
         run: |
           cat > "$RUNNER_TEMP/ExportOptions.plist" << EOF
           <?xml version="1.0" encoding="UTF-8"?>
@@ -121,9 +156,9 @@ jobs:
           <plist version="1.0">
           <dict>
               <key>method</key>
-              <string>app-store-connect</string>
+              <string>$EXPORT_METHOD</string>
               <key>teamID</key>
-              <string>${{ secrets.APPLE_TEAM_ID }}</string>
+              <string>$APPLE_TEAM_ID</string>
               <key>uploadSymbols</key>
               <true/>
               <key>signingStyle</key>
@@ -139,7 +174,7 @@ jobs:
 
           if [ -f ios/App/ShareExtension/Info.plist ]; then
             if [ -z "${SHARE_PROVISIONING_PROFILE_UUID:-}" ]; then
-              echo "ERROR: ShareExtension target requires IOS_SHARE_PROVISION_PROFILE"
+              echo "ERROR: ShareExtension target requires a matching distribution profile"
               exit 1
             fi
             /usr/libexec/PlistBuddy -c \
@@ -149,8 +184,8 @@ jobs:
 
           if [ -f ios/App/SupWidget/Info.plist ]; then
             if [ -z "${WIDGET_PROVISIONING_PROFILE_UUID:-}" ]; then
-              echo "ERROR: SupWidget target requires the IOS_WIDGET_PROVISION_PROFILE secret"
-              echo "(an App Store profile for app.ultratasks.widget; the app"
+              echo "ERROR: SupWidget target requires a matching distribution profile"
+              echo "(a profile for app.ultratasks.widget; the app"
               echo "profile must also carry the App Group). Setup steps:"
               echo "ios/App/SupWidget/README.md"
               exit 1
@@ -178,10 +213,13 @@ jobs:
       - name: Upload IPA artifact
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
-          name: sup-ios-release
+          name: ultra-tasks-ios-${{ inputs.distribution || 'app-store-connect' }}
           path: ${{ runner.temp }}/ipa-output/*.ipa
+          if-no-files-found: error
+          retention-days: 14
 
       - name: Set up Ruby and fastlane
+        if: inputs.distribution != 'ad-hoc' && !inputs.build_only
         # Pinned by SHA per repo policy. ruby-version is required: with no
         # .ruby-version file in the repo the action errors out rather than
         # using system Ruby. bundler-cache runs `bundle install` and caches the
@@ -192,6 +230,7 @@ jobs:
           bundler-cache: true
 
       - name: Prepare App Store release notes
+        if: inputs.distribution != 'ad-hoc' && !inputs.build_only
         run: node tools/prepare-appstore-release-notes.js
 
       # Upload the IPA to App Store Connect and (for final release tags) submit
@@ -199,7 +238,7 @@ jobs:
       # version containing "-", e.g. -rc.0/-beta.1) and manual runs only upload the
       # build (TestFlight). Classification ignores hyphens in the product prefix.
       - name: Upload to App Store Connect and submit for review
-        if: ${{ !inputs.build_only }}
+        if: inputs.distribution != 'ad-hoc' && !inputs.build_only
         env:
           ASC_KEY_ID: ${{ secrets.mac_api_key_id }}
           ASC_ISSUER_ID: ${{ secrets.mac_api_key_issuer_id }}

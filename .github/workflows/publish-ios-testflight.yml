@@ -91,13 +91,13 @@ jobs:
             exit 1
           fi
           if ! [[ "$BASE_SHA" =~ ^[0-9a-f]{40}$ ]] || ! git merge-base --is-ancestor "$BASE_SHA" "${{ github.sha }}"; then
-            echo "::error::Source run base is not a trusted master ancestor"
+            echo "::error::Source run base is not a trusted main ancestor"
             exit 1
           fi
 
           PR_JSON=$(gh api "repos/$REPO/pulls/$PR_NUMBER")
           test "$(jq -r '.state' <<< "$PR_JSON")" = open
-          test "$(jq -r '.base.ref' <<< "$PR_JSON")" = master
+          test "$(jq -r '.base.ref' <<< "$PR_JSON")" = main
           test "$(jq -r '.head.repo.full_name' <<< "$PR_JSON")" = "$REPO"
           test "$(jq -r '.head.sha' <<< "$PR_JSON")" = "$HEAD_SHA"
           jq -e '.labels | map(.name) | index("ios-test-flight") != null' \
@@ -204,7 +204,7 @@ jobs:
           PY
 
           # Recompute from this trusted default-branch checkout, never from
-          # PR-controlled or frozen-base data. A newer master that changes the
+          # PR-controlled or frozen-base data. A newer main that changes the
           # version train intentionally fails validation so a stale build is
           # never signed.
           EXPECTED_VERSION=$(node tools/ios-testflight-version.js package.json HEAD)

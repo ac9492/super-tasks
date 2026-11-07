@@ -1,7 +1,7 @@
 'use strict';
 
 // Computes the versionCode for a per-push Android *dev* build that
-// build-android.yml publishes to the Play `internal` track on non-tag master
+// build-android.yml publishes to the Play `internal` track on non-tag main
 // pushes (see its "dev versionCode" steps).
 //
 // Scheme: dev code = <last stable release's versionCode> + <commits since that
@@ -13,7 +13,7 @@
 // guarantees a dev code can never collide with a real release/pre-release code.
 //
 // The base is derived from the last stable *tag*, NOT the working-tree
-// build.gradle: a version-bump commit that reaches master before its tag is
+// build.gradle: a version-bump commit that reaches main before its tag is
 // pushed must not make dev codes jump ahead of the release and then regress
 // once the tag appears. Anchored to the tag, dev codes stay in the previous
 // release's band until the new tag is visible, then step cleanly up. Pre-release

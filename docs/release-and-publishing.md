@@ -194,13 +194,18 @@ git push --atomic origin HEAD "ultra-tasks-vX.Y.Z"
 | Output                                                      | Workflow                                                      | Final tag                                       | Tag with prerelease suffix |
 | ----------------------------------------------------------- | ------------------------------------------------------------- | ----------------------------------------------- | -------------------------- |
 | Draft GitHub release and Linux/macOS/Windows desktop assets | `.github/workflows/build.yml`                                 | Build                                           | Build                      |
-| Android APK and GitHub release asset                        | `.github/workflows/build-android.yml`                         | Upload to Play `internal` and attach APK        | Build/attach only          |
+| Android APKs and Play AAB                                   | `.github/workflows/build-android.yml`                         | Upload AAB to Play `internal` and attach APK    | Build/attach only          |
 | iOS App Store                                               | `.github/workflows/build-ios.yml`                             | Upload and submit for review                    | Upload only                |
 | Mac App Store                                               | `.github/workflows/build-publish-to-mac-store-on-release.yml` | Upload and submit for review                    | Upload only                |
 | Microsoft Store `.appx`                                     | `.github/workflows/build-create-windows-store-on-release.yml` | Build artifact for manual Partner Center upload | Build artifact             |
 
 Apple's detailed submission behavior, API-key requirements, and recovery cases
 are in [Apple release automation](apple-release-automation.md).
+
+For direct iPhone/iPad installation, manually dispatch `build-ios.yml` from
+`main` with `distribution=ad-hoc` (the manual default). This exports a signed IPA
+for registered devices without App Store upload. See
+[registered-device testing setup](apple-release-automation.md#direct-installation-on-registered-iphone-and-ipad-devices).
 
 Feature-branch builds for outside testers are separate from releases: applying
 the `ios-test-flight` label to a same-repo PR creates an unsigned archive; a
@@ -257,15 +262,24 @@ Center.
 
 ## Continuous channels
 
-- A plain `master` push builds desktop artifacts, uploads a development Android
-  build to the Play `internal` track, and publishes the branch Snap to `edge`.
+- The inherited `master` workflows build desktop artifacts and publish the branch
+  Snap to `edge`.
+- Android uses this fork's `main`. After configuring its signing secrets and
+  `GOOGLE_PLAY_SERVICE_ACCOUNT_JSON`, set repository variable
+  `ANDROID_RELEASE_ENABLED=true` to enable builds and Play `internal` uploads on
+  each `main` push. Until then, automatic `main` Android jobs skip. Manual and
+  tag builds still require signing credentials. The APKs remain downloadable
+  artifacts; Play receives `android/app/build/outputs/bundle/playRelease/*.aab`.
+  `npm run assemble:android:prod` builds both APKs and the Play AAB. Both Android
+  assemble scripts stamp `versionName` and `versionCode` from `package.json` via
+  `tools/bump-android-version.js`; CI's per-push code overrides only the latter.
 - A `master` push that changes SuperSync server inputs publishes
   `ghcr.io/super-productivity/supersync:latest` and `master-<sha>`. The prune keeps
   the 15 newest master images and excludes `v*`, so release tags stay available.
-- Pre-release and manual Apple workflows upload builds without submitting them for
+- Pre-release and manual Apple store uploads do not submit builds for
   App Review. Public TestFlight builds come only from the PR label workflow, see
   [Apple release automation](apple-release-automation.md#public-testflight-builds-label-triggered);
-  `master` pushes do not build for TestFlight.
+  `main` pushes do not build for TestFlight. Ad Hoc manual runs export only.
 
 ## Reproducible Android builds
 
@@ -299,7 +313,7 @@ A warning is not a safety net, though, so the outcome is asserted where it can b
 checked: `build-android.yml` verifies on the packaged APK that no
 `assets/public/` service-worker entry survived. That covers build, `cap sync`,
 strip and package together rather than any single step. It never runs on a pull
-request — push (`master`, `release/*`, `test/git-actions`, `ultra-tasks-v*` tags) and
+request — push (`main`, `release/*`, `test/git-actions`, `ultra-tasks-v*` tags) and
 `workflow_dispatch` only — so it gates the publish rather than the merge. No PR
 workflow could host it: `android-tests.yml` does assemble an APK, but it
 substitutes a stand-in smoke page for the Angular bundle, so the assertion would

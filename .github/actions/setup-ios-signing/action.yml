@@ -1,6 +1,6 @@
 name: 'Setup iOS Signing'
 description: >
-  Shared iOS code-signing setup for the App Store release and the TestFlight
+  Shared iOS code-signing setup for App Store, Ad Hoc and TestFlight
   workflows: select Xcode, trust Apple's WWDR intermediate, import the
   distribution certificate into a temporary keychain, install the app and the
   optional app-extension (share, widget) provisioning profiles, and export
@@ -14,7 +14,7 @@ inputs:
     description: 'Password for mac_certs'
     required: true
   ios_provision_profile:
-    description: 'base64-encoded .mobileprovision for com.super-productivity.app'
+    description: 'base64-encoded .mobileprovision for app.ultratasks'
     required: true
   ios_share_provision_profile:
     description: 'base64-encoded .mobileprovision for the optional ShareExtension target'
@@ -32,6 +32,20 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Validate signing inputs
+      shell: bash
+      env:
+        CERTIFICATE: ${{ inputs.mac_certs }}
+        CERTIFICATE_PASSWORD: ${{ inputs.mac_certs_password }}
+        APP_PROFILE: ${{ inputs.ios_provision_profile }}
+      run: |
+        for name in CERTIFICATE CERTIFICATE_PASSWORD APP_PROFILE; do
+          if [ -z "${!name}" ]; then
+            echo "::error::Missing iOS signing input: $name. Configure the Apple signing secrets in docs/apple-release-automation.md."
+            exit 1
+          fi
+        done
+
     - name: Select Xcode
       shell: bash
       # SDKROOT pin: the macos-26 image (2026-08) resolves the default SDK for
@@ -117,7 +131,7 @@ runs:
         echo "App ID: $PROFILE_APP_ID"
         echo "=================================="
         # Verify bundle ID matches
-        EXPECTED_BUNDLE_ID="com.super-productivity.app"
+        EXPECTED_BUNDLE_ID="app.ultratasks"
         if [ "$PROFILE_APP_ID" != "$EXPECTED_BUNDLE_ID" ]; then
           echo "ERROR: Provisioning profile app ID ($PROFILE_APP_ID) does not match expected bundle ID ($EXPECTED_BUNDLE_ID)"
           echo "Please create a new provisioning profile with the correct bundle ID"
@@ -138,7 +152,7 @@ runs:
 
         PROFILE_UUID=$(/usr/libexec/PlistBuddy -c "Print UUID" "$PROFILE_PLIST")
         PROFILE_APP_ID=$(/usr/libexec/PlistBuddy -c "Print Entitlements:application-identifier" "$PROFILE_PLIST" | sed 's/^[A-Z0-9]*\.//')
-        EXPECTED_BUNDLE_ID="com.super-productivity.app.ShareExtension"
+        EXPECTED_BUNDLE_ID="app.ultratasks.ShareExtension"
         if [ "$PROFILE_APP_ID" != "$EXPECTED_BUNDLE_ID" ]; then
           echo "ERROR: Share profile app ID ($PROFILE_APP_ID) does not match expected bundle ID ($EXPECTED_BUNDLE_ID)"
           exit 1
@@ -161,7 +175,7 @@ runs:
 
         PROFILE_UUID=$(/usr/libexec/PlistBuddy -c "Print UUID" "$PROFILE_PLIST")
         PROFILE_APP_ID=$(/usr/libexec/PlistBuddy -c "Print Entitlements:application-identifier" "$PROFILE_PLIST" | sed 's/^[A-Z0-9]*\.//')
-        EXPECTED_BUNDLE_ID="com.super-productivity.app.widget"
+        EXPECTED_BUNDLE_ID="app.ultratasks.widget"
         if [ "$PROFILE_APP_ID" != "$EXPECTED_BUNDLE_ID" ]; then
           echo "ERROR: Widget profile app ID ($PROFILE_APP_ID) does not match expected bundle ID ($EXPECTED_BUNDLE_ID)"
           echo "See ios/App/SupWidget/README.md for the one-time Apple Developer portal setup."

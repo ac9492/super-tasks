@@ -3,19 +3,20 @@
 See the [release and publishing runbook](release-and-publishing.md) for version
 preparation, the draft-release gate, and non-Apple distribution channels.
 
-Pushing a final version tag (`vX.Y.Z`) builds, signs, uploads **and submits**
+Pushing a final version tag (`ultra-tasks-vX.Y.Z`) builds, signs, uploads **and submits**
 the iOS and macOS App Store builds for review, set to release automatically once
 Apple approves them. The only step that is not automated is Apple's human
 review.
 
 ## Pipeline
 
-| Target                                               | Workflow                                                      | Output                         |
-| ---------------------------------------------------- | ------------------------------------------------------------- | ------------------------------ |
-| iOS App Store                                        | `.github/workflows/build-ios.yml`                             | `.ipa` → App Store Connect     |
-| iOS TestFlight (public testers, label-triggered)     | `build-ios-testflight.yml` → `publish-ios-testflight.yml`     | `.ipa` → TestFlight (external) |
-| Mac App Store                                        | `.github/workflows/build-publish-to-mac-store-on-release.yml` | MAS `.pkg` → App Store Connect |
-| Mac direct download (notarized DMG/zip, auto-update) | `.github/workflows/build.yml` (`mac-bin`)                     | GitHub release asset           |
+| Target                                               | Workflow                                                      | Output                                  |
+| ---------------------------------------------------- | ------------------------------------------------------------- | --------------------------------------- |
+| iOS App Store                                        | `.github/workflows/build-ios.yml`                             | `.ipa` → App Store Connect              |
+| iOS registered-device testing (manual, `ad-hoc`)     | `.github/workflows/build-ios.yml`                             | Signed `.ipa` artifact, no store upload |
+| iOS TestFlight (public testers, label-triggered)     | `build-ios-testflight.yml` → `publish-ios-testflight.yml`     | `.ipa` → TestFlight (external)          |
+| Mac App Store                                        | `.github/workflows/build-publish-to-mac-store-on-release.yml` | MAS `.pkg` → App Store Connect          |
+| Mac direct download (notarized DMG/zip, auto-update) | `.github/workflows/build.yml` (`mac-bin`)                     | GitHub release asset                    |
 
 On a tag push each workflow builds and signs the artifact, then runs a fastlane
 lane (`fastlane/Fastfile`, `ios release` / `mac release`) that:
@@ -40,19 +41,87 @@ commit lands before tagging.
 
 ### Submit vs. upload-only
 
-`SUBMIT_FOR_REVIEW` is computed per run as
-`startsWith(github.ref, 'refs/tags/v') && !contains(github.ref, '-')`:
+`SUBMIT_FOR_REVIEW` uses `tools/release-version.js`: a stable fork tag must
+match `package.json`; hyphens in the `ultra-tasks-v` prefix are ignored.
 
-- **Final tag** (`vX.Y.Z`, no hyphen) → upload **and** submit for review.
-- **Pre-release tag** (any tag containing `-`, e.g. `v18.0.0-rc.0`,
-  `v17.0.0-RC.13`, `-beta.1`, `-alpha.0`) or **manual `workflow_dispatch`** →
+- **Final tag** (`ultra-tasks-vX.Y.Z`) → upload **and** submit for review.
+- **Pre-release tag** (e.g. `ultra-tasks-v0.3.0-rc.0`) or
+  **manual `workflow_dispatch`** with `distribution=app-store-connect` →
   upload only (build lands in App Store Connect / TestFlight, no store
   submission).
 
-> The gate keys on the presence of `-` rather than denylisting `RC`/`beta`/
-> `alpha`, because GitHub Actions `contains()` is case-sensitive and this repo's
-> RC tags are predominantly **lowercase** `-rc.N`. Every pre-release tag in the
-> repo's history contains `-`; no final tag does.
+Manual runs default to `distribution=ad-hoc` and `build_only=true`.
+For a manual App Store Connect upload, select `app-store-connect` and set
+`build_only=false`. `build_only=true` exports an IPA without uploading. `distribution=ad-hoc`
+always exports only, regardless of `build_only` or the selected ref.
+
+## Direct installation on registered iPhone and iPad devices
+
+Use the existing paid Apple Developer company team. Ad Hoc distribution signs
+the app for a list of registered devices; it does not require TestFlight, App
+Review, or an App Store Connect API key. This build retains the team's signing
+identity. An Apple company account does not need to become an individual account
+to test on your own phone.
+
+One-time setup in [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources/):
+
+1. Register each iPhone/iPad's UDID under **Devices**. See
+   [Apple's device-registration instructions](https://developer.apple.com/help/account/devices/register-a-single-device/).
+2. Register explicit App IDs `app.ultratasks` and
+   `app.ultratasks.ShareExtension`. Enable **App Groups** on both and assign
+   `group.app.ultratasks`, matching the native entitlements and share inbox.
+3. Create or reuse an **Apple Distribution** certificate. Export its certificate
+   **and private key** from Keychain Access as a password-protected `.p12` on a
+   Mac. A downloaded `.cer` alone cannot sign the app.
+4. Create two **Ad Hoc** provisioning profiles, one per App ID, selecting that
+   certificate and the same registered devices. Both must include the App Group.
+   See [Apple's Ad Hoc profile instructions](https://developer.apple.com/help/account/provisioning-profiles/create-an-ad-hoc-provisioning-profile/).
+5. Add these GitHub Actions secrets to this repository, or grant this repository
+   access to matching organization secrets:
+
+| Secret                             | Contents                                                  |
+| ---------------------------------- | --------------------------------------------------------- |
+| `APPLE_TEAM_ID`                    | Apple Developer team ID                                   |
+| `APPLE_DISTRIBUTION_CERT`          | Base64-encoded distribution `.p12`, including private key |
+| `APPLE_DISTRIBUTION_CERT_PASSWORD` | Password used to export the `.p12`                        |
+| `IOS_ADHOC_PROFILE`                | Base64-encoded main-app Ad Hoc `.mobileprovision`         |
+| `IOS_SHARE_ADHOC_PROFILE`          | Base64-encoded share-extension Ad Hoc `.mobileprovision`  |
+
+The current fork has no widget target. If one is added later, register
+`app.ultratasks.widget` with the same group and add `IOS_WIDGET_ADHOC_PROFILE`.
+App Store profiles use the separate `IOS_*APP_STORE_PROFILE` secrets and cannot
+replace Ad Hoc profiles.
+
+On Windows, encode and upload files directly with PowerShell and GitHub CLI
+(use your own downloaded file paths; secret values need not appear in chat):
+
+```powershell
+[Convert]::ToBase64String([IO.File]::ReadAllBytes('C:\signing\distribution.p12')) | gh secret set APPLE_DISTRIBUTION_CERT --repo ultra-tasks/ultra-tasks
+[Convert]::ToBase64String([IO.File]::ReadAllBytes('C:\signing\MainApp.mobileprovision')) | gh secret set IOS_ADHOC_PROFILE --repo ultra-tasks/ultra-tasks
+[Convert]::ToBase64String([IO.File]::ReadAllBytes('C:\signing\ShareExtension.mobileprovision')) | gh secret set IOS_SHARE_ADHOC_PROFILE --repo ultra-tasks/ultra-tasks
+gh secret set APPLE_DISTRIBUTION_CERT_PASSWORD --repo ultra-tasks/ultra-tasks
+gh secret set APPLE_TEAM_ID --repo ultra-tasks/ultra-tasks
+```
+
+Run **Actions → iOS Release and Device Testing → Run workflow** on `main`,
+select `distribution=ad-hoc` and `build_only=true`, or run:
+
+```bash
+gh workflow run build-ios.yml --repo ultra-tasks/ultra-tasks --ref main -f distribution=ad-hoc -f build_only=true
+```
+
+The macOS runner builds the frontend, syncs Capacitor, archives with Xcode, and
+exports using `method=release-testing` (Xcode's Ad Hoc export method). Download
+the `ultra-tasks-ios-ad-hoc` artifact within 14 days, unzip it, then install the
+IPA on a registered device using Xcode's Devices window or Apple Configurator
+on a Mac. See [Apple's registered-device distribution guide](https://developer.apple.com/documentation/xcode/distributing-your-app-to-registered-devices).
+The workflow does not upload this IPA to App Store Connect or a public release.
+
+For each new test version, dispatch again from `main`. The marketing version
+comes from `package.json` and the build number is generated by CI. When adding a
+device or renewing the certificate, regenerate **both** profiles and replace
+their secrets before rebuilding. A build cannot be installed on devices absent
+from its embedded profiles, and stops working when its signing profile expires.
 
 ## Public TestFlight builds (label-triggered)
 
@@ -61,7 +130,7 @@ touches native iOS code and so cannot be exercised in the web preview — applie
 the `ios-test-flight` label to a same-repo PR.
 `.github/workflows/build-ios-testflight.yml` builds an **unsigned** archive with
 no Apple credentials (ad-hoc signed only, to carry the entitlements). After it completes,
-`.github/workflows/publish-ios-testflight.yml` runs trusted code from `master`,
+`.github/workflows/publish-ios-testflight.yml` runs trusted code from `main`,
 validates and repacks the archive without credentials, waits for approval through
 the protected `ios-testflight` environment, then signs and runs the
 `fastlane ios testflight` lane. The lane verifies the external group and Public
@@ -70,14 +139,14 @@ comments on the PR and removes the label so re-applying it starts a fresh build.
 
 ### Security boundary
 
-- **Same-repo PRs targeting `master` only.** A fork PR must be pushed to a branch
+- **Same-repo PRs targeting `main` only.** A fork PR must be pushed to a branch
   in this repo first. Labeling a fork PR is silently skipped (no comment, label
   stays on) — remove the label by hand in that case.
 - **PR code never receives Apple credentials.** npm lifecycle scripts, CocoaPods,
   Xcode project files, and build phases run only in the unsigned build workflow.
 - **Trusted publisher.** `workflow_run` loads the publisher from the default
   branch. Its credential-free validation job confirms the source workflow path,
-  associated open PR, same-repo head, current head SHA, `master` base, label,
+  associated open PR, same-repo head, current head SHA, `main` base, label,
   metadata, app IDs, versions, build numbers, archive paths, and symlinks. It
   repacks the validated archive before the credentialed job downloads it.
 - **Human signing gate.** The publish job is bound to the protected
@@ -95,16 +164,16 @@ The share extension in [PR #10033](https://github.com/super-productivity/super-p
 has its own bundle ID and profile. In
 [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources/):
 
-1. Register the App Group `group.com.super-productivity.app`.
-2. Edit the existing App ID `com.super-productivity.app`, enable **App Groups**,
+1. Register the App Group `group.app.ultratasks`.
+2. Edit the existing App ID `app.ultratasks`, enable **App Groups**,
    and assign that group.
-3. Register the explicit App ID `com.super-productivity.app.ShareExtension`,
+3. Register the explicit App ID `app.ultratasks.ShareExtension`,
    enable **App Groups**, and assign the same group.
 4. Regenerate the main app's App Store distribution provisioning profile using
    the existing Apple Distribution certificate. The regenerated profile must
    contain the App Group entitlement.
 5. Create an App Store distribution provisioning profile for
-   `com.super-productivity.app.ShareExtension` using the same certificate.
+   `app.ultratasks.ShareExtension` using the same certificate.
 
 Step 4 replaces the profile the App Store release path also uses. The
 regenerated profile is a superset, so releases keep working; keep the old file
@@ -126,7 +195,7 @@ is available, then map both bundle IDs into `ExportOptions.plist`.
 
 ### One-time App Store Connect setup
 
-In **App Store Connect → Apps → Super Productivity → TestFlight**:
+In **App Store Connect → Apps → Ultra Tasks → TestFlight**:
 
 1. Complete the beta test information (description, feedback email, contact
    information, review notes, and demo credentials if sign-in is required).
@@ -151,7 +220,7 @@ Before merging or applying the label, create the environment under
 1. Name it exactly `ios-testflight`.
 2. Add only trusted release maintainers as **Required reviewers**. If more than
    one release maintainer is available, enable **Prevent self-review**.
-3. Restrict deployment branches to `master`.
+3. Restrict deployment branches to `main`.
 4. Add the environment secret `IOS_TESTFLIGHT_ENV_READY` with the exact value
    `configured`. This fail-closed marker is deliberately not a repository secret.
 5. Save and verify the protection rules. A missing environment may be created
@@ -195,16 +264,16 @@ the description “Build and distribute this PR through public iOS TestFlight.�
 
 1. Create and protect the `ios-testflight` environment before merging the
    workflows.
-2. Merge the workflows to `master`. Old feature branches do not need to contain
+2. Merge the workflows to `main`. Old feature branches do not need to contain
    them: the unsigned builder takes the version helper and version inputs from
-   `master`, and the publisher always runs from the default branch.
-3. Apply `ios-test-flight` to a same-repo PR targeting `master`.
+   `main`, and the publisher always runs from the default branch.
+3. Apply `ios-test-flight` to a same-repo PR targeting `main`.
 4. Wait for **iOS TestFlight Build on Label** to produce the unsigned archive.
 5. Open **iOS TestFlight Publish**. Its validation job recomputes the expected
-   marketing version from the greater of `master`'s `package.json` version and
-   stable tags merged into `master`, then increments the patch. The build number
+   marketing version from the greater of `main`'s `package.json` version and
+   stable tags merged into `main`, then increments the patch. The build number
    is the source workflow's `run_number.run_attempt` and is checked in both app
-   targets. A newer `master` that changes this version train fails validation, so
+   targets. A newer `main` that changes this version train fails validation, so
    a stale build is never signed.
 6. Review the PR and exact SHA shown in the protected publish job name, then
    approve the `ios-testflight` deployment.
@@ -229,15 +298,15 @@ They do not need a Mac, Xcode, or an Apple Developer account.
 - Source build failures, validation failures, and normal publish failures are
   reported on the PR and remove the label. A hard cancellation of the publisher
   can prevent reporting; remove the label manually in that case.
-- `workflow_run` re-runs load the publisher from the original run's `master` SHA,
-  so a publisher fix on `master` cannot be verified by re-running an old run;
+- `workflow_run` re-runs load the publisher from the original run's `main` SHA,
+  so a publisher fix on `main` cannot be verified by re-running an old run;
   re-apply the label instead.
 - To stop distributing a bad build, use **Expire Build** in App Store Connect.
 - To disable public PR builds, remove the `ios-test-flight` label and disable or
   remove `.github/workflows/build-ios-testflight.yml`. Installed builds are not
   remotely removed; expiring a build prevents new installs.
 
-There is no automatic TestFlight build from `master`; TestFlight builds come
+There is no automatic TestFlight build from `main`; TestFlight builds come
 only from the label workflow above.
 
 ## Required secrets
