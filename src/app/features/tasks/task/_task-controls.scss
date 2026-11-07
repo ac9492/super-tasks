@@ -84,7 +84,8 @@
   // the size, which task-title raises to 16px on touch iOS so that focusing the
   // title does not zoom the page (#9556); this selector outranks that rule.
   .task-title {
-    font: var(--type-body-strong);
+    font-weight: var(--font-weight-medium);
+    line-height: 20px;
   }
 
   // Tags, then the description on the same line. The tags keep their own width
