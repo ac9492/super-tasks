@@ -48,7 +48,16 @@
             expiresIn: 600,
           },
         });
-        assert((await command('current', identity)).refreshToken === 'test-refresh');
+        const current = await command('current', identity);
+        assert(
+          current.accessToken === 'test-access' &&
+            current.refreshToken === 'test-refresh',
+        );
+        assert(
+          Number.isInteger(current.expiresIn) &&
+            current.expiresIn > 0 &&
+            current.expiresIn <= 600,
+        );
         await command('bootstrap', {
           ...identity,
           baseUrl,

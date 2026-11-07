@@ -48,7 +48,7 @@ public class NativeAccountPlugin: CAPPlugin, CAPBridgedPlugin, URLSessionTaskDel
     }
     public func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse,
                            newRequest request: URLRequest, completionHandler: @escaping (URLRequest?) -> Void) { completionHandler(nil) }
-    private func tokens(_ input: [String: Any]) throws -> [String: Any] {
+    private func tokens(_ input: [String: Any]) throws -> JSObject {
         guard let access = input["accessToken"] as? String, let refresh = input["refreshToken"] as? String,
               let expires = input["expiresIn"] as? NSNumber, !access.isEmpty, !refresh.isEmpty else { throw failure() }
         return ["accessToken": access, "refreshToken": refresh, "expiresIn": expires]
@@ -105,7 +105,10 @@ public class NativeAccountPlugin: CAPPlugin, CAPBridgedPlugin, URLSessionTaskDel
                 guard profile["serverId"] as? String == input["serverId"] as? String,
                       profile["accountId"] as? String == input["accountId"] as? String else { throw self.failure() }
                 if method == "detach" {
-                    guard var latest = profile["tokens"] as? JSObject else { throw self.failure() }
+                    guard let stored = profile["tokens"] as? [String: Any] else { throw self.failure() }
+                    // JSONSerialization returns Foundation objects. Convert the
+                    // validated fields to Swift JSValue types before bridging.
+                    var latest = try self.tokens(stored)
                     let expiry = (profile["expiresAt"] as? NSNumber)?.doubleValue ?? 0
                     latest["expiresIn"] = max(0, Int((expiry - Date().timeIntervalSince1970 * 1000) / 1000))
                     try self.clear(); call.resolve(latest); return
@@ -114,7 +117,8 @@ public class NativeAccountPlugin: CAPPlugin, CAPBridgedPlugin, URLSessionTaskDel
                 guard method == "current" || method == "refresh" else { throw self.failure() }
                 let expires = (profile["expiresAt"] as? NSNumber)?.doubleValue ?? 0
                 if method == "refresh" || Date().timeIntervalSince1970 * 1000 >= expires - 60000 { profile = try self.refreshed(profile) }
-                guard var result = profile["tokens"] as? JSObject else { throw self.failure() }
+                guard let stored = profile["tokens"] as? [String: Any] else { throw self.failure() }
+                var result = try self.tokens(stored)
                 let validUntil = (profile["expiresAt"] as? NSNumber)?.doubleValue ?? 0
                 result["expiresIn"] = max(1, Int((validUntil - Date().timeIntervalSince1970 * 1000) / 1000))
                 call.resolve(result)
