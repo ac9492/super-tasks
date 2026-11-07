@@ -84,7 +84,12 @@ jobs:
           xcrun simctl launch "$ULTRA_NATIVE_SIM_ID" app.ultratasks
           for attempt in {1..30}; do
             xcrun simctl io "$ULTRA_NATIVE_SIM_ID" screenshot /tmp/ultra-native-smoke.png
-            if /tmp/verify-ios-native-session /tmp/ultra-native-smoke.png; then exit 0; fi
+            if /tmp/verify-ios-native-session /tmp/ultra-native-smoke.png; then
+              exit 0
+            else
+              status=$?
+              if [ "$status" -eq 2 ]; then exit 1; fi
+            fi
             sleep 2
           done
           echo 'Native iOS session smoke did not pass.'
