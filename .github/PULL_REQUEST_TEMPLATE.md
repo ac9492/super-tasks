@@ -15,6 +15,12 @@
 - [ ] Documentation
 - [ ] Other (please describe)
 
+## Contributor License Agreement (required for original contributions)
+
+- [ ] **I have read and affirmatively agree to the [Ultra Tasks Contributor License Agreement](https://github.com/ultra-tasks/ultra-tasks/blob/main/CONTRIBUTOR_LICENSE_AGREEMENT.md) for my original contributions in this PR. I have the authority to grant the described non-exclusive, sublicensable and relicensable license, and I have identified third-party material.** This is not a copyright assignment.
+
+If you cannot agree, discuss alternatives before submitting copyrighted material. An unchecked box is not consent.
+
 ## Checklist
 
 - [ ] I have included relevant changes to the documentation/[wiki](https://github.com/ac9492/ultra-tasks/tree/main/docs/wiki).

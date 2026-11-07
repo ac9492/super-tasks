@@ -89,4 +89,36 @@ describe('countDueTasks', () => {
     expect(countDueTasks(tasks, '2026-10-03', 0)).toBe(1);
     expect(countDueTasks([], '2026-10-03', 0)).toBe(0);
   });
+  it('includes unplanned missed deadlines in the shared overdue count', () => {
+    const today = '2026-11-03';
+    const tasks = [
+      task({ deadlineDay: '2026-11-02' }),
+      task({ deadlineWithTime: new Date(2026, 10, 3, 2).getTime() }),
+      task({ deadlineDay: today }),
+      task({ deadlineDay: '2026-11-02', dueDay: '2026-11-04' }),
+      task({ deadlineDay: '2026-11-02', isDone: true }),
+      task({ dueDay: today }),
+    ];
+    expect(getDueTaskCounts(tasks, today, 4 * 3600000)).toEqual({
+      today: 1,
+      overdue: 2,
+      total: 3,
+    });
+  });
+
+  it('matches overdue nesting and keeps missed-deadline children under planned parents', () => {
+    const tasks = [
+      task({ id: 'unplanned', deadlineDay: '2026-11-01' }),
+      task({ parentId: 'unplanned', deadlineDay: '2026-11-02' }),
+      task({ id: 'planned', dueDay: '2026-11-04' }),
+      task({ parentId: 'planned', deadlineDay: '2026-11-02' }),
+      task({ id: 'done', isDone: true, deadlineDay: '2026-11-01' }),
+      task({ parentId: 'done', deadlineDay: '2026-11-02' }),
+    ];
+    expect(getDueTaskCounts(tasks, '2026-11-03', 0)).toEqual({
+      today: 0,
+      overdue: 2,
+      total: 2,
+    });
+  });
 });

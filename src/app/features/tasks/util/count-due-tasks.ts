@@ -1,9 +1,11 @@
 import { Task } from '../task.model';
 import { getDbDateStr } from '../../../util/get-db-date-str';
+import { getLogicalTodayStartMs, isTaskDeadlineMissedUnplanned } from './is-task-overdue';
 
-type DueTask = Pick<Task, 'id' | 'isDone' | 'dueDay' | 'dueWithTime'> & {
-  parentId?: string | null;
-};
+type DueTask = Pick<Task, 'id' | 'isDone' | 'dueDay' | 'dueWithTime'> &
+  Partial<Pick<Task, 'deadlineDay' | 'deadlineWithTime'>> & {
+    parentId?: string | null;
+  };
 
 export interface DueTaskCounts {
   today: number;
@@ -12,7 +14,7 @@ export interface DueTaskCounts {
 }
 
 /**
- * Count scheduled rows through today, matching Today and overdue nesting.
+ * Count scheduled rows through today and unplanned missed deadlines, matching Today and overdue nesting.
  * A subtask appears separately when its parent is absent from its day group.
  * Earlier dates share one overdue group; timed tasks later today count too.
  */
@@ -21,6 +23,8 @@ export const getDueTaskCounts = (
   today: string,
   startOfNextDayDiffMs: number,
 ): DueTaskCounts => {
+  const todayStartMs = getLogicalTodayStartMs(today, startOfNextDayDiffMs);
+  const byId = new Map(tasks.map((task) => [task.id, task]));
   const todayIds = new Set<string>();
   const overdueIds = new Set<string>();
   const dueTasks: { task: DueTask; groupIds: Set<string> }[] = [];
@@ -29,7 +33,16 @@ export const getDueTaskCounts = (
     const dueDay = task.dueWithTime
       ? getDbDateStr(new Date(task.dueWithTime - startOfNextDayDiffMs))
       : task.dueDay;
-    if (!dueDay || dueDay > today) continue;
+    if (!dueDay) {
+      if (task.isDone || !isTaskDeadlineMissedUnplanned(task, today, todayStartMs))
+        continue;
+      const parent = task.parentId ? byId.get(task.parentId) : undefined;
+      if (parent && (parent.dueDay || parent.dueWithTime)) continue;
+      overdueIds.add(task.id);
+      dueTasks.push({ task, groupIds: overdueIds });
+      continue;
+    }
+    if (dueDay > today) continue;
 
     const groupIds = dueDay === today ? todayIds : overdueIds;
     // Include completed parents here: the list also nests their children.

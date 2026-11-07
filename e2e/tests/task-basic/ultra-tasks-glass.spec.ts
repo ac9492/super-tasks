@@ -15,10 +15,17 @@ test('top search and device-local glass control work and persist', async ({
     await workViewPage.addTask(title);
   const items = page.locator('.nav-list .nav-item');
   await expect(items.first().locator('nav-item')).toContainText('Search');
-  await page.locator('.st-search-entry a').focus();
-  await page.locator('.st-search-entry a').press('Enter');
-  await expect(page).toHaveURL(/search/);
-  await page.goto('/#/config');
+  const searchEntry = page.locator('.st-search-entry').getByRole('menuitem', {
+    name: 'Search',
+    exact: true,
+  });
+  await searchEntry.focus();
+  await searchEntry.press('Enter');
+  const searchDialog = page.getByRole('dialog', { name: 'Search', exact: true });
+  await expect(searchDialog).toBeVisible();
+  await searchDialog.press('Escape');
+  await expect(searchDialog).toBeHidden();
+  await page.goto('/#/config?section=appearance');
   const toggle = page.getByRole('checkbox', { name: 'Glass appearance' });
   await expect(toggle).toBeChecked();
   // The web app draws its own blurred backdrop behind the glass surfaces.
@@ -31,13 +38,13 @@ test('top search and device-local glass control work and persist', async ({
   await expect(page.locator('glass-settings .st-glass-background')).toHaveCount(0);
   await page.reload();
   // Settings opens as a dialog; reopen it after the route restores the workspace.
-  await page.goto('/#/config');
+  await page.goto('/#/config?section=appearance');
   await expect(toggle).not.toBeChecked();
   await toggle.check();
   await page.goto('/#/project/INBOX_PROJECT/tasks');
   await workViewPage.waitForTaskList();
   for (const dark of [false, true]) {
-    await page.goto('/#/config');
+    await page.goto('/#/config?section=appearance');
     await page
       .locator(
         `.dark-mode-select mat-button-toggle[value="${dark ? 'dark' : 'light'}"] button`,
@@ -53,7 +60,7 @@ test('top search and device-local glass control work and persist', async ({
   await page.emulateMedia({ forcedColors: 'active' });
   await expect(page.locator('.nav-sidenav')).toHaveCSS('backdrop-filter', 'none');
   await page.emulateMedia({ forcedColors: 'none' });
-  await page.goto('/#/config');
+  await page.goto('/#/config?section=appearance');
   await toggle.uncheck();
   await page.goto('/#/project/INBOX_PROJECT/tasks');
   await workViewPage.waitForTaskList();

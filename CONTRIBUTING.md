@@ -4,15 +4,15 @@ Ultra Tasks is independently maintained and published by Adrian Chase ([@ac9492]
 
 For general questions, use the [Ultra Tasks issue tracker](https://github.com/ac9492/ultra-tasks/issues). To report a vulnerability privately, follow the [security policy](SECURITY.md).
 
-### Licensing by directory
+### Licensing and contribution grant
 
-Ultra Tasks keeps the client and most reusable packages under MIT, while its
-distributed SuperSync server is under AGPL-3.0-only. Contributions to
-`packages/super-sync-server/` should be suitable for AGPL-3.0-only
-distribution and must preserve inherited copyright notices and compatible
-third-party license terms. Contributors retain their copyrights; this policy
-does not request a copyright assignment. See [LICENSING.md](LICENSING.md)
-before contributing server changes.
+Ultra Tasks distributes its combined program under **AGPL-3.0-only**, while retaining inherited Super Productivity **MIT rights and notices**. See [LICENSING.md](LICENSING.md) and [LICENSES/MIT-UPSTREAM.txt](LICENSES/MIT-UPSTREAM.txt).
+
+**Before contributing original code, docs, tests, artwork or designs, read the [Contributor License Agreement](CONTRIBUTOR_LICENSE_AGREEMENT.md).** Contributors retain their copyright and are asked for a separate, **permissive, non-exclusive, royalty-free, transferable, sublicensable and relicensable inbound license** so Ultra Tasks may use, modify, distribute and license their original work under AGPLv3 and other licenses, including commercial licenses.
+
+The public _outbound_ distribution remains AGPL-3.0-only by default. This additional _inbound_ grant is not a copyright assignment. **Affirmative assent is required:** check the CLA checkbox in the PR template or post the explicit acceptance statement in the CLA. Neither simply submitting a PR nor previously contributing under MIT automatically grants these additional rights.
+
+Contributors should confirm they have the right to license their own work (including employer authorization), disclose copied or AI-generated third-party components where relevant, and preserve copyright and licensing notices. You cannot grant rights in code belonging to the original upstream authors.
 
 ### Code of conduct
 

@@ -81,6 +81,7 @@ import {
 } from './operation-log-store-rows';
 import { LockService } from '../sync/lock.service';
 import { rebaseLocalClockOnDurable } from './operation-log-clock.util';
+import { settleSupersededLocalOpsInTx } from './settle-superseded-local-ops.util';
 import {
   rebaseKeptOpsInTx,
   rebasePendingLocalOpsInTx,
@@ -896,6 +897,8 @@ export class OperationLogStoreService implements RemoteOperationApplyStorePort<O
     nativeBaseline?: { id: string; data: unknown };
     // Reject represented local ops atomically with the replacement, never before it.
     rejectOpIds?: readonly string[];
+    // Pending local ops kept on top of the snapshot (#10972), moved past it.
+    keepOpIds?: readonly string[];
     archiveYoung?: ArchiveStoreEntry['data'];
     archiveOld?: ArchiveStoreEntry['data'];
   }): Promise<{ seqs: number[]; writtenOps: Operation[]; skippedCount: number }> {
@@ -945,23 +948,6 @@ export class OperationLogStoreService implements RemoteOperationApplyStorePort<O
             );
           }
 
-          // Reject superseded local ops inside this transaction so their
-          // rejection is atomic with the state replacement — never orphaned by
-          // a rolled-back baseline (see rejectOpIds doc above).
-          if (opts.rejectOpIds?.length) {
-            for (const opId of opts.rejectOpIds) {
-              const rejectEntry = await tx.getFromIndex<StoredOperationLogEntry>(
-                STORE_NAMES.OPS,
-                OPS_INDEXES.BY_ID,
-                opId,
-              );
-              if (rejectEntry) {
-                rejectEntry.rejectedAt = opts.compactedAt;
-                await tx.put(STORE_NAMES.OPS, rejectEntry);
-              }
-            }
-          }
-
           const seqs: number[] = [];
           const writtenOps: Operation[] = [];
           let skippedCount = 0;
@@ -987,6 +973,16 @@ export class OperationLogStoreService implements RemoteOperationApplyStorePort<O
             snapshotFrontier = Math.max(snapshotFrontier, seq);
             seqs.push(seq);
             writtenOps.push(op);
+          }
+          // Atomic with the state replacement — never orphaned by a
+          // rolled-back baseline (see rejectOpIds doc above).
+          const keptEntries = await settleSupersededLocalOpsInTx(tx, {
+            rejectOpIds: opts.rejectOpIds,
+            keepOpIds: opts.keepOpIds,
+            rejectedAt: opts.compactedAt,
+          });
+          for (const entry of keptEntries) {
+            await tx.add(STORE_NAMES.OPS, entry);
           }
 
           if (opts.nativeBaseline)
@@ -1026,7 +1022,7 @@ export class OperationLogStoreService implements RemoteOperationApplyStorePort<O
       this._invalidateAppliedAndUnsyncedCaches();
       // The committed baseline replaces this tab's live state (dispatched by
       // the caller inside the same locked section), so its frontier is the
-      // tab's applied frontier (#9438).
+      // tab's applied frontier (#9438). Kept rows above it count once re-applied.
       this._tabSeqFrontier.establishFrontier(result.snapshotFrontier);
       return {
         seqs: result.seqs,
@@ -2831,8 +2827,8 @@ export class OperationLogStoreService implements RemoteOperationApplyStorePort<O
   }
 
   /**
-   * Atomically retires a stale local REPAIR and installs its rebased replacement.
-   * Keeping the rejection marker, replacement op, vector clock, and state cache in
+   * Atomically retires a stale or rejected local full-state op (#11352) and
+   * installs its replacement REPAIR. Writing marker, op, clock and cache in
    * one transaction prevents a crash from leaving the repaired state without an
    * uploadable full-state boundary.
    */

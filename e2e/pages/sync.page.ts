@@ -667,17 +667,16 @@ export class SyncPage extends BasePage {
     // Wait for it to be visible
     await collapsibleHeader.waitFor({ state: 'visible', timeout: 5000 });
 
-    // Check if the panel is already expanded by looking for .collapsible-panel sibling
-    const collapsiblePanel = this.page.locator('formly-collapsible .collapsible-panel');
-    const isExpanded = await collapsiblePanel.isVisible().catch(() => false);
-
-    if (!isExpanded) {
+    // Scope to this section: fork settings can contain several collapsibles.
+    // A page-wide panel lookup can see another section or toggle an already-open
+    // Advanced section closed after a strict-mode locator error.
+    const collapsiblePanel = collapsibleHeader
+      .locator('..')
+      .locator(':scope > .collapsible-panel');
+    if ((await collapsibleHeader.getAttribute('aria-expanded')) !== 'true') {
       await collapsibleHeader.click();
-      // Wait for expansion animation
-      await this.page.waitForTimeout(500);
-      // Wait for panel to be visible
-      await collapsiblePanel.waitFor({ state: 'visible', timeout: 3000 });
     }
+    await collapsiblePanel.waitFor({ state: 'visible', timeout: 5000 });
   }
 
   /**

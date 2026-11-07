@@ -1,6 +1,7 @@
 {
   "name": "@super-productivity/plugin-dev",
   "version": "1.0.0",
+  "license": "AGPL-3.0-only",
   "description": "Plugin development workspace for Super Productivity",
   "private": true,
   "scripts": {
